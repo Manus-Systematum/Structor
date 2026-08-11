@@ -15,25 +15,8 @@
 /// reference list by 60 points and reports it as legal.
 library;
 
-import '../source/source_models.dart';
+import '../rules/catalogue.dart';
 import 'roster.dart';
-
-/// Read-only unit lookup. Deliberately narrow: today it is backed by source
-/// DTOs, and the normalised domain model (DESIGN.md §2.1) can implement it
-/// later without touching the calculator.
-abstract interface class Catalogue {
-  SourceUnit? unit(String datasheetId);
-}
-
-class MapCatalogue implements Catalogue {
-  final Map<String, SourceUnit> _units;
-
-  MapCatalogue(Iterable<SourceUnit> units)
-      : _units = {for (final u in units) u.id: u};
-
-  @override
-  SourceUnit? unit(String datasheetId) => _units[datasheetId];
-}
 
 /// Why a unit could not be priced. Surfaced rather than silently treated as
 /// zero — a missing price must never read as a cheap unit.

@@ -8,5 +8,7 @@ export 'src/report/coverage_report.dart';
 export 'src/source/dataset_loader.dart';
 export 'src/source/source_models.dart';
 export 'src/roster/points.dart';
+export 'src/rules/catalogue.dart';
+export 'src/rules/validator.dart';
 export 'src/roster/roster.dart';
 export 'src/rules/battle_size.dart';

@@ -66,6 +66,7 @@ class FactionData {
   final List<SourceStratagem> stratagems;
   final List<SourceAbility> abilities;
   final List<PhaseMapping> phaseMappings;
+  final List<LeaderAttachment> leaderAttachments;
   final Set<String> enhancementIds;
   final List<String> missingFiles;
 
@@ -77,6 +78,7 @@ class FactionData {
     required this.stratagems,
     required this.abilities,
     required this.phaseMappings,
+    required this.leaderAttachments,
     required this.enhancementIds,
     required this.missingFiles,
   });
@@ -185,6 +187,9 @@ class DatasetLoader {
           .toList(growable: false),
       phaseMappings: read('enrichment/$factionId/phase-mappings.json')
           .map(PhaseMapping.fromJson)
+          .toList(growable: false),
+      leaderAttachments: read('core/$factionId/leader-attachments.json')
+          .map(LeaderAttachment.fromJson)
           .toList(growable: false),
       enhancementIds: enhancementIds,
       missingFiles: missing,

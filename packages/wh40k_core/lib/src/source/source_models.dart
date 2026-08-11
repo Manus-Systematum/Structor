@@ -190,6 +190,17 @@ class SourceUnit {
 
   bool get isLeader => attachmentRole == 'leader';
 
+  bool hasKeyword(String keyword) =>
+      keywords.any((k) => k.toLowerCase() == keyword.toLowerCase());
+
+  bool get isCharacter => hasKeyword('Character');
+  bool get isEpicHero => hasKeyword('Epic Hero');
+
+  /// Battleline and Dedicated Transport share a doubled duplicate cap
+  /// (DESIGN.md §4.4), so they are tested together.
+  bool get hasDoubledCap =>
+      hasKeyword('Battleline') || hasKeyword('Dedicated Transport');
+
   /// Selects the bracket for [models] models when this is the [copyIndex]-th
   /// unit of this datasheet in the roster (1-based).
   ///
@@ -425,6 +436,27 @@ class SourceAbility {
     }
     if (node is List) return '[${node.map(_fingerprint).join(',')}]';
     return str(node) ?? 'null';
+  }
+}
+
+/// Which units a given leader may join. This is the data behind the `LEADS`
+/// edge of DESIGN.md §2.2, and the reason leader legality is checkable rather
+/// than left to the player.
+class LeaderAttachment {
+  final String leaderId;
+  final List<String> eligibleBodyguardIds;
+
+  const LeaderAttachment({
+    required this.leaderId,
+    required this.eligibleBodyguardIds,
+  });
+
+  factory LeaderAttachment.fromJson(Object? v) {
+    final j = asMap(v);
+    return LeaderAttachment(
+      leaderId: strOr(j['leader_id'], ''),
+      eligibleBodyguardIds: strList(j['eligible_bodyguard_ids']),
+    );
   }
 }
 

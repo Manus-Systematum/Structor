@@ -923,4 +923,18 @@ The synthetic counter-case is worth keeping in view: three copies of a copy-scal
 
 Snapshot-dependent tests skip cleanly when `data/40kdc/` is absent, since it is gitignored.
 
-**Next:** the `source → domain` transform behind the narrow `Catalogue` interface (which the calculator already depends on rather than on source DTOs), then validation — unit caps, DP budget, unique tags, slot budget — against the same fixture.
+**Done — validation engine (§2.3):**
+
+- `src/rules/catalogue.dart` — the narrow read-only lookup both pricing and validation depend on, so the normalised domain model can replace source DTOs later without touching either.
+- `src/rules/validator.dart` — findings with severity, **never a hard block**. Points, Detachment Points (including the Incursion 3 DP exception), one-3DP-per-force, duplicate detachments, unique-tag conflicts, battle-size-scaled duplicate caps with the Battleline/Dedicated Transport doubling, Epic Hero uniqueness, Warlord presence and Character-ness, the shared slot budget, enhancement and upgrade target legality, and leader attachments.
+- 61 tests; analyzer clean.
+
+**The reference list validates with zero errors** and surfaces exactly the two observations the design analysis predicted by hand: 2 of 3 Detachment Points spent, 3 of 3 slots unused.
+
+Three behaviours worth keeping:
+
+- **Slots count distinct upgrades, not instances.** A three-target Unit Upgrade consumes one slot. Counting instances is the miscount §2.1 exists to prevent, and it is now pinned by test.
+- **Caps come from `BattleSize`, never inline.** Three of a datasheet is legal at Strike Force and illegal at Incursion; a hardcoded rule of three would be wrong at two of three battle sizes.
+- **Absent data is not a restriction.** A leader with no published attachment rule validates rather than being refused — the engine never invents a rule from missing data.
+
+**Next:** the `source → domain` transform behind `Catalogue`; then either the rules renderer (23 effect types, §7.3.6) or the weapon aggregator (§7.3.5), both of which the play screen needs.
