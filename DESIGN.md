@@ -141,6 +141,8 @@ Four deliberate choices:
 
 `pointsLimitOverride` exists because the source data supports it (§3.2) and because casual and narrative play needs it.
 
+> **A roster records a unit's complete loadout, not only its paid upgrades.** Learned the hard way: a fixture listing just the point-bearing wargear priced correctly and then rendered four units with *no weapons at all* on the shooting screen. Pricing needs the paid items; the play screen needs everything the unit actually carries. Import paths must populate the full loadout — War Organ's text export does list every weapon including defaults (§6.7), so this costs nothing at the import boundary and is expensive to discover later.
+
 **Stable semantic IDs**, e.g. `wh40k11.adeptus_astartes.datasheet.intercessor_squad`. Never renumbered. An alias table maps BSData GUIDs onto them so ingest survives upstream churn. QR and cross-app import depend entirely on this stability.
 
 ### 2.3 Validation engine
@@ -732,6 +734,10 @@ Fusion blaster[fusion-blaster]                                  R12 A1 BS4+ S9 A
 
 Ten missile pods that are not one pool. No printed datasheet yields this; the player recomputes it every turn across four differently-composed attached units. **Pre-computed total attacks per resolved profile is the shooting section's reason to exist.**
 
+**Weapon kind is a property of the profile, not the weapon.** Found in implementation: several weapons are typed `ranged` yet carry *both* a Ranged and a Melee profile — the T'au Fusion eliminator is BS2+ at 18" and WS4+ in combat. Filtering the shooting table on `weapon.type` puts melee profiles in front of the player mid-game. The reliable discriminator is the skill characteristic — **`WS` means melee, `BS` means ranged** — with the range string and then the weapon's declared type as fallbacks for auto-hitting profiles that carry neither.
+
+**The rule cuts both ways, which is the point.** Ten missile pods across an attached Commander and Crisis squad split into 4 at BS3+ and 6 at BS4+, because their skills differ. Ten T'au flamers across the equivalent Coldstar pair **merge** into a single `10D6, auto-hit` row, because Torrent has no skill characteristic and the profiles are genuinely identical. Aggregating on the resolved profile produces both outcomes without special-casing either.
+
 **Two levels.**
 
 *Level 1 — unit rows.* One compact row per unit: name, models remaining, a one-line weapon summary, and a "has shot" checkbox. Roughly twelve rows. The checkbox is one tap per unit per turn and earns it — failing to shoot with a unit is a common and expensive mistake. Destroyed and reserved units are filtered out; already-shot units dim rather than vanish, so undo stays visible.
@@ -937,4 +943,28 @@ Three behaviours worth keeping:
 - **Caps come from `BattleSize`, never inline.** Three of a datasheet is legal at Strike Force and illegal at Incursion; a hardcoded rule of three would be wrong at two of three battle sizes.
 - **Absent data is not a restriction.** A leader with no published attachment rule validates rather than being refused — the engine never invents a rule from missing data.
 
-**Next:** the `source → domain` transform behind `Catalogue`; then either the rules renderer (23 effect types, §7.3.6) or the weapon aggregator (§7.3.5), both of which the play screen needs.
+**Done — weapon aggregation (§7.3.5):**
+
+- `src/play/attacks.dart` — scales an Attacks characteristic by a weapon count, keeping dice symbolic (`8D6`, `2D6+2`) and flagging expressions it cannot parse rather than guessing.
+- `src/play/weapon_aggregator.dart` — profile-keyed aggregation over a combat unit, carrier disambiguation, per-profile ranged/melee filtering, casualty scaling, and unresolved-wargear reporting.
+- `bin/roster.dart` — prices, validates and prints a roster's shooting or fight table. A development lens on everything the core does.
+- 80 tests; analyzer clean.
+
+Against the reference list, Attached Unit 1 renders as designed:
+
+```
+Attached Unit 1  (210 pts)
+    4× Missile pod (Commander in Enforcer Battlesuit)   8 atk   3+  S7 AP-1 D2
+    6× Missile pod (Crisis Fireknife Battlesuits)      12 atk   4+  S7 AP-1 D2
+```
+
+Every one of the 16 units resolves; no unresolved wargear anywhere in the list.
+
+Two bugs the CLI caught that the tests alone would not have:
+
+1. **Melee profiles appearing in the shooting table** — see the per-profile filtering note in §7.3.5.
+2. **Four units rendering no weapons at all** — see the complete-loadout note in §2.2.
+
+Both are recorded above as design constraints rather than fixed silently, because both are mistakes any reimplementation would repeat.
+
+**Next:** the rules renderer (23 effect types, §7.3.6) — the last core piece the play screen needs — then the `source → domain` transform behind `Catalogue`.

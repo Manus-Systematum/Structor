@@ -4,6 +4,8 @@
 /// server (DESIGN.md §2).
 library;
 
+export 'src/play/attacks.dart';
+export 'src/play/weapon_aggregator.dart';
 export 'src/report/coverage_report.dart';
 export 'src/source/dataset_loader.dart';
 export 'src/source/source_models.dart';

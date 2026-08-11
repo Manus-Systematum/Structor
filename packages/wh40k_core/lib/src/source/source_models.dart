@@ -259,6 +259,21 @@ class WeaponProfile {
   /// Skill characteristic, or null for Torrent-style auto-hitting weapons.
   String? get skill => stats['BS'] ?? stats['WS'];
 
+  /// Whether this *profile* is a melee profile.
+  ///
+  /// A weapon's declared `type` is not sufficient: several weapons are typed
+  /// `ranged` yet carry both a `Ranged` and a `Melee` profile — the T'au
+  /// Fusion eliminator has BS2+ at 18" and WS4+ in combat. The reliable
+  /// discriminator is the skill characteristic, `WS` for melee and `BS` for
+  /// ranged, with the range string and then the weapon's own type as
+  /// fallbacks for auto-hitting profiles that carry neither.
+  bool isMelee({required bool weaponIsMelee}) {
+    if (stats.containsKey('WS')) return true;
+    if (stats.containsKey('BS')) return false;
+    if ((range ?? '').toLowerCase() == 'melee') return true;
+    return weaponIsMelee;
+  }
+
   /// Identity used for aggregation on the shooting/fight screens.
   ///
   /// DESIGN.md §7.3.5: aggregation keys on the *resolved profile*, never on the
