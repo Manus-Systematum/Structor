@@ -910,4 +910,17 @@ Standing warnings, all expected:
 
 **The rules renderer's scope is now measured, not guessed:** 23 distinct effect types, dominated by `conditional` (58) and `sequence` (9) as recursive combinators, then `ability-grant` (12), `movement-modifier` (7), `stat-modifier` (6), `keyword-grant` (6). A long tail of 17 types appears 1–4 times each.
 
-**Next:** the normalised domain model and the `source → domain` transform, then the points calculator (§2.1) with the reference list as an end-to-end fixture.
+**Done — roster model, pricing and battle sizes:**
+
+- `src/roster/roster.dart` — `Roster`, `RosterUnit`, wargear selections, `LEADS`/`EMBARKED_IN` edges, enhancement and upgrade selections as distinct types (§2.1), JSON round trip. `combatUnits()` collapses leader+bodyguard pairs.
+- `src/roster/points.dart` — roster-level calculator. Pricing failures surface as `PricingProblem` rather than costing zero, so a missing price can never read as a cheap unit.
+- `src/rules/battle_size.dart` — the hand-maintained rules table §3.3 step 5 requires, including the Incursion 3 DP exception.
+- 37 tests; analyzer clean.
+
+**The reference list reconciles exactly.** `test/fixtures/tau_strike_force_2000.json` is the real 2,000 pt T'au list of §6.7, and it prices to **2000** against the live snapshot — 16 roster units, 12 combat units, Crisis Fireknife resolving as 100 base + 6 missile pods at 5 = 130. Every unit priced; nothing unresolved.
+
+The synthetic counter-case is worth keeping in view: three copies of a copy-scaled squad with paid wargear cost 400, where a naive first-bracket-ignore-wargear implementation reports 300. A hundred points adrift, reading as comfortably legal.
+
+Snapshot-dependent tests skip cleanly when `data/40kdc/` is absent, since it is gitignored.
+
+**Next:** the `source → domain` transform behind the narrow `Catalogue` interface (which the calculator already depends on rather than on source DTOs), then validation — unit caps, DP budget, unique tags, slot budget — against the same fixture.
