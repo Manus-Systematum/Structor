@@ -1,0 +1,913 @@
+# Warhammer 40,000 (11th Edition) — Companion App
+
+Design document. Living file: updated as each design step is settled.
+
+**Status:** design phase, no code yet.
+**Started:** 2026-08-11 · **11e rules research + BSData data audit:** 2026-08-11
+
+---
+
+## 0. Scope & constraints
+
+A cross-platform (iOS/Android) companion app for Warhammer 40,000 11th edition, built in three parts:
+
+1. **Army builder** — import from common formats, QR exchange between app instances, community rules database, statistics preview.
+2. **Play mode** — swappable screens: a mission/setup screen (customisable for new missions and house rules), plus in-game reference screens for unit and weapon stats, army rules, and stratagems.
+3. **Sharing server** — a backend with its own web interface for sharing armies. Deliberately deferred.
+
+### Constraint: rules data and copyright
+
+Games Workshop's rules text is copyrighted. The app therefore ships with **no bundled rules data** and fetches community-maintained catalogues at runtime — the same path BattleScribe and New Recruit took. A downloadable, versioned, replaceable content bundle is a day-one architectural requirement, not a later feature.
+
+> ✅ **Largely resolved by §3.0.** Adopting `40kdc-data` (CC BY 4.0 data, CC0 schemas) as the primary source removes this blocker for everything sourced from it. The note below still applies to BSData in its reduced role as a cross-check — and cross-checking internally is a far weaker claim on the licence than redistributing derived bundles, so the risk is much diminished but worth confirming.
+>
+> ⚠ **Original finding.** `BSData/wh40k-11e` has **no `LICENSE`, `LICENSE.md` or `LICENSE.txt` at the repository root** (all three return 404, checked 2026-08-11). The README says only "maintained by community, in no way endorsed by any company/publisher". Absent an explicit licence, the default is all-rights-reserved, which does not obviously permit redistributing a transformed copy of the data — which is precisely what §3.4 proposes. Older BSData repos carried MIT, so this may simply be missing. **Action:** check the BSData org-level default, `bsdata.net` terms, and ask in their Discord before building anything on top. Fallback if unresolved: have the app fetch and transform BSData client-side rather than redistributing derived bundles.
+
+Related: the **Chapter Approved Mission Deck** is a physical GW product. The play-mode setup screen must let the user *record which cards they drew*, not reproduce card text. See §7.
+
+### Constraint: the source data is not the rules
+
+Established by the audit in §3.2: **BSData's encoding disagrees with the printed rules in at least two places** — enhancement slot counts, and how Unit Upgrades consume slots. The ETL must therefore treat BSData as a *structural* source, not an *authoritative* one, and validate its derived limits against a small hand-maintained table of rule values. See §3.3 step 5.
+
+---
+
+## 1. Locked decisions
+
+| Decision | Choice |
+| --- | --- |
+| Stack | **Flutter** |
+| Rules data | **`40kdc-data` as primary source** (CC BY 4.0, already normalised, includes stratagems + missions); BSData/MFM retained as an independent cross-check. See §3.0 |
+| Local storage | **Drift (SQLite)**, with FTS5 for datasheet search |
+| v1 import formats | Plain-text list export · BattleScribe `.rosz`/`.ros` · New Recruit / Army Forge JSON · QR from another app instance |
+| Backend for v1 | **None.** Datasets are static hosted files; QR sharing is peer-to-peer |
+
+---
+
+## 2. Architecture: three layers
+
+The governing split. Everything downstream — import, QR, sharing, the play screen — is easy or hard depending on this separation holding.
+
+```
+Content Layer  ──ref──>  Roster Layer  <──reads──  Validation Engine
+(versioned,              (user-owned,              (edition plugin,
+ immutable)               mutable)                  pure Dart)
+```
+
+The validation engine is a pure Dart package with **no Flutter dependency**, so the identical code runs in the ETL, in the app, and later in the server.
+
+### 2.1 Content layer
+
+```
+Dataset        { id, edition:"11e", version:semver, sourceRev, pointsRev, publishedAt }
+BattleSize     { id, name, points, detachmentPoints, enhancementSlots }
+Faction        { id, name, parentId?, armyRules[] }
+Detachment     { id, factionId, name, rule[], stratagemIds[], enhancementIds[],
+                 upgradeIds[], dpCost:1..3, uniqueTags[], forceDisposition,
+                 restrictions }
+Datasheet      { id, factionId, name, keywords[], factionKeywords[],
+                 composition[], modelProfiles[], wargearOptions[], abilities[],
+                 leaderTargets[], transport{capacity, keywordFilter},
+                 damagedProfile?, pointsTable[PointsBracket],
+                 maxCopies:{ perBattleSizeId: int } }
+PointsBracket  { models, modelsMax?, cost, unitCountMin, unitCountMax? }
+ModelProfile   { id, name, M, T, Sv, Inv?, W, Ld, OC }
+WeaponProfile  { id, name, kind:ranged|melee, range, A, skill, S, AP, D,
+                 keywords:[{key:"SUSTAINED_HITS", value:1}, ...] }
+Ability        { id, name, scope:core|army|detachment|datasheet|wargear, text, phases[] }
+Stratagem      { id, name, cp, turn, phases[], when, target, effect, detachmentId? }
+
+Enhancement    { id, detachmentId, name, points, targetFilter, effects[], text }
+UnitUpgrade    { id, detachmentId, name, points, targetFilter, maxInstances:3,
+                 effects[], text }
+```
+
+**Enhancements and Unit Upgrades are separate entities.** They share the same slot pool, but nothing else:
+
+| | Enhancement | Unit Upgrade |
+| --- | --- | --- |
+| Target | one **Character** | **non-Character** units |
+| Instances | 1 | up to 3, one per unit |
+| Slots consumed | 1 | **1 total**, regardless of how many instances |
+| Points | once | **per instance** |
+
+Modelling Unit Upgrades as `Enhancement { isUpgrade: true }` was the earlier draft and it is wrong — the slot arithmetic differs (one slot for up to three instances, not one per instance), so a shared `slotCost` field would silently miscount every list using them.
+
+**`WeaponProfile.keywords` must be parsed into structured key/value pairs, never stored as the printed string.** `ANTI-VEHICLE 4+`, `SUSTAINED HITS 1`, `MELTA 2` have to be data so the play screen can filter, sort and highlight on them, and so the builder can compute keyword coverage. BSData exposes this as a single `Keywords` characteristic string (§3.2), so the parser is the only thing standing between raw text and every keyword-driven feature in the app.
+
+**`Datasheet.maxCopies` is a per-battle-size map, not a constant.** The cap is authored per datasheet in the source data and modified by battle size (§3.2), so it is read, not inferred.
+
+**Pricing is `base bracket + Σ per-instance wargear costs`.** Verified in implementation against the reference 2,000 pt list (§6.7):
+
+```
+Crisis Fireknife Battlesuits   base 100  (3 models, copies 1-2)
+  + 6 × missile-pod @ 5                30
+                                      ---
+                                      130   ← matches the printed list exactly
+```
+
+Two independent mechanisms feed it, and both are easy to miss:
+
+1. **Copy-scaled brackets.** Crisis Fireknife is 100 for the first or second unit and **110 for the third**; Krootox Rampagers 85 then 95. `PointsBracket` therefore carries `unitCountMin`/`unitCountMax` alongside model count, and pricing needs a unit's index among same-datasheet units — so **points are a roster-level computation, not a per-unit lookup**. 17 of 47 T'au datasheets are copy-scaled.
+2. **Wargear costs.** `wargear_costs` prices items per instance (`missile-pod` at 5); `wargear_budgets` grants free but count-capped items (3 shield drones per 3 models) that contribute legality bounds and no points.
+
+A naive `sum(bracket.cost)` under-prices the reference list by 30 points *per Crisis unit* — 60 points on a 2,000 pt army, which reads as legal when it is not.
+
+**`effects[]` is not decoration.** Both Enhancements and Unit Upgrades can mutate weapon profiles — a real example from the Necron data appends `Assault` to the `Keywords` characteristic of every ranged weapon in the bearer's unit. The play screen must therefore render *roster-resolved* weapon profiles, not raw datasheet ones. See §7.
+
+`Detachment.forceDisposition` is load-bearing well beyond the builder — it is what the play-mode setup screen reads to determine the primary mission. See §4.4.
+
+### 2.2 Roster layer
+
+```
+Roster       { id, name, datasetRef{id, version}, factionId,
+               detachments:[{detachmentId, dpCost}],
+               battleSizeId, pointsLimitOverride?, units[],
+               enhancements[], upgrades[],
+               warlordUnitId, snapshot?, schemaVersion }
+RosterUnit   { instanceId(uuid), datasheetId, customName?,
+               models:[{profileId, count, weapons:[{weaponId, count}]}],
+               notes }
+EnhancementSel { enhancementId, target:instanceId }    // exactly one CHARACTER
+UpgradeSel     { upgradeId, targets:[instanceId] }     // 1–3 units, 1 slot total
+Link           { type: LEADS | EMBARKED_IN, fromInstanceId, toInstanceId }
+```
+
+Four deliberate choices:
+
+1. **Detachments are a list, not a field.** 11e allows multiple detachments bought from a Detachment Points budget (§4.4). This is the single biggest structural difference from a 10e-shaped model, and retrofitting it later would touch the builder UI, validation, import, and the mission screen at once.
+2. **Enhancements and Upgrades are roster-level selections with targets**, not fields on the unit. An Upgrade with three targets is one selection, one slot, three point charges — irreducible to a per-unit field.
+3. **Attachments are explicit edges, not nesting.** A Captain leading an Intercessor Squad is two `RosterUnit`s plus a `LEADS` link. Nesting looks natural until the play screen must show them as one combat unit, the builder must price them separately, and the leader can detach mid-game. Edges handle all three.
+4. **Rosters pin a dataset version and carry a snapshot.** A points update must never silently mutate a saved list; upgrading to a newer dataset is an explicit action with a visible diff. The `snapshot` — a denormalised copy of every datasheet the roster touches — is what makes the play screen work fully offline and lets an imported list from a stranger render even when you lack their catalogue.
+
+`pointsLimitOverride` exists because the source data supports it (§3.2) and because casual and narrative play needs it.
+
+**Stable semantic IDs**, e.g. `wh40k11.adeptus_astartes.datasheet.intercessor_squad`. Never renumbered. An alias table maps BSData GUIDs onto them so ingest survives upstream churn. QR and cross-app import depend entirely on this stability.
+
+### 2.3 Validation engine
+
+Data-driven where possible, hand-written per edition where not. Every result is a **finding with a severity** (`error` / `warning` / `info`) and never a hard block — people build illegal lists on purpose, for narrative games, works in progress, and proxies.
+
+All numeric limits come from `BattleSize` and `Datasheet.maxCopies`, never from constants. 11e scales almost everything with game size.
+
+Checks:
+
+- Points ≤ battle size limit (or `pointsLimitOverride`)
+- Σ detachment DP cost ≤ `battleSize.detachmentPoints`, **with the Incursion 3 DP exception** (§4.4)
+- At most one **3DP Detachment** per force
+- No two detachments sharing a Unique Tag; no detachment taken twice
+- Copies of each datasheet ≤ `datasheet.maxCopies[battleSizeId]`
+- **Slot budget:** `count(enhancements) + count(distinct upgrades) ≤ battleSize.enhancementSlots`
+- Each enhancement at most once per roster; targets exactly one **Character**
+- Each upgrade at most once per roster; 1–3 targets, all **non-Character**, at most one instance per unit; points charged per instance
+- Exactly one **Warlord**
+- Unique / named **Epic Hero** at most once
+- Unit composition and wargear ratios
+- Leader legality (`leaderTargets`) and transport capacity
+
+The slot-budget line is the one to get right: **`count(distinct upgrades)`, not `count(upgrade instances)`.**
+
+---
+
+## 3. The ingest pipeline
+
+### 3.0 Source decision — `40kdc-data` as primary
+
+Audited 2026-08-11: [`wn-mitch/40kdc-data`](https://github.com/wn-mitch/40kdc-data), "community-owned data schemas for Warhammer 40,000 developer tooling". It resolves both of the project's blocking problems and substantially replaces §3.1–3.3.
+
+**Licensing is explicit and permissive** — the reason §0 existed:
+
+| Layer | Licence |
+| --- | --- |
+| Data | **CC BY 4.0** — redistribute and adapt, commercially, with attribution |
+| Schemas | **CC0** |
+| Tools | **MIT**, plus a "Powered by 40kdc-data" notice + link for public deployments |
+
+(GitHub reports `NOASSERTION` only because the licence is split across three files.)
+
+**It contains what BSData does not.** 35 faction directories, each with `units`, `weapons`, `wargear`, `wargear-options`, `unit-compositions`, `detachments`, `enhancements`, `leader-attachments` and **`stratagems`** — plus core-level `missions`, `mission-matchups`, `secondary-cards`, `deployment-patterns`, `force-dispositions`, `terrain-layouts`, `terrain-templates`, `target-profiles`, `weapon-keywords`.
+
+Sample T'au stratagem — precisely the fields §7.3's tracker needs, none of which can be derived:
+
+```json
+{ "id": "a-tempting-trap-kauyon", "name": "A TEMPTING TRAP",
+  "category": "detachment", "type": "battle-tactic", "detachment_id": "kauyon",
+  "cp_cost": 1, "phases": ["shooting"], "player_turn": "your-turn",
+  "timing": "once-per-phase", "target_restrictions": null }
+```
+
+`mission-matchups.json` holds 25 disposition pairings at the **`launch`** dataslate — the §4.4 table, as data. `leader-attachments.json` supplies the `LEADS` relationships that §6.5 flagged as the biggest lossy import relationship.
+
+**It is already normalised**, so §3.3's link resolution, modifier evaluation and constraint flattening — the genuinely hard parts — largely disappear. An `enrichment/` layer goes further, carrying structured ability effects rather than prose:
+
+```json
+{ "ability_id": "scouts-7", "effect": { "type": "movement-modifier",
+    "modifier": { "move_type": "scout", "distance": 7 } } }
+```
+
+That is a more developed version of §2.1's `effects[]`, and it is what makes §7.6's honesty requirement tractable.
+
+**It carries no GW rules text.** Deliberate, and the correct copyright posture — but it means the app can show a stratagem's name, cost, phase and timing, not its printed wording. Good enough to *track*; not a substitute for the player's own codex. Only 7 of 43 T'au stratagems currently link to a structured ability.
+
+#### Risks
+
+1. **Maturity and bus factor.** ~21 stars, effectively one maintainer, active but young (`11e-migration.md`, `gap_analysis.md`, `todo.md` all in flight). BSData has ~2,000 stars and a large contributor base. Mitigation: CC BY permits vendoring and forking — pin a revision, vendor it, and the project survives upstream stalling.
+2. **Mixed dataslates.** Mission data is at `launch` (2026-06-20). All 43 T'au stratagems are still `pre-launch-provisional`, ported from the 10e archive. **Filter and surface `game_version.dataslate` in the UI** — never present provisional data as current.
+3. **No rules text**, as above.
+
+#### Resulting architecture
+
+**`40kdc-data` primary, BSData/MFM as an independent verification source.** Two lineages disagreeing on a points value or a constraint is a high-quality data signal, and it reuses the override-and-assert machinery already specified in §3.3 step 5. The coverage report becomes a three-way diff: 40kdc vs. BSData vs. the hand-maintained rules table.
+
+### 3.1 Upstream sources (BSData — now the cross-check, not the primary)
+
+Two repositories, both community-maintained:
+
+| Repo | Contents | Use |
+| --- | --- | --- |
+| `BSData/wh40k-11e` | Game system + per-faction catalogues | Structure: datasheets, profiles, detachments, stratagems, constraints |
+| `BSData/wh40k-11e-mfm` | Snapshots parsed from `mfm.warhammer-community.com` | Points. Drives the `pointsRev` bump and the dataset-upgrade diff |
+
+**The 11e data is JSON, not the older `.cat`/`.gst` XML.** Files are per-faction (`Necrons.json` ≈ 2 MB, `Aeldari - Craftworlds.json`, …) plus a `Warhammer 40,000.json` game-system file (≈ 1.2 MB) with a top-level `gameSystem` key. The logical model is still BattleScribe's — `costTypes`, `profileTypes`, `categoryEntries`, `forceEntries`, `entryLinks`, `sharedSelectionEntries`, `sharedSelectionEntryGroups`, `sharedProfiles`, `sharedRules` — so everything below applies, but the parser is a JSON reader.
+
+### 3.2 What the source data gives us — verified by direct audit
+
+Read from `Warhammer 40,000.json` and `Necrons.json` on 2026-08-11.
+
+**Cost types are the budget system.** `pts` (`51b2-306e-1021-d207`), **`Detachment Points`** (`82ae-1066-5107-6ae0`), **`Enhancements`** (`f759-1bc4-cb3a-f0d2`), plus Crusade trackers. DP and enhancement slots are budgets in the same machinery as points, so one extraction path in the ETL yields all three.
+
+**Profile types** map onto the schema directly:
+
+| Profile type | Characteristics |
+| --- | --- |
+| `Unit` | M, T, Sv, W, LD, OC, **InSv** |
+| `Ranged Weapons` | Range, A, BS, S, AP, D, **Keywords** |
+| `Melee Weapons` | Range, A, WS, S, AP, D, **Keywords** |
+| `Abilities` | Description |
+| `Transport` | Capacity |
+
+**Battle-size budgets live as modifiers on the `Army Roster` force entry** (`bb9d-299a-ed60-2d8a`), whose base constraints are DP max 2, points max 0, enhancements max 2 — Incursion is the baseline and larger sizes are modifiers on top.
+
+**Force Dispositions are categories in the game system** — `Take and Hold` (`1cc1-f11a-4e8f-1bcc`), `Purge the Foe` (`6fe0-3dbe-f7e0-10bb`), `Reconnaissance` (`b4a7-5083-fe94-4d24`), `Priority Assets` (`0936-9767-1cc7-52ae`), `Disruption` (`ecf8-cf72-7d5b-1b5b`) — and every detachment carries one as a `categoryLink`. **No side-table needed**; the ETL reads disposition for free.
+
+**Detachments** are selection entries carrying a `Detachment Points` cost, `max=1/parent`, a disposition category, a `3DP Detachment` category when applicable, and their Unique Tag as a category. From Necrons:
+
+| Detachment | DP | Disposition | Unique Tag |
+| --- | --- | --- | --- |
+| Awakened Dynasty | 3 | Take and Hold | Dynasty |
+| Canoptek Court | 3 | Take and Hold | — |
+| Starshatter Arsenal | 3 | Priority Assets | — |
+| Annihilation Legion | 2 | Purge the Foe | — |
+| Hypercrypt Legion | 2 | Reconnaissance | Hypercrypt |
+| Hand of the Dynasty | 1 | Take and Hold | Dynasty |
+| The Phaeron's Armoury | 1 | Priority Assets | Hypercrypt |
+
+**Unique Tags are catalogue-level categories with `max=1/force`** — `Dynasty` (`d887-58b7-5a1c-5ef0`), `Hypercrypt` (`822d-f1bf-4a26-6d70`). Identical mechanism to Epic Hero uniqueness, so one validator handles both.
+
+**Per-datasheet caps are per-datasheet categories with a battle-size modifier.** `Royal Warden` is `max=3/force`, set to `2` when Incursion is selected. `Necron Warriors` (Battleline) is `max=6`, set to `4` at Incursion. `Ghost Ark` (Dedicated Transport) is `max=6`. Epic Heroes are `max=1/force`. Onslaught has no modifier, so it inherits the Strike Force caps.
+
+**Enhancements and Unit Upgrades are distinguishable by constraint shape.** Of the 38 slot-costing entries in Necrons: 33 are `max=1/roster` (Enhancements) and 5 are `max=1/parent` + `max=3/force` (Unit Upgrades). That shape difference is the classifier the ETL should key on.
+
+> ⚠ **Two places where BSData contradicts the rules.** Both concern slots, and both would silently produce illegal lists if trusted:
+>
+> 1. **Slot count at Strike Force.** BSData applies a single modifier — "4 if Incursion is not selected" — which is correct at Onslaught but wrong at Strike Force, where the rule is **3**. A one-line omission rather than a design decision: the modifier is missing its Strike Force case. Worth reporting upstream.
+> 2. **Upgrade slot cost.** BSData charges **1 slot per upgrade instance**, with no modifier discounting instances 2 and 3. The rule is **1 slot for up to three instances**.
+>
+> Neither can be detected from within the data. The ETL needs an explicit override table (§3.3 step 5), and the app must compute upgrade slots itself rather than summing the `Enhancements` cost type.
+
+**Unit Upgrades can rewrite weapon profiles.** *Deepening Madness* (20 pts, `max=1/parent` + `max=3/force`) carries a modifier appending `Assault` to the `Keywords` characteristic of every ranged weapon in the bearer's unit, recursively. The most consequential finding for play mode — see §7.
+
+**Custom points limits are supported** via an `Override points limit?` toggle (`c6ea-562c-984f-6c25`) and an incrementing `Points limit` entry (`83ac-f5e5-d3da-5441`), which is what `Roster.pointsLimitOverride` maps onto.
+
+**Exactly one Warlord** — the `Warlord` category (`5c0e-4c31-d51b-e470`) is `min=1 max=1` at roster scope. There is no separate min-Character constraint; the Warlord requirement carries it.
+
+Also present and not yet investigated: `Leader` (`1556-9b56-fba6-4370`) and `Support` (`7dcd-7f61-69a7-0294`) categories at the system level.
+
+### 3.3 Transformation steps
+
+In rough order of difficulty:
+
+1. **Link resolution** — `entryLink` → `sharedSelectionEntries`, `infoLink` → `sharedProfiles`/`sharedRules`, plus `catalogueLink` imports across faction files. Everything is indirection; resolve it into flat inlined entries.
+2. **Profile extraction** — map the profile types in §3.2 onto `ModelProfile` / `WeaponProfile` / `Ability` / transport capacity.
+3. **Cost extraction** — pull `pts`, `Detachment Points` and `Enhancements` per entry; flatten point brackets into `pointsTable[{modelCount, points}]`.
+4. **Category classification** — one pass over `categoryLinks` yields force disposition, unique tags, `3DP Detachment`, Battleline/Dedicated Transport, Epic Hero, and faction keywords. Also splits Enhancements from Unit Upgrades by constraint shape. Cheap and high-value; do it early.
+5. **Battle-size resolution, with a rules override table.** Evaluate the force-entry and per-datasheet constraint modifiers once per battle size and emit a resolved `BattleSize` table plus `Datasheet.maxCopies` maps — then **assert every derived value against a hand-maintained table of known rule values and fail the build on mismatch**. The §3.2 warning is why: "read the limits from the data" is the right default and the wrong absolute. The override table has exactly one entry today: `enhancementSlots` = **2 / 3 / 4** against BSData's 2 / 4 / 4 — a single wrong value, at Strike Force.
+6. **Keyword parsing** — split the `Keywords` characteristic into structured pairs. Keep a keyword registry with an `unknown` bucket and **fail loudly** on unrecognised tokens.
+7. **Composition & wargear constraints** — `constraints` with min/max and scope (`parent` / `force` / `roster`), plus `repeats` / `includeChildSelections` for "1 in every 5". Normalise into the declarative form.
+8. **Modifiers** — the rest of BattleScribe's conditional modifier system is the part **not** to reimplement wholesale. Evaluate static ones; capture enhancement and upgrade → profile effects (§3.2) as structured `effects[]`; emit anything else into a `raw` escape-hatch field.
+
+> **Governing principle: be a normaliser with a documented coverage gap, not a BattleScribe engine.**
+
+Every build publishes a per-faction **coverage report** (`93% of datasheets fully resolved, 14 with raw fallbacks`) plus the **override-table diff**, so both data quality and rules divergence stay visible.
+
+### 3.4 Distribution
+
+Output is per-faction JSON bundles plus a signed manifest, gzipped and content-hashed, hosted as **static files** (GitHub Releases, Pages, or R2). The ETL runs as a scheduled GitHub Action watching both upstream repos. **Gated on the §0 licence check.**
+
+---
+
+## 4. Army builder
+
+### 4.1 Screen structure
+
+```
+Rosters (home)
+ └ New roster wizard:  faction → battle size → detachment(s), spending DP
+ └ Builder
+     ├ Units tab        — grouped by role; attachments shown indented under their
+     │                     leader; sticky points/CP/DP bar; validation chip
+     ├ Detachments tab  — DP budget, Unique Tag conflicts, resulting Force
+     │                     Dispositions, combined stratagem + enhancement pool
+     ├ Datasheet picker — FTS search + filters (role, keywords, points band)
+     ├ Unit config sheet— composition stepper, wargear options, "attach to…" picker
+     ├ Enhancements     — shared slot budget; Enhancements assigned to Characters,
+     │                     Unit Upgrades assigned to 1–3 non-Character units
+     ├ Stats tab        — see §4.2
+     └ Share sheet      — see §6
+```
+
+The **Detachments tab is new and non-optional**. With multiple detachments, a DP budget, Unique Tag exclusions, and a merged stratagem/enhancement pool, detachment selection stops being a one-off wizard step and becomes a screen you return to throughout list building.
+
+The Enhancements screen must show slots as **`used / total` where a three-target Upgrade reads as 1** — the most likely place for the app to quietly mislead someone into an illegal list.
+
+### 4.2 Statistics preview
+
+- Total points, CP, **DP spent / available**, **slots used / available**
+- Model count, total wounds, total OC
+- Drop count
+- Toughness / Save distribution (including invulnerables, via `InSv`)
+- **Keyword coverage** — ANTI-TANK, DEVASTATING WOUNDS, PRECISION, sticky objectives, deep strike, scout
+- **Force Dispositions** the list produces, and therefore which primary missions it can draw
+
+Keyword coverage is the stat that actually changes list decisions, and it is only computable because weapon keywords are parsed at ingest. Force disposition is the stat unique to 11e — your detachment choice picks your missions, so it belongs on the list-building screen, not only in play mode.
+
+### 4.3 Flutter implementation notes
+
+- **Drift (SQLite)** for both datasets and rosters. FTS5 is the decider — the datasheet picker lives or dies on fast fuzzy search — and Drift also brings a real migration story. Avoid Isar; its maintenance situation is shaky.
+- **freezed + json_serializable** for the model layer. `Roster.schemaVersion` from day one.
+- Downloaded bundles are ingested into SQLite **tables**, not stored as JSON blobs.
+
+### 4.4 11th edition army-building rules
+
+Sourced from the rulebook where marked ✓, from BSData where marked ▣, unconfirmed where marked ⚠.
+
+**Battle sizes**
+
+| Battle size | Points | Detachment Points | Slots | Max copies / datasheet | Battleline & Dedicated Transport |
+| --- | --- | --- | --- | --- | --- |
+| Incursion | 1,000 | 2 (→3, see below) ▣ | **2** ✓ | 2 ▣ | 4 ▣ |
+| Strike Force | 2,000 | 3 ▣ | **3** ✓ | 3 ▣ | 6 ▣ |
+| Onslaught | 3,000 | 4 ▣ | **4** ✓ | 3 ▣ | 6 ▣ |
+
+Onslaught gets more Detachment Points but **not** a higher unit cap — it inherits Strike Force's. Dedicated Transport does still receive the doubled cap.
+
+**Detachment Points.** The defining change of the edition: an army takes **multiple detachments** from a DP budget, each costing 1–3 DP by scope — 1 DP for narrow or conditional buffs, 2 DP for classic codex-style detachments, 3 DP for army-wide powerhouses. Detachments carry **Unique Tags**; no two in an army may share one, and no detachment may be taken twice.
+
+> **The Incursion 3 DP exception.** At Incursion your budget rises from 2 to 3 DP *if you take a 3 DP detachment* — so a single big detachment is always legal at any size, but taking one leaves you 0 DP of change. At most **one 3 DP detachment per force**, at any battle size. This is encoded in the data as a conditional modifier and is easy to miss; it is the kind of rule a naive budget check gets wrong.
+
+**Enhancements** attach to a single **Character**, cost one slot plus points, and each may be taken only once per roster.
+
+**Unit Upgrades** are a distinct mechanic sharing the same slot pool. They can be given to **non-Characters**, may be applied to **up to three units** (one instance each), and **all three instances together consume a single slot** — while each instance pays its own points. They exist so detachments built around unit types with no Characters can still spend slots.
+
+**Force Dispositions.** Each detachment is associated with one of five — **Take and Hold, Purge the Foe, Reconnaissance, Priority Assets, Disruption** — and the pairing of your dispositions selects your primary mission from 15 combinations. This is the mechanism that ties list building to the mission you play.
+
+**Other confirmed changes** (reference content, not structural):
+
+- **Stratagems no longer stack** — one stratagem per unit per phase, Command Re-Roll included. See §7.
+- **Cover** grants −1 to hit on incoming ranged attacks for Infantry/Swarms/Beasts fully within terrain, rather than a save bonus. Monsters and Vehicles no longer get cover from footprint overlap.
+- **Objective markers are gone** — terrain pieces and key positions are the objectives, standardised by a 16-template Terrain Area set.
+- **10e codexes remain legal** at launch, so the dataset spans both 10e-era and 11e detachments.
+
+---
+
+## 5. Open questions
+
+- [ ] ⚠ **Licence on `BSData/wh40k-11e`** — see §0. Blocks §3.4.
+- [ ] **MFM publication cadence** — how often `mfm.warhammer-community.com` updates, which sets the dataset refresh rhythm. Observable over time from the `wh40k-11e-mfm` commit history.
+- [ ] What the system-level **`Leader`** and **`Support`** categories mean in 11e — new battlefield roles, or detachment-slot machinery?
+- [ ] Whether the **15 disposition-pair → primary mission** mapping can be derived, or must be entered by the user from the Mission Deck (§0 copyright).
+- [ ] Worth checking during ETL bring-up: does BSData's Upgrade-vs-Enhancement constraint shape (`max=1/parent` + `max=3/force`) hold across all factions, or is Necrons' encoding idiosyncratic?
+
+**Closed:** Onslaught DP and unit caps · Dedicated Transport cap · min-one-Character (it is the Warlord constraint) · Epic Hero uniqueness · no flat detachment-count cap — the "max 2" was max 2 *Detachment Points* · Force Disposition is in the data, no side-table needed · Enhancements vs Unit Upgrades are separate mechanics · slots are 2 / 3 / 4, against BSData's 2 / 4 / 4.
+
+**Battle sizes are now fully specified** (§4.4) — the validation engine can be built without further input.
+
+---
+
+## 6. Sharing & import
+
+**v1 scope: QR, BattleScribe `.rosz`/`.ros`, New Recruit** — with the plain-text question reopened, see §6.0.
+
+### 6.0 Source-tool reality check
+
+The scope above assumed lists originate in New Recruit. They do not: the primary tool in use is **War Organ** (`com.zenchovey.warorgan`), an Android/Windows/iPad 40k list builder supporting 10e and 11e, with continuously updated points and rules.
+
+War Organ exports **PDF, plain text, Yellowscribe, TTS, and a proprietary "share code"**. It does **not** export `.rosz`, BattleScribe XML, or New Recruit JSON. So neither v1 parser imports the user's own lists.
+
+This reopens the text decision. Deferring plain text is clean if lists come from BSData-backed builders; it is not if the originating tool only emits text. Text is also what the official Warhammer app produces, which makes it the genuine lowest common denominator regardless of what else ships.
+
+Three candidate paths, in order of expected value:
+
+1. **Plain text — promoted into v1.** Universal, stable, and the one War Organ path certain to keep working. See §6.8: a real export proved far more structured than assumed, and it preserves leader attachment, which `.rosz` may not.
+2. **`.rosz`** — the interop standard across New Recruit, legacy BattleScribe and assorted tooling, even though the primary tool does not emit it.
+3. ~~**War Organ share code**~~ — **rejected.** A sample resolves to `https://warorgan.com/share/app/01WPXL61`: an eight-character key (≈41 bits) into a server, not an encoded list. The page is a 749-byte React shell loading data from an undocumented API; the app also registers a `warorgan://share/<CODE>` deep link. There is no offline path here at any effort level, and an online one would depend on a third-party API and fail exactly where it matters — at a table with no signal.
+>
+> This validates §6.4 by contrast: our QR payload is self-contained at ~450 bytes and needs no network. That is a genuine capability difference, not a stylistic one.
+
+Prior art note: War Organ also has a viewer mode with stratagem display, and a user request on record for phase-based stratagem organisation. Relevant to §7 — the list-building half of this space is well served already; the in-game half is where this app has room.
+
+Prior art note: War Organ also has a viewer mode with stratagem display, and a user request on record for phase-based stratagem organisation. Relevant to §7 — the list-building half of this space is well served already; the in-game half is where this app has room.
+
+> Correction to an earlier draft: **Army Forge is OnePageRules' builder, not a 40k one.** The 40k builder landscape is New Recruit, BattleScribe (legacy), and the official Warhammer app (text export only). New Recruit already shares lists by link and QR code, and imports/exports `.ros`/`.rosz`, JSON and text.
+
+### 6.1 One intermediate representation, one resolver
+
+```
+.rosz / .ros ──┐
+New Recruit ───┼──> ParsedList (loose) ──> Resolver ──> Roster (strict)
+QR ────────────┘         │                     │
+                    raw ids, names        ResolutionReport
+                    counts, costs         (per-item confidence)
+```
+
+Parsers know only their wire format. All catalogue knowledge lives in the single resolver. Adding plain text later means writing a third parser, not touching the pipeline.
+
+**Why this is cheap:** BattleScribe rosters and New Recruit exports both reference **BSData catalogue GUIDs** in their `entryId` fields, and the ETL already builds a GUID → semantic-ID alias table (§2.2). These imports are deterministic lookups, not fuzzy matches. Plain text is the sole exception — which is what makes deferring it a clean scope cut rather than a compromise.
+
+### 6.2 BattleScribe `.rosz` / `.ros`
+
+`.rosz` is a ZIP wrapping one `.ros` XML: nested `<selection>` elements carrying `entryId`, `number`, `<costs>`, `<categories>` and embedded `<profiles>`.
+
+The embedded profiles are a useful safety net — a `.ros` is partially self-describing, so the importer can populate a snapshot even for GUIDs that fail to resolve. Degraded, not broken.
+
+### 6.3 New Recruit
+
+NR is BattleScribe-compatible and BSData-backed, so its JSON is *probably* a serialisation of the same object model — but that is inference, not knowledge. **Get a real export before committing to a parser.**
+
+Scoping lever: NR exports `.rosz`, so §6.2 already covers NR users. v1 can ship two parsers instead of three and add the NR-native path once a sample export has been inspected.
+
+### 6.4 QR format
+
+Two decisions define it.
+
+**Reference, not snapshot.** A full snapshot with rules text is tens of kilobytes — impossible for QR. The payload names things; the receiver rebuilds the snapshot from their own dataset copy, downloading it if the referenced version is missing.
+
+**Hash the IDs, don't index them.** Indices into dataset tables are cheaper by a byte but break whenever the two devices are on different dataset revisions — which at a tournament is the common case, not the edge case. Use a **3-byte truncated hash of the semantic ID**, scoped per faction, with collisions checked at ETL build time (widen to 4 bytes for a colliding faction). Version-independent end to end.
+
+```
+header   magic(2) fmtver(1) flags(1) part/total(1) datasetId(2) datasetRev(2)
+body     faction(3) battleSize(1)
+         detachments: n × hash(3)
+         units:  hash(3) + modelGroups + weapons[hash(3) + count(1)]
+         slots:  enhancements / upgrades hash(3) + targets
+         links:  LEADS / EMBARKED_IN, unit-index pairs
+         name(utf8, optional)
+```
+
+**Size budget.** A 2,000 pt list of ~20 units comes to **≈ 450 bytes** raw, slightly less after deflate — a **v20 QR at error-correction M**, comfortably scannable phone-to-phone. A 3,000 pt Onslaught list lands near 700 bytes and still fits. Encode in byte mode with raw deflate; base45 + alphanumeric mode is the fallback only if field testing reveals scanner trouble.
+
+Full version-independence therefore costs about 150 bytes over an index-based encoding. Take the trade.
+
+`part/total` is in the header despite nothing needing it yet — one byte now avoids a format version bump later.
+
+### 6.5 What is actually lossy
+
+Not the identifiers. The **relationships**:
+
+- **`LEADS` attachments** — whether `.ros` and NR exports record which Character joined which unit is **unverified**; in 10e BSData this was a game-time decision rather than list data. If absent, imports arrive with unattached leaders and the review screen must ask.
+- **Unit Upgrades** — BattleScribe represents three instances as three child selections on three different units. The importer must **collapse them into one `UpgradeSel` with three targets**. Failing to do so reads the list as consuming three slots instead of one — the same miscount as the §3.2 BSData bug, arriving by a different route.
+- **Detachment sets** — an export must carry all detachments, not one.
+
+Consequently: **never silently import.** Every path terminates on a review screen — *N matched, M ambiguous, K unresolved, these leaders need attaching* — before anything is written to the roster store. QR simply tends to have nothing to review.
+
+### 6.6 Export
+
+v1 exports QR plus the app's own JSON. Writing BattleScribe XML that third-party tools reliably accept is its own project and is not v1 scope; share links wait for §8.
+
+### 6.7 Plain text — the War Organ format
+
+Analysed from a real 2,000 pt T'au export, 2026-08-11. Far more structured than "plain text" suggests.
+
+**It preserves leader attachment.** `ATTACHED UNITS` → `Attached Unit 1..4` groups each Commander with its bodyguard squad; `CHARACTER` and `OTHER DATASHEETS` complete the partition. This is the `LEADS` edge — the biggest lossy relationship in §6.5, and the one `.rosz` may well drop. A format that costs a matcher but keeps attachment beats a structured format that resolves cleanly and loses it.
+
+```
+roster      := name "(" N "points)" faction detachLine disposition battleSize section+
+detachLine  := name ("," name)* "(" N "Detachment Points)"
+section     := ("ATTACHED UNITS" group+) | ("CHARACTER" unit+) | ("OTHER DATASHEETS" unit+)
+group       := "Attached Unit" N unit+          → emits LEADS edges
+unit        := name "(" N "points)" node*
+node        := indent "•" count "x" name node*  → untyped; resolver classifies
+```
+
+**Four hard parts:**
+
+1. **Depth-1 bullets are ambiguous.** Uniform units list *wargear* at depth 1 (`Commander` → `1x Battlesuit fists`); mixed units list *models* at depth 1 with wargear at depth 2 (`Crisis Fireknife` → `1x Crisis Shas'vre` → `2x Missile Pod`). Nothing syntactic separates them — only the catalogue knows that `Crisis Shas'vre` is a model and `Battlesuit fists` is a weapon.
+   > **Architecture consequence:** `ParsedList` must be an **untyped tree of counted named nodes**, with model-vs-wargear classification deferred to the resolver. This keeps the §6.1 parser/resolver split intact instead of leaking catalogue knowledge into the parser.
+2. **Compound wargear.** The same pair appears both split (`1x Gun drone with twin pulse carbine` + `1x Shield drone`) and joined (`1x Gun Drone With Twin Pulse Carbine and Shield Drone`). Match the full string first, then fall back to splitting on ` and ` — never split blindly, since real weapon names contain "and".
+3. **Normalisation.** Inconsistent case (`Missile pod` / `Missile Pod`), U+2019 curly apostrophes (`Shas'vre`, `T'au`), varying plurals (`Missile drone` / `Missile drones`), stray trailing whitespace, and `(2000 Point)` singular against `(2000 points)` plural in the header.
+4. **Depth-2 counts are group totals, not per-model.** `2x Crisis Shas'ui` with `4x Missile Pod` means two pods each. The parser divides — and a non-integer result means a corrupt list, which is a useful error to surface rather than swallow.
+
+**Still unknown:** the sample contains **no Enhancements and no Unit Upgrades**, so their representation is unverified — including whether a three-target Upgrade prints as one entry or three. That is the case most likely to break the importer, and it lands on the same slot-miscount hazard already guarded in §3.2 and §6.5.
+
+Also unresolved: the export prints a single disposition line (`Reconnaissance`) despite two detachments, where the primary mission derives from *pairing* two dispositions (§4.4). Either both detachments share a disposition, or the field means something else.
+
+### 6.8 Open questions
+
+- [ ] Obtain a War Organ export **containing Enhancements and Unit Upgrades** (§6.7). Highest-value remaining artifact.
+- [ ] Resolve the single-disposition-line question (§6.7).
+- [ ] Obtain a real **11e `.rosz`** and confirm whether leader attachment and Unit Upgrade targets are represented (§6.5).
+- [ ] Obtain a real **New Recruit JSON export** and confirm its schema (§6.3) — or drop the NR-native path, since NR exports `.rosz`.
+- [ ] Decide whether to interoperate with **New Recruit's existing QR format** rather than only our own — worth a look before finalising §6.4.
+
+---
+
+## 7. Play mode
+
+### 7.0 The content gap
+
+Verified against the data on 2026-08-11: the game system's `profileTypes`, the catalogue's `profileTypes`, every `typeName`, all 10 `sharedRules`, and the detachment entries themselves. `Awakened Dynasty` carries exactly one thing — an `infoLink` to its detachment rule. The 67 `Detachment Rules` info groups are empty placeholders. **Stratagems appear in BSData only as prose references inside other abilities' text.**
+
+Unsurprising in hindsight: BattleScribe data exists for list building, and stratagems are not list-building data. But it means the feature identified as this app's differentiator has no upstream source.
+
+| Content | Source |
+| --- | --- |
+| Datasheets, weapons, unit stats, abilities | **BSData** |
+| Army rules, detachment rules | **BSData** |
+| Enhancements, Unit Upgrades | **BSData** |
+| **Stratagems** | **none** |
+| **Missions** | **none** — and a GW product (§0) |
+
+> **Superseded in part by §3.0.** `40kdc-data` supplies stratagems (with `phases`, `player_turn`, `cp_cost`, `timing`) and the full mission set (`missions`, `mission-matchups`, `secondary-cards`, `deployment-patterns`, `terrain-layouts`). Both gaps above are filled by a CC BY 4.0 source. What it does **not** supply is GW's rules text, and its faction stratagems are still at the `pre-launch-provisional` dataslate.
+
+### 7.1 Content packs
+
+Content packs remain the right architecture — but their role changes. They are no longer the *only* answer to an empty dataset; §3.0 supplies the baseline. They are now the **user-extension layer**: house rules, new missions as they release, local rules text the user transcribes from their own codex, and community fixes ahead of upstream.
+
+This is what the original brief asked for when it required the setup screen be "customisable to support additional rules".
+
+A **content pack** is a user-editable, importable, shareable JSON layer beside the BSData-derived dataset. Stratagem packs and mission packs are one mechanism with two schemas. **The app ships empty** — a container, with the community supplying content, the same posture already taken on rules data. GW text stays out of the binary, and "the October mission pack" becomes a file rather than a release.
+
+```
+StratagemEntry { id, name, source: core|<detachmentId>, cp,
+                 turn: your|opponent|either,
+                 phases: [command|movement|shooting|charge|fight|end],
+                 category: battle_tactic|epic_deed|strategic_ploy|wargear,
+                 when, target, effect }
+
+MissionPack    { id, name, edition,
+                 primaryTable: { "reconnaissance+take_and_hold": primaryId, … },
+                 primaries[], deployments[], twists[],
+                 secondaries: { fixed[], tactical[] },
+                 rules: { tacticalDrawPerTurn: 2, maxSecondaryVpPerRound: 15 } }
+```
+
+`phases[]` and `turn` are what make §7.4 work. They cannot be derived from anything and are cheap to author — a good argument for the pack format being ours rather than scraped from a site whose terms forbid it.
+
+### 7.2 Design principle
+
+The value is not in displaying data — War Organ already displays data. It is in **collapsing the distance between "I am about to do a thing" and "I know the number."** The enemy is navigation.
+
+> **Phase is a scroll axis, not tracked state.** An earlier draft had the player advance a phase state machine so the app could filter. That is six taps per turn, sixty per game, to maintain something the player already knows — the app charging rent for information it should infer. Instead the turn is **one long scrollable page of phase sections**; where you are scrolled *is* the phase, and the section you are reading supplies the context for stratagem filtering and scoring prompts. Nothing to advance, and you can read ahead into the Fight phase without disturbing anything.
+
+Only two temporal values are tracked, both low-frequency and both worth their taps: **battle round** (5 changes per game) and **active player** (10). Everything else is derived or scrolled to.
+
+> **Guard rail: all tracking is optional, and degradation is graceful.** Enter nothing and the app is still a good datasheet browser. Set the phase and stratagems self-filter. Track unit status and one-per-phase enforcement comes free. An app that only pays off after a dozen taps gets abandoned in game two — this is how in-game companions die, and the architecture must make the zero-input path genuinely good.
+
+### 7.3 Pages
+
+A horizontal pager (the brief's "2 or more swappable screens").
+
+**1 · Setup.** See §7.3.1 — it is a decision aid, not a form.
+
+**2 · Turn.** One vertically scrolling page, sectioned by phase. Sticky header carries only round, active player and CP.
+
+```
+┌ Round 3 · Your turn · CP 4 ────────────┐   sticky; the only controls
+├─────────────────────────────────────────┤
+│ COMMAND    battle-shock · stratagems     │
+│ MOVEMENT   M values · reserves arriving  │
+│ SHOOTING   ranged profiles per unit      │  ← the most-used view in the game
+│ CHARGE                                   │
+│ FIGHT      melee profiles per unit       │
+│ END        scorable secondaries · VP     │
+└─────────────────────────────────────────┘
+```
+
+Each section carries only what that phase needs — Shooting shows ranged weapon rows, Fight shows melee, Movement shows M and status flags. Sections collapse. Tapping a unit opens its full card. Stratagems and scorable secondaries appear **inline in their phase section**, which is what makes phase-as-scroll-position work: relevance comes from where you are reading, not from state you maintained.
+
+**3 · Army.** Full unit cards — statline, all weapons, abilities, keywords, wounds and models remaining. The reference you jump to when the inline row is not enough. **Roster-resolved** profiles with keyword chips (§7.6). An optional per-weapon "vs T/Sv" strip sits one tap from a weapon row, off by default, and is the single easiest thing here to overbuild.
+
+Stratagems appear inline per phase section with CP affordability greying. Tapping one and choosing a target **commits** it: CP deducted, unit marked as having used a stratagem this phase, event logged. Already-used units appear disabled *with the reason shown*. Each is attributed to its source detachment, which matters at two or three (§4.4).
+
+**4 · Reference.** Army and detachment rules, enhancements and upgrades in play, core-rules quick answers — 11e cover is −1 to hit rather than a save bonus (§4.4), which players will get wrong all year — and search.
+
+### 7.3.1 Pre-game sequence
+
+Force disposition is **a choice, not a derivation**, whenever the roster has more than one detachment. Each detachment carries one disposition (`force_dispositions` in the detachment record), the matchup table is *yours × opponent's* (5×5 = 25 rows, one distinct mission per cell), and the army declares one. Two detachments therefore buy a **choice of primary mission**, made after seeing what the opponent declares.
+
+Worked example — the T'au list of §6.7 (Advanced Acquisition Cadre → `reconnaissance`, Experimental Prototype Cadre → `priority-assets`):
+
+| Opponent declares | You declare Reconnaissance | You declare Priority Assets |
+| --- | --- | --- |
+| Take and Hold | Reconnaissance Sweep | Secure Asset |
+| Disruption | Surveil the Foe | Extract Relic |
+| Purge the Foe | Triangulation | Vital Link |
+| Priority Assets | Search and Scour | Sabotage |
+| Reconnaissance | Gather Intel | Vanguard Operation |
+
+This is the setup screen's reason to exist. No other tool can show it, because the matchup table only exists as data in `40kdc-data`.
+
+> **Show the matrix; never recommend a cell.** The app knows neither the matchup, the terrain, nor how the player plays. Rendering consequences is honest; choosing is overreach.
+
+**Setup is a mandatory pre-game wizard.** Every question is answered before the battle screen opens — no progressive disclosure, no "3 items pending" affordance. The battle screen may therefore assume a fully-specified game, which removes a large class of partial-state handling from §7.3–7.4.
+
+```
+1  Start game           roster from builder · opponent: scan QR / name only
+2  Battle size          derived from roster
+3  Opponent disposition required — it determines BOTH missions (see below)
+4  YOUR disposition     ← the decision; grid collapses to their column
+5  Missions resolved    yours = (you × them), theirs = (them × you) — different cells
+6  Deployment           pick from the 6 patterns
+7  Twist                OPTIONAL — skippable, and never re-prompted once skipped
+8  Attacker / Defender  roll-off result
+9  Secondaries          Fixed or Tactical (§7.3.2)
+10 Deploy               mark units on-board / in reserve
+```
+
+Steps 3–5 carry the value; 6–9 are recording and must be fast — a row of chips, not a page each. Opponent's disposition precedes the player's so the grid can collapse to two options at the moment of choosing; if the real sequence is simultaneous, step 4 shows the full 2×5 instead.
+
+**The matchup table is asymmetric.** `(A vs B)` and `(B vs A)` are different cells yielding different missions — 25 ordered pairs, 25 distinct missions, mirrors on the diagonal. Declaring Reconnaissance against Take and Hold means **you** play Reconnaissance Sweep while **they** play Purge and Secure, simultaneously, on the same table. Setup therefore resolves two missions, not one.
+
+**Deployment collapses `LEADS` pairs.** An attached Commander + Crisis squad is one drop, not two. The §2.2 edge model must render as a single deployable entity here — the T'au list is 12 drops, not 16.
+
+### 7.3.2 Secondary missions and the tactical deck
+
+`secondary-cards.json` carries 18 secondaries with **structured scoring**, not just names:
+
+```json
+{ "id": "forward-position", "name": "Forward Position",
+  "when_drawn": { "operation": "redraw", "battle_round": { "max": 1 } },
+  "awards": [ { "trigger": { "timing": "end-of-turn", "player_turn": "your-turn" },
+                "when": { "operator": "or", "operands": [ … ] }, "vp": 5 } ] }
+```
+
+Two consequences.
+
+**Tactical mode draws for real** — by random pick, not a pre-shuffled pile. Each draw selects uniformly from the cards not yet picked; picked cards are excluded from subsequent draws. State is therefore just a used-set, and because the event log records the *outcome* of each draw rather than a shuffle seed, undo is a plain pop with no replay machinery.
+
+`when_drawn` rules are enforced automatically — *Forward Position* drawn in battle round 1 triggers its redraw-and-reshuffle, and the app says that it did.
+
+**The hand is discardable.** Held cards persist across rounds until scored, but the player may discard any of them at will. This is a player decision, not a rules engine one; the app does not judge it.
+
+**Scoring becomes a prompt, not a memory test.** `awards[].trigger` names timing, phase, player turn and battle-round window. Round and active player are tracked (§7.2); phase comes from the scroll position — so scorable cards surface **inline in the relevant phase section** rather than as an interruption. The app must not auto-score, since it cannot see the board, but it removes the most common way players lose points: forgetting. Round and game caps (`vp_per_round_cap: 15`, `vp_per_game_cap: 45`) come from the mission record.
+
+```
+SecondaryState { mode: fixed | tactical,
+                 source: app-pick | physical,   ← input mode, not a separate feature
+                 used: Set<cardId>, hand[], scored[{cardId, round, vp}], discarded[] }
+```
+
+**The deck is a state machine; where picks come from is an input mode.** Players using the physical Chapter Approved deck choose "I drew X and Y" from a list instead of tapping draw; hand tracking, discarding, scoring prompts and caps behave identically. One implementation, two input paths — the §7.2 guard rail applied.
+
+**Deck composition settled:** the Attacker and Defender decks are identical, so there are exactly **18 distinct secondaries** and one pool. The dataset is correct as published; no attacker/defender split is needed.
+
+### 7.3.3 Scoring both players
+
+The app is scorekeeper for both sides. Because missions are asymmetric (§7.3.1), this is not a second counter — the opponent has their own primary mission with its own structured `awards[]`.
+
+That produces a feature worth more than the bookkeeping it was asked for: **the app can show you how your opponent scores.** All 25 primaries carry structured triggers, so once their disposition is known the app can state, for example, that from battle round 2 they score per objective controlled at the end of their Command phase. Knowing the opponent's win condition is how a player decides what to contest — and no existing tool surfaces it, because it needs the matchup table and the primary `awards[]` as data.
+
+```
+Score { me:  { primaryMissionId, primaryVp[round], secondaryVp[round] },
+        opp: { primaryMissionId, primaryVp[round], secondaryVp[round] } }
+```
+
+**Asymmetry of knowledge is deliberate.** The opponent's *primary* is fully modelled — it is derivable from their declared disposition. Their *secondaries* are not: the app cannot know their draws, so it takes a per-round number and does not attempt to mirror the deck of §7.3.2. Modelling hidden information would be inventing it.
+
+Caps apply per side: the mission's own primary cap, plus `vp_per_round_cap: 15` and `vp_per_game_cap: 45` on secondaries.
+
+**Placement.** A compact `You 24 – 19 Them` sits in the sticky header, tappable to expand into the full per-round breakdown. Detailed entry lives in the END section of the turn page, where the scoring prompts already are.
+
+### 7.3.4 Scoring descriptions and mission Actions
+
+**Every card carries a usable description.** Coverage is 43/43 on both `text` and structured `awards` — averaging 412 characters, ranging 115–808. These are explanations, not labels:
+
+> *Reconnaissance Sweep* — "Reconnaissance against Take-and-Hold. Spread out: three or more friendly units wholly within three different table quarters (none within 6 inches of the battlefield centre) pays at end of turn, with a higher tier for four units across four quarters — only the better tier scores. Each enemy unit destroyed pays a small amount. From the second battle round, non-home control pays at the end of your Command phase."
+
+That is enough to play the mission without the physical card, which is the requirement. The description shows on the card in the END section and on the mission detail from setup.
+
+> ⚠ **These are paraphrases, not GW's card text** — original summaries written by the 40kdc project, which is exactly why they are redistributable (§3.0). They are sufficient to *play* from. They are not authoritative for a rules dispute: exact wording still lives on the card. The UI should not imply otherwise, and community-authored text can contain errors, so `game_version.dataslate` stays visible.
+
+**Mission Actions are structured too** — 15 of 43 cards carry an `actions[]` block with start phase, player turn, use limit and effect:
+
+```json
+{ "action_id": "plunder", "starts": "shooting", "player_turn": "your-turn",
+  "use_limit": 1, "effect": { "type": "terrain-area-tag", … } }
+```
+
+**Actions surface in their phase section**, not inside the card. *Plunder* starts in the Shooting phase, so it appears in SHOOTING on the turn page. Failing to perform an Action is a routine way to drop 5 VP, and the scroll-axis layout (§7.2) puts the reminder exactly where the player will pass it.
+
+Seven cards also carry `when_drawn` interaction rules — *Plunder* redraws if *Cleanse* is already active — which the draw logic of §7.3.2 enforces automatically.
+
+### 7.3.5 Phase sections and weapon aggregation
+
+Designed against the T'au list of §6.7 — twelve combat units, four of them attached pairs.
+
+**Weapons are per-carrier records, and identical names carry different stats.** Verified in `tau-empire/weapons.json`:
+
+```
+Missile pod   [missile-pod-commander-in-enforcer-battlesuit]  R30 A2 BS3+ S7 AP-1 D2
+Missile pod   [missile-pod]                                    R30 A2 BS4+ S7 AP-1 D2
+Fusion blaster[fusion-blaster-commander-in-coldstar-battlesuit] R12 A1 BS3+ S9 AP-4 DD6
+Fusion blaster[fusion-blaster]                                  R12 A1 BS4+ S9 AP-4 DD6
+```
+
+> **Aggregation keys on the resolved profile, never on the weapon name.** Rows with differing BS/S/AP/D or keywords must stay separate even when they display the same name. Disambiguate from the carrier — *Missile pod (Commander)* — never invent a label.
+
+**Worked example — Attached Unit 1** (Commander in Enforcer + Crisis Fireknife, 4 models):
+
+| Profile | Weapons | Attacks | BS | S | AP | D | Range |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Missile pod *(Commander)* | 4 | **8** | 3+ | 7 | −1 | 2 | 30" |
+| Missile pod *(Crisis)* | 6 | **12** | 4+ | 7 | −1 | 2 | 30" |
+
+Ten missile pods that are not one pool. No printed datasheet yields this; the player recomputes it every turn across four differently-composed attached units. **Pre-computed total attacks per resolved profile is the shooting section's reason to exist.**
+
+**Two levels.**
+
+*Level 1 — unit rows.* One compact row per unit: name, models remaining, a one-line weapon summary, and a "has shot" checkbox. Roughly twelve rows. The checkbox is one tap per unit per turn and earns it — failing to shoot with a unit is a common and expensive mistake. Destroyed and reserved units are filtered out; already-shot units dim rather than vanish, so undo stays visible.
+
+*Level 2 — expanded profile table*, as above. Melee-only weapons (Battlesuit fists) do not appear here; they belong to FIGHT.
+
+**Dice expressions stay symbolic.** T'au flamer is `A D6`, `Torrent`, `Ignores Cover`, no BS. Eight flamers render as **8D6, auto-hit** — not as a computed average, and with the BS column replaced by "auto" rather than left blank. Both Coldstar/Starscythe units in the example list are entirely this case.
+
+**Casualties make the table live.** Losing one Shas'ui drops the BS4+ row from 6 weapons to 4 and from 12 attacks to 8. So the aggregate reads from `modelsRemaining` — and because model types within a unit carry different weapon counts, **casualty tracking must be per model group, not a single wound pool**. Decrement controls sit on the model groups in the unit card. Per §7.2 this stays optional: with nothing tracked, the table shows full strength.
+
+**Target-aware columns are optional and off by default.** Entering a target's T and Sv adds wound-on and save-needed columns to the same table — missile pod S7 wounds T5 on 3+, T9 on 5+. This is the "vs T/Sv" strip, and it is the easiest thing in the app to overbuild.
+
+**Duplicate units need stable instance labels.** The example list holds two identical Fireknife pairs and two identical Starscythe pairs. Carry the source labels through import where they exist — War Organ's `Attached Unit 1..4` (§6.7) — and auto-suffix otherwise, with rename available.
+
+### 7.3.6 Unit cards, per-model stats, and the rules renderer
+
+**Per-model statlines are required, not optional.** Within one attached unit the profiles genuinely diverge:
+
+| Model | M | T | Sv | Inv | W | Ld | OC |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Commander in Enforcer Battlesuit | 8 | 5 | 2+ | — | 6 | 7 | 2 |
+| Crisis Fireknife Shas'ui | 10 | 5 | 3+ | — | 4 | 7 | 2 |
+
+Different movement, wounds and save in a single unit. The card shows one row per distinct `profiles[]` entry across both component units, with models-remaining per group (which is also what §7.3.5's live aggregation reads).
+
+**Derived stats are marked as derived.** Shield Drone is `{stat-modifier, W, add, 1}`, so the displayed value carries a modifier badge tracing back to its source. Never silently show a modified number — a player checking the app against their codex must be able to see why the two differ.
+
+**Attached units merge their ability sets, attributed by source.** Attached Unit 1 is the union of the Commander's `enforcer-commander, leader, deep-strike` and the squad's `deep-strike, fireknife, gun-drone, marker-drone, shield-drone, weapon-support-systems` — deduplicated, each tagged with which component contributes it.
+
+#### The rules renderer
+
+Abilities in the dataset carry **structured effects and no prose** — 0 of 129 T'au abilities have a text or description field. A renderer from the effect DSL to short English is therefore required infrastructure, not a nicety:
+
+```
+{stat-modifier, W, add, 1}                        → "+1 Wound"
+{conditional, phase-is:shooting,
+  {re-roll, hit, ones}}                           → "Shooting: re-roll Hit rolls of 1"
+{roll-modifier, all, ignore-modifiers}            → "Ignore all modifiers to rolls"
+{keyword-grant, [markerlight]}                    → "Unit gains MARKERLIGHT"
+```
+
+Rendered for Attached Unit 1:
+
+> **Fireknife** *(Shooting)* — Re-roll Hit rolls of 1; if the target is at full strength, re-roll all failed Hit rolls instead.
+> **Weapon Support Systems** *(Shooting)* — Ignore all modifiers to rolls.
+> **Shield Drone** — +1 Wound.
+> **Marker Drone** — Unit gains MARKERLIGHT; may act as Observer even after Advancing.
+> **Gun Drone** — Grants an additional ranged weapon.
+> **Deep Strike** · **Leader** · **Enforcer Commander**
+
+Two benefits beyond legibility: the output is **ours**, sidestepping §0 entirely; and it is terse and consistent in a way transcribed rules text never is.
+
+**Phase-tagged rules surface inline.** Because `effect.condition.phase-is` is machine-readable, *Fireknife* and *Weapon Support Systems* appear in the SHOOTING section automatically, alongside that phase's stratagems and scorable secondaries. The abilities list is a reference you *can* open — but the ones that matter right now come to you. This is §7.2's scroll axis applied to rules.
+
+Where the renderer meets an effect shape it does not know, it falls back to §7.6: show the raw structure and say so, rather than inventing a sentence.
+
+#### Per-weapon-instance modifiers
+
+Some wargear modifies **one weapon on a model**, not all of them. §7.3.5 aggregates by resolved profile, so such a modifier **splits a row**:
+
+```
+6 × Missile pod   BS4+  →   5 × Missile pod          BS4+
+                            1 × Missile pod (system)  BS4+  +modifier
+```
+
+The aggregation key must therefore be *(resolved profile + applied instance modifiers)*, and weapon instances must be individually addressable in the roster model — not merely counted. Cheap to build in now, expensive to retrofit.
+
+> **Data quality note:** the T'au ability set contains near-duplicate IDs with identical effects — `weapon-support-system` / `weapon-support-systems`, and `battlesuit-support-system` / `battlesuit-support-systems`. The ETL should dedupe on effect equality and report upstream.
+
+### 7.3.7 The remaining phase sections
+
+**Phase assignment is shipped data.** `enrichment/<faction>/phase-mappings.json` maps any `source_id` — ability, stratagem or otherwise — to its `phases[]`; 169 entries for T'au alone. §7.3.6's inline phase-tagging reads this index rather than inferring from `effect.condition`.
+
+**COMMAND** — CP gain; command-phase stratagems and abilities; primaries that score here (*Battlefield Dominance*, *Reconnaissance Sweep* from round 2). Its distinctive content is the **derived Battle-shock list**: the app knows `modelsRemaining` per group, so it knows which units are below half strength and must test. That list is computed, not entered.
+
+Battle-shock status then feeds the stratagem tracker — Battle-shocked units cannot normally be targeted by Stratagems, an interaction visible in ability text across the data ("…can target that unit with Stratagems even when it is Battle-shocked" exists as an explicit exception, implying the default). ⚠ Confirm the exact 11e wording before enforcing.
+
+**MOVEMENT** — M per model group, reserves, and status flags.
+
+Divergent movement is visible in the example list: Commander M8 attached to Crisis M10. The card shows both, with the practical constraint noted rather than silently picking one.
+
+Reserves carry arrival rules (Deep Strike is on most of the example army). Status flags set here — **Advanced**, **Fell Back**, **Remained Stationary** — are the inputs to the next section.
+
+#### The eligibility engine
+
+The most useful thing the app computes, and it falls out of data already present:
+
+```
+Fell Back  +  no exception          →  cannot shoot
+Fell Back  +  {fallback-and-act}    →  CAN shoot        ← Ghostkeel
+Advanced   +  weapon lacks Assault  →  that weapon cannot fire
+Advanced   +  Assault               →  fires
+```
+
+*Battlesuit Support System* is `{type: "fallback-and-act"}` in the enrichment layer, so the app can state plainly: **"Ghostkeel fell back — Battlesuit Support System lets it shoot anyway."** Combining a movement flag, a weapon keyword and a structured ability into a single yes/no is precisely the "everything you need for play" the brief asked for, and precisely the thing players forget.
+
+Eligibility renders as a badge on the unit row in SHOOTING, always with its reason. Never a bare grey-out.
+
+**CHARGE** — thin. Eligible units (not Advanced, not Fell Back), charge-phase stratagems. Minimal by design; the example army rarely charges.
+
+**FIGHT** — reuses §7.3.5's aggregation with melee profiles (Battlesuit fists), plus Fights First / Fights Last ordering.
+
+**END** — scoring prompts (§7.3.2), VP entry for both players (§7.3.3), end-of-turn abilities, and the round advance.
+
+> **Core rules are not in the dataset.** `enrichment/_core/abilities.json` is 503 bytes — Battle-shock, Deep Strike arrival, Advance and Fall Back restrictions are absent. These belong in the **edition plugin** alongside the validation engine (§2.3): they are the edition's own rules, few in number, stable across its life, and shared by every army. Not a content pack, and not per-faction data.
+
+### 7.3.8 Remaining surfaces
+
+**Army page** — full unit cards per §7.3.6: per-model statlines, merged and attributed abilities, rendered rules, wounds and models-remaining controls. The place casualties get recorded, since that is what makes §7.3.5's aggregation live.
+
+**Opponent page** — see §7.5. Their datasheets if scanned; their primary mission and scoring triggers regardless (§7.3.3).
+
+**Reference page** — army and detachment rules, enhancements and Unit Upgrades in play, core-rules quick answers (11e cover is −1 to hit, not a save bonus), and search across everything.
+
+**Ergonomics.** Keep the screen awake during a battle. Touch targets sized for a hand holding dice. The turn page must remain readable one-handed; the Army page is where landscape earns its place, for the wide weapon tables.
+
+### 7.4 Battle state
+
+Event-sourced. Mid-game mistakes are constant, so undo is not optional.
+
+```
+BattleState { round, activePlayer, cp,              ← no `phase`; see §7.2
+              score: Score,                         ← both players; see §7.3.3
+              unitStates: { instanceId → { modelsRemaining, wounds, status,
+                                           flags, stratagemsUsed[{phase, round}],
+                                           oncePerBattleUsed[] } },
+              secondaries: SecondaryState, missionSetup, log: Event[] }
+```
+
+State derives from the log, so undo is a pop and a post-game summary is free. It must survive app kill — games get interrupted.
+
+`stratagemsUsed[]` enforces 11e's one-stratagem-per-unit-per-phase rule (§4.4). Note it stores `{phase, round}` per use rather than a "this phase" list: with no tracked phase there is nothing to clear on transition, so the rule is evaluated as a query — *has this unit used a stratagem in this round and this phase?* — against the phase the player is currently reading. Same rule, no lifecycle to get wrong.
+
+### 7.5 Opponent mode
+
+**Scan the opponent's QR at deployment and their army is on your phone** — their datasheets, weapon profiles and rules, available for lookup without asking to borrow their book.
+
+This is §6.4's format design cashing out. It works with no network, which a share-link approach (§6.0) cannot, and it is plausibly the single feature most likely to drive installs.
+
+### 7.6 Honesty requirement
+
+§3.3 step 8 routes unmodellable modifiers into a `raw` escape hatch. Where a unit carries an effect that could not be resolved into its profile, the card must **say so** rather than render a confidently wrong number. Mark it, surface the raw text, let the player adjudicate. A play aid that is silently wrong is worse than no play aid at all.
+
+### 7.7 Open questions
+
+- [ ] Who authors the initial stratagem pack, and how is it distributed given §0's copyright posture? Community-contributed is the intended answer; it needs a real plan.
+- [ ] Is there an existing community stratagem dataset with usable licensing? (Wahapedia has the data but its terms forbid scraping.)
+- [ ] Does the terrain-based objective change (§4.4) justify a deployment/terrain layout view?
+
+---
+
+## 8. Sharing server
+
+*Step 4 — deliberately deferred. Nothing in steps 1–3 requires it.*
+
+---
+
+## 9. Implementation status
+
+Started 2026-08-11. Toolchain: Dart SDK 3.12.2 (Homebrew). Flutter not yet installed — not needed until the app package.
+
+**Done — `packages/wh40k_core`** (pure Dart, no Flutter dependency per §2):
+
+- `tools/fetch-40kdc.sh` — pinned snapshot fetch, per faction, into `data/40kdc/`
+- `src/source/` — tolerant source DTOs for the 40kdc format, plus `DatasetLoader`
+- `src/report/` — coverage and referential-integrity analyzer, `bin/coverage.dart` exits non-zero on error findings so it can gate CI
+- 26 tests; analyzer clean
+
+**First run against T'au** — 47 units, 143 weapons / 160 profiles, 8 detachments, 43 stratagems, 28 enhancements, 129 abilities, 169 phase mappings. **No error findings.** Every forward reference the app will follow resolves: unit→weapon, unit→ability, detachment→stratagem, detachment→enhancement, stratagem→detachment, detachment→disposition, matchup→mission. All weapon keywords are registered; every unit has a profile and points; every stratagem has a phase.
+
+Standing warnings, all expected:
+
+- 322 of 370 records still on `pre-launch-provisional` (§3.0) — only 48 at `launch`
+- 29 abilities share an effect fingerprint; some are genuine ID duplicates (`weapon-support-system` / `-systems` / `support-system`), others reveal the effect DSL is **lossy for `ability-grant`** — `gun-drone` and `missile-drone` are structurally identical because neither names the weapon it grants
+- 11 orphaned abilities pointing at Legends units absent from the snapshot
+
+**The rules renderer's scope is now measured, not guessed:** 23 distinct effect types, dominated by `conditional` (58) and `sequence` (9) as recursive combinators, then `ability-grant` (12), `movement-modifier` (7), `stat-modifier` (6), `keyword-grant` (6). A long tail of 17 types appears 1–4 times each.
+
+**Next:** the normalised domain model and the `source → domain` transform, then the points calculator (§2.1) with the reference list as an end-to-end fixture.

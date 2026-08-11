@@ -1,0 +1,12 @@
+# Dart / Flutter
+.dart_tool/
+.packages
+build/
+pubspec.lock
+*.iml
+
+# Vendored upstream snapshot — refetch with tools/fetch-40kdc.sh
+data/40kdc/
+
+# macOS
+.DS_Store
