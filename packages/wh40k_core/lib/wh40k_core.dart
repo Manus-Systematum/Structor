@@ -4,6 +4,9 @@
 /// server (DESIGN.md §2).
 library;
 
+export 'src/content/content_hash.dart';
+export 'src/content/dataset.dart';
+export 'src/content/roster_snapshot.dart';
 export 'src/play/attacks.dart';
 export 'src/play/rules_renderer.dart';
 export 'src/play/weapon_aggregator.dart';

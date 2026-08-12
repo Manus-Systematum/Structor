@@ -196,6 +196,34 @@ class DatasetLoader {
     );
   }
 
+  /// Raw JSON records from [relativePath], keyed by [idKey].
+  ///
+  /// Snapshots (DESIGN.md §2.2) must preserve the original records rather than
+  /// re-serialise parsed DTOs: a snapshot's whole point is that a later build,
+  /// whose model has moved on, can still read a list saved today.
+  Map<String, Object?> rawIndex(String relativePath, {String idKey = 'id'}) {
+    final data = _readArray(relativePath);
+    if (data == null) return const {};
+    final index = <String, Object?>{};
+    for (final record in data) {
+      final id = str(asMap(record)[idKey]);
+      if (id != null) index[id] = record;
+    }
+    return index;
+  }
+
+  Map<String, Object?> rawUnits(String factionId) =>
+      rawIndex('core/$factionId/units.json');
+
+  Map<String, Object?> rawWeapons(String factionId) =>
+      rawIndex('core/$factionId/weapons.json');
+
+  Map<String, Object?> rawDetachments(String factionId) =>
+      rawIndex('core/$factionId/detachments.json');
+
+  Map<String, Object?> rawAbilities(String factionId) =>
+      rawIndex('enrichment/$factionId/abilities.json', idKey: 'ability_id');
+
   /// Faction ids present under `core/`, i.e. directories rather than files.
   List<String> availableFactions() {
     final dir = Directory('${root.path}/core');

@@ -15,6 +15,7 @@ void main(List<String> args) {
   var dataDir = '../../data/40kdc';
   var kind = WeaponKind.ranged;
   String? rosterPath;
+  String? snapshotOut;
 
   for (var i = 0; i < args.length; i++) {
     final arg = args[i];
@@ -22,9 +23,12 @@ void main(List<String> args) {
       dataDir = args[++i];
     } else if (arg == '--melee') {
       kind = WeaponKind.melee;
+    } else if (arg == '--snapshot' && i + 1 < args.length) {
+      snapshotOut = args[++i];
     } else if (arg == '-h' || arg == '--help') {
       stdout.writeln(
-          'usage: dart run bin/roster.dart <roster.json> [--data <dir>] [--melee]');
+          'usage: dart run bin/roster.dart <roster.json> [--data <dir>] '
+          '[--melee] [--snapshot <out.json>]');
       return;
     } else {
       rosterPath = arg;
@@ -50,7 +54,19 @@ void main(List<String> args) {
     exit(2);
   }
 
-  final catalogue = MapCatalogue.ofFaction(faction);
+  final dataset = Dataset.of(faction, revision: 'local');
+
+  if (snapshotOut != null) {
+    final snapshot =
+        SnapshotBuilder.fromLoader(DatasetLoader(dataDir), dataset).build(roster);
+    final json = const JsonEncoder.withIndent('  ').convert(snapshot.toJson());
+    File(snapshotOut).writeAsStringSync(json);
+    stdout.writeln('wrote $snapshotOut — ${snapshot.entryCount} entries, '
+        '${json.length} bytes');
+    return;
+  }
+
+  final catalogue = dataset;
   final result = RosterValidator(catalogue).validate(roster);
   final battleSize = BattleSize.byId(roster.battleSizeId);
 

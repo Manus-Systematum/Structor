@@ -994,4 +994,19 @@ Real output, from the reference army:
 
 **Coverage: T'au 100%, Adeptus Astartes 99%, Necrons 96%** — see §7.3.6 for why the single-faction figure was misleading, and what remains.
 
-**Next:** the `source → domain` transform behind `Catalogue` — the last structural piece before the Flutter app. After that the core is complete enough to build UI against: ingest, integrity, roster, pricing, validation, weapon aggregation and rules rendering are all done and verified against a real army.
+**Done — content layer (§2.1, §2.2, §6.4):**
+
+> **Scope corrected during implementation.** §2.1 originally called for a wholesale renormalisation of the source into a separate domain model. That was written when BSData — recursive links, modifier evaluation, prose characteristics — was the input. `40kdc-data` arrives already normalised, so re-shaping every DTO would have been motion without value. What the layer genuinely still owed was everything the raw snapshot *cannot* do, and that is what was built instead.
+
+- `src/content/content_hash.dart` — 24-bit FNV-1a over semantic ids, the compact stable identifier the QR payload needs (§6.4). Dependency-free and byte-identical across platforms. **Not** a security primitive: an identity shortener with a build-time collision check, so the namespace can be widened before shipping rather than after.
+- `src/content/dataset.dart` — `Dataset` pins a version, implements `Catalogue`, resolves per-battle-size duplicate caps once, and flags provisional content.
+- `src/content/roster_snapshot.dart` — the denormalised copy §2.2 promises, built as the transitive closure of what a roster actually names. Records are kept in **source form on purpose**: a snapshot's value is that a later build, whose model has moved on, can still read a list saved today.
+- 116 tests; analyzer clean.
+
+**Verified properties:**
+
+- The addressable namespace is **collision-free at three bytes** across T'au, Necrons and Adeptus Astartes, so §6.4's identifier size holds.
+- A snapshot of the reference army is **67 entries / 62 KB pretty-printed against 247 KB for the faction** — roughly a quarter, before minifying or compressing.
+- **A catalogue rebuilt from nothing but the snapshot still prices the list at 2000 and renders the shooting table.** That is the offline-play and list-from-a-stranger case of §6.4, demonstrated rather than asserted.
+
+**Next:** the Flutter app package. The core is complete enough to build UI against — ingest, integrity, roster, pricing, validation, weapon aggregation, rules rendering and portable content, all verified against a real army. Installing Flutter is the first step, since only the Dart SDK is present.
