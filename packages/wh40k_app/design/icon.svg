@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!--
+    App icon: a sci-fi centurion helm in profile, facing left.
+
+    Profile is the only angle showing both halves of the brief at once — an
+    angular visored faceplate at the front, a flared Roman neck guard at the
+    back, and a fore-aft crest over the dome.
+
+    Governing rule, reached after several wrong turns: crest, shell and neck
+    guard are ONE continuous outline. Drawn as separate objects the crest reads
+    as a handle, a cap or an egg, and the guard reads as a slab bolted on. As a
+    single silhouette with colour applied inside it, the shape can only read as
+    one helmet. Everything else is a flat panel painted within that outline.
+
+    Original artwork. Roman helmet forms are public domain; the sci-fi elements
+    are deliberately generic rather than modelled on any specific published
+    design, since this is the app's most visible surface.
+  -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#2A2350"/>
+      <stop offset="0.55" stop-color="#161226"/>
+      <stop offset="1" stop-color="#08060E"/>
+    </linearGradient>
+
+    <radialGradient id="glow" cx="0.46" cy="0.4" r="0.6">
+      <stop offset="0" stop-color="#8B6BFF" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#8B6BFF" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="shell" x1="0.15" y1="0.1" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#EEF2FA"/>
+      <stop offset="0.5" stop-color="#C6CDDE"/>
+      <stop offset="1" stop-color="#8A92A7"/>
+    </linearGradient>
+
+    <linearGradient id="crest" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#BCA6FF"/>
+      <stop offset="0.45" stop-color="#8763FF"/>
+      <stop offset="1" stop-color="#4A2AC8"/>
+    </linearGradient>
+
+    <!-- The whole helm, used to clip every interior panel so nothing can
+         spill outside the silhouette. -->
+    <clipPath id="helm">
+      <path d="
+        M 250 560
+        L 292 448
+        L 356 386
+        C 372 268 430 206 502 206
+        C 580 206 646 272 664 386
+        L 740 452
+        L 762 546
+        L 872 700
+        L 826 772
+        L 706 700
+        L 642 728
+        L 520 758
+        L 398 730
+        L 326 678
+        L 282 624
+        Z"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+
+  <g transform="translate(512 524) scale(1.15) translate(-512 -512)">
+
+    <!-- One continuous silhouette: crest, shell and neck guard together. -->
+    <path fill="url(#shell)" d="
+      M 250 560
+      L 292 448
+      L 356 386
+      C 372 268 430 206 502 206
+      C 580 206 646 272 664 386
+      L 740 452
+      L 762 546
+      L 872 700
+      L 826 772
+      L 706 700
+      L 642 728
+      L 520 758
+      L 398 730
+      L 326 678
+      L 282 624
+      Z"/>
+
+    <g clip-path="url(#helm)">
+      <!-- Crest, coloured inside the outline. Its lower edge is the dome line,
+           so it is part of the helmet rather than sitting on it. -->
+      <path fill="url(#crest)" d="
+        M 340 400
+        C 360 262 428 200 502 200
+        C 582 200 652 268 672 400
+        C 610 350 560 332 506 332
+        C 448 332 396 354 340 400
+        Z"/>
+      <g stroke="#3A22A0" stroke-opacity="0.4" stroke-width="13" fill="none" stroke-linecap="round">
+        <path d="M 402 366 C 412 292 440 246 484 226"/>
+        <path d="M 506 334 C 510 272 518 240 532 224"/>
+        <path d="M 610 366 C 606 296 588 250 552 228"/>
+      </g>
+
+      <!-- Brow band. -->
+      <path fill="#5C6478" d="M 268 500 L 296 444 L 700 402 L 754 486 L 758 548 L 262 566 Z"/>
+
+      <!-- Visor. -->
+      <path fill="#101625" d="M 268 536 L 470 486 L 494 556 L 292 606 Z"/>
+      <path fill="#7FD6F2" d="M 284 540 L 456 498 L 470 540 L 298 582 Z"/>
+      <path fill="#EAFBFF" d="M 288 544 L 444 506 L 448 522 L 292 560 Z"/>
+
+      <!-- Snout: the forward beak. -->
+      <path fill="#5C6478" d="M 240 548 L 282 624 L 326 678 L 398 730 L 434 690 L 396 570 Z"/>
+      <g fill="#1B2130">
+        <rect x="288" y="604" width="76" height="16" rx="8" transform="rotate(-24 326 612)"/>
+        <rect x="310" y="644" width="64" height="16" rx="8" transform="rotate(-24 342 652)"/>
+        <rect x="332" y="684" width="50" height="16" rx="8" transform="rotate(-24 357 692)"/>
+      </g>
+
+      <!-- Cheek guard, running to the jaw edge. -->
+      <path fill="#7C8499" d="M 434 594 L 572 578 L 596 702 L 520 762 L 442 730 Z"/>
+
+      <!-- Neck guard ribs. -->
+      <g stroke="#5C6478" stroke-width="15" fill="none" stroke-linecap="round">
+        <path d="M 772 606 L 858 700"/>
+        <path d="M 730 660 L 818 742"/>
+      </g>
+
+      <!-- Seam dividing faceplate from rear shell. -->
+      <path stroke="#8D95AA" stroke-width="12" fill="none" stroke-linecap="round"
+            d="M 626 400 C 652 500 652 620 622 744"/>
+    </g>
+  </g>
+</svg>
