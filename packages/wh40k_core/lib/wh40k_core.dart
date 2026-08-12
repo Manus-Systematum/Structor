@@ -5,6 +5,7 @@
 library;
 
 export 'src/play/attacks.dart';
+export 'src/play/rules_renderer.dart';
 export 'src/play/weapon_aggregator.dart';
 export 'src/report/coverage_report.dart';
 export 'src/source/dataset_loader.dart';

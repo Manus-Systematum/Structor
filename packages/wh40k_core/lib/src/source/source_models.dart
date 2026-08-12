@@ -409,6 +409,15 @@ class SourceAbility {
   final String? abilityType;
   final String? behavior;
   final Map<String, dynamic> effect;
+
+  /// `{frequency: once-per-turn}` and similar. Kept raw — the renderer reads
+  /// it, nothing else needs a typed view yet.
+  final Map<String, dynamic> usage;
+
+  /// `{event, subject, optional}` for reactive abilities. Raw for the same
+  /// reason as [usage].
+  final Map<String, dynamic> trigger;
+
   final List<String> unitIds;
   final GameVersion gameVersion;
 
@@ -418,6 +427,8 @@ class SourceAbility {
     required this.abilityType,
     required this.behavior,
     required this.effect,
+    required this.usage,
+    required this.trigger,
     required this.unitIds,
     required this.gameVersion,
   });
@@ -430,6 +441,8 @@ class SourceAbility {
       abilityType: str(j['ability_type']),
       behavior: str(j['behavior']),
       effect: asMap(j['effect']),
+      usage: asMap(j['usage']),
+      trigger: asMap(j['trigger']),
       unitIds: strList(j['unit_ids']),
       gameVersion: GameVersion.fromJson(j['game_version']),
     );

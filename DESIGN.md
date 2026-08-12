@@ -790,6 +790,10 @@ Rendered for Attached Unit 1:
 
 Two benefits beyond legibility: the output is **ours**, sidestepping §0 entirely; and it is terse and consistent in a way transcribed rules text never is.
 
+> **Scope, measured across three factions rather than one.** T'au alone suggested 23 effect types; adding Necrons and Adeptus Astartes raised that to roughly 40 effect types and 23 condition types. The single-faction estimate was flattering, and any future coverage claim should be made across several factions before it is believed.
+>
+> Implemented coverage: **T'au 100%, Adeptus Astartes 99%, Necrons 96%.** What remains is a genuine long tail — eight shapes appearing once or twice each (`resurrection`, `stratagem-cost-modifier`, `for-each-unit` and similar). Because unrecognised shapes render a visible placeholder and mark the rule incomplete, partial coverage degrades honestly rather than silently.
+
 **Phase-tagged rules surface inline.** Because `effect.condition.phase-is` is machine-readable, *Fireknife* and *Weapon Support Systems* appear in the SHOOTING section automatically, alongside that phase's stratagems and scorable secondaries. The abilities list is a reference you *can* open — but the ones that matter right now come to you. This is §7.2's scroll axis applied to rules.
 
 Where the renderer meets an effect shape it does not know, it falls back to §7.6: show the raw structure and say so, rather than inventing a sentence.
@@ -967,4 +971,27 @@ Two bugs the CLI caught that the tests alone would not have:
 
 Both are recorded above as design constraints rather than fixed silently, because both are mistakes any reimplementation would repeat.
 
-**Next:** the rules renderer (23 effect types, §7.3.6) — the last core piece the play screen needs — then the `source → domain` transform behind `Catalogue`.
+**Done — rules renderer (§7.3.6):**
+
+- `src/play/rules_renderer.dart` — recursive descent over the effect DSL producing short English, with phase extraction for the turn page and a visible placeholder for any shape it does not know.
+- `bin/rules.dart` — renders a faction's abilities and reports coverage, the renderer's analogue of the ingest coverage report.
+- 101 tests; analyzer clean.
+
+Real output, from the reference army:
+
+```
+▸ Fireknife  {shooting}
+    Shooting phase: re-roll Hit rolls of 1; target at full strength: re-roll failed Hit rolls.
+▸ Shield Drone
+    +1 Wound.
+▸ Marker Drone
+    Gains MARKERLIGHT; grants observer unit.
+▸ Deadly Demise 3D6
+    Before bearer removed: on a D6 of 6+, 3D6 mortal wounds to units within 6".
+▸ Lone Operative
+    May only be targeted by ranged attacks within 12".
+```
+
+**Coverage: T'au 100%, Adeptus Astartes 99%, Necrons 96%** — see §7.3.6 for why the single-faction figure was misleading, and what remains.
+
+**Next:** the `source → domain` transform behind `Catalogue` — the last structural piece before the Flutter app. After that the core is complete enough to build UI against: ingest, integrity, roster, pricing, validation, weapon aggregation and rules rendering are all done and verified against a real army.
