@@ -2,7 +2,7 @@
 # Generate every iOS and Android launcher icon from one source image.
 #
 # Usage:  tools/make-icons.sh [source]
-#         tools/make-icons.sh packages/wh40k_app/design/icon.svg     (default)
+#         tools/make-icons.sh packages/wh40k_app/design/icon-source.png  (default)
 #         tools/make-icons.sh ~/Downloads/icon.png
 #
 # Accepts an SVG (rendered with rsvg-convert) or any raster sips can read.
@@ -13,7 +13,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SRC="${1:-$ROOT/packages/wh40k_app/design/icon.svg}"
+SRC="${1:-$ROOT/packages/wh40k_app/design/icon-source.png}"
 APP="$ROOT/packages/wh40k_app"
 IOS="$APP/ios/Runner/Assets.xcassets/AppIcon.appiconset"
 ANDROID="$APP/android/app/src/main/res"
