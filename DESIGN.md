@@ -1009,4 +1009,21 @@ Real output, from the reference army:
 - A snapshot of the reference army is **67 entries / 62 KB pretty-printed against 247 KB for the faction** — roughly a quarter, before minifying or compressing.
 - **A catalogue rebuilt from nothing but the snapshot still prices the list at 2000 and renders the shooting table.** That is the offline-play and list-from-a-stranger case of §6.4, demonstrated rather than asserted.
 
-**Next:** the Flutter app package. The core is complete enough to build UI against — ingest, integrity, roster, pricing, validation, weapon aggregation, rules rendering and portable content, all verified against a real army. Installing Flutter is the first step, since only the Dart SDK is present.
+**Done — first app increment (`packages/wh40k_app`):**
+
+Flutter 3.44.9, targets iOS and Android. Two screens, running on an iPhone 17 Pro simulator and verified by screenshot.
+
+- **Army** — points against limit, combat-unit count against roster entries, detachment chips, validation findings by severity, and an expandable card per unit with per-model statlines, ranged and melee tables, and rendered abilities.
+- **Turn** — the scroll-axis page of §7.2. Sticky header carrying only round, active player and CP; phase sections below it. Shooting and Fight render the aggregated weapon table; rules tagged with a phase surface inline beside the weapons they modify.
+
+**The app reads its content from a roster snapshot, not a faction dataset.** That makes the offline case the default case rather than something bolted on later, and it is the same path an imported or QR-scanned list will take (§6.4). It also keeps the app independent of the gitignored upstream data.
+
+Verified on device, from the reference army: `4× Missile pod (Commander in Enforcer Battlesuit) — 8 atk, 3+` above `6× Missile pod (Crisis Fireknife Battlesuits) — 12 atk, 4+`, with *Enforcer Commander*, *Fireknife* and *Weapon Support Systems* rendered underneath; and `10× T'au flamer — 10D6 atk, auto` carrying IGNORES COVER and TORRENT chips. Every figure computed from structured data.
+
+121 tests across both packages; both analyzers clean.
+
+> **Environment note.** The native iOS simulator integration reports Xcode as unselected even though `xcode-select -p` already resolves to `/Applications/Xcode.app/Contents/Developer`. Until that is resolved (`sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`), the app is driven with plain `xcrun simctl` — build, install, launch, screenshot — which works but provides **no tap injection**, so interactive flows cannot be exercised from here.
+>
+> Android is not yet set up: `flutter doctor` wants Android Studio for the SDK. Not a blocker for development, but it does mean one of the two shipping targets is currently unbuilt.
+
+**Next:** state that outlives a rebuild. The app currently loads one bundled roster; the builder needs storage (Drift, §4.3), and play mode needs the event-sourced battle state of §7.4. Import (§6) is the other open front.

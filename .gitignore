@@ -10,3 +10,10 @@ data/40kdc/
 
 # macOS
 .DS_Store
+
+# Flutter build output
+packages/wh40k_app/.dart_tool/
+packages/wh40k_app/build/
+packages/wh40k_app/ios/Flutter/ephemeral/
+packages/wh40k_app/ios/Pods/
+packages/wh40k_app/.flutter-plugins-dependencies

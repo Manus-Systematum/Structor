@@ -1,0 +1,2677 @@
+{
+  "version": {
+    "source": "40kdc",
+    "revision": "local",
+    "factionId": "tau-empire"
+  },
+  "units": {
+    "commander-in-enforcer-battlesuit": {
+      "id": "commander-in-enforcer-battlesuit",
+      "name": "Commander in Enforcer Battlesuit",
+      "faction_id": "tau-empire",
+      "role": "character",
+      "profiles": [
+        {
+          "name": "Commander in Enforcer Battlesuit",
+          "M": 8,
+          "T": 5,
+          "W": 6,
+          "Sv": 2,
+          "invuln_sv": null,
+          "Ld": 7,
+          "OC": 2
+        }
+      ],
+      "points": [
+        {
+          "models": 1,
+          "cost": 80
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Walker",
+        "Fly",
+        "Character",
+        "Battlesuit",
+        "Commander in Enforcer Battlesuit"
+      ],
+      "faction_keywords": [
+        "T’au Empire"
+      ],
+      "base_size_mm": {
+        "shape": "round",
+        "diameter": 60
+      },
+      "model_count": {
+        "min": 1,
+        "max": 1
+      },
+      "weapon_ids": [
+        "airbursting-fragmentation-projector",
+        "battlesuit-fists-commander-in-enforcer-battlesuit",
+        "burst-cannon-commander-in-enforcer-battlesuit",
+        "cyclic-ion-blaster-commander-in-enforcer-battlesuit",
+        "fusion-blaster-commander-in-enforcer-battlesuit",
+        "missile-pod-commander-in-enforcer-battlesuit",
+        "plasma-rifle-commander-in-enforcer-battlesuit",
+        "tau-flamer"
+      ],
+      "ability_ids": [
+        "enforcer-commander",
+        "leader",
+        "deep-strike"
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "launch"
+      },
+      "is_legend": false,
+      "points_provisional": false,
+      "attachment_role": "leader",
+      "wargear_budgets": [
+        {
+          "items": [
+            "cyclic-ion-blaster-commander-in-enforcer-battlesuit"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
+        {
+          "items": [
+            "shield-generator"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
+        {
+          "items": [
+            "weapon-support-system"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
+        {
+          "items": [
+            "battlesuit-support-system"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
+        {
+          "items": [
+            "airbursting-fragmentation-projector"
+          ],
+          "count": 1,
+          "per_models": 0
+        }
+      ]
+    },
+    "crisis-fireknife-battlesuits": {
+      "id": "crisis-fireknife-battlesuits",
+      "name": "Crisis Fireknife Battlesuits",
+      "faction_id": "tau-empire",
+      "profiles": [
+        {
+          "name": "Crisis Fireknife Shas’ui",
+          "M": 10,
+          "T": 5,
+          "W": 4,
+          "Sv": 3,
+          "invuln_sv": null,
+          "Ld": 7,
+          "OC": 2
+        }
+      ],
+      "points": [
+        {
+          "models": 3,
+          "cost": 100,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 110,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Walker",
+        "Fly",
+        "Battlesuit",
+        "Crisis",
+        "Fireknife"
+      ],
+      "faction_keywords": [
+        "T’au Empire"
+      ],
+      "base_size_mm": {
+        "shape": "round",
+        "diameter": 50
+      },
+      "model_count": {
+        "min": 3,
+        "max": 3
+      },
+      "weapon_ids": [
+        "battlesuit-fists",
+        "missile-pod",
+        "plasma-rifle"
+      ],
+      "ability_ids": [
+        "deep-strike",
+        "fireknife",
+        "gun-drone",
+        "marker-drone",
+        "shield-drone",
+        "weapon-support-systems"
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "launch"
+      },
+      "is_legend": false,
+      "points_provisional": false,
+      "wargear_costs": [
+        {
+          "item_id": "missile-pod",
+          "cost": 5
+        }
+      ],
+      "wargear_budgets": [
+        {
+          "items": [
+            "shield-drone"
+          ],
+          "count": 3,
+          "per_models": 3
+        },
+        {
+          "items": [
+            "marker-drone"
+          ],
+          "count": 3,
+          "per_models": 3
+        },
+        {
+          "items": [
+            "gun-drone"
+          ],
+          "count": 3,
+          "per_models": 3
+        }
+      ]
+    },
+    "commander-in-coldstar-battlesuit": {
+      "id": "commander-in-coldstar-battlesuit",
+      "name": "Commander in Coldstar Battlesuit",
+      "faction_id": "tau-empire",
+      "role": "character",
+      "profiles": [
+        {
+          "name": "Commander in Coldstar Battlesuit",
+          "M": 12,
+          "T": 5,
+          "W": 6,
+          "Sv": 3,
+          "invuln_sv": null,
+          "Ld": 7,
+          "OC": 2
+        }
+      ],
+      "points": [
+        {
+          "models": 1,
+          "cost": 95
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Walker",
+        "Fly",
+        "Character",
+        "Battlesuit",
+        "Commander in Coldstar Battlesuit"
+      ],
+      "faction_keywords": [
+        "T’au Empire"
+      ],
+      "base_size_mm": {
+        "shape": "round",
+        "diameter": 60
+      },
+      "model_count": {
+        "min": 1,
+        "max": 1
+      },
+      "weapon_ids": [
+        "airbursting-fragmentation-projector",
+        "battlesuit-fists-commander-in-coldstar-battlesuit",
+        "burst-cannon-commander-in-coldstar-battlesuit",
+        "cyclic-ion-blaster-commander-in-coldstar-battlesuit",
+        "fusion-blaster-commander-in-coldstar-battlesuit",
+        "high-output-burst-cannon",
+        "missile-pod-commander-in-coldstar-battlesuit",
+        "plasma-rifle-commander-in-coldstar-battlesuit",
+        "tau-flamer"
+      ],
+      "ability_ids": [
+        "coldstar-commander",
+        "leader",
+        "shield-generator",
+        "deep-strike"
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "launch"
+      },
+      "is_legend": false,
+      "points_provisional": false,
+      "attachment_role": "leader",
+      "wargear_budgets": [
+        {
+          "items": [
+            "shield-generator"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
+        {
+          "items": [
+            "cyclic-ion-blaster-commander-in-coldstar-battlesuit"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
+        {
+          "items": [
+            "airbursting-fragmentation-projector"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
+        {
+          "items": [
+            "weapon-support-system"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
+        {
+          "items": [
+            "battlesuit-support-system"
+          ],
+          "count": 1,
+          "per_models": 0
+        }
+      ]
+    },
+    "crisis-starscythe-battlesuits": {
+      "id": "crisis-starscythe-battlesuits",
+      "name": "Crisis Starscythe Battlesuits",
+      "faction_id": "tau-empire",
+      "profiles": [
+        {
+          "name": "Crisis Starscythe Shas’ui",
+          "M": 10,
+          "T": 5,
+          "W": 4,
+          "Sv": 3,
+          "invuln_sv": null,
+          "Ld": 7,
+          "OC": 2
+        }
+      ],
+      "points": [
+        {
+          "models": 3,
+          "cost": 90,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 100,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Walker",
+        "Fly",
+        "Battlesuit",
+        "Crisis",
+        "Starscythe"
+      ],
+      "faction_keywords": [
+        "T’au Empire"
+      ],
+      "base_size_mm": {
+        "shape": "round",
+        "diameter": 50
+      },
+      "model_count": {
+        "min": 3,
+        "max": 3
+      },
+      "weapon_ids": [
+        "battlesuit-fists",
+        "burst-cannon",
+        "tau-flamer"
+      ],
+      "ability_ids": [
+        "battlesuit-support-systems",
+        "starscythe",
+        "deep-strike"
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "launch"
+      },
+      "is_legend": false,
+      "points_provisional": false,
+      "wargear_costs": [
+        {
+          "item_id": "tau-flamer",
+          "cost": 5
+        }
+      ],
+      "wargear_budgets": [
+        {
+          "items": [
+            "shield-drone"
+          ],
+          "count": 3,
+          "per_models": 3
+        },
+        {
+          "items": [
+            "marker-drone"
+          ],
+          "count": 3,
+          "per_models": 3
+        },
+        {
+          "items": [
+            "gun-drone"
+          ],
+          "count": 3,
+          "per_models": 3
+        }
+      ]
+    },
+    "the-twin-lance": {
+      "id": "the-twin-lance",
+      "name": "The Twin Lance",
+      "faction_id": "tau-empire",
+      "role": "epic-hero",
+      "profiles": [
+        {
+          "name": "Ri’Locai",
+          "M": 10,
+          "T": 6,
+          "W": 8,
+          "Sv": 2,
+          "invuln_sv": 4,
+          "Ld": 6,
+          "OC": 2
+        }
+      ],
+      "points": [
+        {
+          "models": 2,
+          "cost": 220
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Walker",
+        "Fly",
+        "Character",
+        "Epic Hero",
+        "Battlesuit",
+        "The Twin Lance"
+      ],
+      "faction_keywords": [
+        "T’au Empire"
+      ],
+      "base_size_mm": {
+        "shape": "round",
+        "diameter": 60
+      },
+      "model_count": {
+        "min": 2,
+        "max": 2
+      },
+      "weapon_ids": [
+        "fusion-eliminator",
+        "ion-scattercannon",
+        "shardstorm-burst-system",
+        "xv-pulse-pistol"
+      ],
+      "ability_ids": [
+        "exemplars-of-mont-ka",
+        "mv15-gun-drone",
+        "neocapacitor-shields",
+        "retro-thrusters",
+        "scouts-8",
+        "deep-strike"
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "launch"
+      },
+      "is_legend": false,
+      "points_provisional": false
+    },
+    "broadside-battlesuits": {
+      "id": "broadside-battlesuits",
+      "name": "Broadside Battlesuits",
+      "faction_id": "tau-empire",
+      "profiles": [
+        {
+          "name": "Broadside Shas’vre",
+          "M": 5,
+          "T": 6,
+          "W": 8,
+          "Sv": 2,
+          "invuln_sv": null,
+          "Ld": 7,
+          "OC": 2
+        }
+      ],
+      "points": [
+        {
+          "models": 1,
+          "cost": 75,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 150,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 255,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 95,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 2,
+          "cost": 170,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 3,
+          "cost": 275,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Walker",
+        "Battlesuit",
+        "Broadside"
+      ],
+      "faction_keywords": [
+        "T’au Empire"
+      ],
+      "base_size_mm": {
+        "shape": "round",
+        "diameter": 60
+      },
+      "model_count": {
+        "min": 1,
+        "max": 3
+      },
+      "weapon_ids": [
+        "crushing-bulk",
+        "heavy-rail-rifle",
+        "high-yield-missile-pods",
+        "seeker-missile",
+        "twin-plasma-rifle",
+        "twin-smart-missile-system-broadside-battlesuits"
+      ],
+      "ability_ids": [
+        "advanced-armour"
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "launch"
+      },
+      "is_legend": false,
+      "points_provisional": false,
+      "wargear_costs": [
+        {
+          "item_id": "high-yield-missile-pods",
+          "cost": 5
+        }
+      ]
+    },
+    "ghostkeel-battlesuit": {
+      "id": "ghostkeel-battlesuit",
+      "name": "Ghostkeel Battlesuit",
+      "faction_id": "tau-empire",
+      "profiles": [
+        {
+          "name": "Ghostkeel Battlesuit",
+          "M": 10,
+          "T": 8,
+          "W": 12,
+          "Sv": 2,
+          "invuln_sv": null,
+          "Ld": 7,
+          "OC": 3
+        }
+      ],
+      "points": [
+        {
+          "models": 1,
+          "cost": 150,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 165,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Walker",
+        "Fly",
+        "Smoke",
+        "Battlesuit",
+        "Ghostkeel"
+      ],
+      "faction_keywords": [
+        "T’au Empire"
+      ],
+      "base_size_mm": {
+        "shape": "oval",
+        "width": 105,
+        "length": 70
+      },
+      "model_count": {
+        "min": 1,
+        "max": 1
+      },
+      "weapon_ids": [
+        "cyclic-ion-raker",
+        "fusion-collider",
+        "ghostkeel-fists",
+        "twin-burst-cannon-ghostkeel-battlesuit",
+        "twin-fusion-blaster",
+        "twin-tau-flamer"
+      ],
+      "ability_ids": [
+        "stealth-drones",
+        "stealth",
+        "infiltrators",
+        "deadly-demise-d3",
+        "lone-operative"
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "launch"
+      },
+      "is_legend": false,
+      "points_provisional": false,
+      "wargear_costs": [
+        {
+          "item_id": "cyclic-ion-raker",
+          "cost": 15
+        }
+      ]
+    },
+    "riptide-battlesuit": {
+      "id": "riptide-battlesuit",
+      "name": "Riptide Battlesuit",
+      "faction_id": "tau-empire",
+      "profiles": [
+        {
+          "name": "Riptide Battlesuit",
+          "M": 10,
+          "T": 9,
+          "W": 14,
+          "Sv": 2,
+          "invuln_sv": 4,
+          "Ld": 7,
+          "OC": 4
+        }
+      ],
+      "points": [
+        {
+          "models": 1,
+          "cost": 190,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 220,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Walker",
+        "Fly",
+        "Battlesuit",
+        "Riptide"
+      ],
+      "faction_keywords": [
+        "T’au Empire"
+      ],
+      "base_size_mm": {
+        "shape": "oval",
+        "width": 120,
+        "length": 92
+      },
+      "model_count": {
+        "min": 1,
+        "max": 1
+      },
+      "weapon_ids": [
+        "heavy-burst-cannon",
+        "ion-accelerator",
+        "riptide-fists",
+        "twin-fusion-blaster",
+        "twin-plasma-rifle",
+        "twin-smart-missile-system-riptide-battlesuit"
+      ],
+      "ability_ids": [
+        "battlesuit-support-system",
+        "deadly-demise-d6",
+        "missile-drone",
+        "nova-charge",
+        "weapon-support-system"
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "launch"
+      },
+      "is_legend": false,
+      "points_provisional": false,
+      "wargear_costs": [
+        {
+          "item_id": "ion-accelerator",
+          "cost": 25
+        }
+      ]
+    },
+    "stealth-battlesuits": {
+      "id": "stealth-battlesuits",
+      "name": "Stealth Battlesuits",
+      "faction_id": "tau-empire",
+      "profiles": [
+        {
+          "name": "Stealth Shas’ui",
+          "M": 8,
+          "T": 4,
+          "W": 2,
+          "Sv": 3,
+          "invuln_sv": null,
+          "Ld": 7,
+          "OC": 1
+        }
+      ],
+      "points": [
+        {
+          "models": 5,
+          "cost": 100,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 110,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "keywords": [
+        "Infantry",
+        "Fly",
+        "Battlesuit",
+        "Grenades",
+        "Markerlight",
+        "Stealth"
+      ],
+      "faction_keywords": [
+        "T’au Empire"
+      ],
+      "base_size_mm": {
+        "shape": "round",
+        "diameter": 32
+      },
+      "model_count": {
+        "min": 5,
+        "max": 5
+      },
+      "weapon_ids": [
+        "battlesuit-fists-stealth-battlesuits",
+        "burst-cannon",
+        "fusion-blaster",
+        "pulse-pistol"
+      ],
+      "ability_ids": [
+        "forward-observers",
+        "homing-beacon",
+        "infiltrators",
+        "stealth"
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "launch"
+      },
+      "is_legend": false,
+      "points_provisional": false,
+      "wargear_budgets": [
+        {
+          "items": [
+            "fusion-blaster"
+          ],
+          "count": 2,
+          "per_models": 0
+        }
+      ]
+    }
+  },
+  "weapons": {
+    "missile-pod-commander-in-enforcer-battlesuit": {
+      "id": "missile-pod-commander-in-enforcer-battlesuit",
+      "name": "Missile pod",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Missile pod",
+          "range": 30,
+          "stats": {
+            "A": 2,
+            "S": 7,
+            "AP": -1,
+            "D": 2,
+            "BS": 3
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "battlesuit-fists-commander-in-enforcer-battlesuit": {
+      "id": "battlesuit-fists-commander-in-enforcer-battlesuit",
+      "name": "Battlesuit fists",
+      "type": "melee",
+      "profiles": [
+        {
+          "name": "Battlesuit fists",
+          "range": "Melee",
+          "stats": {
+            "A": 3,
+            "S": 5,
+            "AP": 0,
+            "D": 1,
+            "WS": 4
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "missile-pod": {
+      "id": "missile-pod",
+      "name": "Missile pod",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Missile pod",
+          "range": 30,
+          "stats": {
+            "A": 2,
+            "S": 7,
+            "AP": -1,
+            "D": 2,
+            "BS": 4
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "battlesuit-fists": {
+      "id": "battlesuit-fists",
+      "name": "Battlesuit fists",
+      "type": "melee",
+      "profiles": [
+        {
+          "name": "Battlesuit fists",
+          "range": "Melee",
+          "stats": {
+            "A": 3,
+            "S": 5,
+            "AP": 0,
+            "D": 1,
+            "WS": 5
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "tau-flamer": {
+      "id": "tau-flamer",
+      "name": "T’au flamer",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "T’au flamer",
+          "range": 12,
+          "stats": {
+            "A": "D6",
+            "S": 4,
+            "AP": 0,
+            "D": 1,
+            "BS": null
+          },
+          "keywords": [
+            {
+              "keyword_id": "ignores-cover"
+            },
+            {
+              "keyword_id": "torrent"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "battlesuit-fists-commander-in-coldstar-battlesuit": {
+      "id": "battlesuit-fists-commander-in-coldstar-battlesuit",
+      "name": "Battlesuit fists",
+      "type": "melee",
+      "profiles": [
+        {
+          "name": "Battlesuit fists",
+          "range": "Melee",
+          "stats": {
+            "A": 3,
+            "S": 5,
+            "AP": 0,
+            "D": 1,
+            "WS": 4
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "fusion-eliminator": {
+      "id": "fusion-eliminator",
+      "name": "Fusion eliminator",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Ranged",
+          "range": 18,
+          "stats": {
+            "A": 2,
+            "S": 10,
+            "AP": -4,
+            "D": "D6",
+            "BS": 2
+          },
+          "keywords": [
+            {
+              "keyword_id": "melta",
+              "parameters": {
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "name": "Melee",
+          "range": "Melee",
+          "stats": {
+            "A": 1,
+            "S": 10,
+            "AP": -4,
+            "D": "D6+2",
+            "WS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "extra-attacks"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "ion-scattercannon": {
+      "id": "ion-scattercannon",
+      "name": "Ion scattercannon",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Standard",
+          "range": 18,
+          "stats": {
+            "A": 4,
+            "S": 7,
+            "AP": -2,
+            "D": 2,
+            "BS": 2
+          },
+          "keywords": [
+            {
+              "keyword_id": "rapid-fire",
+              "parameters": {
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "name": "Overcharge",
+          "range": 18,
+          "stats": {
+            "A": 4,
+            "S": 8,
+            "AP": -3,
+            "D": 3,
+            "BS": 2
+          },
+          "keywords": [
+            {
+              "keyword_id": "hazardous"
+            },
+            {
+              "keyword_id": "rapid-fire",
+              "parameters": {
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "name": "Melee",
+          "range": "Melee",
+          "stats": {
+            "A": 3,
+            "S": 7,
+            "AP": -2,
+            "D": 2,
+            "WS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "extra-attacks"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "xv-pulse-pistol": {
+      "id": "xv-pulse-pistol",
+      "name": "XV pulse pistol",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Ranged",
+          "range": 12,
+          "stats": {
+            "A": 2,
+            "S": 6,
+            "AP": -1,
+            "D": 2,
+            "BS": 2
+          },
+          "keywords": [
+            {
+              "keyword_id": "rapid-fire",
+              "parameters": {
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "name": "Melee",
+          "range": "Melee",
+          "stats": {
+            "A": 4,
+            "S": 6,
+            "AP": -1,
+            "D": 2,
+            "WS": 3
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "shardstorm-burst-system": {
+      "id": "shardstorm-burst-system",
+      "name": "Shardstorm burst system",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Shardstorm burst system",
+          "range": 18,
+          "stats": {
+            "A": "D6",
+            "S": 5,
+            "AP": 0,
+            "D": 1,
+            "BS": 2
+          },
+          "keywords": [
+            {
+              "keyword_id": "pistol"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "crushing-bulk": {
+      "id": "crushing-bulk",
+      "name": "Crushing bulk",
+      "type": "melee",
+      "profiles": [
+        {
+          "name": "Crushing bulk",
+          "range": "Melee",
+          "stats": {
+            "A": 3,
+            "S": 6,
+            "AP": 0,
+            "D": 1,
+            "WS": 5
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "heavy-rail-rifle": {
+      "id": "heavy-rail-rifle",
+      "name": "Heavy rail rifle",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Heavy rail rifle",
+          "range": 60,
+          "stats": {
+            "A": 2,
+            "S": 12,
+            "AP": -4,
+            "D": "D6+1",
+            "BS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "devastating-wounds"
+            },
+            {
+              "keyword_id": "heavy"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "seeker-missile": {
+      "id": "seeker-missile",
+      "name": "Seeker missile",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Seeker missile",
+          "range": 48,
+          "stats": {
+            "A": 1,
+            "S": 14,
+            "AP": -3,
+            "D": "D6+1",
+            "BS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "one-shot"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "twin-smart-missile-system-broadside-battlesuits": {
+      "id": "twin-smart-missile-system-broadside-battlesuits",
+      "name": "Twin smart missile system",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Twin smart missile system",
+          "range": 30,
+          "stats": {
+            "A": 4,
+            "S": 5,
+            "AP": 0,
+            "D": 1,
+            "BS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "indirect-fire"
+            },
+            {
+              "keyword_id": "twin-linked"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "fusion-collider": {
+      "id": "fusion-collider",
+      "name": "Fusion collider",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Fusion collider",
+          "range": 18,
+          "stats": {
+            "A": 2,
+            "S": 12,
+            "AP": -4,
+            "D": "D6",
+            "BS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "melta",
+              "parameters": {
+                "value": 2
+              }
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "ghostkeel-fists": {
+      "id": "ghostkeel-fists",
+      "name": "Ghostkeel fists",
+      "type": "melee",
+      "profiles": [
+        {
+          "name": "Ghostkeel fists",
+          "range": "Melee",
+          "stats": {
+            "A": 3,
+            "S": 6,
+            "AP": 0,
+            "D": 2,
+            "WS": 5
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "twin-fusion-blaster": {
+      "id": "twin-fusion-blaster",
+      "name": "Twin fusion blaster",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Twin fusion blaster",
+          "range": 12,
+          "stats": {
+            "A": 1,
+            "S": 9,
+            "AP": -4,
+            "D": "D6",
+            "BS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "melta",
+              "parameters": {
+                "value": 2
+              }
+            },
+            {
+              "keyword_id": "twin-linked"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "ion-accelerator": {
+      "id": "ion-accelerator",
+      "name": "Ion accelerator",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Standard",
+          "range": 72,
+          "stats": {
+            "A": 6,
+            "S": 9,
+            "AP": -2,
+            "D": 3,
+            "BS": 4
+          },
+          "keywords": []
+        },
+        {
+          "name": "Overcharge",
+          "range": 72,
+          "stats": {
+            "A": 6,
+            "S": 10,
+            "AP": -3,
+            "D": 4,
+            "BS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "hazardous"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "riptide-fists": {
+      "id": "riptide-fists",
+      "name": "Riptide fists",
+      "type": "melee",
+      "profiles": [
+        {
+          "name": "Riptide fists",
+          "range": "Melee",
+          "stats": {
+            "A": 6,
+            "S": 6,
+            "AP": 0,
+            "D": 2,
+            "WS": 5
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "twin-smart-missile-system-riptide-battlesuit": {
+      "id": "twin-smart-missile-system-riptide-battlesuit",
+      "name": "Twin smart missile system",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Twin smart missile system",
+          "range": 30,
+          "stats": {
+            "A": 3,
+            "S": 5,
+            "AP": 0,
+            "D": 1,
+            "BS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "indirect-fire"
+            },
+            {
+              "keyword_id": "twin-linked"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "battlesuit-fists-stealth-battlesuits": {
+      "id": "battlesuit-fists-stealth-battlesuits",
+      "name": "Battlesuit fists",
+      "type": "melee",
+      "profiles": [
+        {
+          "name": "Battlesuit fists",
+          "range": "Melee",
+          "stats": {
+            "A": 2,
+            "S": 4,
+            "AP": 0,
+            "D": 1,
+            "WS": 5
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "burst-cannon": {
+      "id": "burst-cannon",
+      "name": "Burst cannon",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Burst cannon",
+          "range": 18,
+          "stats": {
+            "A": 4,
+            "S": 5,
+            "AP": 0,
+            "D": 1,
+            "BS": 4
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "fusion-blaster": {
+      "id": "fusion-blaster",
+      "name": "Fusion blaster",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Fusion blaster",
+          "range": 12,
+          "stats": {
+            "A": 1,
+            "S": 9,
+            "AP": -4,
+            "D": "D6",
+            "BS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "melta",
+              "parameters": {
+                "value": 2
+              }
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "pulse-pistol": {
+      "id": "pulse-pistol",
+      "name": "Pulse pistol",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Pulse pistol",
+          "range": 12,
+          "stats": {
+            "A": 1,
+            "S": 5,
+            "AP": 0,
+            "D": 1,
+            "BS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "pistol"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    }
+  },
+  "detachments": {
+    "advanced-acquisition-cadre": {
+      "id": "advanced-acquisition-cadre",
+      "name": "Advanced Acquisition Cadre",
+      "faction_id": "tau-empire",
+      "detachment_rule_id": "expert-fieldcraft",
+      "enhancement_ids": [
+        "negation-emitters-upgrade-advanced-acquisition-cadre",
+        "unmasking-suite-upgrade-advanced-acquisition-cadre"
+      ],
+      "stratagem_ids": [
+        "marker-beacon-advanced-acquisition-cadre",
+        "microdrone-support-advanced-acquisition-cadre",
+        "autoreactive-camouflage-advanced-acquisition-cadre"
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "detachment_points": 1,
+      "force_dispositions": [
+        "reconnaissance"
+      ]
+    },
+    "experimental-prototype-cadre": {
+      "id": "experimental-prototype-cadre",
+      "name": "Experimental Prototype Cadre",
+      "faction_id": "tau-empire",
+      "detachment_rule_id": "superior-craftsmanship",
+      "enhancement_ids": [
+        "supernova-launcher-experimental-prototype-cadre",
+        "thermoneutronic-projector-experimental-prototype-cadre",
+        "plasma-accelerator-rifle-experimental-prototype-cadre",
+        "fusion-blades-experimental-prototype-cadre"
+      ],
+      "stratagem_ids": [
+        "reactive-impact-dampeners-experimental-prototype-cadre",
+        "experimental-weaponry-experimental-prototype-cadre",
+        "automated-repair-drones-experimental-prototype-cadre",
+        "experimental-ammunition-experimental-prototype-cadre",
+        "threat-assessment-analyser-experimental-prototype-cadre",
+        "neuroweb-system-jammer-experimental-prototype-cadre"
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "detachment_points": 1,
+      "force_dispositions": [
+        "priority-assets"
+      ],
+      "tags": [
+        "retaliation"
+      ]
+    }
+  },
+  "abilities": {
+    "expert-fieldcraft": {
+      "ability_id": "expert-fieldcraft",
+      "name": "Expert Fieldcraft",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "supersedes": null,
+      "unit_ids": [],
+      "faction_id": "tau-empire",
+      "detachment_id": "advanced-acquisition-cadre",
+      "ability_type": "detachment",
+      "behavior": "passive",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "phase-is",
+          "parameters": {
+            "phase": "shooting"
+          }
+        },
+        "effect": {
+          "type": "ability-grant",
+          "target": "unit",
+          "modifier": {
+            "grant_type": "shoot-while-hidden"
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "phase"
+      },
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+    },
+    "superior-craftsmanship": {
+      "ability_id": "superior-craftsmanship",
+      "name": "Superior Craftsmanship",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "supersedes": null,
+      "unit_ids": [],
+      "faction_id": "tau-empire",
+      "detachment_id": "experimental-prototype-cadre",
+      "ability_type": "detachment",
+      "behavior": "passive",
+      "effect": {
+        "type": "stat-modifier",
+        "target": "attacker",
+        "modifier": {
+          "stat": "R",
+          "operation": "add",
+          "value": 6,
+          "attack_type": "ranged"
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+    },
+    "enforcer-commander": {
+      "ability_id": "enforcer-commander",
+      "name": "Enforcer Commander",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "operator": "and",
+          "operands": [
+            {
+              "type": "phase-is",
+              "parameters": {
+                "phase": "shooting"
+              }
+            },
+            {
+              "type": "is-attached"
+            }
+          ]
+        },
+        "effect": {
+          "type": "stat-modifier",
+          "target": "attacker",
+          "modifier": {
+            "stat": "AP",
+            "operation": "worsen",
+            "value": 1
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "commander-in-enforcer-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "defensive ability (skipped for damage calc)"
+    },
+    "leader": {
+      "ability_id": "leader",
+      "name": "Leader",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "ability-grant",
+        "target": "unit",
+        "modifier": {
+          "ability_id": "leader"
+        }
+      },
+      "scope": {
+        "range": "attached",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "ethereal"
+      ],
+      "ability_type": "core",
+      "behavior": "passive"
+    },
+    "deep-strike": {
+      "ability_id": "deep-strike",
+      "name": "Deep Strike",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "deep-strike",
+        "target": "unit",
+        "modifier": {}
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "crisis-fireknife-battlesuits"
+      ],
+      "ability_type": "core",
+      "behavior": "activated"
+    },
+    "fireknife": {
+      "ability_id": "fireknife",
+      "name": "Fireknife",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "phase-is",
+          "parameters": {
+            "phase": "shooting"
+          }
+        },
+        "effect": {
+          "type": "sequence",
+          "steps": [
+            {
+              "type": "re-roll",
+              "target": "unit",
+              "modifier": {
+                "roll": "hit",
+                "subset": "ones"
+              }
+            },
+            {
+              "type": "conditional",
+              "condition": {
+                "type": "unit-below-starting-strength",
+                "parameters": {
+                  "subject": "target"
+                },
+                "negated": true
+              },
+              "effect": {
+                "type": "re-roll",
+                "target": "unit",
+                "modifier": {
+                  "roll": "hit",
+                  "subset": "all-failures"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "crisis-fireknife-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
+    "gun-drone": {
+      "ability_id": "gun-drone",
+      "name": "Gun Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "ability-grant",
+        "target": "self",
+        "modifier": {
+          "grant_type": "ranged-weapon"
+        }
+      },
+      "scope": {
+        "range": "self",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "crisis-fireknife-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+    },
+    "marker-drone": {
+      "ability_id": "marker-drone",
+      "name": "Marker Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "sequence",
+        "steps": [
+          {
+            "type": "keyword-grant",
+            "target": "unit",
+            "modifier": {
+              "keywords": [
+                "markerlight"
+              ]
+            }
+          },
+          {
+            "type": "ability-grant",
+            "target": "unit",
+            "modifier": {
+              "ability": "observer-unit",
+              "bypass_restrictions": [
+                "advanced-this-turn"
+              ]
+            }
+          }
+        ]
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "crisis-fireknife-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+    },
+    "shield-drone": {
+      "ability_id": "shield-drone",
+      "name": "Shield Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "stat-modifier",
+        "target": "self",
+        "modifier": {
+          "stat": "W",
+          "operation": "add",
+          "value": 1
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "crisis-fireknife-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
+    "weapon-support-systems": {
+      "ability_id": "weapon-support-systems",
+      "name": "Weapon Support Systems",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "phase-is",
+          "parameters": {
+            "phase": "shooting"
+          }
+        },
+        "effect": {
+          "type": "roll-modifier",
+          "target": "unit",
+          "modifier": {
+            "roll": "all",
+            "operation": "ignore-modifiers"
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "crisis-fireknife-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
+    "coldstar-commander": {
+      "ability_id": "coldstar-commander",
+      "name": "Coldstar Commander",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "is-attached"
+        },
+        "effect": {
+          "type": "stat-modifier",
+          "target": "unit",
+          "modifier": {
+            "stat": "M",
+            "operation": "set",
+            "value": 12
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "commander-in-coldstar-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
+    "shield-generator": {
+      "ability_id": "shield-generator",
+      "name": "Shield Generator",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "invulnerable-save",
+        "target": "self",
+        "modifier": {
+          "invuln_sv": 4
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "commander-in-coldstar-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
+    "battlesuit-support-systems": {
+      "ability_id": "battlesuit-support-systems",
+      "name": "Battlesuit Support Systems",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "fallback-and-act",
+        "target": "unit",
+        "modifier": {}
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "crisis-starscythe-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
+    "starscythe": {
+      "ability_id": "starscythe",
+      "name": "Starscythe",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "phase-is",
+          "parameters": {
+            "phase": "shooting"
+          }
+        },
+        "effect": {
+          "type": "stat-modifier",
+          "target": "unit",
+          "modifier": {
+            "stat": "AP",
+            "operation": "add",
+            "value": -1
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "crisis-starscythe-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
+    "exemplars-of-mont-ka": {
+      "ability_id": "exemplars-of-mont-ka",
+      "name": "Exemplars of Mont’ka",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "operator": "and",
+          "operands": [
+            {
+              "type": "phase-is",
+              "parameters": {
+                "phase": "shooting"
+              }
+            },
+            {
+              "type": "opponent-unit-within-range",
+              "parameters": {
+                "target_qualifier": "closest-eligible-enemy-unit"
+              }
+            }
+          ]
+        },
+        "effect": {
+          "type": "sequence",
+          "steps": [
+            {
+              "type": "keyword-grant",
+              "target": "unit",
+              "modifier": {
+                "keywords": [
+                  "Sustained Hits 1"
+                ]
+              }
+            },
+            {
+              "type": "keyword-grant",
+              "target": "unit",
+              "modifier": {
+                "keywords": [
+                  "Ignores Cover"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "the-twin-lance"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "auto-generated, partial"
+    },
+    "mv15-gun-drone": {
+      "ability_id": "mv15-gun-drone",
+      "name": "MV15 Gun Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "ability-grant",
+        "target": "self",
+        "modifier": {
+          "grant_type": "weapon",
+          "weapon": "twin-pulse-blaster"
+        }
+      },
+      "scope": {
+        "range": "self",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "the-twin-lance"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+    },
+    "neocapacitor-shields": {
+      "ability_id": "neocapacitor-shields",
+      "name": "Neocapacitor Shields",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "leadership-modifier",
+        "target": "enemy-within-aura",
+        "modifier": {
+          "test": "battle-shock"
+        }
+      },
+      "scope": {
+        "range": "aura-12",
+        "duration": "turn"
+      },
+      "unit_ids": [
+        "the-twin-lance"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
+    "retro-thrusters": {
+      "ability_id": "retro-thrusters",
+      "name": "Retro-thrusters",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "phase-is",
+          "parameters": {
+            "phase": "fight"
+          }
+        },
+        "effect": {
+          "type": "fallback-and-act",
+          "target": "unit",
+          "modifier": {}
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "the-twin-lance"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
+    "scouts-8": {
+      "ability_id": "scouts-8",
+      "name": "Scouts 8\"",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "movement-modifier",
+        "target": "unit",
+        "modifier": {
+          "move_type": "scout",
+          "distance": 8
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "the-twin-lance"
+      ],
+      "ability_type": "core",
+      "behavior": "activated"
+    },
+    "advanced-armour": {
+      "ability_id": "advanced-armour",
+      "name": "Advanced Armour",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "feel-no-pain",
+        "target": "unit",
+        "modifier": {
+          "threshold": 4
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "broadside-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
+    "stealth-drones": {
+      "ability_id": "stealth-drones",
+      "name": "Stealth Drones",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "damage-reduction",
+        "target": "self",
+        "modifier": {
+          "reduction": "to-zero"
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "ghostkeel-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "defensive ability (skipped for damage calc)",
+      "usage": {
+        "frequency": "n-per-battle",
+        "count": 2
+      }
+    },
+    "stealth": {
+      "ability_id": "stealth",
+      "name": "Stealth",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "roll-modifier",
+        "target": "attacker",
+        "modifier": {
+          "roll": "hit",
+          "operation": "subtract",
+          "value": 1
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "stealth-battlesuits"
+      ],
+      "ability_type": "core",
+      "behavior": "passive"
+    },
+    "infiltrators": {
+      "ability_id": "infiltrators",
+      "name": "Infiltrators",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "unit-keyword",
+        "target": "unit",
+        "modifier": {
+          "keyword_id": "infiltrators"
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "one-use"
+      },
+      "unit_ids": [
+        "stealth-battlesuits"
+      ],
+      "ability_type": "core",
+      "behavior": "activated"
+    },
+    "deadly-demise-d3": {
+      "ability_id": "deadly-demise-d3",
+      "name": "Deadly Demise D3",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "timing-is",
+          "parameters": {
+            "timing": "before-bearer-removed"
+          }
+        },
+        "effect": {
+          "type": "dice-gated",
+          "dice": "D6",
+          "threshold": 6,
+          "comparison": "gte",
+          "on_success": {
+            "type": "mortal-wounds",
+            "target": "enemy-within-aura",
+            "modifier": {
+              "count": "D3",
+              "range": 6
+            }
+          },
+          "on_fail": null
+        }
+      },
+      "scope": {
+        "range": "aura-6",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "sun-shark-bomber",
+        "tidewall-shieldline"
+      ],
+      "ability_type": "core",
+      "behavior": "reactive"
+    },
+    "lone-operative": {
+      "ability_id": "lone-operative",
+      "name": "Lone Operative",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "targeting-permission",
+        "target": "self",
+        "modifier": {
+          "attack_type": "ranged",
+          "gate": "within-range",
+          "range": 12
+        }
+      },
+      "scope": {
+        "range": "self",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "commander-shadowsun"
+      ],
+      "ability_type": "core",
+      "behavior": "passive"
+    },
+    "battlesuit-support-system": {
+      "ability_id": "battlesuit-support-system",
+      "name": "Battlesuit Support System",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "fallback-and-act",
+        "target": "unit",
+        "modifier": {}
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "riptide-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
+    "deadly-demise-d6": {
+      "ability_id": "deadly-demise-d6",
+      "name": "Deadly Demise D6",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "timing-is",
+          "parameters": {
+            "timing": "before-bearer-removed"
+          }
+        },
+        "effect": {
+          "type": "dice-gated",
+          "dice": "D6",
+          "threshold": 6,
+          "comparison": "gte",
+          "on_success": {
+            "type": "mortal-wounds",
+            "target": "enemy-within-aura",
+            "modifier": {
+              "count": "D6",
+              "range": 6
+            }
+          },
+          "on_fail": null
+        }
+      },
+      "scope": {
+        "range": "aura-6",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "riptide-battlesuit"
+      ],
+      "ability_type": "core",
+      "behavior": "reactive"
+    },
+    "missile-drone": {
+      "ability_id": "missile-drone",
+      "name": "Missile Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "ability-grant",
+        "target": "self",
+        "modifier": {
+          "grant_type": "ranged-weapon"
+        }
+      },
+      "scope": {
+        "range": "self",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "riptide-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+    },
+    "nova-charge": {
+      "ability_id": "nova-charge",
+      "name": "Nova Charge",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "phase-is",
+          "parameters": {
+            "phase": "shooting"
+          }
+        },
+        "effect": {
+          "type": "keyword-grant",
+          "target": "unit",
+          "modifier": {
+            "keywords": [
+              "Devastating Wounds"
+            ]
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "phase"
+      },
+      "unit_ids": [
+        "riptide-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "activated"
+    },
+    "weapon-support-system": {
+      "ability_id": "weapon-support-system",
+      "name": "Weapon Support System",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "phase-is",
+          "parameters": {
+            "phase": "shooting"
+          }
+        },
+        "effect": {
+          "type": "roll-modifier",
+          "target": "unit",
+          "modifier": {
+            "roll": "all",
+            "operation": "ignore-modifiers"
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "riptide-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
+    "forward-observers": {
+      "ability_id": "forward-observers",
+      "name": "Forward Observers",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "operator": "and",
+          "operands": [
+            {
+              "type": "phase-is",
+              "parameters": {
+                "phase": "shooting"
+              }
+            },
+            {
+              "type": "unit-has-keyword",
+              "parameters": {
+                "keyword": "GUIDED"
+              }
+            },
+            {
+              "type": "target-has-keyword",
+              "parameters": {
+                "keyword": "SPOTTED"
+              }
+            }
+          ]
+        },
+        "effect": {
+          "type": "sequence",
+          "steps": [
+            {
+              "type": "re-roll",
+              "target": "unit",
+              "modifier": {
+                "roll": "hit",
+                "subset": "ones"
+              }
+            },
+            {
+              "type": "re-roll",
+              "target": "unit",
+              "modifier": {
+                "roll": "wound",
+                "subset": "ones"
+              }
+            }
+          ]
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "phase"
+      },
+      "unit_ids": [
+        "stealth-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "auto-generated, partial"
+    },
+    "homing-beacon": {
+      "ability_id": "homing-beacon",
+      "name": "Homing Beacon",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "cp-refund",
+        "target": "self",
+        "modifier": {
+          "type": "stratagem-for-0cp"
+        }
+      },
+      "scope": {
+        "range": "aura-6",
+        "duration": "one-use"
+      },
+      "unit_ids": [
+        "stealth-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "activated"
+    }
+  }
+}
