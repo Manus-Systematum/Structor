@@ -59,6 +59,12 @@ class $RostersTable extends Rosters with TableInfo<$RostersTable, RosterRow> {
   late final GeneratedColumn<String> snapshotJson = GeneratedColumn<String>(
       'snapshot_json', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _battleLogJsonMeta =
+      const VerificationMeta('battleLogJson');
+  @override
+  late final GeneratedColumn<String> battleLogJson = GeneratedColumn<String>(
+      'battle_log_json', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -69,7 +75,8 @@ class $RostersTable extends Rosters with TableInfo<$RostersTable, RosterRow> {
         unitCount,
         updatedAt,
         rosterJson,
-        snapshotJson
+        snapshotJson,
+        battleLogJson
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -140,6 +147,12 @@ class $RostersTable extends Rosters with TableInfo<$RostersTable, RosterRow> {
     } else if (isInserting) {
       context.missing(_snapshotJsonMeta);
     }
+    if (data.containsKey('battle_log_json')) {
+      context.handle(
+          _battleLogJsonMeta,
+          battleLogJson.isAcceptableOrUnknown(
+              data['battle_log_json']!, _battleLogJsonMeta));
+    }
     return context;
   }
 
@@ -167,6 +180,8 @@ class $RostersTable extends Rosters with TableInfo<$RostersTable, RosterRow> {
           .read(DriftSqlType.string, data['${effectivePrefix}roster_json'])!,
       snapshotJson: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}snapshot_json'])!,
+      battleLogJson: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}battle_log_json']),
     );
   }
 
@@ -186,6 +201,11 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
   final DateTime updatedAt;
   final String rosterJson;
   final String snapshotJson;
+
+  /// The battle event log (DESIGN.md §7.4), or null when no game is in
+  /// progress. Stored as a document for the same reason as the roster: it is
+  /// an append-only history whose value is being replayed verbatim.
+  final String? battleLogJson;
   const RosterRow(
       {required this.id,
       required this.name,
@@ -195,7 +215,8 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
       required this.unitCount,
       required this.updatedAt,
       required this.rosterJson,
-      required this.snapshotJson});
+      required this.snapshotJson,
+      this.battleLogJson});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -208,6 +229,9 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
     map['updated_at'] = Variable<DateTime>(updatedAt);
     map['roster_json'] = Variable<String>(rosterJson);
     map['snapshot_json'] = Variable<String>(snapshotJson);
+    if (!nullToAbsent || battleLogJson != null) {
+      map['battle_log_json'] = Variable<String>(battleLogJson);
+    }
     return map;
   }
 
@@ -222,6 +246,9 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
       updatedAt: Value(updatedAt),
       rosterJson: Value(rosterJson),
       snapshotJson: Value(snapshotJson),
+      battleLogJson: battleLogJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(battleLogJson),
     );
   }
 
@@ -238,6 +265,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
       rosterJson: serializer.fromJson<String>(json['rosterJson']),
       snapshotJson: serializer.fromJson<String>(json['snapshotJson']),
+      battleLogJson: serializer.fromJson<String?>(json['battleLogJson']),
     );
   }
   @override
@@ -253,6 +281,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
       'rosterJson': serializer.toJson<String>(rosterJson),
       'snapshotJson': serializer.toJson<String>(snapshotJson),
+      'battleLogJson': serializer.toJson<String?>(battleLogJson),
     };
   }
 
@@ -265,7 +294,8 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
           int? unitCount,
           DateTime? updatedAt,
           String? rosterJson,
-          String? snapshotJson}) =>
+          String? snapshotJson,
+          Value<String?> battleLogJson = const Value.absent()}) =>
       RosterRow(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -276,6 +306,8 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
         updatedAt: updatedAt ?? this.updatedAt,
         rosterJson: rosterJson ?? this.rosterJson,
         snapshotJson: snapshotJson ?? this.snapshotJson,
+        battleLogJson:
+            battleLogJson.present ? battleLogJson.value : this.battleLogJson,
       );
   RosterRow copyWithCompanion(RostersCompanion data) {
     return RosterRow(
@@ -293,6 +325,9 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
       snapshotJson: data.snapshotJson.present
           ? data.snapshotJson.value
           : this.snapshotJson,
+      battleLogJson: data.battleLogJson.present
+          ? data.battleLogJson.value
+          : this.battleLogJson,
     );
   }
 
@@ -307,14 +342,15 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
           ..write('unitCount: $unitCount, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('rosterJson: $rosterJson, ')
-          ..write('snapshotJson: $snapshotJson')
+          ..write('snapshotJson: $snapshotJson, ')
+          ..write('battleLogJson: $battleLogJson')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(id, name, factionId, battleSizeId, points,
-      unitCount, updatedAt, rosterJson, snapshotJson);
+      unitCount, updatedAt, rosterJson, snapshotJson, battleLogJson);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -327,7 +363,8 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
           other.unitCount == this.unitCount &&
           other.updatedAt == this.updatedAt &&
           other.rosterJson == this.rosterJson &&
-          other.snapshotJson == this.snapshotJson);
+          other.snapshotJson == this.snapshotJson &&
+          other.battleLogJson == this.battleLogJson);
 }
 
 class RostersCompanion extends UpdateCompanion<RosterRow> {
@@ -340,6 +377,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
   final Value<DateTime> updatedAt;
   final Value<String> rosterJson;
   final Value<String> snapshotJson;
+  final Value<String?> battleLogJson;
   final Value<int> rowid;
   const RostersCompanion({
     this.id = const Value.absent(),
@@ -351,6 +389,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
     this.updatedAt = const Value.absent(),
     this.rosterJson = const Value.absent(),
     this.snapshotJson = const Value.absent(),
+    this.battleLogJson = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   RostersCompanion.insert({
@@ -363,6 +402,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
     required DateTime updatedAt,
     required String rosterJson,
     required String snapshotJson,
+    this.battleLogJson = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         name = Value(name),
@@ -383,6 +423,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
     Expression<DateTime>? updatedAt,
     Expression<String>? rosterJson,
     Expression<String>? snapshotJson,
+    Expression<String>? battleLogJson,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -395,6 +436,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
       if (updatedAt != null) 'updated_at': updatedAt,
       if (rosterJson != null) 'roster_json': rosterJson,
       if (snapshotJson != null) 'snapshot_json': snapshotJson,
+      if (battleLogJson != null) 'battle_log_json': battleLogJson,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -409,6 +451,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
       Value<DateTime>? updatedAt,
       Value<String>? rosterJson,
       Value<String>? snapshotJson,
+      Value<String?>? battleLogJson,
       Value<int>? rowid}) {
     return RostersCompanion(
       id: id ?? this.id,
@@ -420,6 +463,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
       updatedAt: updatedAt ?? this.updatedAt,
       rosterJson: rosterJson ?? this.rosterJson,
       snapshotJson: snapshotJson ?? this.snapshotJson,
+      battleLogJson: battleLogJson ?? this.battleLogJson,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -454,6 +498,9 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
     if (snapshotJson.present) {
       map['snapshot_json'] = Variable<String>(snapshotJson.value);
     }
+    if (battleLogJson.present) {
+      map['battle_log_json'] = Variable<String>(battleLogJson.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -472,6 +519,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
           ..write('updatedAt: $updatedAt, ')
           ..write('rosterJson: $rosterJson, ')
           ..write('snapshotJson: $snapshotJson, ')
+          ..write('battleLogJson: $battleLogJson, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -499,6 +547,7 @@ typedef $$RostersTableCreateCompanionBuilder = RostersCompanion Function({
   required DateTime updatedAt,
   required String rosterJson,
   required String snapshotJson,
+  Value<String?> battleLogJson,
   Value<int> rowid,
 });
 typedef $$RostersTableUpdateCompanionBuilder = RostersCompanion Function({
@@ -511,6 +560,7 @@ typedef $$RostersTableUpdateCompanionBuilder = RostersCompanion Function({
   Value<DateTime> updatedAt,
   Value<String> rosterJson,
   Value<String> snapshotJson,
+  Value<String?> battleLogJson,
   Value<int> rowid,
 });
 
@@ -549,6 +599,9 @@ class $$RostersTableFilterComposer
 
   ColumnFilters<String> get snapshotJson => $composableBuilder(
       column: $table.snapshotJson, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get battleLogJson => $composableBuilder(
+      column: $table.battleLogJson, builder: (column) => ColumnFilters(column));
 }
 
 class $$RostersTableOrderingComposer
@@ -588,6 +641,10 @@ class $$RostersTableOrderingComposer
   ColumnOrderings<String> get snapshotJson => $composableBuilder(
       column: $table.snapshotJson,
       builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get battleLogJson => $composableBuilder(
+      column: $table.battleLogJson,
+      builder: (column) => ColumnOrderings(column));
 }
 
 class $$RostersTableAnnotationComposer
@@ -625,6 +682,9 @@ class $$RostersTableAnnotationComposer
 
   GeneratedColumn<String> get snapshotJson => $composableBuilder(
       column: $table.snapshotJson, builder: (column) => column);
+
+  GeneratedColumn<String> get battleLogJson => $composableBuilder(
+      column: $table.battleLogJson, builder: (column) => column);
 }
 
 class $$RostersTableTableManager extends RootTableManager<
@@ -659,6 +719,7 @@ class $$RostersTableTableManager extends RootTableManager<
             Value<DateTime> updatedAt = const Value.absent(),
             Value<String> rosterJson = const Value.absent(),
             Value<String> snapshotJson = const Value.absent(),
+            Value<String?> battleLogJson = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               RostersCompanion(
@@ -671,6 +732,7 @@ class $$RostersTableTableManager extends RootTableManager<
             updatedAt: updatedAt,
             rosterJson: rosterJson,
             snapshotJson: snapshotJson,
+            battleLogJson: battleLogJson,
             rowid: rowid,
           ),
           createCompanionCallback: ({
@@ -683,6 +745,7 @@ class $$RostersTableTableManager extends RootTableManager<
             required DateTime updatedAt,
             required String rosterJson,
             required String snapshotJson,
+            Value<String?> battleLogJson = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               RostersCompanion.insert(
@@ -695,6 +758,7 @@ class $$RostersTableTableManager extends RootTableManager<
             updatedAt: updatedAt,
             rosterJson: rosterJson,
             snapshotJson: snapshotJson,
+            battleLogJson: battleLogJson,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0

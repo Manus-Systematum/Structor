@@ -1047,4 +1047,15 @@ Nineteen entries report as *info*, not warnings: drones and support systems the 
 
 **Verified on device:** roster list reads *2k ret · tau empire · 2000 pts · 12 units*, seeded and persisted. The import *screen* is not interactively verified — the simulator integration gives no tap injection (see the environment note above) — though the import logic underneath it is covered by the core suite.
 
-**Next:** the event-sourced battle state of §7.4, so play mode tracks a game rather than displaying one; and dataset distribution (§3.4), which now has a concrete caller.
+**Done — battle state (§7.4):**
+
+- `src/battle/` — a sealed event hierarchy and a pure reducer. State is **derived from the log**, never mutated, so undo is a pop rather than an inverse operation per event type, and a finished game replays for free.
+- Persisted per roster as a JSON document, schema v2. Verified by installing over a v1 build on device: the existing roster survived the upgrade with no crash and no re-seed.
+- Turn page now reads round, active player and CP from the log and writes events back; casualties recorded in the log shrink the weapon table live.
+- 154 core tests, 16 app tests.
+
+The design decision that pays off here is the one from §7.2. **`stratagemsUsed` stores `{round, phase}` per use** rather than a "this phase" list cleared on transition — and because there is no tracked phase, there is no transition, so nothing needs clearing. The one-per-phase rule is a query against whichever phase the player is reading. Lists that reset on transition are exactly where "why is this unit still greyed out" bugs live, and there is a test pinning that advancing the round frees a unit without touching its history.
+
+Secondary VP caps apply per round and then per game, trimming later rounds so early ones keep their points. Primary is left uncapped here; its cap belongs to the mission record and arrives with the setup screen.
+
+**Next:** the setup screen of §7.3.1 — the disposition decision grid is the single most valuable unbuilt screen, and the mission data has been sitting ready since §3.0. Then dataset distribution (§3.4), which now has two callers rather than one.

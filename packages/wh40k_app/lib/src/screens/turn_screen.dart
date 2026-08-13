@@ -11,44 +11,55 @@ import '../widgets/weapon_table.dart';
 /// the app could filter — six taps a turn, sixty a game, to maintain something
 /// the player already knows. Only round and active player are tracked, because
 /// they change five and ten times a game respectively and so earn their taps.
-class TurnScreen extends StatefulWidget {
+class TurnScreen extends StatelessWidget {
   final Army army;
 
-  const TurnScreen({super.key, required this.army});
+  /// The game so far. Everything shown here is derived from it (§7.4).
+  final BattleLog log;
 
-  @override
-  State<TurnScreen> createState() => _TurnScreenState();
-}
+  final void Function(BattleEvent) onEvent;
+  final VoidCallback onUndo;
 
-class _TurnScreenState extends State<TurnScreen> {
-  int _round = 1;
-  bool _yourTurn = true;
-  int _cp = 0;
+  const TurnScreen({
+    super.key,
+    required this.army,
+    this.log = const BattleLog(),
+    this.onEvent = _ignore,
+    this.onUndo = _nothing,
+  });
+
+  static void _ignore(BattleEvent _) {}
+  static void _nothing() {}
 
   @override
   Widget build(BuildContext context) {
+    final state = log.state;
     return Column(
       children: [
         _StickyHeader(
-          round: _round,
-          yourTurn: _yourTurn,
-          cp: _cp,
-          onRound: (delta) => setState(
-              () => _round = (_round + delta).clamp(1, 5)),
-          onTurn: () => setState(() => _yourTurn = !_yourTurn),
-          onCp: (delta) => setState(() => _cp = (_cp + delta).clamp(0, 99)),
+          state: state,
+          canUndo: log.canUndo,
+          onRound: (delta) =>
+              onEvent(SetRound((state.round + delta).clamp(1, 5))),
+          onTurn: () => onEvent(SetActivePlayer(
+              state.activePlayer == Player.me ? Player.opponent : Player.me)),
+          onCp: (delta) => onEvent(AdjustCp(delta)),
+          onUndo: onUndo,
         ),
         Expanded(
           child: ListView(
             padding: const EdgeInsets.only(bottom: 32),
-            children: const [
-              _PhaseSection(phase: 'command'),
-              _PhaseSection(phase: 'movement'),
-              _PhaseSection(phase: 'shooting'),
-              _PhaseSection(phase: 'charge'),
-              _PhaseSection(phase: 'fight'),
-              _PhaseSection(phase: 'end'),
-            ].map((s) => s.withArmy(widget.army)).toList(),
+            children: [
+              for (final phase in const [
+                'command',
+                'movement',
+                'shooting',
+                'charge',
+                'fight',
+                'end',
+              ])
+                _PhaseSection(phase: phase, army: army, state: state),
+            ],
           ),
         ),
       ],
@@ -57,25 +68,26 @@ class _TurnScreenState extends State<TurnScreen> {
 }
 
 class _StickyHeader extends StatelessWidget {
-  final int round;
-  final bool yourTurn;
-  final int cp;
+  final BattleState state;
+  final bool canUndo;
   final void Function(int) onRound;
   final VoidCallback onTurn;
   final void Function(int) onCp;
+  final VoidCallback onUndo;
 
   const _StickyHeader({
-    required this.round,
-    required this.yourTurn,
-    required this.cp,
+    required this.state,
+    required this.canUndo,
     required this.onRound,
     required this.onTurn,
     required this.onCp,
+    required this.onUndo,
   });
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final yourTurn = state.activePlayer == Player.me;
     return Material(
       color: scheme.surfaceContainerHigh,
       child: Padding(
@@ -84,7 +96,7 @@ class _StickyHeader extends StatelessWidget {
           children: [
             _Stepper(
               label: 'ROUND',
-              value: '$round',
+              value: '${state.round}',
               onDown: () => onRound(-1),
               onUp: () => onRound(1),
             ),
@@ -119,7 +131,7 @@ class _StickyHeader extends StatelessWidget {
             const SizedBox(width: 8),
             _Stepper(
               label: 'CP',
-              value: '$cp',
+              value: '${state.cp}',
               onDown: () => onCp(-1),
               onUp: () => onCp(1),
             ),
@@ -197,11 +209,13 @@ class _TapTarget extends StatelessWidget {
 class _PhaseSection extends StatelessWidget {
   final String phase;
   final Army? army;
+  final BattleState state;
 
-  const _PhaseSection({required this.phase, this.army});
-
-  _PhaseSection withArmy(Army army) =>
-      _PhaseSection(phase: phase, army: army);
+  const _PhaseSection({
+    required this.phase,
+    this.army,
+    this.state = const BattleState(),
+  });
 
   static const _labels = {
     'command': 'COMMAND',
@@ -243,7 +257,12 @@ class _PhaseSection extends StatelessWidget {
           _phasePlaceholder(context, army)
         else
           for (final unit in army.combatUnits)
-            _UnitBlock(unit: unit, kind: kind, phase: phase),
+            _UnitBlock(
+              unit: unit,
+              kind: kind,
+              phase: phase,
+              state: state,
+            ),
         const SizedBox(height: 12),
       ],
     );
@@ -282,17 +301,20 @@ class _UnitBlock extends StatelessWidget {
   final CombatUnit unit;
   final WeaponKind kind;
   final String phase;
+  final BattleState state;
 
   const _UnitBlock({
     required this.unit,
     required this.kind,
     required this.phase,
+    required this.state,
   });
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final table = unit.weapons(kind);
+    // Casualties recorded in the log shrink the table live (§7.3.5).
+    final table = unit.weapons(kind, modelsRemaining: state.modelsRemaining);
     if (table.weapons.isEmpty && table.isComplete) {
       return const SizedBox.shrink();
     }

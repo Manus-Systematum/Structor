@@ -29,6 +29,11 @@ class Rosters extends Table {
   TextColumn get rosterJson => text()();
   TextColumn get snapshotJson => text()();
 
+  /// The battle event log (DESIGN.md §7.4), or null when no game is in
+  /// progress. Stored as a document for the same reason as the roster: it is
+  /// an append-only history whose value is being replayed verbatim.
+  TextColumn get battleLogJson => text().nullable()();
+
   @override
   Set<Column> get primaryKey => {id};
 }
@@ -41,7 +46,14 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.memory() : super(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onUpgrade: (m, from, to) async {
+          if (from < 2) await m.addColumn(rosters, rosters.battleLogJson);
+        },
+      );
 
   Future<List<RosterRow>> allRosters() =>
       (select(rosters)..orderBy([(r) => OrderingTerm.desc(r.updatedAt)])).get();
@@ -55,6 +67,10 @@ class AppDatabase extends _$AppDatabase {
 
   Future<void> upsertRoster(RostersCompanion roster) =>
       into(rosters).insertOnConflictUpdate(roster);
+
+  Future<void> saveBattleLog(String rosterId, String? json) =>
+      (update(rosters)..where((r) => r.id.equals(rosterId)))
+          .write(RostersCompanion(battleLogJson: Value(json)));
 
   Future<int> deleteRoster(String id) =>
       (delete(rosters)..where((r) => r.id.equals(id))).go();

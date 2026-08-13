@@ -79,6 +79,72 @@ void main() {
     expect(await store.load(reference.id), isNull);
   });
 
+  group('battle state', () {
+    test('a game persists and replays', () async {
+      await store.save(reference);
+      expect((await store.loadBattle(reference.id)).events, isEmpty);
+
+      final log = const core.BattleLog()
+          .add(const core.SetRound(3))
+          .add(const core.AdjustCp(4))
+          .add(const core.UseStratagem(
+            stratagemId: 'overwatch',
+            targetInstanceId: 'u01',
+            round: 3,
+            phase: 'shooting',
+            cp: 1,
+          ));
+      await store.saveBattle(reference.id, log);
+
+      final restored = await store.loadBattle(reference.id);
+      final state = restored.state;
+      expect(state.round, 3);
+      expect(state.cp, 3, reason: '4 gained, 1 spent');
+      expect(state.hasUsedStratagem('u01', phase: 'shooting'), isTrue);
+    });
+
+    test('undo persists as a shorter log', () async {
+      await store.save(reference);
+      final log = const core.BattleLog().add(const core.SetRound(4));
+      await store.saveBattle(reference.id, log);
+      await store.saveBattle(reference.id, log.undo());
+
+      expect((await store.loadBattle(reference.id)).state.round, 1);
+    });
+
+    test('clearing a battle leaves the roster intact', () async {
+      await store.save(reference);
+      await store.saveBattle(
+          reference.id, const core.BattleLog().add(const core.SetRound(2)));
+      await store.clearBattle(reference.id);
+
+      expect((await store.loadBattle(reference.id)).events, isEmpty);
+      expect(await store.load(reference.id), isNotNull);
+    });
+
+    test('recorded casualties shrink the weapon table', () async {
+      await store.save(reference);
+      await store.saveBattle(
+        reference.id,
+        const core.BattleLog()
+            .add(const core.SetModelsRemaining(instanceId: 'u02', models: 2)),
+      );
+
+      final army = (await store.load(reference.id))!;
+      final state = (await store.loadBattle(reference.id)).state;
+      final attached = army.combatUnits
+          .firstWhere((u) => u.label == 'Attached Unit 1');
+
+      final full = attached.weapons(core.WeaponKind.ranged);
+      final wounded = attached.weapons(core.WeaponKind.ranged,
+          modelsRemaining: state.modelsRemaining);
+
+      expect(full.weapons.map((w) => w.attacks.fixed), containsAll([8, 12]));
+      expect(wounded.weapons.map((w) => w.attacks.fixed), containsAll([8, 8]),
+          reason: 'two of three Crisis suits left, so 4 pods not 6');
+    });
+  });
+
   test('stored documents are verbatim, not re-derived', () async {
     // A snapshot's value is that a later build can read a list saved today,
     // so the bytes must go in and come back unchanged.

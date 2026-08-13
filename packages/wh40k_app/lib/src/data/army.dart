@@ -124,8 +124,15 @@ class CombatUnit {
     return out;
   }
 
-  AggregationResult weapons(WeaponKind kind) =>
-      WeaponAggregator(army.catalogue).aggregate(group, kind: kind);
+  AggregationResult weapons(
+    WeaponKind kind, {
+    Map<String, int> modelsRemaining = const {},
+  }) =>
+      WeaponAggregator(army.catalogue).aggregate(
+        group,
+        kind: kind,
+        modelsRemaining: modelsRemaining,
+      );
 
   List<RenderedRule> get rules {
     final seen = <String>{};

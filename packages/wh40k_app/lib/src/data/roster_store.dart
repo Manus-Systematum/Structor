@@ -20,6 +20,20 @@ class RosterStore {
 
   Future<List<RosterRow>> list() => db.allRosters();
 
+  /// The battle in progress for [rosterId], or an empty log if none.
+  Future<core.BattleLog> loadBattle(String rosterId) async {
+    final row = await db.rosterById(rosterId);
+    final json = row?.battleLogJson;
+    if (json == null) return const core.BattleLog();
+    return core.BattleLog.fromJson(jsonDecode(json));
+  }
+
+  Future<void> saveBattle(String rosterId, core.BattleLog log) =>
+      db.saveBattleLog(rosterId, jsonEncode(log.toJson()));
+
+  Future<void> clearBattle(String rosterId) =>
+      db.saveBattleLog(rosterId, null);
+
   Future<void> delete(String id) => db.deleteRoster(id);
 
   /// Rehydrates a saved roster into something the screens can render.

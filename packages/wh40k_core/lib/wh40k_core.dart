@@ -4,6 +4,8 @@
 /// server (DESIGN.md §2).
 library;
 
+export 'src/battle/battle_event.dart';
+export 'src/battle/battle_state.dart';
 export 'src/content/content_hash.dart';
 export 'src/content/dataset.dart';
 export 'src/content/roster_snapshot.dart';

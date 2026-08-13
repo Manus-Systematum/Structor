@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wh40k_core/wh40k_core.dart';
 
 import 'src/data/army.dart';
 import 'src/data/database.dart';
@@ -54,6 +55,22 @@ class ArmyPage extends StatefulWidget {
 class _ArmyPageState extends State<ArmyPage> {
   late final Future<Army?> _army = widget.store.load(widget.rosterId);
   int _tab = 0;
+  BattleLog _log = const BattleLog();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.store.loadBattle(widget.rosterId).then((log) {
+      if (mounted) setState(() => _log = log);
+    });
+  }
+
+  /// Every change appends to the log and persists it, so a game survives the
+  /// app being killed mid-turn (DESIGN.md §7.4).
+  Future<void> _apply(BattleLog next) async {
+    setState(() => _log = next);
+    await widget.store.saveBattle(widget.rosterId, next);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +95,12 @@ class _ArmyPageState extends State<ArmyPage> {
               index: _tab,
               children: [
                 ArmyScreen(army: army),
-                TurnScreen(army: army),
+                TurnScreen(
+                  army: army,
+                  log: _log,
+                  onEvent: (event) => _apply(_log.add(event)),
+                  onUndo: () => _apply(_log.undo()),
+                ),
               ],
             );
           },
