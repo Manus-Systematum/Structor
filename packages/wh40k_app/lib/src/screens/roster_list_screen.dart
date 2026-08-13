@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/database.dart';
 import '../data/dataset_repository.dart';
 import '../data/roster_store.dart';
+import 'about_screen.dart';
 import 'import_screen.dart';
 
 /// Saved rosters. The app's front door.
@@ -23,7 +24,20 @@ class RosterListScreen extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Structor')),
+      appBar: AppBar(
+        title: const Text('Structor'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: 'About',
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => AboutScreen(datasets: datasets),
+              ),
+            ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           final army = await Navigator.of(context).push(

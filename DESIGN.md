@@ -1082,4 +1082,15 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 
 > ⚠ **The manifest is not signed.** §3.4 asks for one; this is integrity only. A SHA-256 proves the bytes arrived intact, not that they came from you. Worth adding before the manifest is served from anywhere outside the project's control.
 
+**Done — release readiness:**
+
+- About screen carrying the **"Powered by 40kdc-data"** attribution and link, which 40kdc's licence obliges any public deployment to display. A TestFlight build counts, so this was a genuine blocker rather than a nicety. **A test asserts the phrase verbatim** — if it fails the app is out of compliance, and the screen is what should change.
+- The same screen surfaces the dataset revision, bundle sizes, the Games Workshop disclaimer, a plain statement that nothing is collected, and the **provisional dataslate warning** §3.0 requires be visible rather than presented as current.
+- Build number scheme: `version: 0.1.0+2`. App Store Connect refuses a build number it has already accepted, so it increments on every upload regardless of the version.
+- iOS deployment target raised 13.0 → 15.0, ahead of Apple's Spring 2027 cutoff.
+- Bundle identifier settled as `dev.structor.app` on both platforms — permanent once App Store Connect has used it, and no longer carrying a Warhammer reference.
+- 35 app tests.
+
+**First TestFlight upload succeeded**, which validates enrolment, the app record, signing, archive and export end to end.
+
 **Next:** the stratagem screen — §7.3's third page and the last major surface of the play mode. The data has phases, CP costs and timing, and `BattleState.hasUsedStratagem` already enforces the one-per-phase rule; nothing is showing it yet.

@@ -1,0 +1,207 @@
+import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:wh40k_core/wh40k_core.dart';
+
+import '../data/dataset_repository.dart';
+
+/// Credits, attribution and provenance.
+///
+/// This screen is **required**, not decorative. 40kdc-data's licence obliges
+/// any public deployment to display "Powered by 40kdc-data" with a link, and a
+/// TestFlight build counts. The rules data the entire app runs on comes from
+/// there (DESIGN.md §3.0).
+///
+/// It also surfaces the dataset revision and whether any of it is still on a
+/// provisional dataslate, which §3.0 requires be visible rather than presented
+/// as current.
+class AboutScreen extends StatefulWidget {
+  final DatasetRepository datasets;
+
+  const AboutScreen({super.key, required this.datasets});
+
+  @override
+  State<AboutScreen> createState() => _AboutScreenState();
+}
+
+class _AboutScreenState extends State<AboutScreen> {
+  PackageInfo? _package;
+  DatasetManifest? _manifest;
+  bool? _provisional;
+
+  @override
+  void initState() {
+    super.initState();
+    PackageInfo.fromPlatform().then((info) {
+      if (mounted) setState(() => _package = info);
+    });
+    widget.datasets.manifest().then((manifest) {
+      if (mounted) setState(() => _manifest = manifest);
+    });
+    widget.datasets.faction('tau-empire').then((dataset) {
+      if (mounted) setState(() => _provisional = dataset.hasProvisionalContent);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final package = _package;
+    final manifest = _manifest;
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('About')),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
+        children: [
+          const Text('Structor',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800)),
+          Text(
+            package == null
+                ? 'version …'
+                : 'version ${package.version} (build ${package.buildNumber})',
+            style: TextStyle(fontSize: 13, color: scheme.onSurfaceVariant),
+          ),
+          const SizedBox(height: 4),
+          Text('A companion for Warhammer 40,000, 11th edition.',
+              style: TextStyle(fontSize: 13, color: scheme.onSurfaceVariant)),
+
+          const _Heading('Rules data'),
+          // The licence requires this exact phrase and a link. Do not reword.
+          const Text('Powered by 40kdc-data',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 2),
+          const SelectableText('https://40kdc.alpacasoft.dev',
+              style: TextStyle(fontSize: 13)),
+          const SizedBox(height: 10),
+          const _Body(
+            'Datasheets, weapons, abilities, missions and stratagems come from '
+            'the 40kdc-data project, licensed CC BY 4.0 © Alpaca Software and '
+            'the 40kdc community contributors. Its schemas are CC0. Changes '
+            'were made: the data is repackaged into compressed bundles and '
+            'rendered by this app.',
+          ),
+          if (manifest != null) ...[
+            const SizedBox(height: 10),
+            _Row(label: 'Dataset', value: manifest.generated),
+            for (final bundle in manifest.bundles)
+              _Row(
+                  label: bundle.name,
+                  value: '${(bundle.bytes / 1024).toStringAsFixed(0)} KB'),
+          ],
+          if (_provisional == true) ...[
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: scheme.tertiaryContainer,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.warning_amber,
+                      size: 16, color: scheme.onTertiaryContainer),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Some of this data is on a pre-launch provisional '
+                      'dataslate, carried over from 10th edition. Check '
+                      'anything that matters against your own book.',
+                      style: TextStyle(
+                          fontSize: 12,
+                          height: 1.35,
+                          color: scheme.onTertiaryContainer),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+
+          const _Heading('Rules text'),
+          const _Body(
+            'Mission and ability descriptions are original summaries written '
+            'by the 40kdc project, not Games Workshop’s printed wording. They '
+            'are enough to play from, but they are not authoritative — for a '
+            'rules dispute, use the card or the book.',
+          ),
+
+          const _Heading('Trademarks'),
+          const _Body(
+            'Warhammer 40,000 and all associated names, marks and imagery are '
+            '© Games Workshop Limited. This app is unofficial and is neither '
+            'endorsed by nor affiliated with Games Workshop. No Games '
+            'Workshop rules text is distributed with it.',
+          ),
+
+          const _Heading('Privacy'),
+          const _Body(
+            'Structor collects nothing. There are no accounts, no analytics '
+            'and no tracking. Your rosters and games stay on this device.',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Heading extends StatelessWidget {
+  final String text;
+
+  const _Heading(this.text);
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.fromLTRB(0, 24, 0, 8),
+        child: Text(text.toUpperCase(),
+            style: TextStyle(
+              fontSize: 11,
+              letterSpacing: 1.1,
+              fontWeight: FontWeight.w800,
+              color: Theme.of(context).colorScheme.primary,
+            )),
+      );
+}
+
+class _Body extends StatelessWidget {
+  final String text;
+
+  const _Body(this.text);
+
+  @override
+  Widget build(BuildContext context) => Text(
+        text,
+        style: TextStyle(
+          fontSize: 12.5,
+          height: 1.4,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+      );
+}
+
+class _Row extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const _Row({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(label,
+                style:
+                    TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
+          ),
+          Text(value,
+              style: const TextStyle(
+                  fontSize: 12, fontWeight: FontWeight.w600)),
+        ],
+      ),
+    );
+  }
+}

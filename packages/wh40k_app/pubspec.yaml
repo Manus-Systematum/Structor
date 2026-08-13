@@ -1,7 +1,10 @@
 name: wh40k_app
 description: Warhammer 40,000 11th edition companion — army builder and play mode.
 publish_to: none
-version: 0.1.0
+# The part after "+" is the build number. App Store Connect refuses a build
+# number it has already accepted, so increment it on EVERY upload — even when
+# the version before it is unchanged.
+version: 0.1.0+2
 
 environment:
   sdk: ^3.4.0
@@ -10,6 +13,7 @@ dependencies:
   drift: ^2.34.3
   flutter:
     sdk: flutter
+  package_info_plus: ^10.2.1
   path: ^1.9.1
   path_provider: ^2.1.6
   sqlite3_flutter_libs: ^0.6.0+eol

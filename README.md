@@ -35,6 +35,19 @@ Fetch other factions by id:
 tools/fetch-40kdc.sh necrons aeldari
 ```
 
+## Releasing to TestFlight
+
+```bash
+cd packages/wh40k_app && flutter build ipa
+```
+
+**Increment the build number on every upload.** `pubspec.yaml` carries it after
+the `+` — `0.1.0+2`. App Store Connect refuses a build number it has already
+accepted, even when the version before it is unchanged.
+
+The app's About screen carries the attribution the data licence requires, and
+a test asserts it verbatim. Do not remove it.
+
 ## Data and attribution
 
 Rules data comes from [40kdc-data](https://github.com/wn-mitch/40kdc-data),
