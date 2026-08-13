@@ -1,0 +1,223 @@
+/// Compares the primary dataset against the Munitorum points (DESIGN.md §3.0).
+///
+/// The point is **independence**. `40kdc-data` is community-transcribed;
+/// `wh40k-11e-mfm` is parsed from Games Workshop's own published points page.
+/// Where two separately derived lineages disagree, one of them is wrong, and
+/// the disagreement is a higher-quality signal than either source auditing
+/// itself.
+///
+/// This is exactly how the enhancement-slot discrepancy of §3.2 would have
+/// been caught automatically rather than by hand.
+///
+/// Nothing here decides who is right. It reports the divergence and leaves the
+/// judgement to a person — a cross-check that silently picked a winner would
+/// just be a second, quieter source of error.
+library;
+
+import '../import/name_match.dart';
+import '../source/source_models.dart';
+import 'mfm.dart';
+
+enum DivergenceKind {
+  unitPoints,
+  unitMissing,
+  detachmentPoints,
+  detachmentDisposition,
+  detachmentUniqueTag,
+  enhancementPoints,
+}
+
+class Divergence {
+  final DivergenceKind kind;
+  final String subject;
+  final String primary;
+  final String munitorum;
+
+  const Divergence({
+    required this.kind,
+    required this.subject,
+    required this.primary,
+    required this.munitorum,
+  });
+
+  @override
+  String toString() =>
+      '${kind.name.padRight(24)} $subject\n'
+      '${' ' * 26}40kdc: $primary\n'
+      '${' ' * 26}MFM:   $munitorum';
+}
+
+class CrossCheckReport {
+  final String factionId;
+  final String mfmVersion;
+  final int unitsCompared;
+  final int detachmentsCompared;
+  final List<Divergence> divergences;
+
+  /// Units in the Munitorum list with no counterpart in the primary data.
+  /// Legends entries are excluded — the app does not carry them.
+  final List<String> unmatched;
+
+  const CrossCheckReport({
+    required this.factionId,
+    required this.mfmVersion,
+    required this.unitsCompared,
+    required this.detachmentsCompared,
+    required this.divergences,
+    required this.unmatched,
+  });
+
+  bool get agrees => divergences.isEmpty;
+}
+
+class CrossChecker {
+  final Iterable<SourceUnit> units;
+  final Iterable<SourceDetachment> detachments;
+
+  /// Enhancement id → points, from the primary data.
+  final Map<String, int> enhancementPoints;
+
+  /// Enhancement id → display name, so divergences read sensibly.
+  final Map<String, String> enhancementNames;
+
+  const CrossChecker({
+    required this.units,
+    required this.detachments,
+    this.enhancementPoints = const {},
+    this.enhancementNames = const {},
+  });
+
+  CrossCheckReport compare(MfmFaction mfm, {required String factionId}) {
+    final divergences = <Divergence>[];
+    final unmatched = <String>[];
+    var unitsCompared = 0;
+
+    for (final mfmUnit in mfm.units) {
+      if (mfmUnit.isLegends) continue;
+
+      final match = bestMatch<SourceUnit>(
+        mfmUnit.name,
+        units,
+        (u) => u.name,
+        threshold: 0.75,
+      );
+      if (match == null) {
+        unmatched.add(mfmUnit.name);
+        continue;
+      }
+      unitsCompared++;
+
+      // Resolve through bracketFor rather than keying on the model count:
+      // a primary bracket may cover a range (4-6 models) where the Munitorum
+      // lists the endpoint (6), and exact-matching reports every such bracket
+      // as missing.
+      for (final entry in mfmUnit.costTable.entries) {
+        final (copies, models) = entry.key;
+        final mine = match.value
+            .bracketFor(models: models, copyIndex: copies)
+            ?.cost;
+        if (mine == null) {
+          divergences.add(Divergence(
+            kind: DivergenceKind.unitMissing,
+            subject: '${match.value.name} — $models models, copies $copies+',
+            primary: 'no such bracket',
+            munitorum: '${entry.value} pts',
+          ));
+        } else if (mine != entry.value) {
+          divergences.add(Divergence(
+            kind: DivergenceKind.unitPoints,
+            subject: '${match.value.name} — $models models, copies $copies+',
+            primary: '$mine pts',
+            munitorum: '${entry.value} pts',
+          ));
+        }
+      }
+    }
+
+    var detachmentsCompared = 0;
+    for (final mfmDetachment in mfm.detachments) {
+      final match = bestMatch<SourceDetachment>(
+        mfmDetachment.name,
+        detachments,
+        (d) => d.name,
+        threshold: 0.75,
+      );
+      if (match == null) continue;
+      detachmentsCompared++;
+      final ours = match.value;
+
+      if (ours.detachmentPoints != mfmDetachment.dp) {
+        divergences.add(Divergence(
+          kind: DivergenceKind.detachmentPoints,
+          subject: ours.name,
+          primary: '${ours.detachmentPoints} DP',
+          munitorum: '${mfmDetachment.dp} DP',
+        ));
+      }
+
+      final objective = mfmDetachment.objective;
+      if (objective != null) {
+        final wanted = normalise(objective).replaceAll(' ', '-');
+        if (!ours.forceDispositions.contains(wanted)) {
+          divergences.add(Divergence(
+            kind: DivergenceKind.detachmentDisposition,
+            subject: ours.name,
+            primary: ours.forceDispositions.join(', '),
+            munitorum: wanted,
+          ));
+        }
+      }
+
+      // A unique tag governs which detachments can be combined, so a missing
+      // one silently permits an illegal army.
+      final unique = mfmDetachment.unique;
+      final oursTags = ours.uniqueTags.map(normalise).toSet();
+      final tagMatches = unique != null &&
+          ours.uniqueTags.any((t) => scoreName(unique, t) >= 0.85);
+      if (unique != null && !tagMatches) {
+        divergences.add(Divergence(
+          kind: DivergenceKind.detachmentUniqueTag,
+          subject: ours.name,
+          primary: ours.uniqueTags.isEmpty ? 'none' : ours.uniqueTags.join(', '),
+          munitorum: unique,
+        ));
+      } else if (unique == null && oursTags.isNotEmpty) {
+        divergences.add(Divergence(
+          kind: DivergenceKind.detachmentUniqueTag,
+          subject: ours.name,
+          primary: ours.uniqueTags.join(', '),
+          munitorum: 'none',
+        ));
+      }
+
+      for (final mfmEnhancement in mfmDetachment.enhancements) {
+        final ids = ours.enhancementIds;
+        final enhancementMatch = bestMatch<String>(
+          mfmEnhancement.name,
+          ids,
+          (id) => enhancementNames[id] ?? id.replaceAll('-', ' '),
+          threshold: 0.7,
+        );
+        if (enhancementMatch == null) continue;
+        final mine = enhancementPoints[enhancementMatch.value];
+        if (mine != null && mine != mfmEnhancement.points) {
+          divergences.add(Divergence(
+            kind: DivergenceKind.enhancementPoints,
+            subject: '${ours.name} — ${mfmEnhancement.name}',
+            primary: '$mine pts',
+            munitorum: '${mfmEnhancement.points} pts',
+          ));
+        }
+      }
+    }
+
+    return CrossCheckReport(
+      factionId: factionId,
+      mfmVersion: mfm.version,
+      unitsCompared: unitsCompared,
+      detachmentsCompared: detachmentsCompared,
+      divergences: divergences,
+      unmatched: unmatched,
+    );
+  }
+}

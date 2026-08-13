@@ -27,7 +27,7 @@ Games Workshop's rules text is copyrighted. The app therefore ships with **no bu
 >
 > Worth holding that second point at the right strength: it is **permission, not a licence**. A maintainer's statement in an issue does not set terms, does not obviously bind every contributor who holds copyright in their own contributions, and is not as durable as a file in the repository. The useful follow-up is to ask them to add an actual `LICENSE` — the reply suggests they would be receptive, and it would settle it for every downstream project rather than just this one.
 >
-> What it unblocks here is the **cross-check** of §3.0: validating 40kdc's points and constraints against BSData and the MFM, where two independently derived lineages disagreeing is a high-quality data signal. That reads BSData rather than redistributing it, which is the weakest claim on a licence and the case the reply most comfortably covers.
+> What it unblocked was the **cross-check**, now built — though against a better source than the catalogue repo. See §3.5.
 >
 > ⚠ **Original finding, kept for the record.** `BSData/wh40k-11e` has **no `LICENSE`, `LICENSE.md` or `LICENSE.txt` at the repository root** (all three returned 404, checked 2026-08-11).
 
@@ -227,6 +227,25 @@ That is a more developed version of §2.1's `effects[]`, and it is what makes §
 #### Resulting architecture
 
 **`40kdc-data` primary, BSData/MFM as an independent verification source.** Two lineages disagreeing on a points value or a constraint is a high-quality data signal, and it reuses the override-and-assert machinery already specified in §3.3 step 5. The coverage report becomes a three-way diff: 40kdc vs. BSData vs. the hand-maintained rules table.
+
+### 3.5 Cross-checking against the Munitorum
+
+`BSData/wh40k-11e-mfm` is **MIT licensed** — unlike the catalogue repo — and is parsed from `mfm.warhammer-community.com`, Games Workshop's own published points. That makes it a better cross-check than the catalogue: independent of 40kdc, unambiguously licensed, and closer to the source of truth for points.
+
+`tools/fetch-mfm.sh` retrieves it; `bin/crosscheck.dart` compares. **Nothing from it is shipped.** It exists to answer one question: where do two independently derived lineages disagree?
+
+Compared: unit points per (copy index, model count) bracket, detachment points, force disposition, unique tags, and enhancement costs.
+
+> **The cross-check does not decide who is right.** It reports and leaves the judgement to a person. One that silently picked a winner would just be a second, quieter source of error.
+
+**Results.** Necrons: 52 units and 12 detachments, **no divergence at all**. T'au: one real finding — the unique tag on Retaliation Cadre and Experimental Prototype Cadre is `retaliation` in 40kdc and `Battlesuit` in the Munitorum. Both sources agree the two detachments *share* a tag, so validation behaves identically either way; only the name differs. Worth reporting upstream.
+
+Two lessons came from its own false positives, and both are now pinned by test:
+
+- **Match model counts through `bracketFor`, not by key.** A primary bracket may cover 4–6 models where the Munitorum lists the endpoint; exact-matching reported every such bracket as missing.
+- **Exclude `addon: true` entries.** A Tidewall Defence Platform is priced at the same model count as the unit it attaches to, so treating it as the unit's cost made the unit look 65 points cheaper.
+
+That is the pattern to expect from any cross-check: the first run is mostly your own bugs, and the real signal only appears once they are weeded out.
 
 ### 3.1 Upstream sources (BSData — now the cross-check, not the primary)
 

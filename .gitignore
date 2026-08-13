@@ -20,3 +20,6 @@ packages/wh40k_app/.flutter-plugins-dependencies
 
 # Built dataset bundles — regenerate with packages/wh40k_core/bin/bundle.dart
 dist/
+
+# Cross-check source — refetch with tools/fetch-mfm.sh
+data/mfm/

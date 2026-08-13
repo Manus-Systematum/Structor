@@ -35,8 +35,12 @@ String normalise(String value) {
 List<String> tokens(String value) =>
     normalise(value).split(' ').where((t) => t.isNotEmpty).toList();
 
-/// Naive singularisation, enough for `Missile drones` against `missile drone`.
+/// Naive singularisation, enough for `Missile drones` against `missile drone`
+/// and `auxiliaries` against `Auxiliary`.
 String _singular(String token) {
+  if (token.length > 4 && token.endsWith('ies')) {
+    return '${token.substring(0, token.length - 3)}y';
+  }
   if (token.length > 3 && token.endsWith('s') && !token.endsWith('ss')) {
     return token.substring(0, token.length - 1);
   }
