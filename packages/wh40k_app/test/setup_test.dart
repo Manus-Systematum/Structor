@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wh40k_app/src/data/army.dart';
-import 'package:wh40k_app/src/data/bundled_faction.dart';
+import 'package:wh40k_app/src/data/dataset_repository.dart';
 import 'package:wh40k_app/src/screens/setup_screen.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
@@ -12,7 +12,7 @@ void main() {
   setUpAll(() async {
     TestWidgetsFlutterBinding.ensureInitialized();
     army = await Army.loadReference();
-    pack = await BundledFaction.missions();
+    pack = await DatasetRepository().missions();
   });
 
   /// A tall surface so the whole form is laid out and hit-testable, rather

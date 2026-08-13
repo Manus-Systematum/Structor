@@ -1069,4 +1069,17 @@ Verified by test on the reference army: declaring **Reconnaissance** against Tak
 
 > **Data gap: there is no twist data upstream.** No file publishes them, so the twist is free text the player records rather than a picker over a list that does not exist. It is optional anyway.
 
-**Next:** dataset distribution (§3.4). It now has three callers — import, any second faction, and the mission pack — and 408 KB of assets in the binary standing in for it.
+**Done — dataset distribution (§3.4):**
+
+- `src/content/bundle.dart` — bundle and manifest format. One gzipped JSON document per faction plus a shared core bundle, listed in a manifest with sizes and SHA-256 hashes.
+- `bin/bundle.dart` — builds a complete static site from a snapshot. Copy the output to Pages, a Release or a bucket.
+- App `DatasetRepository` — resolves **cache → shipped assets → network**, verifying every download against its hash before caching. One code path regardless of where the data came from.
+- 167 core tests, 31 app tests.
+
+**Gzip changes the arithmetic.** T'au was 296 KB of loose JSON assets; as a bundle it is 26 KB. All three factions plus core come to 143 KB, and the app's asset payload dropped from 408 KB to 228 KB *while gaining two factions*. Adding a faction now costs tens of kilobytes, not hundreds.
+
+The remote source is written but **inert** — nothing is hosted, so `baseUrl` is unset and the repository falls through to the shipped bundles. Publishing is now a configuration change rather than an architectural one, and the shipped bundles keep the app working offline on first launch regardless.
+
+> ⚠ **The manifest is not signed.** §3.4 asks for one; this is integrity only. A SHA-256 proves the bytes arrived intact, not that they came from you. Worth adding before the manifest is served from anywhere outside the project's control.
+
+**Next:** the stratagem screen — §7.3's third page and the last major surface of the play mode. The data has phases, CP costs and timing, and `BattleState.hasUsedStratagem` already enforces the one-per-phase rule; nothing is showing it yet.

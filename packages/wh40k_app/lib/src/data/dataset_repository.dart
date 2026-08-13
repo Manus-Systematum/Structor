@@ -1,0 +1,233 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+import 'package:wh40k_core/wh40k_core.dart';
+
+/// Somewhere bundles can come from (DESIGN.md §3.4).
+///
+/// The seam exists so the app has **one** code path whether data is baked into
+/// the binary, cached on disk or downloaded. Before this, faction data was
+/// read straight out of assets and a second faction meant a bigger binary and
+/// a store release for every points update.
+abstract interface class BundleSource {
+  Future<DatasetManifest?> manifest();
+
+  Future<List<int>?> fetch(BundleEntry entry);
+}
+
+/// Bundles shipped inside the app. Always present, so the app works on first
+/// launch with no network.
+class AssetBundleSource implements BundleSource {
+  const AssetBundleSource();
+
+  @override
+  Future<DatasetManifest?> manifest() async {
+    try {
+      final raw = await rootBundle.loadString('assets/bundles/manifest.json');
+      return DatasetManifest.fromJson(jsonDecode(raw));
+    } on FlutterError {
+      return null;
+    }
+  }
+
+  @override
+  Future<List<int>?> fetch(BundleEntry entry) async {
+    try {
+      final data = await rootBundle.load('assets/bundles/${entry.file}');
+      return data.buffer.asUint8List();
+    } on FlutterError {
+      return null;
+    }
+  }
+}
+
+/// Bundles served over HTTP.
+///
+/// Inert until a base URL is configured — nothing is hosted yet. It exists now
+/// so that publishing is a configuration change rather than an architecture
+/// one.
+class HttpBundleSource implements BundleSource {
+  final Uri? baseUrl;
+  final HttpClient _client;
+
+  HttpBundleSource(this.baseUrl, {HttpClient? client})
+      : _client = client ?? HttpClient();
+
+  bool get isConfigured => baseUrl != null;
+
+  Future<List<int>?> _get(String path) async {
+    final base = baseUrl;
+    if (base == null) return null;
+    try {
+      final request = await _client.getUrl(base.resolve(path));
+      final response = await request.close();
+      if (response.statusCode != 200) return null;
+      final bytes = <int>[];
+      await for (final chunk in response) {
+        bytes.addAll(chunk);
+      }
+      return bytes;
+    } on Exception {
+      return null;
+    }
+  }
+
+  @override
+  Future<DatasetManifest?> manifest() async {
+    final bytes = await _get('manifest.json');
+    if (bytes == null) return null;
+    return DatasetManifest.fromJson(jsonDecode(utf8.decode(bytes)));
+  }
+
+  @override
+  Future<List<int>?> fetch(BundleEntry entry) => _get(entry.file);
+}
+
+/// Downloaded bundles on disk.
+class BundleCache {
+  final Directory dir;
+
+  BundleCache(this.dir);
+
+  static Future<BundleCache> open() async {
+    final support = await getApplicationSupportDirectory();
+    final dir = Directory(p.join(support.path, 'datasets'));
+    if (!dir.existsSync()) dir.createSync(recursive: true);
+    return BundleCache(dir);
+  }
+
+  File _file(BundleEntry entry) => File(p.join(dir.path, entry.file));
+
+  /// Returns the cached bytes only if they hash to what the manifest expects.
+  /// A corrupt or superseded file is treated as absent rather than trusted.
+  List<int>? read(BundleEntry entry) {
+    final file = _file(entry);
+    if (!file.existsSync()) return null;
+    final bytes = file.readAsBytesSync();
+    if (sha256Of(bytes) != entry.sha256) return null;
+    return bytes;
+  }
+
+  void write(BundleEntry entry, List<int> bytes) =>
+      _file(entry).writeAsBytesSync(bytes);
+
+  void clear() {
+    if (dir.existsSync()) dir.deleteSync(recursive: true);
+    dir.createSync(recursive: true);
+  }
+}
+
+/// Resolves datasets from cache, then the shipped assets, then the network.
+class DatasetRepository {
+  final BundleSource assets;
+  final BundleSource? remote;
+  final BundleCache? cache;
+
+  DatasetManifest? _manifest;
+  final Map<String, DatasetBundle> _loaded = {};
+  Dataset? _faction;
+  MissionPack? _missions;
+
+  DatasetRepository({
+    this.assets = const AssetBundleSource(),
+    this.remote,
+    this.cache,
+  });
+
+  /// The manifest in force. Prefers the remote one when reachable, so a
+  /// published update is picked up without shipping a build; falls back to
+  /// what the binary carries.
+  Future<DatasetManifest> manifest() async {
+    final cached = _manifest;
+    if (cached != null) return cached;
+
+    final fromRemote = await remote?.manifest();
+    if (fromRemote != null && !fromRemote.isFuture) {
+      return _manifest = fromRemote;
+    }
+
+    final fromAssets = await assets.manifest();
+    if (fromAssets == null) {
+      throw StateError('no dataset manifest in assets or from the network');
+    }
+    // A manifest from a newer builder is refused rather than half-read.
+    if (fromAssets.isFuture) {
+      throw StateError(
+          'manifest schema ${fromAssets.schema} is newer than this build');
+    }
+    return _manifest = fromAssets;
+  }
+
+  Future<List<BundleEntry>> availableFactions() async =>
+      (await manifest()).factions;
+
+  Future<DatasetBundle> bundle(String id) async {
+    final loaded = _loaded[id];
+    if (loaded != null) return loaded;
+
+    final entry = (await manifest()).entry(id);
+    if (entry == null) throw StateError('no bundle "$id" in the manifest');
+
+    final bytes = cache?.read(entry) ??
+        await assets.fetch(entry) ??
+        await _download(entry);
+    if (bytes == null) throw StateError('bundle "$id" is unavailable');
+
+    return _loaded[id] = DatasetBundle.decode(bytes);
+  }
+
+  Future<List<int>?> _download(BundleEntry entry) async {
+    final bytes = await remote?.fetch(entry);
+    if (bytes == null) return null;
+    // Verify before caching: a bad download must not become a bad cache.
+    if (sha256Of(bytes) != entry.sha256) return null;
+    cache?.write(entry, bytes);
+    return bytes;
+  }
+
+  Future<Dataset> faction(String id) async {
+    final cached = _faction;
+    if (cached != null && cached.version.factionId == id) return cached;
+
+    final data = await bundle(id);
+    List<Object?> file(String name) => data.file(name);
+
+    final faction = FactionData(
+      factionId: id,
+      units: file('units').map(SourceUnit.fromJson).toList(),
+      weapons: file('weapons').map(SourceWeapon.fromJson).toList(),
+      detachments: file('detachments').map(SourceDetachment.fromJson).toList(),
+      stratagems: file('stratagems').map(SourceStratagem.fromJson).toList(),
+      abilities: file('abilities').map(SourceAbility.fromJson).toList(),
+      phaseMappings:
+          file('phase-mappings').map(PhaseMapping.fromJson).toList(),
+      leaderAttachments:
+          file('leader-attachments').map(LeaderAttachment.fromJson).toList(),
+      enhancementIds: {
+        for (final raw in file('enhancements'))
+          if (raw is Map && raw['id'] != null) raw['id'].toString(),
+      },
+      missingFiles: const [],
+    );
+
+    return _faction = Dataset.of(faction, revision: data.revision);
+  }
+
+  Future<MissionPack> missions() async {
+    final cached = _missions;
+    if (cached != null) return cached;
+
+    final data = await bundle('core');
+    return _missions = MissionPack.fromJson(
+      dispositions: data.file('force-dispositions'),
+      missions: data.file('missions'),
+      matchups: data.file('mission-matchups'),
+      cards: data.file('secondary-cards'),
+      deployments: data.file('deployment-patterns'),
+    );
+  }
+}

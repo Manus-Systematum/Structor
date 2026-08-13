@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
 import '../data/database.dart';
+import '../data/dataset_repository.dart';
 import '../data/roster_store.dart';
 import 'import_screen.dart';
 
 /// Saved rosters. The app's front door.
 class RosterListScreen extends StatelessWidget {
   final RosterStore store;
+  final DatasetRepository datasets;
   final void Function(String rosterId) onOpen;
 
   const RosterListScreen({
     super.key,
     required this.store,
+    required this.datasets,
     required this.onOpen,
   });
 
@@ -24,7 +27,7 @@ class RosterListScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           final army = await Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const ImportScreen()),
+            MaterialPageRoute(builder: (_) => ImportScreen(datasets: datasets)),
           );
           if (army != null) await store.save(army);
         },

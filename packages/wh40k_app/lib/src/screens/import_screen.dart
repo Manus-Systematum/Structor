@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart' as core;
 
 import '../data/army.dart';
-import '../data/bundled_faction.dart';
+import '../data/dataset_repository.dart';
 
 /// Paste a text export, review what the importer made of it, then save.
 ///
@@ -11,7 +11,14 @@ import '../data/bundled_faction.dart';
 /// placed, because an importer that quietly drops a unit is worse than one
 /// that refuses.
 class ImportScreen extends StatefulWidget {
-  const ImportScreen({super.key});
+  final DatasetRepository datasets;
+  final String factionId;
+
+  const ImportScreen({
+    super.key,
+    required this.datasets,
+    this.factionId = 'tau-empire',
+  });
 
   @override
   State<ImportScreen> createState() => _ImportScreenState();
@@ -36,13 +43,13 @@ class _ImportScreenState extends State<ImportScreen> {
       _failure = null;
     });
     try {
-      final dataset = await BundledFaction.load();
+      final dataset = await widget.datasets.faction(widget.factionId);
       final parsed = const core.TextListParser().parse(_controller.text);
       final result = core.RosterResolver(
         dataset,
         abilityLookup: dataset.ability,
         knownAbilities: dataset.faction.abilities,
-      ).resolve(parsed, factionId: BundledFaction.factionId);
+      ).resolve(parsed, factionId: widget.factionId);
 
       // The saved roster carries its own snapshot, so it stays renderable once
       // the bundled dataset changes or goes away (§2.2).

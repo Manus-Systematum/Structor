@@ -17,3 +17,6 @@ packages/wh40k_app/build/
 packages/wh40k_app/ios/Flutter/ephemeral/
 packages/wh40k_app/ios/Pods/
 packages/wh40k_app/.flutter-plugins-dependencies
+
+# Built dataset bundles — regenerate with packages/wh40k_core/bin/bundle.dart
+dist/

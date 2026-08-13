@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "generated": "2026-08-13",
+  "source": "40kdc-data",
+  "bundles": [
+    {
+      "id": "core",
+      "kind": "core",
+      "name": "Core rules data",
+      "file": "core.json.gz",
+      "sha256": "2d4c5339d1848377da5aa86961acff2c501e63024db0695300ecba556611ea1c",
+      "bytes": 10491,
+      "revision": "2026-08-13"
+    },
+    {
+      "id": "adeptus-astartes",
+      "kind": "faction",
+      "name": "Adeptus Astartes",
+      "file": "adeptus-astartes.json.gz",
+      "sha256": "5966ce707ce92463998555d81271487179ac284f006a1e95b9b5e3c217006875",
+      "bytes": 78834,
+      "revision": "2026-08-13"
+    },
+    {
+      "id": "necrons",
+      "kind": "faction",
+      "name": "Necrons",
+      "file": "necrons.json.gz",
+      "sha256": "8820977083aff56e88e59ab305cec2e335fbbad7e0783976da408d33a0ba4fc5",
+      "bytes": 30619,
+      "revision": "2026-08-13"
+    },
+    {
+      "id": "tau-empire",
+      "kind": "faction",
+      "name": "Tau Empire",
+      "file": "tau-empire.json.gz",
+      "sha256": "fb93d8489fda66c7ac14bdaa4beab95c163a08e703e4a2479db20874c007c268",
+      "bytes": 26678,
+      "revision": "2026-08-13"
+    }
+  ]
+}

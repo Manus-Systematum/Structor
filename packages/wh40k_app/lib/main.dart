@@ -5,7 +5,7 @@ import 'src/data/army.dart';
 import 'src/data/database.dart';
 import 'src/data/roster_store.dart';
 import 'src/screens/army_screen.dart';
-import 'src/data/bundled_faction.dart';
+import 'src/data/dataset_repository.dart';
 import 'src/screens/roster_list_screen.dart';
 import 'src/screens/setup_screen.dart';
 import 'src/screens/turn_screen.dart';
@@ -15,13 +15,19 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final store = RosterStore(await openAppDatabase());
   await store.seedIfEmpty();
-  runApp(StructorApp(store: store));
+  final datasets = DatasetRepository(cache: await BundleCache.open());
+  runApp(StructorApp(store: store, datasets: datasets));
 }
 
 class StructorApp extends StatelessWidget {
   final RosterStore store;
+  final DatasetRepository datasets;
 
-  const StructorApp({super.key, required this.store});
+  const StructorApp({
+    super.key,
+    required this.store,
+    required this.datasets,
+  });
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -33,9 +39,14 @@ class StructorApp extends StatelessWidget {
         home: Builder(
           builder: (context) => RosterListScreen(
             store: store,
+            datasets: datasets,
             onOpen: (id) => Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => ArmyPage(store: store, rosterId: id),
+                builder: (_) => ArmyPage(
+                  store: store,
+                  datasets: datasets,
+                  rosterId: id,
+                ),
               ),
             ),
           ),
@@ -46,9 +57,15 @@ class StructorApp extends StatelessWidget {
 /// One saved army, with the two in-play surfaces.
 class ArmyPage extends StatefulWidget {
   final RosterStore store;
+  final DatasetRepository datasets;
   final String rosterId;
 
-  const ArmyPage({super.key, required this.store, required this.rosterId});
+  const ArmyPage({
+    super.key,
+    required this.store,
+    required this.datasets,
+    required this.rosterId,
+  });
 
   @override
   State<ArmyPage> createState() => _ArmyPageState();
@@ -66,7 +83,7 @@ class _ArmyPageState extends State<ArmyPage> {
     widget.store.loadBattle(widget.rosterId).then((log) {
       if (mounted) setState(() => _log = log);
     });
-    BundledFaction.missions().then((pack) {
+    widget.datasets.missions().then((pack) {
       if (mounted) setState(() => _pack = pack);
     });
   }
