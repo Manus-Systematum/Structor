@@ -1,0 +1,25 @@
+# Divergences a human has looked at and settled (DESIGN.md §3.5).
+#
+# The cross-check compares two independently derived sources and reports where
+# they disagree. It deliberately does not decide who is right — but once a
+# person has, the disagreement should stop being noise, or the tool cannot gate
+# a build.
+#
+# Every entry needs a reason. An accepted divergence with no explanation is
+# indistinguishable from one nobody looked at.
+#
+# Match keys: faction, kind, and a subject prefix.
+
+- faction: tau-empire
+  kind: detachmentUniqueTag
+  subject: Retaliation Cadre
+  reason: >
+    40kdc is right. The tag is Retaliation; the Munitorum parse says
+    Battlesuit. Both sources agree the two detachments share a tag, so
+    validation is unaffected either way.
+
+- faction: tau-empire
+  kind: detachmentUniqueTag
+  subject: Experimental Prototype Cadre
+  reason: >
+    Same as Retaliation Cadre — the tag is Retaliation, not Battlesuit.

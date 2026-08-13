@@ -13,6 +13,7 @@ import 'package:wh40k_core/wh40k_core.dart';
 void main(List<String> args) {
   var dataDir = '../../data/40kdc';
   var mfmDir = '../../data/mfm';
+  var acceptedPath = '../../crosscheck-accepted.yaml';
   final factions = <String>[];
 
   for (var i = 0; i < args.length; i++) {
@@ -21,6 +22,8 @@ void main(List<String> args) {
         if (i + 1 < args.length) dataDir = args[++i];
       case '--mfm':
         if (i + 1 < args.length) mfmDir = args[++i];
+      case '--accepted':
+        if (i + 1 < args.length) acceptedPath = args[++i];
       case '-h':
       case '--help':
         stdout.writeln('usage: dart run bin/crosscheck.dart [faction ...] '
@@ -48,6 +51,11 @@ void main(List<String> args) {
     exit(2);
   }
 
+  final acceptedFile = File(acceptedPath);
+  final accepted = acceptedFile.existsSync()
+      ? AcceptedDivergence.parse(acceptedFile.readAsStringSync())
+      : <AcceptedDivergence>[];
+
   var total = 0;
   for (final factionId in targets) {
     final yamlFile = File('$mfmDir/${mfmSlugFor(factionId)}.yaml');
@@ -67,6 +75,7 @@ void main(List<String> args) {
       detachments: faction.detachments,
       enhancementPoints: enhancements.$1,
       enhancementNames: enhancements.$2,
+      accepted: accepted,
     ).compare(MfmFaction.parse(yamlFile.readAsStringSync()),
         factionId: factionId);
 
@@ -83,8 +92,12 @@ void main(List<String> args) {
     }
     stdout.writeln();
 
+    if (report.accepted.isNotEmpty) {
+      stdout.writeln('  ${report.accepted.length} previously settled');
+    }
+
     if (report.agrees) {
-      stdout.writeln('  the two sources agree\n');
+      stdout.writeln('  no outstanding divergence\n');
     } else {
       for (final divergence in report.divergences) {
         stdout.writeln('  $divergence');

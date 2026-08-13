@@ -236,7 +236,9 @@ That is a more developed version of §2.1's `effects[]`, and it is what makes §
 
 Compared: unit points per (copy index, model count) bracket, detachment points, force disposition, unique tags, and enhancement costs.
 
-> **The cross-check does not decide who is right.** It reports and leaves the judgement to a person. One that silently picked a winner would just be a second, quieter source of error.
+> **The cross-check does not decide who is right.** It reports and leaves the judgement to a person. One that silently picked a winner would just be a second, quieter source of error — and that caution earned itself immediately: the T'au tag divergence resolved **against** the Munitorum. `Retaliation` is the correct tag; the Munitorum parse says `Battlesuit`. Neither source is authoritative.
+>
+> Settled disagreements go in `crosscheck-accepted.yaml`, keyed by faction, kind and a subject prefix, and are suppressed from the report while still being counted. **A reason is mandatory** — an accepted divergence with no explanation is indistinguishable from one nobody looked at. Without this the tool could never gate a build, because known-and-fine findings would fail it forever.
 
 **Faction slugs differ between the sources.** The primary data calls the Space Marines `adeptus-astartes`; the Munitorum calls them `space-marines`. `mfmSlugFor` holds the alias table — only genuine renamings belong in it, since chapters with their own file in both sources are not aliases.
 
@@ -248,7 +250,7 @@ Compared: unit points per (copy index, model count) bracket, detachment points, 
 | T'au Empire | 43 units, 7 detachments | 2, cosmetic |
 | Adeptus Astartes | 103 units, 15 detachments | **6, real** |
 
-T'au's are a naming difference: the unique tag on Retaliation Cadre and Experimental Prototype Cadre is `retaliation` in 40kdc and `Battlesuit` in the Munitorum. Both agree the two detachments *share* a tag, so validation behaves identically; only the name differs.
+T'au's two are a naming difference, and are now **settled in 40kdc's favour**: the tag is `Retaliation`, and the Munitorum parse is the wrong one. Both sources agree the two detachments *share* a tag, so validation behaved identically regardless. They are recorded in `crosscheck-accepted.yaml` and no longer reported.
 
 **Adeptus Astartes has genuinely stale points**, verified against both raw sources:
 

@@ -14,6 +14,8 @@
 /// just be a second, quieter source of error.
 library;
 
+import 'package:yaml/yaml.dart';
+
 import '../import/name_match.dart';
 import '../source/source_models.dart';
 import 'mfm.dart';
@@ -67,12 +69,68 @@ class Divergence {
       '${' ' * 26}MFM:   $munitorum';
 }
 
+/// A divergence a person has looked at and settled.
+///
+/// The cross-check will not decide who is right, but once someone has, the
+/// disagreement must stop being noise or the tool can never gate a build.
+/// Neither source is authoritative: the T'au tag divergence resolved in the
+/// primary data's favour, against the Munitorum.
+class AcceptedDivergence {
+  final String faction;
+  final DivergenceKind kind;
+
+  /// Matched as a prefix, so a unit's per-bracket divergences settle together.
+  final String subject;
+
+  final String reason;
+
+  const AcceptedDivergence({
+    required this.faction,
+    required this.kind,
+    required this.subject,
+    required this.reason,
+  });
+
+  bool covers(String factionId, Divergence divergence) =>
+      faction == factionId &&
+      kind == divergence.kind &&
+      divergence.subject.startsWith(subject);
+
+  static List<AcceptedDivergence> parse(String yamlSource) {
+    final root = loadYaml(yamlSource);
+    if (root is! List) return const [];
+    final out = <AcceptedDivergence>[];
+    for (final raw in root) {
+      if (raw is! Map) continue;
+      final kindName = raw['kind']?.toString();
+      DivergenceKind? kind;
+      for (final k in DivergenceKind.values) {
+        if (k.name == kindName) kind = k;
+      }
+      final reason = raw['reason']?.toString().trim() ?? '';
+      // An accepted divergence with no reason is indistinguishable from one
+      // nobody looked at, so it is not accepted.
+      if (kind == null || reason.isEmpty) continue;
+      out.add(AcceptedDivergence(
+        faction: raw['faction']?.toString() ?? '',
+        kind: kind,
+        subject: raw['subject']?.toString() ?? '',
+        reason: reason,
+      ));
+    }
+    return out;
+  }
+}
+
 class CrossCheckReport {
   final String factionId;
   final String mfmVersion;
   final int unitsCompared;
   final int detachmentsCompared;
   final List<Divergence> divergences;
+
+  /// Divergences suppressed by an entry in the accepted list.
+  final List<Divergence> accepted;
 
   /// Units in the Munitorum list with no counterpart in the primary data.
   /// Legends entries are excluded — the app does not carry them.
@@ -85,6 +143,7 @@ class CrossCheckReport {
     required this.detachmentsCompared,
     required this.divergences,
     required this.unmatched,
+    this.accepted = const [],
   });
 
   bool get agrees => divergences.isEmpty;
@@ -100,11 +159,15 @@ class CrossChecker {
   /// Enhancement id → display name, so divergences read sensibly.
   final Map<String, String> enhancementNames;
 
+  /// Divergences already settled by a person, suppressed from the report.
+  final List<AcceptedDivergence> accepted;
+
   const CrossChecker({
     required this.units,
     required this.detachments,
     this.enhancementPoints = const {},
     this.enhancementNames = const {},
+    this.accepted = const [],
   });
 
   CrossCheckReport compare(MfmFaction mfm, {required String factionId}) {
@@ -231,12 +294,23 @@ class CrossChecker {
       }
     }
 
+    final settled = <Divergence>[];
+    final outstanding = <Divergence>[];
+    for (final divergence in divergences) {
+      if (accepted.any((a) => a.covers(factionId, divergence))) {
+        settled.add(divergence);
+      } else {
+        outstanding.add(divergence);
+      }
+    }
+
     return CrossCheckReport(
       factionId: factionId,
       mfmVersion: mfm.version,
       unitsCompared: unitsCompared,
       detachmentsCompared: detachmentsCompared,
-      divergences: divergences,
+      divergences: outstanding,
+      accepted: settled,
       unmatched: unmatched,
     );
   }

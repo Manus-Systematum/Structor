@@ -220,6 +220,81 @@ void main() {
     });
   });
 
+  group('adjudicated divergences', () {
+    const yaml = '''
+- faction: testers
+  kind: detachmentUniqueTag
+  subject: Alpha Cadre
+  reason: 40kdc is right; the Munitorum parse is wrong here.
+''';
+
+    CrossCheckReport withAccepted(List<AcceptedDivergence> accepted) =>
+        CrossChecker(
+          units: const [],
+          detachments: [detachment(tags: const ['retaliation'])],
+          accepted: accepted,
+        ).compare(MfmFaction.parse(_yaml), factionId: 'testers');
+
+    test('a settled divergence is suppressed but still counted', () {
+      final before = withAccepted(const []);
+      expect(before.divergences, isNotEmpty);
+
+      final after = withAccepted(AcceptedDivergence.parse(yaml));
+      expect(after.divergences, isEmpty);
+      expect(after.accepted, hasLength(1));
+      expect(after.agrees, isTrue);
+    });
+
+    test('an entry without a reason is not accepted', () {
+      // Indistinguishable from one nobody looked at.
+      final parsed = AcceptedDivergence.parse('''
+- faction: testers
+  kind: detachmentUniqueTag
+  subject: Alpha Cadre
+''');
+      expect(parsed, isEmpty);
+    });
+
+    test('an unknown kind is ignored rather than matching everything', () {
+      expect(
+        AcceptedDivergence.parse('''
+- faction: testers
+  kind: notAKind
+  subject: Alpha Cadre
+  reason: whatever
+'''),
+        isEmpty,
+      );
+    });
+
+    test('acceptance is scoped to its faction', () {
+      final other = AcceptedDivergence.parse('''
+- faction: necrons
+  kind: detachmentUniqueTag
+  subject: Alpha Cadre
+  reason: different faction entirely
+''');
+      expect(withAccepted(other).divergences, isNotEmpty);
+    });
+
+    test('the subject matches as a prefix, settling a unit at once', () {
+      const accepted = AcceptedDivergence(
+        faction: 'testers',
+        kind: DivergenceKind.unitPoints,
+        subject: 'Squad',
+        reason: 'known stale upstream',
+      );
+      const divergence = Divergence(
+        kind: DivergenceKind.unitPoints,
+        subject: 'Squad — 3 models, copies 1+',
+        primary: '95 pts',
+        munitorum: '100 pts',
+      );
+      expect(accepted.covers('testers', divergence), isTrue);
+      expect(accepted.covers('necrons', divergence), isFalse);
+    });
+  });
+
   group('faction slugs', () {
     test('the two sources disagree on the Space Marines', () {
       expect(mfmSlugFor('adeptus-astartes'), 'space-marines');
