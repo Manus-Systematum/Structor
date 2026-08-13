@@ -13,6 +13,8 @@ export 'src/import/name_match.dart';
 export 'src/import/parsed_list.dart';
 export 'src/import/roster_resolver.dart';
 export 'src/import/text_parser.dart';
+export 'src/missions/mission_pack.dart';
+export 'src/missions/mission_setup.dart';
 export 'src/play/attacks.dart';
 export 'src/play/rules_renderer.dart';
 export 'src/play/weapon_aggregator.dart';

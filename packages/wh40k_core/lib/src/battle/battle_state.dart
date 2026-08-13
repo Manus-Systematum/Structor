@@ -14,6 +14,7 @@
 /// exactly where "why is this unit still greyed out" bugs live.
 library;
 
+import '../missions/mission_setup.dart';
 import 'battle_event.dart';
 
 /// A stratagem use, remembered with enough context to answer the rule.
@@ -111,6 +112,10 @@ class SecondaryState {
 }
 
 class BattleState {
+  /// Null until the setup wizard completes. The battle screen is only reached
+  /// once it is set (§7.3.1).
+  final MissionSetup? setup;
+
   final int round;
   final Player activePlayer;
   final int cp;
@@ -121,6 +126,7 @@ class BattleState {
   final SecondaryState secondaries;
 
   const BattleState({
+    this.setup,
     this.round = 1,
     this.activePlayer = Player.me,
     this.cp = 0,
@@ -199,6 +205,7 @@ class BattleLog {
   }
 
   BattleState get state {
+    MissionSetup? setup;
     var round = 1;
     var activePlayer = Player.me;
     var cp = 0;
@@ -216,6 +223,8 @@ class BattleLog {
 
     for (final event in events) {
       switch (event) {
+        case final ConfigureBattle e:
+          setup = e.setup;
         case final SetRound e:
           round = e.round;
         case final SetActivePlayer e:
@@ -273,6 +282,7 @@ class BattleLog {
     }
 
     return BattleState(
+      setup: setup,
       round: round,
       activePlayer: activePlayer,
       cp: cp,

@@ -19,6 +19,29 @@ class BundledFaction {
 
   static Dataset? _cached;
 
+  static MissionPack? _pack;
+
+  /// Missions, dispositions, the matchup table, deployments and the secondary
+  /// deck. Bundled for the same reason as the faction (§3.4).
+  static Future<MissionPack> missions() async {
+    final cached = _pack;
+    if (cached != null) return cached;
+
+    Future<List<Object?>> read(String file) async {
+      final raw = await rootBundle.loadString('assets/data/core/$file.json');
+      final decoded = jsonDecode(raw);
+      return decoded is List ? decoded : const [];
+    }
+
+    return _pack = MissionPack.fromJson(
+      dispositions: await read('force-dispositions'),
+      missions: await read('missions'),
+      matchups: await read('mission-matchups'),
+      cards: await read('secondary-cards'),
+      deployments: await read('deployment-patterns'),
+    );
+  }
+
   static Future<Dataset> load() async {
     final cached = _cached;
     if (cached != null) return cached;

@@ -1058,4 +1058,15 @@ The design decision that pays off here is the one from §7.2. **`stratagemsUsed`
 
 Secondary VP caps apply per round and then per game, trimming later rounds so early ones keep their points. Primary is left uncapped here; its cap belongs to the mission record and arrives with the setup screen.
 
-**Next:** the setup screen of §7.3.1 — the disposition decision grid is the single most valuable unbuilt screen, and the mission data has been sitting ready since §3.0. Then dataset distribution (§3.4), which now has two callers rather than one.
+**Done — setup screen (§7.3.1):**
+
+- `src/missions/` — mission pack, the 25-cell matchup table, deployment patterns, the 18 secondary cards, and `MissionSetup`. Completing the wizard emits a single `ConfigureBattle` event, so setup persists, replays and undoes with everything else.
+- The screen collapses the grid to the opponent's column once they declare, shows the resulting mission and its description under each of your options, and — because the table is asymmetric — shows **what the opponent is playing** underneath. Full 5×N grid available on demand.
+- Setup is mandatory: the Turn tab routes through the wizard until it completes, and Start stays disabled until every question is answered.
+- 167 core tests, 21 app tests.
+
+Verified by test on the reference army: declaring **Reconnaissance** against Take and Hold plays *Reconnaissance Sweep* while the opponent plays *Purge and Secure*; declaring **Priority Assets** instead plays *Secure Asset*. Same opponent, different mission — which is the whole reason the screen exists.
+
+> **Data gap: there is no twist data upstream.** No file publishes them, so the twist is free text the player records rather than a picker over a list that does not exist. It is optional anyway.
+
+**Next:** dataset distribution (§3.4). It now has three callers — import, any second faction, and the mission pack — and 408 KB of assets in the binary standing in for it.

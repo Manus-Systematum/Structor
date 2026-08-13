@@ -36,3 +36,4 @@ flutter:
     # against, and dataset distribution (DESIGN.md §3.4) is not
     # built yet. 40kdc-data, CC BY 4.0.
     - assets/data/tau-empire/
+    - assets/data/core/

@@ -7,6 +7,7 @@
 /// cost.
 library;
 
+import '../missions/mission_setup.dart';
 import '../source/json.dart';
 
 enum Player { me, opponent }
@@ -73,6 +74,7 @@ sealed class BattleEvent {
           instanceId: strOr(j['unit'], ''),
           abilityId: strOr(j['ability'], ''),
         ),
+      'setup' => ConfigureBattle(MissionSetup.fromJson(j['setup'])),
       'drawSecondary' => DrawSecondary(strOr(j['card'], '')),
       'discardSecondary' => DiscardSecondary(strOr(j['card'], '')),
       'scoreSecondary' => ScoreSecondaryCard(
@@ -281,4 +283,18 @@ class ScoreSecondaryCard extends BattleEvent {
   @override
   Map<String, Object?> toJson() =>
       {'type': type, 'card': cardId, 'round': round, 'vp': vp};
+}
+
+/// The completed setup wizard, recorded as a single event so it persists,
+/// replays and undoes with everything else (DESIGN.md §7.3.1).
+class ConfigureBattle extends BattleEvent {
+  final MissionSetup setup;
+
+  const ConfigureBattle(this.setup);
+
+  @override
+  String get type => 'setup';
+
+  @override
+  Map<String, Object?> toJson() => {'type': type, 'setup': setup.toJson()};
 }

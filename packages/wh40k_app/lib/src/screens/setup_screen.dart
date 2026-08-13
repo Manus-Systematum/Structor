@@ -1,0 +1,479 @@
+import 'package:flutter/material.dart';
+import 'package:wh40k_core/wh40k_core.dart';
+
+import '../data/army.dart';
+
+/// Pre-game setup (DESIGN.md §7.3.1).
+///
+/// **A decision aid, not a form.** Taking two detachments buys a *choice* of
+/// primary mission, made after seeing what the opponent declares — and until
+/// now nothing could show that, because it needs the matchup table as data.
+///
+/// Two rules the screen obeys. Every question is answered before the battle
+/// screen opens, so play mode can assume a fully specified game. And the
+/// matrix is rendered, never recommended: the app knows neither the matchup,
+/// the terrain, nor how this player plays.
+class SetupScreen extends StatefulWidget {
+  final Army army;
+  final MissionPack pack;
+
+  const SetupScreen({super.key, required this.army, required this.pack});
+
+  @override
+  State<SetupScreen> createState() => _SetupScreenState();
+}
+
+class _SetupScreenState extends State<SetupScreen> {
+  String? _opponentDisposition;
+  String? _myDisposition;
+  String? _deploymentId;
+  final _twist = TextEditingController();
+  final _opponentName = TextEditingController();
+  var _iAmAttacker = true;
+  var _mode = SecondaryMode.tactical;
+  var _showFullGrid = false;
+
+  @override
+  void dispose() {
+    _twist.dispose();
+    _opponentName.dispose();
+    super.dispose();
+  }
+
+  List<ForceDisposition> get _mine =>
+      widget.pack.availableTo(widget.army.roster.detachments
+          .map((d) => widget.army.catalogue.detachment(d.detachmentId))
+          .whereType<SourceDetachment>());
+
+  bool get _complete =>
+      _opponentDisposition != null &&
+      _myDisposition != null &&
+      _deploymentId != null;
+
+  MissionSetup? _build() {
+    final mine = _myDisposition;
+    final theirs = _opponentDisposition;
+    if (mine == null || theirs == null) return null;
+
+    // Both missions, because the table is asymmetric and the opponent plays a
+    // different primary (§7.3.1).
+    final myMission =
+        widget.pack.missionFor(disposition: mine, opponentDisposition: theirs);
+    final theirMission =
+        widget.pack.missionFor(disposition: theirs, opponentDisposition: mine);
+
+    return MissionSetup(
+      myDisposition: mine,
+      opponentDisposition: theirs,
+      myMissionId: myMission?.id ?? '',
+      opponentMissionId: theirMission?.id ?? '',
+      deploymentId: _deploymentId,
+      twist: _twist.text.trim().isEmpty ? null : _twist.text.trim(),
+      iAmAttacker: _iAmAttacker,
+      secondaryMode: _mode,
+      opponentName:
+          _opponentName.text.trim().isEmpty ? null : _opponentName.text.trim(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final mine = _mine;
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Set up battle')),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          child: FilledButton(
+            onPressed: _complete
+                ? () => Navigator.of(context).pop(_build())
+                : null,
+            child: Text(_complete
+                ? 'Start battle'
+                : 'Answer the questions above'),
+          ),
+        ),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+        children: [
+          _Step(
+            number: 1,
+            title: 'Your opponent',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: _opponentName,
+                  decoration: const InputDecoration(
+                    labelText: 'Name (optional)',
+                    isDense: true,
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text('Their Force Disposition',
+                    style: TextStyle(
+                        fontSize: 12, color: scheme.onSurfaceVariant)),
+                const SizedBox(height: 6),
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    for (final d in widget.pack.allDispositions)
+                      ChoiceChip(
+                        label: Text(d.name),
+                        selected: _opponentDisposition == d.id,
+                        onSelected: (_) =>
+                            setState(() => _opponentDisposition = d.id),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          _Step(
+            number: 2,
+            title: 'Your declaration',
+            subtitle: mine.length > 1
+                ? 'Two detachments means a choice — and it decides which '
+                    'mission you play.'
+                : 'Your detachments offer one disposition.',
+            child: _opponentDisposition == null
+                ? Text('Pick your opponent’s disposition first.',
+                    style: TextStyle(
+                        fontSize: 12.5, color: scheme.onSurfaceVariant))
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (final d in mine)
+                        _DispositionOption(
+                          disposition: d,
+                          selected: _myDisposition == d.id,
+                          outcome: widget.pack.outcomeFor(
+                            disposition: d.id,
+                            opponentDisposition: _opponentDisposition!,
+                          ),
+                          onTap: () => setState(() => _myDisposition = d.id),
+                        ),
+                      if (_myDisposition != null) ...[
+                        const SizedBox(height: 10),
+                        _TheirMission(
+                          pack: widget.pack,
+                          mine: _myDisposition!,
+                          theirs: _opponentDisposition!,
+                        ),
+                      ],
+                      const SizedBox(height: 8),
+                      TextButton.icon(
+                        onPressed: () =>
+                            setState(() => _showFullGrid = !_showFullGrid),
+                        icon: Icon(_showFullGrid
+                            ? Icons.expand_less
+                            : Icons.grid_on),
+                        label: Text(_showFullGrid
+                            ? 'Hide the full grid'
+                            : 'Show every matchup'),
+                      ),
+                      if (_showFullGrid)
+                        _FullGrid(pack: widget.pack, mine: mine),
+                    ],
+                  ),
+          ),
+          _Step(
+            number: 3,
+            title: 'The table',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Deployment',
+                    style: TextStyle(
+                        fontSize: 12, color: scheme.onSurfaceVariant)),
+                const SizedBox(height: 6),
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    for (final pattern in widget.pack.deployments)
+                      ChoiceChip(
+                        label: Text(pattern.name),
+                        selected: _deploymentId == pattern.id,
+                        onSelected: (_) =>
+                            setState(() => _deploymentId = pattern.id),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 14),
+                TextField(
+                  controller: _twist,
+                  decoration: const InputDecoration(
+                    labelText: 'Twist (optional)',
+                    // There is no twist data upstream, so the player records
+                    // what they drew rather than picking from a list that
+                    // does not exist.
+                    helperText: 'Free text — no twist data is published yet',
+                    isDense: true,
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 14),
+                SegmentedButton<bool>(
+                  segments: const [
+                    ButtonSegment(value: true, label: Text('Attacker')),
+                    ButtonSegment(value: false, label: Text('Defender')),
+                  ],
+                  selected: {_iAmAttacker},
+                  onSelectionChanged: (v) =>
+                      setState(() => _iAmAttacker = v.first),
+                ),
+                const SizedBox(height: 10),
+                SegmentedButton<SecondaryMode>(
+                  segments: const [
+                    ButtonSegment(
+                        value: SecondaryMode.tactical, label: Text('Tactical')),
+                    ButtonSegment(
+                        value: SecondaryMode.fixed, label: Text('Fixed')),
+                  ],
+                  selected: {_mode},
+                  onSelectionChanged: (v) => setState(() => _mode = v.first),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DispositionOption extends StatelessWidget {
+  final ForceDisposition disposition;
+  final MissionOutcome outcome;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _DispositionOption({
+    required this.disposition,
+    required this.outcome,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: selected ? scheme.primaryContainer : scheme.surfaceContainer,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: selected ? scheme.primary : scheme.outlineVariant,
+              width: selected ? 2 : 1,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    selected
+                        ? Icons.radio_button_checked
+                        : Icons.radio_button_unchecked,
+                    size: 18,
+                    color: selected ? scheme.primary : scheme.outline,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(disposition.name,
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w700)),
+                ],
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'You would play ${outcome.mission?.name ?? '—'}',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: selected ? scheme.onPrimaryContainer : scheme.primary,
+                ),
+              ),
+              if (outcome.card != null) ...[
+                const SizedBox(height: 4),
+                Text(outcome.card!.text,
+                    style: TextStyle(
+                        fontSize: 11.5,
+                        height: 1.35,
+                        color: scheme.onSurfaceVariant)),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// What the opponent is playing. Knowing how they score is how a player
+/// decides what to contest (§7.3.3).
+class _TheirMission extends StatelessWidget {
+  final MissionPack pack;
+  final String mine;
+  final String theirs;
+
+  const _TheirMission({
+    required this.pack,
+    required this.mine,
+    required this.theirs,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final outcome =
+        pack.outcomeFor(disposition: theirs, opponentDisposition: mine);
+
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: scheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('THEY PLAY',
+              style: TextStyle(
+                  fontSize: 9,
+                  letterSpacing: 0.9,
+                  fontWeight: FontWeight.w800,
+                  color: scheme.onSurfaceVariant)),
+          const SizedBox(height: 2),
+          Text(outcome.mission?.name ?? '—',
+              style:
+                  const TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
+          if (outcome.card != null) ...[
+            const SizedBox(height: 4),
+            Text(outcome.card!.text,
+                style: TextStyle(
+                    fontSize: 11.5,
+                    height: 1.35,
+                    color: scheme.onSurfaceVariant)),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _FullGrid extends StatelessWidget {
+  final MissionPack pack;
+  final List<ForceDisposition> mine;
+
+  const _FullGrid({required this.pack, required this.mine});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final opponents = pack.allDispositions;
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: DataTable(
+        headingRowHeight: 34,
+        dataRowMinHeight: 34,
+        dataRowMaxHeight: 44,
+        columnSpacing: 14,
+        columns: [
+          const DataColumn(label: Text('THEY DECLARE', style: _head)),
+          for (final d in mine)
+            DataColumn(label: Text(d.name.toUpperCase(), style: _head)),
+        ],
+        rows: [
+          for (final theirs in opponents)
+            DataRow(cells: [
+              DataCell(Text(theirs.name,
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: scheme.onSurfaceVariant))),
+              for (final ours in mine)
+                DataCell(Text(
+                  pack
+                          .missionFor(
+                              disposition: ours.id,
+                              opponentDisposition: theirs.id)
+                          ?.name ??
+                      '—',
+                  style: const TextStyle(fontSize: 12),
+                )),
+            ]),
+        ],
+      ),
+    );
+  }
+
+  static const _head = TextStyle(
+      fontSize: 9, letterSpacing: 0.7, fontWeight: FontWeight.w800);
+}
+
+class _Step extends StatelessWidget {
+  final int number;
+  final String title;
+  final String? subtitle;
+  final Widget child;
+
+  const _Step({
+    required this.number,
+    required this.title,
+    required this.child,
+    this.subtitle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 22),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 11,
+                backgroundColor: scheme.primary,
+                child: Text('$number',
+                    style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w800,
+                        color: scheme.onPrimary)),
+              ),
+              const SizedBox(width: 8),
+              Text(title,
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w800)),
+            ],
+          ),
+          if (subtitle != null)
+            Padding(
+              padding: const EdgeInsets.only(left: 30, top: 2),
+              child: Text(subtitle!,
+                  style: TextStyle(
+                      fontSize: 12, color: scheme.onSurfaceVariant)),
+            ),
+          const SizedBox(height: 10),
+          child,
+        ],
+      ),
+    );
+  }
+}

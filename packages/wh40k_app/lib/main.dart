@@ -5,7 +5,9 @@ import 'src/data/army.dart';
 import 'src/data/database.dart';
 import 'src/data/roster_store.dart';
 import 'src/screens/army_screen.dart';
+import 'src/data/bundled_faction.dart';
 import 'src/screens/roster_list_screen.dart';
+import 'src/screens/setup_screen.dart';
 import 'src/screens/turn_screen.dart';
 import 'src/theme.dart';
 
@@ -56,6 +58,7 @@ class _ArmyPageState extends State<ArmyPage> {
   late final Future<Army?> _army = widget.store.load(widget.rosterId);
   int _tab = 0;
   BattleLog _log = const BattleLog();
+  MissionPack _pack = const MissionPack();
 
   @override
   void initState() {
@@ -63,6 +66,20 @@ class _ArmyPageState extends State<ArmyPage> {
     widget.store.loadBattle(widget.rosterId).then((log) {
       if (mounted) setState(() => _log = log);
     });
+    BundledFaction.missions().then((pack) {
+      if (mounted) setState(() => _pack = pack);
+    });
+  }
+
+  /// Setup is mandatory before play, so the Turn tab routes through the wizard
+  /// until it has been completed (DESIGN.md §7.3.1).
+  Future<void> _runSetup(Army army) async {
+    final setup = await Navigator.of(context).push<MissionSetup>(
+      MaterialPageRoute(
+        builder: (_) => SetupScreen(army: army, pack: _pack),
+      ),
+    );
+    if (setup != null) await _apply(_log.add(ConfigureBattle(setup)));
   }
 
   /// Every change appends to the log and persists it, so a game survives the
@@ -95,12 +112,18 @@ class _ArmyPageState extends State<ArmyPage> {
               index: _tab,
               children: [
                 ArmyScreen(army: army),
-                TurnScreen(
-                  army: army,
-                  log: _log,
-                  onEvent: (event) => _apply(_log.add(event)),
-                  onUndo: () => _apply(_log.undo()),
-                ),
+                if (_log.state.setup == null)
+                  _SetupPrompt(
+                    ready: !_pack.isEmpty,
+                    onStart: () => _runSetup(army),
+                  )
+                else
+                  TurnScreen(
+                    army: army,
+                    log: _log,
+                    onEvent: (event) => _apply(_log.add(event)),
+                    onUndo: () => _apply(_log.undo()),
+                  ),
               ],
             );
           },
@@ -141,4 +164,44 @@ class _Message extends StatelessWidget {
               style: TextStyle(color: Theme.of(context).colorScheme.error)),
         ),
       );
+}
+
+/// The Turn tab before a game has been set up.
+class _SetupPrompt extends StatelessWidget {
+  final bool ready;
+  final VoidCallback onStart;
+
+  const _SetupPrompt({required this.ready, required this.onStart});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.flag_outlined, size: 40, color: scheme.primary),
+            const SizedBox(height: 12),
+            const Text('No battle in progress',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+            const SizedBox(height: 6),
+            Text(
+              'Setting up decides which mission you play — and with two '
+              'detachments, that is a choice.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12.5, color: scheme.onSurfaceVariant),
+            ),
+            const SizedBox(height: 18),
+            FilledButton.icon(
+              onPressed: ready ? onStart : null,
+              icon: const Icon(Icons.play_arrow),
+              label: const Text('Set up battle'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

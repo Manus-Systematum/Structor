@@ -1,0 +1,136 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:wh40k_app/src/data/army.dart';
+import 'package:wh40k_app/src/data/bundled_faction.dart';
+import 'package:wh40k_app/src/screens/setup_screen.dart';
+import 'package:wh40k_core/wh40k_core.dart';
+
+void main() {
+  late Army army;
+  late MissionPack pack;
+
+  setUpAll(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    army = await Army.loadReference();
+    pack = await BundledFaction.missions();
+  });
+
+  /// A tall surface so the whole form is laid out and hit-testable, rather
+  /// than fighting scroll position in every test.
+  Future<void> pumpSetup(WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1200, 4200);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+        MaterialApp(home: SetupScreen(army: army, pack: pack)));
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> chooseMine(WidgetTester tester, String mission) async {
+    final option = find.ancestor(
+      of: find.textContaining('You would play $mission'),
+      matching: find.byType(InkWell),
+    );
+    await tester.tap(option.first);
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets('the decision grid appears once the opponent declares',
+      (tester) async {
+    await pumpSetup(tester);
+    expect(find.textContaining('Pick your opponent'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Take and Hold'));
+    await tester.pumpAndSettle();
+
+    // The reference army's detachments offer Reconnaissance or Priority
+    // Assets, and the two lead to different missions — the decision.
+    expect(find.textContaining('You would play Reconnaissance Sweep'),
+        findsOneWidget);
+    expect(find.textContaining('You would play Secure Asset'), findsOneWidget);
+  });
+
+  testWidgets('choosing reveals what the opponent is playing', (tester) async {
+    await pumpSetup(tester);
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Take and Hold'));
+    await tester.pumpAndSettle();
+    await chooseMine(tester, 'Reconnaissance Sweep');
+
+    // Asymmetric: they play a different primary simultaneously.
+    expect(find.text('THEY PLAY'), findsOneWidget);
+    expect(find.text('Purge and Secure'), findsOneWidget);
+  });
+
+  testWidgets('the same choice yields a different mission against a '
+      'different opponent', (tester) async {
+    await pumpSetup(tester);
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Disruption'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('You would play Surveil the Foe'),
+        findsOneWidget);
+  });
+
+  testWidgets('start stays disabled until every question is answered',
+      (tester) async {
+    await pumpSetup(tester);
+
+    FilledButton bottomButton() => tester.widget<FilledButton>(
+          find
+              .descendant(
+                of: find.byType(Scaffold),
+                matching: find.byType(FilledButton),
+              )
+              .last,
+        );
+
+    expect(bottomButton().onPressed, isNull);
+    expect(find.text('Answer the questions above'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Take and Hold'));
+    await tester.pumpAndSettle();
+    await chooseMine(tester, 'Reconnaissance Sweep');
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Tipping Point'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Start battle'), findsOneWidget);
+    expect(bottomButton().onPressed, isNotNull);
+  });
+
+  testWidgets('completing setup returns both missions', (tester) async {
+    MissionSetup? captured;
+    tester.view.physicalSize = const Size(1200, 4200);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(MaterialApp(
+      home: Builder(
+        builder: (context) => TextButton(
+          onPressed: () async {
+            captured = await Navigator.of(context).push<MissionSetup>(
+              MaterialPageRoute(
+                  builder: (_) => SetupScreen(army: army, pack: pack)),
+            );
+          },
+          child: const Text('open'),
+        ),
+      ),
+    ));
+    await tester.tap(find.text('open'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Take and Hold'));
+    await tester.pumpAndSettle();
+    await chooseMine(tester, 'Reconnaissance Sweep');
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Tipping Point'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Start battle'));
+    await tester.pumpAndSettle();
+
+    expect(captured, isNotNull);
+    expect(captured!.myMissionId, 'reconnaissance-sweep');
+    expect(captured!.opponentMissionId, 'purge-and-secure',
+        reason: 'the opponent plays their own cell of the table');
+    expect(captured!.deploymentId, 'tipping-point');
+    expect(captured!.isMirror, isFalse);
+  });
+}
