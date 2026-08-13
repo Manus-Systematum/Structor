@@ -19,9 +19,17 @@ A cross-platform (iOS/Android) companion app for Warhammer 40,000 11th edition, 
 
 Games Workshop's rules text is copyrighted. The app therefore ships with **no bundled rules data** and fetches community-maintained catalogues at runtime — the same path BattleScribe and New Recruit took. A downloadable, versioned, replaceable content bundle is a day-one architectural requirement, not a later feature.
 
-> ✅ **Largely resolved by §3.0.** Adopting `40kdc-data` (CC BY 4.0 data, CC0 schemas) as the primary source removes this blocker for everything sourced from it. The note below still applies to BSData in its reduced role as a cross-check — and cross-checking internally is a far weaker claim on the licence than redistributing derived bundles, so the risk is much diminished but worth confirming.
+> ✅ **Resolved, twice over.**
 >
-> ⚠ **Original finding.** `BSData/wh40k-11e` has **no `LICENSE`, `LICENSE.md` or `LICENSE.txt` at the repository root** (all three return 404, checked 2026-08-11). The README says only "maintained by community, in no way endorsed by any company/publisher". Absent an explicit licence, the default is all-rights-reserved, which does not obviously permit redistributing a transformed copy of the data — which is precisely what §3.4 proposes. Older BSData repos carried MIT, so this may simply be missing. **Action:** check the BSData org-level default, `bsdata.net` terms, and ask in their Discord before building anything on top. Fallback if unresolved: have the app fetch and transform BSData client-side rather than redistributing derived bundles.
+> **By architecture.** §3.0 made `40kdc-data` the primary source, and it is explicitly licensed: CC BY 4.0 for data, CC0 for schemas. Nothing derived from BSData is used, built or shipped — the published bundles carry `source: 40kdc-data`, and BSData now survives only in two source comments explaining design history.
+>
+> **By the maintainers.** Asked directly ([BSData/wh40k-11e#918](https://github.com/BSData/wh40k-11e/issues/918)), they replied that the organisation often does not attach licences, that the repository *is* intended to be open source, and that it may be cloned and altered freely.
+>
+> Worth holding that second point at the right strength: it is **permission, not a licence**. A maintainer's statement in an issue does not set terms, does not obviously bind every contributor who holds copyright in their own contributions, and is not as durable as a file in the repository. The useful follow-up is to ask them to add an actual `LICENSE` — the reply suggests they would be receptive, and it would settle it for every downstream project rather than just this one.
+>
+> What it unblocks here is the **cross-check** of §3.0: validating 40kdc's points and constraints against BSData and the MFM, where two independently derived lineages disagreeing is a high-quality data signal. That reads BSData rather than redistributing it, which is the weakest claim on a licence and the case the reply most comfortably covers.
+>
+> ⚠ **Original finding, kept for the record.** `BSData/wh40k-11e` has **no `LICENSE`, `LICENSE.md` or `LICENSE.txt` at the repository root** (all three returned 404, checked 2026-08-11).
 
 Related: the **Chapter Approved Mission Deck** is a physical GW product. The play-mode setup screen must let the user *record which cards they drew*, not reproduce card text. See §7.
 
