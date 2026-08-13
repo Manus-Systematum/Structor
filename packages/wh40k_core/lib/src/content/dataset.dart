@@ -111,6 +111,12 @@ class Dataset implements Catalogue {
   SourceUnit? unit(String datasheetId) => _units[datasheetId];
 
   @override
+  Iterable<SourceUnit> get allUnits => _units.values;
+
+  @override
+  Iterable<SourceDetachment> get allDetachments => _detachments.values;
+
+  @override
   SourceWeapon? weapon(String weaponId) => _weapons[weaponId];
 
   @override

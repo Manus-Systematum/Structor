@@ -11,6 +11,12 @@ import '../source/source_models.dart';
 abstract interface class Catalogue {
   SourceUnit? unit(String datasheetId);
 
+  /// Every datasheet, for name-based lookup during import (DESIGN.md §6.1).
+  Iterable<SourceUnit> get allUnits;
+
+  /// Every detachment, for the same reason.
+  Iterable<SourceDetachment> get allDetachments;
+
   SourceDetachment? detachment(String detachmentId);
 
   SourceWeapon? weapon(String weaponId);
@@ -62,6 +68,12 @@ class MapCatalogue implements Catalogue {
 
   @override
   SourceUnit? unit(String datasheetId) => _units[datasheetId];
+
+  @override
+  Iterable<SourceUnit> get allUnits => _units.values;
+
+  @override
+  Iterable<SourceDetachment> get allDetachments => _detachments.values;
 
   @override
   SourceDetachment? detachment(String detachmentId) =>
