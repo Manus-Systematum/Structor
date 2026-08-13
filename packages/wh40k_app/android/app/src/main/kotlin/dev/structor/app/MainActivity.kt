@@ -1,4 +1,4 @@
-package dev.structor.wh40k_app
+package dev.structor.app
 
 import io.flutter.embedding.android.FlutterActivity
 
