@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 
 import 'src/data/army.dart';
+import 'src/data/database.dart';
+import 'src/data/roster_store.dart';
 import 'src/screens/army_screen.dart';
+import 'src/screens/roster_list_screen.dart';
 import 'src/screens/turn_screen.dart';
 import 'src/theme.dart';
 
-void main() => runApp(const Wh40kApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final store = RosterStore(await openAppDatabase());
+  await store.seedIfEmpty();
+  runApp(StructorApp(store: store));
+}
 
-class Wh40kApp extends StatelessWidget {
-  const Wh40kApp({super.key});
+class StructorApp extends StatelessWidget {
+  final RosterStore store;
+
+  const StructorApp({super.key, required this.store});
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -17,19 +27,32 @@ class Wh40kApp extends StatelessWidget {
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
         themeMode: ThemeMode.system,
-        home: const HomePage(),
+        home: Builder(
+          builder: (context) => RosterListScreen(
+            store: store,
+            onOpen: (id) => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => ArmyPage(store: store, rosterId: id),
+              ),
+            ),
+          ),
+        ),
       );
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+/// One saved army, with the two in-play surfaces.
+class ArmyPage extends StatefulWidget {
+  final RosterStore store;
+  final String rosterId;
+
+  const ArmyPage({super.key, required this.store, required this.rosterId});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ArmyPage> createState() => _ArmyPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  late final Future<Army> _army = Army.loadReference();
+class _ArmyPageState extends State<ArmyPage> {
+  late final Future<Army?> _army = widget.store.load(widget.rosterId);
   int _tab = 0;
 
   @override
@@ -37,15 +60,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: FutureBuilder<Army>(
+        child: FutureBuilder<Army?>(
           future: _army,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return _Error(error: snapshot.error!);
+              return _Message(
+                  text: 'Could not open this roster.\n\n${snapshot.error}');
+            }
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const Center(child: CircularProgressIndicator());
             }
             final army = snapshot.data;
             if (army == null) {
-              return const Center(child: CircularProgressIndicator());
+              return const _Message(text: 'This roster is no longer saved.');
             }
             return IndexedStack(
               index: _tab,
@@ -78,16 +105,16 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class _Error extends StatelessWidget {
-  final Object error;
+class _Message extends StatelessWidget {
+  final String text;
 
-  const _Error({required this.error});
+  const _Message({required this.text});
 
   @override
   Widget build(BuildContext context) => Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
-          child: Text('Could not load the reference army.\n\n$error',
+          child: Text(text,
               textAlign: TextAlign.center,
               style: TextStyle(color: Theme.of(context).colorScheme.error)),
         ),

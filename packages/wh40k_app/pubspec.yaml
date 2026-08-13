@@ -7,8 +7,12 @@ environment:
   sdk: ^3.4.0
 
 dependencies:
+  drift: ^2.34.3
   flutter:
     sdk: flutter
+  path: ^1.9.1
+  path_provider: ^2.1.6
+  sqlite3_flutter_libs: ^0.6.0+eol
   wh40k_core:
     path: ../wh40k_core
 
@@ -16,6 +20,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  drift_dev: ^2.34.5
+  build_runner: ^2.15.1
 
 flutter:
   uses-material-design: true
@@ -26,3 +32,7 @@ flutter:
     # independent of the gitignored upstream data.
     - assets/reference_roster.json
     - assets/reference_snapshot.json
+    # Temporary: import needs a full catalogue to resolve names
+    # against, and dataset distribution (DESIGN.md §3.4) is not
+    # built yet. 40kdc-data, CC BY 4.0.
+    - assets/data/tau-empire/

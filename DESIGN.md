@@ -1026,4 +1026,25 @@ Verified on device, from the reference army: `4× Missile pod (Commander in Enfo
 >
 > Android is not yet set up: `flutter doctor` wants Android Studio for the SDK. Not a blocker for development, but it does mean one of the two shipping targets is currently unbuilt.
 
-**Next:** state that outlives a rebuild. The app currently loads one bundled roster; the builder needs storage (Drift, §4.3), and play mode needs the event-sourced battle state of §7.4. Import (§6) is the other open front.
+**Done — text import (§6.7):**
+
+- `src/import/` — untyped parse tree, War Organ text parser, name matcher, and the resolver that holds all catalogue knowledge.
+- The reference export imports with **zero errors and prices to exactly 2000**, matching its own printed total. Sixteen roster units, four attachment pairs, twelve combat units, Warlord found.
+- 133 core tests.
+
+Two things only real input revealed. `Strike Force (2000 Point)` also matches the unit-header pattern and was importing as a datasheet, so the preamble must claim it first. And apostrophes have to be **deleted** rather than turned into separators, or `T'au` folds to `t au` and never matches `tau-flamer`.
+
+Nineteen entries report as *info*, not warnings: drones and support systems the printed list carries but the datasheet does not list. Fireknife lists its drones as abilities; Starscythe, Stealth, Broadside and Ghostkeel do not. An upstream attachment gap worth surfacing, not an import failure — it costs no points and does not touch the weapon table.
+
+**Done — storage (§4.3):**
+
+- Drift over SQLite. Roster and snapshot are stored as **JSON documents**, not shredded into columns: both are versioned artifacts whose value is being read back verbatim by a later build, and normalising them would tie saved lists to today's schema. The columns beside them exist so the roster list renders without parsing anything.
+- Roster list screen with swipe-to-delete, seeded with the reference army on first launch.
+- Import screen: paste, review, save. **Nothing imports silently** (§6.5) — every run lands on a review step showing matches, assumptions and misses, with the computed total checked against the printed one.
+- 12 app tests, including a roster rehydrating and rendering its weapon table with no faction dataset present.
+
+> ⚠ **One faction is bundled as an app asset.** Import needs a full catalogue to resolve names against, and a snapshot is not enough — a snapshot only holds what some other list already referenced. Dataset distribution (§3.4) does not exist yet, so T'au rides along in the binary (296 KB) until it does. This is the first place the missing distribution layer has actually bitten.
+
+**Verified on device:** roster list reads *2k ret · tau empire · 2000 pts · 12 units*, seeded and persisted. The import *screen* is not interactively verified — the simulator integration gives no tap injection (see the environment note above) — though the import logic underneath it is covered by the core suite.
+
+**Next:** the event-sourced battle state of §7.4, so play mode tracks a game rather than displaying one; and dataset distribution (§3.4), which now has a concrete caller.

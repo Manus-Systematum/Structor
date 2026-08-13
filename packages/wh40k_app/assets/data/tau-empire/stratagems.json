@@ -1,0 +1,830 @@
+[
+  {
+    "id": "a-tempting-trap-kauyon",
+    "name": "A TEMPTING TRAP",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "kauyon",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "a-trap-well-laid-kroot-hunting-pack",
+    "name": "A TRAP WELL LAID",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "kroot-hunting-pack",
+    "cp_cost": 1,
+    "phases": [
+      "fight",
+      "shooting"
+    ],
+    "player_turn": "either",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "aggressive-mobility-montka",
+    "name": "AGGRESSIVE MOBILITY",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "montka",
+    "cp_cost": 1,
+    "phases": [
+      "movement"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "alien-expertise-auxiliary-cadre",
+    "name": "ALIEN EXPERTISE",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "auxiliary-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "movement"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "automated-repair-drones-experimental-prototype-cadre",
+    "name": "AUTOMATED REPAIR DRONES",
+    "category": "detachment",
+    "type": "strategic-ploy",
+    "detachment_id": "experimental-prototype-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "command"
+    ],
+    "player_turn": "either",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "autoreactive-camouflage-advanced-acquisition-cadre",
+    "name": "Autoreactive Camouflage",
+    "category": "detachment",
+    "detachment_id": "advanced-acquisition-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "opponent-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": "autoreactive-camouflage-advanced-acquisition-cadre",
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "combat-debarkation-montka",
+    "name": "COMBAT DEBARKATION",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "montka",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "combat-embarkation-kauyon",
+    "name": "COMBAT EMBARKATION",
+    "category": "detachment",
+    "type": "wargear",
+    "detachment_id": "kauyon",
+    "cp_cost": 1,
+    "phases": [
+      "charge"
+    ],
+    "player_turn": "opponent-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "coordinate-to-engage-kauyon",
+    "name": "COORDINATE TO ENGAGE",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "kauyon",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "counterfire-defence-systems-montka",
+    "name": "COUNTERFIRE DEFENCE SYSTEMS",
+    "category": "detachment",
+    "type": "wargear",
+    "detachment_id": "montka",
+    "cp_cost": 2,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "opponent-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "emp-grenades-kroot-hunting-pack",
+    "name": "EMP GRENADES",
+    "category": "detachment",
+    "type": "wargear",
+    "detachment_id": "kroot-hunting-pack",
+    "cp_cost": 1,
+    "phases": [
+      "fight",
+      "shooting"
+    ],
+    "player_turn": "either",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "experimental-ammunition-experimental-prototype-cadre",
+    "name": "EXPERIMENTAL AMMUNITION",
+    "category": "detachment",
+    "type": "wargear",
+    "detachment_id": "experimental-prototype-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "experimental-modifications-auxiliary-cadre",
+    "name": "EXPERIMENTAL MODIFICATIONS",
+    "category": "detachment",
+    "type": "strategic-ploy",
+    "detachment_id": "auxiliary-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "fight",
+      "shooting"
+    ],
+    "player_turn": "either",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "experimental-weaponry-experimental-prototype-cadre",
+    "name": "EXPERIMENTAL WEAPONRY",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "experimental-prototype-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "fail-safe-detonator-retaliation-cadre",
+    "name": "FAIL-SAFE DETONATOR",
+    "category": "detachment",
+    "type": "epic-deed",
+    "detachment_id": "retaliation-cadre",
+    "cp_cost": 2,
+    "phases": [
+      "command",
+      "movement",
+      "shooting",
+      "charge",
+      "fight"
+    ],
+    "player_turn": "either",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "focused-fire-montka",
+    "name": "FOCUSED FIRE",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "montka",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "grav-inhibitor-field-retaliation-cadre",
+    "name": "GRAV-INHIBITOR FIELD",
+    "category": "detachment",
+    "type": "strategic-ploy",
+    "detachment_id": "retaliation-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "charge"
+    ],
+    "player_turn": "opponent-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "guerrilla-warriors-kroot-hunting-pack",
+    "name": "GUERRILLA WARRIORS",
+    "category": "detachment",
+    "type": "strategic-ploy",
+    "detachment_id": "kroot-hunting-pack",
+    "cp_cost": 1,
+    "phases": [
+      "movement"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "guided-by-unity-auxiliary-cadre",
+    "name": "Guided By Unity",
+    "category": "detachment",
+    "detachment_id": "auxiliary-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": "guided-by-unity-auxiliary-cadre",
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "guided-fire-auxiliary-cadre",
+    "name": "GUIDED FIRE",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "auxiliary-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "hidden-hunters-kroot-hunting-pack",
+    "name": "HIDDEN HUNTERS",
+    "category": "detachment",
+    "type": "strategic-ploy",
+    "detachment_id": "kroot-hunting-pack",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "opponent-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "interlocking-manouevres-auxiliary-cadre",
+    "name": "INTERLOCKING MANOUEVRES",
+    "category": "detachment",
+    "type": "strategic-ploy",
+    "detachment_id": "auxiliary-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "fight"
+    ],
+    "player_turn": "either",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "join-the-hunt-kroot-hunting-pack",
+    "name": "JOIN THE HUNT",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "kroot-hunting-pack",
+    "cp_cost": 2,
+    "phases": [
+      "command",
+      "movement",
+      "shooting",
+      "charge",
+      "fight"
+    ],
+    "player_turn": "either",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "marker-beacon-advanced-acquisition-cadre",
+    "name": "Marker Beacon",
+    "category": "detachment",
+    "detachment_id": "advanced-acquisition-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "movement"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": "marker-beacon-advanced-acquisition-cadre",
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "microdrone-support-advanced-acquisition-cadre",
+    "name": "Microdrone Support",
+    "category": "detachment",
+    "detachment_id": "advanced-acquisition-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": "microdrone-support-advanced-acquisition-cadre",
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "multisensory-scanning-auxiliary-cadre",
+    "name": "MULTISENSORY SCANNING",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "auxiliary-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "fight",
+      "shooting"
+    ],
+    "player_turn": "either",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "neuroweb-system-jammer-experimental-prototype-cadre",
+    "name": "NEUROWEB SYSTEM JAMMER",
+    "category": "detachment",
+    "type": "wargear",
+    "detachment_id": "experimental-prototype-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "opponent-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "pheromone-waypoints-auxiliary-cadre",
+    "name": "PHEROMONE WAYPOINTS",
+    "category": "detachment",
+    "type": "strategic-ploy",
+    "detachment_id": "auxiliary-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "movement"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "photon-grenades-kauyon",
+    "name": "PHOTON GRENADES",
+    "category": "detachment",
+    "type": "wargear",
+    "detachment_id": "kauyon",
+    "cp_cost": 1,
+    "phases": [
+      "charge"
+    ],
+    "player_turn": "opponent-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "pinpoint-counter-offensive-montka",
+    "name": "PINPOINT COUNTER-OFFENSIVE",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "montka",
+    "cp_cost": 1,
+    "phases": [
+      "command",
+      "movement",
+      "shooting",
+      "charge",
+      "fight"
+    ],
+    "player_turn": "either",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "point-blank-ambush-kauyon",
+    "name": "POINT-BLANK AMBUSH",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "kauyon",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "pulse-onslaught-montka",
+    "name": "PULSE ONSLAUGHT",
+    "category": "detachment",
+    "type": "strategic-ploy",
+    "detachment_id": "montka",
+    "cp_cost": 2,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "rapid-acquisition-sudden-dawn-cadre",
+    "name": "Rapid Acquisition",
+    "category": "detachment",
+    "detachment_id": "sudden-dawn-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "movement"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": "rapid-acquisition-sudden-dawn-cadre",
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "reactive-impact-dampeners-experimental-prototype-cadre",
+    "name": "REACTIVE IMPACT DAMPENERS",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "experimental-prototype-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "fight",
+      "shooting"
+    ],
+    "player_turn": "either",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "stimm-injectors-retaliation-cadre",
+    "name": "STIMM INJECTORS",
+    "category": "detachment",
+    "type": "wargear",
+    "detachment_id": "retaliation-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "fight",
+      "shooting"
+    ],
+    "player_turn": "either",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "suppressing-fire-sudden-dawn-cadre",
+    "name": "Suppressing Fire",
+    "category": "detachment",
+    "detachment_id": "sudden-dawn-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": "suppressing-fire-sudden-dawn-cadre",
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "swift-embarkation-sudden-dawn-cadre",
+    "name": "Swift Embarkation",
+    "category": "detachment",
+    "detachment_id": "sudden-dawn-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "fight"
+    ],
+    "player_turn": "opponent-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": "swift-embarkation-sudden-dawn-cadre",
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "the-arrokon-protocol-retaliation-cadre",
+    "name": "THE ARRO’KON PROTOCOL",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "retaliation-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "the-grisly-feast-kroot-hunting-pack",
+    "name": "THE GRISLY FEAST",
+    "category": "detachment",
+    "type": "strategic-ploy",
+    "detachment_id": "kroot-hunting-pack",
+    "cp_cost": 1,
+    "phases": [
+      "fight"
+    ],
+    "player_turn": "either",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "the-shortened-blade-retaliation-cadre",
+    "name": "THE SHORTENED BLADE",
+    "category": "detachment",
+    "type": "strategic-ploy",
+    "detachment_id": "retaliation-cadre",
+    "cp_cost": 2,
+    "phases": [
+      "movement"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "the-torchstar-gambit-retaliation-cadre",
+    "name": "THE TORCHSTAR GAMBIT",
+    "category": "detachment",
+    "type": "strategic-ploy",
+    "detachment_id": "retaliation-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "threat-assessment-analyser-experimental-prototype-cadre",
+    "name": "THREAT ASSESSMENT ANALYSER",
+    "category": "detachment",
+    "type": "wargear",
+    "detachment_id": "experimental-prototype-cadre",
+    "cp_cost": 1,
+    "phases": [
+      "shooting"
+    ],
+    "player_turn": "your-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  },
+  {
+    "id": "wall-of-mirrors-kauyon",
+    "name": "WALL OF MIRRORS",
+    "category": "detachment",
+    "type": "battle-tactic",
+    "detachment_id": "kauyon",
+    "cp_cost": 1,
+    "phases": [
+      "fight"
+    ],
+    "player_turn": "opponent-turn",
+    "timing": "once-per-phase",
+    "target_restrictions": null,
+    "ability_id": null,
+    "game_version": {
+      "edition": "11th",
+      "dataslate": "pre-launch-provisional"
+    }
+  }
+]

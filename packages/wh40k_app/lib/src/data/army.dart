@@ -10,25 +10,32 @@ import 'package:wh40k_core/wh40k_core.dart';
 /// so the offline case is the default case rather than a fallback bolted on
 /// later.
 class Army {
+  /// Stable identity for storage. Not part of the roster document itself,
+  /// which is portable and may be shared or re-imported.
+  final String id;
+
   final Roster roster;
   final RosterSnapshot snapshot;
   final Catalogue catalogue;
   final ValidationResult validation;
 
   Army._({
+    required this.id,
     required this.roster,
     required this.snapshot,
     required this.catalogue,
     required this.validation,
   });
 
-  factory Army.fromSnapshot(Roster roster, RosterSnapshot snapshot) {
+  factory Army.fromSnapshot(Roster roster, RosterSnapshot snapshot,
+      {required String id}) {
     final catalogue = MapCatalogue(
       snapshot.units.values.map(SourceUnit.fromJson),
       weapons: snapshot.weapons.values.map(SourceWeapon.fromJson),
       detachments: snapshot.detachments.values.map(SourceDetachment.fromJson),
     );
     return Army._(
+      id: id,
       roster: roster,
       snapshot: snapshot,
       catalogue: catalogue,
@@ -43,6 +50,7 @@ class Army {
     return Army.fromSnapshot(
       Roster.fromJson(jsonDecode(rosterJson)),
       RosterSnapshot.fromJson(jsonDecode(snapshotJson)),
+      id: 'reference',
     );
   }
 
