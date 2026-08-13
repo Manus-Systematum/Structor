@@ -106,8 +106,9 @@ class _StickyHeader extends StatelessWidget {
                 onTap: onTurn,
                 borderRadius: BorderRadius.circular(8),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  alignment: Alignment.center,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  alignment: Alignment.centerLeft,
                   decoration: BoxDecoration(
                     color: yourTurn
                         ? scheme.primaryContainer
@@ -160,6 +161,7 @@ class _Stepper extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label,
             style: TextStyle(
@@ -174,7 +176,7 @@ class _Stepper extends StatelessWidget {
             SizedBox(
               width: 26,
               child: Text(value,
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                   style: const TextStyle(
                       fontSize: 16, fontWeight: FontWeight.w800)),
             ),

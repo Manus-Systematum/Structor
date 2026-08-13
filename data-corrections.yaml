@@ -1,0 +1,31 @@
+# Corrections applied to upstream data when the bundles are built.
+#
+# The cross-check (DESIGN.md §3.5) finds where two sources disagree. This is
+# the other half: where the data is simply wrong or incomplete and a person has
+# confirmed it against the book. Corrections are applied by bin/bundle.dart, so
+# the shipped bundle is right while the upstream fix is pending.
+#
+# Every entry needs a reason and should have an upstream report. A correction
+# with neither is a private fork nobody can audit.
+#
+# Delete an entry once upstream carries the fix — leaving it means silently
+# overriding data that has since become correct.
+
+abilities:
+  - faction: tau-empire
+    id: advanced-armour
+    reason: >
+      Advanced Armour is Feel No Pain 4+ against mortal wounds only. The
+      upstream effect has no qualifier, so the app rendered an unrestricted
+      Feel No Pain 4+ — a much stronger ability than the Broadside has, and
+      exactly the kind of confidently wrong number that loses games.
+    upstream: not yet reported
+    effect:
+      type: conditional
+      condition:
+        type: damage-is-mortal
+      effect:
+        type: feel-no-pain
+        target: unit
+        modifier:
+          threshold: 4

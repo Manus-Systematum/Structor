@@ -14,6 +14,7 @@ import 'package:wh40k_core/wh40k_core.dart';
 void main(List<String> args) {
   var dataDir = '../../data/40kdc';
   var kind = WeaponKind.ranged;
+  var correctionsPath = '../../data-corrections.yaml';
   String? rosterPath;
   String? snapshotOut;
 
@@ -25,6 +26,8 @@ void main(List<String> args) {
       kind = WeaponKind.melee;
     } else if (arg == '--snapshot' && i + 1 < args.length) {
       snapshotOut = args[++i];
+    } else if (arg == '--corrections' && i + 1 < args.length) {
+      correctionsPath = args[++i];
     } else if (arg == '-h' || arg == '--help') {
       stdout.writeln(
           'usage: dart run bin/roster.dart <roster.json> [--data <dir>] '
@@ -47,7 +50,11 @@ void main(List<String> args) {
   }
 
   final roster = Roster.fromJson(jsonDecode(file.readAsStringSync()));
-  final faction = DatasetLoader(dataDir).loadFaction(roster.factionId);
+  final loader = DatasetLoader(
+    dataDir,
+    corrections: DatasetLoader.correctionsAt(correctionsPath),
+  );
+  final faction = loader.loadFaction(roster.factionId);
   if (faction.units.isEmpty) {
     stderr.writeln(
         'no data for ${roster.factionId} in $dataDir - run tools/fetch-40kdc.sh');
@@ -57,8 +64,7 @@ void main(List<String> args) {
   final dataset = Dataset.of(faction, revision: 'local');
 
   if (snapshotOut != null) {
-    final snapshot =
-        SnapshotBuilder.fromLoader(DatasetLoader(dataDir), dataset).build(roster);
+    final snapshot = SnapshotBuilder.fromLoader(loader, dataset).build(roster);
     final json = const JsonEncoder.withIndent('  ').convert(snapshot.toJson());
     File(snapshotOut).writeAsStringSync(json);
     stdout.writeln('wrote $snapshotOut — ${snapshot.entryCount} entries, '

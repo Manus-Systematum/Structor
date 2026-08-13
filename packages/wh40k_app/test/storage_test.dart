@@ -58,8 +58,11 @@ void main() {
     await store.save(reference);
     final loaded = await store.load(reference.id);
 
+    // Selected by member, not by label: units are named after their
+    // datasheets now, and this list fields two identical Commander + Crisis
+    // Fireknife groups.
     final attached = loaded!.combatUnits
-        .firstWhere((u) => u.label == 'Attached Unit 1');
+        .firstWhere((u) => u.group.any((g) => g.instanceId == 'u02'));
     final table = attached.weapons(core.WeaponKind.ranged);
     expect(table.isComplete, isTrue);
     expect(table.weapons.map((w) => w.attacks.fixed), containsAll([8, 12]));
@@ -133,7 +136,7 @@ void main() {
       final army = (await store.load(reference.id))!;
       final state = (await store.loadBattle(reference.id)).state;
       final attached = army.combatUnits
-          .firstWhere((u) => u.label == 'Attached Unit 1');
+          .firstWhere((u) => u.group.any((g) => g.instanceId == 'u02'));
 
       final full = attached.weapons(core.WeaponKind.ranged);
       final wounded = attached.weapons(core.WeaponKind.ranged,

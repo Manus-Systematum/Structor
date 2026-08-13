@@ -41,6 +41,7 @@ void main(List<String> args) {
   var dataDir = '../../data/40kdc';
   var outDir = '../../dist';
   var revision = 'local';
+  var correctionsPath = '../../data-corrections.yaml';
 
   for (var i = 0; i < args.length; i++) {
     switch (args[i]) {
@@ -50,15 +51,21 @@ void main(List<String> args) {
         if (i + 1 < args.length) outDir = args[++i];
       case '--revision':
         if (i + 1 < args.length) revision = args[++i];
+      case '--corrections':
+        if (i + 1 < args.length) correctionsPath = args[++i];
       case '-h':
       case '--help':
         stdout.writeln('usage: dart run bin/bundle.dart '
-            '[--data <dir>] [--out <dir>] [--revision <rev>]');
+            '[--data <dir>] [--out <dir>] [--revision <rev>] '
+            '[--corrections <file>]');
         return;
     }
   }
 
-  final loader = DatasetLoader(dataDir);
+  final loader = DatasetLoader(
+    dataDir,
+    corrections: DatasetLoader.correctionsAt(correctionsPath),
+  );
   if (!loader.root.existsSync()) {
     stderr.writeln('no snapshot at $dataDir - run tools/fetch-40kdc.sh first');
     exit(2);
@@ -75,6 +82,8 @@ void main(List<String> args) {
   }
 
   final entries = <BundleEntry>[];
+  final correctionNotes = <String>[];
+  final staleCorrections = <String>[];
 
   BundleEntry write(DatasetBundle bundle, String displayName) {
     final compressed = bundle.encode();
@@ -108,6 +117,16 @@ void main(List<String> args) {
       for (final f in _factionFiles) f: read('core/$factionId/$f'),
       for (final f in _enrichmentFiles) f: read('enrichment/$factionId/$f'),
     };
+
+    final corrected = loader.correctedAbilities(factionId);
+    files['abilities'] = corrected.records;
+    for (final c in corrected.applied) {
+      correctionNotes.add('$factionId/${c.abilityId}');
+    }
+    for (final c in corrected.unmatched) {
+      staleCorrections.add('$factionId/${c.abilityId}');
+    }
+
     if (files['units']!.isEmpty) {
       stdout.writeln('  skip $factionId (no units)');
       continue;
@@ -143,6 +162,17 @@ void main(List<String> args) {
     ..writeln()
     ..writeln('${entries.length} bundles, ${_kb(total)} total')
     ..writeln('manifest: $outDir/manifest.json');
+
+  if (correctionNotes.isNotEmpty) {
+    stdout.writeln('\ncorrections applied: ${correctionNotes.join(', ')}');
+  }
+  // A correction that matches nothing is either a typo or one upstream has
+  // since adopted. Either way it is now shadowing nothing and should go.
+  if (staleCorrections.isNotEmpty) {
+    stderr.writeln('\nWARNING: corrections matched no ability — remove them '
+        'from $correctionsPath if upstream has fixed the data:\n'
+        '  ${staleCorrections.join('\n  ')}');
+  }
 }
 
 String _kb(int bytes) => '${(bytes / 1024).toStringAsFixed(1)} KB';

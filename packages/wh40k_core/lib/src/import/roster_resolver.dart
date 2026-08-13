@@ -127,10 +127,14 @@ class RosterResolver {
       final datasheet = match.value;
       final resolved = _resolveUnit(datasheet, parsedUnit, issues);
 
+      // No customName: the attachment group is bookkeeping from the export
+      // format, not something the player named the unit. Putting it here made
+      // every attached unit show up as "Attached Unit 2" on the play screen
+      // instead of the datasheets it is actually made of. The grouping itself
+      // is carried by [groups] below.
       units.add(RosterUnit(
         instanceId: instanceId,
         datasheetId: datasheet.id,
-        customName: parsedUnit.attachmentGroup,
         models: resolved.models,
         wargear: resolved.wargear,
       ));

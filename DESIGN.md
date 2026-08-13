@@ -269,6 +269,33 @@ Two lessons came from its own false positives, and both are now pinned by test:
 
 That is the pattern to expect from any cross-check: the first run is mostly your own bugs, and the real signal only appears once they are weeded out.
 
+### 3.6 Corrections — when the data is simply wrong
+
+The cross-check catches *disagreement*. It cannot catch the case where both sources are silent about something the rulebook says, and that turns out to be the more dangerous failure, because it renders as confident text.
+
+The founding case: Broadside Battlesuits' **Advanced Armour** is encoded upstream as
+
+```json
+{"type": "feel-no-pain", "target": "unit", "modifier": {"threshold": 4}}
+```
+
+which the renderer faithfully turned into `Feel No Pain 4+`. The actual rule applies **only to mortal wounds**. Nothing in the data was contradictory — it was incomplete in a direction that promised the player a save they do not have.
+
+Three ways to fix that, and only one is honest:
+
+- **Special-case it in the renderer.** Rejected. §7.6 says the renderer states what the data says; a renderer that knows one ability by name is lying about where its knowledge comes from, and the next such ability gets missed.
+- **Fork the snapshot.** Rejected. `tools/fetch-40kdc.sh` would overwrite it, and nobody could see what had been changed or why.
+- **Correct the data at build time, from a file a person can read.** Taken.
+
+`data-corrections.yaml` at the repo root lists ability effects to replace, each with a mandatory `reason` and an `upstream` field recording where the problem has been reported. `DatasetLoader` applies them as it reads, so the bundler, the snapshot writer and the coverage report all see the same corrected data — while the cross-check deliberately constructs its loader **without** them, so it keeps comparing upstream against upstream.
+
+Two rules stop this becoming a private fork:
+
+- **No reason, no correction** — the same bar as an accepted divergence. Unexplained is indistinguishable from unexamined.
+- **A correction that matches nothing is reported.** The bundler warns and a test fails. Otherwise an entry upstream has since adopted goes on shadowing data that is now correct, forever, and silently.
+
+The corrected record carries its own provenance: a `corrected: {reason, upstream}` key travels with the ability into the shipped bundle, so the explanation is in the data rather than in a build log nobody kept.
+
 ### 3.1 Upstream sources (BSData — now the cross-check, not the primary)
 
 Two repositories, both community-maintained:
@@ -1141,5 +1168,12 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 - 35 app tests.
 
 **First TestFlight upload succeeded**, which validates enrolment, the app record, signing, archive and export end to end.
+
+**Done — corrections and naming, from first play-test feedback:**
+
+- `data-corrections.yaml` and `src/source/corrections.dart` (§3.6). One entry so far: Broadside Battlesuits' Advanced Armour, which upstream encodes as an unrestricted `Feel No Pain 4+` and which the rulebook restricts to mortal wounds. The renderer gained one condition, `damage-is-mortal`, and now reads `Against mortal wounds: Feel No Pain 4+.`
+- **Units are named after their datasheets.** The text importer had been stashing the export format's `Attached Unit N` grouping label in `customName`, so the play screen listed four units by a bookkeeping artefact instead of what they were. The grouping was always carried by the `LEADS` edges; the name was pure noise. An attached unit now reads `Commander in Enforcer Battlesuit + Crisis Fireknife Battlesuits`, and two identical pairings are shown as two identical names rather than disambiguated — the models on the table are what tells them apart.
+- Text left-aligned throughout: empty states, error messages, the setup prompt, the round stepper and the turn toggle. Centred text reads as decoration; a rules aid should read as a document.
+- 200 core tests, 35 app tests; both analyzers clean.
 
 **Next:** the stratagem screen — §7.3's third page and the last major surface of the play mode. The data has phases, CP costs and timing, and `BattleState.hasUsedStratagem` already enforces the one-per-phase rule; nothing is showing it yet.

@@ -346,6 +346,7 @@ class RulesRenderer {
       'controls-objective' => 'while controlling an objective',
       'within-range-of-objective' => 'within range of an objective',
       'disembarked-from-transport' => 'after disembarking',
+      'damage-is-mortal' => 'against mortal wounds',
 
       _ => null,
     };

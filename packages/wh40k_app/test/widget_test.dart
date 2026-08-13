@@ -34,7 +34,14 @@ void main() {
 
     expect(find.text('2k ret'), findsOneWidget);
     expect(find.text('2000'), findsOneWidget);
-    expect(find.text('Attached Unit 1'), findsOneWidget);
+    // Units carry their datasheet names, and an attached unit names both
+    // halves. This list fields the same pairing twice, which is legal and
+    // shown as-is rather than disambiguated.
+    expect(
+      find.text('Commander in Enforcer Battlesuit + Crisis Fireknife '
+          'Battlesuits'),
+      findsNWidgets(2),
+    );
 
     // Informational findings are surfaced, not hidden: these are the two the
     // design predicted for this list.

@@ -14,6 +14,7 @@ library;
 import 'dart:convert';
 import 'dart:io';
 
+import 'corrections.dart';
 import 'json.dart';
 import 'source_models.dart';
 
@@ -87,7 +88,21 @@ class FactionData {
 class DatasetLoader {
   final Directory root;
 
-  DatasetLoader(String rootPath) : root = Directory(rootPath);
+  /// Applied to abilities as they are read, so every consumer — the bundler,
+  /// the snapshot writer, the coverage report — sees the same corrected data
+  /// (DESIGN.md §3.6). A loader built without them reads the snapshot as it
+  /// came from upstream, which is what the cross-check wants.
+  final DataCorrections corrections;
+
+  DatasetLoader(String rootPath, {this.corrections = DataCorrections.empty})
+      : root = Directory(rootPath);
+
+  /// Reads corrections from [path], or none if the file is absent.
+  static DataCorrections correctionsAt(String path) {
+    final file = File(path);
+    if (!file.existsSync()) return DataCorrections.empty;
+    return DataCorrections.parse(file.readAsStringSync());
+  }
 
   /// Reads a JSON array file, returning `null` when absent or unparseable.
   List<Object?>? _readArray(String relativePath) {
@@ -182,7 +197,12 @@ class DatasetLoader {
       stratagems: read('core/$factionId/stratagems.json')
           .map(SourceStratagem.fromJson)
           .toList(growable: false),
-      abilities: read('enrichment/$factionId/abilities.json')
+      abilities: corrections
+          .applyToAbilities(
+            factionId,
+            read('enrichment/$factionId/abilities.json'),
+          )
+          .records
           .map(SourceAbility.fromJson)
           .toList(growable: false),
       phaseMappings: read('enrichment/$factionId/phase-mappings.json')
@@ -221,8 +241,22 @@ class DatasetLoader {
   Map<String, Object?> rawDetachments(String factionId) =>
       rawIndex('core/$factionId/detachments.json');
 
-  Map<String, Object?> rawAbilities(String factionId) =>
-      rawIndex('enrichment/$factionId/abilities.json', idKey: 'ability_id');
+  Map<String, Object?> rawAbilities(String factionId) {
+    final index = <String, Object?>{};
+    for (final record in correctedAbilities(factionId).records) {
+      final id = str(asMap(record)['ability_id']);
+      if (id != null) index[id] = record;
+    }
+    return index;
+  }
+
+  /// Raw ability records with [corrections] applied, alongside the bookkeeping
+  /// of which corrections fired and which matched nothing.
+  CorrectionResult correctedAbilities(String factionId) =>
+      corrections.applyToAbilities(
+        factionId,
+        _readArray('enrichment/$factionId/abilities.json') ?? const [],
+      );
 
   /// Faction ids present under `core/`, i.e. directories rather than files.
   List<String> availableFactions() {

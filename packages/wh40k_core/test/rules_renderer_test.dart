@@ -92,6 +92,19 @@ void main() {
         'Feel No Pain 5+.',
       );
     });
+
+    test('a Feel No Pain restricted to mortal wounds says so', () {
+      // Broadside Battlesuits' Advanced Armour. Rendering this unqualified
+      // promises a save the unit does not have (§3.6).
+      expect(
+        _text({
+          'type': 'conditional',
+          'condition': {'type': 'damage-is-mortal'},
+          'effect': {'type': 'feel-no-pain', 'modifier': {'threshold': 4}},
+        }),
+        'Against mortal wounds: Feel No Pain 4+.',
+      );
+    });
   });
 
   group('combinators recurse', () {

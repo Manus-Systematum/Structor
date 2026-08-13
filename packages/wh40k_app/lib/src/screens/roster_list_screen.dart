@@ -56,12 +56,13 @@ class RosterListScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           if (rows.isEmpty) {
-            return Center(
+            return Align(
+              alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.all(32),
                 child: Text(
                   'No rosters yet.\nImport a text export to get started.',
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                   style: TextStyle(color: scheme.onSurfaceVariant),
                 ),
               ),

@@ -173,11 +173,12 @@ class _Message extends StatelessWidget {
   const _Message({required this.text});
 
   @override
-  Widget build(BuildContext context) => Center(
+  Widget build(BuildContext context) => Align(
+        alignment: Alignment.centerLeft,
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Text(text,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
               style: TextStyle(color: Theme.of(context).colorScheme.error)),
         ),
       );
@@ -193,11 +194,13 @@ class _SetupPrompt extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Center(
+    return Align(
+      alignment: Alignment.centerLeft,
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(Icons.flag_outlined, size: 40, color: scheme.primary),
             const SizedBox(height: 12),
@@ -207,7 +210,7 @@ class _SetupPrompt extends StatelessWidget {
             Text(
               'Setting up decides which mission you play — and with two '
               'detachments, that is a choice.',
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
               style: TextStyle(fontSize: 12.5, color: scheme.onSurfaceVariant),
             ),
             const SizedBox(height: 18),

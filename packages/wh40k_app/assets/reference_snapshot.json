@@ -2240,10 +2240,16 @@
       },
       "version": "2025-q3",
       "effect": {
-        "type": "feel-no-pain",
-        "target": "unit",
-        "modifier": {
-          "threshold": 4
+        "type": "conditional",
+        "condition": {
+          "type": "damage-is-mortal"
+        },
+        "effect": {
+          "type": "feel-no-pain",
+          "target": "unit",
+          "modifier": {
+            "threshold": 4
+          }
         }
       },
       "scope": {
@@ -2254,7 +2260,11 @@
         "broadside-battlesuits"
       ],
       "ability_type": "unit",
-      "behavior": "passive"
+      "behavior": "passive",
+      "corrected": {
+        "reason": "Advanced Armour is Feel No Pain 4+ against mortal wounds only. The upstream effect has no qualifier, so the app rendered an unrestricted Feel No Pain 4+ — a much stronger ability than the Broadside has, and exactly the kind of confidently wrong number that loses games.",
+        "upstream": "not yet reported"
+      }
     },
     "stealth-drones": {
       "ability_id": "stealth-drones",
