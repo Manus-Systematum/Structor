@@ -238,7 +238,27 @@ Compared: unit points per (copy index, model count) bracket, detachment points, 
 
 > **The cross-check does not decide who is right.** It reports and leaves the judgement to a person. One that silently picked a winner would just be a second, quieter source of error.
 
-**Results.** Necrons: 52 units and 12 detachments, **no divergence at all**. T'au: one real finding — the unique tag on Retaliation Cadre and Experimental Prototype Cadre is `retaliation` in 40kdc and `Battlesuit` in the Munitorum. Both sources agree the two detachments *share* a tag, so validation behaves identically either way; only the name differs. Worth reporting upstream.
+**Faction slugs differ between the sources.** The primary data calls the Space Marines `adeptus-astartes`; the Munitorum calls them `space-marines`. `mfmSlugFor` holds the alias table — only genuine renamings belong in it, since chapters with their own file in both sources are not aliases.
+
+**Results across the three shipped factions:**
+
+| Faction | Compared | Divergences |
+| --- | --- | --- |
+| Necrons | 52 units, 12 detachments | **none** |
+| T'au Empire | 43 units, 7 detachments | 2, cosmetic |
+| Adeptus Astartes | 103 units, 15 detachments | **6, real** |
+
+T'au's are a naming difference: the unique tag on Retaliation Cadre and Experimental Prototype Cadre is `retaliation` in 40kdc and `Battlesuit` in the Munitorum. Both agree the two detachments *share* a tag, so validation behaves identically; only the name differs.
+
+**Adeptus Astartes has genuinely stale points**, verified against both raw sources:
+
+```
+Repulsor Executioner                     40kdc 240 / 260   MFM 255 / 275
+Vanguard Veteran Squad with Jump Packs   40kdc 100 / 200   MFM 105 / 210
+                                  (3rd+) 40kdc 110 / 210   MFM 115 / 220
+```
+
+Every gap runs the same direction — 40kdc is cheap — which is the signature of a missed points update rather than a transcription slip. **This is the failure the cross-check exists to catch:** a 2,000 pt list carrying a Repulsor Executioner validates as legal in the app while actually being 2,015. Worth reporting upstream, and worth running before every dataset build.
 
 Two lessons came from its own false positives, and both are now pinned by test:
 

@@ -18,6 +18,26 @@ import '../import/name_match.dart';
 import '../source/source_models.dart';
 import 'mfm.dart';
 
+/// The two sources do not always agree on a faction's slug: the primary data
+/// calls the Space Marines `adeptus-astartes`, the Munitorum calls them
+/// `space-marines`. Only genuine renamings belong here — a chapter with its
+/// own file in both sources is not an alias.
+const mfmSlugAliases = <String, String>{
+  'adeptus-astartes': 'space-marines',
+};
+
+/// The Munitorum slug for a primary faction id.
+String mfmSlugFor(String factionId) =>
+    mfmSlugAliases[factionId] ?? factionId;
+
+/// The primary faction id for a Munitorum slug.
+String factionIdFor(String mfmSlug) {
+  for (final entry in mfmSlugAliases.entries) {
+    if (entry.value == mfmSlug) return entry.key;
+  }
+  return mfmSlug;
+}
+
 enum DivergenceKind {
   unitPoints,
   unitMissing,

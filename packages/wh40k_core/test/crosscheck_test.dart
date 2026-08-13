@@ -220,6 +220,18 @@ void main() {
     });
   });
 
+  group('faction slugs', () {
+    test('the two sources disagree on the Space Marines', () {
+      expect(mfmSlugFor('adeptus-astartes'), 'space-marines');
+      expect(factionIdFor('space-marines'), 'adeptus-astartes');
+    });
+
+    test('everything else passes through unchanged', () {
+      expect(mfmSlugFor('necrons'), 'necrons');
+      expect(factionIdFor('tau-empire'), 'tau-empire');
+    });
+  });
+
   group('against the real sources', () {
     final mfm = File('../../data/mfm/necrons.yaml');
     final available = mfm.existsSync() &&

@@ -37,7 +37,8 @@ void main(List<String> args) {
           .listSync()
           .whereType<File>()
           .where((f) => f.path.endsWith('.yaml'))
-          .map((f) => f.uri.pathSegments.last.replaceAll('.yaml', ''))
+          .map((f) =>
+              factionIdFor(f.uri.pathSegments.last.replaceAll('.yaml', '')))
           .toList()
       : <String>[];
 
@@ -49,7 +50,7 @@ void main(List<String> args) {
 
   var total = 0;
   for (final factionId in targets) {
-    final yamlFile = File('$mfmDir/$factionId.yaml');
+    final yamlFile = File('$mfmDir/${mfmSlugFor(factionId)}.yaml');
     if (!yamlFile.existsSync()) {
       stderr.writeln('no MFM data for $factionId');
       continue;
