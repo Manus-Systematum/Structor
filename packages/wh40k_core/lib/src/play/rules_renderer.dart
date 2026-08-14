@@ -217,8 +217,10 @@ class RulesRenderer {
       case 'ability-grant':
         final ability = str(mod['ability']);
         if (ability != null) return 'grants ${_words(ability)}';
-        final weapon = str(mod['weapon']);
-        if (weapon != null) return 'grants ${_words(weapon)}';
+        // `weapon_id` is the shape a drone uses (§7.3.7); `weapon` is the
+        // older free-text one. Either names the gun, which is the point.
+        final weapon = str(mod['weapon']) ?? str(mod['weapon_id']);
+        if (weapon != null) return 'grants a ${_words(weapon)}';
         return 'grants a ${_words(strOr(mod['grant_type'], 'bonus'))}';
 
       case 'movement-modifier':

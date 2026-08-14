@@ -113,7 +113,18 @@ class WeaponAggregator {
       final survivors = modelsRemaining[rosterUnit.instanceId];
 
       for (final selection in rosterUnit.wargear) {
-        final weapon = catalogue.weaponFor(datasheet, selection.itemId);
+        var resolved = catalogue.weaponFor(datasheet, selection.itemId);
+
+        // A drone is wargear that grants the model a rule, and sometimes a
+        // weapon with it (§7.3.7). `gun-drone` is not itself a weapon id, so
+        // the grant has to be followed before calling it unresolved.
+        if (resolved == null &&
+            datasheet.abilityIds.contains(selection.itemId)) {
+          resolved = _grantedWeapon(datasheet, selection.itemId);
+          if (resolved == null) continue; // a rule, not a gun
+        }
+
+        final weapon = resolved;
         if (weapon == null) {
           unresolved.add(UnresolvedWargear(
             instanceId: rosterUnit.instanceId,
@@ -156,6 +167,14 @@ class WeaponAggregator {
       weapons: _render(buckets.values.toList()),
       unresolved: unresolved,
     );
+  }
+
+  /// The weapon a wargear-ability grants its bearer, if it grants one.
+  SourceWeapon? _grantedWeapon(SourceUnit datasheet, String abilityId) {
+    final weaponId = catalogue.ability(abilityId)?.grantedWeaponId;
+    if (weaponId == null) return null;
+    return catalogue.weaponFor(datasheet, weaponId) ??
+        catalogue.weapon(weaponId);
   }
 
   /// Scales a unit-level wargear count to its surviving models.

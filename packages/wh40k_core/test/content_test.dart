@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:test/test.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import 'support.dart';
+
 void main() {
   group('content hashing', () {
     test('is deterministic and fits in three bytes', () {
@@ -50,7 +52,7 @@ void main() {
     final available = snapshot.existsSync();
 
     Dataset load(String faction) => Dataset.of(
-          DatasetLoader(snapshot.path).loadFaction(faction),
+          correctedLoader().loadFaction(faction),
           revision: 'test',
         );
 
@@ -108,7 +110,7 @@ void main() {
     final available = dir.existsSync();
 
     RosterSnapshot buildSnapshot() {
-      final loader = DatasetLoader(dir.path);
+      final loader = correctedLoader();
       final dataset =
           Dataset.of(loader.loadFaction('tau-empire'), revision: 'test');
       final roster = Roster.fromJson(jsonDecode(
@@ -132,7 +134,7 @@ void main() {
     }, skip: available ? null : 'no snapshot');
 
     test('is far smaller than the faction it came from', () {
-      final loader = DatasetLoader(dir.path);
+      final loader = correctedLoader();
       final faction = loader.loadFaction('tau-empire');
       final snapshot = buildSnapshot();
       expect(snapshot.units.length, lessThan(faction.units.length / 3),
@@ -156,6 +158,9 @@ void main() {
         snapshot.units.values.map(SourceUnit.fromJson),
         weapons: snapshot.weapons.values.map(SourceWeapon.fromJson),
         detachments: snapshot.detachments.values.map(SourceDetachment.fromJson),
+        // Abilities are part of the snapshot because wargear can be one: a
+        // Gun Drone resolves to a twin pulse carbine through its ability.
+        abilities: snapshot.abilities.values.map(SourceAbility.fromJson),
       );
       final roster = Roster.fromJson(jsonDecode(
           File('test/fixtures/tau_strike_force_2000.json').readAsStringSync()));

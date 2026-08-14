@@ -202,8 +202,8 @@ class _UnitCard extends StatelessWidget {
                         ),
                         // Only when it could be either half: a Shield
                         // Generator on the Commander is not one on the suits
-                        // it leads.
-                        if (unit.isAttached)
+                        // it leads. Empty when both halves have the rule.
+                        if (entry.source.isNotEmpty)
                           TextSpan(
                             text: '  (${entry.source})',
                             style: TextStyle(

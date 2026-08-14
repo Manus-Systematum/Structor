@@ -156,7 +156,7 @@ abilities:
       final result = DataCorrections.parse(_yaml)
           .applyToAbilities('tau-empire', [_records.last]);
       expect(result.applied, isEmpty);
-      expect(result.unmatched.single.abilityId, 'advanced-armour');
+      expect(result.unmatched.single.subject, 'advanced-armour');
     });
   });
 
@@ -183,19 +183,23 @@ abilities:
       );
       if (!loader.root.existsSync()) return;
 
-      final applied = <AbilityCorrection>[];
+      final applied = <Correction>[];
       for (final factionId in loader.availableFactions()) {
-        final result = loader.correctedAbilities(factionId);
-        applied.addAll(result.applied);
-        expect(
-          result.unmatched.map((c) => c.abilityId),
-          isEmpty,
-          reason: 'a correction for $factionId matches no ability — either a '
-              'typo, or upstream has fixed it and the entry should go',
-        );
+        for (final result in [
+          loader.correctedAbilities(factionId),
+          loader.correctedUnits(factionId),
+        ]) {
+          applied.addAll(result.applied);
+          expect(
+            result.unmatched.map((c) => c.subject),
+            isEmpty,
+            reason: 'a correction for $factionId matches nothing — either a '
+                'typo, or upstream has fixed it and the entry should go',
+          );
+        }
       }
       expect(
-        loader.corrections.neverApplied(applied).map((c) => c.abilityId),
+        loader.corrections.neverApplied(applied).map((c) => c.subject),
         isEmpty,
         reason: 'a wildcard correction fired for no faction at all',
       );

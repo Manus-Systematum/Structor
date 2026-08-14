@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:test/test.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import 'support.dart';
+
 SourceUnit _unit(
   String id, {
   int cost = 100,
@@ -318,7 +320,7 @@ void main() {
     test('a real 2,000 pt list produces no errors', () {
       final roster = Roster.fromJson(jsonDecode(
           File('test/fixtures/tau_strike_force_2000.json').readAsStringSync()));
-      final faction = DatasetLoader(snapshot.path).loadFaction('tau-empire');
+      final faction = correctedLoader().loadFaction('tau-empire');
       final result =
           RosterValidator(MapCatalogue.ofFaction(faction)).validate(roster);
 

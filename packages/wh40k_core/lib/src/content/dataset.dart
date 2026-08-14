@@ -134,6 +134,7 @@ class Dataset implements Catalogue {
     return null;
   }
 
+  @override
   SourceAbility? ability(String abilityId) => _abilities[abilityId];
 
   // -------------------------------------------------------- addressing

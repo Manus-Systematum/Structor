@@ -127,8 +127,21 @@ class SnapshotBuilder {
       // carrier so the scoped variant is captured rather than the generic one
       // (§7.3.5).
       for (final selection in rosterUnit.wargear) {
-        final weapon = dataset.weaponFor(datasheet, selection.itemId);
-        if (weapon == null) continue;
+        var weapon = dataset.weaponFor(datasheet, selection.itemId);
+
+        // Wargear that is an ability can still bring a gun: a Gun Drone is a
+        // twin pulse carbine (§7.3.7). Missing it here leaves the shooting
+        // table short a weapon on any list rebuilt from the snapshot alone,
+        // which is the case the snapshot exists for.
+        if (weapon == null) {
+          final grantedId =
+              dataset.ability(selection.itemId)?.grantedWeaponId;
+          if (grantedId == null) continue;
+          weapon = dataset.weaponFor(datasheet, grantedId) ??
+              dataset.weapon(grantedId);
+          if (weapon == null) continue;
+        }
+
         final raw = rawWeapons[weapon.id];
         if (raw != null) weapons[weapon.id] = raw;
       }

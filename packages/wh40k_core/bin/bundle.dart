@@ -84,7 +84,7 @@ void main(List<String> args) {
   final entries = <BundleEntry>[];
   final correctionNotes = <String>[];
   final staleCorrections = <String>[];
-  final appliedCorrections = <AbilityCorrection>[];
+  final appliedCorrections = <Correction>[];
 
   BundleEntry write(DatasetBundle bundle, String displayName) {
     final compressed = bundle.encode();
@@ -119,15 +119,20 @@ void main(List<String> args) {
       for (final f in _enrichmentFiles) f: read('enrichment/$factionId/$f'),
     };
 
-    final corrected = loader.correctedAbilities(factionId);
-    files['abilities'] = corrected.records;
-    for (final c in corrected.applied) {
-      correctionNotes.add('$factionId/${c.abilityId}');
-      appliedCorrections.add(c);
+    for (final corrected in [
+      loader.correctedAbilities(factionId),
+      loader.correctedUnits(factionId),
+    ]) {
+      for (final c in corrected.applied) {
+        correctionNotes.add('$factionId/${c.subject}');
+        appliedCorrections.add(c);
+      }
+      for (final c in corrected.unmatched) {
+        staleCorrections.add('$factionId/${c.subject}');
+      }
     }
-    for (final c in corrected.unmatched) {
-      staleCorrections.add('$factionId/${c.abilityId}');
-    }
+    files['abilities'] = loader.correctedAbilities(factionId).records;
+    files['units'] = loader.correctedUnits(factionId).records;
 
     if (files['units']!.isEmpty) {
       stdout.writeln('  skip $factionId (no units)');
@@ -166,7 +171,7 @@ void main(List<String> args) {
     ..writeln('manifest: $outDir/manifest.json');
 
   for (final c in loader.corrections.neverApplied(appliedCorrections)) {
-    staleCorrections.add('*/${c.abilityId}');
+    staleCorrections.add('*/${c.subject}');
   }
 
   if (correctionNotes.isNotEmpty) {

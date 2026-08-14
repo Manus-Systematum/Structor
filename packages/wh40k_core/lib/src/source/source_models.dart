@@ -556,6 +556,26 @@ class SourceAbility {
     return null;
   }
 
+  /// The weapon this ability grants its bearer, if it names one.
+  ///
+  /// Drones are wargear that give the model a rule, and a Gun Drone's rule is
+  /// a twin pulse carbine (§7.3.7). Only an explicit `weapon_id` counts:
+  /// `{grant_type: ranged-weapon}` with no id names nothing, and guessing
+  /// which weapon was meant is the invention §7.6 forbids.
+  String? get grantedWeaponId => _grantedWeaponIn(effect);
+
+  static String? _grantedWeaponIn(Map<String, dynamic> node) {
+    if (strOr(node['type'], '') == 'ability-grant') {
+      final id = str(asMap(node['modifier'])['weapon_id']);
+      if (id != null) return id;
+    }
+    for (final step in asList(node['steps'])) {
+      final found = _grantedWeaponIn(asMap(step));
+      if (found != null) return found;
+    }
+    return null;
+  }
+
   /// Structural fingerprint used to detect near-duplicate ability records —
   /// upstream carries both `weapon-support-system` and
   /// `weapon-support-systems` with identical effects (DESIGN.md §7.3.6).

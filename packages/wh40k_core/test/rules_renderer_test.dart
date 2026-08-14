@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:test/test.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import 'support.dart';
+
 const _renderer = RulesRenderer();
 
 /// Renders an ability from its raw effect, as it appears in the source data.
@@ -404,7 +406,7 @@ void main() {
     final snapshot = Directory('../../data/40kdc');
 
     ({int total, int complete, Set<String> gaps}) coverageOf(String faction) {
-      final data = DatasetLoader(snapshot.path).loadFaction(faction);
+      final data = correctedLoader().loadFaction(faction);
       final rules = data.abilities.map(_renderer.render).toList();
       return (
         total: rules.length,

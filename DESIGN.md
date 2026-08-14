@@ -313,9 +313,25 @@ Seven complaints from one game, and the useful thing about them is that they sor
 
 **Wrong data** — corrected in `data-corrections.yaml` (§3.6): Stealth, and Broadside Advanced Armour.
 
-**Upstream gaps** — nothing local can fix these honestly:
+**The seventh, the missing drones, took a wrong turn first.** See §3.8.
 
-- **Drones do not exist as models.** `gun-drone`, `shield-drone`, `marker-drone` and the rest are name-only wargear stubs — `{id, name, game_version}`, no statline, no weapons — and no `unit-compositions` entry lists a drone model. So there is no drone profile to show, and no amount of rendering will invent one. Their *abilities* are present (`shield-drone` → +1 Wound), which is why they appear on the rules list but never in the stat block.
+### 3.8 Drones are wargear, and the model gets the rules
+
+My first reading of the missing drone profiles was wrong, and worth recording because the wrong reading was the expensive one. I took "no drone statline in the data" as an upstream gap that could only be closed by authoring drone datasheets. It is not a gap. **In 11th edition a drone is not a model — it is wargear, and the model that takes one gains its rules.** The data models exactly that: a name-only `wargear` stub for the choice, and an ability for what it does. Nothing was missing from the encoding.
+
+What was missing was on our side, in three places.
+
+**The importer recognised drones and then threw them away.** `_tallyWargear` matched `Gun Drone With Twin Pulse Carbine and Shield Drone` against the datasheet's abilities, concluded "yes, that is a real thing" — and returned without recording it. The real export carries drones on nine of sixteen units and **not one reached the roster**. Consequences that all read as separate bugs: no twin pulse carbines in the shooting table; Shield Drones absent; and every drone a datasheet *could* take listed on units that had bought none, because the rules list was reading `ability_ids` while the roster knew nothing.
+
+Drones are now recorded as ordinary `WargearSelection`s keyed by the ability id. That one change makes the roster the single answer to "what does this unit have", which the rest hangs off.
+
+**Wargear that is an ability can still bring a gun.** `gun-drone` is not a weapon id, so the aggregator called it unresolved. It now follows an `ability-grant`'s `weapon_id` to the weapon, and so does the snapshot builder — otherwise a list rebuilt from a snapshot alone, the case snapshots exist for, would be short a weapon.
+
+**Optional is not the same as fitted.** A Crisis suit may take a Gun, Marker or Shield Drone. Showing all three on a unit that bought two is three rules to read and one of them false. An ability that appears in `wargear_budgets` is now shown only when the roster unit carries it — and the statline reads the same filtered set, so the INV column and the rules text cannot disagree about whether a Shield Generator was bought.
+
+That last rule exposed a contradiction upstream: the Commander in Coldstar Battlesuit lists `shield-generator` in **both** `ability_ids` and `wargear_budgets`, so a list that never mentions buying one is ambiguous. Corrections gained `standard_wargear` to settle it.
+
+Six T'au datasheets do not list the drones their units demonstrably carry — Commanders, Starscythe, Stealth, Broadsides, and the Ghostkeel's support system. Those are `units:` corrections, evidenced by a validated export of a legal 2,000 point list. Two drones still name no weapon upstream (`missile-drone`, `mv15-gun-drone`, the latter naming a `twin-pulse-blaster` that has no weapon record), so their guns remain absent; naming them would be guessing.
 Two more turned out to be wrong data rather than gaps, once the exact wording was to hand. Both are now corrections:
 
 - **Coldstar Commander** grants ASSAULT to the whole squad's ranged weapons as well as setting Move to 12. Upstream had only the Move part, so the app advertised a mobility buff and said nothing about shooting after Advancing — which is the reason to field it.
@@ -1202,6 +1218,8 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 - **Units are named after their datasheets.** The text importer had been stashing the export format's `Attached Unit N` grouping label in `customName`, so the play screen listed four units by a bookkeeping artefact instead of what they were. The grouping was always carried by the `LEADS` edges; the name was pure noise. An attached unit now reads `Commander in Enforcer Battlesuit + Crisis Fireknife Battlesuits`, and two identical pairings are shown as two identical names rather than disambiguated — the models on the table are what tells them apart.
 - Text left-aligned throughout: empty states, error messages, the setup prompt, the round stepper and the turn toggle. Centred text reads as decoration; a rules aid should read as a document.
 
-**Done — the seven play-test findings (§3.7):** operation-aware stat rendering, sign preservation, attacker/defender attribution, weapon keyword parameters end to end, ability-granted invulnerable saves in the INV column, per-datasheet attribution of an attached unit's abilities, and corrections for Stealth, Coldstar Commander and Starscythe. Only the missing drone profiles remain, and they are not ours to fix. 215 core tests, 40 app tests; both analyzers clean.
+**Done — the seven play-test findings (§3.7, §3.8):** operation-aware stat rendering, sign preservation, attacker/defender attribution, weapon keyword parameters end to end, ability-granted invulnerable saves in the INV column, per-datasheet attribution of an attached unit's abilities, and corrections for Stealth, Coldstar Commander and Starscythe.
+
+**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 215 core tests, 42 app tests; both analyzers clean.
 
 **Next:** the stratagem screen — §7.3's third page and the last major surface of the play mode. The data has phases, CP costs and timing, and `BattleState.hasUsedStratagem` already enforces the one-per-phase rule; nothing is showing it yet.

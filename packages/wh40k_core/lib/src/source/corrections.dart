@@ -24,14 +24,30 @@ library;
 
 import 'package:yaml/yaml.dart';
 
+import 'json.dart';
+
+/// Something a person has decided the upstream data gets wrong.
+abstract interface class Correction {
+  /// A faction id, or `*` for data carried identically by several factions.
+  String get faction;
+
+  /// What is being corrected, for logs and staleness reports.
+  String get subject;
+
+  String get reason;
+}
+
 /// A replacement effect for one ability in one faction.
-class AbilityCorrection {
+class AbilityCorrection implements Correction {
   /// A faction id, or `*` for a core ability carried identically by several
   /// factions — Stealth is transcribed once per faction file, and wrong in
   /// each of them.
+  @override
   final String faction;
 
   final String abilityId;
+
+  @override
   final String reason;
 
   /// Where the problem has been reported upstream, for the record. Free text —
@@ -40,6 +56,9 @@ class AbilityCorrection {
 
   /// The effect that replaces the upstream one, in the source JSON shape.
   final Map<String, Object?> effect;
+
+  @override
+  String get subject => abilityId;
 
   const AbilityCorrection({
     required this.faction,
@@ -50,14 +69,56 @@ class AbilityCorrection {
   });
 }
 
+/// Wargear a datasheet can carry that upstream does not list.
+///
+/// Drones are wargear, and what a drone does is an ability (§7.3.7) — so a
+/// datasheet that can take one has to name it in both `ability_ids` (what it
+/// does) and `wargear_budgets` (that it is a choice, not standard kit). The
+/// second half is what lets the app show a drone's rules only on units that
+/// actually bought one.
+class UnitCorrection implements Correction {
+  @override
+  final String faction;
+
+  final String unitId;
+
+  @override
+  final String reason;
+
+  final String? upstream;
+
+  @override
+  String get subject => unitId;
+
+  /// Ability ids the datasheet may take as wargear.
+  final List<String> addWargear;
+
+  /// Ability ids that are fitted as standard, not chosen.
+  ///
+  /// Upstream can say both at once: the Commander in Coldstar Battlesuit
+  /// lists `shield-generator` in `ability_ids` *and* in `wargear_budgets`, so
+  /// the app cannot tell whether a list that does not mention one has an
+  /// invulnerable save. Naming it standard settles that.
+  final List<String> standardWargear;
+
+  const UnitCorrection({
+    required this.faction,
+    required this.unitId,
+    required this.reason,
+    this.addWargear = const [],
+    this.standardWargear = const [],
+    this.upstream,
+  });
+}
+
 class CorrectionResult {
   final List<Object?> records;
 
-  /// Corrections that found their ability.
-  final List<AbilityCorrection> applied;
+  /// Corrections that found their subject.
+  final List<Correction> applied;
 
   /// Corrections that matched nothing — a stale entry, or a typo in the id.
-  final List<AbilityCorrection> unmatched;
+  final List<Correction> unmatched;
 
   const CorrectionResult({
     required this.records,
@@ -68,14 +129,96 @@ class CorrectionResult {
 
 class DataCorrections {
   final List<AbilityCorrection> abilities;
+  final List<UnitCorrection> units;
 
-  const DataCorrections({this.abilities = const []});
+  const DataCorrections({
+    this.abilities = const [],
+    this.units = const [],
+  });
 
   static const empty = DataCorrections();
 
-  bool get isEmpty => abilities.isEmpty;
+  bool get isEmpty => abilities.isEmpty && units.isEmpty;
 
   static const _anyFaction = '*';
+
+  /// Applies unit corrections to raw `units.json` records.
+  CorrectionResult applyToUnits(String factionId, List<Object?> records) {
+    final byId = {
+      for (final c in units)
+        if (c.faction == factionId || c.faction == _anyFaction) c.unitId: c,
+    };
+    if (byId.isEmpty) {
+      return CorrectionResult(
+        records: records,
+        applied: const [],
+        unmatched: const [],
+      );
+    }
+
+    final applied = <Correction>[];
+    final out = <Object?>[];
+
+    for (final record in records) {
+      if (record is! Map) {
+        out.add(record);
+        continue;
+      }
+      final correction = byId[record['id']?.toString()];
+      if (correction == null) {
+        out.add(record);
+        continue;
+      }
+      applied.add(correction);
+
+      final abilityIds = <String>[
+        for (final id in asList(record['ability_ids'])) '$id',
+      ];
+      var budgets = [...asList(record['wargear_budgets'])];
+
+      // Standard kit is not a choice, so it must not appear as a budget item
+      // — otherwise the app hides its rule on any list that does not mention
+      // buying one.
+      for (final item in correction.standardWargear) {
+        if (!abilityIds.contains(item)) abilityIds.add(item);
+        budgets = [
+          for (final b in budgets)
+            if (!(b is Map &&
+                asList(b['items']).map((i) => '$i').contains(item)))
+              b,
+        ];
+      }
+
+      for (final item in correction.addWargear) {
+        if (!abilityIds.contains(item)) abilityIds.add(item);
+        final alreadyBudgeted = budgets.any((b) =>
+            b is Map &&
+            asList(b['items']).map((i) => '$i').contains(item));
+        if (!alreadyBudgeted) {
+          budgets.add({'items': [item], 'count': 1, 'per_models': 0});
+        }
+      }
+
+      out.add({
+        for (final e in record.entries) e.key.toString(): e.value,
+        'ability_ids': abilityIds,
+        'wargear_budgets': budgets,
+        'corrected': {
+          'reason': correction.reason,
+          if (correction.upstream != null) 'upstream': correction.upstream,
+        },
+      });
+    }
+
+    return CorrectionResult(
+      records: out,
+      applied: applied,
+      unmatched: [
+        for (final c in byId.values)
+          if (c.faction != _anyFaction && !applied.contains(c)) c,
+      ],
+    );
+  }
 
   /// Corrections for one faction, applied to its raw `abilities.json` records.
   ///
@@ -97,7 +240,7 @@ class DataCorrections {
     }
 
     final byId = {for (final c in mine) c.abilityId: c};
-    final applied = <AbilityCorrection>[];
+    final applied = <Correction>[];
     final out = <Object?>[];
 
     for (final record in records) {
@@ -138,10 +281,10 @@ class DataCorrections {
 
   /// Wildcard corrections that fired for no faction at all — the same "stale
   /// entry" check [CorrectionResult.unmatched] does, but across a whole run.
-  List<AbilityCorrection> neverApplied(Iterable<AbilityCorrection> applied) {
+  List<Correction> neverApplied(Iterable<Correction> applied) {
     final fired = applied.toSet();
     return [
-      for (final c in abilities)
+      for (final c in <Correction>[...abilities, ...units])
         if (c.faction == _anyFaction && !fired.contains(c)) c,
     ];
   }
@@ -171,7 +314,31 @@ class DataCorrections {
         ));
       }
     }
-    return DataCorrections(abilities: abilities);
+    final units = <UnitCorrection>[];
+    final rawUnits = root['units'];
+    if (rawUnits is List) {
+      for (final node in rawUnits) {
+        if (node is! Map) continue;
+        final reason = node['reason']?.toString().trim() ?? '';
+        final wargear = [
+          for (final item in asList(_plain(node['add_wargear']))) '$item',
+        ];
+        final standard = [
+          for (final item in asList(_plain(node['standard_wargear']))) '$item',
+        ];
+        if (reason.isEmpty || (wargear.isEmpty && standard.isEmpty)) continue;
+        units.add(UnitCorrection(
+          faction: node['faction']?.toString() ?? '',
+          unitId: node['id']?.toString() ?? '',
+          reason: reason,
+          upstream: node['upstream']?.toString(),
+          addWargear: wargear,
+          standardWargear: standard,
+        ));
+      }
+    }
+
+    return DataCorrections(abilities: abilities, units: units);
   }
 
   /// YAML nodes are not JSON-encodable, so they are copied into plain maps and

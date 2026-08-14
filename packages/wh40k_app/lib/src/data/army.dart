@@ -33,6 +33,9 @@ class Army {
       snapshot.units.values.map(SourceUnit.fromJson),
       weapons: snapshot.weapons.values.map(SourceWeapon.fromJson),
       detachments: snapshot.detachments.values.map(SourceDetachment.fromJson),
+      // Wargear can be an ability: a Gun Drone resolves to a twin pulse
+      // carbine only by following the grant (§7.3.7).
+      abilities: snapshot.abilities.values.map(SourceAbility.fromJson),
     );
     return Army._(
       id: id,
@@ -75,7 +78,7 @@ class Army {
     if (datasheet == null) return const [];
 
     final rules = <RenderedRule>[];
-    for (final abilityId in datasheet.abilityIds) {
+    for (final abilityId in _activeAbilityIds(unit)) {
       final raw = snapshot.abilities[abilityId];
       if (raw == null) continue;
       rules.add(renderer.render(SourceAbility.fromJson(raw)));
@@ -91,11 +94,11 @@ class Army {
   /// ability and its profile says nothing. Reading only the profile left the
   /// INV column empty on a unit that has one.
   String? grantedInvulnerableSave(RosterUnit unit) {
-    final datasheet = catalogue.unit(unit.datasheetId);
-    if (datasheet == null) return null;
-
     int? best;
-    for (final abilityId in datasheet.abilityIds) {
+    // Over the abilities the unit actually has, not every one its datasheet
+    // could carry — otherwise the INV column and the rules list disagree
+    // about whether a Shield Generator was bought.
+    for (final abilityId in _activeAbilityIds(unit)) {
       final raw = snapshot.abilities[abilityId];
       if (raw == null) continue;
       final save = SourceAbility.fromJson(raw).unconditionalInvulnerableSave;
@@ -104,6 +107,26 @@ class Army {
       if (best == null || save < best) best = save;
     }
     return best?.toString();
+  }
+
+  /// Ability ids in force for [unit]: its datasheet's, minus optional wargear
+  /// it did not take.
+  ///
+  /// Wargear the datasheet *could* take is not wargear it has. A Crisis suit
+  /// may take a Gun, Marker or Shield Drone; listing all three on a unit that
+  /// bought two is three rules to read and one of them false (§7.3.7).
+  List<String> _activeAbilityIds(RosterUnit unit) {
+    final datasheet = catalogue.unit(unit.datasheetId);
+    if (datasheet == null) return const [];
+
+    final optional = <String>{
+      for (final budget in datasheet.wargearBudgets) ...budget.items,
+    };
+    final taken = {for (final item in unit.wargear) item.itemId};
+    return [
+      for (final id in datasheet.abilityIds)
+        if (!optional.contains(id) || taken.contains(id)) id,
+    ];
   }
 
   String detachmentName(String id) => catalogue.detachment(id)?.name ?? id;
@@ -169,22 +192,39 @@ class CombatUnit {
   /// When it is, a rule needs saying *whose* it is.
   bool get isAttached => group.length > 1;
 
-  /// Abilities with the datasheet each one belongs to.
+  /// Abilities with the datasheets they belong to.
   ///
   /// An attached unit's abilities are not shared. The Commander in Coldstar
   /// Battlesuit carries a Shield Generator; the Crisis Starscythe suits it
   /// leads do not. Listing the union unattributed reads as though they did.
+  ///
+  /// A rule both halves have needs no attribution — Deep Strike twice, once
+  /// per datasheet, is noise. [source] is empty in that case.
   List<({String source, RenderedRule rule})> get attributedRules {
-    final seen = <String>{};
-    final out = <({String source, RenderedRule rule})>[];
+    final order = <String>[];
+    final rules = <String, RenderedRule>{};
+    final owners = <String, List<String>>{};
+
     for (final unit in group) {
-      final name = army.catalogue.unit(unit.datasheetId)?.name ??
-          unit.datasheetId;
+      final name =
+          army.catalogue.unit(unit.datasheetId)?.name ?? unit.datasheetId;
       for (final rule in army.rulesFor(unit)) {
-        if (seen.add(rule.abilityId)) out.add((source: name, rule: rule));
+        if (rules.putIfAbsent(rule.abilityId, () => rule) == rule) {
+          order.add(rule.abilityId);
+        }
+        (owners[rule.abilityId] ??= []).add(name);
       }
     }
-    return out;
+
+    return [
+      for (final id in order)
+        (
+          source: owners[id]!.length == group.length
+              ? ''
+              : owners[id]!.join(', '),
+          rule: rules[id]!,
+        ),
+    ];
   }
 
   List<RenderedRule> get rules {

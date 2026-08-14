@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:test/test.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import 'support.dart';
+
 SourceWeapon _weapon(
   String id,
   String name, {
@@ -272,7 +274,7 @@ void main() {
     test('Attached Unit 1 fields ten missile pods across two skills', () {
       final roster = Roster.fromJson(jsonDecode(
           File('test/fixtures/tau_strike_force_2000.json').readAsStringSync()));
-      final faction = DatasetLoader(snapshot.path).loadFaction('tau-empire');
+      final faction = correctedLoader().loadFaction('tau-empire');
       final catalogue = MapCatalogue.ofFaction(faction);
 
       final attached = roster
@@ -303,7 +305,7 @@ void main() {
     test('Attached Unit 2 is an auto-hitting dice pool', () {
       final roster = Roster.fromJson(jsonDecode(
           File('test/fixtures/tau_strike_force_2000.json').readAsStringSync()));
-      final faction = DatasetLoader(snapshot.path).loadFaction('tau-empire');
+      final faction = correctedLoader().loadFaction('tau-empire');
 
       final attached = roster
           .combatUnits()

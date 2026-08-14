@@ -267,9 +267,12 @@ class RosterResolver {
       weaponCandidates.add(_Candidate(itemId, weapon.name));
     }
 
-    final abilityNames = <String>[
+    // Abilities the datasheet can carry, keyed by id. A drone is wargear on
+    // the printed list and an ability in the data (§7.3.7), so matching one
+    // has to yield something the roster can store, not just a yes/no.
+    final abilityCandidates = <_Candidate>[
       for (final id in datasheet.abilityIds)
-        abilityLookup?.call(id)?.name ?? id.replaceAll('-', ' '),
+        _Candidate(id, abilityLookup?.call(id)?.name ?? id.replaceAll('-', ' ')),
     ];
 
     final modelNodes = <ParsedNode>[];
@@ -320,7 +323,7 @@ class RosterResolver {
         node: node,
         datasheet: datasheet,
         candidates: weaponCandidates,
-        abilityNames: abilityNames,
+        abilityCandidates: abilityCandidates,
         tally: tally,
         issues: issues,
       );
@@ -339,7 +342,7 @@ class RosterResolver {
     required ParsedNode node,
     required SourceUnit datasheet,
     required List<_Candidate> candidates,
-    required List<String> abilityNames,
+    required List<_Candidate> abilityCandidates,
     required Map<String, int> tally,
     required List<ResolutionIssue> issues,
   }) {
@@ -368,16 +371,24 @@ class RosterResolver {
           tally.update(match.value.id, (n) => n + node.count,
               ifAbsent: () => node.count);
           any = true;
-        } else if (_isAbility(part, abilityNames)) {
+        } else if (_abilityFor(part, abilityCandidates) case final id?) {
+          tally.update(id, (n) => n + node.count, ifAbsent: () => node.count);
           any = true;
         }
       }
       if (any) return;
     }
 
-    // Drones and support systems are wargear on the printed list but abilities
-    // in the data. Recognising them keeps the report honest rather than noisy.
-    if (_isAbility(node.name, abilityNames)) return;
+    // Drones and support systems are wargear on the printed list but
+    // abilities in the data. They are **recorded**, not merely acknowledged:
+    // a Gun Drone is a twin pulse carbine the unit actually fires, and a
+    // Shield Drone is a wound it actually has. Discarding them left the play
+    // screen showing every drone the datasheet *could* take and none of the
+    // weapons they bring.
+    if (_abilityFor(node.name, abilityCandidates) case final id?) {
+      tally.update(id, (n) => n + node.count, ifAbsent: () => node.count);
+      return;
+    }
 
     // Known to the faction but not attached to this datasheet: an upstream
     // data gap rather than an import failure. It costs no points and does not
@@ -406,8 +417,11 @@ class RosterResolver {
     ));
   }
 
-  bool _isAbility(String name, List<String> abilityNames) =>
-      abilityNames.any((a) => scoreName(name, a) >= 0.7);
+  /// The id of the datasheet ability [name] refers to, if any.
+  String? _abilityFor(String name, List<_Candidate> candidates) =>
+      bestMatch<_Candidate>(name, candidates, (c) => c.name, threshold: 0.7)
+          ?.value
+          .id;
 
   int _defaultModels(SourceUnit datasheet) {
     for (final bracket in datasheet.points) {

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:test/test.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import 'support.dart';
+
 const _parser = TextListParser();
 
 void main() {
@@ -120,7 +122,7 @@ void main() {
 
     setUp(() {
       final faction =
-          DatasetLoader(snapshot.path).loadFaction('tau-empire');
+          correctedLoader().loadFaction('tau-empire');
       dataset = Dataset.of(faction, revision: 'test');
       result = RosterResolver(
         dataset,
@@ -181,15 +183,25 @@ void main() {
       expect(table.weapons.map((w) => w.attacks.fixed), containsAll([8, 12]));
     }, skip: available ? null : 'no snapshot');
 
-    test('dataset attachment gaps are info, not warnings', () {
-      // Drones the printed list carries but the datasheet does not list are an
-      // upstream gap, not an import failure. They cost nothing and do not
-      // affect the weapon table.
-      final infos = result.issues
-          .where((i) => i.severity == IssueSeverity.info)
-          .where((i) => i.message.contains('does not list in the dataset'))
-          .toList();
-      expect(infos, isNotEmpty);
+    test('every drone in the printed list is recorded as wargear', () {
+      // Drones are wargear, and the model gets the drone's rules (§7.3.7).
+      // They used to be recognised as abilities and then thrown away, which
+      // cost the list its Gun Drone carbines and showed every drone a
+      // datasheet *could* take on units that had bought none.
+      final commander =
+          result.roster.units.firstWhere((u) => u.instanceId == 'u01');
+      final carried = {for (final w in commander.wargear) w.itemId: w.count};
+      expect(carried['gun-drone'], 1);
+      expect(carried['shield-drone'], 1);
+
+      // The unit corrections exist so nothing in this export is left behind.
+      expect(
+        result.issues.where((i) => i.message.contains('does not list in the '
+            'dataset')),
+        isEmpty,
+        reason: 'an attachment gap remains; add it to data-corrections.yaml\n'
+            '${result.issues.join('\n')}',
+      );
       expect(
         result.issues.where((i) => i.severity == IssueSeverity.warning),
         isEmpty,

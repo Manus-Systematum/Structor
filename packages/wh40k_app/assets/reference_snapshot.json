@@ -60,7 +60,9 @@
       "ability_ids": [
         "enforcer-commander",
         "leader",
-        "deep-strike"
+        "deep-strike",
+        "gun-drone",
+        "shield-drone"
       ],
       "game_version": {
         "edition": "11th",
@@ -104,8 +106,26 @@
           ],
           "count": 1,
           "per_models": 0
+        },
+        {
+          "items": [
+            "gun-drone"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
+        {
+          "items": [
+            "shield-drone"
+          ],
+          "count": 1,
+          "per_models": 0
         }
-      ]
+      ],
+      "corrected": {
+        "reason": "Commander battlesuits take drones. Upstream lists neither the abilities nor the wargear budget, so a Commander's Gun Drone was dropped on import — its twin pulse carbine missing from the shooting table and its Shield Drone missing from the rules. Evidenced by a validated War Organ export of a legal 2,000 point list.",
+        "upstream": "not yet reported"
+      }
     },
     "crisis-fireknife-battlesuits": {
       "id": "crisis-fireknife-battlesuits",
@@ -262,7 +282,9 @@
         "coldstar-commander",
         "leader",
         "shield-generator",
-        "deep-strike"
+        "deep-strike",
+        "gun-drone",
+        "shield-drone"
       ],
       "game_version": {
         "edition": "11th",
@@ -272,13 +294,6 @@
       "points_provisional": false,
       "attachment_role": "leader",
       "wargear_budgets": [
-        {
-          "items": [
-            "shield-generator"
-          ],
-          "count": 1,
-          "per_models": 0
-        },
         {
           "items": [
             "cyclic-ion-blaster-commander-in-coldstar-battlesuit"
@@ -306,8 +321,26 @@
           ],
           "count": 1,
           "per_models": 0
+        },
+        {
+          "items": [
+            "gun-drone"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
+        {
+          "items": [
+            "shield-drone"
+          ],
+          "count": 1,
+          "per_models": 0
         }
-      ]
+      ],
+      "corrected": {
+        "reason": "Drones as for the Enforcer Commander. The Shield Generator is a separate problem: upstream lists it BOTH as a standard ability and as a wargear option, so the app could not tell whether a list that never mentions buying one has a 4+ invulnerable save. Treated as standard, which is what the ability list implies and what makes the statline agree with the rules text. If a Coldstar has to pay for its Shield Generator, this entry is the thing to change.",
+        "upstream": "not yet reported"
+      }
     },
     "crisis-starscythe-battlesuits": {
       "id": "crisis-starscythe-battlesuits",
@@ -366,7 +399,9 @@
       "ability_ids": [
         "battlesuit-support-systems",
         "starscythe",
-        "deep-strike"
+        "deep-strike",
+        "gun-drone",
+        "shield-drone"
       ],
       "game_version": {
         "edition": "11th",
@@ -402,7 +437,11 @@
           "count": 3,
           "per_models": 3
         }
-      ]
+      ],
+      "corrected": {
+        "reason": "Crisis Starscythe suits take the same drones as Crisis Fireknife suits, whose datasheet does list them. The omission looks like a transcription slip rather than a rule.",
+        "upstream": "not yet reported"
+      }
     },
     "the-twin-lance": {
       "id": "the-twin-lance",
@@ -548,7 +587,8 @@
         "twin-smart-missile-system-broadside-battlesuits"
       ],
       "ability_ids": [
-        "advanced-armour"
+        "advanced-armour",
+        "missile-drone"
       ],
       "game_version": {
         "edition": "11th",
@@ -561,7 +601,20 @@
           "item_id": "high-yield-missile-pods",
           "cost": 5
         }
-      ]
+      ],
+      "wargear_budgets": [
+        {
+          "items": [
+            "missile-drone"
+          ],
+          "count": 1,
+          "per_models": 0
+        }
+      ],
+      "corrected": {
+        "reason": "Broadsides take Missile Drones. The ability exists and is attached to the Riptide, but not here.",
+        "upstream": "not yet reported"
+      }
     },
     "ghostkeel-battlesuit": {
       "id": "ghostkeel-battlesuit",
@@ -626,7 +679,8 @@
         "stealth",
         "infiltrators",
         "deadly-demise-d3",
-        "lone-operative"
+        "lone-operative",
+        "battlesuit-support-system"
       ],
       "game_version": {
         "edition": "11th",
@@ -639,7 +693,20 @@
           "item_id": "cyclic-ion-raker",
           "cost": 15
         }
-      ]
+      ],
+      "wargear_budgets": [
+        {
+          "items": [
+            "battlesuit-support-system"
+          ],
+          "count": 1,
+          "per_models": 0
+        }
+      ],
+      "corrected": {
+        "reason": "The Ghostkeel takes a Battlesuit Support System. The ability exists and is attached to other battlesuits, but not to this one.",
+        "upstream": "not yet reported"
+      }
     },
     "riptide-battlesuit": {
       "id": "riptide-battlesuit",
@@ -777,7 +844,9 @@
         "forward-observers",
         "homing-beacon",
         "infiltrators",
-        "stealth"
+        "stealth",
+        "gun-drone",
+        "marker-drone"
       ],
       "game_version": {
         "edition": "11th",
@@ -792,34 +861,29 @@
           ],
           "count": 2,
           "per_models": 0
+        },
+        {
+          "items": [
+            "gun-drone"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
+        {
+          "items": [
+            "marker-drone"
+          ],
+          "count": 1,
+          "per_models": 0
         }
-      ]
+      ],
+      "corrected": {
+        "reason": "Stealth Battlesuits take a Gun Drone and a Marker Drone. Both abilities exist in the faction data; neither is attached to this datasheet.",
+        "upstream": "not yet reported"
+      }
     }
   },
   "weapons": {
-    "missile-pod-commander-in-enforcer-battlesuit": {
-      "id": "missile-pod-commander-in-enforcer-battlesuit",
-      "name": "Missile pod",
-      "type": "ranged",
-      "profiles": [
-        {
-          "name": "Missile pod",
-          "range": 30,
-          "stats": {
-            "A": 2,
-            "S": 7,
-            "AP": -1,
-            "D": 2,
-            "BS": 3
-          },
-          "keywords": []
-        }
-      ],
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
-    },
     "battlesuit-fists-commander-in-enforcer-battlesuit": {
       "id": "battlesuit-fists-commander-in-enforcer-battlesuit",
       "name": "Battlesuit fists",
@@ -834,6 +898,59 @@
             "AP": 0,
             "D": 1,
             "WS": 4
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "twin-pulse-carbine": {
+      "id": "twin-pulse-carbine",
+      "name": "Twin pulse carbine",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Twin pulse carbine",
+          "range": 20,
+          "stats": {
+            "A": 2,
+            "S": 5,
+            "AP": 0,
+            "D": 1,
+            "BS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "assault"
+            },
+            {
+              "keyword_id": "twin-linked"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "missile-pod-commander-in-enforcer-battlesuit": {
+      "id": "missile-pod-commander-in-enforcer-battlesuit",
+      "name": "Missile pod",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Missile pod",
+          "range": 30,
+          "stats": {
+            "A": 2,
+            "S": 7,
+            "AP": -1,
+            "D": 2,
+            "BS": 3
           },
           "keywords": []
         }
@@ -889,6 +1006,29 @@
         "dataslate": "pre-launch-provisional"
       }
     },
+    "battlesuit-fists-commander-in-coldstar-battlesuit": {
+      "id": "battlesuit-fists-commander-in-coldstar-battlesuit",
+      "name": "Battlesuit fists",
+      "type": "melee",
+      "profiles": [
+        {
+          "name": "Battlesuit fists",
+          "range": "Melee",
+          "stats": {
+            "A": 3,
+            "S": 5,
+            "AP": 0,
+            "D": 1,
+            "WS": 4
+          },
+          "keywords": []
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
     "tau-flamer": {
       "id": "tau-flamer",
       "name": "T’au flamer",
@@ -912,29 +1052,6 @@
               "keyword_id": "torrent"
             }
           ]
-        }
-      ],
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
-    },
-    "battlesuit-fists-commander-in-coldstar-battlesuit": {
-      "id": "battlesuit-fists-commander-in-coldstar-battlesuit",
-      "name": "Battlesuit fists",
-      "type": "melee",
-      "profiles": [
-        {
-          "name": "Battlesuit fists",
-          "range": "Melee",
-          "stats": {
-            "A": 3,
-            "S": 5,
-            "AP": 0,
-            "D": 1,
-            "WS": 4
-          },
-          "keywords": []
         }
       ],
       "game_version": {
@@ -974,74 +1091,6 @@
             "S": 10,
             "AP": -4,
             "D": "D6+2",
-            "WS": 4
-          },
-          "keywords": [
-            {
-              "keyword_id": "extra-attacks"
-            }
-          ]
-        }
-      ],
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
-    },
-    "ion-scattercannon": {
-      "id": "ion-scattercannon",
-      "name": "Ion scattercannon",
-      "type": "ranged",
-      "profiles": [
-        {
-          "name": "Standard",
-          "range": 18,
-          "stats": {
-            "A": 4,
-            "S": 7,
-            "AP": -2,
-            "D": 2,
-            "BS": 2
-          },
-          "keywords": [
-            {
-              "keyword_id": "rapid-fire",
-              "parameters": {
-                "value": 2
-              }
-            }
-          ]
-        },
-        {
-          "name": "Overcharge",
-          "range": 18,
-          "stats": {
-            "A": 4,
-            "S": 8,
-            "AP": -3,
-            "D": 3,
-            "BS": 2
-          },
-          "keywords": [
-            {
-              "keyword_id": "hazardous"
-            },
-            {
-              "keyword_id": "rapid-fire",
-              "parameters": {
-                "value": 2
-              }
-            }
-          ]
-        },
-        {
-          "name": "Melee",
-          "range": "Melee",
-          "stats": {
-            "A": 3,
-            "S": 7,
-            "AP": -2,
-            "D": 2,
             "WS": 4
           },
           "keywords": [
@@ -1116,6 +1165,74 @@
           "keywords": [
             {
               "keyword_id": "pistol"
+            }
+          ]
+        }
+      ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "ion-scattercannon": {
+      "id": "ion-scattercannon",
+      "name": "Ion scattercannon",
+      "type": "ranged",
+      "profiles": [
+        {
+          "name": "Standard",
+          "range": 18,
+          "stats": {
+            "A": 4,
+            "S": 7,
+            "AP": -2,
+            "D": 2,
+            "BS": 2
+          },
+          "keywords": [
+            {
+              "keyword_id": "rapid-fire",
+              "parameters": {
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "name": "Overcharge",
+          "range": 18,
+          "stats": {
+            "A": 4,
+            "S": 8,
+            "AP": -3,
+            "D": 3,
+            "BS": 2
+          },
+          "keywords": [
+            {
+              "keyword_id": "hazardous"
+            },
+            {
+              "keyword_id": "rapid-fire",
+              "parameters": {
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
+          "name": "Melee",
+          "range": "Melee",
+          "stats": {
+            "A": 3,
+            "S": 7,
+            "AP": -2,
+            "D": 2,
+            "WS": 4
+          },
+          "keywords": [
+            {
+              "keyword_id": "extra-attacks"
             }
           ]
         }
@@ -1436,22 +1553,26 @@
         "dataslate": "pre-launch-provisional"
       }
     },
-    "burst-cannon": {
-      "id": "burst-cannon",
-      "name": "Burst cannon",
+    "pulse-pistol": {
+      "id": "pulse-pistol",
+      "name": "Pulse pistol",
       "type": "ranged",
       "profiles": [
         {
-          "name": "Burst cannon",
-          "range": 18,
+          "name": "Pulse pistol",
+          "range": 12,
           "stats": {
-            "A": 4,
+            "A": 1,
             "S": 5,
             "AP": 0,
             "D": 1,
             "BS": 4
           },
-          "keywords": []
+          "keywords": [
+            {
+              "keyword_id": "pistol"
+            }
+          ]
         }
       ],
       "game_version": {
@@ -1489,26 +1610,22 @@
         "dataslate": "pre-launch-provisional"
       }
     },
-    "pulse-pistol": {
-      "id": "pulse-pistol",
-      "name": "Pulse pistol",
+    "burst-cannon": {
+      "id": "burst-cannon",
+      "name": "Burst cannon",
       "type": "ranged",
       "profiles": [
         {
-          "name": "Pulse pistol",
-          "range": 12,
+          "name": "Burst cannon",
+          "range": 18,
           "stats": {
-            "A": 1,
+            "A": 4,
             "S": 5,
             "AP": 0,
             "D": 1,
             "BS": 4
           },
-          "keywords": [
-            {
-              "keyword_id": "pistol"
-            }
-          ]
+          "keywords": []
         }
       ],
       "game_version": {
@@ -1738,6 +1855,67 @@
       "ability_type": "core",
       "behavior": "activated"
     },
+    "gun-drone": {
+      "ability_id": "gun-drone",
+      "name": "Gun Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "ability-grant",
+        "target": "bearer",
+        "modifier": {
+          "grant_type": "weapon-grant",
+          "weapon_id": "twin-pulse-carbine",
+          "count": 1
+        }
+      },
+      "scope": {
+        "range": "self",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "crisis-fireknife-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21",
+      "corrected": {
+        "reason": "A Gun Drone brings a twin pulse carbine. Upstream records only `{grant_type: ranged-weapon}` with no weapon named, so the app could say \"grants a ranged weapon\" and nothing more — no profile, no attacks, and nothing in the shooting table. The Recon Drone in the same file shows the intended shape, with an explicit weapon_id.",
+        "upstream": "not yet reported"
+      }
+    },
+    "shield-drone": {
+      "ability_id": "shield-drone",
+      "name": "Shield Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "stat-modifier",
+        "target": "self",
+        "modifier": {
+          "stat": "W",
+          "operation": "add",
+          "value": 1
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "crisis-fireknife-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive"
+    },
     "fireknife": {
       "ability_id": "fireknife",
       "name": "Fireknife",
@@ -1797,33 +1975,6 @@
       "ability_type": "unit",
       "behavior": "passive"
     },
-    "gun-drone": {
-      "ability_id": "gun-drone",
-      "name": "Gun Drone",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "ability-grant",
-        "target": "self",
-        "modifier": {
-          "grant_type": "ranged-weapon"
-        }
-      },
-      "scope": {
-        "range": "self",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "crisis-fireknife-battlesuits"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive",
-      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
-    },
     "marker-drone": {
       "ability_id": "marker-drone",
       "name": "Marker Drone",
@@ -1867,34 +2018,6 @@
       "ability_type": "unit",
       "behavior": "passive",
       "community_notes": "community-authored from 10e source (provisional 11e); see #21"
-    },
-    "shield-drone": {
-      "ability_id": "shield-drone",
-      "name": "Shield Drone",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "stat-modifier",
-        "target": "self",
-        "modifier": {
-          "stat": "W",
-          "operation": "add",
-          "value": 1
-        }
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "crisis-fireknife-battlesuits"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive"
     },
     "weapon-support-systems": {
       "ability_id": "weapon-support-systems",
@@ -2303,6 +2426,33 @@
         "upstream": "not yet reported"
       }
     },
+    "missile-drone": {
+      "ability_id": "missile-drone",
+      "name": "Missile Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "ability-grant",
+        "target": "self",
+        "modifier": {
+          "grant_type": "ranged-weapon"
+        }
+      },
+      "scope": {
+        "range": "self",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "riptide-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+    },
     "stealth-drones": {
       "ability_id": "stealth-drones",
       "name": "Stealth Drones",
@@ -2525,33 +2675,6 @@
       ],
       "ability_type": "core",
       "behavior": "reactive"
-    },
-    "missile-drone": {
-      "ability_id": "missile-drone",
-      "name": "Missile Drone",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "ability-grant",
-        "target": "self",
-        "modifier": {
-          "grant_type": "ranged-weapon"
-        }
-      },
-      "scope": {
-        "range": "self",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "riptide-battlesuit"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive",
-      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
     },
     "nova-charge": {
       "ability_id": "nova-charge",

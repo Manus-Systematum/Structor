@@ -39,13 +39,46 @@ void main() {
     test("an attached unit's abilities say which half owns them", () {
       final coldstar = unitWith('u03');
       expect(coldstar.isAttached, isTrue);
-      final shieldGenerator = coldstar.attributedRules
-          .firstWhere((r) => r.rule.abilityId == 'shield-generator');
-      expect(shieldGenerator.source, 'Commander in Coldstar Battlesuit');
+      final rules = {
+        for (final r in coldstar.attributedRules) r.rule.abilityId: r.source,
+      };
+      // The Commander's, not the Crisis suits'.
+      expect(rules['shield-generator'], 'Commander in Coldstar Battlesuit');
+      expect(rules['starscythe'], 'Crisis Starscythe Battlesuits');
+      // Both halves Deep Strike, and both bought drones, so naming a half
+      // would be wrong as well as noisy.
+      expect(rules['deep-strike'], isEmpty);
+      expect(rules['gun-drone'], isEmpty);
     });
 
     test('a single-datasheet unit is not attributed', () {
-      expect(unitWith('u10').isAttached, isFalse);
+      final broadside = unitWith('u10');
+      expect(broadside.isAttached, isFalse);
+      expect(broadside.attributedRules.map((r) => r.source), everyElement(''));
+    });
+
+    test('a drone is shown only on the units that bought one', () {
+      // Crisis suits may take a Gun, Marker or Shield Drone. This list takes
+      // Gun and Shield; listing Marker too would be a rule that is not there.
+      final fireknife = unitWith('u02');
+      final ids = fireknife.rules.map((r) => r.abilityId).toSet();
+      expect(ids, containsAll(['gun-drone', 'shield-drone']));
+      expect(ids, isNot(contains('marker-drone')));
+    });
+
+    test("a Gun Drone's carbine reaches the shooting table", () {
+      // Drones are wargear, and this one brings a gun (§7.3.7). The import
+      // used to recognise the drone and then discard it.
+      final fireknife = unitWith('u02');
+      final carbines = fireknife
+          .weapons(WeaponKind.ranged)
+          .weapons
+          .where((w) => w.displayName.contains('Twin pulse carbine'));
+      expect(carbines, hasLength(1));
+      // One on the Commander, three on the Crisis suits.
+      expect(carbines.single.weaponCount, 4);
+      expect(carbines.single.keywords.map((k) => k.label),
+          containsAll(['ASSAULT', 'TWIN LINKED']));
     });
 
     test('the Coldstar sets Move to 12 rather than adding 12', () {

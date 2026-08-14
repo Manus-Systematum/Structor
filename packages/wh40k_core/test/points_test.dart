@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:test/test.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import 'support.dart';
+
 /// Synthetic datasheet exercising both pricing mechanisms.
 SourceUnit _copyScaledUnit() => SourceUnit.fromJson({
       'id': 'squad',
@@ -169,7 +171,7 @@ void main() {
     setUp(() {
       roster = Roster.fromJson(jsonDecode(
           File('test/fixtures/tau_strike_force_2000.json').readAsStringSync()));
-      final faction = DatasetLoader(snapshot.path).loadFaction('tau-empire');
+      final faction = correctedLoader().loadFaction('tau-empire');
       calculator = PointsCalculator(MapCatalogue(faction.units));
     });
 

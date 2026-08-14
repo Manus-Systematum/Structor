@@ -1,16 +1,15 @@
 {
   "_comment": [
-    "Reference roster: a real 2,000 pt T'au Strike Force list, transcribed from",
-    "a War Organ text export. Used as an end-to-end pricing fixture because its",
-    "total is independently known to be exactly 2000 (DESIGN.md §2.1, §6.7).",
-    "Four Commander + Crisis pairs are modelled as eight units joined by LEADS",
-    "edges, giving 16 roster units and 12 combat units."
+    "Reference roster: a real 2,000 pt T'au Strike Force list, imported from",
+    "test/fixtures/war_organ_export.txt. Regenerate with:",
+    "  dart run bin/import.dart test/fixtures/war_organ_export.txt \\",
+    "    --out test/fixtures/tau_strike_force_2000.json",
+    "Do not hand-edit: a fixture out of step with the importer stops testing it."
   ],
   "schemaVersion": 1,
   "name": "2k ret",
   "factionId": "tau-empire",
   "battleSizeId": "strike-force",
-  "declaredDisposition": "reconnaissance",
   "detachments": [
     {
       "detachmentId": "advanced-acquisition-cadre"
@@ -19,7 +18,7 @@
       "detachmentId": "experimental-prototype-cadre"
     }
   ],
-  "warlordInstanceId": "u09",
+  "declaredDisposition": "reconnaissance",
   "units": [
     {
       "instanceId": "u01",
@@ -27,11 +26,19 @@
       "models": 1,
       "wargear": [
         {
+          "itemId": "battlesuit-fists",
+          "count": 1
+        },
+        {
+          "itemId": "gun-drone",
+          "count": 1
+        },
+        {
           "itemId": "missile-pod",
           "count": 4
         },
         {
-          "itemId": "battlesuit-fists",
+          "itemId": "shield-drone",
           "count": 1
         }
       ]
@@ -48,6 +55,14 @@
         {
           "itemId": "battlesuit-fists",
           "count": 3
+        },
+        {
+          "itemId": "gun-drone",
+          "count": 3
+        },
+        {
+          "itemId": "shield-drone",
+          "count": 3
         }
       ]
     },
@@ -57,12 +72,20 @@
       "models": 1,
       "wargear": [
         {
-          "itemId": "tau-flamer",
-          "count": 4
-        },
-        {
           "itemId": "battlesuit-fists",
           "count": 1
+        },
+        {
+          "itemId": "gun-drone",
+          "count": 1
+        },
+        {
+          "itemId": "shield-drone",
+          "count": 1
+        },
+        {
+          "itemId": "tau-flamer",
+          "count": 4
         }
       ]
     },
@@ -78,6 +101,14 @@
         {
           "itemId": "battlesuit-fists",
           "count": 3
+        },
+        {
+          "itemId": "gun-drone",
+          "count": 3
+        },
+        {
+          "itemId": "shield-drone",
+          "count": 3
         }
       ]
     },
@@ -87,11 +118,19 @@
       "models": 1,
       "wargear": [
         {
+          "itemId": "battlesuit-fists",
+          "count": 1
+        },
+        {
+          "itemId": "gun-drone",
+          "count": 1
+        },
+        {
           "itemId": "missile-pod",
           "count": 4
         },
         {
-          "itemId": "battlesuit-fists",
+          "itemId": "shield-drone",
           "count": 1
         }
       ]
@@ -102,11 +141,19 @@
       "models": 3,
       "wargear": [
         {
+          "itemId": "battlesuit-fists",
+          "count": 3
+        },
+        {
           "itemId": "missile-pod",
           "count": 6
         },
         {
-          "itemId": "battlesuit-fists",
+          "itemId": "gun-drone",
+          "count": 3
+        },
+        {
+          "itemId": "shield-drone",
           "count": 3
         }
       ]
@@ -117,12 +164,20 @@
       "models": 1,
       "wargear": [
         {
-          "itemId": "tau-flamer",
-          "count": 4
-        },
-        {
           "itemId": "battlesuit-fists",
           "count": 1
+        },
+        {
+          "itemId": "gun-drone",
+          "count": 1
+        },
+        {
+          "itemId": "shield-drone",
+          "count": 1
+        },
+        {
+          "itemId": "tau-flamer",
+          "count": 4
         }
       ]
     },
@@ -138,6 +193,14 @@
         {
           "itemId": "battlesuit-fists",
           "count": 3
+        },
+        {
+          "itemId": "gun-drone",
+          "count": 3
+        },
+        {
+          "itemId": "shield-drone",
+          "count": 3
         }
       ]
     },
@@ -151,16 +214,20 @@
           "count": 1
         },
         {
-          "itemId": "ion-scattercannon",
-          "count": 1
-        },
-        {
           "itemId": "xv-pulse-pistol",
           "count": 2
         },
         {
           "itemId": "shardstorm-burst-system",
           "count": 2
+        },
+        {
+          "itemId": "mv15-gun-drone",
+          "count": 2
+        },
+        {
+          "itemId": "ion-scattercannon",
+          "count": 1
         }
       ]
     },
@@ -176,6 +243,10 @@
         {
           "itemId": "heavy-rail-rifle",
           "count": 1
+        },
+        {
+          "itemId": "missile-drone",
+          "count": 2
         },
         {
           "itemId": "seeker-missile",
@@ -201,6 +272,10 @@
           "count": 1
         },
         {
+          "itemId": "missile-drone",
+          "count": 2
+        },
+        {
           "itemId": "twin-smart-missile-system",
           "count": 1
         }
@@ -211,6 +286,10 @@
       "datasheetId": "ghostkeel-battlesuit",
       "models": 1,
       "wargear": [
+        {
+          "itemId": "battlesuit-support-system",
+          "count": 1
+        },
         {
           "itemId": "fusion-collider",
           "count": 1
@@ -230,6 +309,10 @@
       "datasheetId": "riptide-battlesuit",
       "models": 1,
       "wargear": [
+        {
+          "itemId": "missile-drone",
+          "count": 2
+        },
         {
           "itemId": "ion-accelerator",
           "count": 1
@@ -273,16 +356,24 @@
           "count": 5
         },
         {
-          "itemId": "burst-cannon",
-          "count": 4
+          "itemId": "gun-drone",
+          "count": 1
+        },
+        {
+          "itemId": "marker-drone",
+          "count": 1
+        },
+        {
+          "itemId": "pulse-pistol",
+          "count": 1
         },
         {
           "itemId": "fusion-blaster",
           "count": 1
         },
         {
-          "itemId": "pulse-pistol",
-          "count": 1
+          "itemId": "burst-cannon",
+          "count": 4
         }
       ]
     },
@@ -296,16 +387,24 @@
           "count": 5
         },
         {
-          "itemId": "burst-cannon",
-          "count": 4
+          "itemId": "fusion-blaster",
+          "count": 1
         },
         {
-          "itemId": "fusion-blaster",
+          "itemId": "gun-drone",
+          "count": 1
+        },
+        {
+          "itemId": "marker-drone",
           "count": 1
         },
         {
           "itemId": "pulse-pistol",
           "count": 1
+        },
+        {
+          "itemId": "burst-cannon",
+          "count": 4
         }
       ]
     }
@@ -331,5 +430,6 @@
       "from": "u07",
       "to": "u08"
     }
-  ]
+  ],
+  "warlordInstanceId": "u09"
 }
