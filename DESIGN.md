@@ -333,9 +333,13 @@ That last rule exposed a contradiction upstream: the Commander in Coldstar Battl
 
 Six T'au datasheets do not list the drones their units demonstrably carry — Commanders, Starscythe, Stealth, Broadsides, and the Ghostkeel's support system. Those are `units:` corrections, evidenced by a validated export of a legal 2,000 point list.
 
-**And some drones name a weapon that does not exist.** `missile-drone` and `mv15-gun-drone` recorded `{grant_type: ranged-weapon}` with nothing to resolve, and the Recon Drone names `drone-burst-cannon`, which is simply absent from `weapons.json`. A grant pointing at no record is silently no weapon at all, so corrections gained a `weapons:` section that can **add** a record, not only patch one. Two are now in: the Drone missile pod (30", A2, BS5+, S7, AP-1, D2) and the Twin pulse blaster (12", A2, BS5+, S6, AP-1, D1, ASSAULT, TWIN LINKED), both confirmed against the datasheets.
+**And some drones name a weapon that does not exist.** `missile-drone` and `mv15-gun-drone` recorded `{grant_type: ranged-weapon}` with nothing to resolve, and the Recon Drone names `drone-burst-cannon`, which is simply absent from `weapons.json`. A grant pointing at no record is silently no weapon at all, so corrections gained a `weapons:` section that can **add** a record, not only patch one.
 
-A test now walks every ability grant and fails on a weapon id with no record, against a short list of known-dangling ones. `recon-drone → drone-burst-cannon` is the only entry: no list to hand carries a Pathfinder Team, so the profile is unconfirmed and inventing it is the guess §7.6 forbids. The test fails in both directions, so upstream fixing it is noticed too.
+The rule turned out to be general, and worth encoding as a rule rather than four stat blocks: **a drone's gun is its namesake fired at BS5+.** `derive_from` builds the record from another weapon and overrides the skill, so an upstream revision to the missile pod carries to the drone's automatically — copying the stat block would silently stop tracking it.
+
+That generalisation also caught a mistake. The Gun Drone's grant had been pointed at the plain `twin-pulse-carbine`, which is BS4+: the drone was firing at the skill of the battlesuit carrying it. Three derived weapons now exist — `drone-missile-pod`, `drone-burst-cannon`, `drone-twin-pulse-carbine` — and one written out, `twin-pulse-blaster`, because the MV15's gun is 12" with TWIN LINKED where upstream's `pulse-blaster` is 10" without, so it is *not* simply its namesake at BS5+.
+
+A test walks every ability grant and fails on a weapon id with no record. Its known-exceptions set is now empty, and it fails in both directions, so a new dangling grant and an upstream fix are both noticed. That check is what found the Recon Drone's missing weapon in the first place.
 Two more turned out to be wrong data rather than gaps, once the exact wording was to hand. Both are now corrections:
 
 - **Coldstar Commander** grants ASSAULT to the whole squad's ranged weapons as well as setting Move to 12. Upstream had only the Move part, so the app advertised a mobility buff and said nothing about shooting after Advancing — which is the reason to field it.
@@ -1224,6 +1228,6 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 
 **Done — the seven play-test findings (§3.7, §3.8):** operation-aware stat rendering, sign preservation, attacker/defender attribution, weapon keyword parameters end to end, ability-granted invulnerable saves in the INV column, per-datasheet attribution of an attached unit's abilities, and corrections for Stealth, Coldstar Commander and Starscythe.
 
-**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 217 core tests, 42 app tests; both analyzers clean.
+**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 218 core tests, 43 app tests; both analyzers clean.
 
 **Next:** the stratagem screen — §7.3's third page and the last major surface of the play mode. The data has phases, CP costs and timing, and `BattleState.hasUsedStratagem` already enforces the one-per-phase rule; nothing is showing it yet.

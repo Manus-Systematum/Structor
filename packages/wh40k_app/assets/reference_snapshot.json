@@ -907,20 +907,20 @@
         "dataslate": "pre-launch-provisional"
       }
     },
-    "twin-pulse-carbine": {
-      "id": "twin-pulse-carbine",
-      "name": "Twin pulse carbine",
+    "drone-twin-pulse-carbine": {
+      "id": "drone-twin-pulse-carbine",
+      "name": "Drone twin pulse carbine",
       "type": "ranged",
       "profiles": [
         {
-          "name": "Twin pulse carbine",
+          "name": "Drone twin pulse carbine",
           "range": 20,
           "stats": {
             "A": 2,
             "S": 5,
             "AP": 0,
             "D": 1,
-            "BS": 4
+            "BS": 5
           },
           "keywords": [
             {
@@ -935,6 +935,10 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
+      },
+      "corrected": {
+        "reason": "The Gun Drone's gun. Pointing the grant at the plain `twin-pulse-carbine` had the drone firing at BS4+, the skill of the battlesuit carrying it, which is a better weapon than the drone has.",
+        "upstream": "not yet reported"
       }
     },
     "missile-pod-commander-in-enforcer-battlesuit": {
@@ -1200,7 +1204,7 @@
         }
       ],
       "corrected": {
-        "reason": "The MV15 Gun Drone's gun, carried by The Twin Lance. Upstream names it only as free text — \"twin pulse blaster\" — with no record to resolve, so it never reached the shooting table. Profile confirmed by the app's user against the datasheet. Distinct from `pulse-blaster`, which is the infantry weapon.",
+        "reason": "The MV15 Gun Drone's gun, carried by The Twin Lance. Upstream names it only as free text — \"twin pulse blaster\" — with no record to resolve. Written out rather than derived: the profile confirmed against the datasheet is 12\" with TWIN LINKED, where upstream's `pulse-blaster` is 10\" without it, so this is not simply its namesake at BS5+.",
         "upstream": "not yet reported"
       }
     },
@@ -1335,16 +1339,20 @@
           "range": 30,
           "stats": {
             "A": 2,
-            "BS": 5,
             "S": 7,
             "AP": -1,
-            "D": 2
+            "D": 2,
+            "BS": 5
           },
           "keywords": []
         }
       ],
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
       "corrected": {
-        "reason": "The Missile Drone's gun. Upstream records the drone as granting `{grant_type: ranged-weapon}` with no weapon named and has no record for it either, so Broadsides and Riptides were fielding drones that shot nothing. Profile confirmed by the app's user against the datasheet. Named `drone-missile-pod` after the existing `drone-burst-cannon` convention, and distinct from `missile-pod` because the drone fires at BS5+ where a Crisis suit fires at 4+ and a Commander at 3+.",
+        "reason": "The Missile Drone's gun: a missile pod at BS5+. Upstream records the drone as granting `{grant_type: ranged-weapon}` with no weapon named and has no record for it either, so Broadsides and Riptides were fielding drones that shot nothing.",
         "upstream": "not yet reported"
       }
     },
@@ -1922,7 +1930,7 @@
         "target": "bearer",
         "modifier": {
           "grant_type": "weapon-grant",
-          "weapon_id": "twin-pulse-carbine",
+          "weapon_id": "drone-twin-pulse-carbine",
           "count": 1
         }
       },

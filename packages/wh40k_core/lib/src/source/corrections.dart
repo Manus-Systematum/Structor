@@ -128,8 +128,24 @@ class WeaponCorrection implements Correction {
 
   final String? upstream;
 
-  /// The whole record, in the source JSON shape, minus its id.
+  /// The whole record, in the source JSON shape, minus its id. Empty when
+  /// [deriveFrom] is set.
   final Map<String, Object?> record;
+
+  /// Build this weapon from another one instead of writing it out.
+  ///
+  /// A drone's weapon is its namesake at BS5+ — the Missile Drone fires the
+  /// unit's missile pod, just worse. Deriving says that, and keeps the copy
+  /// in step when upstream revises the original. Copying the stat block
+  /// instead means a points or profile change upstream silently stops
+  /// applying to the drone.
+  final String? deriveFrom;
+
+  /// Display name for a derived weapon.
+  final String? name;
+
+  /// Stat overrides applied to every profile of a derived weapon.
+  final Map<String, Object?> overrideStats;
 
   @override
   String get subject => weaponId;
@@ -138,7 +154,10 @@ class WeaponCorrection implements Correction {
     required this.faction,
     required this.weaponId,
     required this.reason,
-    required this.record,
+    this.record = const {},
+    this.deriveFrom,
+    this.name,
+    this.overrideStats = const {},
     this.upstream,
   });
 }
@@ -196,16 +215,48 @@ class DataCorrections {
       );
     }
 
-    Map<String, Object?> build(WeaponCorrection c) => {
-          'id': c.weaponId,
-          ...c.record,
-          'corrected': {
-            'reason': c.reason,
-            if (c.upstream != null) 'upstream': c.upstream,
-          },
+    final source = <String, Object?>{
+      for (final record in records)
+        if (record is Map && record['id'] != null)
+          record['id'].toString(): record,
+    };
+
+    Map<String, Object?>? build(WeaponCorrection c) {
+      var body = c.record;
+      if (c.deriveFrom != null) {
+        final original = _plain(source[c.deriveFrom]);
+        if (original is! Map<String, Object?>) return null;
+        body = {
+          for (final e in original.entries)
+            if (e.key != 'id' && e.key != 'corrected') e.key: e.value,
         };
+        if (c.name != null) body['name'] = c.name;
+        body['profiles'] = [
+          for (final profile in asList(body['profiles']))
+            if (_plain(profile) case final Map<String, Object?> p)
+              {
+                ...p,
+                if (c.name != null) 'name': c.name,
+                'stats': {
+                  ...asMap(p['stats']),
+                  ...c.overrideStats,
+                },
+              },
+        ];
+      }
+      if (body.isEmpty) return null;
+      return {
+        'id': c.weaponId,
+        ...body,
+        'corrected': {
+          'reason': c.reason,
+          if (c.upstream != null) 'upstream': c.upstream,
+        },
+      };
+    }
 
     final applied = <Correction>[];
+    final unmatched = <Correction>[];
     final out = <Object?>[];
 
     for (final record in records) {
@@ -214,25 +265,33 @@ class DataCorrections {
         continue;
       }
       final correction = byId.remove(record['id']?.toString());
-      if (correction == null) {
+      final built = correction == null ? null : build(correction);
+      if (built == null) {
         out.add(record);
+        if (correction != null) unmatched.add(correction);
         continue;
       }
-      applied.add(correction);
-      out.add(build(correction));
+      applied.add(correction!);
+      out.add(built);
     }
 
     // Whatever is left had no upstream record at all, which is the case this
-    // exists for.
+    // exists for. A derivation whose source is missing is reported instead —
+    // silently skipping it would leave the grant dangling again.
     for (final correction in byId.values) {
+      final built = build(correction);
+      if (built == null) {
+        unmatched.add(correction);
+        continue;
+      }
       applied.add(correction);
-      out.add(build(correction));
+      out.add(built);
     }
 
     return CorrectionResult(
       records: out,
       applied: applied,
-      unmatched: const [],
+      unmatched: unmatched,
     );
   }
 
@@ -439,17 +498,20 @@ class DataCorrections {
         if (node is! Map) continue;
         final reason = node['reason']?.toString().trim() ?? '';
         final record = _plain(node['weapon']);
-        if (reason.isEmpty ||
-            record is! Map<String, Object?> ||
-            record.isEmpty) {
-          continue;
-        }
+        final deriveFrom = node['derive_from']?.toString();
+        final overrides = _plain(node['override_stats']);
+        final hasRecord = record is Map<String, Object?> && record.isNotEmpty;
+        if (reason.isEmpty || (!hasRecord && deriveFrom == null)) continue;
         weapons.add(WeaponCorrection(
           faction: node['faction']?.toString() ?? '',
           weaponId: node['id']?.toString() ?? '',
           reason: reason,
           upstream: node['upstream']?.toString(),
-          record: record,
+          record: hasRecord ? record : const {},
+          deriveFrom: deriveFrom,
+          name: node['name']?.toString(),
+          overrideStats:
+              overrides is Map<String, Object?> ? overrides : const {},
         ));
       }
     }

@@ -73,12 +73,26 @@ void main() {
       final carbines = fireknife
           .weapons(WeaponKind.ranged)
           .weapons
-          .where((w) => w.displayName.contains('Twin pulse carbine'));
+          .where((w) => w.displayName.contains('twin pulse carbine'));
       expect(carbines, hasLength(1));
       // One on the Commander, three on the Crisis suits.
       expect(carbines.single.weaponCount, 4);
       expect(carbines.single.keywords.map((k) => k.label),
           containsAll(['ASSAULT', 'TWIN LINKED']));
+      // The drone's skill, not the battlesuit's — the Crisis suits beside it
+      // fire their missile pods at 4+.
+      expect(carbines.single.skill, '5+');
+    });
+
+    test("a Missile Drone's pod reaches the shooting table", () {
+      final broadside = unitWith('u10');
+      final pods = broadside
+          .weapons(WeaponKind.ranged)
+          .weapons
+          .where((w) => w.displayName.contains('Drone missile pod'));
+      expect(pods.single.weaponCount, 2);
+      expect(pods.single.skill, '5+');
+      expect(pods.single.attacks.fixed, 4);
     });
 
     test('the Coldstar sets Move to 12 rather than adding 12', () {

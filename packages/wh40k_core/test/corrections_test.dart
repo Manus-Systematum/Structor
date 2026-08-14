@@ -188,6 +188,7 @@ abilities:
         for (final result in [
           loader.correctedAbilities(factionId),
           loader.correctedUnits(factionId),
+          loader.correctedWeapons(factionId),
         ]) {
           applied.addAll(result.applied);
           expect(
@@ -266,6 +267,19 @@ abilities:
       expect(profile.stats['AP'], '-1');
       expect(profile.stats['D'], '2');
 
+      // Derived, not copied: everything but the skill matches the namesake,
+      // so an upstream revision to the missile pod carries over.
+      final namesake =
+          faction.weapons.firstWhere((w) => w.id == 'missile-pod');
+      final original = namesake.profiles.single;
+      expect(original.skill, '4', reason: 'the battlesuit fires it better');
+      for (final stat in ['A', 'S', 'AP', 'D']) {
+        expect(profile.stats[stat], original.stats[stat], reason: stat);
+      }
+      expect(profile.range, original.range);
+      expect(profile.keywords.map((k) => k.key),
+          original.keywords.map((k) => k.key));
+
       // And the grant now resolves to it.
       final drone =
           faction.abilities.firstWhere((a) => a.abilityId == 'missile-drone');
@@ -276,11 +290,9 @@ abilities:
       // A grant naming a weapon that does not exist is silently no weapon at
       // all, which is how three drones came to shoot nothing. Anything not
       // listed below is a new one, and needs a weapons: correction.
-      const knownDangling = {
-        // Pathfinder Team. Not in any list to hand, so the profile has not
-        // been confirmed and inventing one would be the guess §7.6 forbids.
-        'recon-drone -> drone-burst-cannon',
-      };
+      // Empty, and it should stay that way: a drone's gun is its namesake at
+      // BS5+, so any new one is a two-line `derive_from` entry.
+      const knownDangling = <String>{};
 
       final loader = DatasetLoader(
         '../../data/40kdc',
@@ -300,6 +312,27 @@ abilities:
           reason: 'a new unresolvable weapon grant');
       expect(knownDangling.difference(dangling), isEmpty,
           reason: 'upstream fixed one — drop it from knownDangling');
+    });
+
+    test("a drone fires its own gun, not the battlesuit's", () {
+      // Pointing the Gun Drone's grant at the plain twin-pulse-carbine had it
+      // shooting at BS4+ — the battlesuit's skill, on the drone's gun.
+      final loader = DatasetLoader(
+        '../../data/40kdc',
+        corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
+      );
+      if (!loader.root.existsSync()) return;
+
+      final faction = loader.loadFaction('tau-empire');
+      final byId = {for (final w in faction.weapons) w.id: w};
+      for (final id in [
+        'drone-missile-pod',
+        'drone-burst-cannon',
+        'drone-twin-pulse-carbine',
+        'twin-pulse-blaster',
+      ]) {
+        expect(byId[id]?.profiles.single.skill, '5', reason: id);
+      }
     });
 
     test('Stealth is the Benefit of Cover in every faction that has it', () {

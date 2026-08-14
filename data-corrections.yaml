@@ -43,7 +43,7 @@ abilities:
       target: bearer
       modifier:
         grant_type: weapon-grant
-        weapon_id: twin-pulse-carbine
+        weapon_id: drone-twin-pulse-carbine
         count: 1
 
   - faction: tau-empire
@@ -152,15 +152,56 @@ abilities:
 # Weapon records upstream is missing. An ability can name a weapon that does
 # not exist — the Recon Drone grants `drone-burst-cannon` and no such record is
 # in the file — and then the grant resolves to nothing at all.
+#
+# `derive_from` builds the record from another weapon rather than restating it.
+# A drone's gun is its namesake fired worse: same profile, BS5+. Saying that,
+# instead of copying the stat block, keeps the drone in step when upstream
+# revises the original.
 weapons:
+  - faction: tau-empire
+    id: drone-missile-pod
+    reason: >
+      The Missile Drone's gun: a missile pod at BS5+. Upstream records the
+      drone as granting `{grant_type: ranged-weapon}` with no weapon named and
+      has no record for it either, so Broadsides and Riptides were fielding
+      drones that shot nothing.
+    upstream: not yet reported
+    derive_from: missile-pod
+    name: Drone missile pod
+    override_stats:
+      BS: 5
+
+  - faction: tau-empire
+    id: drone-burst-cannon
+    reason: >
+      The Recon Drone's gun, already named by that ability but with no record
+      anywhere in the file. A burst cannon at BS5+.
+    upstream: not yet reported
+    derive_from: burst-cannon
+    name: Drone burst cannon
+    override_stats:
+      BS: 5
+
+  - faction: tau-empire
+    id: drone-twin-pulse-carbine
+    reason: >
+      The Gun Drone's gun. Pointing the grant at the plain `twin-pulse-carbine`
+      had the drone firing at BS4+, the skill of the battlesuit carrying it,
+      which is a better weapon than the drone has.
+    upstream: not yet reported
+    derive_from: twin-pulse-carbine
+    name: Drone twin pulse carbine
+    override_stats:
+      BS: 5
+
   - faction: tau-empire
     id: twin-pulse-blaster
     reason: >
       The MV15 Gun Drone's gun, carried by The Twin Lance. Upstream names it
-      only as free text — "twin pulse blaster" — with no record to resolve, so
-      it never reached the shooting table. Profile confirmed by the app's user
-      against the datasheet. Distinct from `pulse-blaster`, which is the
-      infantry weapon.
+      only as free text — "twin pulse blaster" — with no record to resolve.
+      Written out rather than derived: the profile confirmed against the
+      datasheet is 12" with TWIN LINKED, where upstream's `pulse-blaster` is
+      10" without it, so this is not simply its namesake at BS5+.
     upstream: not yet reported
     weapon:
       name: Twin pulse blaster
@@ -177,31 +218,6 @@ weapons:
           keywords:
             - keyword_id: assault
             - keyword_id: twin-linked
-
-  - faction: tau-empire
-    id: drone-missile-pod
-    reason: >
-      The Missile Drone's gun. Upstream records the drone as granting
-      `{grant_type: ranged-weapon}` with no weapon named and has no record for
-      it either, so Broadsides and Riptides were fielding drones that shot
-      nothing. Profile confirmed by the app's user against the datasheet.
-      Named `drone-missile-pod` after the existing `drone-burst-cannon`
-      convention, and distinct from `missile-pod` because the drone fires at
-      BS5+ where a Crisis suit fires at 4+ and a Commander at 3+.
-    upstream: not yet reported
-    weapon:
-      name: Drone missile pod
-      type: ranged
-      profiles:
-        - name: Drone missile pod
-          range: 30
-          stats:
-            A: 2
-            BS: 5
-            S: 7
-            AP: -1
-            D: 2
-          keywords: []
 
 # Datasheets that can carry wargear upstream does not list. A drone is an
 # ability (what it does) plus a wargear budget entry (that it is a choice),
