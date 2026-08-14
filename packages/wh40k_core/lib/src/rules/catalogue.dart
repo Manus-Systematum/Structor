@@ -5,6 +5,7 @@
 /// without touching the calculator or the validator.
 library;
 
+import '../roster/roster.dart';
 import '../source/dataset_loader.dart';
 import '../source/source_models.dart';
 
@@ -113,5 +114,22 @@ class MapCatalogue implements Catalogue {
     if (unit.weaponIds.contains(scoped)) return weapon(scoped);
     if (unit.weaponIds.contains(itemId)) return weapon(itemId);
     return null;
+  }
+}
+
+extension CombatUnitLabel on Catalogue {
+  /// A combat unit as a player names it at the table.
+  ///
+  /// The character leads, so it is named first and the unit it joined follows:
+  /// *Commander in Enforcer Battlesuit with Crisis Fireknife Battlesuits*. An
+  /// earlier `A + B` read as two units rather than the one they fight as.
+  String labelFor(Iterable<RosterUnit> group) {
+    final names = [
+      for (final rosterUnit in group)
+        unit(rosterUnit.datasheetId)?.name ?? rosterUnit.datasheetId,
+    ];
+    if (names.isEmpty) return '';
+    if (names.length == 1) return names.first;
+    return '${names.first} with ${names.skip(1).join(' and ')}';
   }
 }

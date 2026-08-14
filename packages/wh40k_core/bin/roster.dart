@@ -102,10 +102,7 @@ void main(List<String> args) {
 
   for (final combatUnit in roster.combatUnits()) {
     final head = combatUnit.first;
-    final label = head.customName ??
-        combatUnit
-            .map((u) => catalogue.unit(u.datasheetId)?.name ?? u.datasheetId)
-            .join(' + ');
+    final label = head.customName ?? catalogue.labelFor(combatUnit);
 
     final cost = result.cost.units
         .where((c) => combatUnit.any((u) => u.instanceId == c.instanceId))

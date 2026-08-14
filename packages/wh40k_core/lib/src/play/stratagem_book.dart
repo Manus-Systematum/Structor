@@ -197,9 +197,7 @@ class StratagemBook {
         for (final unit in group)
           ...?catalogue.unit(unit.datasheetId)?.keywords,
       ];
-      final label = group
-          .map((u) => catalogue.unit(u.datasheetId)?.name ?? u.datasheetId)
-          .join(' + ');
+      final label = catalogue.labelFor(group);
 
       String? reason;
       if (!stratagem.permitsTarget(keywords)) {

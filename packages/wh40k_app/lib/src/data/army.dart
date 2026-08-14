@@ -173,11 +173,9 @@ class CombatUnit {
 
   RosterUnit get head => group.first;
 
-  String get label =>
-      head.customName ??
-      group
-          .map((u) => army.catalogue.unit(u.datasheetId)?.name ?? u.datasheetId)
-          .join(' + ');
+  /// The character leads, so it is named first: *Commander in Enforcer
+  /// Battlesuit with Crisis Fireknife Battlesuits*.
+  String get label => head.customName ?? army.catalogue.labelFor(group);
 
   int get points => army.validation.cost.units
       .where((c) => group.any((u) => u.instanceId == c.instanceId))
