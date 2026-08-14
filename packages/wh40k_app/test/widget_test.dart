@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wh40k_app/src/data/army.dart';
 import 'package:wh40k_app/src/screens/army_screen.dart';
 import 'package:wh40k_app/src/screens/turn_screen.dart';
+import 'package:wh40k_core/wh40k_core.dart';
 
 /// Wraps a screen so it can be pumped without the app's FutureBuilder, whose
 /// indeterminate spinner never lets `pumpAndSettle` reach a steady state.
@@ -14,6 +15,58 @@ void main() {
   setUpAll(() async {
     TestWidgetsFlutterBinding.ensureInitialized();
     army = await Army.loadReference();
+  });
+
+  group('what a play-test found wrong', () {
+    CombatUnit unitWith(String instanceId) => army.combatUnits
+        .firstWhere((u) => u.group.any((g) => g.instanceId == instanceId));
+
+    test('an invulnerable save granted by an ability reaches the statline',
+        () {
+      // The Coldstar's 4+ lives in its shield-generator ability, not in
+      // invuln_sv. Reading the profile alone left the INV column empty.
+      final coldstar = unitWith('u03');
+      final commander = coldstar.profiles
+          .firstWhere((p) => p.name.contains('Coldstar'));
+      expect(commander.profile.invulnSv, '4');
+
+      // …and it does not leak onto the suits it leads.
+      final suits = coldstar.profiles
+          .firstWhere((p) => p.name.contains('Starscythe'));
+      expect(suits.profile.invulnSv, isNull);
+    });
+
+    test("an attached unit's abilities say which half owns them", () {
+      final coldstar = unitWith('u03');
+      expect(coldstar.isAttached, isTrue);
+      final shieldGenerator = coldstar.attributedRules
+          .firstWhere((r) => r.rule.abilityId == 'shield-generator');
+      expect(shieldGenerator.source, 'Commander in Coldstar Battlesuit');
+    });
+
+    test('a single-datasheet unit is not attributed', () {
+      expect(unitWith('u10').isAttached, isFalse);
+    });
+
+    test('the Coldstar sets Move to 12 rather than adding 12', () {
+      final rule = unitWith('u03')
+          .rules
+          .firstWhere((r) => r.abilityId == 'coldstar-commander');
+      expect(rule.text, 'While leading a unit: Move set to 12.');
+    });
+
+    test('weapon keywords keep their values through the snapshot', () {
+      // Ghostkeel's fusion collider. The snapshot round trip was dropping
+      // the parameter, so MELTA 2 arrived as MELTA.
+      final ghostkeel = unitWith('u12');
+      final labels = ghostkeel
+          .weapons(WeaponKind.ranged)
+          .weapons
+          .expand((w) => w.keywords)
+          .map((k) => k.label)
+          .toSet();
+      expect(labels, contains('MELTA 2'));
+    });
   });
 
   group('army loads from its snapshot alone', () {

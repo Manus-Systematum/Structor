@@ -2307,13 +2307,8 @@
       },
       "version": "2025-q3",
       "effect": {
-        "type": "roll-modifier",
-        "target": "attacker",
-        "modifier": {
-          "roll": "hit",
-          "operation": "subtract",
-          "value": 1
-        }
+        "type": "cover-benefit",
+        "target": "unit"
       },
       "scope": {
         "range": "unit",
@@ -2323,7 +2318,11 @@
         "stealth-battlesuits"
       ],
       "ability_type": "core",
-      "behavior": "passive"
+      "behavior": "passive",
+      "corrected": {
+        "reason": "In 11th edition Stealth gives the unit the Benefit of Cover. Upstream still carries the 10th edition rule, -1 to the attacker's Hit roll, in all three faction files. Reported by the app's user against the current rulebook. The two are not interchangeable: cover changes the save, a hit penalty changes the roll, and they stack differently with everything else on the table.",
+        "upstream": "not yet reported"
+      }
     },
     "infiltrators": {
       "ability_id": "infiltrators",

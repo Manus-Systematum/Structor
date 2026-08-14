@@ -126,7 +126,7 @@ void main() {
           reason: 'a dice pool has no fixed total');
       expect(rows.single.autoHits, isTrue);
       expect(rows.single.skill, isNull);
-      expect(rows.single.keywords, contains('torrent'));
+      expect(rows.single.keywords.map((k) => k.id), contains('torrent'));
     });
 
     test('scaling handles multipliers and modifiers', () {
@@ -318,7 +318,7 @@ void main() {
           reason: 'Torrent weapons have no BS');
       expect(flamers.map((w) => w.attacks.display).join(' + '), contains('D6'));
       expect(
-        flamers.expand((w) => w.keywords),
+        flamers.expand((w) => w.keywords).map((k) => k.id),
         contains('torrent'),
       );
     }, skip: available ? null : 'no snapshot; run tools/fetch-40kdc.sh');

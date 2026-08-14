@@ -182,7 +182,7 @@ class _UnitCard extends StatelessWidget {
               const _Subheader('Melee'),
               WeaponTable(result: unit.weapons(WeaponKind.melee)),
               if (unit.rules.isNotEmpty) const _Subheader('Abilities'),
-              for (final rule in unit.rules)
+              for (final entry in unit.attributedRules)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(12, 3, 12, 3),
                   child: RichText(
@@ -190,16 +190,28 @@ class _UnitCard extends StatelessWidget {
                       style: DefaultTextStyle.of(context).style,
                       children: [
                         TextSpan(
-                          text: '${rule.name}: ',
+                          text: '${entry.rule.name}: ',
                           style: const TextStyle(
                               fontSize: 11.5, fontWeight: FontWeight.w700),
                         ),
                         TextSpan(
-                          text: rule.text,
+                          text: entry.rule.text,
                           style: TextStyle(
                               fontSize: 11.5,
                               color: scheme.onSurfaceVariant),
                         ),
+                        // Only when it could be either half: a Shield
+                        // Generator on the Commander is not one on the suits
+                        // it leads.
+                        if (unit.isAttached)
+                          TextSpan(
+                            text: '  (${entry.source})',
+                            style: TextStyle(
+                              fontSize: 10.5,
+                              fontStyle: FontStyle.italic,
+                              color: scheme.outline,
+                            ),
+                          ),
                       ],
                     ),
                   ),

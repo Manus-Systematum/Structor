@@ -296,6 +296,28 @@ Two rules stop this becoming a private fork:
 
 The corrected record carries its own provenance: a `corrected: {reason, upstream}` key travels with the ability into the shipped bundle, so the explanation is in the data rather than in a build log nobody kept.
 
+`faction: "*"` matches an ability in every faction that carries it. Core abilities are transcribed once per faction file, so a mistake in one is usually a mistake in all of them — **Stealth is wrong identically in all three**. A wildcard is only reported stale once a whole run has gone by without it firing anywhere; a faction that simply lacks the ability is not evidence of anything.
+
+### 3.7 What the first play-test found
+
+Seven complaints from one game, and the useful thing about them is that they sort into three quite different causes. Worth recording, because the ratio is not what it looks like from the screen: **most of what read as bad data was our own rendering.**
+
+**Our bugs** — the data was right and the app was not:
+
+- **Twelve operations rendered as two.** `_signed()` knew `add` and `subtract`. The data uses `set`, `improve`, `worsen`, `multiply`, `halve`, `crit-on`, `improve-vs-D1`, `set-on-crit-wound` and more. So the Coldstar Commander's *Move set to 12* rendered as **`+12 Move`** — on a suit that already moves 12, a plausible-looking lie. Thirty-odd abilities were affected.
+- **`{operation: add, value: -1}` lost its sign**, because the magnitude was taken before the sign was applied. Thirteen AP *improvements* across three factions read as `+1 AP`, the opposite of what they do. Starscythe was one.
+- **Whose characteristic changes was never stated.** Enforcer Commander worsens the **attacker's** AP; rendered ownerless as `+1 AP` it reads as a buff to the Commander. Only `attacker` and `defender` get an owner prefix — the data uses `attacker` inconsistently enough (defensively for Stealth, offensively for Hunter's Instincts) that inventing a longer sentence would be guessing.
+- **Weapon keyword parameters were discarded at parse.** `melta` is Melta **2**; `anti` is Anti-**Infantry 4+**; `rapid-fire` is Rapid Fire **N**. **201 of 920 keyword instances** in the snapshot carry a parameter, and every one of them was being dropped — twice, in fact, since the import screen re-serialised profiles as bare `keyword_id`s on the way into a snapshot. The parameters are now part of the profile key too, so a Melta 2 and a Melta 4 no longer aggregate into one row.
+- **An invulnerable save granted by an ability never reached the statline.** Both encodings exist upstream: most models carry `invuln_sv`, but the Coldstar's 4+ lives only in its `shield-generator` ability. The INV column read the profile alone, so a unit with an invulnerable save showed none. Conditional grants are deliberately *not* folded in — a save that applies sometimes is a rule to read, not a number in a column that says "always".
+- **An attached unit's abilities were listed unattributed.** The Shield Generator belongs to the Commander in Coldstar Battlesuit, not to the Crisis Starscythe suits it leads, and a flat union said otherwise. Rules now name their datasheet whenever the group has more than one.
+
+**Wrong data** — corrected in `data-corrections.yaml` (§3.6): Stealth, and Broadside Advanced Armour.
+
+**Upstream gaps** — nothing local can fix these honestly:
+
+- **Drones do not exist as models.** `gun-drone`, `shield-drone`, `marker-drone` and the rest are name-only wargear stubs — `{id, name, game_version}`, no statline, no weapons — and no `unit-compositions` entry lists a drone model. So there is no drone profile to show, and no amount of rendering will invent one. Their *abilities* are present (`shield-drone` → +1 Wound), which is why they appear on the rules list but never in the stat block.
+- **Coldstar Commander is missing its Assault grant**, and **Starscythe's AP improvement is missing its target restriction**. Both need the exact rulebook wording before a correction can be written; guessing at scope is how a correction becomes a second source of error.
+
 ### 3.1 Upstream sources (BSData — now the cross-check, not the primary)
 
 Two repositories, both community-maintained:
@@ -1174,6 +1196,7 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 - `data-corrections.yaml` and `src/source/corrections.dart` (§3.6). One entry so far: Broadside Battlesuits' Advanced Armour, which upstream encodes as an unrestricted `Feel No Pain 4+` and which the rulebook restricts to mortal wounds. The renderer gained one condition, `damage-is-mortal`, and now reads `Against mortal wounds: Feel No Pain 4+.`
 - **Units are named after their datasheets.** The text importer had been stashing the export format's `Attached Unit N` grouping label in `customName`, so the play screen listed four units by a bookkeeping artefact instead of what they were. The grouping was always carried by the `LEADS` edges; the name was pure noise. An attached unit now reads `Commander in Enforcer Battlesuit + Crisis Fireknife Battlesuits`, and two identical pairings are shown as two identical names rather than disambiguated — the models on the table are what tells them apart.
 - Text left-aligned throughout: empty states, error messages, the setup prompt, the round stepper and the turn toggle. Centred text reads as decoration; a rules aid should read as a document.
-- 200 core tests, 35 app tests; both analyzers clean.
+
+**Done — the seven play-test findings (§3.7):** operation-aware stat rendering, sign preservation, attacker/defender attribution, weapon keyword parameters end to end, ability-granted invulnerable saves in the INV column, per-datasheet attribution of an attached unit's abilities, and the Stealth correction. 214 core tests, 40 app tests; both analyzers clean.
 
 **Next:** the stratagem screen — §7.3's third page and the last major surface of the play mode. The data has phases, CP costs and timing, and `BattleState.hasUsedStratagem` already enforces the one-per-phase rule; nothing is showing it yet.

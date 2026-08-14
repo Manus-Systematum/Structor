@@ -127,9 +127,10 @@ class _ImportScreenState extends State<ImportScreen> {
                   'name': p.name,
                   'range': p.range,
                   'stats': p.stats,
-                  'keywords': [
-                    for (final k in p.keywordIds) {'keyword_id': k},
-                  ],
+                  // Keyword parameters go through verbatim. Re-serialising
+                  // as bare ids is how Melta 2 became Melta in a snapshot
+                  // built at import time.
+                  'keywords': [for (final k in p.keywords) k.toJson()],
                 },
             ],
           },

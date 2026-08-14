@@ -117,6 +117,39 @@ abilities:
       );
     });
 
+    test('a wildcard faction matches every faction that has the ability', () {
+      const wildcard = '''
+abilities:
+  - faction: "*"
+    id: advanced-armour
+    reason: Core abilities are transcribed once per faction file.
+    effect:
+      type: cover-benefit
+''';
+      final corrections = DataCorrections.parse(wildcard);
+      for (final faction in ['tau-empire', 'necrons', 'adeptus-astartes']) {
+        final result = corrections.applyToAbilities(faction, _records);
+        expect(result.applied, hasLength(1), reason: faction);
+      }
+    });
+
+    test('a wildcard is stale only when no faction anywhere carries it', () {
+      const wildcard = '''
+abilities:
+  - faction: "*"
+    id: nonexistent
+    reason: Deliberately matches nothing.
+    effect:
+      type: cover-benefit
+''';
+      final corrections = DataCorrections.parse(wildcard);
+      final result = corrections.applyToAbilities('necrons', _records);
+      // Not reported per-faction — a faction without the ability is normal.
+      expect(result.unmatched, isEmpty);
+      // Reported once the whole run has been seen.
+      expect(corrections.neverApplied(result.applied), hasLength(1));
+    });
+
     test('a correction that matches nothing is reported, not silent', () {
       // Otherwise a correction upstream has since adopted goes on shadowing
       // data that is now correct, and nobody finds out.
@@ -150,8 +183,10 @@ abilities:
       );
       if (!loader.root.existsSync()) return;
 
+      final applied = <AbilityCorrection>[];
       for (final factionId in loader.availableFactions()) {
         final result = loader.correctedAbilities(factionId);
+        applied.addAll(result.applied);
         expect(
           result.unmatched.map((c) => c.abilityId),
           isEmpty,
@@ -159,6 +194,33 @@ abilities:
               'typo, or upstream has fixed it and the entry should go',
         );
       }
+      expect(
+        loader.corrections.neverApplied(applied).map((c) => c.abilityId),
+        isEmpty,
+        reason: 'a wildcard correction fired for no faction at all',
+      );
+    });
+
+    test('Stealth is the Benefit of Cover in every faction that has it', () {
+      final loader = DatasetLoader(
+        '../../data/40kdc',
+        corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
+      );
+      if (!loader.root.existsSync()) return;
+
+      var seen = 0;
+      for (final factionId in loader.availableFactions()) {
+        for (final ability in loader.loadFaction(factionId).abilities) {
+          if (ability.abilityId != 'stealth') continue;
+          seen++;
+          expect(
+            const RulesRenderer().render(ability).text,
+            'Has the Benefit of Cover.',
+            reason: '$factionId still carries the 10th edition -1 to Hit',
+          );
+        }
+      }
+      expect(seen, greaterThan(1), reason: 'Stealth is a core ability');
     });
 
     test('Advanced Armour renders as a mortal-wounds-only save', () {

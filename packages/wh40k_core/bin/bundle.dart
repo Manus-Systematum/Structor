@@ -84,6 +84,7 @@ void main(List<String> args) {
   final entries = <BundleEntry>[];
   final correctionNotes = <String>[];
   final staleCorrections = <String>[];
+  final appliedCorrections = <AbilityCorrection>[];
 
   BundleEntry write(DatasetBundle bundle, String displayName) {
     final compressed = bundle.encode();
@@ -122,6 +123,7 @@ void main(List<String> args) {
     files['abilities'] = corrected.records;
     for (final c in corrected.applied) {
       correctionNotes.add('$factionId/${c.abilityId}');
+      appliedCorrections.add(c);
     }
     for (final c in corrected.unmatched) {
       staleCorrections.add('$factionId/${c.abilityId}');
@@ -162,6 +164,10 @@ void main(List<String> args) {
     ..writeln()
     ..writeln('${entries.length} bundles, ${_kb(total)} total')
     ..writeln('manifest: $outDir/manifest.json');
+
+  for (final c in loader.corrections.neverApplied(appliedCorrections)) {
+    staleCorrections.add('*/${c.abilityId}');
+  }
 
   if (correctionNotes.isNotEmpty) {
     stdout.writeln('\ncorrections applied: ${correctionNotes.join(', ')}');

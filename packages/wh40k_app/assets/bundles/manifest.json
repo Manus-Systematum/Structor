@@ -17,8 +17,8 @@
       "kind": "faction",
       "name": "Adeptus Astartes",
       "file": "adeptus-astartes.json.gz",
-      "sha256": "b18410d74d37904c8a874dae490bdce7d3f3d9744896a244cd5e5280b99b3d64",
-      "bytes": 78827,
+      "sha256": "9adf2ec7e4d78cd3f28d8c79af83fc1552ec04bea21bf94b2c3b6d48930a520f",
+      "bytes": 79077,
       "revision": "local"
     },
     {
@@ -26,8 +26,8 @@
       "kind": "faction",
       "name": "Necrons",
       "file": "necrons.json.gz",
-      "sha256": "dee78b10b2885ed07598e4b32af872c5389c0098932b79b43a95a37afe5d7aac",
-      "bytes": 30611,
+      "sha256": "dc4678b8b67594a3900a9b1457d7168427ca403f2053dadab80516cc84aff68f",
+      "bytes": 30848,
       "revision": "local"
     },
     {
@@ -35,8 +35,8 @@
       "kind": "faction",
       "name": "Tau Empire",
       "file": "tau-empire.json.gz",
-      "sha256": "8a5c9cbd58dc0a76ef1ea54c2a0b4f5faf102d3f6bf978568ec4d26d55fe634c",
-      "bytes": 26871,
+      "sha256": "89d209a9efccd61b5f2a7d4065b6e95c8c404594348739f26c24f943dd9fe832",
+      "bytes": 27084,
       "revision": "local"
     }
   ]

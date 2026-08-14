@@ -125,7 +125,7 @@ void main(List<String> args) {
           'S${w.profile.stats['S'] ?? '-'} '
           'AP${w.profile.stats['AP'] ?? '-'} '
           'D${w.profile.stats['D'] ?? '-'}'
-          '${w.keywords.isEmpty ? '' : '  [${w.keywords.join(', ')}]'}');
+          '${w.keywords.isEmpty ? '' : '  [${w.keywords.map((k) => k.label).join(', ')}]'}');
     }
     for (final u in table.unresolved) {
       stdout.writeln('   !! unresolved wargear: ${u.itemId}');

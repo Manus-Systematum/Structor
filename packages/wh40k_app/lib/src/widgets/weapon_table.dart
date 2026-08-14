@@ -117,7 +117,7 @@ class _WeaponRow extends StatelessWidget {
                 _stat(context, 'AP', stats['AP']),
                 _stat(context, 'D', stats['D']),
                 for (final keyword in weapon.keywords)
-                  _KeywordChip(label: keyword),
+                  _KeywordChip(label: keyword.label),
               ],
             ),
           ),

@@ -27,6 +27,66 @@ void main() {
       expect(flamer.keywordIds, containsAll(['torrent', 'ignores-cover']));
     });
 
+    group('weapon keywords keep their parameters', () {
+      // 201 of 920 keyword instances in the snapshot carry parameters. A
+      // Fusion blaster reading MELTA rather than MELTA 2 is a different
+      // weapon at the moment someone is deciding whether to shoot it.
+      WeaponKeyword kw(String id, [Map<String, Object?>? params]) =>
+          WeaponKeyword.fromJson({
+            'keyword_id': id,
+            if (params != null) 'parameters': params,
+          });
+
+      test('a valued keyword prints its value', () {
+        expect(kw('melta', {'value': 2}).label, 'MELTA 2');
+        expect(kw('sustained-hits', {'value': 1}).label, 'SUSTAINED HITS 1');
+        expect(kw('rapid-fire', {'value': 2}).label, 'RAPID FIRE 2');
+      });
+
+      test('Anti prints its target and threshold', () {
+        expect(
+          kw('anti', {'target_keyword': 'INFANTRY', 'threshold': 4}).label,
+          'ANTI-INFANTRY 4+',
+        );
+      });
+
+      test('a bare keyword is unchanged', () {
+        expect(kw('torrent').label, 'TORRENT');
+        expect(kw('ignores-cover').label, 'IGNORES COVER');
+      });
+
+      test('an unrecognised parameter is shown rather than dropped', () {
+        expect(kw('bubblechukka', {'dakka': 7}).label, 'BUBBLECHUKKA 7');
+      });
+
+      test('profiles differing only in a keyword value stay distinct', () {
+        // profileKey drives aggregation. Keying on the bare id would merge a
+        // Melta 2 and a Melta 4 into one row.
+        WeaponProfile withMelta(int value) => WeaponProfile.fromJson({
+              'name': 'Fusion blaster',
+              'range': 12,
+              'stats': {'A': 1, 'S': 9, 'AP': -4, 'D': 'D6', 'BS': 4},
+              'keywords': [
+                {
+                  'keyword_id': 'melta',
+                  'parameters': {'value': value},
+                },
+              ],
+            });
+        expect(withMelta(2).profileKey, isNot(withMelta(4).profileKey));
+        expect(withMelta(2).keywords.single.label, 'MELTA 2');
+      });
+
+      test('a keyword round-trips through JSON with its parameters', () {
+        // The import screen re-serialises profiles into the snapshot; the
+        // parameters were being dropped on the way back out.
+        final original = kw('anti', {'target_keyword': 'VEHICLE',
+            'threshold': 3});
+        expect(WeaponKeyword.fromJson(original.toJson()).label,
+            'ANTI-VEHICLE 3+');
+      });
+    });
+
     test('absent and malformed fields degrade instead of throwing', () {
       final unit = SourceUnit.fromJson({'id': 'x', 'profiles': 'not-a-list'});
       expect(unit.name, '(unnamed)');

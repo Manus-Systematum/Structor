@@ -95,9 +95,18 @@ class RulesRenderer {
 
       case 'stat-modifier':
         final stat = _statName(strOr(mod['stat'], '?'));
-        final weaponType = str(mod['weapon_type']);
-        final scope = weaponType == null ? '' : ' (${_words(weaponType)})';
-        return '${_signed(mod)} $stat$scope';
+        final qualifier =
+            str(mod['weapon_type']) ?? str(mod['attack_type']);
+        final scope = qualifier == null ? '' : ' (${_words(qualifier)})';
+        // Whose characteristic changes is the whole meaning of an ability
+        // like Enforcer Commander, where the AP being worsened is the
+        // *attacker's*. Rendering it ownerless reads as a buff.
+        final owner = switch (strOr(node['target'], '')) {
+          'attacker' => "attacker's ",
+          'defender' => "target's ",
+          _ => '',
+        };
+        return '$owner${_statChange(stat, mod, ctx)}$scope';
 
       case 'aura':
         final range = str(mod['range']) ?? '?';
@@ -157,10 +166,20 @@ class RulesRenderer {
 
       case 'roll-modifier':
         final roll = _rollName(strOr(mod['roll'], 'all'));
-        if (strOr(mod['operation'], '') == 'ignore-modifiers') {
-          return 'ignore modifiers to $roll rolls';
-        }
-        return '${_signed(mod)} to $roll';
+        final context = str(mod['context']);
+        final when = context == null ? '' : ' (${_words(context)})';
+        return switch (strOr(mod['operation'], 'add')) {
+          'ignore-modifiers' => 'ignore modifiers to $roll rolls',
+          'ignore-engagement-penalty' =>
+            'ignore the Engagement Range penalty to $roll rolls',
+          // A fixed roll, not a bonus: Sentinel Protocols hits on 5+ in
+          // Overwatch regardless of BS.
+          'set' => '$roll on ${str(mod['value']) ?? '?'}+$when',
+          'crit-on' =>
+            'critical $roll on ${str(mod['value']) ?? '?'}+$when',
+          'add' || 'subtract' => '${_signed(mod)} to $roll$when',
+          final other => _unknownOperation(other, '$roll rolls', mod, ctx),
+        };
 
       case 'bs-modifier':
         return '${_signed(mod)} to Hit';
@@ -229,10 +248,15 @@ class RulesRenderer {
       case 'deep-strike':
         return 'Deep Strike';
 
+      case 'cover-benefit':
+        return 'has the Benefit of Cover';
+
       case 'objective-control-modifier':
-        return mod['sticky'] == true
-            ? 'objectives remain controlled after leaving'
-            : 'modifies objective control';
+        if (mod['sticky'] == true) {
+          return 'objectives remain controlled after leaving';
+        }
+        if (mod['operation'] == null) return 'modifies objective control';
+        return _statChange('OC', mod, ctx);
 
       case 'leadership-modifier':
         final test = _words(strOr(mod['test'], 'Leadership'));
@@ -394,12 +418,51 @@ class RulesRenderer {
 
   // ---------------------------------------------------------------- helpers
 
-  /// `{operation: add, value: 1}` becomes `+1`.
+  /// A characteristic change written the way the operation actually behaves.
+  ///
+  /// The data uses twelve operations, not two. Collapsing them into `+N`/`-N`
+  /// is how the Coldstar Commander's *Move set to 12* became `+12 Move` — a
+  /// buff of half again on a suit that already moves 12 — and how thirteen
+  /// `{operation: add, value: -1}` AP improvements read as penalties.
+  String _statChange(String stat, Map<String, dynamic> mod, _Ctx ctx) {
+    final value = asInt(mod['value']);
+    final magnitude = (value ?? 1).abs();
+    return switch (strOr(mod['operation'], 'add')) {
+      'add' || 'subtract' => '${_signed(mod)} $stat',
+      'set' => '$stat set to ${value ?? '?'}',
+      'improve' => '$stat improved by $magnitude',
+      'worsen' => '$stat worsened by $magnitude',
+      'multiply' => '$stat ×$magnitude',
+      'halve' => '$stat halved',
+      'improve-vs-D1' =>
+        '$stat improved by $magnitude against Damage 1 attacks',
+      'set-on-crit-wound' =>
+        'on a Critical Wound, $stat set to ${value ?? '?'}',
+      final other => _unknownOperation(other, stat, mod, ctx),
+    };
+  }
+
+  /// An operation the renderer does not know. Shown, not guessed at (§7.6):
+  /// silently treating it as an addition is exactly the failure this method
+  /// exists to stop repeating.
+  String _unknownOperation(
+    String operation,
+    String subject,
+    Map<String, dynamic> mod,
+    _Ctx ctx,
+  ) {
+    ctx.unrendered.add('operation:$operation');
+    final value = str(mod['value']);
+    return '[$operation${value == null ? '' : ' $value'}] $subject';
+  }
+
+  /// `{operation: add, value: 1}` becomes `+1`; a negative value keeps its
+  /// sign, because `{add, -1}` on AP is an improvement, not a bonus of one.
   String _signed(Map<String, dynamic> mod) {
     final value = asInt(mod['value']) ?? 1;
-    final subtract = strOr(mod['operation'], 'add') == 'subtract';
-    final magnitude = value.abs();
-    return subtract ? '-$magnitude' : '+$magnitude';
+    final effective =
+        strOr(mod['operation'], 'add') == 'subtract' ? -value.abs() : value;
+    return effective < 0 ? '$effective' : '+$effective';
   }
 
   static const _stats = {
@@ -427,6 +490,7 @@ class RulesRenderer {
     'advance': 'Advance',
     'damage': 'Damage',
     'all': 'all',
+    'any': 'any roll',
   };
 
   String _rollName(String roll) => _rolls[roll] ?? _words(roll);

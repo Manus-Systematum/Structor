@@ -26,7 +26,11 @@ import 'package:yaml/yaml.dart';
 
 /// A replacement effect for one ability in one faction.
 class AbilityCorrection {
+  /// A faction id, or `*` for a core ability carried identically by several
+  /// factions — Stealth is transcribed once per faction file, and wrong in
+  /// each of them.
   final String faction;
+
   final String abilityId;
   final String reason;
 
@@ -71,6 +75,8 @@ class DataCorrections {
 
   bool get isEmpty => abilities.isEmpty;
 
+  static const _anyFaction = '*';
+
   /// Corrections for one faction, applied to its raw `abilities.json` records.
   ///
   /// Returns fresh records; the input is not mutated, so a caller may bundle
@@ -79,7 +85,9 @@ class DataCorrections {
     String factionId,
     List<Object?> records,
   ) {
-    final mine = abilities.where((c) => c.faction == factionId).toList();
+    final mine = abilities
+        .where((c) => c.faction == factionId || c.faction == _anyFaction)
+        .toList();
     if (mine.isEmpty) {
       return CorrectionResult(
         records: records,
@@ -118,8 +126,24 @@ class DataCorrections {
     return CorrectionResult(
       records: out,
       applied: applied,
-      unmatched: [for (final c in mine) if (!applied.contains(c)) c],
+      // A wildcard correction is not stale just because *this* faction has no
+      // such ability — only if no faction anywhere has it, which only the
+      // caller iterating every faction can know.
+      unmatched: [
+        for (final c in mine)
+          if (c.faction != _anyFaction && !applied.contains(c)) c,
+      ],
     );
+  }
+
+  /// Wildcard corrections that fired for no faction at all — the same "stale
+  /// entry" check [CorrectionResult.unmatched] does, but across a whole run.
+  List<AbilityCorrection> neverApplied(Iterable<AbilityCorrection> applied) {
+    final fired = applied.toSet();
+    return [
+      for (final c in abilities)
+        if (c.faction == _anyFaction && !fired.contains(c)) c,
+    ];
   }
 
   static DataCorrections parse(String yamlSource) {

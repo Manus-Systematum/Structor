@@ -53,7 +53,9 @@ class AggregatedWeapon {
   bool get autoHits => skill == null;
 
   String? get range => profile.range;
-  List<String> get keywords => profile.keywordIds;
+
+  /// Full keywords, parameters included — `MELTA 2`, not `MELTA`.
+  List<WeaponKeyword> get keywords => profile.keywords;
 }
 
 /// A wargear item that could not be resolved to a weapon for its carrier.

@@ -61,6 +61,17 @@ class ModelProfile {
   /// Statline identity, used to detect genuinely divergent per-model profiles
   /// within one attached unit (DESIGN.md §7.3.6).
   String get statKey => '$m|$t|$w|$sv|$invulnSv|$ld|$oc';
+
+  ModelProfile withInvulnerableSave(String? save) => ModelProfile(
+        name: name,
+        m: m,
+        t: t,
+        w: w,
+        sv: sv,
+        invulnSv: save,
+        ld: ld,
+        oc: oc,
+      );
 }
 
 /// Points bracket. Carries `unitCountMin`/`unitCountMax` because 11e prices
@@ -224,18 +235,86 @@ class SourceUnit {
       .fold(0, (sum, c) => sum + c.cost);
 }
 
+/// A weapon keyword together with the parameters that give it its meaning.
+///
+/// The parameters are not decoration. `melta` is Melta 2, `anti` is
+/// Anti-Infantry 4+, `rapid-fire` is Rapid Fire 1 — **201 of 920 keyword
+/// instances in the snapshot carry one**, and dropping them turns a specific
+/// rule into a vague one at exactly the moment a player is reading it to
+/// decide whether to shoot.
+class WeaponKeyword {
+  final String id;
+
+  /// `{value: 2}` for Melta 2, `{target_keyword: INFANTRY, threshold: 4}` for
+  /// Anti-Infantry 4+. Kept raw so a keyword the app has never heard of still
+  /// shows its numbers.
+  final Map<String, String> parameters;
+
+  const WeaponKeyword(this.id, {this.parameters = const {}});
+
+  factory WeaponKeyword.fromJson(Object? v) {
+    final j = asMap(v);
+    final params = <String, String>{};
+    for (final entry in asMap(j['parameters']).entries) {
+      final value = str(entry.value);
+      if (value != null && value.isNotEmpty) params[entry.key] = value;
+    }
+    return WeaponKeyword(strOr(j['keyword_id'], ''), parameters: params);
+  }
+
+  Map<String, Object?> toJson() => {
+        'keyword_id': id,
+        if (parameters.isNotEmpty) 'parameters': parameters,
+      };
+
+  /// As it is printed on a datasheet: `MELTA 2`, `ANTI-INFANTRY 4+`,
+  /// `SUSTAINED HITS 1`, `TORRENT`.
+  String get label {
+    final name = id.replaceAll('-', ' ').toUpperCase();
+    final target = parameters['target_keyword'];
+    final threshold = parameters['threshold'];
+    if (target != null || threshold != null) {
+      final subject = target == null ? name : '$name-${target.toUpperCase()}';
+      return threshold == null ? subject : '$subject $threshold+';
+    }
+    final value = parameters['value'];
+    if (value != null) return '$name $value';
+    // An unrecognised parameter set is shown rather than dropped: a keyword
+    // rendered without its numbers reads as though it had none.
+    if (parameters.isEmpty) return name;
+    return '$name ${parameters.values.join('/')}';
+  }
+
+  /// Stable identity for aggregation — Melta 2 and Melta 4 are not the same
+  /// profile, and keying on the bare id would merge them.
+  String get key {
+    if (parameters.isEmpty) return id;
+    final keys = parameters.keys.toList()..sort();
+    return '$id(${keys.map((k) => '$k=${parameters[k]}').join(',')})';
+  }
+
+  @override
+  String toString() => label;
+}
+
 class WeaponProfile {
   final String name;
   final String? range;
   final Map<String, String> stats;
-  final List<String> keywordIds;
+  final List<WeaponKeyword> keywords;
 
   const WeaponProfile({
     required this.name,
     required this.range,
     required this.stats,
-    required this.keywordIds,
+    required this.keywords,
   });
+
+  /// Bare keyword ids, for callers that only ask whether a keyword is present.
+  List<String> get keywordIds =>
+      [for (final k in keywords) k.id];
+
+  bool hasKeyword(String id) => keywords.any((k) => k.id == id);
 
   factory WeaponProfile.fromJson(Object? v) {
     final j = asMap(v);
@@ -249,9 +328,9 @@ class WeaponProfile {
       name: strOr(j['name'], '(unnamed)'),
       range: str(j['range']),
       stats: stats,
-      keywordIds: asList(j['keywords'])
-          .map((k) => str(asMap(k)['keyword_id']))
-          .whereType<String>()
+      keywords: asList(j['keywords'])
+          .map(WeaponKeyword.fromJson)
+          .where((k) => k.id.isNotEmpty)
           .toList(growable: false),
     );
   }
@@ -282,7 +361,7 @@ class WeaponProfile {
   String get profileKey {
     final keys = stats.keys.toList()..sort();
     final body = keys.map((k) => '$k=${stats[k]}').join(',');
-    final kw = (List<String>.from(keywordIds)..sort()).join('+');
+    final kw = (keywords.map((k) => k.key).toList()..sort()).join('+');
     return '$range|$body|$kw';
   }
 }
@@ -451,6 +530,31 @@ class SourceAbility {
   /// Outermost effect discriminator, e.g. `conditional`, `stat-modifier`.
   /// The rules renderer (DESIGN.md §7.3.6) dispatches on this.
   String get effectType => strOr(effect['type'], 'none');
+
+  /// An invulnerable save this ability grants unconditionally, if any.
+  ///
+  /// The two encodings coexist upstream: most models carry `invuln_sv` on the
+  /// profile, but the Commander in Coldstar Battlesuit's 4+ lives only in its
+  /// `shield-generator` ability. A screen that reads the statline alone shows
+  /// no invulnerable save on a model that has one.
+  ///
+  /// Deliberately does not descend into `conditional`. A save that applies
+  /// only sometimes is a rule to read, not a number to print in a column that
+  /// says the model always has it.
+  int? get unconditionalInvulnerableSave => _invulnIn(effect);
+
+  static int? _invulnIn(Map<String, dynamic> node) {
+    switch (strOr(node['type'], '')) {
+      case 'invulnerable-save':
+        return asInt(asMap(node['modifier'])['invuln_sv']);
+      case 'sequence':
+        for (final step in asList(node['steps'])) {
+          final found = _invulnIn(asMap(step));
+          if (found != null) return found;
+        }
+    }
+    return null;
+  }
 
   /// Structural fingerprint used to detect near-duplicate ability records —
   /// upstream carries both `weapon-support-system` and

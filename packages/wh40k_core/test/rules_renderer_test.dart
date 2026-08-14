@@ -36,6 +36,86 @@ void main() {
       );
     });
 
+    test('every operation reads as what it does, not as an addition', () {
+      // The data uses twelve operations. Rendering them all as +N/-N is how
+      // the Coldstar Commander's Move *set to* 12 became "+12 Move".
+      String change(String operation, {Object? value = 1, String stat = 'M'}) =>
+          _text({
+            'type': 'stat-modifier',
+            'modifier': {'stat': stat, 'operation': operation, 'value': value},
+          });
+
+      expect(change('set', value: 12), 'Move set to 12.');
+      expect(change('improve', stat: 'Sv'), 'Save improved by 1.');
+      expect(change('worsen', stat: 'AP'), 'AP worsened by 1.');
+      expect(change('multiply', value: 3, stat: 'A'), 'Attacks ×3.');
+      expect(
+        _text({
+          'type': 'stat-modifier',
+          'modifier': {'stat': 'OC', 'operation': 'halve'},
+        }),
+        'OC halved.',
+      );
+    });
+
+    test('a negative value keeps its sign', () {
+      // Thirteen abilities encode an AP improvement as {add, -1}. Taking the
+      // magnitude turned every one of them into a penalty of +1.
+      expect(
+        _text({
+          'type': 'stat-modifier',
+          'modifier': {'stat': 'AP', 'operation': 'add', 'value': -1},
+        }),
+        '-1 AP.',
+      );
+    });
+
+    test('an unknown operation is shown, never treated as an addition', () {
+      final rule = _render({
+        'type': 'stat-modifier',
+        'modifier': {'stat': 'T', 'operation': 'quadruple', 'value': 4},
+      });
+      expect(rule.text, contains('[quadruple 4]'));
+      expect(rule.unrendered, contains('operation:quadruple'));
+      expect(rule.isComplete, isFalse);
+    });
+
+    test("whose characteristic changes is stated when it is the attacker's",
+        () {
+      // Enforcer Commander worsens the *attacker's* AP. Ownerless, it reads
+      // as a buff to the unit carrying it.
+      expect(
+        _text({
+          'type': 'stat-modifier',
+          'target': 'attacker',
+          'modifier': {'stat': 'AP', 'operation': 'worsen', 'value': 1},
+        }),
+        "Attacker's AP worsened by 1.",
+      );
+    });
+
+    test('a fixed roll is not a bonus to one', () {
+      expect(
+        _text({
+          'type': 'roll-modifier',
+          'modifier': {
+            'roll': 'hit',
+            'operation': 'set',
+            'value': 5,
+            'context': 'overwatch',
+          },
+        }),
+        'Hit on 5+ (overwatch).',
+      );
+      expect(
+        _text({
+          'type': 'roll-modifier',
+          'modifier': {'roll': 'hit', 'operation': 'crit-on', 'value': 5},
+        }),
+        'Critical Hit on 5+.',
+      );
+    });
+
     test('roll modifiers distinguish a penalty from ignoring modifiers', () {
       expect(
         _text({

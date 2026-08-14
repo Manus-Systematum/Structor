@@ -12,6 +12,23 @@
 # overriding data that has since become correct.
 
 abilities:
+  # `faction: "*"` matches the ability in every faction that carries it. Core
+  # abilities are transcribed once per faction file, so a mistake in one is
+  # usually a mistake in all of them.
+  - faction: "*"
+    id: stealth
+    reason: >
+      In 11th edition Stealth gives the unit the Benefit of Cover. Upstream
+      still carries the 10th edition rule, -1 to the attacker's Hit roll, in
+      all three faction files. Reported by the app's user against the current
+      rulebook. The two are not interchangeable: cover changes the save, a hit
+      penalty changes the roll, and they stack differently with everything
+      else on the table.
+    upstream: not yet reported
+    effect:
+      type: cover-benefit
+      target: unit
+
   - faction: tau-empire
     id: advanced-armour
     reason: >

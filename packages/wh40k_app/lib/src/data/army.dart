@@ -83,6 +83,29 @@ class Army {
     return rules;
   }
 
+  /// An invulnerable save a unit gets from an **ability** rather than from its
+  /// statline.
+  ///
+  /// The two encodings coexist upstream: most profiles carry `invuln_sv`, but
+  /// the Commander in Coldstar Battlesuit's 4+ lives in its `shield-generator`
+  /// ability and its profile says nothing. Reading only the profile left the
+  /// INV column empty on a unit that has one.
+  String? grantedInvulnerableSave(RosterUnit unit) {
+    final datasheet = catalogue.unit(unit.datasheetId);
+    if (datasheet == null) return null;
+
+    int? best;
+    for (final abilityId in datasheet.abilityIds) {
+      final raw = snapshot.abilities[abilityId];
+      if (raw == null) continue;
+      final save = SourceAbility.fromJson(raw).unconditionalInvulnerableSave;
+      if (save == null) continue;
+      // Best available, since two grants do not stack — the lower wins.
+      if (best == null || save < best) best = save;
+    }
+    return best?.toString();
+  }
+
   String detachmentName(String id) => catalogue.detachment(id)?.name ?? id;
 }
 
@@ -109,13 +132,21 @@ class CombatUnit {
 
   /// Distinct model profiles across the group. Divergent statlines within one
   /// attached unit are the norm, not an edge case (§7.3.6).
+  ///
+  /// An invulnerable save granted by an ability is folded in here, so the INV
+  /// column reflects what the model actually saves on rather than only what
+  /// the statline happened to record.
   List<({String name, ModelProfile profile})> get profiles {
     final seen = <String>{};
     final out = <({String name, ModelProfile profile})>[];
     for (final unit in group) {
       final datasheet = army.catalogue.unit(unit.datasheetId);
       if (datasheet == null) continue;
-      for (final profile in datasheet.profiles) {
+      final granted = army.grantedInvulnerableSave(unit);
+      for (final raw in datasheet.profiles) {
+        final profile = granted == null || raw.invulnSv != null
+            ? raw
+            : raw.withInvulnerableSave(granted);
         if (seen.add(profile.statKey)) {
           out.add((name: profile.name, profile: profile));
         }
@@ -133,6 +164,28 @@ class CombatUnit {
         kind: kind,
         modelsRemaining: modelsRemaining,
       );
+
+  /// Whether the group is a leader plus a bodyguard rather than one datasheet.
+  /// When it is, a rule needs saying *whose* it is.
+  bool get isAttached => group.length > 1;
+
+  /// Abilities with the datasheet each one belongs to.
+  ///
+  /// An attached unit's abilities are not shared. The Commander in Coldstar
+  /// Battlesuit carries a Shield Generator; the Crisis Starscythe suits it
+  /// leads do not. Listing the union unattributed reads as though they did.
+  List<({String source, RenderedRule rule})> get attributedRules {
+    final seen = <String>{};
+    final out = <({String source, RenderedRule rule})>[];
+    for (final unit in group) {
+      final name = army.catalogue.unit(unit.datasheetId)?.name ??
+          unit.datasheetId;
+      for (final rule in army.rulesFor(unit)) {
+        if (seen.add(rule.abilityId)) out.add((source: name, rule: rule));
+      }
+    }
+    return out;
+  }
 
   List<RenderedRule> get rules {
     final seen = <String>{};
