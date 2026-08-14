@@ -35,8 +35,8 @@
       "kind": "faction",
       "name": "Tau Empire",
       "file": "tau-empire.json.gz",
-      "sha256": "89d209a9efccd61b5f2a7d4065b6e95c8c404594348739f26c24f943dd9fe832",
-      "bytes": 27084,
+      "sha256": "649faeb5c2fd549f751f7c177e369f0505eef63a9101bef1e2c499f309c9331f",
+      "bytes": 27405,
       "revision": "local"
     }
   ]

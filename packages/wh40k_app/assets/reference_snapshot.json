@@ -1947,13 +1947,28 @@
           "type": "is-attached"
         },
         "effect": {
-          "type": "stat-modifier",
-          "target": "unit",
-          "modifier": {
-            "stat": "M",
-            "operation": "set",
-            "value": 12
-          }
+          "type": "sequence",
+          "steps": [
+            {
+              "type": "stat-modifier",
+              "target": "unit",
+              "modifier": {
+                "stat": "M",
+                "operation": "set",
+                "value": 12
+              }
+            },
+            {
+              "type": "weapon-keyword-grant",
+              "target": "unit",
+              "modifier": {
+                "weapon_type": "ranged",
+                "keywords": [
+                  "assault"
+                ]
+              }
+            }
+          ]
         }
       },
       "scope": {
@@ -1964,7 +1979,11 @@
         "commander-in-coldstar-battlesuit"
       ],
       "ability_type": "unit",
-      "behavior": "passive"
+      "behavior": "passive",
+      "corrected": {
+        "reason": "While the Commander leads a unit, the whole squad's ranged weapons gain ASSAULT as well as moving 12\". Upstream carries only the Move part, so the app showed a mobility buff and said nothing about being able to shoot after Advancing — which is the reason to take the detachment.",
+        "upstream": "not yet reported"
+      }
     },
     "shield-generator": {
       "ability_id": "shield-generator",
@@ -2028,10 +2047,24 @@
       "effect": {
         "type": "conditional",
         "condition": {
-          "type": "phase-is",
-          "parameters": {
-            "phase": "shooting"
-          }
+          "operator": "and",
+          "operands": [
+            {
+              "type": "phase-is",
+              "parameters": {
+                "phase": "shooting"
+              }
+            },
+            {
+              "type": "target-has-keyword",
+              "parameters": {
+                "excluded_keywords": [
+                  "vehicle",
+                  "monster"
+                ]
+              }
+            }
+          ]
         },
         "effect": {
           "type": "stat-modifier",
@@ -2051,7 +2084,11 @@
         "crisis-starscythe-battlesuits"
       ],
       "ability_type": "unit",
-      "behavior": "passive"
+      "behavior": "passive",
+      "corrected": {
+        "reason": "The AP improvement does not apply against VEHICLE or MONSTER targets. Upstream has no restriction, so the app promised -1 AP against exactly the targets where it does not help.",
+        "upstream": "not yet reported"
+      }
     },
     "exemplars-of-mont-ka": {
       "ability_id": "exemplars-of-mont-ka",

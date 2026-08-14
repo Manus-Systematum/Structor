@@ -30,6 +30,62 @@ abilities:
       target: unit
 
   - faction: tau-empire
+    id: coldstar-commander
+    reason: >
+      While the Commander leads a unit, the whole squad's ranged weapons gain
+      ASSAULT as well as moving 12". Upstream carries only the Move part, so
+      the app showed a mobility buff and said nothing about being able to
+      shoot after Advancing — which is the reason to take the detachment.
+    upstream: not yet reported
+    effect:
+      type: conditional
+      condition:
+        type: is-attached
+      effect:
+        type: sequence
+        steps:
+          - type: stat-modifier
+            target: unit
+            modifier:
+              stat: M
+              operation: set
+              value: 12
+          - type: weapon-keyword-grant
+            target: unit
+            modifier:
+              weapon_type: ranged
+              keywords:
+                - assault
+
+  - faction: tau-empire
+    id: starscythe
+    reason: >
+      The AP improvement does not apply against VEHICLE or MONSTER targets.
+      Upstream has no restriction, so the app promised -1 AP against exactly
+      the targets where it does not help.
+    upstream: not yet reported
+    effect:
+      type: conditional
+      condition:
+        operator: and
+        operands:
+          - type: phase-is
+            parameters:
+              phase: shooting
+          - type: target-has-keyword
+            parameters:
+              excluded_keywords:
+                - vehicle
+                - monster
+      effect:
+        type: stat-modifier
+        target: unit
+        modifier:
+          stat: AP
+          operation: add
+          value: -1
+
+  - faction: tau-empire
     id: advanced-armour
     reason: >
       Advanced Armour is Feel No Pain 4+ against mortal wounds only. The

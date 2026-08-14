@@ -202,6 +202,15 @@ class RulesRenderer {
         final keywords = strList(mod['keywords']).map(_keyword).join(', ');
         return 'gains $keywords';
 
+      // A keyword on the weapons rather than on the unit. "Gains ASSAULT"
+      // would say the models have it, which is a different rule.
+      case 'weapon-keyword-grant':
+        final keywords = strList(mod['keywords']).map(_keyword).join(', ');
+        final weaponType = str(mod['weapon_type']);
+        final which =
+            weaponType == null ? 'weapons' : '${_words(weaponType)} weapons';
+        return '$which gain $keywords';
+
       case 'unit-keyword':
         return 'gains ${_keyword(strOr(mod['keyword_id'], '?'))}';
 
@@ -313,7 +322,16 @@ class RulesRenderer {
           .where((s) => s.isNotEmpty)
           .toList();
       if (parts.isEmpty) return '';
-      return parts.join(operator == 'and' ? ' and ' : ' or ');
+      if (operator != 'and') return parts.join(' or ');
+
+      final buffer = StringBuffer(parts.first);
+      for (final part in parts.skip(1)) {
+        // "Shooting phase and except vs VEHICLE" is worse English than
+        // "Shooting phase, except vs VEHICLE" for the same condition.
+        buffer.write(part.startsWith('except ') ? ', ' : ' and ');
+        buffer.write(part);
+      }
+      return buffer.toString();
     }
 
     final type = strOr(node['type'], '');
@@ -326,8 +344,7 @@ class RulesRenderer {
           ? "opponent's turn"
           : 'your turn',
       'timing-is' => _words(strOr(params['timing'], '')),
-      'target-has-keyword' =>
-        'vs ${_keyword(strOr(params['keyword'], '?'))}',
+      'target-has-keyword' => _targetKeyword(params),
       'unit-has-keyword' =>
         'while ${_keyword(strOr(params['keyword'], '?'))}',
       'attack-is-type' =>
@@ -386,6 +403,24 @@ class RulesRenderer {
       return 'unless $rendered';
     }
     return rendered;
+  }
+
+  /// Which targets a rule applies to.
+  ///
+  /// Carved out rather than exclusions, when that is how the rule reads:
+  /// Starscythe improves AP against everything *except* VEHICLE and MONSTER,
+  /// and spelling that as two negated conditions joined by "and" is unreadable
+  /// at the table.
+  String _targetKeyword(Map<String, dynamic> params) {
+    final excluded = strList(params['excluded_keywords']).map(_keyword);
+    if (excluded.isNotEmpty) return 'except vs ${excluded.join(' or ')}';
+
+    final single = str(params['keyword']);
+    final required = [
+      ...strList(params['keywords']),
+      if (single != null) single,
+    ].map(_keyword);
+    return required.isEmpty ? 'vs ?' : 'vs ${required.join(' or ')}';
   }
 
   /// `{required_keywords: [NECRONS], excluded_keywords: [MONSTER]}` becomes

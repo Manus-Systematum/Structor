@@ -316,7 +316,12 @@ Seven complaints from one game, and the useful thing about them is that they sor
 **Upstream gaps** — nothing local can fix these honestly:
 
 - **Drones do not exist as models.** `gun-drone`, `shield-drone`, `marker-drone` and the rest are name-only wargear stubs — `{id, name, game_version}`, no statline, no weapons — and no `unit-compositions` entry lists a drone model. So there is no drone profile to show, and no amount of rendering will invent one. Their *abilities* are present (`shield-drone` → +1 Wound), which is why they appear on the rules list but never in the stat block.
-- **Coldstar Commander is missing its Assault grant**, and **Starscythe's AP improvement is missing its target restriction**. Both need the exact rulebook wording before a correction can be written; guessing at scope is how a correction becomes a second source of error.
+Two more turned out to be wrong data rather than gaps, once the exact wording was to hand. Both are now corrections:
+
+- **Coldstar Commander** grants ASSAULT to the whole squad's ranged weapons as well as setting Move to 12. Upstream had only the Move part, so the app advertised a mobility buff and said nothing about shooting after Advancing — which is the reason to field it.
+- **Starscythe** improves AP by 1 against everything *except* VEHICLE and MONSTER. Upstream had no restriction, so the app promised the bonus against precisely the targets where it does not apply.
+
+The second needed a small renderer addition. Two negated `target-has-keyword` conditions joined by "and" is unreadable at the table, so an `excluded_keywords` form renders as `except vs VEHICLE or MONSTER`, and an `and` chain joins an exclusion with a comma rather than another "and".
 
 ### 3.1 Upstream sources (BSData — now the cross-check, not the primary)
 
@@ -1197,6 +1202,6 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 - **Units are named after their datasheets.** The text importer had been stashing the export format's `Attached Unit N` grouping label in `customName`, so the play screen listed four units by a bookkeeping artefact instead of what they were. The grouping was always carried by the `LEADS` edges; the name was pure noise. An attached unit now reads `Commander in Enforcer Battlesuit + Crisis Fireknife Battlesuits`, and two identical pairings are shown as two identical names rather than disambiguated — the models on the table are what tells them apart.
 - Text left-aligned throughout: empty states, error messages, the setup prompt, the round stepper and the turn toggle. Centred text reads as decoration; a rules aid should read as a document.
 
-**Done — the seven play-test findings (§3.7):** operation-aware stat rendering, sign preservation, attacker/defender attribution, weapon keyword parameters end to end, ability-granted invulnerable saves in the INV column, per-datasheet attribution of an attached unit's abilities, and the Stealth correction. 214 core tests, 40 app tests; both analyzers clean.
+**Done — the seven play-test findings (§3.7):** operation-aware stat rendering, sign preservation, attacker/defender attribution, weapon keyword parameters end to end, ability-granted invulnerable saves in the INV column, per-datasheet attribution of an attached unit's abilities, and corrections for Stealth, Coldstar Commander and Starscythe. Only the missing drone profiles remain, and they are not ours to fix. 215 core tests, 40 app tests; both analyzers clean.
 
 **Next:** the stratagem screen — §7.3's third page and the last major surface of the play mode. The data has phases, CP costs and timing, and `BattleState.hasUsedStratagem` already enforces the one-per-phase rule; nothing is showing it yet.

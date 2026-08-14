@@ -201,6 +201,43 @@ abilities:
       );
     });
 
+    test('the corrected T\'au abilities read as the rulebook has them', () {
+      final loader = DatasetLoader(
+        '../../data/40kdc',
+        corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
+      );
+      if (!loader.root.existsSync()) return;
+
+      const renderer = RulesRenderer();
+      final rendered = {
+        for (final a in loader.loadFaction('tau-empire').abilities)
+          a.abilityId: renderer.render(a),
+      };
+
+      expect(
+        rendered['advanced-armour']?.text,
+        'Against mortal wounds: Feel No Pain 4+.',
+      );
+      // The whole squad's ranged weapons, not just the Commander's — being
+      // able to shoot after Advancing is the point of the ability.
+      expect(
+        rendered['coldstar-commander']?.text,
+        'While leading a unit: Move set to 12; ranged weapons gain ASSAULT.',
+      );
+      // The exclusion is the rule: -1 AP against everything the Starscythe
+      // is not built to kill would be a promise the datasheet does not make.
+      expect(
+        rendered['starscythe']?.text,
+        'Shooting phase, except vs VEHICLE or MONSTER: -1 AP.',
+      );
+
+      for (final id in ['advanced-armour', 'coldstar-commander', 'starscythe',
+          'stealth']) {
+        expect(rendered[id]?.isComplete, isTrue,
+            reason: '$id renders a placeholder');
+      }
+    });
+
     test('Stealth is the Benefit of Cover in every faction that has it', () {
       final loader = DatasetLoader(
         '../../data/40kdc',

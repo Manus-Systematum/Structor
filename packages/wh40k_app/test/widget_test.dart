@@ -52,7 +52,10 @@ void main() {
       final rule = unitWith('u03')
           .rules
           .firstWhere((r) => r.abilityId == 'coldstar-commander');
-      expect(rule.text, 'While leading a unit: Move set to 12.');
+      expect(
+        rule.text,
+        'While leading a unit: Move set to 12; ranged weapons gain ASSAULT.',
+      );
     });
 
     test('weapon keywords keep their values through the snapshot', () {
