@@ -242,6 +242,66 @@ abilities:
       }
     });
 
+    test('a weapon upstream does not have at all is added', () {
+      // The Missile Drone granted `{grant_type: ranged-weapon}` with no
+      // weapon named and no record to name — so Broadsides fielded drones
+      // that shot nothing.
+      final loader = DatasetLoader(
+        '../../data/40kdc',
+        corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
+      );
+      if (!loader.root.existsSync()) return;
+
+      final faction = loader.loadFaction('tau-empire');
+      final pod = faction.weapons
+          .where((w) => w.id == 'drone-missile-pod')
+          .toList();
+      expect(pod, hasLength(1), reason: 'added, not duplicated');
+
+      final profile = pod.single.profiles.single;
+      expect(profile.range, '30');
+      expect(profile.stats['A'], '2');
+      expect(profile.skill, '5');
+      expect(profile.stats['S'], '7');
+      expect(profile.stats['AP'], '-1');
+      expect(profile.stats['D'], '2');
+
+      // And the grant now resolves to it.
+      final drone =
+          faction.abilities.firstWhere((a) => a.abilityId == 'missile-drone');
+      expect(drone.grantedWeaponId, 'drone-missile-pod');
+    });
+
+    test('every granted weapon resolves to a record', () {
+      // A grant naming a weapon that does not exist is silently no weapon at
+      // all, which is how three drones came to shoot nothing. Anything not
+      // listed below is a new one, and needs a weapons: correction.
+      const knownDangling = {
+        // Pathfinder Team. Not in any list to hand, so the profile has not
+        // been confirmed and inventing one would be the guess §7.6 forbids.
+        'recon-drone -> drone-burst-cannon',
+      };
+
+      final loader = DatasetLoader(
+        '../../data/40kdc',
+        corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
+      );
+      if (!loader.root.existsSync()) return;
+
+      final faction = loader.loadFaction('tau-empire');
+      final known = {for (final w in faction.weapons) w.id};
+      final dangling = {
+        for (final ability in faction.abilities)
+          if (ability.grantedWeaponId case final id?)
+            if (!known.contains(id)) '${ability.abilityId} -> $id',
+      };
+
+      expect(dangling.difference(knownDangling), isEmpty,
+          reason: 'a new unresolvable weapon grant');
+      expect(knownDangling.difference(dangling), isEmpty,
+          reason: 'upstream fixed one — drop it from knownDangling');
+    });
+
     test('Stealth is the Benefit of Cover in every faction that has it', () {
       final loader = DatasetLoader(
         '../../data/40kdc',

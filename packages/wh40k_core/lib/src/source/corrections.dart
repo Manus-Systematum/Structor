@@ -111,6 +111,38 @@ class UnitCorrection implements Correction {
   });
 }
 
+/// A weapon record upstream is missing, or has wrong.
+///
+/// Needed because an ability can name a weapon that does not exist: the Recon
+/// Drone grants `drone-burst-cannon` and no such record is in the file, so the
+/// grant resolves to nothing. Adding the weapon is the only way to make the
+/// grant mean anything.
+class WeaponCorrection implements Correction {
+  @override
+  final String faction;
+
+  final String weaponId;
+
+  @override
+  final String reason;
+
+  final String? upstream;
+
+  /// The whole record, in the source JSON shape, minus its id.
+  final Map<String, Object?> record;
+
+  @override
+  String get subject => weaponId;
+
+  const WeaponCorrection({
+    required this.faction,
+    required this.weaponId,
+    required this.reason,
+    required this.record,
+    this.upstream,
+  });
+}
+
 class CorrectionResult {
   final List<Object?> records;
 
@@ -130,17 +162,79 @@ class CorrectionResult {
 class DataCorrections {
   final List<AbilityCorrection> abilities;
   final List<UnitCorrection> units;
+  final List<WeaponCorrection> weapons;
 
   const DataCorrections({
     this.abilities = const [],
     this.units = const [],
+    this.weapons = const [],
   });
 
   static const empty = DataCorrections();
 
-  bool get isEmpty => abilities.isEmpty && units.isEmpty;
+  bool get isEmpty =>
+      abilities.isEmpty && units.isEmpty && weapons.isEmpty;
 
   static const _anyFaction = '*';
+
+  /// Applies weapon corrections to raw `weapons.json` records.
+  ///
+  /// A weapon named by a correction is **added** when upstream has no record
+  /// for it, and replaced when it does. Both count as applied — an addition
+  /// that turns out to exist upstream is reported by the bundler, since that
+  /// is the signal the entry has been adopted and should go.
+  CorrectionResult applyToWeapons(String factionId, List<Object?> records) {
+    final byId = {
+      for (final c in weapons)
+        if (c.faction == factionId || c.faction == _anyFaction) c.weaponId: c,
+    };
+    if (byId.isEmpty) {
+      return CorrectionResult(
+        records: records,
+        applied: const [],
+        unmatched: const [],
+      );
+    }
+
+    Map<String, Object?> build(WeaponCorrection c) => {
+          'id': c.weaponId,
+          ...c.record,
+          'corrected': {
+            'reason': c.reason,
+            if (c.upstream != null) 'upstream': c.upstream,
+          },
+        };
+
+    final applied = <Correction>[];
+    final out = <Object?>[];
+
+    for (final record in records) {
+      if (record is! Map) {
+        out.add(record);
+        continue;
+      }
+      final correction = byId.remove(record['id']?.toString());
+      if (correction == null) {
+        out.add(record);
+        continue;
+      }
+      applied.add(correction);
+      out.add(build(correction));
+    }
+
+    // Whatever is left had no upstream record at all, which is the case this
+    // exists for.
+    for (final correction in byId.values) {
+      applied.add(correction);
+      out.add(build(correction));
+    }
+
+    return CorrectionResult(
+      records: out,
+      applied: applied,
+      unmatched: const [],
+    );
+  }
 
   /// Applies unit corrections to raw `units.json` records.
   CorrectionResult applyToUnits(String factionId, List<Object?> records) {
@@ -284,7 +378,7 @@ class DataCorrections {
   List<Correction> neverApplied(Iterable<Correction> applied) {
     final fired = applied.toSet();
     return [
-      for (final c in <Correction>[...abilities, ...units])
+      for (final c in <Correction>[...abilities, ...units, ...weapons])
         if (c.faction == _anyFaction && !fired.contains(c)) c,
     ];
   }
@@ -338,7 +432,33 @@ class DataCorrections {
       }
     }
 
-    return DataCorrections(abilities: abilities, units: units);
+    final weapons = <WeaponCorrection>[];
+    final rawWeapons = root['weapons'];
+    if (rawWeapons is List) {
+      for (final node in rawWeapons) {
+        if (node is! Map) continue;
+        final reason = node['reason']?.toString().trim() ?? '';
+        final record = _plain(node['weapon']);
+        if (reason.isEmpty ||
+            record is! Map<String, Object?> ||
+            record.isEmpty) {
+          continue;
+        }
+        weapons.add(WeaponCorrection(
+          faction: node['faction']?.toString() ?? '',
+          weaponId: node['id']?.toString() ?? '',
+          reason: reason,
+          upstream: node['upstream']?.toString(),
+          record: record,
+        ));
+      }
+    }
+
+    return DataCorrections(
+      abilities: abilities,
+      units: units,
+      weapons: weapons,
+    );
   }
 
   /// YAML nodes are not JSON-encodable, so they are copied into plain maps and

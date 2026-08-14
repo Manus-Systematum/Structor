@@ -190,7 +190,9 @@ class DatasetLoader {
           .records
           .map(SourceUnit.fromJson)
           .toList(growable: false),
-      weapons: read('core/$factionId/weapons.json')
+      weapons: corrections
+          .applyToWeapons(factionId, read('core/$factionId/weapons.json'))
+          .records
           .map(SourceWeapon.fromJson)
           .toList(growable: false),
       detachments: read('core/$factionId/detachments.json')
@@ -243,8 +245,14 @@ class DatasetLoader {
     return index;
   }
 
-  Map<String, Object?> rawWeapons(String factionId) =>
-      rawIndex('core/$factionId/weapons.json');
+  Map<String, Object?> rawWeapons(String factionId) {
+    final index = <String, Object?>{};
+    for (final record in correctedWeapons(factionId).records) {
+      final id = str(asMap(record)['id']);
+      if (id != null) index[id] = record;
+    }
+    return index;
+  }
 
   Map<String, Object?> rawDetachments(String factionId) =>
       rawIndex('core/$factionId/detachments.json');
@@ -264,6 +272,14 @@ class DatasetLoader {
       corrections.applyToAbilities(
         factionId,
         _readArray('enrichment/$factionId/abilities.json') ?? const [],
+      );
+
+  /// Raw weapon records with [corrections] applied, including any the
+  /// corrections add outright.
+  CorrectionResult correctedWeapons(String factionId) =>
+      corrections.applyToWeapons(
+        factionId,
+        _readArray('core/$factionId/weapons.json') ?? const [],
       );
 
   /// Raw unit records with [corrections] applied.

@@ -122,6 +122,7 @@ void main(List<String> args) {
     for (final corrected in [
       loader.correctedAbilities(factionId),
       loader.correctedUnits(factionId),
+      loader.correctedWeapons(factionId),
     ]) {
       for (final c in corrected.applied) {
         correctionNotes.add('$factionId/${c.subject}');
@@ -133,6 +134,7 @@ void main(List<String> args) {
     }
     files['abilities'] = loader.correctedAbilities(factionId).records;
     files['units'] = loader.correctedUnits(factionId).records;
+    files['weapons'] = loader.correctedWeapons(factionId).records;
 
     if (files['units']!.isEmpty) {
       stdout.writeln('  skip $factionId (no units)');
