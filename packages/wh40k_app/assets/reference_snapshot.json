@@ -1752,6 +1752,130 @@
     }
   },
   "abilities": {
+    "autoreactive-camouflage-advanced-acquisition-cadre": {
+      "ability_id": "autoreactive-camouflage-advanced-acquisition-cadre",
+      "name": "Autoreactive Camouflage",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "supersedes": null,
+      "unit_ids": [],
+      "faction_id": "tau-empire",
+      "detachment_id": "advanced-acquisition-cadre",
+      "ability_type": "stratagem",
+      "behavior": "reactive",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "operator": "and",
+          "operands": [
+            {
+              "type": "phase-is",
+              "parameters": {
+                "phase": "shooting"
+              }
+            },
+            {
+              "type": "player-turn-is",
+              "parameters": {
+                "turn": "opponent"
+              }
+            }
+          ]
+        },
+        "effect": {
+          "type": "stat-modifier",
+          "target": "self",
+          "modifier": {
+            "stat": "Sv",
+            "operation": "improve",
+            "value": 1
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "phase"
+      },
+      "community_notes": "[APPROX] When a hidden PATHFINDER TEAM or STEALTH BATTLESUITS unit is targeted in your opponent's Shooting phase, it gets +1 to its Save characteristic. The 'hidden' precondition is not gated here. Full rule in raw-text store."
+    },
+    "marker-beacon-advanced-acquisition-cadre": {
+      "ability_id": "marker-beacon-advanced-acquisition-cadre",
+      "name": "Marker Beacon",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "supersedes": null,
+      "unit_ids": [],
+      "faction_id": "tau-empire",
+      "detachment_id": "advanced-acquisition-cadre",
+      "ability_type": "stratagem",
+      "behavior": "passive",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "phase-is",
+          "parameters": {
+            "phase": "movement"
+          }
+        },
+        "effect": {
+          "type": "objective-control-modifier",
+          "target": "unit",
+          "modifier": {
+            "sticky": true
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "battle-round"
+      },
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+    },
+    "microdrone-support-advanced-acquisition-cadre": {
+      "ability_id": "microdrone-support-advanced-acquisition-cadre",
+      "name": "Microdrone Support",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "supersedes": null,
+      "unit_ids": [],
+      "faction_id": "tau-empire",
+      "detachment_id": "advanced-acquisition-cadre",
+      "ability_type": "stratagem",
+      "behavior": "passive",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "phase-is",
+          "parameters": {
+            "phase": "shooting"
+          }
+        },
+        "effect": {
+          "type": "ability-grant",
+          "target": "unit",
+          "modifier": {
+            "grant_type": "shoot-while-in-action"
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "phase"
+      },
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+    },
     "expert-fieldcraft": {
       "ability_id": "expert-fieldcraft",
       "name": "Expert Fieldcraft",
@@ -2913,6 +3037,390 @@
       ],
       "ability_type": "unit",
       "behavior": "activated"
+    }
+  },
+  "stratagems": {
+    "command-re-roll": {
+      "id": "command-re-roll",
+      "name": "COMMAND RE-ROLL",
+      "category": "core",
+      "type": "battle-tactic",
+      "detachment_id": null,
+      "cp_cost": 1,
+      "phases": [
+        "command",
+        "movement",
+        "shooting",
+        "charge",
+        "fight"
+      ],
+      "player_turn": "either",
+      "timing": "once-per-phase",
+      "target_restrictions": null,
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "counter-offensive": {
+      "id": "counter-offensive",
+      "name": "COUNTER-OFFENSIVE",
+      "category": "core",
+      "type": "strategic-ploy",
+      "detachment_id": null,
+      "cp_cost": 2,
+      "phases": [
+        "fight"
+      ],
+      "player_turn": "either",
+      "timing": "once-per-phase",
+      "target_restrictions": null,
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "epic-challenge": {
+      "id": "epic-challenge",
+      "name": "EPIC CHALLENGE",
+      "category": "core",
+      "type": "epic-deed",
+      "detachment_id": null,
+      "cp_cost": 1,
+      "phases": [
+        "fight"
+      ],
+      "player_turn": "either",
+      "timing": "once-per-phase",
+      "target_restrictions": {
+        "required_keywords": [
+          "Character"
+        ]
+      },
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "insane-bravery": {
+      "id": "insane-bravery",
+      "name": "INSANE BRAVERY",
+      "category": "core",
+      "type": "battle-tactic",
+      "detachment_id": null,
+      "cp_cost": 1,
+      "phases": [
+        "command"
+      ],
+      "player_turn": "your-turn",
+      "timing": "once-per-battle",
+      "target_restrictions": null,
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "explosives": {
+      "id": "explosives",
+      "name": "EXPLOSIVES",
+      "category": "core",
+      "type": "wargear",
+      "detachment_id": null,
+      "cp_cost": 1,
+      "phases": [
+        "shooting"
+      ],
+      "player_turn": "your-turn",
+      "timing": "once-per-phase",
+      "target_restrictions": {
+        "required_keywords_any": [
+          "Explosives",
+          "Grenades"
+        ]
+      },
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "crushing-impact": {
+      "id": "crushing-impact",
+      "name": "CRUSHING IMPACT",
+      "category": "core",
+      "type": "strategic-ploy",
+      "detachment_id": null,
+      "cp_cost": 1,
+      "phases": [
+        "charge"
+      ],
+      "player_turn": "your-turn",
+      "timing": "once-per-phase",
+      "target_restrictions": {
+        "required_keywords_any": [
+          "Monster",
+          "Vehicle"
+        ]
+      },
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "rapid-ingress": {
+      "id": "rapid-ingress",
+      "name": "RAPID INGRESS",
+      "category": "core",
+      "type": "strategic-ploy",
+      "detachment_id": null,
+      "cp_cost": 1,
+      "phases": [
+        "movement"
+      ],
+      "player_turn": "opponent-turn",
+      "timing": "once-per-phase",
+      "target_restrictions": null,
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "fire-overwatch": {
+      "id": "fire-overwatch",
+      "name": "FIRE OVERWATCH",
+      "category": "core",
+      "type": "strategic-ploy",
+      "detachment_id": null,
+      "cp_cost": 1,
+      "phases": [
+        "movement",
+        "charge"
+      ],
+      "player_turn": "opponent-turn",
+      "timing": "once-per-turn",
+      "target_restrictions": null,
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "smokescreen": {
+      "id": "smokescreen",
+      "name": "SMOKESCREEN",
+      "category": "core",
+      "type": "wargear",
+      "detachment_id": null,
+      "cp_cost": 1,
+      "phases": [
+        "shooting"
+      ],
+      "player_turn": "opponent-turn",
+      "timing": "once-per-phase",
+      "target_restrictions": {
+        "required_keywords": [
+          "Smoke"
+        ]
+      },
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "heroic-intervention": {
+      "id": "heroic-intervention",
+      "name": "HEROIC INTERVENTION",
+      "category": "core",
+      "type": "strategic-ploy",
+      "detachment_id": null,
+      "cp_cost": 1,
+      "phases": [
+        "charge"
+      ],
+      "player_turn": "opponent-turn",
+      "timing": "once-per-turn",
+      "target_restrictions": null,
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "automated-repair-drones-experimental-prototype-cadre": {
+      "id": "automated-repair-drones-experimental-prototype-cadre",
+      "name": "AUTOMATED REPAIR DRONES",
+      "category": "detachment",
+      "type": "strategic-ploy",
+      "detachment_id": "experimental-prototype-cadre",
+      "cp_cost": 1,
+      "phases": [
+        "command"
+      ],
+      "player_turn": "either",
+      "timing": "once-per-phase",
+      "target_restrictions": null,
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "autoreactive-camouflage-advanced-acquisition-cadre": {
+      "id": "autoreactive-camouflage-advanced-acquisition-cadre",
+      "name": "Autoreactive Camouflage",
+      "category": "detachment",
+      "detachment_id": "advanced-acquisition-cadre",
+      "cp_cost": 1,
+      "phases": [
+        "shooting"
+      ],
+      "player_turn": "opponent-turn",
+      "timing": "once-per-phase",
+      "target_restrictions": null,
+      "ability_id": "autoreactive-camouflage-advanced-acquisition-cadre",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "experimental-ammunition-experimental-prototype-cadre": {
+      "id": "experimental-ammunition-experimental-prototype-cadre",
+      "name": "EXPERIMENTAL AMMUNITION",
+      "category": "detachment",
+      "type": "wargear",
+      "detachment_id": "experimental-prototype-cadre",
+      "cp_cost": 1,
+      "phases": [
+        "shooting"
+      ],
+      "player_turn": "your-turn",
+      "timing": "once-per-phase",
+      "target_restrictions": null,
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "experimental-weaponry-experimental-prototype-cadre": {
+      "id": "experimental-weaponry-experimental-prototype-cadre",
+      "name": "EXPERIMENTAL WEAPONRY",
+      "category": "detachment",
+      "type": "battle-tactic",
+      "detachment_id": "experimental-prototype-cadre",
+      "cp_cost": 1,
+      "phases": [
+        "shooting"
+      ],
+      "player_turn": "your-turn",
+      "timing": "once-per-phase",
+      "target_restrictions": null,
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "marker-beacon-advanced-acquisition-cadre": {
+      "id": "marker-beacon-advanced-acquisition-cadre",
+      "name": "Marker Beacon",
+      "category": "detachment",
+      "detachment_id": "advanced-acquisition-cadre",
+      "cp_cost": 1,
+      "phases": [
+        "movement"
+      ],
+      "player_turn": "your-turn",
+      "timing": "once-per-phase",
+      "target_restrictions": null,
+      "ability_id": "marker-beacon-advanced-acquisition-cadre",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "microdrone-support-advanced-acquisition-cadre": {
+      "id": "microdrone-support-advanced-acquisition-cadre",
+      "name": "Microdrone Support",
+      "category": "detachment",
+      "detachment_id": "advanced-acquisition-cadre",
+      "cp_cost": 1,
+      "phases": [
+        "shooting"
+      ],
+      "player_turn": "your-turn",
+      "timing": "once-per-phase",
+      "target_restrictions": null,
+      "ability_id": "microdrone-support-advanced-acquisition-cadre",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "neuroweb-system-jammer-experimental-prototype-cadre": {
+      "id": "neuroweb-system-jammer-experimental-prototype-cadre",
+      "name": "NEUROWEB SYSTEM JAMMER",
+      "category": "detachment",
+      "type": "wargear",
+      "detachment_id": "experimental-prototype-cadre",
+      "cp_cost": 1,
+      "phases": [
+        "shooting"
+      ],
+      "player_turn": "opponent-turn",
+      "timing": "once-per-phase",
+      "target_restrictions": null,
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "reactive-impact-dampeners-experimental-prototype-cadre": {
+      "id": "reactive-impact-dampeners-experimental-prototype-cadre",
+      "name": "REACTIVE IMPACT DAMPENERS",
+      "category": "detachment",
+      "type": "battle-tactic",
+      "detachment_id": "experimental-prototype-cadre",
+      "cp_cost": 1,
+      "phases": [
+        "fight",
+        "shooting"
+      ],
+      "player_turn": "either",
+      "timing": "once-per-phase",
+      "target_restrictions": null,
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
+    },
+    "threat-assessment-analyser-experimental-prototype-cadre": {
+      "id": "threat-assessment-analyser-experimental-prototype-cadre",
+      "name": "THREAT ASSESSMENT ANALYSER",
+      "category": "detachment",
+      "type": "wargear",
+      "detachment_id": "experimental-prototype-cadre",
+      "cp_cost": 1,
+      "phases": [
+        "shooting"
+      ],
+      "player_turn": "your-turn",
+      "timing": "once-per-phase",
+      "target_restrictions": null,
+      "ability_id": null,
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      }
     }
   }
 }

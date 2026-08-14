@@ -1228,6 +1228,17 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 
 **Done — the seven play-test findings (§3.7, §3.8):** operation-aware stat rendering, sign preservation, attacker/defender attribution, weapon keyword parameters end to end, ability-granted invulnerable saves in the INV column, per-datasheet attribution of an attached unit's abilities, and corrections for Stealth, Coldstar Commander and Starscythe.
 
-**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 218 core tests, 43 app tests; both analyzers clean.
+**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 228 core tests, 48 app tests; both analyzers clean.
 
-**Next:** the stratagem screen — §7.3's third page and the last major surface of the play mode. The data has phases, CP costs and timing, and `BattleState.hasUsedStratagem` already enforces the one-per-phase rule; nothing is showing it yet.
+**Done — stratagems (§7.3):** the last major play-mode surface, and it is *not* a page.
+
+Calling it "the stratagem screen" was the wrong frame. §7.2 says relevance comes from where you are scrolled, so stratagems live **inline at the head of each phase section** — the Shooting section shows shooting stratagems because that is where you are reading. A page of its own would have needed a phase selector, which is the state machine §7.2 exists to avoid.
+
+- `src/play/stratagem_book.dart` — availability as a set of queries against the log. Phase from the section, turn from the header, CP from the state, and each stratagem's own `once-per-phase` / `-turn` / `-battle` limit from `stratagemsUsed`. No lifecycle, nothing to reset.
+- **Unplayable stratagems are shown, greyed, with the reason** — "not enough CP", "opponent's turn only", "already used this phase". Hiding them answers *why can't I use that* by omission, which reads as a missing stratagem rather than as a rule. Same for target units: a unit that has already had a stratagem this phase is listed and disabled, not dropped.
+- Scoped to the roster's detachments, and each row names its source. At two detachments (§4.4) half the list is not the half you are reading — the reference army carries 19 stratagems, 10 core and 9 across its two Cadres.
+- Keyword restrictions are enforced against the combat unit: Epic Challenge offers the Commanders and The Twin Lance, and tells the Broadsides they are `not Character`.
+- **Stratagems are part of the roster snapshot**, since which ones apply is a property of *this roster's* detachments rather than of the faction. A scanned list brings its own, and an older snapshot without them opens with an empty section instead of failing.
+- Effects render from `ability_id` where the data has one — 7 of 53. The rest show name, cost, source and type and stop, because §7.6 forbids inventing the text.
+
+**Next:** the Reference page (§7.3.4), and reporting the stale Adeptus Astartes points and the ten local corrections upstream to 40kdc.

@@ -9,6 +9,18 @@ import 'package:wh40k_core/wh40k_core.dart';
 /// indeterminate spinner never lets `pumpAndSettle` reach a steady state.
 Widget host(Widget child) => MaterialApp(home: Scaffold(body: child));
 
+/// Renders on a tall surface for the rest of the test.
+///
+/// The turn page is one long scroll of phase sections (§7.2) and a `ListView`
+/// only builds what fits. On the default 800x600 the Shooting section is
+/// never constructed, so `find.text` cannot see it — a property of the test
+/// window, not of the page.
+void useTallSurface(WidgetTester tester) {
+  tester.view.physicalSize = const Size(1200, 6000);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+}
+
 void main() {
   late Army army;
 
@@ -153,6 +165,7 @@ void main() {
   });
 
   testWidgets('the turn page renders phase sections in order', (tester) async {
+    useTallSurface(tester);
     await tester.pumpWidget(host(TurnScreen(army: army)));
 
     for (final phase in ['COMMAND', 'MOVEMENT', 'SHOOTING']) {
@@ -163,6 +176,7 @@ void main() {
 
   testWidgets('the shooting section shows the split attack totals',
       (tester) async {
+    useTallSurface(tester);
     await tester.pumpWidget(host(TurnScreen(army: army)));
 
     // The number the table exists for: four Commander pods at BS3+ give 8
@@ -179,6 +193,7 @@ void main() {
 
   testWidgets('rendered rules appear next to the weapons they modify',
       (tester) async {
+    useTallSurface(tester);
     await tester.pumpWidget(host(TurnScreen(army: army)));
 
     expect(find.textContaining('Fireknife:', findRichText: true), findsWidgets);

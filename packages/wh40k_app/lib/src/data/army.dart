@@ -130,6 +130,29 @@ class Army {
   }
 
   String detachmentName(String id) => catalogue.detachment(id)?.name ?? id;
+
+  /// The stratagems this army can play, already scoped to its detachments
+  /// (§7.3). Built from the snapshot, so a scanned list brings its own.
+  late final StratagemBook stratagems = StratagemBook.forRoster(
+    roster,
+    all: snapshot.stratagems.values.map(SourceStratagem.fromJson),
+    catalogue: catalogue,
+  );
+
+  /// Units a stratagem may be played on, with a reason against each that
+  /// cannot be.
+  List<StratagemTarget> targetsFor(
+    SourceStratagem stratagem, {
+    required String phase,
+    required BattleState state,
+  }) =>
+      stratagems.targetsFor(
+        stratagem,
+        roster: roster,
+        catalogue: catalogue,
+        phase: phase,
+        state: state,
+      );
 }
 
 /// A leader and its bodyguard presented as the single unit they fight as.

@@ -20,6 +20,7 @@ export 'src/missions/mission_pack.dart';
 export 'src/missions/mission_setup.dart';
 export 'src/play/attacks.dart';
 export 'src/play/rules_renderer.dart';
+export 'src/play/stratagem_book.dart';
 export 'src/play/weapon_aggregator.dart';
 export 'src/report/coverage_report.dart';
 export 'src/source/corrections.dart';

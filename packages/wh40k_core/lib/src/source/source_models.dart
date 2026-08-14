@@ -406,6 +406,13 @@ class SourceStratagem {
   final String? abilityId;
   final int cpCost;
   final List<String> phases;
+
+  /// Keywords a target must have **all** of.
+  final List<String> requiredKeywords;
+
+  /// Keywords a target must have **at least one** of.
+  final List<String> requiredKeywordsAny;
+
   final GameVersion gameVersion;
 
   const SourceStratagem({
@@ -420,10 +427,13 @@ class SourceStratagem {
     required this.cpCost,
     required this.phases,
     required this.gameVersion,
+    this.requiredKeywords = const [],
+    this.requiredKeywordsAny = const [],
   });
 
   factory SourceStratagem.fromJson(Object? v) {
     final j = asMap(v);
+    final restrictions = asMap(j['target_restrictions']);
     return SourceStratagem(
       id: strOr(j['id'], ''),
       name: strOr(j['name'], '(unnamed)'),
@@ -435,8 +445,28 @@ class SourceStratagem {
       abilityId: str(j['ability_id']),
       cpCost: intOr(j['cp_cost'], 0),
       phases: strList(j['phases']),
+      requiredKeywords: strList(restrictions['required_keywords']),
+      requiredKeywordsAny: strList(restrictions['required_keywords_any']),
       gameVersion: GameVersion.fromJson(j['game_version']),
     );
+  }
+
+  /// Whether this stratagem is played on a nominated unit at all.
+  ///
+  /// The data does not say directly, so it is inferred from the restrictions:
+  /// a stratagem that names keywords is targeted, and one that does not may
+  /// still be — Command Re-roll targets nothing. Callers treat a target as
+  /// optional rather than demanding one, which is the honest reading.
+  bool get namesTargetKeywords =>
+      requiredKeywords.isNotEmpty || requiredKeywordsAny.isNotEmpty;
+
+  bool permitsTarget(Iterable<String> keywords) {
+    final have = keywords.map((k) => k.toLowerCase()).toSet();
+    for (final needed in requiredKeywords) {
+      if (!have.contains(needed.toLowerCase())) return false;
+    }
+    if (requiredKeywordsAny.isEmpty) return true;
+    return requiredKeywordsAny.any((k) => have.contains(k.toLowerCase()));
   }
 }
 

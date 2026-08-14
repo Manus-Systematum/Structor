@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../data/army.dart';
+import '../widgets/stratagem_list.dart';
 import '../widgets/weapon_table.dart';
 
 /// The turn page (DESIGN.md §7.2, §7.3).
@@ -58,7 +59,12 @@ class TurnScreen extends StatelessWidget {
                 'fight',
                 'end',
               ])
-                _PhaseSection(phase: phase, army: army, state: state),
+                _PhaseSection(
+                  phase: phase,
+                  army: army,
+                  state: state,
+                  onEvent: onEvent,
+                ),
             ],
           ),
         ),
@@ -212,11 +218,13 @@ class _PhaseSection extends StatelessWidget {
   final String phase;
   final Army? army;
   final BattleState state;
+  final void Function(BattleEvent) onEvent;
 
   const _PhaseSection({
     required this.phase,
     this.army,
     this.state = const BattleState(),
+    this.onEvent = TurnScreen._ignore,
   });
 
   static const _labels = {
@@ -239,6 +247,9 @@ class _PhaseSection extends StatelessWidget {
       _ => null,
     };
 
+    final hasStratagems =
+        army != null && army.stratagems.forPhase(phase, state: state).isNotEmpty;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -255,8 +266,17 @@ class _PhaseSection extends StatelessWidget {
             ),
           ),
         ),
+        // Stratagems lead the section. They are the decision the phase turns
+        // on, and the weapon tables below are the reference for making it.
+        if (army != null)
+          StratagemList(
+            army: army,
+            phase: phase,
+            state: state,
+            onEvent: onEvent,
+          ),
         if (army == null || kind == null)
-          _phasePlaceholder(context, army)
+          _phasePlaceholder(context, army, hasStratagems: hasStratagems)
         else
           for (final unit in army.combatUnits)
             _UnitBlock(
@@ -270,7 +290,11 @@ class _PhaseSection extends StatelessWidget {
     );
   }
 
-  Widget _phasePlaceholder(BuildContext context, Army? army) {
+  Widget _phasePlaceholder(
+    BuildContext context,
+    Army? army, {
+    bool hasStratagems = false,
+  }) {
     final scheme = Theme.of(context).colorScheme;
     final rules = army == null
         ? <({String unit, RenderedRule rule})>[]
@@ -281,7 +305,10 @@ class _PhaseSection extends StatelessWidget {
                   (unit: unit.label, rule: rule),
           ];
 
+    // Stratagems alone make a section worth reading, so the empty note is
+    // only honest when there is nothing at all.
     if (rules.isEmpty) {
+      if (hasStratagems) return const SizedBox.shrink();
       return Padding(
         padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
         child: Text('Nothing tracked in this phase yet',

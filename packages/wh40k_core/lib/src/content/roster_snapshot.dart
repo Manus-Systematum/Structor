@@ -28,16 +28,27 @@ class RosterSnapshot {
   final Map<String, Object?> detachments;
   final Map<String, Object?> abilities;
 
+  /// Core stratagems plus those of the detachments taken. Part of the snapshot
+  /// because the play screen's stratagem list has to survive the trip to
+  /// someone else's phone (§7.3), and because which stratagems apply is a
+  /// property of *this roster's* detachments, not of the faction.
+  final Map<String, Object?> stratagems;
+
   const RosterSnapshot({
     required this.version,
     required this.units,
     required this.weapons,
     required this.detachments,
     required this.abilities,
+    this.stratagems = const {},
   });
 
   int get entryCount =>
-      units.length + weapons.length + detachments.length + abilities.length;
+      units.length +
+      weapons.length +
+      detachments.length +
+      abilities.length +
+      stratagems.length;
 
   Map<String, Object?> toJson() => {
         'version': version.toJson(),
@@ -45,6 +56,7 @@ class RosterSnapshot {
         'weapons': weapons,
         'detachments': detachments,
         'abilities': abilities,
+        'stratagems': stratagems,
       };
 
   factory RosterSnapshot.fromJson(Object? v) {
@@ -55,6 +67,9 @@ class RosterSnapshot {
       weapons: asMap(j['weapons']),
       detachments: asMap(j['detachments']),
       abilities: asMap(j['abilities']),
+      // Absent in snapshots written before stratagems were captured. An older
+      // list opens with an empty stratagem section rather than failing.
+      stratagems: asMap(j['stratagems']),
     );
   }
 }
@@ -71,12 +86,17 @@ class SnapshotBuilder {
   final Map<String, Object?> rawDetachments;
   final Map<String, Object?> rawAbilities;
 
+  /// Faction stratagems **and** the core ones, keyed by id. Core stratagems
+  /// live outside the faction files, so the caller merges them.
+  final Map<String, Object?> rawStratagems;
+
   const SnapshotBuilder({
     required this.dataset,
     this.rawUnits = const {},
     this.rawWeapons = const {},
     this.rawDetachments = const {},
     this.rawAbilities = const {},
+    this.rawStratagems = const {},
   });
 
   /// Builds against a snapshot on disk, pulling the raw records the parsed
@@ -89,6 +109,10 @@ class SnapshotBuilder {
       rawWeapons: loader.rawWeapons(factionId),
       rawDetachments: loader.rawDetachments(factionId),
       rawAbilities: loader.rawAbilities(factionId),
+      rawStratagems: {
+        ...loader.rawIndex('core/stratagems.json'),
+        ...loader.rawIndex('core/$factionId/stratagems.json'),
+      },
     );
   }
 
@@ -97,10 +121,25 @@ class SnapshotBuilder {
     final weapons = <String, Object?>{};
     final detachments = <String, Object?>{};
     final abilities = <String, Object?>{};
+    final stratagems = <String, Object?>{};
 
     void takeAbility(String id) {
       final raw = rawAbilities[id];
       if (raw != null) abilities[id] = raw;
+    }
+
+    // Core stratagems apply to every army; a detachment's apply only to the
+    // armies that took it (§7.3). Scoping here means a shared list never
+    // offers its receiver a stratagem the sender could not play either.
+    final taken = {for (final d in roster.detachments) d.detachmentId};
+    for (final entry in rawStratagems.entries) {
+      final detachmentId = str(asMap(entry.value)['detachment_id']);
+      if (detachmentId != null && !taken.contains(detachmentId)) continue;
+      stratagems[entry.key] = entry.value;
+
+      // A stratagem's effect, where the data has one, is an ability.
+      final abilityId = str(asMap(entry.value)['ability_id']);
+      if (abilityId != null) takeAbility(abilityId);
     }
 
     for (final entry in roster.detachments) {
@@ -153,6 +192,7 @@ class SnapshotBuilder {
       weapons: weapons,
       detachments: detachments,
       abilities: abilities,
+      stratagems: stratagems,
     );
   }
 }
