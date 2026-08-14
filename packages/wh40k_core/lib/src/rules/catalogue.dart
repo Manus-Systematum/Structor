@@ -26,6 +26,9 @@ abstract interface class Catalogue {
   /// choice, and what it does is an ability (DESIGN.md §7.3.7).
   SourceAbility? ability(String abilityId) => null;
 
+  /// Enhancements and Unit Upgrades the army's detachments offer.
+  Iterable<SourceEnhancement> get enhancements => const [];
+
   /// Datasheets [leaderDatasheetId] may join. Empty when the datasheet is not
   /// a leader, or when no attachment rule is published for it.
   List<String> eligibleBodyguards(String leaderDatasheetId);
@@ -51,6 +54,7 @@ class MapCatalogue implements Catalogue {
   final Map<String, SourceWeapon> _weapons;
   final Map<String, List<String>> _attachments;
   final Map<String, SourceAbility> _abilities;
+  final Map<String, SourceEnhancement> _enhancements;
 
   MapCatalogue(
     Iterable<SourceUnit> units, {
@@ -58,10 +62,12 @@ class MapCatalogue implements Catalogue {
     Iterable<SourceWeapon> weapons = const [],
     Iterable<LeaderAttachment> leaderAttachments = const [],
     Iterable<SourceAbility> abilities = const [],
+    Iterable<SourceEnhancement> enhancements = const [],
   })  : _units = {for (final u in units) u.id: u},
         _detachments = {for (final d in detachments) d.id: d},
         _weapons = {for (final w in weapons) w.id: w},
         _abilities = {for (final a in abilities) a.abilityId: a},
+        _enhancements = {for (final e in enhancements) e.id: e},
         _attachments = {
           for (final a in leaderAttachments) a.leaderId: a.eligibleBodyguardIds,
         };
@@ -80,6 +86,9 @@ class MapCatalogue implements Catalogue {
 
   @override
   SourceAbility? ability(String abilityId) => _abilities[abilityId];
+
+  @override
+  Iterable<SourceEnhancement> get enhancements => _enhancements.values;
 
   @override
   Iterable<SourceUnit> get allUnits => _units.values;

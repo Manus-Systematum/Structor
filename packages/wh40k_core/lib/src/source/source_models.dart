@@ -470,6 +470,72 @@ class SourceStratagem {
   }
 }
 
+/// An Enhancement or a Unit Upgrade.
+///
+/// One record shape, two mechanics (§2.1). `upgrade_tag` is the discriminator:
+/// an Enhancement goes on a Character and consumes one of the army's two or
+/// three slots, while a Unit Upgrade may go on a non-Character and three
+/// instances of the same one count as a single slot. Treating them alike is
+/// the miscount the roster model exists to prevent.
+class SourceEnhancement {
+  final String id;
+  final String name;
+  final String? detachmentId;
+  final int cost;
+  final String? abilityId;
+  final bool isUpgrade;
+  final bool isUnique;
+  final int? maxTargets;
+
+  /// Keywords a bearer must have, and must not have.
+  final List<String> keywordRestrictions;
+  final List<String> exclusionKeywords;
+
+  final GameVersion gameVersion;
+
+  const SourceEnhancement({
+    required this.id,
+    required this.name,
+    required this.detachmentId,
+    required this.cost,
+    required this.abilityId,
+    required this.isUpgrade,
+    required this.isUnique,
+    required this.maxTargets,
+    required this.keywordRestrictions,
+    required this.exclusionKeywords,
+    required this.gameVersion,
+  });
+
+  factory SourceEnhancement.fromJson(Object? v) {
+    final j = asMap(v);
+    return SourceEnhancement(
+      id: strOr(j['id'], ''),
+      name: strOr(j['name'], '(unnamed)'),
+      detachmentId: str(j['detachment_id']),
+      cost: intOr(j['cost'], 0),
+      abilityId: str(j['ability_id']),
+      isUpgrade: j['upgrade_tag'] == true,
+      isUnique: j['is_unique'] == true,
+      maxTargets: asInt(j['max_targets']),
+      keywordRestrictions: strList(j['keyword_restrictions']),
+      exclusionKeywords: strList(j['exclusion_keywords']),
+      gameVersion: GameVersion.fromJson(j['game_version']),
+    );
+  }
+
+  /// `T'AU EMPIRE, not SHAPER` — who may take it, in one line.
+  String get restrictionSummary {
+    final parts = <String>[
+      if (keywordRestrictions.isNotEmpty)
+        keywordRestrictions.map((k) => k.toUpperCase()).join(' '),
+      if (exclusionKeywords.isNotEmpty)
+        'not ${exclusionKeywords.map((k) => k.toUpperCase()).join(' or ')}',
+    ];
+    return parts.join(', ');
+  }
+}
+
 class SourceDetachment {
   final String id;
   final String name;

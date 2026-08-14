@@ -69,6 +69,12 @@ class FactionData {
   final List<PhaseMapping> phaseMappings;
   final List<LeaderAttachment> leaderAttachments;
   final Set<String> enhancementIds;
+
+  /// Parsed Enhancement and Unit Upgrade records. [enhancementIds] remains the
+  /// validator's cheap membership test; this is for anything that has to show
+  /// one to a player.
+  final List<SourceEnhancement> enhancements;
+
   final List<String> missingFiles;
 
   const FactionData({
@@ -81,6 +87,7 @@ class FactionData {
     required this.phaseMappings,
     required this.leaderAttachments,
     required this.enhancementIds,
+    this.enhancements = const [],
     required this.missingFiles,
   });
 }
@@ -177,8 +184,9 @@ class DatasetLoader {
       return data;
     }
 
+    final enhancementRecords = read('core/$factionId/enhancements.json');
     final enhancementIds = <String>{};
-    for (final raw in read('core/$factionId/enhancements.json')) {
+    for (final raw in enhancementRecords) {
       final id = str(asMap(raw)['id']);
       if (id != null) enhancementIds.add(id);
     }
@@ -216,6 +224,10 @@ class DatasetLoader {
           .map(LeaderAttachment.fromJson)
           .toList(growable: false),
       enhancementIds: enhancementIds,
+      enhancements: enhancementRecords
+          .map(SourceEnhancement.fromJson)
+          .where((e) => e.id.isNotEmpty)
+          .toList(growable: false),
       missingFiles: missing,
     );
   }

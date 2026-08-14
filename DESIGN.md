@@ -1228,7 +1228,7 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 
 **Done — the seven play-test findings (§3.7, §3.8):** operation-aware stat rendering, sign preservation, attacker/defender attribution, weapon keyword parameters end to end, ability-granted invulnerable saves in the INV column, per-datasheet attribution of an attached unit's abilities, and corrections for Stealth, Coldstar Commander and Starscythe.
 
-**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 243 core tests, 56 app tests; both analyzers clean.
+**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 253 core tests, 62 app tests; both analyzers clean.
 
 **Done — stratagems (§7.3):** the last major play-mode surface, and it is *not* a page.
 
@@ -1249,4 +1249,13 @@ Calling it "the stratagem screen" was the wrong frame. §7.2 says relevance come
 - Tactical draws at random; fixed opens a picker. One event either way.
 - **Seven of the eighteen cards carry a `when_drawn` rule**, in three shapes I had not noticed until a test forced the count: three go back if drawn in the first battle round, Plunder and Cleanse cannot be held together, and two are replaced when the opponent fields no valid target. Each renders a note and **leaves the card alone** — the deck is physical, the last case depends on an army the app cannot see, and a silent swap would be the app playing the game.
 
-**Next:** the Reference page (§7.3.4), and reporting the stale Adeptus Astartes points and the local corrections upstream to 40kdc.
+**Done — the Reference page (§7.3, §7.3.8):** one searchable index over everything the army carries, on a third tab.
+
+- `src/play/reference_index.dart` — detachment rules, unit abilities, enhancements and stratagems flattened into one list. **Search runs across all four at once**, matching each word anywhere in title, source, body or detail, because mid-game you remember a word and not which of the four it lives in.
+- An ability shared by several datasheets is **one entry naming them all**: five identical Gun Drone rows, one per battlesuit that bought one, is five times the scrolling for the same sentence.
+- Enhancements are listed **whether or not they were taken**, flagged `IN PLAY` when they were — "what could I have taken" is asked as often as "what did I take" — and Enhancements are labelled apart from Unit Upgrades, which the data distinguishes by `upgrade_tag` and §2.1 treats as separate mechanics.
+- `SourceEnhancement` now exists as a model. The validator only ever needed the id set, so nothing had parsed the records before; the snapshot captures the taken detachments' enhancements and their abilities, so a shared list brings them.
+
+**What the page deliberately does not carry is a core-rules crib.** §7.3 wanted "core-rules quick answers — 11e cover is −1 to hit rather than a save bonus". The dataset cannot supply it: `weapon-keywords.json` and `unit-keywords.json` give names and `required_parameters` and **no text at all**. Writing those summaries from memory would be reproducing Games Workshop's rules into a shipped binary, which is the line §0 draws. The page says so at its foot rather than leaving the absence to be discovered.
+
+**Next:** QR (§6.4), which also unlocks the opponent page; army editing; and reporting the stale Adeptus Astartes points and the local corrections upstream to 40kdc.

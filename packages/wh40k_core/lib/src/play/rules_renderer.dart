@@ -515,9 +515,12 @@ class RulesRenderer {
     'D': 'Damage',
     'BS': 'BS',
     'WS': 'WS',
+    'R': 'Range',
   };
 
-  String _statName(String stat) => _stats[stat] ?? stat;
+  /// Unmapped characteristics fall through as words rather than as ids —
+  /// `detection-range` reads as a stat, `detection-range` reads as a bug.
+  String _statName(String stat) => _stats[stat] ?? _words(stat);
 
   static const _rolls = {
     'hit': 'Hit',

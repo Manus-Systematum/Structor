@@ -34,6 +34,12 @@ class RosterSnapshot {
   /// property of *this roster's* detachments, not of the faction.
   final Map<String, Object?> stratagems;
 
+  /// Enhancements and Unit Upgrades the taken detachments offer — not only
+  /// the ones bought. The reference page lists what was *available*, because
+  /// "what could I have taken" is a question asked mid-game as often as
+  /// "what did I take".
+  final Map<String, Object?> enhancements;
+
   const RosterSnapshot({
     required this.version,
     required this.units,
@@ -41,6 +47,7 @@ class RosterSnapshot {
     required this.detachments,
     required this.abilities,
     this.stratagems = const {},
+    this.enhancements = const {},
   });
 
   int get entryCount =>
@@ -48,7 +55,8 @@ class RosterSnapshot {
       weapons.length +
       detachments.length +
       abilities.length +
-      stratagems.length;
+      stratagems.length +
+      enhancements.length;
 
   Map<String, Object?> toJson() => {
         'version': version.toJson(),
@@ -57,6 +65,7 @@ class RosterSnapshot {
         'detachments': detachments,
         'abilities': abilities,
         'stratagems': stratagems,
+        'enhancements': enhancements,
       };
 
   factory RosterSnapshot.fromJson(Object? v) {
@@ -70,6 +79,7 @@ class RosterSnapshot {
       // Absent in snapshots written before stratagems were captured. An older
       // list opens with an empty stratagem section rather than failing.
       stratagems: asMap(j['stratagems']),
+      enhancements: asMap(j['enhancements']),
     );
   }
 }
@@ -89,6 +99,7 @@ class SnapshotBuilder {
   /// Faction stratagems **and** the core ones, keyed by id. Core stratagems
   /// live outside the faction files, so the caller merges them.
   final Map<String, Object?> rawStratagems;
+  final Map<String, Object?> rawEnhancements;
 
   const SnapshotBuilder({
     required this.dataset,
@@ -97,6 +108,7 @@ class SnapshotBuilder {
     this.rawDetachments = const {},
     this.rawAbilities = const {},
     this.rawStratagems = const {},
+    this.rawEnhancements = const {},
   });
 
   /// Builds against a snapshot on disk, pulling the raw records the parsed
@@ -113,6 +125,7 @@ class SnapshotBuilder {
         ...loader.rawIndex('core/stratagems.json'),
         ...loader.rawIndex('core/$factionId/stratagems.json'),
       },
+      rawEnhancements: loader.rawIndex('core/$factionId/enhancements.json'),
     );
   }
 
@@ -122,6 +135,7 @@ class SnapshotBuilder {
     final detachments = <String, Object?>{};
     final abilities = <String, Object?>{};
     final stratagems = <String, Object?>{};
+    final enhancements = <String, Object?>{};
 
     void takeAbility(String id) {
       final raw = rawAbilities[id];
@@ -147,8 +161,17 @@ class SnapshotBuilder {
       if (raw != null) detachments[entry.detachmentId] = raw;
 
       // A detachment's rule is an ability, and the play screen needs it.
-      final ruleId = dataset.detachment(entry.detachmentId)?.detachmentRuleId;
+      final detachment = dataset.detachment(entry.detachmentId);
+      final ruleId = detachment?.detachmentRuleId;
       if (ruleId != null) takeAbility(ruleId);
+
+      for (final id in detachment?.enhancementIds ?? const <String>[]) {
+        final raw = rawEnhancements[id];
+        if (raw == null) continue;
+        enhancements[id] = raw;
+        final abilityId = str(asMap(raw)['ability_id']);
+        if (abilityId != null) takeAbility(abilityId);
+      }
     }
 
     for (final rosterUnit in roster.units) {
@@ -193,6 +216,7 @@ class SnapshotBuilder {
       detachments: detachments,
       abilities: abilities,
       stratagems: stratagems,
+      enhancements: enhancements,
     );
   }
 }

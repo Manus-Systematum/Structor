@@ -137,6 +137,9 @@ class Dataset implements Catalogue {
   @override
   SourceAbility? ability(String abilityId) => _abilities[abilityId];
 
+  @override
+  Iterable<SourceEnhancement> get enhancements => faction.enhancements;
+
   // -------------------------------------------------------- addressing
 
   int hashOf(String contentId) => _hasher.hashOf(contentId);

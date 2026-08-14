@@ -36,6 +36,8 @@ class Army {
       // Wargear can be an ability: a Gun Drone resolves to a twin pulse
       // carbine only by following the grant (§7.3.7).
       abilities: snapshot.abilities.values.map(SourceAbility.fromJson),
+      enhancements:
+          snapshot.enhancements.values.map(SourceEnhancement.fromJson),
     );
     return Army._(
       id: id,
@@ -137,6 +139,13 @@ class Army {
     roster,
     all: snapshot.stratagems.values.map(SourceStratagem.fromJson),
     catalogue: catalogue,
+  );
+
+  /// Everything the army carries, in one searchable list (§7.3.8).
+  late final ReferenceIndex reference = ReferenceIndex.forRoster(
+    roster,
+    catalogue: catalogue,
+    book: stratagems,
   );
 
   /// Units a stratagem may be played on, with a reason against each that
