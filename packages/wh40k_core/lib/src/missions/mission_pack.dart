@@ -93,6 +93,11 @@ class MissionCard {
   final List<Object?> awards;
   final List<Object?> actions;
 
+  /// `when_drawn`, raw. Only Forward Position uses it — drawn in the first
+  /// battle round it goes back in the deck — and one card does not justify a
+  /// typed model.
+  final Object? rawWhenDrawn;
+
   const MissionCard({
     required this.id,
     required this.name,
@@ -100,6 +105,7 @@ class MissionCard {
     required this.text,
     this.awards = const [],
     this.actions = const [],
+    this.rawWhenDrawn,
   });
 
   factory MissionCard.fromJson(Object? v) {
@@ -111,6 +117,7 @@ class MissionCard {
       text: strOr(j['text'], ''),
       awards: asList(j['awards']),
       actions: asList(j['actions']),
+      rawWhenDrawn: j['when_drawn'],
     );
   }
 

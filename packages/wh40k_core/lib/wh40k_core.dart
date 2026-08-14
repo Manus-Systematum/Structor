@@ -18,6 +18,7 @@ export 'src/import/roster_resolver.dart';
 export 'src/import/text_parser.dart';
 export 'src/missions/mission_pack.dart';
 export 'src/missions/mission_setup.dart';
+export 'src/missions/secondary_deck.dart';
 export 'src/play/attacks.dart';
 export 'src/play/rules_renderer.dart';
 export 'src/play/stratagem_book.dart';

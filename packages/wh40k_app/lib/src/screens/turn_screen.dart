@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../data/army.dart';
+import '../widgets/end_phase.dart';
 import '../widgets/stratagem_list.dart';
 import '../widgets/weapon_table.dart';
 
@@ -21,12 +22,17 @@ class TurnScreen extends StatelessWidget {
   final void Function(BattleEvent) onEvent;
   final VoidCallback onUndo;
 
+  /// The secondary deck. Empty until the mission pack loads, which is why the
+  /// END section degrades to the score panel alone rather than failing.
+  final SecondaryDeck deck;
+
   const TurnScreen({
     super.key,
     required this.army,
     this.log = const BattleLog(),
     this.onEvent = _ignore,
     this.onUndo = _nothing,
+    this.deck = const SecondaryDeck([]),
   });
 
   static void _ignore(BattleEvent _) {}
@@ -63,6 +69,7 @@ class TurnScreen extends StatelessWidget {
                   phase: phase,
                   army: army,
                   state: state,
+                  deck: deck,
                   onEvent: onEvent,
                 ),
             ],
@@ -218,12 +225,14 @@ class _PhaseSection extends StatelessWidget {
   final String phase;
   final Army? army;
   final BattleState state;
+  final SecondaryDeck deck;
   final void Function(BattleEvent) onEvent;
 
   const _PhaseSection({
     required this.phase,
     this.army,
     this.state = const BattleState(),
+    this.deck = const SecondaryDeck([]),
     this.onEvent = TurnScreen._ignore,
   });
 
@@ -275,7 +284,11 @@ class _PhaseSection extends StatelessWidget {
             state: state,
             onEvent: onEvent,
           ),
-        if (army == null || kind == null)
+        // END is where both players' scores live and where the deck is
+        // worked (§7.3.2, §7.3.3).
+        if (phase == 'end')
+          EndPhase(state: state, deck: deck, onEvent: onEvent)
+        else if (army == null || kind == null)
           _phasePlaceholder(context, army, hasStratagems: hasStratagems)
         else
           for (final unit in army.combatUnits)

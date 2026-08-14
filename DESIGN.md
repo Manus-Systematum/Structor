@@ -1228,7 +1228,7 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 
 **Done — the seven play-test findings (§3.7, §3.8):** operation-aware stat rendering, sign preservation, attacker/defender attribution, weapon keyword parameters end to end, ability-granted invulnerable saves in the INV column, per-datasheet attribution of an attached unit's abilities, and corrections for Stealth, Coldstar Commander and Starscythe.
 
-**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 228 core tests, 48 app tests; both analyzers clean.
+**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 243 core tests, 56 app tests; both analyzers clean.
 
 **Done — stratagems (§7.3):** the last major play-mode surface, and it is *not* a page.
 
@@ -1241,4 +1241,12 @@ Calling it "the stratagem screen" was the wrong frame. §7.2 says relevance come
 - **Stratagems are part of the roster snapshot**, since which ones apply is a property of *this roster's* detachments rather than of the faction. A scanned list brings its own, and an older snapshot without them opens with an empty section instead of failing.
 - Effects render from `ability_id` where the data has one — 7 of 53. The rest show name, cost, source and type and stop, because §7.6 forbids inventing the text.
 
-**Next:** the Reference page (§7.3.4), and reporting the stale Adeptus Astartes points and the ten local corrections upstream to 40kdc.
+**Done — secondaries and victory points (§7.3.2, §7.3.3):** the END section, and the last of the play mode.
+
+- `src/missions/secondary_deck.dart` — the deck as a query over the log. There is no shuffled deck object because *the cards in each deck are identical, so there are only 18 choices*: a draw is a pick from what this player has not yet seen. Randomness lives at the call site and the chosen id is the event, so a replay deals the same hand and undo puts the card back.
+- **Both players are tracked**, primary and secondary, per round, with the round and game caps applied. Knowing you are on 42 is useless without knowing they are on 47, and the side that is ahead is marked so nobody does the subtraction by hand.
+- Scoring is entered, never derived. A card offers the payouts **it actually names** — Outflank pays 3 or 5 — and anything paying *per objective* falls to a stepper, because that number is only visible from the table (§7.6).
+- Tactical draws at random; fixed opens a picker. One event either way.
+- **Seven of the eighteen cards carry a `when_drawn` rule**, in three shapes I had not noticed until a test forced the count: three go back if drawn in the first battle round, Plunder and Cleanse cannot be held together, and two are replaced when the opponent fields no valid target. Each renders a note and **leaves the card alone** — the deck is physical, the last case depends on an army the app cannot see, and a silent swap would be the app playing the game.
+
+**Next:** the Reference page (§7.3.4), and reporting the stale Adeptus Astartes points and the local corrections upstream to 40kdc.
