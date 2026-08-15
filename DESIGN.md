@@ -1228,7 +1228,7 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 
 **Done — the seven play-test findings (§3.7, §3.8):** operation-aware stat rendering, sign preservation, attacker/defender attribution, weapon keyword parameters end to end, ability-granted invulnerable saves in the INV column, per-datasheet attribution of an attached unit's abilities, and corrections for Stealth, Coldstar Commander and Starscythe.
 
-**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 253 core tests, 62 app tests; both analyzers clean.
+**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 267 core tests, 68 app tests; both analyzers clean.
 
 **Done — stratagems (§7.3):** the last major play-mode surface, and it is *not* a page.
 
@@ -1258,4 +1258,16 @@ Calling it "the stratagem screen" was the wrong frame. §7.2 says relevance come
 
 **What the page deliberately does not carry is a core-rules crib.** §7.3 wanted "core-rules quick answers — 11e cover is −1 to hit rather than a save bonus". The dataset cannot supply it: `weapon-keywords.json` and `unit-keywords.json` give names and `required_parameters` and **no text at all**. Writing those summaries from memory would be reproducing Games Workshop's rules into a shipped binary, which is the line §0 draws. The page says so at its foot rather than leaving the absence to be discovered.
 
-**Next:** QR (§6.4), which also unlocks the opponent page; army editing; and reporting the stale Adeptus Astartes points and the local corrections upstream to 40kdc.
+**Done — the army builder (§4, the brief's first item):**
+
+- `src/roster/roster_editor.dart` — every operation returns a **new** roster. Nothing mutates, so undo is a list of prior states and "what would this cost" is the same mechanism as "commit it". `Roster` and `RosterUnit` gained `copyWith`.
+- Create, name, faction, battle size, detachments, add/remove/duplicate units, model counts, wargear counts, leader attachment, enhancements, Warlord. Points and validation findings update on every tap.
+- **A new unit arrives at its smallest legal size with its default loadout**, which needed `UnitComposition` — "every weapon on the datasheet" is the wrong starting point, since a Crisis suit lists nine and carries three.
+- Removing a unit takes its baggage with it: attachment links, its enhancement, the Warlord nomination. Dropping a detachment drops the enhancements that came with it. An enhancement outliving its bearer is a points total that quietly stops adding up.
+- Editing works against the **faction dataset**, unlike every play surface, which reads a snapshot. Saving re-snapshots, so a saved list stops moving when the dataset next updates.
+
+> **The builder is permissive and the validator is honest.** It will let you build an illegal list and say exactly how it is illegal, rather than refusing the tap. §2.3 settled that for validation, and the wargear-option data settles it again: `wargear-options` comes in three shapes across 87 records, and §3.8 found six datasheets that did not list the drones their units demonstrably carry. An editor that enforced that data would refuse legal lists, and a builder that will not let you enter the army standing on your table is worthless.
+
+**What is deliberately not built is a wargear-option engine.** Wargear is a counter per item over the datasheet's own vocabulary — its weapons plus its budgeted drones and support systems — rather than a gated `replace X with Y` flow. That is the honest ceiling of the current data. When the option records are complete and uniform, the counters can become constrained choices without changing the roster model.
+
+**Next:** QR (§6.4), which also unlocks the opponent page, and reporting the stale Adeptus Astartes points and the local corrections upstream to 40kdc.

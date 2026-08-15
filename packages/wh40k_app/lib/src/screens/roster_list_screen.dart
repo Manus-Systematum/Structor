@@ -4,6 +4,7 @@ import '../data/database.dart';
 import '../data/dataset_repository.dart';
 import '../data/roster_store.dart';
 import 'about_screen.dart';
+import 'editor_screen.dart';
 import 'import_screen.dart';
 
 /// Saved rosters. The app's front door.
@@ -38,15 +39,34 @@ class RosterListScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          final army = await Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => ImportScreen(datasets: datasets)),
-          );
-          if (army != null) await store.save(army);
-        },
-        icon: const Icon(Icons.download),
-        label: const Text('Import'),
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          FloatingActionButton.small(
+            heroTag: 'import',
+            tooltip: 'Import a list',
+            onPressed: () async {
+              final army = await Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (_) => ImportScreen(datasets: datasets)),
+              );
+              if (army != null) await store.save(army);
+            },
+            child: const Icon(Icons.download),
+          ),
+          const SizedBox(height: 10),
+          FloatingActionButton.extended(
+            heroTag: 'build',
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => EditorScreen(store: store, datasets: datasets),
+              ),
+            ),
+            icon: const Icon(Icons.add),
+            label: const Text('Build'),
+          ),
+        ],
       ),
       body: StreamBuilder<List<RosterRow>>(
         stream: store.watch(),

@@ -211,10 +211,51 @@ class DatasetRepository {
         for (final raw in file('enhancements'))
           if (raw is Map && raw['id'] != null) raw['id'].toString(),
       },
+      enhancements: file('enhancements')
+          .map(SourceEnhancement.fromJson)
+          .where((e) => e.id.isNotEmpty)
+          .toList(),
+      // The builder needs a datasheet's default loadout; nothing else does.
+      compositions: file('unit-compositions')
+          .map(UnitComposition.fromJson)
+          .where((c) => c.unitId.isNotEmpty)
+          .toList(),
       missingFiles: const [],
     );
 
     return _faction = Dataset.of(faction, revision: data.revision);
+  }
+
+  /// A snapshot builder over the bundled faction, for rosters the app builds
+  /// rather than imports.
+  ///
+  /// The play surfaces read a **snapshot**, never the faction dataset (§2.2),
+  /// so an edited roster has to be re-snapshotted before it is saved — the
+  /// alternative is a list whose datasheets silently change under it at the
+  /// next dataset update.
+  Future<SnapshotBuilder> snapshotBuilder(String factionId) async {
+    final dataset = await faction(factionId);
+    final data = await bundle(factionId);
+    final core = await bundle('core');
+
+    Map<String, Object?> index(List<Object?> records, {String key = 'id'}) => {
+          for (final record in records)
+            if (record is Map && record[key] != null)
+              record[key].toString(): record,
+        };
+
+    return SnapshotBuilder(
+      dataset: dataset,
+      rawUnits: index(data.file('units')),
+      rawWeapons: index(data.file('weapons')),
+      rawDetachments: index(data.file('detachments')),
+      rawAbilities: index(data.file('abilities'), key: 'ability_id'),
+      rawStratagems: {
+        ...index(core.file('stratagems')),
+        ...index(data.file('stratagems')),
+      },
+      rawEnhancements: index(data.file('enhancements')),
+    );
   }
 
   Future<MissionPack> missions() async {

@@ -140,6 +140,14 @@ class Dataset implements Catalogue {
   @override
   Iterable<SourceEnhancement> get enhancements => faction.enhancements;
 
+  @override
+  UnitComposition? composition(String datasheetId) {
+    for (final c in faction.compositions) {
+      if (c.unitId == datasheetId) return c;
+    }
+    return null;
+  }
+
   // -------------------------------------------------------- addressing
 
   int hashOf(String contentId) => _hasher.hashOf(contentId);

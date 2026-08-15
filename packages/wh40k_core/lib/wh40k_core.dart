@@ -29,6 +29,7 @@ export 'src/source/corrections.dart';
 export 'src/source/dataset_loader.dart';
 export 'src/source/source_models.dart';
 export 'src/roster/points.dart';
+export 'src/roster/roster_editor.dart';
 export 'src/rules/catalogue.dart';
 export 'src/rules/validator.dart';
 export 'src/roster/roster.dart';

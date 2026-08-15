@@ -6,6 +6,7 @@ import 'src/data/database.dart';
 import 'src/data/roster_store.dart';
 import 'src/screens/army_screen.dart';
 import 'src/data/dataset_repository.dart';
+import 'src/screens/editor_screen.dart';
 import 'src/screens/reference_screen.dart';
 import 'src/screens/roster_list_screen.dart';
 import 'src/screens/setup_screen.dart';
@@ -73,7 +74,7 @@ class ArmyPage extends StatefulWidget {
 }
 
 class _ArmyPageState extends State<ArmyPage> {
-  late final Future<Army?> _army = widget.store.load(widget.rosterId);
+  late Future<Army?> _army = widget.store.load(widget.rosterId);
   int _tab = 0;
   BattleLog _log = const BattleLog();
   MissionPack _pack = const MissionPack();
@@ -98,6 +99,25 @@ class _ArmyPageState extends State<ArmyPage> {
       ),
     );
     if (setup != null) await _apply(_log.add(ConfigureBattle(setup)));
+  }
+
+  /// Opens the builder on this roster. Editing works against the faction
+  /// dataset and re-snapshots on save, so the list stops moving under the
+  /// player at the next dataset update (§2.2).
+  Future<void> _editArmy(Army army) async {
+    final saved = await Navigator.of(context).push<bool>(
+      MaterialPageRoute(
+        builder: (_) => EditorScreen(
+          store: widget.store,
+          datasets: widget.datasets,
+          initial: army.roster,
+          rosterId: army.id,
+        ),
+      ),
+    );
+    if (saved == true && mounted) {
+      setState(() => _army = widget.store.load(widget.rosterId));
+    }
   }
 
   /// Every change appends to the log and persists it, so a game survives the
@@ -129,7 +149,7 @@ class _ArmyPageState extends State<ArmyPage> {
             return IndexedStack(
               index: _tab,
               children: [
-                ArmyScreen(army: army),
+                ArmyScreen(army: army, onEdit: () => _editArmy(army)),
                 if (_log.state.setup == null)
                   _SetupPrompt(
                     ready: !_pack.isEmpty,

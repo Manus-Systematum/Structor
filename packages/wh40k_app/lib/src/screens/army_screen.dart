@@ -14,7 +14,10 @@ import '../widgets/weapon_table.dart';
 class ArmyScreen extends StatelessWidget {
   final Army army;
 
-  const ArmyScreen({super.key, required this.army});
+  /// Opens the builder. Null on surfaces where editing makes no sense.
+  final VoidCallback? onEdit;
+
+  const ArmyScreen({super.key, required this.army, this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +33,21 @@ class ArmyScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(roster.name,
-                  style: const TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.w800)),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(roster.name,
+                        style: const TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.w800)),
+                  ),
+                  if (onEdit != null)
+                    IconButton(
+                      tooltip: 'Edit army',
+                      onPressed: onEdit,
+                      icon: const Icon(Icons.edit_outlined),
+                    ),
+                ],
+              ),
               const SizedBox(height: 2),
               Text(
                 '${roster.factionId.replaceAll('-', ' ')} · '

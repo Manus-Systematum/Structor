@@ -105,6 +105,19 @@ class RosterUnit {
   int countOf(String itemId) => wargear
       .where((w) => w.itemId == itemId)
       .fold(0, (sum, w) => sum + w.count);
+
+  RosterUnit copyWith({
+    int? models,
+    List<WargearSelection>? wargear,
+    String? customName,
+  }) =>
+      RosterUnit(
+        instanceId: instanceId,
+        datasheetId: datasheetId,
+        customName: customName ?? this.customName,
+        models: models ?? this.models,
+        wargear: wargear ?? this.wargear,
+      );
 }
 
 /// An Enhancement: one slot, one **Character**, points once.
@@ -243,6 +256,44 @@ class Roster {
         if (links.isNotEmpty) 'links': links.map((l) => l.toJson()).toList(),
         if (warlordInstanceId != null) 'warlordInstanceId': warlordInstanceId,
       };
+
+  /// A changed copy. Everything here is immutable, so the editor works by
+  /// producing new rosters and the caller can hold on to the old one — which
+  /// is what makes undo and "points before I commit" the same mechanism.
+  ///
+  /// [clearWarlordIf] exists because `warlordInstanceId: null` cannot be told
+  /// apart from "not passed"; deleting the Warlord's unit has to be able to
+  /// clear it.
+  Roster copyWith({
+    String? name,
+    String? factionId,
+    String? battleSizeId,
+    int? pointsLimitOverride,
+    List<RosterDetachment>? detachments,
+    String? declaredDisposition,
+    List<RosterUnit>? units,
+    List<EnhancementSelection>? enhancements,
+    List<UpgradeSelection>? upgrades,
+    List<RosterLink>? links,
+    String? warlordInstanceId,
+    bool clearWarlordIf = false,
+  }) =>
+      Roster(
+        schemaVersion: schemaVersion,
+        name: name ?? this.name,
+        factionId: factionId ?? this.factionId,
+        battleSizeId: battleSizeId ?? this.battleSizeId,
+        pointsLimitOverride: pointsLimitOverride ?? this.pointsLimitOverride,
+        detachments: detachments ?? this.detachments,
+        declaredDisposition: declaredDisposition ?? this.declaredDisposition,
+        units: units ?? this.units,
+        enhancements: enhancements ?? this.enhancements,
+        upgrades: upgrades ?? this.upgrades,
+        links: links ?? this.links,
+        warlordInstanceId: clearWarlordIf
+            ? null
+            : (warlordInstanceId ?? this.warlordInstanceId),
+      );
 
   RosterUnit? unitByInstance(String instanceId) {
     for (final u in units) {

@@ -30,6 +30,10 @@ abstract interface class Catalogue {
   /// Enhancements and Unit Upgrades the army's detachments offer.
   Iterable<SourceEnhancement> get enhancements => const [];
 
+  /// How a datasheet is made up, when the backing store knows. Only the
+  /// builder needs it.
+  UnitComposition? composition(String datasheetId) => null;
+
   /// Datasheets [leaderDatasheetId] may join. Empty when the datasheet is not
   /// a leader, or when no attachment rule is published for it.
   List<String> eligibleBodyguards(String leaderDatasheetId);
@@ -56,6 +60,7 @@ class MapCatalogue implements Catalogue {
   final Map<String, List<String>> _attachments;
   final Map<String, SourceAbility> _abilities;
   final Map<String, SourceEnhancement> _enhancements;
+  final Map<String, UnitComposition> _compositions;
 
   MapCatalogue(
     Iterable<SourceUnit> units, {
@@ -64,11 +69,13 @@ class MapCatalogue implements Catalogue {
     Iterable<LeaderAttachment> leaderAttachments = const [],
     Iterable<SourceAbility> abilities = const [],
     Iterable<SourceEnhancement> enhancements = const [],
+    Iterable<UnitComposition> compositions = const [],
   })  : _units = {for (final u in units) u.id: u},
         _detachments = {for (final d in detachments) d.id: d},
         _weapons = {for (final w in weapons) w.id: w},
         _abilities = {for (final a in abilities) a.abilityId: a},
         _enhancements = {for (final e in enhancements) e.id: e},
+        _compositions = {for (final c in compositions) c.unitId: c},
         _attachments = {
           for (final a in leaderAttachments) a.leaderId: a.eligibleBodyguardIds,
         };
@@ -80,6 +87,8 @@ class MapCatalogue implements Catalogue {
         weapons: faction.weapons,
         leaderAttachments: faction.leaderAttachments,
         abilities: faction.abilities,
+        enhancements: faction.enhancements,
+        compositions: faction.compositions,
       );
 
   @override
@@ -90,6 +99,10 @@ class MapCatalogue implements Catalogue {
 
   @override
   Iterable<SourceEnhancement> get enhancements => _enhancements.values;
+
+  @override
+  UnitComposition? composition(String datasheetId) =>
+      _compositions[datasheetId];
 
   @override
   Iterable<SourceUnit> get allUnits => _units.values;

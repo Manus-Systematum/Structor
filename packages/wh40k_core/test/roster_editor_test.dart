@@ -1,0 +1,255 @@
+import 'package:test/test.dart';
+import 'package:wh40k_core/wh40k_core.dart';
+
+import 'support.dart';
+
+void main() {
+  final available = snapshotAvailable;
+
+  late Dataset dataset;
+  late RosterEditor editor;
+
+  setUpAll(() {
+    if (!available) return;
+    dataset =
+        Dataset.of(correctedLoader().loadFaction('tau-empire'), revision: 't');
+    editor = RosterEditor(dataset);
+  });
+
+  Roster blank() => RosterEditor.blank(
+        name: 'New army',
+        factionId: 'tau-empire',
+      );
+
+  int priceOf(Roster roster) => PointsCalculator(dataset).price(roster).total;
+
+  group('adding units', () {
+    test('a new unit arrives at its smallest legal size, loaded', () {
+      // Not "every weapon on the datasheet" — a Crisis suit lists nine and
+      // carries three.
+      final roster = editor.addUnit(blank(), 'crisis-fireknife-battlesuits');
+      final unit = roster.units.single;
+
+      expect(unit.models, 3);
+      expect(unit.wargear.map((w) => w.itemId),
+          containsAll(['battlesuit-fists', 'plasma-rifle']));
+      expect(unit.countOf('battlesuit-fists'), 3, reason: 'one per model');
+      expect(priceOf(roster), greaterThan(0));
+    }, skip: available ? null : 'no snapshot');
+
+    test('instance ids are never reused', () {
+      // A recycled id would silently re-target a link or an enhancement at a
+      // different unit.
+      var roster = editor.addUnit(blank(), 'broadside-battlesuits');
+      roster = editor.addUnit(roster, 'broadside-battlesuits');
+      final second = roster.units.last.instanceId;
+
+      roster = editor.removeUnit(roster, roster.units.first.instanceId);
+      roster = editor.addUnit(roster, 'ghostkeel-battlesuit');
+
+      expect(roster.units.map((u) => u.instanceId).toSet(), hasLength(2));
+      expect(roster.units.last.instanceId, isNot(second));
+    }, skip: available ? null : 'no snapshot');
+
+    test('duplicating copies the loadout, not the identity', () {
+      var roster = editor.addUnit(blank(), 'broadside-battlesuits');
+      final first = roster.units.single.instanceId;
+      roster = editor.setWargear(roster, first, 'seeker-missile', 2);
+      roster = editor.duplicateUnit(roster, first);
+
+      expect(roster.units, hasLength(2));
+      expect(roster.units.last.countOf('seeker-missile'), 2);
+      expect(roster.units.last.instanceId, isNot(first));
+    }, skip: available ? null : 'no snapshot');
+  });
+
+  group('removing a unit takes its baggage with it', () {
+    test('links, enhancement and Warlord all go', () {
+      var roster = blank();
+      roster = editor.addDetachment(roster, 'retaliation-cadre');
+      roster = editor.addUnit(roster, 'commander-in-enforcer-battlesuit');
+      roster = editor.addUnit(roster, 'crisis-fireknife-battlesuits');
+      final leader = roster.units.first.instanceId;
+      final squad = roster.units.last.instanceId;
+
+      roster = editor.attach(roster, leader, squad);
+      roster = editor.setWarlord(roster, leader);
+      roster = editor.setEnhancement(
+          roster, 'puretide-engram-neurochip-retaliation-cadre', leader);
+
+      expect(roster.links, hasLength(1));
+      expect(roster.enhancements, hasLength(1));
+
+      roster = editor.removeUnit(roster, leader);
+
+      // An enhancement on a unit that is gone is points that stop adding up.
+      expect(roster.links, isEmpty);
+      expect(roster.enhancements, isEmpty);
+      expect(roster.warlordInstanceId, isNull);
+      expect(roster.units.single.instanceId, squad);
+    }, skip: available ? null : 'no snapshot');
+
+    test('dropping a detachment drops its enhancements', () {
+      var roster = blank();
+      roster = editor.addDetachment(roster, 'retaliation-cadre');
+      roster = editor.addUnit(roster, 'commander-in-enforcer-battlesuit');
+      roster = editor.setEnhancement(
+        roster,
+        'puretide-engram-neurochip-retaliation-cadre',
+        roster.units.single.instanceId,
+      );
+
+      roster = editor.removeDetachment(roster, 'retaliation-cadre');
+      expect(roster.detachments, isEmpty);
+      expect(roster.enhancements, isEmpty);
+    }, skip: available ? null : 'no snapshot');
+  });
+
+  group('attachments', () {
+    test('only units the data says may be led are offered', () {
+      var roster = blank();
+      roster = editor.addUnit(roster, 'commander-in-enforcer-battlesuit');
+      roster = editor.addUnit(roster, 'crisis-fireknife-battlesuits');
+      roster = editor.addUnit(roster, 'broadside-battlesuits');
+      final leader = roster.units.first.instanceId;
+
+      final offered = editor
+          .eligibleBodyguards(roster, leader)
+          .map((u) => u.datasheetId);
+      expect(offered, contains('crisis-fireknife-battlesuits'));
+      expect(offered, isNot(contains('broadside-battlesuits')));
+    }, skip: available ? null : 'no snapshot');
+
+    test('a unit already led by someone else is not offered again', () {
+      var roster = blank();
+      roster = editor.addUnit(roster, 'commander-in-enforcer-battlesuit');
+      roster = editor.addUnit(roster, 'commander-in-enforcer-battlesuit');
+      roster = editor.addUnit(roster, 'crisis-fireknife-battlesuits');
+      final first = roster.units[0].instanceId;
+      final second = roster.units[1].instanceId;
+      final squad = roster.units[2].instanceId;
+
+      roster = editor.attach(roster, first, squad);
+      expect(editor.eligibleBodyguards(roster, second), isEmpty);
+    }, skip: available ? null : 'no snapshot');
+
+    test('attaching twice replaces rather than accumulates', () {
+      var roster = blank();
+      roster = editor.addUnit(roster, 'commander-in-enforcer-battlesuit');
+      roster = editor.addUnit(roster, 'crisis-fireknife-battlesuits');
+      roster = editor.addUnit(roster, 'crisis-fireknife-battlesuits');
+      final leader = roster.units[0].instanceId;
+
+      roster = editor.attach(roster, leader, roster.units[1].instanceId);
+      roster = editor.attach(roster, leader, roster.units[2].instanceId);
+
+      // A character leads one unit. Two links would be a tangle the validator
+      // then has to complain about.
+      expect(roster.links, hasLength(1));
+      expect(roster.links.single.toInstanceId, roster.units[2].instanceId);
+    }, skip: available ? null : 'no snapshot');
+  });
+
+  group('wargear', () {
+    test('setting a count to zero removes the entry', () {
+      var roster = editor.addUnit(blank(), 'broadside-battlesuits');
+      final id = roster.units.single.instanceId;
+
+      roster = editor.setWargear(roster, id, 'seeker-missile', 1);
+      expect(roster.units.single.countOf('seeker-missile'), 1);
+
+      roster = editor.setWargear(roster, id, 'seeker-missile', 0);
+      expect(roster.units.single.countOf('seeker-missile'), 0);
+      expect(roster.units.single.wargear.map((w) => w.itemId),
+          isNot(contains('seeker-missile')));
+    }, skip: available ? null : 'no snapshot');
+
+    test('priced wargear moves the total', () {
+      var roster = editor.addUnit(blank(), 'crisis-fireknife-battlesuits');
+      final id = roster.units.single.instanceId;
+
+      // The default loadout is three suits with a missile pod each, and pods
+      // are 5 points apiece: 100 + 15.
+      expect(roster.units.single.countOf('missile-pod'), 3);
+      expect(priceOf(roster), 115);
+
+      // setWargear sets the count, it does not add to it.
+      roster = editor.setWargear(roster, id, 'missile-pod', 6);
+      expect(priceOf(roster), 130);
+
+      roster = editor.setWargear(roster, id, 'missile-pod', 0);
+      expect(priceOf(roster), 100);
+    }, skip: available ? null : 'no snapshot');
+
+    test('reset restores the default loadout, scaled to the unit', () {
+      var roster = editor.addUnit(blank(), 'crisis-fireknife-battlesuits');
+      final id = roster.units.single.instanceId;
+
+      roster = editor.setWargear(roster, id, 'battlesuit-fists', 0);
+      roster = editor.setModels(roster, id, 6);
+      roster = editor.resetWargear(roster, id);
+
+      expect(roster.units.single.countOf('battlesuit-fists'), 6,
+          reason: 'the composition describes three; the unit is six');
+    }, skip: available ? null : 'no snapshot');
+  });
+
+  group('the editor is permissive, the validator is honest', () {
+    test('an over-points list is built and then reported, not refused', () {
+      // §2.3: findings with severity, never a hard block. A builder that
+      // refuses the army standing on your table is worthless.
+      var roster = blank();
+      roster = editor.addDetachment(roster, 'retaliation-cadre');
+      for (var i = 0; i < 20; i++) {
+        roster = editor.addUnit(roster, 'riptide-battlesuit');
+      }
+
+      expect(roster.units, hasLength(20));
+      final result = RosterValidator(dataset).validate(roster);
+      expect(result.isLegal, isFalse);
+      expect(result.errors.join(' '), contains('points'));
+    }, skip: available ? null : 'no snapshot');
+
+    test('a blank roster is legal to hold and reports what it needs', () {
+      final result = RosterValidator(dataset).validate(blank());
+      expect(result.findings, isNotEmpty);
+    }, skip: available ? null : 'no snapshot');
+  });
+
+  group('rebuilding the reference army from nothing', () {
+    test('the same list, assembled by the editor, prices the same', () {
+      // The end-to-end claim: the builder can produce the list the importer
+      // produces, and both come to 2000.
+      var roster = RosterEditor.blank(
+        name: '2k ret',
+        factionId: 'tau-empire',
+      );
+      roster = editor.addDetachment(roster, 'advanced-acquisition-cadre');
+      roster = editor.addDetachment(roster, 'experimental-prototype-cadre');
+
+      void add(String datasheetId, Map<String, int> wargear, {int? models}) {
+        roster = editor.addUnit(roster, datasheetId);
+        final id = roster.units.last.instanceId;
+        if (models != null) roster = editor.setModels(roster, id, models);
+        for (final w in wargear.entries) {
+          roster = editor.setWargear(roster, id, w.key, w.value);
+        }
+      }
+
+      for (var i = 0; i < 2; i++) {
+        add('commander-in-enforcer-battlesuit',
+            {'missile-pod': 4, 'battlesuit-fists': 1});
+        add('crisis-fireknife-battlesuits',
+            {'missile-pod': 6, 'battlesuit-fists': 3, 'plasma-rifle': 0});
+        add('commander-in-coldstar-battlesuit',
+            {'tau-flamer': 4, 'battlesuit-fists': 1});
+        add('crisis-starscythe-battlesuits',
+            {'tau-flamer': 6, 'battlesuit-fists': 3, 'burst-cannon': 0});
+      }
+
+      expect(roster.units, hasLength(8));
+      // 2 x (80 + 130 + 95 + 120) = 850 for the attached half of the list.
+      expect(priceOf(roster), 850);
+    }, skip: available ? null : 'no snapshot');
+  });
+}

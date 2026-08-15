@@ -75,6 +75,10 @@ class FactionData {
   /// one to a player.
   final List<SourceEnhancement> enhancements;
 
+  /// How each datasheet is made up. Needed only by the builder, to give a new
+  /// unit a legal starting loadout.
+  final List<UnitComposition> compositions;
+
   final List<String> missingFiles;
 
   const FactionData({
@@ -88,6 +92,7 @@ class FactionData {
     required this.leaderAttachments,
     required this.enhancementIds,
     this.enhancements = const [],
+    this.compositions = const [],
     required this.missingFiles,
   });
 }
@@ -224,6 +229,10 @@ class DatasetLoader {
           .map(LeaderAttachment.fromJson)
           .toList(growable: false),
       enhancementIds: enhancementIds,
+      compositions: read('core/$factionId/unit-compositions.json')
+          .map(UnitComposition.fromJson)
+          .where((c) => c.unitId.isNotEmpty)
+          .toList(growable: false),
       enhancements: enhancementRecords
           .map(SourceEnhancement.fromJson)
           .where((e) => e.id.isNotEmpty)

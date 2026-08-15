@@ -146,6 +146,80 @@ class WargearBudget {
   }
 }
 
+/// One model entry inside a datasheet's composition.
+class CompositionModel {
+  final String name;
+  final int min;
+  final int max;
+  final bool isLeaderModel;
+
+  /// What this model carries before the player changes anything.
+  final List<String> defaultWeaponIds;
+
+  const CompositionModel({
+    required this.name,
+    required this.min,
+    required this.max,
+    required this.isLeaderModel,
+    required this.defaultWeaponIds,
+  });
+
+  factory CompositionModel.fromJson(Object? v) {
+    final j = asMap(v);
+    final min = intOr(j['min'], 1);
+    return CompositionModel(
+      name: strOr(j['name'], '(unnamed)'),
+      min: min,
+      max: intOr(j['max'], min),
+      isLeaderModel: j['is_leader_model'] == true,
+      defaultWeaponIds: strList(j['default_weapon_ids']),
+    );
+  }
+}
+
+/// How a datasheet is made up, and what it carries out of the box.
+///
+/// The builder needs this and nothing else does: adding a unit has to produce
+/// a legal starting loadout, and "every weapon on the datasheet" is not that
+/// — a Crisis suit lists nine and carries three.
+class UnitComposition {
+  final String unitId;
+  final List<CompositionModel> models;
+
+  const UnitComposition({required this.unitId, required this.models});
+
+  factory UnitComposition.fromJson(Object? v) {
+    final j = asMap(v);
+    return UnitComposition(
+      unitId: strOr(j['unit_id'], ''),
+      models: asList(j['models'])
+          .map(CompositionModel.fromJson)
+          .toList(growable: false),
+    );
+  }
+
+  /// The smallest legal unit, which is what "add this datasheet" should give.
+  int get defaultModels =>
+      models.fold(0, (sum, m) => sum + m.min);
+
+  /// The default loadout as wargear counts, keyed by the **item id** the
+  /// roster stores — the weapon id with any `-<unitId>` suffix removed, so
+  /// `Catalogue.weaponFor` can re-scope it (§7.3.5).
+  Map<String, int> defaultWargear() {
+    final tally = <String, int>{};
+    for (final model in models) {
+      for (final weaponId in model.defaultWeaponIds) {
+        final suffix = '-$unitId';
+        final itemId = weaponId.endsWith(suffix)
+            ? weaponId.substring(0, weaponId.length - suffix.length)
+            : weaponId;
+        tally[itemId] = (tally[itemId] ?? 0) + model.min;
+      }
+    }
+    return tally;
+  }
+}
+
 class SourceUnit {
   final String id;
   final String name;
