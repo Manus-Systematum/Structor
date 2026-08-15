@@ -187,7 +187,7 @@
         "gun-drone",
         "marker-drone",
         "shield-drone",
-        "weapon-support-systems"
+        "weapon-support-system"
       ],
       "game_version": {
         "edition": "11th",
@@ -397,7 +397,7 @@
         "tau-flamer"
       ],
       "ability_ids": [
-        "battlesuit-support-systems",
+        "battlesuit-support-system",
         "starscythe",
         "deep-strike",
         "gun-drone",
@@ -505,7 +505,8 @@
         "dataslate": "launch"
       },
       "is_legend": false,
-      "points_provisional": false
+      "points_provisional": false,
+      "wargear_budgets": []
     },
     "broadside-battlesuits": {
       "id": "broadside-battlesuits",
@@ -783,7 +784,8 @@
           "item_id": "ion-accelerator",
           "cost": 25
         }
-      ]
+      ],
+      "wargear_budgets": []
     },
     "stealth-battlesuits": {
       "id": "stealth-battlesuits",
@@ -2277,9 +2279,9 @@
       "behavior": "passive",
       "community_notes": "community-authored from 10e source (provisional 11e); see #21"
     },
-    "weapon-support-systems": {
-      "ability_id": "weapon-support-systems",
-      "name": "Weapon Support Systems",
+    "weapon-support-system": {
+      "ability_id": "weapon-support-system",
+      "name": "Weapon Support System",
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
@@ -2308,7 +2310,7 @@
         "duration": "permanent"
       },
       "unit_ids": [
-        "crisis-fireknife-battlesuits"
+        "riptide-battlesuit"
       ],
       "ability_type": "unit",
       "behavior": "passive"
@@ -2392,9 +2394,9 @@
       "ability_type": "unit",
       "behavior": "passive"
     },
-    "battlesuit-support-systems": {
-      "ability_id": "battlesuit-support-systems",
-      "name": "Battlesuit Support Systems",
+    "battlesuit-support-system": {
+      "ability_id": "battlesuit-support-system",
+      "name": "Battlesuit Support System",
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
@@ -2411,7 +2413,7 @@
         "duration": "permanent"
       },
       "unit_ids": [
-        "crisis-starscythe-battlesuits"
+        "riptide-battlesuit"
       ],
       "ability_type": "unit",
       "behavior": "passive"
@@ -2878,30 +2880,6 @@
       "ability_type": "core",
       "behavior": "passive"
     },
-    "battlesuit-support-system": {
-      "ability_id": "battlesuit-support-system",
-      "name": "Battlesuit Support System",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "fallback-and-act",
-        "target": "unit",
-        "modifier": {}
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "riptide-battlesuit"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive"
-    },
     "deadly-demise-d6": {
       "ability_id": "deadly-demise-d6",
       "name": "Deadly Demise D6",
@@ -2981,42 +2959,6 @@
       ],
       "ability_type": "unit",
       "behavior": "activated"
-    },
-    "weapon-support-system": {
-      "ability_id": "weapon-support-system",
-      "name": "Weapon Support System",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "conditional",
-        "condition": {
-          "type": "phase-is",
-          "parameters": {
-            "phase": "shooting"
-          }
-        },
-        "effect": {
-          "type": "roll-modifier",
-          "target": "unit",
-          "modifier": {
-            "roll": "all",
-            "operation": "ignore-modifiers"
-          }
-        }
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "riptide-battlesuit"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive"
     },
     "forward-observers": {
       "ability_id": "forward-observers",
@@ -3110,6 +3052,70 @@
       ],
       "ability_type": "unit",
       "behavior": "activated"
+    },
+    "for-the-greater-good": {
+      "ability_id": "for-the-greater-good",
+      "name": "For the Greater Good",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "operator": "and",
+          "operands": [
+            {
+              "type": "phase-is",
+              "parameters": {
+                "phase": "shooting"
+              }
+            },
+            {
+              "type": "target-has-keyword",
+              "parameters": {
+                "keyword": "SPOTTED"
+              }
+            }
+          ]
+        },
+        "effect": {
+          "type": "sequence",
+          "steps": [
+            {
+              "type": "roll-modifier",
+              "target": "unit",
+              "modifier": {
+                "roll": "hit",
+                "operation": "add",
+                "value": 1
+              }
+            },
+            {
+              "type": "keyword-grant",
+              "target": "unit",
+              "modifier": {
+                "keywords": [
+                  "Ignores Cover"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "phase"
+      },
+      "faction_id": "tau-empire",
+      "ability_type": "faction",
+      "behavior": "activated",
+      "community_notes": "Assumes targets are SPOTTED (observer unit sacrifices shooting). +1 BS is the primary offensive benefit; Ignores Cover is kept for completeness but has no effect in the current damage engine (cover not simulated).",
+      "unit_ids": [
+        "taunar-supremacy-armour"
+      ]
     }
   },
   "stratagems": {
@@ -3605,5 +3611,23 @@
       "upgrade_tag": false,
       "max_targets": 1
     }
-  }
+  },
+  "factionRuleId": "for-the-greater-good",
+  "sharedAbilities": [
+    "scouts-7",
+    "deep-strike",
+    "gun-drone",
+    "marker-drone",
+    "shield-drone",
+    "weapon-support-system",
+    "infiltrators",
+    "stealth",
+    "deadly-demise-d3",
+    "battlesuit-support-system",
+    "deadly-demise-d6-2",
+    "firing-deck-11",
+    "leader",
+    "missile-drone",
+    "lone-operative"
+  ]
 }

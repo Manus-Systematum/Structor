@@ -209,4 +209,71 @@ void main() {
       );
     }, skip: available ? null : 'no snapshot');
   });
+
+  group('a 1,000 pt Incursion export with Unit Upgrades', () {
+    // A second real export, and everything it exercises was broken when it
+    // first went through: the battle size, the `Enhancement:` lines, and the
+    // points those lines cost.
+    final available = snapshotAvailable;
+
+    late ImportResult result;
+    late Dataset dataset;
+
+    setUpAll(() {
+      if (!available) return;
+      final faction = correctedLoader().loadFaction('tau-empire');
+      dataset = Dataset.of(faction, revision: 'test');
+      final parsed = const TextListParser().parse(
+        File('test/fixtures/war_organ_incursion_1000.txt').readAsStringSync(),
+      );
+      result = RosterResolver(
+        dataset,
+        abilityLookup: dataset.ability,
+        knownAbilities: faction.abilities,
+      ).resolve(parsed, factionId: 'tau-empire');
+    });
+
+    test('imports without errors or warnings', () {
+      expect(result.errors, isEmpty, reason: result.issues.join('\n'));
+      expect(
+        result.issues.where((i) => i.severity == IssueSeverity.warning),
+        isEmpty,
+        reason: result.issues.join('\n'),
+      );
+    }, skip: available ? null : 'no snapshot');
+
+    test('prices to the printed total', () {
+      // 995, and it was 965 until Enhancements were priced at all.
+      expect(result.printedPoints, 995);
+      expect(PointsCalculator(dataset).price(result.roster).total, 995);
+    }, skip: available ? null : 'no snapshot');
+
+    test('Incursion is read from the header', () {
+      expect(result.roster.battleSizeId, 'incursion');
+    }, skip: available ? null : 'no snapshot');
+
+    test('a Unit Upgrade on two units is one selection with two targets', () {
+      // Three instances of a Unit Upgrade share one slot (§2.1), which is why
+      // targets are a list rather than one selection per bearer.
+      expect(result.roster.enhancements, isEmpty);
+      final upgrade = result.roster.upgrades.single;
+      expect(upgrade.upgradeId,
+          'negation-emitters-upgrade-advanced-acquisition-cadre');
+      expect(upgrade.targetInstanceIds, hasLength(2));
+
+      final validation = RosterValidator(dataset).validate(result.roster);
+      expect(validation.isLegal, isTrue, reason: validation.errors.join('\n'));
+      // Incursion allows two slots and this list spends one.
+      expect(validation.findings.map((f) => f.message).join(' '),
+          contains('1 of 2 slots unused'));
+    }, skip: available ? null : 'no snapshot');
+
+    test('each bearer is charged for the upgrade', () {
+      final cost = PointsCalculator(dataset).price(result.roster);
+      final charged =
+          cost.units.where((u) => u.enhancements > 0).toList();
+      expect(charged, hasLength(2), reason: 'both Stealth units bear one');
+      expect(charged.every((u) => u.enhancements == 15), isTrue);
+    }, skip: available ? null : 'no snapshot');
+  });
 }

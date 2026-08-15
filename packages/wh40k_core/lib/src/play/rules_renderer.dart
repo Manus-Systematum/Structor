@@ -52,7 +52,7 @@ class RulesRenderer {
     var text = _effect(ability.effect, ctx);
 
     final frequency = str(ability.usage['frequency']);
-    if (frequency != null) text = '$text (${_words(frequency)})';
+    if (frequency != null) text = '$text (${_frequency(ability.usage)})';
 
     return RenderedRule(
       abilityId: ability.abilityId,
@@ -61,6 +61,18 @@ class RulesRenderer {
       phases: ctx.phases.toList(),
       unrendered: ctx.unrendered.toList(),
     );
+  }
+
+  /// How often a rule may be used, with the count substituted.
+  ///
+  /// `n-per-battle` carries its number alongside as `count`; rendering the
+  /// frequency alone printed the placeholder, so the Ghostkeel's Stealth
+  /// Drones read "(n per battle)" on a rule usable twice.
+  String _frequency(Map<String, dynamic> usage) {
+    final frequency = strOr(usage['frequency'], '');
+    final count = str(usage['count']);
+    if (count == null) return _words(frequency);
+    return _words(frequency.replaceAll(RegExp(r'\bn\b'), count));
   }
 
   // ---------------------------------------------------------------- effects
@@ -299,7 +311,10 @@ class RulesRenderer {
         final scope = _words(strOr(select['scope'], 'unit'));
         final applies = _effect(asMap(asMap(node['applies'])['effect']), ctx);
         final duration = str(node['duration']);
-        final until = duration == null ? '' : ' until ${_words(duration)}';
+        // Durations are written both ways upstream — `end-of-turn` and
+        // `until-next-command-phase` — so the connective has to come from the
+        // value rather than be pasted in front of it.
+        final until = duration == null ? '' : ' ${_until(duration)}';
         final result = applies.isEmpty ? '' : ' — that unit suffers $applies';
         return 'designate $count $scope as $designation$result$until';
 
@@ -436,6 +451,12 @@ class RulesRenderer {
       if (excluded.isNotEmpty) '(not ${excluded.join(' ')})',
     ];
     return parts.isEmpty ? '' : '${parts.join(' ')} — ';
+  }
+
+  /// A duration phrase that reads once, however the value is spelled.
+  String _until(String duration) {
+    final words = _words(duration);
+    return words.startsWith('until ') ? words : 'until $words';
   }
 
   String _battleRound(Map<String, dynamic> params) {

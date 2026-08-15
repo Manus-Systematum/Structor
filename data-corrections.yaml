@@ -281,3 +281,42 @@ units:
       is attached to other battlesuits, but not to this one.
     upstream: not yet reported
     add_wargear: [battlesuit-support-system]
+
+# Two ids for one rule. Upstream transcribes an ability once per datasheet, and
+# the datasheets disagree about the plural — the effect records are identical.
+# §7.3.9 decides whether a rule is shared by counting the datasheets carrying
+# its id, so a stray plural splits one shared rule into two unshared ones and
+# files the same sentence twice on the rules screen.
+#
+# The duplicate is dropped and every reference to it rewritten to `canonical`,
+# which must already exist upstream.
+aliases:
+  - faction: tau-empire
+    id: battlesuit-support-systems
+    canonical: battlesuit-support-system
+    reason: >
+      Crisis Starscythe Battlesuits carry "Battlesuit Support Systems" while
+      the Ghostkeel and Riptide carry "Battlesuit Support System". Both encode
+      the same effect — may act normally after Falling Back — and the rulebook
+      names one rule.
+    upstream: not yet reported
+
+  - faction: tau-empire
+    id: weapon-support-systems
+    canonical: weapon-support-system
+    reason: >
+      Crisis Fireknife Battlesuits carry "Weapon Support Systems" while the
+      Riptide carries "Weapon Support System". Both encode ignoring modifiers
+      to all rolls in the Shooting phase.
+    upstream: not yet reported
+
+  - faction: tau-empire
+    id: support-system
+    canonical: weapon-support-system
+    reason: >
+      The Stormsurge's "Support System" encodes exactly what the Riptide's
+      "Weapon Support System" does — ignore modifiers to all rolls in the
+      Shooting phase — and the two records are otherwise identical. Upstream
+      abbreviates the name on this one datasheet. Confirmed as the same rule
+      by the app's user against the rulebook.
+    upstream: not yet reported

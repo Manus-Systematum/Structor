@@ -141,11 +141,26 @@ class Army {
     catalogue: catalogue,
   );
 
-  /// Everything the army carries, in one searchable list (§7.3.8).
+  /// Everything the army carries, in one searchable list (§7.3.8). Still the
+  /// index search runs over — a query crosses all four kinds at once.
   late final ReferenceIndex reference = ReferenceIndex.forRoster(
     roster,
     catalogue: catalogue,
     book: stratagems,
+  );
+
+  /// The same rules, filed by how widely each applies (§7.3.9). What the
+  /// reference page shows when nothing is being searched for.
+  ///
+  /// Sharedness comes from the snapshot rather than from [catalogue]: the
+  /// catalogue here holds only this roster's datasheets, so counting owners in
+  /// it would decide sharedness per list.
+  late final ArmyRules armyRules = ArmyRules.forRoster(
+    roster,
+    catalogue: catalogue,
+    sharedAbilityIds:
+        snapshot.sharedAbilities.isEmpty ? null : snapshot.sharedAbilities,
+    factionRuleId: snapshot.factionRuleId,
   );
 
   /// Units a stratagem may be played on, with a reason against each that

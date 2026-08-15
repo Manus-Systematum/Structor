@@ -79,6 +79,15 @@ class FactionData {
   /// unit a legal starting loadout.
   final List<UnitComposition> compositions;
 
+  /// The army rule every unit in the faction has — For the Greater Good, Oath
+  /// of Moment. `factions.json` has always carried it; nothing read the file,
+  /// so the one rule that is true of the whole army was the one rule the app
+  /// never showed (DESIGN.md §7.3.9).
+  final String? factionRuleId;
+
+  /// The faction's display name, from the same record.
+  final String? factionName;
+
   final List<String> missingFiles;
 
   const FactionData({
@@ -93,6 +102,8 @@ class FactionData {
     required this.enhancementIds,
     this.enhancements = const [],
     this.compositions = const [],
+    this.factionRuleId,
+    this.factionName,
     required this.missingFiles,
   });
 }
@@ -196,8 +207,18 @@ class DatasetLoader {
       if (id != null) enhancementIds.add(id);
     }
 
+    // A faction file holds one record for the faction itself. Sub-factions
+    // exist upstream, so the one whose id matches is the one wanted.
+    final factionRecords = read('core/$factionId/factions.json');
+    final self = factionRecords
+        .map(asMap)
+        .where((j) => str(j['id']) == factionId)
+        .firstOrNull;
+
     return FactionData(
       factionId: factionId,
+      factionRuleId: self == null ? null : str(self['faction_rule_id']),
+      factionName: self == null ? null : str(self['name']),
       units: corrections
           .applyToUnits(factionId, read('core/$factionId/units.json'))
           .records

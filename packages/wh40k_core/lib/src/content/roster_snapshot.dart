@@ -12,6 +12,7 @@
 /// names, which for a 2,000 pt army is a small fraction of it.
 library;
 
+import '../play/army_rules.dart';
 import '../roster/roster.dart';
 import '../source/dataset_loader.dart';
 import '../source/json.dart';
@@ -40,6 +41,18 @@ class RosterSnapshot {
   /// "what did I take".
   final Map<String, Object?> enhancements;
 
+  /// The faction's own army rule — For the Greater Good, Oath of Moment. Its
+  /// record is in [abilities]; this names which one it is (§7.3.9).
+  final String? factionRuleId;
+
+  /// Ability ids more than one datasheet **in the faction** can take.
+  ///
+  /// Whether a rule is shared is a fact about the catalogue, and a snapshot
+  /// holds only the datasheets this roster uses — so counting owners on the
+  /// receiving end would answer a narrower question and file the same rule
+  /// differently on the sender's phone and the receiver's (§7.3.9).
+  final Set<String> sharedAbilities;
+
   const RosterSnapshot({
     required this.version,
     required this.units,
@@ -48,6 +61,8 @@ class RosterSnapshot {
     required this.abilities,
     this.stratagems = const {},
     this.enhancements = const {},
+    this.factionRuleId,
+    this.sharedAbilities = const {},
   });
 
   int get entryCount =>
@@ -66,6 +81,8 @@ class RosterSnapshot {
         'abilities': abilities,
         'stratagems': stratagems,
         'enhancements': enhancements,
+        if (factionRuleId != null) 'factionRuleId': factionRuleId,
+        'sharedAbilities': sharedAbilities.toList(growable: false),
       };
 
   factory RosterSnapshot.fromJson(Object? v) {
@@ -80,6 +97,13 @@ class RosterSnapshot {
       // list opens with an empty stratagem section rather than failing.
       stratagems: asMap(j['stratagems']),
       enhancements: asMap(j['enhancements']),
+      factionRuleId: str(j['factionRuleId']),
+      // Absent in snapshots written before rules were tiered. An older list
+      // falls back to its own datasheets, which files a few more rules under
+      // the unit that has them rather than failing to open.
+      sharedAbilities: {
+        for (final id in asList(j['sharedAbilities'])) '$id',
+      },
     );
   }
 }
@@ -209,6 +233,11 @@ class SnapshotBuilder {
       }
     }
 
+    // The army rule is not reachable from any datasheet, so nothing above
+    // would have pulled it in.
+    final factionRuleId = dataset.faction.factionRuleId;
+    if (factionRuleId != null) takeAbility(factionRuleId);
+
     return RosterSnapshot(
       version: dataset.version,
       units: units,
@@ -217,6 +246,10 @@ class SnapshotBuilder {
       abilities: abilities,
       stratagems: stratagems,
       enhancements: enhancements,
+      factionRuleId: factionRuleId,
+      // Computed here, over the whole faction, because this is the last point
+      // at which the whole faction is in hand.
+      sharedAbilities: ArmyRules.sharedAcross(dataset.faction.units),
     );
   }
 }

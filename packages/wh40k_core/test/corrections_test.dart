@@ -74,6 +74,101 @@ abilities:
     });
   });
 
+  group('aliases fold a duplicate into the rule it repeats', () {
+    const yaml = '''
+aliases:
+  - faction: tau-empire
+    id: weapon-support-systems
+    canonical: weapon-support-system
+    reason: >
+      One rule transcribed twice, singular on one datasheet and plural on
+      another.
+''';
+
+    List<Object?> abilities() => [
+          {'ability_id': 'weapon-support-system', 'name': 'Weapon Support System'},
+          {'ability_id': 'weapon-support-systems', 'name': 'Weapon Support Systems'},
+          {'ability_id': 'nova-charge', 'name': 'Nova Charge'},
+        ];
+
+    test('the duplicate record is dropped', () {
+      final result =
+          DataCorrections.parse(yaml).applyToAbilities('tau-empire', abilities());
+
+      expect(
+        result.records.map((r) => (r! as Map)['ability_id']),
+        ['weapon-support-system', 'nova-charge'],
+      );
+      expect(result.applied, hasLength(1));
+      expect(result.unmatched, isEmpty);
+    });
+
+    test('datasheets referring to it are rewritten to the canonical id', () {
+      final result = DataCorrections.parse(yaml).applyToUnits('tau-empire', [
+        {
+          'id': 'crisis-fireknife-battlesuits',
+          'ability_ids': ['weapon-support-systems', 'fireknife'],
+          'wargear_budgets': [
+            {'items': ['weapon-support-systems'], 'count': 1},
+          ],
+        },
+      ]);
+
+      final unit = result.records.single! as Map;
+      expect(unit['ability_ids'], ['weapon-support-system', 'fireknife']);
+      expect((unit['wargear_budgets']! as List).single,
+          containsPair('items', ['weapon-support-system']));
+    });
+
+    test('a datasheet holding both ids ends up with one', () {
+      final result = DataCorrections.parse(yaml).applyToUnits('tau-empire', [
+        {
+          'id': 'x',
+          'ability_ids': ['weapon-support-system', 'weapon-support-systems'],
+        },
+      ]);
+      expect((result.records.single! as Map)['ability_ids'],
+          ['weapon-support-system']);
+    });
+
+    test('an alias never deletes a rule whose canonical is missing', () {
+      // Otherwise a typo in `canonical` silently removes a rule from the app
+      // rather than being reported as stale.
+      final result = DataCorrections.parse(yaml).applyToAbilities(
+        'tau-empire',
+        [
+          {'ability_id': 'weapon-support-systems', 'name': 'Weapon Support Systems'},
+        ],
+      );
+      expect(result.records, hasLength(1));
+      expect(result.applied, isEmpty);
+      expect(result.unmatched.map((c) => c.subject),
+          ['weapon-support-systems -> weapon-support-system']);
+    });
+
+    test('an alias with no reason, or pointing at itself, is ignored', () {
+      expect(
+        DataCorrections.parse('''
+aliases:
+  - faction: tau-empire
+    id: a
+    canonical: b
+''').aliases,
+        isEmpty,
+      );
+      expect(
+        DataCorrections.parse('''
+aliases:
+  - faction: tau-empire
+    id: a
+    canonical: a
+    reason: circular
+''').aliases,
+        isEmpty,
+      );
+    });
+  });
+
   group('application', () {
     test('the named ability is replaced and the rest left alone', () {
       final result = DataCorrections.parse(_yaml)
@@ -173,6 +268,40 @@ abilities:
         expect(correction.faction, isNotEmpty);
         expect(correction.abilityId, isNotEmpty);
         expect(correction.effect, isNotEmpty);
+      }
+      expect(corrections.aliases, isNotEmpty);
+      for (final alias in corrections.aliases) {
+        expect(alias.reason, isNotEmpty);
+        expect(alias.faction, isNotEmpty);
+        expect(alias.abilityId, isNotEmpty);
+        expect(alias.canonicalId, isNotEmpty);
+      }
+    });
+
+    test('no two ids in the shipped data render the same rule twice', () {
+      // The check the aliases exist to satisfy: an ability whose name differs
+      // only by a plural and whose effect is identical is one rule, and
+      // leaving it as two splits it across tiers on the rules screen.
+      final loader = DatasetLoader(
+        '../../data/40kdc',
+        corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
+      );
+      if (!loader.root.existsSync()) return;
+
+      for (final factionId in loader.availableFactions()) {
+        final seen = <String, String>{};
+        for (final ability in loader.loadFaction(factionId).abilities) {
+          final key = '${ability.name.toLowerCase().replaceAll(RegExp(r's$'), '')}'
+              '|${ability.effectFingerprint}';
+          final previous = seen[key];
+          expect(
+            previous,
+            isNull,
+            reason: '$factionId: ${ability.abilityId} and $previous are the '
+                'same rule under two ids — add an alias',
+          );
+          seen[key] = ability.abilityId;
+        }
       }
     });
 

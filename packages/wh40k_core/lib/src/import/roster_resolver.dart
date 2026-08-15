@@ -93,6 +93,7 @@ class RosterResolver {
 
     final units = <RosterUnit>[];
     final links = <RosterLink>[];
+    final chosenEnhancements = <({String id, String instanceId})>[];
     final groups = <String, List<String>>{};
     String? warlord;
     var index = 0;
@@ -126,6 +127,9 @@ class RosterResolver {
 
       final datasheet = match.value;
       final resolved = _resolveUnit(datasheet, parsedUnit, issues);
+      for (final enhancementId in resolved.enhancementIds) {
+        chosenEnhancements.add((id: enhancementId, instanceId: instanceId));
+      }
 
       // No customName: the attachment group is bookkeeping from the export
       // format, not something the player named the unit. Putting it here made
@@ -193,6 +197,22 @@ class RosterResolver {
       ));
     }
 
+    // An Enhancement goes on one Character; a Unit Upgrade may go on several,
+    // and the three of them share a slot — so upgrades are grouped by id and
+    // enhancements are not (§2.1).
+    final enhancementSelections = <EnhancementSelection>[];
+    final upgradeTargets = <String, List<String>>{};
+    for (final chosen in chosenEnhancements) {
+      if (_enhancement(chosen.id)?.isUpgrade ?? false) {
+        (upgradeTargets[chosen.id] ??= []).add(chosen.instanceId);
+      } else {
+        enhancementSelections.add(EnhancementSelection(
+          enhancementId: chosen.id,
+          targetInstanceId: chosen.instanceId,
+        ));
+      }
+    }
+
     return ImportResult(
       printedPoints: parsed.printedPoints,
       issues: issues,
@@ -204,6 +224,14 @@ class RosterResolver {
         declaredDisposition: _slug(parsed.disposition),
         units: units,
         links: links,
+        enhancements: enhancementSelections,
+        upgrades: [
+          for (final entry in upgradeTargets.entries)
+            UpgradeSelection(
+              upgradeId: entry.key,
+              targetInstanceIds: entry.value,
+            ),
+        ],
         warlordInstanceId: warlord,
       ),
     );
@@ -317,8 +345,22 @@ class RosterResolver {
       for (final group in modelNodes) ...group.children,
     ];
 
-    final tally = <String, int>{};
+    // `• Enhancement: Negation Emitters` is not wargear — it is a roster-level
+    // selection that costs points there. Recognised before tallying, or it
+    // fuzzy-matches the ability of the same name and is then discarded.
+    final enhancementIds = <String>[];
+    final remaining = <ParsedNode>[];
     for (final node in flat) {
+      final id = _enhancementFor(node.name, datasheet, issues);
+      if (id != null) {
+        enhancementIds.add(id);
+      } else {
+        remaining.add(node);
+      }
+    }
+
+    final tally = <String, int>{};
+    for (final node in remaining) {
       _tallyWargear(
         node: node,
         datasheet: datasheet,
@@ -335,6 +377,7 @@ class RosterResolver {
         for (final entry in tally.entries)
           WargearSelection(itemId: entry.key, count: entry.value),
       ],
+      enhancementIds: enhancementIds,
     );
   }
 
@@ -417,6 +460,57 @@ class RosterResolver {
     ));
   }
 
+  static final _enhancementPrefix =
+      RegExp(r'^\s*(enhancement|upgrade)\s*[:\-]\s*', caseSensitive: false);
+
+  SourceEnhancement? _enhancement(String id) {
+    for (final enhancement in catalogue.enhancements) {
+      if (enhancement.id == id) return enhancement;
+    }
+    return null;
+  }
+
+  /// The Enhancement or Unit Upgrade a `Enhancement: X` line names.
+  ///
+  /// Only lines carrying the prefix are considered. Matching every wargear
+  /// line against the enhancement list would let a weapon named like one slip
+  /// through and quietly add points.
+  String? _enhancementFor(
+    String name,
+    SourceUnit datasheet,
+    List<ResolutionIssue> issues,
+  ) {
+    if (!_enhancementPrefix.hasMatch(name)) return null;
+    final wanted = name.replaceFirst(_enhancementPrefix, '').trim();
+    if (wanted.isEmpty) return null;
+
+    // The data suffixes a Unit Upgrade's name — `Negation Emitters (Upgrade)`
+    // — where the export writes it plain, so both forms are tried.
+    final match = bestMatch<SourceEnhancement>(
+      wanted,
+      catalogue.enhancements,
+      (e) => e.name,
+      threshold: 0.7,
+    ) ??
+        bestMatch<SourceEnhancement>(
+          wanted,
+          catalogue.enhancements,
+          (e) => e.name.replaceAll(RegExp(r'\s*\([^)]*\)'), '').trim(),
+          threshold: 0.7,
+        );
+
+    if (match == null) {
+      issues.add(ResolutionIssue(
+        severity: IssueSeverity.warning,
+        message: '${datasheet.name}: no Enhancement matches "$wanted"',
+      ));
+      // Consumed regardless: it is not wargear, and leaving it to the wargear
+      // tally would report it as unresolved kit instead.
+      return null;
+    }
+    return match.value.id;
+  }
+
   /// The id of the datasheet ability [name] refers to, if any.
   String? _abilityFor(String name, List<_Candidate> candidates) =>
       bestMatch<_Candidate>(name, candidates, (c) => c.name, threshold: 0.7)
@@ -448,5 +542,13 @@ class _ResolvedUnit {
   final int models;
   final List<WargearSelection> wargear;
 
-  const _ResolvedUnit({required this.models, required this.wargear});
+  /// Enhancements and Unit Upgrades written on this unit's entry. Kept apart
+  /// from wargear because they live at roster level and cost points there.
+  final List<String> enhancementIds;
+
+  const _ResolvedUnit({
+    required this.models,
+    required this.wargear,
+    this.enhancementIds = const [],
+  });
 }

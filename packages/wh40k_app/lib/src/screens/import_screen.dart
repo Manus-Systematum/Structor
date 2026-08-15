@@ -53,13 +53,14 @@ class _ImportScreenState extends State<ImportScreen> {
 
       // The saved roster carries its own snapshot, so it stays renderable once
       // the bundled dataset changes or goes away (§2.2).
-      final snapshot = core.SnapshotBuilder(
-        dataset: dataset,
-        rawUnits: _raw(dataset.faction.units, (u) => u.id),
-        rawWeapons: _raw(dataset.faction.weapons, (w) => w.id),
-        rawDetachments: _raw(dataset.faction.detachments, (d) => d.id),
-        rawAbilities: _raw(dataset.faction.abilities, (a) => a.abilityId),
-      ).build(result.roster);
+      //
+      // Built from the shared builder rather than hand-assembled here: this
+      // once omitted stratagems and enhancements, so an imported list came
+      // back from storage with an empty stratagem section and priced lower
+      // than it had at import.
+      final builder =
+          await widget.datasets.snapshotBuilder(widget.factionId);
+      final snapshot = builder.build(result.roster);
 
       setState(() {
         _result = result;
@@ -72,90 +73,6 @@ class _ImportScreenState extends State<ImportScreen> {
       setState(() => _busy = false);
     }
   }
-
-  /// The snapshot builder wants the original records. The bundled loader keeps
-  /// parsed DTOs, so they are re-serialised here — acceptable because the
-  /// bundle and the model are the same build.
-  Map<String, Object?> _raw<T>(Iterable<T> items, String Function(T) idOf) => {
-        for (final item in items) idOf(item): _toJson(item),
-      };
-
-  Object? _toJson(Object? item) => switch (item) {
-        core.SourceUnit u => {
-            'id': u.id,
-            'name': u.name,
-            'faction_id': u.factionId,
-            'keywords': u.keywords,
-            'ability_ids': u.abilityIds,
-            'weapon_ids': u.weaponIds,
-            'attachment_role': u.attachmentRole,
-            'profiles': [
-              for (final p in u.profiles)
-                {
-                  'name': p.name,
-                  'M': p.m,
-                  'T': p.t,
-                  'W': p.w,
-                  'Sv': p.sv,
-                  'invuln_sv': p.invulnSv,
-                  'Ld': p.ld,
-                  'OC': p.oc,
-                },
-            ],
-            'points': [
-              for (final b in u.points)
-                {
-                  'models': b.models,
-                  'models_max': b.modelsMax,
-                  'cost': b.cost,
-                  'unit_count_min': b.unitCountMin,
-                  'unit_count_max': b.unitCountMax,
-                },
-            ],
-            'wargear_costs': [
-              for (final c in u.wargearCosts)
-                {'item_id': c.itemId, 'cost': c.cost},
-            ],
-          },
-        core.SourceWeapon w => {
-            'id': w.id,
-            'name': w.name,
-            'type': w.type,
-            'profiles': [
-              for (final p in w.profiles)
-                {
-                  'name': p.name,
-                  'range': p.range,
-                  'stats': p.stats,
-                  // Keyword parameters go through verbatim. Re-serialising
-                  // as bare ids is how Melta 2 became Melta in a snapshot
-                  // built at import time.
-                  'keywords': [for (final k in p.keywords) k.toJson()],
-                },
-            ],
-          },
-        core.SourceDetachment d => {
-            'id': d.id,
-            'name': d.name,
-            'faction_id': d.factionId,
-            'detachment_rule_id': d.detachmentRuleId,
-            'detachment_points': d.detachmentPoints,
-            'force_dispositions': d.forceDispositions,
-            'unique_tags': d.uniqueTags,
-            'stratagem_ids': d.stratagemIds,
-            'enhancement_ids': d.enhancementIds,
-          },
-        core.SourceAbility a => {
-            'ability_id': a.abilityId,
-            'name': a.name,
-            'ability_type': a.abilityType,
-            'behavior': a.behavior,
-            'effect': a.effect,
-            'usage': a.usage,
-            'unit_ids': a.unitIds,
-          },
-        _ => null,
-      };
 
   @override
   Widget build(BuildContext context) {

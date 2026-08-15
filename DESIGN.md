@@ -298,6 +298,10 @@ The corrected record carries its own provenance: a `corrected: {reason, upstream
 
 `faction: "*"` matches an ability in every faction that carries it. Core abilities are transcribed once per faction file, so a mistake in one is usually a mistake in all of them — **Stealth is wrong identically in all three**. A wildcard is only reported stale once a whole run has gone by without it firing anywhere; a faction that simply lacks the ability is not evidence of anything.
 
+**Aliases — one rule under two ids.** Upstream transcribes an ability once per datasheet that has it, and the datasheets do not agree on the plural: a Ghostkeel has a Battlesuit Support System, a Crisis Starscythe has Battlesuit Support Systems, and the effect records are identical. Left alone that is untidy; under §7.3.9 it is wrong, because whether a rule is *shared* is decided by counting the datasheets carrying its id, so a stray plural splits one shared rule into two rules nobody shares and files the same sentence in two different places.
+
+An `aliases:` entry names the duplicate and the `canonical` id it folds into. Every reference is rewritten — ability lists and wargear budgets both, since a support system is offered as wargear and named there by the same id — and the duplicate record is dropped. Two safeguards: the duplicate is removed **only once its canonical twin is confirmed present**, so a typo in `canonical` can never be the reason a rule disappears; and an alias is a merge, never a rename, so it cannot introduce an id upstream does not have. A test fails if two ids in any faction differ only by a plural and render the same effect, so the next one gets noticed rather than quietly splitting a tier.
+
 ### 3.7 What the first play-test found
 
 Seven complaints from one game, and the useful thing about them is that they sort into three quite different causes. Worth recording, because the ratio is not what it looks like from the screen: **most of what read as bad data was our own rendering.**
@@ -985,6 +989,35 @@ Eligibility renders as a badge on the unit row in SHOOTING, always with its reas
 
 **Ergonomics.** Keep the screen awake during a battle. Touch targets sized for a hand holding dice. The turn page must remain readable one-handed; the Army page is where landscape earns its place, for the wide weapon tables.
 
+### 7.3.9 Filing rules by reach
+
+The reference page of §7.3.8 files every rule the same way: one entry per ability, naming the datasheets that have it. Measured against real lists, that is the wrong shape twice over.
+
+| | datasheets | distinct rules | matrix cells | filled |
+|---|---|---|---|---|
+| T'au, 2000pts, Advanced Acquisition + Experimental Prototype | 9 | 30 | 270 | 47 (17%) |
+| Adeptus Astartes, Gladius Task Force, ~1900pts | 15 | 26 | 390 | 32 (8%) |
+
+Two facts follow. First, **the unit × rule matrix is 83–92% empty**, so drawing it as a grid is mostly whitespace. Second, and more useful: **21 of 30 T'au rules and 23 of 26 Marine rules belong to exactly one datasheet.** For that majority "who has this rule" has one answer, and it is the heading directly above — the entry pays for an index nobody needs. Meanwhile the handful that genuinely are shared carry an owner list long enough to bury the sentence it belongs to: *Deep Strike.* under five datasheet names.
+
+A third fact settles the layout: rendered rules text has a **median of 38 characters** and a maximum of 104. It is generated from structured effects, not transcribed prose. Descriptions are not the bulky part; the owner lists are.
+
+So rules are filed by how far they reach:
+
+* **Whole army** — the faction rule and the detachment rules. Stated once, never repeated. Universal keywords join them as a sentence (*Every unit: Battlesuit*) rather than becoming a column solid down its whole length.
+* **Shared** — rules more than one datasheet in the faction can take. These become columns over unit rows, which is the only tier where both questions are live at once: read a row for one unit's rules, read a column for one rule's units. Keyword columns sit beside them, answering *which of these can Fly* — a question no arrangement of the old page could answer, since it carried no keywords at all.
+* **Only this unit** — everything else, printed under the one datasheet that has it, where naming an owner would repeat the heading.
+
+**Sharedness is a property of the faction, not of the roster.** A Space Marine list with one Deep Strike unit still files Deep Strike as shared, because 37 datasheets in the catalogue carry it and the player asking "who can Deep Strike" knows it is a common rule. Deciding it per roster moved the same rule between tiers depending on what was taken, which reads as a bug. The consequence is that a roster snapshot must **carry the shared set**: a snapshot holds only the datasheets its roster uses, so a receiver counting owners locally would answer a narrower question and file a shared list differently from its sender (§6.4).
+
+**Column count belongs to the army, not to the phone.** T'au battlesuits share twelve rules where the Marine list shares six. Rather than cap the count and hide the overflow, the grid keeps every column and scrolls sideways inside its own box; unit names stay pinned, and the page still scrolls vertically as one piece.
+
+**A dot needs a way back to its headings.** In a wide grid a lone dot is hard to trace to either axis, so touching a row or a column lights both and names the rule underneath, with its text and its owners. That is also what keeps the grid from needing a legend.
+
+**Search is unchanged and takes precedence.** Typing a query restores the flat list of §7.3.8 across all four kinds, because recall — *I remember a word, not which kind it was* — wants the opposite shape from orientation.
+
+Two data consequences fell out of building this, both now fixed. `factions.json` has always carried `faction_rule_id`, but nothing read the file, so For the Greater Good and Oath of Moment were the one rule true of the whole army and the one rule the app never showed. And upstream transcribes an ability once per datasheet without agreeing on the plural — `battlesuit-support-system` and `battlesuit-support-systems` are the same effect — which splits one shared rule into two nobody shares. §3.6 gains an `aliases` correction that folds a duplicate into the id it repeats, and a test fails if a new one appears.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.
@@ -1228,7 +1261,7 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 
 **Done — the seven play-test findings (§3.7, §3.8):** operation-aware stat rendering, sign preservation, attacker/defender attribution, weapon keyword parameters end to end, ability-granted invulnerable saves in the INV column, per-datasheet attribution of an attached unit's abilities, and corrections for Stealth, Coldstar Commander and Starscythe.
 
-**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 267 core tests, 68 app tests; both analyzers clean.
+**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 299 core tests, 76 app tests; both analyzers clean.
 
 **Done — stratagems (§7.3):** the last major play-mode surface, and it is *not* a page.
 
@@ -1269,5 +1302,13 @@ Calling it "the stratagem screen" was the wrong frame. §7.2 says relevance come
 > **The builder is permissive and the validator is honest.** It will let you build an illegal list and say exactly how it is illegal, rather than refusing the tap. §2.3 settled that for validation, and the wargear-option data settles it again: `wargear-options` comes in three shapes across 87 records, and §3.8 found six datasheets that did not list the drones their units demonstrably carry. An editor that enforced that data would refuse legal lists, and a builder that will not let you enter the army standing on your table is worthless.
 
 **What is deliberately not built is a wargear-option engine.** Wargear is a counter per item over the datasheet's own vocabulary — its weapons plus its budgeted drones and support systems — rather than a gated `replace X with Y` flow. That is the honest ceiling of the current data. When the option records are complete and uniform, the counters can become constrained choices without changing the roster model.
+
+**Done — Enhancements were never priced.** A second real export, a 1,000 pt Incursion list, came in 30 points light. Three faults behind one symptom:
+
+- **`PointsCalculator` did not price Enhancements or Unit Upgrades at all.** §2.1 defines the unit cost as bracket plus wargear and nothing had ever added the third term, because the reference 2,000 pt list takes none. Any list with an Enhancement was under-priced, and the validator's points check would pass an illegal army. They are charged **per bearer** now — a Unit Upgrade on two units costs twice even though the two share one slot, which is the validator's arithmetic and not the calculator's.
+- **The importer dropped `• Enhancement: Negation Emitters`.** It fuzzy-matched the *ability* of the same name and reported an attachment gap. The prefix is now recognised before wargear tallying, matched against the faction's enhancements — trying the name both with and without the `(Upgrade)` suffix the data adds — and Unit Upgrades are grouped by id so one selection carries several targets.
+- **The import screen hand-assembled its own snapshot**, omitting stratagems and enhancements. An imported list therefore came back from storage with an empty stratagem section and priced lower than it had at import. It uses the shared `DatasetRepository.snapshotBuilder` now, and 77 lines of duplicated serialiser went with it.
+
+The list imports clean and prices to exactly 995, and `war_organ_incursion_1000.txt` joins the fixtures. Only lines carrying the `Enhancement:` prefix are matched against the enhancement list; matching every wargear line would let a weapon named like one quietly add points.
 
 **Next:** QR (§6.4), which also unlocks the opponent page, and reporting the stale Adeptus Astartes points and the local corrections upstream to 40kdc.

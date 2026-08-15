@@ -28,6 +28,12 @@ class UnitCost {
   final int copyIndex;
   final int base;
   final int wargear;
+
+  /// Enhancements and Unit Upgrades borne by this unit. Charged **per
+  /// bearer**: a Unit Upgrade on three units costs three times, even though
+  /// the three share one slot (§2.1).
+  final int enhancements;
+
   final PricingProblem? problem;
 
   const UnitCost({
@@ -36,10 +42,11 @@ class UnitCost {
     required this.copyIndex,
     required this.base,
     required this.wargear,
+    this.enhancements = 0,
     this.problem,
   });
 
-  int get total => base + wargear;
+  int get total => base + wargear + enhancements;
   bool get isPriced => problem == null;
 }
 
@@ -64,6 +71,28 @@ class PointsCalculator {
 
   RosterCost price(Roster roster) {
     final costs = <UnitCost>[];
+
+    // Enhancements and Unit Upgrades are priced per bearer, so they are
+    // gathered by instance before the units are walked. Slots are counted
+    // differently — three instances of an Upgrade share one — but that is the
+    // validator's arithmetic, not this one's (§2.1).
+    final borne = <String, int>{};
+    void charge(String instanceId, String enhancementId) {
+      for (final enhancement in catalogue.enhancements) {
+        if (enhancement.id != enhancementId) continue;
+        borne[instanceId] = (borne[instanceId] ?? 0) + enhancement.cost;
+        return;
+      }
+    }
+
+    for (final selection in roster.enhancements) {
+      charge(selection.targetInstanceId, selection.enhancementId);
+    }
+    for (final selection in roster.upgrades) {
+      for (final instanceId in selection.targetInstanceIds) {
+        charge(instanceId, selection.upgradeId);
+      }
+    }
 
     // Copy index is assigned in roster order, so it is tracked as we go rather
     // than recomputed per unit.
@@ -111,6 +140,7 @@ class PointsCalculator {
         copyIndex: copyIndex,
         base: bracket.cost,
         wargear: wargear,
+        enhancements: borne[unit.instanceId] ?? 0,
       ));
     }
 

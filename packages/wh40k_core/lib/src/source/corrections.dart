@@ -162,6 +162,45 @@ class WeaponCorrection implements Correction {
   });
 }
 
+/// Two ids for one rule, folded into one.
+///
+/// Upstream transcribes an ability once per datasheet that has it, and the
+/// datasheets do not agree on the plural: a Ghostkeel has a Battlesuit Support
+/// System, a Crisis Starscythe has Battlesuit Support Systems, and the effect
+/// records are identical. Left alone that is only untidy, but §7.3.9 decides
+/// whether a rule is shared by counting the datasheets that carry its id — so
+/// a stray plural splits one shared rule into two rules nobody shares, and the
+/// rules screen files the same sentence in two different places.
+///
+/// The alias is deliberately not a rename: [canonicalId] must already exist,
+/// so this can only ever merge a duplicate into a record upstream also has.
+class AliasCorrection implements Correction {
+  @override
+  final String faction;
+
+  /// The duplicate, which is dropped.
+  final String abilityId;
+
+  /// The record it folds into.
+  final String canonicalId;
+
+  @override
+  final String reason;
+
+  final String? upstream;
+
+  @override
+  String get subject => '$abilityId -> $canonicalId';
+
+  const AliasCorrection({
+    required this.faction,
+    required this.abilityId,
+    required this.canonicalId,
+    required this.reason,
+    this.upstream,
+  });
+}
+
 class CorrectionResult {
   final List<Object?> records;
 
@@ -182,19 +221,31 @@ class DataCorrections {
   final List<AbilityCorrection> abilities;
   final List<UnitCorrection> units;
   final List<WeaponCorrection> weapons;
+  final List<AliasCorrection> aliases;
 
   const DataCorrections({
     this.abilities = const [],
     this.units = const [],
     this.weapons = const [],
+    this.aliases = const [],
   });
 
   static const empty = DataCorrections();
 
   bool get isEmpty =>
-      abilities.isEmpty && units.isEmpty && weapons.isEmpty;
+      abilities.isEmpty &&
+      units.isEmpty &&
+      weapons.isEmpty &&
+      aliases.isEmpty;
 
   static const _anyFaction = '*';
+
+  /// Duplicate ability id to canonical id, for [factionId].
+  Map<String, String> _aliasesFor(String factionId) => {
+        for (final c in aliases)
+          if (c.faction == factionId || c.faction == _anyFaction)
+            c.abilityId: c.canonicalId,
+      };
 
   /// Applies weapon corrections to raw `weapons.json` records.
   ///
@@ -301,7 +352,8 @@ class DataCorrections {
       for (final c in units)
         if (c.faction == factionId || c.faction == _anyFaction) c.unitId: c,
     };
-    if (byId.isEmpty) {
+    final aliased = _aliasesFor(factionId);
+    if (byId.isEmpty && aliased.isEmpty) {
       return CorrectionResult(
         records: records,
         applied: const [],
@@ -312,6 +364,30 @@ class DataCorrections {
     final applied = <Correction>[];
     final out = <Object?>[];
 
+    /// Rewrites ids through [aliased], dropping a duplicate the canonical id
+    /// already covers.
+    List<String> resolve(Iterable<Object?> ids) {
+      final seen = <String>[];
+      for (final id in ids) {
+        final canonical = aliased['$id'] ?? '$id';
+        if (!seen.contains(canonical)) seen.add(canonical);
+      }
+      return seen;
+    }
+
+    /// The same rewrite inside wargear budgets, since a drone or a support
+    /// system is offered as wargear and named there by the same id.
+    List<Object?> resolveBudgets(List<Object?> budgets) => [
+          for (final b in budgets)
+            if (b is Map)
+              {
+                for (final e in b.entries) e.key.toString(): e.value,
+                'items': resolve(asList(b['items'])),
+              }
+            else
+              b,
+        ];
+
     for (final record in records) {
       if (record is! Map) {
         out.add(record);
@@ -319,15 +395,23 @@ class DataCorrections {
       }
       final correction = byId[record['id']?.toString()];
       if (correction == null) {
-        out.add(record);
+        // An alias applies to every datasheet, not only the ones a unit
+        // correction names, so this pass runs regardless.
+        if (aliased.isEmpty) {
+          out.add(record);
+          continue;
+        }
+        out.add({
+          for (final e in record.entries) e.key.toString(): e.value,
+          'ability_ids': resolve(asList(record['ability_ids'])),
+          'wargear_budgets': resolveBudgets(asList(record['wargear_budgets'])),
+        });
         continue;
       }
       applied.add(correction);
 
-      final abilityIds = <String>[
-        for (final id in asList(record['ability_ids'])) '$id',
-      ];
-      var budgets = [...asList(record['wargear_budgets'])];
+      final abilityIds = resolve(asList(record['ability_ids']));
+      var budgets = resolveBudgets(asList(record['wargear_budgets']));
 
       // Standard kit is not a choice, so it must not appear as a budget item
       // — otherwise the app hides its rule on any list that does not mention
@@ -384,7 +468,10 @@ class DataCorrections {
     final mine = abilities
         .where((c) => c.faction == factionId || c.faction == _anyFaction)
         .toList();
-    if (mine.isEmpty) {
+    final myAliases = aliases
+        .where((c) => c.faction == factionId || c.faction == _anyFaction)
+        .toList();
+    if (mine.isEmpty && myAliases.isEmpty) {
       return CorrectionResult(
         records: records,
         applied: const [],
@@ -393,6 +480,12 @@ class DataCorrections {
     }
 
     final byId = {for (final c in mine) c.abilityId: c};
+    final aliasById = {for (final c in myAliases) c.abilityId: c};
+    final present = {
+      for (final record in records)
+        if (record is Map && record['ability_id'] != null)
+          record['ability_id'].toString(),
+    };
     final applied = <Correction>[];
     final out = <Object?>[];
 
@@ -401,7 +494,17 @@ class DataCorrections {
         out.add(record);
         continue;
       }
-      final correction = byId[record['ability_id']?.toString()];
+      final id = record['ability_id']?.toString();
+
+      // A duplicate is dropped only once its canonical twin is confirmed
+      // present — an alias must never be the reason a rule disappears.
+      final alias = aliasById[id];
+      if (alias != null && present.contains(alias.canonicalId)) {
+        applied.add(alias);
+        continue;
+      }
+
+      final correction = byId[id];
       if (correction == null) {
         out.add(record);
         continue;
@@ -426,7 +529,7 @@ class DataCorrections {
       // such ability — only if no faction anywhere has it, which only the
       // caller iterating every faction can know.
       unmatched: [
-        for (final c in mine)
+        for (final c in <Correction>[...mine, ...myAliases])
           if (c.faction != _anyFaction && !applied.contains(c)) c,
       ],
     );
@@ -437,7 +540,12 @@ class DataCorrections {
   List<Correction> neverApplied(Iterable<Correction> applied) {
     final fired = applied.toSet();
     return [
-      for (final c in <Correction>[...abilities, ...units, ...weapons])
+      for (final c in <Correction>[
+        ...abilities,
+        ...units,
+        ...weapons,
+        ...aliases,
+      ])
         if (c.faction == _anyFaction && !fired.contains(c)) c,
     ];
   }
@@ -516,10 +624,31 @@ class DataCorrections {
       }
     }
 
+    final aliases = <AliasCorrection>[];
+    final rawAliases = root['aliases'];
+    if (rawAliases is List) {
+      for (final node in rawAliases) {
+        if (node is! Map) continue;
+        final reason = node['reason']?.toString().trim() ?? '';
+        final id = node['id']?.toString() ?? '';
+        final canonical = node['canonical']?.toString() ?? '';
+        if (reason.isEmpty || id.isEmpty || canonical.isEmpty) continue;
+        if (id == canonical) continue;
+        aliases.add(AliasCorrection(
+          faction: node['faction']?.toString() ?? '',
+          abilityId: id,
+          canonicalId: canonical,
+          reason: reason,
+          upstream: node['upstream']?.toString(),
+        ));
+      }
+    }
+
     return DataCorrections(
       abilities: abilities,
       units: units,
       weapons: weapons,
+      aliases: aliases,
     );
   }
 

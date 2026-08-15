@@ -56,6 +56,24 @@ void main() {
           revision: 'test',
         );
 
+    test('carries the faction its own army rule', () {
+      // factions.json shipped from the start and nothing read it, so the one
+      // rule true of every unit was the one rule the app never had (§7.3.9).
+      expect(load('tau-empire').faction.factionRuleId, 'for-the-greater-good');
+      expect(load('tau-empire').faction.factionName, 'T’au Empire');
+      expect(
+        load('adeptus-astartes').faction.factionRuleId,
+        'oath-of-moment',
+      );
+    }, skip: available ? null : 'no snapshot');
+
+    test('the army rule resolves to an ability that renders', () {
+      final dataset = load('tau-empire');
+      final rule = dataset.ability(dataset.faction.factionRuleId!);
+      expect(rule, isNotNull);
+      expect(const RulesRenderer().render(rule!).text, isNotEmpty);
+    }, skip: available ? null : 'no snapshot');
+
     test('pins a version', () {
       final dataset = load('tau-empire');
       expect(dataset.version.source, '40kdc');

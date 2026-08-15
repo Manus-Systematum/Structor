@@ -350,6 +350,61 @@ void main() {
     });
   });
 
+  group('a rule reads once, however the data spells it', () {
+    test('a duration already saying "until" is not prefixed again', () {
+      // Oath of Moment read "until until next command phase": the duration
+      // value carries the connective and the renderer pasted another in front.
+      final text = _text({
+        'type': 'designate-target',
+        'designation': 'oath-of-moment',
+        'select': {'scope': 'enemy-unit', 'count': 1},
+        'applies': {
+          'effect': {
+            'type': 're-roll',
+            'target': 'unit',
+            'modifier': {'roll': 'hit', 'subset': 'all-failures'},
+          },
+        },
+        'duration': 'until-next-command-phase',
+      });
+      expect(text, contains('until next command phase'));
+      expect(text, isNot(contains('until until')));
+    });
+
+    test('a duration without one still gets it', () {
+      final text = _text({
+        'type': 'designate-target',
+        'designation': 'marked',
+        'select': {'scope': 'enemy-unit', 'count': 1},
+        'duration': 'end-of-turn',
+      });
+      expect(text, contains('until end of turn'));
+    });
+
+    test('a counted frequency substitutes its count', () {
+      // The Ghostkeel's Stealth Drones are usable twice and read
+      // "(n per battle)" while the number sat unused beside the placeholder.
+      final rule = _render(
+        {
+          'type': 'damage-reduction',
+          'target': 'self',
+          'modifier': {'reduction': 'to-zero'},
+        },
+        usage: {'frequency': 'n-per-battle', 'count': 2},
+      );
+      expect(rule.text, contains('(2 per battle)'));
+      expect(rule.text, isNot(contains(' n ')));
+    });
+
+    test('an uncounted frequency is unchanged', () {
+      final rule = _render(
+        {'type': 'fight-first', 'modifier': <String, Object?>{}},
+        usage: {'frequency': 'once-per-turn'},
+      );
+      expect(rule.text, contains('(once per turn)'));
+    });
+  });
+
   group('phases are extracted for the turn page', () {
     test('a phase condition is reported alongside the text', () {
       final rule = _render({
