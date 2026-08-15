@@ -66,5 +66,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- Export compliance. Declared false because the app uses no encryption
+	     beyond what Apple exempts: dataset downloads go over HTTPS using the
+	     operating system's own TLS, the local database is plain SQLite with
+	     no SQLCipher, and the only cryptographic primitive in the code is a
+	     SHA-256 hash used to verify a downloaded bundle, which is a digest
+	     rather than encryption. Without this key App Store Connect holds
+	     every build for a manual answer to the same question. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
