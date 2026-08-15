@@ -1261,7 +1261,7 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 
 **Done — the seven play-test findings (§3.7, §3.8):** operation-aware stat rendering, sign preservation, attacker/defender attribution, weapon keyword parameters end to end, ability-granted invulnerable saves in the INV column, per-datasheet attribution of an attached unit's abilities, and corrections for Stealth, Coldstar Commander and Starscythe.
 
-**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 299 core tests, 76 app tests; both analyzers clean.
+**And drones, which were the interesting one.** They are wargear, not models, and the importer had been recognising them and discarding them — nine of sixteen units in the real export lost theirs. `bin/import.dart` now exists so the reference fixture is *derived* from `war_organ_export.txt` rather than hand-maintained; a fixture out of step with the importer stops testing it. 299 core tests, 81 app tests; both analyzers clean.
 
 **Done — stratagems (§7.3):** the last major play-mode surface, and it is *not* a page.
 
@@ -1310,5 +1310,11 @@ Calling it "the stratagem screen" was the wrong frame. §7.2 says relevance come
 - **The import screen hand-assembled its own snapshot**, omitting stratagems and enhancements. An imported list therefore came back from storage with an empty stratagem section and priced lower than it had at import. It uses the shared `DatasetRepository.snapshotBuilder` now, and 77 lines of duplicated serialiser went with it.
 
 The list imports clean and prices to exactly 995, and `war_organ_incursion_1000.txt` joins the fixtures. Only lines carrying the `Enhancement:` prefix are matched against the enhancement list; matching every wargear line would let a weapon named like one quietly add points.
+
+**Done — a guard on the shipped bundles.** The assets in `packages/wh40k_app/assets/bundles/` are built by hand, and nothing noticed when that step was skipped: the core tests read `data/40kdc` through a loader that applies corrections **live**, so they stay green while the app ships uncorrected data. The symptom is a drone import warning that the CLI cannot reproduce.
+
+`test/shipped_bundle_test.dart` reads what the app reads. It asserts the six corrected datasheets list their drones, that a drone's gun is BS5+, that Advanced Armour is mortal-wounds-only, and that **both real exports import with no issues at all** — not merely no errors, since an info line about an unlisted drone is exactly the symptom. Verified by rebuilding the bundles with corrections disabled: all five tests fail, with the drone message the user reported.
+
+`tools/rebuild-assets.sh` regenerates the fixture, the reference roster, the snapshot and the bundles in one command, so the step is harder to skip than to do.
 
 **Next:** QR (§6.4), which also unlocks the opponent page, and reporting the stale Adeptus Astartes points and the local corrections upstream to 40kdc.
