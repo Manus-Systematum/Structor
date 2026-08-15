@@ -1213,7 +1213,7 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 
 - About screen carrying the **"Powered by 40kdc-data"** attribution and link, which 40kdc's licence obliges any public deployment to display. A TestFlight build counts, so this was a genuine blocker rather than a nicety. **A test asserts the phrase verbatim** — if it fails the app is out of compliance, and the screen is what should change.
 - The same screen surfaces the dataset revision, bundle sizes, the Games Workshop disclaimer, a plain statement that nothing is collected, and the **provisional dataslate warning** §3.0 requires be visible rather than presented as current.
-- Build number scheme: `version: 0.1.0+2`. App Store Connect refuses a build number it has already accepted, so it increments on every upload regardless of the version.
+- Build number scheme: `version: <semver>+<build>`, currently `0.2.0+3`. App Store Connect refuses a build number it has already accepted, so the build number increments on every upload regardless of the version. `0.2.0` marks the release that added stratagems, secondaries and VP, the reference page and the army builder — everything since the first TestFlight upload at `0.1.0+2`.
 - iOS deployment target raised 13.0 → 15.0, ahead of Apple's Spring 2027 cutoff.
 - Bundle identifier settled as `dev.structor.app` on both platforms — permanent once App Store Connect has used it, and no longer carrying a Warhammer reference.
 - 35 app tests.

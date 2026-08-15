@@ -4,7 +4,7 @@ publish_to: none
 # The part after "+" is the build number. App Store Connect refuses a build
 # number it has already accepted, so increment it on EVERY upload — even when
 # the version before it is unchanged.
-version: 0.1.0+2
+version: 0.2.0+3
 
 environment:
   sdk: ^3.4.0

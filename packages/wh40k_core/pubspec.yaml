@@ -3,7 +3,7 @@ description: >-
   Pure-Dart domain core for the Warhammer 40,000 11th edition companion app:
   source ingest, normalised model, validation and rules rendering. No Flutter
   dependency, so the same code runs in the ETL, the app and (later) the server.
-version: 0.1.0
+version: 0.2.0
 publish_to: none
 
 environment:
