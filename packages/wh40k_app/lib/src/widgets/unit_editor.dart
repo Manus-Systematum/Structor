@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../theme.dart';
+import 'sheet_header.dart';
 
 /// Editing one unit: size, loadout, who it joins, what it carries.
 ///
@@ -47,20 +48,11 @@ class UnitEditorSheet extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 2),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(datasheet.name,
-                      style: const TextStyle(
-                          fontSize: 17, fontWeight: FontWeight.w800)),
-                ),
-                Text('$points pts',
-                    style: AppTheme.numeric(context, size: 15)
-                        .copyWith(fontWeight: FontWeight.w700)),
-              ],
-            ),
+          SheetHeader(
+            title: datasheet.name,
+            trailing: Text('$points pts',
+                style: AppTheme.numeric(context, size: 15)
+                    .copyWith(fontWeight: FontWeight.w700)),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),

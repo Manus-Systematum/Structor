@@ -94,7 +94,7 @@ class _WeaponRow extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               _Pill(
-                text: weapon.skill ?? 'auto',
+                text: weapon.skill ?? 'auto hit',
                 background: weapon.autoHits
                     ? scheme.tertiaryContainer
                     : scheme.surfaceContainerHighest,

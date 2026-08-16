@@ -5,6 +5,7 @@ import '../data/army.dart';
 import '../data/dataset_repository.dart';
 import '../data/roster_store.dart';
 import '../theme.dart';
+import '../widgets/sheet_header.dart';
 import '../widgets/unit_editor.dart';
 
 /// The army builder (DESIGN.md §4, the brief's first item).
@@ -643,6 +644,7 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            const SheetHeader(title: 'Add unit'),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
               child: SearchBar(

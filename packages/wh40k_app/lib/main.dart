@@ -16,7 +16,6 @@ import 'src/theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final store = RosterStore(await openAppDatabase());
-  await store.seedIfEmpty();
   final datasets = DatasetRepository(cache: await BundleCache.open());
   runApp(StructorApp(store: store, datasets: datasets));
 }

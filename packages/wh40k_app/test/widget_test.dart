@@ -188,7 +188,7 @@ void main() {
 
     // Torrent weapons merge into one auto-hitting pool instead of splitting.
     expect(find.text('10D6 atk'), findsWidgets);
-    expect(find.text('auto'), findsWidgets);
+    expect(find.text('auto hit'), findsWidgets);
   });
 
   testWidgets('rendered rules appear next to the weapons they modify',
@@ -203,4 +203,5 @@ void main() {
       reason: 'generated from the structured effect, not transcribed',
     );
   });
+
 }

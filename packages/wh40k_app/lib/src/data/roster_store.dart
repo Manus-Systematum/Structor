@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
 import 'package:wh40k_core/wh40k_core.dart' as core;
 
 import 'army.dart';
@@ -60,21 +59,6 @@ class RosterStore {
       updatedAt: DateTime.now(),
       rosterJson: jsonEncode(army.roster.toJson()),
       snapshotJson: jsonEncode(army.snapshot.toJson()),
-    ));
-  }
-
-  /// Puts the bundled reference army in on first launch, so a fresh install
-  /// has something to look at before anything has been imported.
-  Future<void> seedIfEmpty() async {
-    if (await db.count() > 0) return;
-    final rosterJson =
-        await rootBundle.loadString('assets/reference_roster.json');
-    final snapshotJson =
-        await rootBundle.loadString('assets/reference_snapshot.json');
-    await save(Army.fromSnapshot(
-      core.Roster.fromJson(jsonDecode(rosterJson)),
-      core.RosterSnapshot.fromJson(jsonDecode(snapshotJson)),
-      id: 'reference',
     ));
   }
 }

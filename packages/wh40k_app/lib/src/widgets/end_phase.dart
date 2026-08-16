@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../theme.dart';
+import 'sheet_header.dart';
 
 /// The END section of the turn page: victory points and the secondary deck
 /// (DESIGN.md §7.3.2, §7.3.3).
@@ -381,11 +382,7 @@ class _PickSheet extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 8),
-            child: Text('Choose a secondary',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
-          ),
+          const SheetHeader(title: 'Choose a secondary'),
           for (final card in cards)
             ListTile(
               dense: true,

@@ -48,6 +48,8 @@ class Army {
     );
   }
 
+  /// The reference army, from the bundled assets. **A test fixture only** —
+  /// nothing pre-installs it, so a fresh install starts with no armies.
   static Future<Army> loadReference() async {
     final rosterJson = await rootBundle.loadString('assets/reference_roster.json');
     final snapshotJson =

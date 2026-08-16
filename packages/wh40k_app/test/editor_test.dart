@@ -94,6 +94,24 @@ void main() {
     expect(find.textContaining('1 models'), findsOneWidget);
   });
 
+  testWidgets('the add-unit sheet can be left without adding anything',
+      (tester) async {
+    // It opens `isScrollControlled`, so it fills the screen: there is no scrim
+    // left to tap, and the list swallows the drag that would dismiss it. The
+    // close button is the only way out, and it has to stay.
+    await open(tester, initial: tau());
+
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+    expect(find.byType(SearchBar), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.close));
+    await settle(tester);
+
+    expect(find.byType(SearchBar), findsNothing);
+    expect(find.text('No units yet. Add one to get started.'), findsOneWidget);
+  });
+
   testWidgets('undo puts the army back', (tester) async {
     await open(tester, initial: tau());
 

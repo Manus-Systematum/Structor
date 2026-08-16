@@ -68,11 +68,8 @@ void main() {
     expect(table.weapons.map((w) => w.attacks.fixed), containsAll([8, 12]));
   });
 
-  test('seeding is idempotent', () async {
-    await store.seedIfEmpty();
-    expect(await db.count(), 1);
-    await store.seedIfEmpty();
-    expect(await db.count(), 1);
+  test('a fresh install starts empty', () async {
+    expect(await db.count(), 0);
   });
 
   test('delete removes the roster', () async {

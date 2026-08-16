@@ -81,7 +81,9 @@ class RosterListScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(32),
                 child: Text(
-                  'No rosters yet.\nImport a text export to get started.',
+                  'No armies yet.\n\n'
+                  'Build one from the datasheets, or import a text export '
+                  'from the list you already have.',
                   textAlign: TextAlign.left,
                   style: TextStyle(color: scheme.onSurfaceVariant),
                 ),
