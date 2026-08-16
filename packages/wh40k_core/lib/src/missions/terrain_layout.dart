@@ -93,6 +93,32 @@ class TerrainTemplate {
   }
 
   bool get isFeature => kind == 'feature';
+
+  /// The marking on the physical piece — `AB`, `CO`, `EF`, `GH`, `Tower`.
+  ///
+  /// Battlemaster's parts are lettered, and the whole point of a table
+  /// diagram is setting the real terrain out to match it, so the letter is
+  /// what turns the picture into instructions. It lives in the name and
+  /// nowhere else: there is no label field upstream.
+  ///
+  /// `Small L` and `Small L flip` are the same physical piece placed either
+  /// way round, so both read `Small L`.
+  String get label {
+    var out = name;
+    for (final prefix in const ['Battlemaster ']) {
+      if (out.startsWith(prefix)) out = out.substring(prefix.length);
+    }
+    if (out.endsWith(' flip')) out = out.substring(0, out.length - 5);
+    return out.trim();
+  }
+}
+
+/// A building placed on the board, with the letter it is marked with.
+class PlacedBuilding {
+  final String label;
+  final List<BoardPoint> outline;
+
+  const PlacedBuilding({required this.label, required this.outline});
 }
 
 /// Shifts a shape so its bounding box is centred on the origin.
@@ -252,17 +278,29 @@ class TerrainPiece {
   /// Two transforms composed: the feature sits in its template's local frame,
   /// and the template sits on the board. Empty for a piece whose template
   /// publishes no features — plenty of area terrain is just open ground.
-  List<List<BoardPoint>> buildings(Map<String, TerrainTemplate> templates) {
+  ///
+  /// > **The outlines are bounding boxes, not true shapes.** Every part the
+  /// > shipped layouts use is modelled upstream as a `width`/`height`
+  /// > rectangle, including the one *named* `Small L`, which is published as
+  /// > a plain 1.5×2.5 box. The library does contain properly L-shaped
+  /// > polygons — `corner-short`, `corner-ruin-left` and four more — but no
+  /// > layout references any of them. Drawing the real L would mean drawing
+  /// > a shape the data does not have (§7.6), so the diagram shows the
+  /// > footprint it publishes and says so.
+  List<PlacedBuilding> buildings(Map<String, TerrainTemplate> templates) {
     final template = templates[templateId];
     if (template == null) return const [];
 
-    final out = <List<BoardPoint>>[];
+    final out = <PlacedBuilding>[];
     for (final feature in template.features) {
-      final part = templates[feature.templateId]?.footprint;
-      if (part == null || part.length < 3) continue;
+      final part = templates[feature.templateId];
+      if (part == null || part.footprint.length < 3) continue;
       final inTemplate =
-          _place(part, feature.position, feature.rotationDegrees);
-      out.add(_place(inTemplate, position, rotationDegrees));
+          _place(part.footprint, feature.position, feature.rotationDegrees);
+      out.add(PlacedBuilding(
+        label: part.label,
+        outline: _place(inTemplate, position, rotationDegrees),
+      ));
     }
     return out;
   }

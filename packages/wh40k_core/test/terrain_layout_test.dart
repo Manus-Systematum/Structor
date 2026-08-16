@@ -192,7 +192,7 @@ void main() {
         final walls = <(String, List<BoardPoint>)>[];
         for (final piece in layout.pieces) {
           for (final building in piece.buildings(pack.terrainTemplates)) {
-            walls.add((piece.id, building));
+            walls.add((piece.id, building.outline));
           }
         }
         for (var i = 0; i < walls.length; i++) {
@@ -236,7 +236,7 @@ void main() {
           final area = piece.outline(pack.terrainTemplates);
           if (area.length < 3) continue;
           for (final wall in piece.buildings(pack.terrainTemplates)) {
-            for (final vertex in wall) {
+            for (final vertex in wall.outline) {
               total++;
               if (inside(vertex, area)) on++;
             }
@@ -264,7 +264,7 @@ void main() {
             if (p.x > areaMax) areaMax = p.x;
           }
           for (final wall in piece.buildings(pack.terrainTemplates)) {
-            for (final p in wall) {
+            for (final p in wall.outline) {
               if (p.x < wallMin) wallMin = p.x;
               if (p.x > wallMax) wallMax = p.x;
             }
@@ -347,8 +347,8 @@ void main() {
       final walls = piece.buildings(templates);
       expect(walls, hasLength(1));
       // Centred 2x2 at feature offset (2,0), piece offset (100,50).
-      expect(walls.single.map((p) => p.x), containsAll([101.0, 103.0]));
-      expect(walls.single.map((p) => p.y), containsAll([49.0, 51.0]));
+      expect(walls.single.outline.map((p) => p.x), containsAll([101.0, 103.0]));
+      expect(walls.single.outline.map((p) => p.y), containsAll([49.0, 51.0]));
     });
 
     test('a piece whose template has no features has no buildings', () {
@@ -377,6 +377,56 @@ void main() {
       });
       expect(piece.outline(const {}), isEmpty);
     });
+  });
+
+  group('the markings on the pieces', () {
+    test('a building carries the letter its physical piece is marked with',
+        () {
+      final labels = {
+        for (final layout in pack.terrainLayouts)
+          for (final piece in layout.pieces)
+            for (final building in piece.buildings(pack.terrainTemplates))
+              building.label,
+      };
+      // Setting real terrain out to match the diagram is the point of having
+      // it, and the letter is what makes that possible.
+      expect(labels, containsAll(['AB', 'CO', 'EF', 'GH']));
+      expect(labels, isNot(contains('')));
+    }, skip: skip);
+
+    test('the source prefix goes, and a mirrored piece keeps its name', () {
+      String labelOf(String name) =>
+          TerrainTemplate.fromJson({'id': 'x', 'name': name, 'kind': 'feature'})
+              .label;
+      expect(labelOf('Battlemaster AB'), 'AB');
+      expect(labelOf('Battlemaster Small L'), 'Small L');
+      // The same physical piece, laid the other way round.
+      expect(labelOf('Battlemaster Small L flip'), 'Small L');
+      expect(labelOf('Catwalk'), 'Catwalk');
+    });
+
+    test('every part the layouts use is published as a bounding box', () {
+      // Recorded rather than worked around. The real Battlemaster pieces are
+      // L-shaped; upstream models each as a `width`/`height` rectangle,
+      // including the one *named* "Small L". Properly L-shaped polygons do
+      // exist in the library — corner-short, corner-ruin-left and four more
+      // — but no layout references any of them, so drawing the real shape
+      // would mean inventing geometry the data does not have (§7.6).
+      final used = {
+        for (final template in pack.terrainTemplates.values)
+          for (final feature in template.features) feature.templateId,
+      };
+      expect(used, isNotEmpty);
+      for (final id in used) {
+        expect(pack.terrainTemplates[id]!.footprint, hasLength(4),
+            reason: '$id is a bounding box, not an outline');
+      }
+
+      // The unused L-shapes, so this test fails loudly if upstream ever
+      // starts placing them and the note above goes stale.
+      expect(pack.terrainTemplates['corner-short']!.footprint, hasLength(6));
+      expect(used, isNot(contains('corner-short')));
+    }, skip: skip);
   });
 
   group('finding the table for a matchup', () {

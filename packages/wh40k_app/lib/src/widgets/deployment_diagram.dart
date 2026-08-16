@@ -226,7 +226,7 @@ class _BoardPainter extends CustomPainter {
 
       for (final piece in table.pieces) {
         for (final building in piece.buildings(templates)) {
-          if (pathOfPoints(building) case final path?) {
+          if (pathOfPoints(building.outline) case final path?) {
             canvas.drawPath(
               path,
               Paint()..color = terrain.withValues(alpha: 0.55),
@@ -238,6 +238,11 @@ class _BoardPainter extends CustomPainter {
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = 0.8,
             );
+            // The letter the physical piece is marked with, so the diagram
+            // can be followed while setting the real terrain out. Drawn only
+            // where it fits: a 0.5"-thick barrier has no room for a word, and
+            // a label spilling past its own piece labels its neighbour.
+            _pieceLabel(canvas, path.getBounds(), building.label);
           }
         }
       }
@@ -269,6 +274,37 @@ class _BoardPainter extends CustomPainter {
   }
 
   static int _fallback(bool attacker) => attacker ? 0xFFEF4444 : 0xFF3B82F6;
+
+  /// Writes a piece's marking inside its own outline, or not at all.
+  void _pieceLabel(Canvas canvas, Rect bounds, String label) {
+    if (label.isEmpty) return;
+
+    final painter = TextPainter(
+      text: TextSpan(
+        text: label,
+        style: TextStyle(
+          fontSize: 7,
+          height: 1,
+          letterSpacing: 0.2,
+          fontWeight: FontWeight.w800,
+          color: objectiveRing,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    // Its own box, with a hair of margin. Anything that does not fit is left
+    // unlabelled rather than shrunk to illegibility or spilled onto a
+    // neighbour.
+    if (painter.width > bounds.width - 2 ||
+        painter.height > bounds.height - 2) {
+      return;
+    }
+    painter.paint(
+      canvas,
+      bounds.center - Offset(painter.width / 2, painter.height / 2),
+    );
+  }
 
   /// The polygon's area centroid, not its bounding-box centre. Every zone in
   /// the shipped patterns is an L or a bar, and a bounding box puts the label
