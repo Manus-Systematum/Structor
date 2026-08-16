@@ -18,6 +18,11 @@ const _coreFiles = [
   'mission-matchups',
   'secondary-cards',
   'deployment-patterns',
+  // The competitive terrain layouts and the piece shapes they place. ~21 KB
+  // gzipped together, against a 10 KB core bundle — the layouts are what turn
+  // the deployment diagram from a picture of two zones into the actual table.
+  'terrain-layouts',
+  'terrain-templates',
   'weapon-keywords',
   'unit-keywords',
   'stratagems',

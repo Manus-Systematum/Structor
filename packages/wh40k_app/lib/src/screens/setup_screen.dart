@@ -35,6 +35,10 @@ class _SetupScreenState extends State<SetupScreen> {
   var _mode = SecondaryMode.tactical;
   var _showFullGrid = false;
 
+  /// The published table, once one is chosen. Choosing one also fixes the
+  /// deployment pattern, because the layout names it.
+  String? _layoutId;
+
   @override
   void dispose() {
     _twist.dispose();
@@ -47,11 +51,32 @@ class _SetupScreenState extends State<SetupScreen> {
           .map((d) => widget.army.catalogue.detachment(d.detachmentId))
           .whereType<SourceDetachment>());
 
-  DeploymentPattern? get _deployment {
-    for (final pattern in widget.pack.deployments) {
-      if (pattern.id == _deploymentId) return pattern;
+  DeploymentPattern? get _deployment => widget.pack.deployment(_deploymentId ?? '');
+
+  /// The tables published for this matchup. Empty until both dispositions are
+  /// declared, since a layout is keyed by the pairing.
+  List<TerrainLayout> get _layouts {
+    final mine = _myDisposition;
+    final theirs = _opponentDisposition;
+    if (mine == null || theirs == null) return const [];
+    return widget.pack
+        .layoutsFor(disposition: mine, opponentDisposition: theirs);
+  }
+
+  TerrainLayout? get _layout {
+    for (final layout in _layouts) {
+      if (layout.id == _layoutId) return layout;
     }
     return null;
+  }
+
+  /// Picking a table also sets the deployment, because the layout is built on
+  /// one — offering them as separate questions would let the two disagree.
+  void _pickLayout(TerrainLayout? layout) {
+    setState(() {
+      _layoutId = layout?.id;
+      if (layout != null) _deploymentId = layout.deploymentPatternId;
+    });
   }
 
   bool get _complete =>
@@ -77,6 +102,7 @@ class _SetupScreenState extends State<SetupScreen> {
       myMissionId: myMission?.id ?? '',
       opponentMissionId: theirMission?.id ?? '',
       deploymentId: _deploymentId,
+      terrainLayoutId: _layoutId,
       twist: _twist.text.trim().isEmpty ? null : _twist.text.trim(),
       iAmAttacker: _iAmAttacker,
       iGoFirst: _iGoFirst,
@@ -198,9 +224,38 @@ class _SetupScreenState extends State<SetupScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Deployment',
-                    style: TextStyle(
-                        fontSize: 12, color: scheme.onSurfaceVariant)),
+                if (_layouts.isNotEmpty) ...[
+                  Text('Published table for this matchup',
+                      style: TextStyle(
+                          fontSize: 12, color: scheme.onSurfaceVariant)),
+                  const SizedBox(height: 6),
+                  Wrap(
+                    spacing: 6,
+                    runSpacing: 6,
+                    children: [
+                      ChoiceChip(
+                        label: const Text('None'),
+                        selected: _layoutId == null,
+                        onSelected: (_) => _pickLayout(null),
+                      ),
+                      for (final layout in _layouts)
+                        ChoiceChip(
+                          label: Text('${layout.sourceLabel} '
+                              '${layout.variant}'),
+                          selected: _layoutId == layout.id,
+                          onSelected: (_) => _pickLayout(layout),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                ],
+                Text(
+                  _layout == null
+                      ? 'Deployment'
+                      : 'Deployment · set by the table',
+                  style:
+                      TextStyle(fontSize: 12, color: scheme.onSurfaceVariant),
+                ),
                 const SizedBox(height: 6),
                 Wrap(
                   spacing: 6,
@@ -210,8 +265,12 @@ class _SetupScreenState extends State<SetupScreen> {
                       ChoiceChip(
                         label: Text(pattern.name),
                         selected: _deploymentId == pattern.id,
-                        onSelected: (_) =>
-                            setState(() => _deploymentId = pattern.id),
+                        // A chosen layout is built on one deployment, so the
+                        // pattern stops being a free choice rather than being
+                        // allowed to contradict the table on screen.
+                        onSelected: _layout != null
+                            ? null
+                            : (_) => setState(() => _deploymentId = pattern.id),
                       ),
                   ],
                 ),
@@ -224,7 +283,21 @@ class _SetupScreenState extends State<SetupScreen> {
                   DeploymentDiagram(
                     pattern: pattern,
                     iAmAttacker: _iAmAttacker,
+                    layout: _layout,
+                    templates: widget.pack.terrainTemplates,
                   ),
+                  // Named, not implied. These are community layouts, and the
+                  // app must not pass them off as Games Workshop's own (§7.6).
+                  if (_layout case final table?)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6),
+                      child: Text(
+                        '${table.name} — ${table.sourceLabel} layout, not a '
+                        'Games Workshop publication.',
+                        style: TextStyle(
+                            fontSize: 11, color: scheme.onSurfaceVariant),
+                      ),
+                    ),
                 ],
                 const SizedBox(height: 14),
                 TextField(

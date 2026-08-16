@@ -26,6 +26,7 @@ CORE_FILES=(
   mission-matchups.json
   secondary-cards.json
   deployment-patterns.json
+  terrain-layouts.json
   terrain-templates.json
   weapon-keywords.json
   unit-keywords.json

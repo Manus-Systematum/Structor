@@ -792,7 +792,17 @@ Steps 3–5 carry the value; 6–10 are recording and must be fast — a row of 
 
 **First turn is its own question.** It is decided by a roll-off and is not implied by attacker/defender, so it cannot be derived from step 8. It earns its place in the wizard rather than being defaulted because the battle round is *both players having taken a turn* — knowing who opens is what lets the round advance on its own instead of being stepped by hand (§7.4).
 
-**Step 6 draws the table.** `deployment-patterns.json` publishes the zones as real geometry — polygons or `width`/`height` rectangles, each with a `position` offset, plus each player's territory and the objective coordinates — so the pattern can be shown rather than described. "Short edge deployment with L-shaped zones" is a sentence about a shape; the shape itself is in the data. Your half is **named** on the picture, not just coloured: the patterns are symmetric under attacker/defender, so the only thing making one side yours is the declaration made several steps earlier, which is exactly what nobody remembers while unpacking models. Opponent's disposition precedes the player's so the grid can collapse to two options at the moment of choosing; if the real sequence is simultaneous, step 4 shows the full 2×5 instead.
+**Step 6 draws the terrain too.** `terrain-layouts.json` publishes 46 competitive tables — every piece placed by position and rotation against a shared template library — and a deployment pattern without terrain is only half a table: in 11e the same pattern with different ruins is a different game. Choosing a published table also **sets the deployment pattern**, because the layout is built on one; offering them as independent questions would let the two disagree on screen.
+
+Three things the layout data settles:
+
+- **The lookup commutes; the mission table does not.** `(A vs B)` and `(B vs A)` are different missions, but they are the *same physical table*, and upstream publishes each pairing once — 15 unordered pairs, 3 variants each. Looking up only the declared order finds nothing for ten of the twenty-five matchups, and the failure reads as missing data rather than a lookup that forgot to commute.
+- **Placement is rotate-about-the-template's-origin, then translate.** Verified against all 745 pieces: that convention lands 633 wholly on the board with the rest overhanging an edge by at most 3.73″, while rotating about the footprint's centroid shifts every layout off the long edge — and still looks like a plausible table, which is why it is asserted rather than eyeballed.
+- **Templates come as polygons *or* rectangles**, 50 and 19 of them. Reading only `points` leaves nineteen templates' pieces with no outline, and a piece with no outline is not an error anywhere — it simply does not appear.
+
+> ⚠ **These are not Chapter Approved layouts.** Upstream publishes 45 from `battlemaster-11e` and one from `kotc`, and no Games Workshop set at all — `missions.json` carries the Chapter Approved source, the terrain does not. The screen names the source under every table and says plainly that it is not a Games Workshop publication (§7.6). If GW's own layouts are ever published as data, they slot into the same structure.
+
+**Step 6 also draws the zones.** `deployment-patterns.json` publishes them as real geometry — polygons or `width`/`height` rectangles, each with a `position` offset, plus each player's territory and the objective coordinates — so the pattern can be shown rather than described. "Short edge deployment with L-shaped zones" is a sentence about a shape; the shape itself is in the data. Your half is **named** on the picture, not just coloured: the patterns are symmetric under attacker/defender, so the only thing making one side yours is the declaration made several steps earlier, which is exactly what nobody remembers while unpacking models. Opponent's disposition precedes the player's so the grid can collapse to two options at the moment of choosing; if the real sequence is simultaneous, step 4 shows the full 2×5 instead.
 
 **The matchup table is asymmetric.** `(A vs B)` and `(B vs A)` are different cells yielding different missions — 25 ordered pairs, 25 distinct missions, mirrors on the diagonal. Declaring Reconnaissance against Take and Hold means **you** play Reconnaissance Sweep while **they** play Purge and Secure, simultaneously, on the same table. Setup therefore resolves two missions, not one.
 
@@ -1385,5 +1395,16 @@ Two things ingesting thirty-two new factions turned up, both by tests rather tha
 Verified on the simulator: Blood Angels lists *Angelic Inheritors*, *Encarmine Speartip* and *Liberator Assault Group* beside the shared Astartes detachments, offers Sanguinary Guard, Sanguinary Priest and The Sanguinor from the inherited catalogue, and prices the Guard at 125.
 
 328 core tests, 96 app tests; both analyzers clean.
+
+**Done — terrain layouts (§7.3.1).** `terrain-layouts.json` was never fetched: 278 KB of published competitive tables, every piece placed by position and rotation, sitting upstream unread. With `terrain-templates.json` beside it the setup screen now draws the actual table rather than two coloured zones, and picking one sets the deployment pattern it is built on.
+
+- **+18 KB.** The core bundle goes 10.2 → 28.7 KB, the total 725 → 743 KB. Cheap for the single most-looked-at picture in the app.
+- **The matchup lookup commutes.** Fifteen unordered pairs, three variants each — the terrain is one physical table however the two players declared. Ten of the twenty-five matchups find nothing without it.
+- **The transform is pinned by measurement, not by eye.** Rotate about the template origin then translate: 633 of 745 pieces wholly on board, worst overhang 3.73″. The centroid alternative also produces a plausible-looking table, which is exactly why it is asserted.
+- **Nineteen of sixty-nine templates are rectangles**, not polygons — the same split the deployment zones have. A test caught the missing branch; without it those pieces are invisible and nothing reports an error.
+
+> ⚠ **Not Chapter Approved.** These are Battlemaster (45) and KOTC (1); upstream publishes no Games Workshop layout set. The UI names the source on every table and says it is not a GW publication.
+
+340 core tests, 96 app tests; both analyzers clean. Verified on the simulator: *Take vs Take 01* draws ten ruins and five objectives on Tipping Point, and switching to variant 2 moves the whole table to Dawn of War with the pieces rotated.
 
 **Next:** QR (§6.4), which also unlocks the opponent page, and reporting upstream: the stale Adeptus Astartes points, the local corrections, and the four factions' dangling `detachment_id` references (§3.9).

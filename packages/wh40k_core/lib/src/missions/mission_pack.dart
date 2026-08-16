@@ -13,6 +13,7 @@ library;
 
 import '../source/json.dart';
 import '../source/source_models.dart';
+import 'terrain_layout.dart';
 
 class ForceDisposition {
   final String id;
@@ -293,12 +294,20 @@ class MissionPack {
   final List<DeploymentPattern> deployments;
   final List<MissionMatchupEntry> matchups;
 
+  /// Published competitive tables (§7.3.1). Empty on a pack built before they
+  /// were bundled, which the setup screen degrades around.
+  final List<TerrainLayout> terrainLayouts;
+
+  final Map<String, TerrainTemplate> terrainTemplates;
+
   const MissionPack({
     this.dispositions = const {},
     this.missions = const {},
     this.cards = const {},
     this.deployments = const [],
     this.matchups = const [],
+    this.terrainLayouts = const [],
+    this.terrainTemplates = const {},
   });
 
   factory MissionPack.fromJson({
@@ -307,6 +316,8 @@ class MissionPack {
     required List<Object?> matchups,
     required List<Object?> cards,
     required List<Object?> deployments,
+    List<Object?> terrainLayouts = const [],
+    List<Object?> terrainTemplates = const [],
   }) {
     final parsedCards = cards.map(MissionCard.fromJson).toList();
     return MissionPack(
@@ -325,6 +336,13 @@ class MissionPack {
       },
       deployments: deployments.map(DeploymentPattern.fromJson).toList(),
       matchups: matchups.map(MissionMatchupEntry.fromJson).toList(),
+      terrainLayouts:
+          terrainLayouts.map(TerrainLayout.fromJson).toList(),
+      terrainTemplates: {
+        for (final raw in terrainTemplates)
+          if (TerrainTemplate.fromJson(raw) case final t when t.id.isNotEmpty)
+            t.id: t,
+      },
     );
   }
 
@@ -338,6 +356,37 @@ class MissionPack {
         ..sort((a, b) => a.name.compareTo(b.name));
 
   MissionCard? card(String id) => cards[id];
+
+  DeploymentPattern? deployment(String id) {
+    for (final pattern in deployments) {
+      if (pattern.id == id) return pattern;
+    }
+    return null;
+  }
+
+  /// The published tables for this pairing.
+  ///
+  /// **The lookup is unordered, and the mission table is not.** `(A vs B)` and
+  /// `(B vs A)` are different cells yielding different missions — that is the
+  /// whole point of §7.3.1 — but they are the *same physical table*, and
+  /// upstream publishes each pairing once. Fifteen unordered pairs, three
+  /// variants each. Looking up only the declared order finds nothing for ten
+  /// of the twenty-five matchups, and the failure looks like missing data
+  /// rather than a lookup that forgot to commute.
+  List<TerrainLayout> layoutsFor({
+    required String disposition,
+    required String opponentDisposition,
+  }) {
+    final forward = '$disposition-vs-$opponentDisposition';
+    final reverse = '$opponentDisposition-vs-$disposition';
+    final out = [
+      for (final layout in terrainLayouts)
+        if (layout.missionMatchupId == forward ||
+            layout.missionMatchupId == reverse)
+          layout,
+    ]..sort((a, b) => a.variant.compareTo(b.variant));
+    return out;
+  }
 
   /// The mission played by a player declaring [disposition] against an
   /// opponent declaring [opponentDisposition]. Order matters.

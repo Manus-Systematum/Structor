@@ -26,6 +26,11 @@ class MissionSetup {
 
   final String? deploymentId;
 
+  /// The published table this was played on, when one was chosen. Recorded so
+  /// the choice survives into the game rather than evaporating with the
+  /// wizard — the table is the one piece of setup you keep looking at.
+  final String? terrainLayoutId;
+
   /// Free text. There is no twist data upstream, and the twist is optional
   /// anyway, so the player records what they drew rather than picking from a
   /// list that does not exist.
@@ -48,6 +53,7 @@ class MissionSetup {
     required this.myMissionId,
     required this.opponentMissionId,
     this.deploymentId,
+    this.terrainLayoutId,
     this.twist,
     this.iAmAttacker = true,
     this.iGoFirst = true,
@@ -63,6 +69,7 @@ class MissionSetup {
       myMissionId: strOr(j['myMissionId'], ''),
       opponentMissionId: strOr(j['opponentMissionId'], ''),
       deploymentId: str(j['deploymentId']),
+      terrainLayoutId: str(j['terrainLayoutId']),
       twist: str(j['twist']),
       iAmAttacker: j['iAmAttacker'] != false,
       // Absent in games saved before the choice existed, and those all ran as
@@ -81,6 +88,7 @@ class MissionSetup {
         'myMissionId': myMissionId,
         'opponentMissionId': opponentMissionId,
         if (deploymentId != null) 'deploymentId': deploymentId,
+        if (terrainLayoutId != null) 'terrainLayoutId': terrainLayoutId,
         if (twist != null) 'twist': twist,
         'iAmAttacker': iAmAttacker,
         'iGoFirst': iGoFirst,

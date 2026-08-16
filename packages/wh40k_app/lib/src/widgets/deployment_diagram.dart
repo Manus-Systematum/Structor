@@ -18,10 +18,19 @@ class DeploymentDiagram extends StatelessWidget {
   /// Which half is yours. Flips the labels, never the geometry.
   final bool iAmAttacker;
 
+  /// The table's terrain, when a published layout has been chosen. Without
+  /// one the diagram is still the zones, which is what it was before layouts
+  /// were bundled.
+  final TerrainLayout? layout;
+
+  final Map<String, TerrainTemplate> templates;
+
   const DeploymentDiagram({
     super.key,
     required this.pattern,
     required this.iAmAttacker,
+    this.layout,
+    this.templates = const {},
   });
 
   @override
@@ -51,7 +60,10 @@ class DeploymentDiagram extends StatelessWidget {
                 painter: _BoardPainter(
                   pattern: pattern,
                   iAmAttacker: iAmAttacker,
+                  layout: layout,
+                  templates: templates,
                   outline: scheme.outline,
+                  terrain: scheme.onSurfaceVariant,
                   objectiveFill: scheme.onSurface,
                   objectiveRing: scheme.surface,
                 ),
@@ -72,8 +84,13 @@ class DeploymentDiagram extends StatelessWidget {
             _Key(label: 'Opponent', color: _zoneColor(!iAmAttacker)),
             const Spacer(),
             Text(
-              '${_inches(size.x)}″ × ${_inches(size.y)}″'
-              '${pattern.objectives.isEmpty ? '' : ' · ${pattern.objectives.length} objectives'}',
+              [
+                '${_inches(size.x)}″ × ${_inches(size.y)}″',
+                if (layout != null)
+                  '${layout!.pieces.where((p) => !p.isObjective).length} pieces'
+                else if (pattern.objectives.isNotEmpty)
+                  '${pattern.objectives.length} objectives',
+              ].join(' · '),
               style: TextStyle(fontSize: 10.5, color: scheme.onSurfaceVariant),
             ),
           ],
@@ -96,14 +113,20 @@ class DeploymentDiagram extends StatelessWidget {
 class _BoardPainter extends CustomPainter {
   final DeploymentPattern pattern;
   final bool iAmAttacker;
+  final TerrainLayout? layout;
+  final Map<String, TerrainTemplate> templates;
   final Color outline;
+  final Color terrain;
   final Color objectiveFill;
   final Color objectiveRing;
 
   _BoardPainter({
     required this.pattern,
     required this.iAmAttacker,
+    required this.layout,
+    required this.templates,
     required this.outline,
+    required this.terrain,
     required this.objectiveFill,
     required this.objectiveRing,
   });
@@ -158,7 +181,49 @@ class _BoardPainter extends CustomPainter {
           mine);
     }
 
-    for (final objective in pattern.objectives) {
+    // Terrain sits above the zones and below the objectives: it is what the
+    // zones are *for*, and an objective hidden under a ruin is the one thing
+    // on the table you must be able to find.
+    final table = layout;
+    if (table != null) {
+      for (final piece in table.pieces) {
+        if (piece.isObjective) continue;
+        final points = piece.outline(templates);
+        if (points.length < 3) continue;
+
+        final path = Path();
+        for (var i = 0; i < points.length; i++) {
+          final o = project(points[i]);
+          i == 0 ? path.moveTo(o.dx, o.dy) : path.lineTo(o.dx, o.dy);
+        }
+        path.close();
+
+        canvas.drawPath(
+          path,
+          Paint()..color = terrain.withValues(alpha: 0.22),
+        );
+        canvas.drawPath(
+          path,
+          Paint()
+            ..color = terrain.withValues(alpha: 0.55)
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 0.7,
+        );
+      }
+    }
+
+    // A layout places its own objective markers; the pattern's are the
+    // fallback for a table with no layout chosen. Drawing both double-marks
+    // every objective.
+    final objectives = table == null
+        ? pattern.objectives
+        : [
+            for (final piece in table.pieces)
+              if (piece.isObjective) piece.position,
+          ];
+
+    for (final objective in
+        objectives.isEmpty ? pattern.objectives : objectives) {
       final o = project(objective);
       canvas.drawCircle(o, 5, Paint()..color = objectiveRing);
       canvas.drawCircle(
@@ -226,6 +291,7 @@ class _BoardPainter extends CustomPainter {
   bool shouldRepaint(_BoardPainter old) =>
       old.pattern.id != pattern.id ||
       old.iAmAttacker != iAmAttacker ||
+      old.layout?.id != layout?.id ||
       old.outline != outline;
 }
 

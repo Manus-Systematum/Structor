@@ -309,6 +309,8 @@ class DatasetRepository {
       matchups: data.file('mission-matchups'),
       cards: data.file('secondary-cards'),
       deployments: data.file('deployment-patterns'),
+      terrainLayouts: data.file('terrain-layouts'),
+      terrainTemplates: data.file('terrain-templates'),
     );
   }
 }
