@@ -405,6 +405,72 @@ void main() {
       expect(labelOf('Catwalk'), 'Catwalk');
     });
 
+    test('rotation is real information, so the tick has something to show',
+        () {
+      // A bounding box is symmetric: 0° and 180° draw the same picture. That
+      // upstream distinguishes them anyway is the evidence the underlying
+      // shape is not symmetric — these are L-shaped ruins and the rotation
+      // says where the L points. Without the tick the diagram throws that
+      // away and two differently-turned pieces look identical.
+      final byPart = <String, Set<double>>{};
+      for (final template in pack.terrainTemplates.values) {
+        for (final feature in template.features) {
+          (byPart[feature.templateId] ??= {}).add(feature.rotationDegrees);
+        }
+      }
+      for (final id in const ['ef', 'gh', 'co', 'small-l']) {
+        final key = 'bm-bm-terrain-11e-1-part-$id';
+        expect(byPart[key], containsAll([0.0, 90.0, 180.0, 270.0]),
+            reason: key);
+      }
+    }, skip: skip);
+
+    test('the tick turns with its piece and stays on it', () {
+      final templates = {
+        'area': TerrainTemplate.fromJson(const {
+          'id': 'area',
+          'kind': 'area',
+          'footprint': {
+            'points': [
+              {'x': 0, 'y': 0},
+              {'x': 10, 'y': 0},
+              {'x': 10, 'y': 10},
+              {'x': 0, 'y': 10},
+            ],
+          },
+          'features': [
+            {
+              'id': 'f',
+              'template': 'wall',
+              'position': {'x': 0, 'y': 0},
+            },
+          ],
+        }),
+        'wall': TerrainTemplate.fromJson(const {
+          'id': 'wall',
+          'kind': 'feature',
+          'footprint': {'type': 'rectangle', 'width': 4, 'height': 2},
+        }),
+      };
+
+      List<BoardPoint> markAt(double degrees) => TerrainPiece.fromJson({
+            'id': 'p',
+            'template': 'area',
+            'position': const {'x': 0, 'y': 0},
+            'rotation_degrees': degrees,
+          }).buildings(templates).single.cornerMark;
+
+      // Three points: along one edge, the corner, along the other.
+      expect(markAt(0), hasLength(3));
+      // The corner is a corner of the box, so it sits at half the extents.
+      expect(markAt(0)[1].x.abs(), closeTo(2, 1e-9));
+      expect(markAt(0)[1].y.abs(), closeTo(1, 1e-9));
+      // And it moves when the piece turns, which is the whole point: a
+      // symmetric box drawn at 0 and at 180 is otherwise the same picture.
+      expect(markAt(180)[1].x, closeTo(-markAt(0)[1].x, 1e-9));
+      expect(markAt(180)[1].y, closeTo(-markAt(0)[1].y, 1e-9));
+    });
+
     test('every part the layouts use is published as a bounding box', () {
       // Recorded rather than worked around. The real Battlemaster pieces are
       // L-shaped; upstream models each as a `width`/`height` rectangle,

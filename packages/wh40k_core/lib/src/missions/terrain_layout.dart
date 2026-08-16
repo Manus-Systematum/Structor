@@ -118,7 +118,46 @@ class PlacedBuilding {
   final String label;
   final List<BoardPoint> outline;
 
-  const PlacedBuilding({required this.label, required this.outline});
+  /// A three-point polyline hugging the piece's local origin corner — the
+  /// corner tick the diagram draws.
+  ///
+  /// **Why this is recoverable at all.** The published footprint is a
+  /// bounding box, which is symmetric, so a box alone cannot say which way a
+  /// piece is turned. But `part-ef`, `part-gh`, `part-co` and `part-small-l`
+  /// each appear at 0°, 90°, 180° *and* 270°, and 0 and 180 are the same
+  /// picture for a rectangle — upstream would have no reason to distinguish
+  /// them unless the real shape is asymmetric. It is: these are L-shaped
+  /// ruins, and `rotation_degrees` is carrying where the L points.
+  ///
+  /// So the rotation is real information the box was throwing away. The tick
+  /// puts it back by marking one consistent corner of the piece's own frame
+  /// and turning it with the piece. It shows **how the piece is turned**; it
+  /// is not a measured wall position, because upstream does not publish one.
+  final List<BoardPoint> cornerMark;
+
+  const PlacedBuilding({
+    required this.label,
+    required this.outline,
+    this.cornerMark = const [],
+  });
+}
+
+/// The corner tick for [outline]: along each edge meeting its first vertex,
+/// a fraction of the way. Short enough to read as a corner rather than as a
+/// second outline.
+List<BoardPoint> _cornerMark(List<BoardPoint> outline) {
+  if (outline.length < 3) return const [];
+  const reach = 0.45;
+  BoardPoint towards(BoardPoint from, BoardPoint to) => BoardPoint(
+        from.x + (to.x - from.x) * reach,
+        from.y + (to.y - from.y) * reach,
+      );
+  final corner = outline.first;
+  return [
+    towards(corner, outline.last),
+    corner,
+    towards(corner, outline[1]),
+  ];
 }
 
 /// Shifts a shape so its bounding box is centred on the origin.
@@ -297,9 +336,11 @@ class TerrainPiece {
       if (part == null || part.footprint.length < 3) continue;
       final inTemplate =
           _place(part.footprint, feature.position, feature.rotationDegrees);
+      final placed = _place(inTemplate, position, rotationDegrees);
       out.add(PlacedBuilding(
         label: part.label,
-        outline: _place(inTemplate, position, rotationDegrees),
+        outline: placed,
+        cornerMark: _cornerMark(placed),
       ));
     }
     return out;

@@ -238,6 +238,28 @@ class _BoardPainter extends CustomPainter {
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = 0.8,
             );
+            // The corner tick, showing which way the piece is turned. The
+            // published footprint is a symmetric box, so without this the
+            // rotation the data carries is invisible — and these pieces are
+            // L-shaped, so the turn is the thing you need to copy.
+            final mark = building.cornerMark;
+            if (mark.length >= 3) {
+              final tick = Path();
+              for (var i = 0; i < mark.length; i++) {
+                final o = project(mark[i]);
+                i == 0 ? tick.moveTo(o.dx, o.dy) : tick.lineTo(o.dx, o.dy);
+              }
+              canvas.drawPath(
+                tick,
+                Paint()
+                  ..color = objectiveRing
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 1.8
+                  ..strokeCap = StrokeCap.round
+                  ..strokeJoin = StrokeJoin.round,
+              );
+            }
+
             // The letter the physical piece is marked with, so the diagram
             // can be followed while setting the real terrain out. Drawn only
             // where it fits: a 0.5"-thick barrier has no room for a word, and

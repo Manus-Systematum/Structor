@@ -293,10 +293,10 @@ class _SetupScreenState extends State<SetupScreen> {
                       padding: const EdgeInsets.only(top: 6),
                       child: Text(
                         '${table.name} — ${table.sourceLabel} layout, not a '
-                        'Games Workshop publication. Pieces are drawn at '
-                        'their published footprint, which upstream gives as a '
-                        'bounding box; the real ${table.sourceLabel} parts '
-                        'are L-shaped.',
+                        'Games Workshop publication.\n'
+                        'The real parts are L-shaped; upstream publishes each '
+                        'as a bounding box, so the tick marks which way the '
+                        'piece is turned rather than where its walls run.',
                         style: TextStyle(
                             fontSize: 11, color: scheme.onSurfaceVariant),
                       ),
