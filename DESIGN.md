@@ -799,6 +799,9 @@ Three things the layout data settles:
 - **The lookup commutes; the mission table does not.** `(A vs B)` and `(B vs A)` are different missions, but they are the *same physical table*, and upstream publishes each pairing once — 15 unordered pairs, 3 variants each. Looking up only the declared order finds nothing for ten of the twenty-five matchups, and the failure reads as missing data rather than a lookup that forgot to commute.
 - **Placement is rotate-about-the-template's-origin, then translate.** Verified against all 745 pieces: that convention lands 633 wholly on the board with the rest overhanging an edge by at most 3.73″, while rotating about the footprint's centroid shifts every layout off the long edge — and still looks like a plausible table, which is why it is asserted rather than eyeballed.
 - **Templates come as polygons *or* rectangles**, 50 and 19 of them. Reading only `points` leaves nineteen templates' pieces with no outline, and a piece with no outline is not an error anywhere — it simply does not appear.
+- **There are two levels, and the buildings are the lower one.** A template's `footprint` is the *area terrain* boundary — the ground you are within. The ruins standing in it are its `features`, 72 of them across 38 templates, each a part template with its own position and rotation inside the parent's frame. Drawing only the footprint gives you the zone with nothing standing in it.
+- **An objective is usually a building.** 275 of the 745 pieces carry an objective and 270 of those are ruins: the objective sits *in* the terrain, it is not a bare marker on open ground. Treating `is_objective` as "not terrain" drops a third of every table.
+- **A rectangle's origin depends on its `kind`.** An `area` rectangle is a region authored from its corner; a `feature` rectangle is a physical object whose placement names where it *sits*, so it is centred on the origin. Measured, not assumed: centring features leaves 14 intersecting building pairs of 17,010, corner-anchoring them leaves 152. Twelve of the 14 are parts of one composite ruin interlocking — which is how an L is built from rectangles — and the last two are flush neighbours at zero depth.
 
 > ⚠ **These are not Chapter Approved layouts.** Upstream publishes 45 from `battlemaster-11e` and one from `kotc`, and no Games Workshop set at all — `missions.json` carries the Chapter Approved source, the terrain does not. The screen names the source under every table and says plainly that it is not a Games Workshop publication (§7.6). If GW's own layouts are ever published as data, they slot into the same structure.
 
@@ -1405,6 +1408,11 @@ Verified on the simulator: Blood Angels lists *Angelic Inheritors*, *Encarmine S
 
 > ⚠ **Not Chapter Approved.** These are Battlemaster (45) and KOTC (1); upstream publishes no Games Workshop layout set. The UI names the source on every table and says it is not a GW publication.
 
-340 core tests, 96 app tests; both analyzers clean. Verified on the simulator: *Take vs Take 01* draws ten ruins and five objectives on Tipping Point, and switching to variant 2 moves the whole table to Dawn of War with the pieces rotated.
+**Two corrections, both from looking at the drawn table.** The first version rendered area footprints only, and skipped every piece flagged `is_objective`:
+
+- **The objectives are buildings.** Skipping them dropped 6 of 16 pieces on the first table looked at, leaving bare circles floating where the ruins should be. The test agreed with the bug, because it skipped objective pieces too — mirroring the renderer's own `continue` rather than checking the data.
+- **The ruins live a level below the footprint.** `features` on a template holds the actual walls; the footprint alone is the area terrain zone. And a `feature` rectangle is centred on its origin, which is what stopped the buildings intersecting each other — found by measuring intersecting pairs across all 46 layouts under each convention rather than by eye.
+
+345 core tests, 96 app tests; both analyzers clean. Verified on the simulator: *Take vs Take 01* draws 16 pieces and 6 objectives on Tipping Point with the walls forming L-shapes and the whole table 180° rotationally symmetric, which is the shape a competitive layout is supposed to have; switching to variant 2 moves it to Dawn of War with the pieces rotated.
 
 **Next:** QR (§6.4), which also unlocks the opponent page, and reporting upstream: the stale Adeptus Astartes points, the local corrections, and the four factions' dangling `detachment_id` references (§3.9).

@@ -18,32 +18,95 @@ import 'dart:math' as math;
 import '../source/json.dart';
 import 'mission_pack.dart';
 
+/// A building placed inside a template's area — a ruin, a wall, a bastion.
+///
+/// This is the level the models actually stand in and shoot through. It is
+/// nested one deeper than the piece: a layout places a *piece*, the piece's
+/// template describes an **area terrain footprint**, and the buildings within
+/// that area are its `features`. Drawing only the footprint gives you the
+/// zone with nothing standing in it.
+class TerrainFeature {
+  final String id;
+
+  /// The part template this feature's shape comes from.
+  final String templateId;
+
+  /// Placement within the parent template's local frame, not the board's.
+  final BoardPoint position;
+  final double rotationDegrees;
+
+  const TerrainFeature({
+    required this.id,
+    required this.templateId,
+    required this.position,
+    this.rotationDegrees = 0,
+  });
+
+  factory TerrainFeature.fromJson(Object? v) {
+    final j = asMap(v);
+    return TerrainFeature(
+      id: strOr(j['id'], ''),
+      templateId: strOr(j['template'], ''),
+      position: BoardPoint.fromJson(j['position']),
+      rotationDegrees: dblOr(j['rotation_degrees'], 0),
+    );
+  }
+}
+
 /// A reusable piece shape, in inches, in its own local coordinates.
 class TerrainTemplate {
   final String id;
   final String name;
 
-  /// `area`, `ruin`, `barricade` — what kind of terrain the piece is.
+  /// `area` for a terrain footprint, `feature` for a building part.
   final String kind;
 
+  /// The area terrain boundary — the ground you are *within*, not the walls.
   final List<BoardPoint> footprint;
+
+  /// The buildings standing in that area. 38 of the 69 templates have them.
+  final List<TerrainFeature> features;
 
   const TerrainTemplate({
     required this.id,
     required this.name,
     this.kind = '',
     this.footprint = const [],
+    this.features = const [],
   });
 
   factory TerrainTemplate.fromJson(Object? v) {
     final j = asMap(v);
+    final kind = strOr(j['kind'], '');
     return TerrainTemplate(
       id: strOr(j['id'], ''),
       name: strOr(j['name'], ''),
-      kind: strOr(j['kind'], ''),
-      footprint: _footprintOf(j['footprint']),
+      kind: kind,
+      footprint: _footprintOf(j['footprint'], centred: kind == 'feature'),
+      features: asList(j['features']).map(TerrainFeature.fromJson).toList(),
     );
   }
+
+  bool get isFeature => kind == 'feature';
+}
+
+/// Rotate about the origin, then translate. The one placement rule in this
+/// file, applied at both levels: piece-within-board and feature-within-piece.
+List<BoardPoint> _place(
+  List<BoardPoint> points,
+  BoardPoint origin,
+  double degrees,
+) {
+  final radians = degrees * math.pi / 180.0;
+  final cos = math.cos(radians);
+  final sin = math.sin(radians);
+  return [
+    for (final p in points)
+      BoardPoint(
+        origin.x + p.x * cos - p.y * sin,
+        origin.y + p.x * sin + p.y * cos,
+      ),
+  ];
 }
 
 /// A footprint, from either shape the source uses.
@@ -53,12 +116,32 @@ class TerrainTemplate {
 /// zones. Reading only `points` leaves those pieces with no outline, and a
 /// piece with no outline is not an error anywhere: it simply does not appear
 /// on the table.
-List<BoardPoint> _footprintOf(Object? raw) {
+///
+/// **A rectangle's origin depends on what it is.** An `area` footprint is a
+/// region authored from its corner, like a deployment zone. A `feature` is a
+/// physical object — a wall, a container — and its placement names where the
+/// object *sits*, so its rectangle is centred on the origin.
+///
+/// That is measured, not assumed: across all 46 layouts, centring feature
+/// rectangles leaves 14 intersecting building pairs out of 17,010, and
+/// corner-anchoring them leaves 152. Of the 14, twelve are parts of a single
+/// composite ruin interlocking — which is how an L-shape is built out of
+/// rectangles — and the remaining two are flush against each other at zero
+/// depth.
+List<BoardPoint> _footprintOf(Object? raw, {required bool centred}) {
   final shape = asMap(raw);
   if (strOr(shape['type'], '') == 'rectangle') {
     final w = dblOr(shape['width'], 0);
     final h = dblOr(shape['height'], 0);
     if (w <= 0 || h <= 0) return const [];
+    if (centred) {
+      return [
+        BoardPoint(-w / 2, -h / 2),
+        BoardPoint(w / 2, -h / 2),
+        BoardPoint(w / 2, h / 2),
+        BoardPoint(-w / 2, h / 2),
+      ];
+    }
     return [
       const BoardPoint(0, 0),
       BoardPoint(w, 0),
@@ -111,7 +194,8 @@ class TerrainPiece {
       name: strOr(j['name'], ''),
       pieceType: strOr(j['piece_type'], ''),
       templateId: strOr(j['template'], ''),
-      footprint: _footprintOf(j['footprint']),
+      // A piece's own inline footprint is an area, never a building part.
+      footprint: _footprintOf(j['footprint'], centred: false),
       position: BoardPoint.fromJson(j['position']),
       // Absent on a quarter of the pieces, which simply means unrotated.
       rotationDegrees: dblOr(j['rotation_degrees'], 0),
@@ -127,17 +211,27 @@ class TerrainPiece {
     final local =
         footprint.isNotEmpty ? footprint : templates[templateId]?.footprint;
     if (local == null || local.isEmpty) return const [];
+    return _place(local, position, rotationDegrees);
+  }
 
-    final radians = rotationDegrees * math.pi / 180.0;
-    final cos = math.cos(radians);
-    final sin = math.sin(radians);
-    return [
-      for (final p in local)
-        BoardPoint(
-          position.x + p.x * cos - p.y * sin,
-          position.y + p.x * sin + p.y * cos,
-        ),
-    ];
+  /// The buildings standing in this piece's area, in board coordinates.
+  ///
+  /// Two transforms composed: the feature sits in its template's local frame,
+  /// and the template sits on the board. Empty for a piece whose template
+  /// publishes no features — plenty of area terrain is just open ground.
+  List<List<BoardPoint>> buildings(Map<String, TerrainTemplate> templates) {
+    final template = templates[templateId];
+    if (template == null) return const [];
+
+    final out = <List<BoardPoint>>[];
+    for (final feature in template.features) {
+      final part = templates[feature.templateId]?.footprint;
+      if (part == null || part.length < 3) continue;
+      final inTemplate =
+          _place(part, feature.position, feature.rotationDegrees);
+      out.add(_place(inTemplate, position, rotationDegrees));
+    }
+    return out;
   }
 }
 

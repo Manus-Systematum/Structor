@@ -86,9 +86,11 @@ class DeploymentDiagram extends StatelessWidget {
             Text(
               [
                 '${_inches(size.x)}″ × ${_inches(size.y)}″',
-                if (layout != null)
-                  '${layout!.pieces.where((p) => !p.isObjective).length} pieces'
-                else if (pattern.objectives.isNotEmpty)
+                if (layout != null) ...[
+                  '${layout!.pieces.length} pieces',
+                  '${layout!.pieces.where((p) => p.isObjective).length} '
+                      'objectives',
+                ] else if (pattern.objectives.isNotEmpty)
                   '${pattern.objectives.length} objectives',
               ].join(' · '),
               style: TextStyle(fontSize: 10.5, color: scheme.onSurfaceVariant),
@@ -181,34 +183,63 @@ class _BoardPainter extends CustomPainter {
           mine);
     }
 
-    // Terrain sits above the zones and below the objectives: it is what the
-    // zones are *for*, and an objective hidden under a ruin is the one thing
-    // on the table you must be able to find.
+    // Terrain sits above the zones and below the objective markers: it is what
+    // the zones are *for*, and an objective inside a ruin is the one thing on
+    // the table you must still be able to find.
+    //
+    // **Objective-bearing pieces are terrain too.** 275 of the 745 pieces
+    // carry an objective and 270 of those are buildings — the objective sits
+    // *in* the ruin. Skipping them because they are flagged as objectives
+    // dropped a third of every table and left bare circles floating where the
+    // ruins should be.
     final table = layout;
     if (table != null) {
-      for (final piece in table.pieces) {
-        if (piece.isObjective) continue;
-        final points = piece.outline(templates);
-        if (points.length < 3) continue;
-
+      Path? pathOfPoints(List<BoardPoint> points) {
+        if (points.length < 3) return null;
         final path = Path();
         for (var i = 0; i < points.length; i++) {
           final o = project(points[i]);
           i == 0 ? path.moveTo(o.dx, o.dy) : path.lineTo(o.dx, o.dy);
         }
-        path.close();
+        return path..close();
+      }
 
-        canvas.drawPath(
-          path,
-          Paint()..color = terrain.withValues(alpha: 0.22),
-        );
-        canvas.drawPath(
-          path,
-          Paint()
-            ..color = terrain.withValues(alpha: 0.55)
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = 0.7,
-        );
+      // Two levels, drawn in order. The area terrain footprint is the ground
+      // you are *within* — faint, because it is a zone rather than an object.
+      // The buildings standing in it are solid, because they are what blocks
+      // line of sight and what the models climb.
+      for (final piece in table.pieces) {
+        if (pathOfPoints(piece.outline(templates)) case final area?) {
+          canvas.drawPath(
+            area,
+            Paint()..color = terrain.withValues(alpha: 0.10),
+          );
+          canvas.drawPath(
+            area,
+            Paint()
+              ..color = terrain.withValues(alpha: 0.30)
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 0.6,
+          );
+        }
+      }
+
+      for (final piece in table.pieces) {
+        for (final building in piece.buildings(templates)) {
+          if (pathOfPoints(building) case final path?) {
+            canvas.drawPath(
+              path,
+              Paint()..color = terrain.withValues(alpha: 0.55),
+            );
+            canvas.drawPath(
+              path,
+              Paint()
+                ..color = terrain.withValues(alpha: 0.9)
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 0.8,
+            );
+          }
+        }
       }
     }
 

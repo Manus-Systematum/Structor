@@ -36,23 +36,47 @@ void main() {
           {'Battlemaster', 'KOTC'});
     }, skip: skip);
 
-    test('every piece resolves a shape', () {
+    test('every piece resolves a shape, objective-bearing ones included', () {
       // Either by template reference or from its own inline footprint —
       // seventeen pieces publish the latter, so both paths have to work or
       // those pieces silently vanish from the drawing.
+      //
+      // **Counting objective pieces here is the point.** The first version of
+      // this test skipped them, mirroring the renderer's own `continue`, and
+      // so agreed with the bug: 275 of the 745 pieces carry an objective and
+      // 270 of those are ruins, and every one was being dropped from the
+      // table while the test stayed green.
       var pieces = 0;
+      var withObjective = 0;
       for (final layout in pack.terrainLayouts) {
         for (final piece in layout.pieces) {
-          if (piece.isObjective) continue;
+          if (piece.isObjective) withObjective++;
+          if (piece.templateId.isEmpty && piece.footprint.isEmpty) continue;
           expect(piece.outline(pack.terrainTemplates), isNotEmpty,
               reason: '${layout.id}/${piece.id}');
           pieces++;
         }
       }
-      // 470 at the current revision. The bound is loose enough to survive
-      // upstream adding or trimming a layout, and tight enough to catch a
-      // parse change that quietly empties the table.
-      expect(pieces, greaterThan(400));
+      // 740 of 745 at the current revision — five objective markers publish
+      // no shape at all, which is the only legitimate reason to draw none.
+      expect(pieces, greaterThan(700));
+      expect(withObjective, greaterThan(250));
+    }, skip: skip);
+
+    test('an objective is usually a building, not a bare marker', () {
+      // The user-visible symptom of getting this wrong: circles floating
+      // where the ruins should be, and a third of the table missing.
+      final objectives = [
+        for (final layout in pack.terrainLayouts)
+          for (final piece in layout.pieces)
+            if (piece.isObjective) piece,
+      ];
+      final drawable = objectives
+          .where((p) => p.outline(pack.terrainTemplates).length >= 3)
+          .length;
+      expect(objectives, hasLength(275));
+      expect(drawable, greaterThan(250),
+          reason: 'the objective sits *in* the ruin');
     }, skip: skip);
 
     test('every layout names a deployment pattern that exists', () {
@@ -138,6 +162,129 @@ void main() {
       });
       expect(outline.single.x, closeTo(0, 1e-9));
       expect(outline.single.y, closeTo(2, 1e-9));
+    });
+
+    test('buildings on separate pieces do not intersect', () {
+      // The symptom that found this: ruins overlapping each other on screen.
+      // A `feature` rectangle names where the object *sits*, so it is centred
+      // on its origin; anchoring it at a corner shifts every wall by half its
+      // own size and pushes 152 building pairs into each other.
+      //
+      // Parts *within* one composite are allowed to overlap — that is how an
+      // L-shape is built out of rectangles — so only cross-piece pairs count.
+      bool inside(BoardPoint p, List<BoardPoint> poly) {
+        var hit = false;
+        for (var i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+          final a = poly[i];
+          final b = poly[j];
+          if ((a.y > p.y) != (b.y > p.y) &&
+              p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x) {
+            hit = !hit;
+          }
+        }
+        return hit;
+      }
+
+      var crossPieceOverlaps = 0;
+      for (final layout in pack.terrainLayouts) {
+        final walls = <(String, List<BoardPoint>)>[];
+        for (final piece in layout.pieces) {
+          for (final building in piece.buildings(pack.terrainTemplates)) {
+            walls.add((piece.id, building));
+          }
+        }
+        for (var i = 0; i < walls.length; i++) {
+          for (var j = i + 1; j < walls.length; j++) {
+            final (idA, a) = walls[i];
+            final (idB, b) = walls[j];
+            if (idA == idB) continue;
+            if (a.any((p) => inside(p, b)) || b.any((p) => inside(p, a))) {
+              crossPieceOverlaps++;
+            }
+          }
+        }
+      }
+      // Two, both flush against a neighbour at zero penetration depth.
+      expect(crossPieceOverlaps, lessThanOrEqualTo(2));
+    }, skip: skip);
+
+    test('a feature rectangle is centred, an area rectangle is not', () {
+      final feature = TerrainTemplate.fromJson(const {
+        'id': 'f',
+        'name': 'wall',
+        'kind': 'feature',
+        'footprint': {'type': 'rectangle', 'width': 4, 'height': 2},
+      });
+      expect(feature.footprint.map((p) => p.x).reduce((a, b) => a < b ? a : b),
+          -2);
+
+      final area = TerrainTemplate.fromJson(const {
+        'id': 'a',
+        'name': 'ground',
+        'kind': 'area',
+        'footprint': {'type': 'rectangle', 'width': 4, 'height': 2},
+      });
+      expect(
+          area.footprint.map((p) => p.x).reduce((a, b) => a < b ? a : b), 0);
+    });
+
+    test('a building is placed through both frames', () {
+      // Feature-within-template, then template-within-board. Getting either
+      // transform alone puts the walls somewhere plausible and wrong.
+      final templates = {
+        'area': TerrainTemplate.fromJson(const {
+          'id': 'area',
+          'kind': 'area',
+          'footprint': {
+            'points': [
+              {'x': 0, 'y': 0},
+              {'x': 10, 'y': 0},
+              {'x': 10, 'y': 10},
+            ],
+          },
+          'features': [
+            {
+              'id': 'f1',
+              'template': 'wall',
+              'position': {'x': 2, 'y': 0},
+            },
+          ],
+        }),
+        'wall': TerrainTemplate.fromJson(const {
+          'id': 'wall',
+          'kind': 'feature',
+          'footprint': {'type': 'rectangle', 'width': 2, 'height': 2},
+        }),
+      };
+
+      final piece = TerrainPiece.fromJson(const {
+        'id': 'p',
+        'template': 'area',
+        'position': {'x': 100, 'y': 50},
+      });
+      final walls = piece.buildings(templates);
+      expect(walls, hasLength(1));
+      // Centred 2x2 at feature offset (2,0), piece offset (100,50).
+      expect(walls.single.map((p) => p.x), containsAll([101.0, 103.0]));
+      expect(walls.single.map((p) => p.y), containsAll([49.0, 51.0]));
+    });
+
+    test('a piece whose template has no features has no buildings', () {
+      final piece = TerrainPiece.fromJson(const {
+        'id': 'p',
+        'template': 't',
+        'position': {'x': 0, 'y': 0},
+      });
+      expect(
+        piece.buildings({
+          't': const TerrainTemplate(id: 't', name: 'T', footprint: [
+            BoardPoint(0, 0),
+            BoardPoint(1, 0),
+            BoardPoint(1, 1),
+          ]),
+        }),
+        isEmpty,
+      );
     });
 
     test('an unresolvable shape draws nothing rather than a blob', () {
