@@ -12,12 +12,15 @@ import '../data/dataset_repository.dart';
 /// that refuses.
 class ImportScreen extends StatefulWidget {
   final DatasetRepository datasets;
-  final String factionId;
+
+  /// Forces a faction instead of reading the one the export names. Only the
+  /// tests pass it; the screen detects and offers a correction.
+  final String? factionId;
 
   const ImportScreen({
     super.key,
     required this.datasets,
-    this.factionId = 'tau-empire',
+    this.factionId,
   });
 
   @override
@@ -31,11 +34,42 @@ class _ImportScreenState extends State<ImportScreen> {
   String? _failure;
   var _busy = false;
 
+  List<core.BundleEntry> _factions = const [];
+
+  /// Null means *read it from the list*, which is the default and is right
+  /// almost every time — the export carries its own faction line.
+  late String? _chosen = widget.factionId;
+
+  /// The faction the last run actually used, so the summary can say which one
+  /// the numbers came from rather than leaving it inferred.
+  String? _usedFactionId;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFactions();
+  }
+
+  Future<void> _loadFactions() async {
+    try {
+      final factions = await widget.datasets.availableFactions();
+      if (mounted) setState(() => _factions = factions);
+    } catch (error) {
+      if (mounted) setState(() => _failure = '$error');
+    }
+  }
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
+
+  String _nameOf(String id) => _factions
+      .where((f) => f.id == id)
+      .map((f) => f.name)
+      .firstOrNull ??
+      id;
 
   Future<void> _run() async {
     setState(() {
@@ -43,13 +77,34 @@ class _ImportScreenState extends State<ImportScreen> {
       _failure = null;
     });
     try {
-      final dataset = await widget.datasets.faction(widget.factionId);
+      // Parsing needs no catalogue, so the faction line is read before a
+      // dataset is chosen rather than after one has been assumed.
       final parsed = const core.TextListParser().parse(_controller.text);
+      final factionId = _chosen ??
+          core.matchFactionId(parsed.factionName, [
+            for (final f in _factions)
+              core.FactionCandidate(
+                  id: f.id, name: f.name, aliases: f.aliases),
+          ]);
+
+      if (factionId == null) {
+        setState(() {
+          _busy = false;
+          _failure = parsed.factionName == null
+              ? 'This list does not name a faction. Pick one above and '
+                  'import again.'
+              : 'No bundled faction matches “${parsed.factionName}”. Pick one '
+                  'above and import again.';
+        });
+        return;
+      }
+
+      final dataset = await widget.datasets.faction(factionId);
       final result = core.RosterResolver(
         dataset,
         abilityLookup: dataset.ability,
         knownAbilities: dataset.faction.abilities,
-      ).resolve(parsed, factionId: widget.factionId);
+      ).resolve(parsed, factionId: factionId);
 
       // The saved roster carries its own snapshot, so it stays renderable once
       // the bundled dataset changes or goes away (§2.2).
@@ -58,12 +113,12 @@ class _ImportScreenState extends State<ImportScreen> {
       // once omitted stratagems and enhancements, so an imported list came
       // back from storage with an empty stratagem section and priced lower
       // than it had at import.
-      final builder =
-          await widget.datasets.snapshotBuilder(widget.factionId);
+      final builder = await widget.datasets.snapshotBuilder(factionId);
       final snapshot = builder.build(result.roster);
 
       setState(() {
         _result = result;
+        _usedFactionId = factionId;
         _army = Army.fromSnapshot(result.roster, snapshot,
             id: DateTime.now().microsecondsSinceEpoch.toString());
       });
@@ -96,8 +151,33 @@ class _ImportScreenState extends State<ImportScreen> {
         children: [
           Text(
             'Paste a text export from War Organ or the Warhammer app. '
-            'Only T’au Empire is bundled so far.',
+            'All ${_factions.length} factions are bundled.',
             style: TextStyle(fontSize: 12.5, color: scheme.onSurfaceVariant),
+          ),
+          const SizedBox(height: 12),
+          DropdownButtonFormField<String?>(
+            initialValue: _chosen,
+            isDense: true,
+            isExpanded: true,
+            decoration: const InputDecoration(
+              labelText: 'Faction',
+              isDense: true,
+              border: OutlineInputBorder(),
+              helperText: 'The list names its own; override only if it is '
+                  'wrong',
+            ),
+            items: [
+              const DropdownMenuItem(
+                value: null,
+                child: Text('Read it from the list'),
+              ),
+              for (final faction in _factions)
+                DropdownMenuItem(
+                  value: faction.id,
+                  child: Text(faction.name, overflow: TextOverflow.ellipsis),
+                ),
+            ],
+            onChanged: (id) => setState(() => _chosen = id),
           ),
           const SizedBox(height: 12),
           TextField(
@@ -127,6 +207,24 @@ class _ImportScreenState extends State<ImportScreen> {
           ],
           if (result != null && army != null) ...[
             const SizedBox(height: 20),
+            if (_usedFactionId != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Row(
+                  children: [
+                    Icon(Icons.shield_outlined,
+                        size: 14, color: scheme.onSurfaceVariant),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        'Resolved against ${_nameOf(_usedFactionId!)}',
+                        style: TextStyle(
+                            fontSize: 12, color: scheme.onSurfaceVariant),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             _Summary(army: army, result: result),
             const SizedBox(height: 12),
             for (final issue in result.issues) _IssueTile(issue: issue),

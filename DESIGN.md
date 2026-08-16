@@ -351,6 +351,27 @@ Two more turned out to be wrong data rather than gaps, once the exact wording wa
 
 The second needed a small renderer addition. Two negated `target-has-keyword` conditions joined by "and" is unreadable at the table, so an `excluded_keywords` form renders as `except vs VEHICLE or MONSTER`, and an `and` chain joins an exclusion with a comma rather than another "and".
 
+### 3.9 Every faction, and the twelve that have no datasheets
+
+Upstream publishes **35 playable factions**. Twenty-three carry a full catalogue. The other twelve — Black Templars, Blood Angels, Crimson Fists, Dark Angels, Deathwatch, Imperial Fists, Iron Hands, Raven Guard, Salamanders, Space Wolves, Ultramarines, White Scars — are **Space Marine chapters, and they publish no datasheets at all**. A Blood Angels army fields Adeptus Astartes units; what the chapter adds is its own detachments, stratagems, enhancements and army rule.
+
+`factions.json` says so directly, in `parent_faction_id`. The chapters' own files are *already merged* — Blood Angels' `detachments.json` holds 15 of the 16 Astartes detachments plus 9 of its own — so the inheritance is needed for datasheets and nothing else.
+
+**The parent is followed at load time, not flattened at build time.** Copying the Astartes datasheets into each of the twelve would add roughly 840 KB to a 725 KB download, for data already present. Instead the manifest names `parentId`, and both readers — `DatasetLoader` for the CLI, `DatasetRepository` for the app — fall through to the parent for the datasheet files only. A chapter bundle is 5–8 KB.
+
+Two things this arrangement has to get right, both pinned by test:
+
+- **Corrections are keyed by the faction that owns the record.** An inherited datasheet is corrected as the parent's, or every one of the twelve chapters would need its own copy of every Adeptus Astartes correction.
+- **A chapter keeps its own army rule.** Blood Angels is The Red Thirst, not Oath of Moment. Only datasheets are inherited.
+
+**A faction with no datasheets *and* no parent is skipped** — that is an upstream stub, not something to offer in the picker.
+
+> **The faction record was never bundled.** `factions.json` carries the display name and the army rule, and `_factionFiles` did not list it — so `factionRuleId` arrived null in the app and **every roster built or imported there lost the one rule its whole army has**. The CLI reads the snapshot directly and kept it, which is exactly why nothing noticed: the reference snapshot in `assets/` was built by the CLI and has `for-the-greater-good` in it. Same shape as the corrections bug of §3.6 — two readers, one of them tested. A test now asserts the rule survives the trip through the bundle and into a snapshot.
+
+Bundling the record also fixes the names: the manifest said *Tau Empire*, because it title-cased the id. It now says **T’au Empire**, because the data does.
+
+**Upstream integrity gaps, in 4 of 35.** Adeptus Astartes, Crimson Fists, Raven Guard and Orks each carry stratagems whose `detachment_id` names a detachment the data never publishes — `shadowmark-talon`, `vengeful-hosts`, `equatorial-hordes`, `liberator-assault-group` on the wrong chapter. Harmless in play, because stratagems are scoped to the detachments a roster actually took, so these can never appear; but `bin/coverage.dart` exits non-zero on them and should keep doing so. Worth reporting upstream rather than suppressing.
+
 ### 3.1 Upstream sources (BSData — now the cross-check, not the primary)
 
 Two repositories, both community-maintained:
@@ -1350,4 +1371,19 @@ Three things the geometry work turned up, each pinned by a test:
 
 317 core tests, 89 app tests; both analyzers clean. All four verified on the simulator interactively.
 
-**Next:** QR (§6.4), which also unlocks the opponent page, and reporting the stale Adeptus Astartes points and the local corrections upstream to 40kdc.
+**Done — all 35 factions (§3.9).** Three shipped before; the snapshot now covers everything upstream publishes.
+
+- **725 KB of bundles, 36 of them**, against 143 KB for four. Adeptus Astartes is the largest at 78 KB; the twelve chapters are 5–8 KB each, because they inherit datasheets rather than carrying copies (§3.9).
+- **The import screen no longer assumes T'au.** It reads the faction line the export already carries — `matchFactionId` in the core package, exact on the normalised form so `Tau Empire`, `T’au Empire` and `tau-empire` all land on the same faction, with `Space Marines` reaching Adeptus Astartes by its published alias. A picker sits above the paste box for the cases the export cannot answer, and the summary names the faction the numbers were resolved against.
+- **Matching is exact, never fuzzy.** Importing against the wrong faction resolves almost nothing, and the wall of misses it produces never says the faction was the problem — so a near-miss asks instead of guessing.
+
+Two things ingesting thirty-two new factions turned up, both by tests rather than by reading:
+
+- **Three more plural/singular duplicate abilities** — Sororitas *Cherubs*/*Cherub*, Guard *Mobile Hunter-killers*/*-killer*, Ork *Bomb Squigs*/*Bomb Squig* — each one rule filed twice. The duplicate-fingerprint test of §3.6 found all three; three aliases in `data-corrections.yaml` close them. The T'au correction for *Stealth* turned out to apply to 13 factions, since it is a shared ability id.
+- **The unbundled faction record**, above. That one had been shipping broken for three factions and nothing had noticed.
+
+Verified on the simulator: Blood Angels lists *Angelic Inheritors*, *Encarmine Speartip* and *Liberator Assault Group* beside the shared Astartes detachments, offers Sanguinary Guard, Sanguinary Priest and The Sanguinor from the inherited catalogue, and prices the Guard at 125.
+
+328 core tests, 96 app tests; both analyzers clean.
+
+**Next:** QR (§6.4), which also unlocks the opponent page, and reporting upstream: the stale Adeptus Astartes points, the local corrections, and the four factions' dangling `detachment_id` references (§3.9).

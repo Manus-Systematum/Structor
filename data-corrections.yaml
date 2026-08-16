@@ -320,3 +320,33 @@ aliases:
       abbreviates the name on this one datasheet. Confirmed as the same rule
       by the app's user against the rulebook.
     upstream: not yet reported
+
+  # The three below turned up when the remaining thirty-two factions were
+  # ingested. All are the same shape as the T'au ones above — one rule
+  # transcribed per datasheet, and the datasheets disagree about the plural —
+  # and all three were found by the duplicate-fingerprint test rather than by
+  # reading, which is the point of having it.
+  - faction: adepta-sororitas
+    id: cherubs
+    canonical: cherub
+    reason: >
+      One datasheet carries "Cherubs" and another "Cherub", with identical
+      effect records. Left split, the rules screen files the same sentence
+      under two ids and neither reads as shared.
+    upstream: not yet reported
+
+  - faction: astra-militarum
+    id: mobile-hunter-killers
+    canonical: mobile-hunter-killer
+    reason: >
+      "Mobile Hunter-killers" and "Mobile Hunter-killer" encode the same
+      effect; upstream pluralises on the datasheets that mount more than one.
+    upstream: not yet reported
+
+  - faction: orks
+    id: bomb-squigs
+    canonical: bomb-squig
+    reason: >
+      "Bomb Squigs" and "Bomb Squig" encode the same effect. Same plural
+      split as the two above.
+    upstream: not yet reported

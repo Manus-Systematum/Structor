@@ -194,19 +194,47 @@ class DatasetRepository {
     if (cached != null && cached.version.factionId == id) return cached;
 
     final data = await bundle(id);
+
+    // The faction's own record. Sub-factions appear in the file, so the one
+    // whose id matches is the one wanted — the same rule `DatasetLoader`
+    // applies when reading the snapshot directly.
+    final self = data
+        .file('factions')
+        .map((raw) => raw is Map ? raw : const {})
+        .where((j) => j['id']?.toString() == id)
+        .firstOrNull;
+
+    // A Space Marine chapter publishes detachments, stratagems and
+    // enhancements but no datasheets — a Blood Angels army fields Adeptus
+    // Astartes units. The datasheets come from the parent; everything the
+    // chapter publishes stays the chapter's own, since its own files already
+    // carry the parent's entries plus its own.
+    final parentId = self?['parent_faction_id']?.toString();
+    final parent = parentId == null ? null : await bundle(parentId);
+
     List<Object?> file(String name) => data.file(name);
+    List<Object?> sheets(String name) {
+      final own = data.file(name);
+      return own.isEmpty && parent != null ? parent.file(name) : own;
+    }
 
     final faction = FactionData(
       factionId: id,
-      units: file('units').map(SourceUnit.fromJson).toList(),
-      weapons: file('weapons').map(SourceWeapon.fromJson).toList(),
+      // Without these the army rule is dropped on the way through the bundle,
+      // and a roster built in the app loses the one rule its whole army has.
+      // A chapter keeps *its own* — The Red Thirst, not Oath of Moment.
+      factionRuleId: self?['faction_rule_id']?.toString(),
+      factionName: self?['name']?.toString(),
+      parentFactionId: parentId,
+      units: sheets('units').map(SourceUnit.fromJson).toList(),
+      weapons: sheets('weapons').map(SourceWeapon.fromJson).toList(),
       detachments: file('detachments').map(SourceDetachment.fromJson).toList(),
       stratagems: file('stratagems').map(SourceStratagem.fromJson).toList(),
-      abilities: file('abilities').map(SourceAbility.fromJson).toList(),
+      abilities: sheets('abilities').map(SourceAbility.fromJson).toList(),
       phaseMappings:
-          file('phase-mappings').map(PhaseMapping.fromJson).toList(),
+          sheets('phase-mappings').map(PhaseMapping.fromJson).toList(),
       leaderAttachments:
-          file('leader-attachments').map(LeaderAttachment.fromJson).toList(),
+          sheets('leader-attachments').map(LeaderAttachment.fromJson).toList(),
       enhancementIds: {
         for (final raw in file('enhancements'))
           if (raw is Map && raw['id'] != null) raw['id'].toString(),
@@ -216,7 +244,7 @@ class DatasetRepository {
           .where((e) => e.id.isNotEmpty)
           .toList(),
       // The builder needs a datasheet's default loadout; nothing else does.
-      compositions: file('unit-compositions')
+      compositions: sheets('unit-compositions')
           .map(UnitComposition.fromJson)
           .where((c) => c.unitId.isNotEmpty)
           .toList(),
@@ -238,6 +266,18 @@ class DatasetRepository {
     final data = await bundle(factionId);
     final core = await bundle('core');
 
+    // The snapshot keeps records in **source form** (§2.2), so it reads the
+    // raw bundle rather than the parsed dataset — and therefore has to follow
+    // the chapter's parent for datasheets exactly as `faction()` does. Miss
+    // this and a Blood Angels roster snapshots with no units in it.
+    final parentId = dataset.faction.parentFactionId;
+    final parent = parentId == null ? null : await bundle(parentId);
+
+    List<Object?> sheets(String name) {
+      final own = data.file(name);
+      return own.isEmpty && parent != null ? parent.file(name) : own;
+    }
+
     Map<String, Object?> index(List<Object?> records, {String key = 'id'}) => {
           for (final record in records)
             if (record is Map && record[key] != null)
@@ -246,10 +286,10 @@ class DatasetRepository {
 
     return SnapshotBuilder(
       dataset: dataset,
-      rawUnits: index(data.file('units')),
-      rawWeapons: index(data.file('weapons')),
+      rawUnits: index(sheets('units')),
+      rawWeapons: index(sheets('weapons')),
       rawDetachments: index(data.file('detachments')),
-      rawAbilities: index(data.file('abilities'), key: 'ability_id'),
+      rawAbilities: index(sheets('abilities'), key: 'ability_id'),
       rawStratagems: {
         ...index(core.file('stratagems')),
         ...index(data.file('stratagems')),

@@ -88,6 +88,11 @@ class FactionData {
   /// The faction's display name, from the same record.
   final String? factionName;
 
+  /// The faction whose datasheets this one fields, or null when it has its
+  /// own. The twelve Space Marine chapters publish detachments, stratagems
+  /// and enhancements and no units at all (DESIGN.md §3.9).
+  final String? parentFactionId;
+
   final List<String> missingFiles;
 
   const FactionData({
@@ -104,6 +109,7 @@ class FactionData {
     this.compositions = const [],
     this.factionRuleId,
     this.factionName,
+    this.parentFactionId,
     required this.missingFiles,
   });
 }
@@ -215,17 +221,43 @@ class DatasetLoader {
         .where((j) => str(j['id']) == factionId)
         .firstOrNull;
 
+    // A Space Marine chapter publishes its own detachments, stratagems and
+    // enhancements and **no datasheets** — a Blood Angels army fields Adeptus
+    // Astartes units. Datasheet files therefore fall through to the parent,
+    // while everything the chapter publishes stays its own, since its files
+    // already carry the parent's entries alongside its own.
+    final parentId = self == null ? null : str(self['parent_faction_id']);
+
+    /// A datasheet file, from the parent when this faction publishes none.
+    /// Absent-and-inherited is not a missing file, so it is not reported as
+    /// one — otherwise every chapter would list eight.
+    List<Object?> sheets(String dir, String name) {
+      final own = _readArray('$dir/$factionId/$name');
+      if (own != null && own.isNotEmpty) return own;
+      if (parentId != null) {
+        final inherited = _readArray('$dir/$parentId/$name');
+        if (inherited != null) return inherited;
+      }
+      return read('$dir/$factionId/$name');
+    }
+
+    // Corrections are keyed by the faction that *owns* the record, so an
+    // inherited datasheet is corrected as the parent's — a chapter must not
+    // need its own copy of every Astartes correction.
+    final sheetOwner = parentId ?? factionId;
+
     return FactionData(
       factionId: factionId,
       factionRuleId: self == null ? null : str(self['faction_rule_id']),
       factionName: self == null ? null : str(self['name']),
+      parentFactionId: parentId,
       units: corrections
-          .applyToUnits(factionId, read('core/$factionId/units.json'))
+          .applyToUnits(sheetOwner, sheets('core', 'units.json'))
           .records
           .map(SourceUnit.fromJson)
           .toList(growable: false),
       weapons: corrections
-          .applyToWeapons(factionId, read('core/$factionId/weapons.json'))
+          .applyToWeapons(sheetOwner, sheets('core', 'weapons.json'))
           .records
           .map(SourceWeapon.fromJson)
           .toList(growable: false),
@@ -237,20 +269,20 @@ class DatasetLoader {
           .toList(growable: false),
       abilities: corrections
           .applyToAbilities(
-            factionId,
-            read('enrichment/$factionId/abilities.json'),
+            sheetOwner,
+            sheets('enrichment', 'abilities.json'),
           )
           .records
           .map(SourceAbility.fromJson)
           .toList(growable: false),
-      phaseMappings: read('enrichment/$factionId/phase-mappings.json')
+      phaseMappings: sheets('enrichment', 'phase-mappings.json')
           .map(PhaseMapping.fromJson)
           .toList(growable: false),
-      leaderAttachments: read('core/$factionId/leader-attachments.json')
+      leaderAttachments: sheets('core', 'leader-attachments.json')
           .map(LeaderAttachment.fromJson)
           .toList(growable: false),
       enhancementIds: enhancementIds,
-      compositions: read('core/$factionId/unit-compositions.json')
+      compositions: sheets('core', 'unit-compositions.json')
           .map(UnitComposition.fromJson)
           .where((c) => c.unitId.isNotEmpty)
           .toList(growable: false),

@@ -43,6 +43,22 @@ class BundleEntry {
   /// even when the file name is unchanged.
   final String revision;
 
+  /// The faction this one inherits datasheets from, or null when it stands
+  /// alone.
+  ///
+  /// The twelve Space Marine chapters publish their own detachments,
+  /// stratagems and enhancements and **no datasheets at all** — a Blood
+  /// Angels army fields Adeptus Astartes units. Naming the parent here rather
+  /// than copying the datasheets into each chapter keeps twelve copies of the
+  /// largest faction out of the download, and says what the data already
+  /// says.
+  final String? parentId;
+
+  /// Other names this faction goes by, from its own record. Two factions
+  /// publish one: Adeptus Astartes is also *Space Marines*, and an export
+  /// written by a human is at least as likely to say that.
+  final List<String> aliases;
+
   const BundleEntry({
     required this.id,
     required this.kind,
@@ -51,6 +67,8 @@ class BundleEntry {
     required this.sha256,
     required this.bytes,
     required this.revision,
+    this.parentId,
+    this.aliases = const [],
   });
 
   factory BundleEntry.fromJson(Object? v) {
@@ -65,6 +83,8 @@ class BundleEntry {
       sha256: strOr(j['sha256'], ''),
       bytes: intOr(j['bytes'], 0),
       revision: strOr(j['revision'], 'unknown'),
+      parentId: str(j['parentId']),
+      aliases: strList(j['aliases']),
     );
   }
 
@@ -76,6 +96,8 @@ class BundleEntry {
         'sha256': sha256,
         'bytes': bytes,
         'revision': revision,
+        if (parentId != null) 'parentId': parentId,
+        if (aliases.isNotEmpty) 'aliases': aliases,
       };
 }
 

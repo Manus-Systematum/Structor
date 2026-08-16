@@ -24,6 +24,12 @@ const _coreFiles = [
 ];
 
 const _factionFiles = [
+  // The faction's own record: its display name, its army rule, and the
+  // aliases the importer matches an export's faction line against. Bundling
+  // it was overlooked, so `factionRuleId` arrived null in the app and every
+  // roster built or imported there lost For the Greater Good / Oath of
+  // Moment — while the CLI, which reads the snapshot directly, kept it.
+  'factions',
   'units',
   'weapons',
   'wargear',
@@ -86,7 +92,8 @@ void main(List<String> args) {
   final staleCorrections = <String>[];
   final appliedCorrections = <Correction>[];
 
-  BundleEntry write(DatasetBundle bundle, String displayName) {
+  BundleEntry write(DatasetBundle bundle, String displayName,
+      {String? parentId, List<String> aliases = const []}) {
     final compressed = bundle.encode();
     final file = '${bundle.id}.json.gz';
     File('$outDir/$file').writeAsBytesSync(compressed);
@@ -98,6 +105,8 @@ void main(List<String> args) {
       sha256: sha256Of(compressed),
       bytes: compressed.length,
       revision: bundle.revision,
+      parentId: parentId,
+      aliases: aliases,
     );
   }
 
@@ -136,10 +145,23 @@ void main(List<String> args) {
     files['units'] = loader.correctedUnits(factionId).records;
     files['weapons'] = loader.correctedWeapons(factionId).records;
 
-    if (files['units']!.isEmpty) {
-      stdout.writeln('  skip $factionId (no units)');
+    final self = files['factions']!
+        .whereType<Map<String, Object?>>()
+        .where((j) => j['id']?.toString() == factionId)
+        .firstOrNull;
+    final displayName = self?['name']?.toString();
+    final parentId = self?['parent_faction_id']?.toString();
+
+    // No datasheets and no parent is a faction that cannot field an army —
+    // an upstream stub rather than something to offer in the picker. With a
+    // parent it is a chapter, whose datasheets are the parent's.
+    if (files['units']!.isEmpty && parentId == null) {
+      stdout.writeln('  skip $factionId (no units, no parent)');
       continue;
     }
+    // The faction's published name — `T’au Empire`, not the `Tau Empire` that
+    // title-casing the id produces. Falls back to the id when the record is
+    // absent, so a faction still lists rather than vanishing.
     entries.add(write(
       DatasetBundle(
         id: factionId,
@@ -147,7 +169,14 @@ void main(List<String> args) {
         revision: revision,
         files: files,
       ),
-      _title(factionId),
+      displayName == null || displayName.isEmpty
+          ? _title(factionId)
+          : displayName,
+      parentId: parentId,
+      aliases: [
+        for (final a in (self?['aliases'] as List? ?? const []))
+          if (a != null && a.toString().isNotEmpty) a.toString(),
+      ],
     ));
   }
 
