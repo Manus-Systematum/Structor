@@ -78,16 +78,47 @@ class TerrainTemplate {
   factory TerrainTemplate.fromJson(Object? v) {
     final j = asMap(v);
     final kind = strOr(j['kind'], '');
+    final isFeature = kind == 'feature';
+    final footprint = _footprintOf(j['footprint'], centred: isFeature);
     return TerrainTemplate(
       id: strOr(j['id'], ''),
       name: strOr(j['name'], ''),
       kind: kind,
-      footprint: _footprintOf(j['footprint'], centred: kind == 'feature'),
+      // A feature's shape is already authored about its own origin. An area's
+      // is anchored at a bounding-box corner and has to be recentred to join
+      // the frame its buildings are placed in.
+      footprint: isFeature ? footprint : _centreOnOrigin(footprint),
       features: asList(j['features']).map(TerrainFeature.fromJson).toList(),
     );
   }
 
   bool get isFeature => kind == 'feature';
+}
+
+/// Shifts a shape so its bounding box is centred on the origin.
+///
+/// **The two levels are authored in different frames.** A template's features
+/// are placed around the origin — their cluster centre averages (0.5, 0.7)
+/// across all 38 composites — while its area footprint is exported anchored
+/// at a bounding-box *corner*, averaging (5.0, 3.3). Left as authored, every
+/// base sits offset from the walls standing on it: only 20% of wall vertices
+/// fall inside their own area, and the areas inflate 3.6″ past every board
+/// edge while the walls stay within 3.5″..56.5″. Centring the footprint puts
+/// the two in one frame — 84% containment, and an area extent of
+/// 2.9″..57.1″ against the walls' 3.5″..56.5″.
+List<BoardPoint> _centreOnOrigin(List<BoardPoint> points) {
+  if (points.isEmpty) return points;
+  var minX = points.first.x, maxX = points.first.x;
+  var minY = points.first.y, maxY = points.first.y;
+  for (final p in points) {
+    if (p.x < minX) minX = p.x;
+    if (p.x > maxX) maxX = p.x;
+    if (p.y < minY) minY = p.y;
+    if (p.y > maxY) maxY = p.y;
+  }
+  final cx = (minX + maxX) / 2;
+  final cy = (minY + maxY) / 2;
+  return [for (final p in points) BoardPoint(p.x - cx, p.y - cy)];
 }
 
 /// Rotate about the origin, then translate. The one placement rule in this
@@ -194,8 +225,10 @@ class TerrainPiece {
       name: strOr(j['name'], ''),
       pieceType: strOr(j['piece_type'], ''),
       templateId: strOr(j['template'], ''),
-      // A piece's own inline footprint is an area, never a building part.
-      footprint: _footprintOf(j['footprint'], centred: false),
+      // A piece's own inline footprint is an area, never a building part, so
+      // it is recentred like any other.
+      footprint:
+          _centreOnOrigin(_footprintOf(j['footprint'], centred: false)),
       position: BoardPoint.fromJson(j['position']),
       // Absent on a quarter of the pieces, which simply means unrotated.
       rotationDegrees: dblOr(j['rotation_degrees'], 0),

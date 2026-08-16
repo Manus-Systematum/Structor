@@ -128,8 +128,10 @@ void main() {
         }),
       });
       expect(outline, hasLength(4));
-      expect(outline.map((p) => p.x).reduce((a, b) => a > b ? a : b), 3.75);
-      expect(outline.map((p) => p.y).reduce((a, b) => a > b ? a : b), 4.5);
+      double span(Iterable<double> vs) =>
+          vs.reduce((a, b) => a > b ? a : b) - vs.reduce((a, b) => a < b ? a : b);
+      expect(span(outline.map((p) => p.x)), 3.75);
+      expect(span(outline.map((p) => p.y)), 4.5);
     });
 
     test('an unrotated piece is its template, moved', () {
@@ -208,24 +210,104 @@ void main() {
       expect(crossPieceOverlaps, lessThanOrEqualTo(2));
     }, skip: skip);
 
-    test('a feature rectangle is centred, an area rectangle is not', () {
+    test('the walls stand on their own base', () {
+      // The symptom that found this: the bases sat rotated and offset around
+      // the objectives instead of under the buildings. A template's features
+      // are authored about the origin; its area footprint is exported from a
+      // bounding-box corner. Left as authored the two are in different
+      // frames and only a fifth of the walls land on their own ground.
+      bool inside(BoardPoint p, List<BoardPoint> poly) {
+        var hit = false;
+        for (var i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+          final a = poly[i];
+          final b = poly[j];
+          if ((a.y > p.y) != (b.y > p.y) &&
+              p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x) {
+            hit = !hit;
+          }
+        }
+        return hit;
+      }
+
+      var on = 0;
+      var total = 0;
+      for (final layout in pack.terrainLayouts) {
+        for (final piece in layout.pieces) {
+          final area = piece.outline(pack.terrainTemplates);
+          if (area.length < 3) continue;
+          for (final wall in piece.buildings(pack.terrainTemplates)) {
+            for (final vertex in wall) {
+              total++;
+              if (inside(vertex, area)) on++;
+            }
+          }
+        }
+      }
+      expect(total, greaterThan(4000));
+      // 84% at the current revision, against 20% before. Not 100% because a
+      // ruin's wall legitimately overhangs the edge of its base.
+      expect(on / total, greaterThan(0.8));
+    }, skip: skip);
+
+    test('the areas cover the same ground as the walls', () {
+      // The independent check on the same thing, and the one that settled the
+      // convention: the walls span 3.5"..56.5" across a 60" board, so bases
+      // that reach 3.6" *past* every edge are offset outward, not merely
+      // generous. Centred, the areas span 2.9"..57.1" — the same table.
+      var wallMin = 999.0, wallMax = -999.0;
+      var areaMin = 999.0, areaMax = -999.0;
+      for (final layout in pack.terrainLayouts) {
+        if (layout.deploymentPatternId == 'kotc-colosseum') continue;
+        for (final piece in layout.pieces) {
+          for (final p in piece.outline(pack.terrainTemplates)) {
+            if (p.x < areaMin) areaMin = p.x;
+            if (p.x > areaMax) areaMax = p.x;
+          }
+          for (final wall in piece.buildings(pack.terrainTemplates)) {
+            for (final p in wall) {
+              if (p.x < wallMin) wallMin = p.x;
+              if (p.x > wallMax) wallMax = p.x;
+            }
+          }
+        }
+      }
+      expect((areaMin - wallMin).abs(), lessThan(1.5));
+      expect((areaMax - wallMax).abs(), lessThan(1.5));
+    }, skip: skip);
+
+    test('every template shape ends up centred on its own origin', () {
+      // The two kinds get there by different routes, which is the whole
+      // subtlety: a feature is *authored* about its origin, an area is
+      // authored from a bounding-box corner and recentred. Both must end up
+      // in the same frame or the walls do not stand on their base.
       final feature = TerrainTemplate.fromJson(const {
         'id': 'f',
         'name': 'wall',
         'kind': 'feature',
         'footprint': {'type': 'rectangle', 'width': 4, 'height': 2},
       });
-      expect(feature.footprint.map((p) => p.x).reduce((a, b) => a < b ? a : b),
-          -2);
-
       final area = TerrainTemplate.fromJson(const {
         'id': 'a',
         'name': 'ground',
         'kind': 'area',
-        'footprint': {'type': 'rectangle', 'width': 4, 'height': 2},
+        'footprint': {
+          'points': [
+            {'x': 0, 'y': 0},
+            {'x': 4, 'y': 0},
+            {'x': 4, 'y': 2},
+            {'x': 0, 'y': 2},
+          ],
+        },
       });
-      expect(
-          area.footprint.map((p) => p.x).reduce((a, b) => a < b ? a : b), 0);
+
+      for (final shape in [feature.footprint, area.footprint]) {
+        final xs = shape.map((p) => p.x);
+        final ys = shape.map((p) => p.y);
+        expect(xs.reduce((a, b) => a < b ? a : b), -2);
+        expect(xs.reduce((a, b) => a > b ? a : b), 2);
+        expect(ys.reduce((a, b) => a < b ? a : b), -1);
+        expect(ys.reduce((a, b) => a > b ? a : b), 1);
+      }
     });
 
     test('a building is placed through both frames', () {
