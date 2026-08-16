@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wh40k_app/src/data/army.dart';
 import 'package:wh40k_app/src/data/dataset_repository.dart';
 import 'package:wh40k_app/src/screens/setup_screen.dart';
+import 'package:wh40k_app/src/widgets/deployment_diagram.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 void main() {
@@ -132,5 +133,81 @@ void main() {
         reason: 'the opponent plays their own cell of the table');
     expect(captured!.deploymentId, 'tipping-point');
     expect(captured!.isMirror, isFalse);
+    expect(captured!.iGoFirst, isTrue, reason: 'the default is unchanged');
+  });
+
+  testWidgets('who takes the first turn is recorded, not assumed',
+      (tester) async {
+    MissionSetup? captured;
+    tester.view.physicalSize = const Size(1200, 4200);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(MaterialApp(
+      home: Builder(
+        builder: (context) => TextButton(
+          onPressed: () async {
+            captured = await Navigator.of(context).push<MissionSetup>(
+              MaterialPageRoute(
+                  builder: (_) => SetupScreen(army: army, pack: pack)),
+            );
+          },
+          child: const Text('open'),
+        ),
+      ),
+    ));
+    await tester.tap(find.text('open'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Take and Hold'));
+    await tester.pumpAndSettle();
+    await chooseMine(tester, 'Reconnaissance Sweep');
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Tipping Point'));
+    await tester.pumpAndSettle();
+
+    // The opponent going first is not implied by attacker/defender, and until
+    // it could be said the app ran every game as though it opened.
+    await tester.tap(find.widgetWithText(ButtonSegment<bool>, 'Opponent')
+        .evaluate()
+        .isEmpty
+        ? find.text('Opponent').last
+        : find.text('Opponent').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Start battle'));
+    await tester.pumpAndSettle();
+
+    expect(captured, isNotNull);
+    expect(captured!.iGoFirst, isFalse);
+
+    // And the game opens in their turn rather than mine.
+    final log = BattleLog(events: [ConfigureBattle(captured!)]);
+    expect(log.state.activePlayer, Player.opponent);
+  });
+
+  testWidgets('picking a deployment draws the table', (tester) async {
+    await pumpSetup(tester);
+    expect(find.byType(DeploymentDiagram), findsNothing,
+        reason: 'nothing to draw before one is chosen');
+
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Tipping Point'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(DeploymentDiagram), findsOneWidget);
+    // The pattern is symmetric, so a colour alone does not say which half is
+    // yours — the key names it.
+    expect(find.text('You'), findsWidgets);
+    expect(find.text('Opponent'), findsWidgets);
+    expect(find.textContaining('60″ × 44″'), findsOneWidget);
+    expect(find.textContaining('5 objectives'), findsOneWidget);
+  });
+
+  testWidgets('a smaller table is drawn at its own size', (tester) async {
+    await pumpSetup(tester);
+    await tester.tap(find.widgetWithText(ChoiceChip, 'KOTC Colosseum (9" edges)'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('36″ × 36″'), findsOneWidget);
+    expect(find.textContaining('objectives'), findsNothing,
+        reason: 'it publishes none, so none are claimed');
   });
 }

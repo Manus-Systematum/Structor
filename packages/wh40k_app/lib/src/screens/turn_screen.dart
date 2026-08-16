@@ -26,6 +26,10 @@ class TurnScreen extends StatelessWidget {
   /// END section degrades to the score panel alone rather than failing.
   final SecondaryDeck deck;
 
+  /// The mission data, for the primary each side is playing. Empty until it
+  /// loads, which the END section degrades around rather than failing.
+  final MissionPack pack;
+
   const TurnScreen({
     super.key,
     required this.army,
@@ -33,6 +37,7 @@ class TurnScreen extends StatelessWidget {
     this.onEvent = _ignore,
     this.onUndo = _nothing,
     this.deck = const SecondaryDeck([]),
+    this.pack = const MissionPack(),
   });
 
   static void _ignore(BattleEvent _) {}
@@ -70,6 +75,7 @@ class TurnScreen extends StatelessWidget {
                   army: army,
                   state: state,
                   deck: deck,
+                  pack: pack,
                   onEvent: onEvent,
                 ),
             ],
@@ -128,16 +134,37 @@ class _StickyHeader extends StatelessWidget {
                         : scheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Text(
-                    yourTurn ? 'YOUR TURN' : 'OPPONENT',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 0.6,
-                      color: yourTurn
-                          ? scheme.onPrimaryContainer
-                          : scheme.onSurfaceVariant,
-                    ),
+                  child: Row(
+                    children: [
+                      Text(
+                        yourTurn ? 'YOUR TURN' : 'OPPONENT',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 0.6,
+                          color: yourTurn
+                              ? scheme.onPrimaryContainer
+                              : scheme.onSurfaceVariant,
+                        ),
+                      ),
+                      // The round moves on its own when the turn comes back to
+                      // whoever opened, so it is announced before the tap
+                      // rather than discovered afterwards.
+                      if (state.passingEndsRound) ...[
+                        const Spacer(),
+                        Text(
+                          '→ R${state.round + 1}',
+                          style: TextStyle(
+                            fontSize: 10.5,
+                            fontWeight: FontWeight.w700,
+                            color: (yourTurn
+                                    ? scheme.onPrimaryContainer
+                                    : scheme.onSurfaceVariant)
+                                .withValues(alpha: 0.7),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
               ),
@@ -226,6 +253,7 @@ class _PhaseSection extends StatelessWidget {
   final Army? army;
   final BattleState state;
   final SecondaryDeck deck;
+  final MissionPack pack;
   final void Function(BattleEvent) onEvent;
 
   const _PhaseSection({
@@ -233,6 +261,7 @@ class _PhaseSection extends StatelessWidget {
     this.army,
     this.state = const BattleState(),
     this.deck = const SecondaryDeck([]),
+    this.pack = const MissionPack(),
     this.onEvent = TurnScreen._ignore,
   });
 
@@ -287,7 +316,7 @@ class _PhaseSection extends StatelessWidget {
         // END is where both players' scores live and where the deck is
         // worked (§7.3.2, §7.3.3).
         if (phase == 'end')
-          EndPhase(state: state, deck: deck, onEvent: onEvent)
+          EndPhase(state: state, deck: deck, pack: pack, onEvent: onEvent)
         else if (army == null || kind == null)
           _phasePlaceholder(context, army, hasStratagems: hasStratagems)
         else

@@ -7,6 +7,12 @@
 /// charged for something the player already knows. Only round and active
 /// player are tracked, changing five and ten times a game respectively.
 ///
+/// **The round is derived from the turns, not stepped.** A battle round is
+/// both players having taken a turn, so it advances when the turn returns to
+/// whoever opened — which the setup records, since the opener is decided at
+/// the table rather than implied by attacker/defender. `SetRound` remains as
+/// the override for when the app and the table disagree.
+///
 /// **`stratagemsUsed` stores `{round, phase}` per use** rather than a
 /// "this phase" list that gets cleared on transition. With no transition there
 /// is nothing to clear, so the one-per-phase rule becomes a query against
@@ -140,6 +146,17 @@ class BattleState {
   UnitState unit(String instanceId) =>
       units[instanceId] ?? const UnitState();
 
+  /// Whoever takes the first turn of each battle round.
+  Player get opener => (setup?.iGoFirst ?? true) ? Player.me : Player.opponent;
+
+  Player get nextPlayer =>
+      activePlayer == Player.me ? Player.opponent : Player.me;
+
+  /// True when passing the turn completes the round and advances it. The
+  /// header says so before the tap, because a number that moves on its own is
+  /// alarming unless it was announced.
+  bool get passingEndsRound => nextPlayer == opener && round < 5;
+
   /// The one-per-phase rule as a **query**, not a lifecycle (§4.4).
   bool hasUsedStratagem(String instanceId, {required String phase, int? round}) {
     final r = round ?? this.round;
@@ -225,9 +242,23 @@ class BattleLog {
       switch (event) {
         case final ConfigureBattle e:
           setup = e.setup;
+          // Who opens is a setup decision, not always the player holding the
+          // phone. Before this, a game the opponent started ran a whole round
+          // labelled with the wrong active player.
+          activePlayer = e.setup.iGoFirst ? Player.me : Player.opponent;
         case final SetRound e:
           round = e.round;
         case final SetActivePlayer e:
+          // A battle round is both players having taken a turn, so the round
+          // advances when the turn comes back round to whoever opened —
+          // derived here rather than left as a stepper the player must
+          // remember. `SetRound` still overrides, which is the correction path
+          // when the table and the app disagree.
+          final opener =
+              (setup?.iGoFirst ?? true) ? Player.me : Player.opponent;
+          if (e.player != activePlayer && e.player == opener && round < 5) {
+            round++;
+          }
           activePlayer = e.player;
         case final AdjustCp e:
           cp = (cp + e.delta).clamp(0, 1 << 30);

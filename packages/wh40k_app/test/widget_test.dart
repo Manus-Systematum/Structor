@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wh40k_app/src/data/army.dart';
+import 'package:wh40k_app/src/data/dataset_repository.dart';
 import 'package:wh40k_app/src/screens/army_screen.dart';
 import 'package:wh40k_app/src/screens/turn_screen.dart';
+import 'package:wh40k_app/src/widgets/end_phase.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 /// Wraps a screen so it can be pumped without the app's FutureBuilder, whose
@@ -204,4 +206,87 @@ void main() {
     );
   });
 
+  /// The END section, pumped on its own.
+  ///
+  /// It is the last thing on the turn page, below twelve units of weapon
+  /// tables, and a `ListView` only builds what fits — so reaching it through
+  /// `TurnScreen` tests the scroll extent rather than the panel.
+  group('the scoring panel', () {
+    late MissionPack pack;
+
+    setUpAll(() async {
+      pack = await DatasetRepository().missions();
+    });
+
+    BattleState stateOf({required bool iGoFirst}) => BattleLog(events: [
+          ConfigureBattle(MissionSetup(
+            myDisposition: 'reconnaissance',
+            opponentDisposition: 'take-and-hold',
+            myMissionId: 'reconnaissance-sweep',
+            opponentMissionId: 'purge-and-secure',
+            iGoFirst: iGoFirst,
+          )),
+        ]).state;
+
+    Future<void> pumpPanel(
+      WidgetTester tester, {
+      required BattleState state,
+      MissionPack? pack,
+    }) async {
+      tester.view.physicalSize = const Size(1200, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(host(SingleChildScrollView(
+        child: EndPhase(
+          state: state,
+          deck: const SecondaryDeck([]),
+          pack: pack ?? const MissionPack(),
+          onEvent: (_) {},
+        ),
+      )));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('names each side’s primary, and they are different',
+        (tester) async {
+      await pumpPanel(tester, state: stateOf(iGoFirst: true), pack: pack);
+
+      // The matchup table is asymmetric, so the two rows are two missions.
+      expect(find.text('Reconnaissance Sweep'), findsOneWidget);
+      expect(find.text('Purge and Secure'), findsOneWidget);
+    });
+
+    testWidgets('and expands to the scoring rule behind the number',
+        (tester) async {
+      await pumpPanel(tester, state: stateOf(iGoFirst: true), pack: pack);
+
+      final text =
+          pack.card('reconnaissance-sweep')!.text.split('.').first.trim();
+      expect(find.textContaining(text), findsNothing,
+          reason: 'collapsed by default — the numbers come first');
+
+      await tester.tap(find.text('Reconnaissance Sweep'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining(text), findsOneWidget);
+    });
+
+    testWidgets('opening one side does not open the other', (tester) async {
+      await pumpPanel(tester, state: stateOf(iGoFirst: true), pack: pack);
+      await tester.tap(find.text('Reconnaissance Sweep'));
+      await tester.pumpAndSettle();
+
+      final theirs =
+          pack.card('purge-and-secure')!.text.split('.').first.trim();
+      expect(find.textContaining(theirs), findsNothing);
+    });
+
+    testWidgets('degrades to the bare steppers with no mission data',
+        (tester) async {
+      await pumpPanel(tester, state: stateOf(iGoFirst: true));
+
+      expect(find.text('PRIMARY'), findsWidgets);
+      expect(find.byIcon(Icons.flag_outlined), findsNothing,
+          reason: 'no empty disclosure to tap');
+    });
+  });
 }

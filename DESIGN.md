@@ -762,11 +762,16 @@ This is the setup screen's reason to exist. No other tool can show it, because t
 6  Deployment           pick from the 6 patterns
 7  Twist                OPTIONAL — skippable, and never re-prompted once skipped
 8  Attacker / Defender  roll-off result
-9  Secondaries          Fixed or Tactical (§7.3.2)
-10 Deploy               mark units on-board / in reserve
+9  First turn           roll-off result — separate from step 8, see below
+10 Secondaries          Fixed or Tactical (§7.3.2)
+11 Deploy               mark units on-board / in reserve
 ```
 
-Steps 3–5 carry the value; 6–9 are recording and must be fast — a row of chips, not a page each. Opponent's disposition precedes the player's so the grid can collapse to two options at the moment of choosing; if the real sequence is simultaneous, step 4 shows the full 2×5 instead.
+Steps 3–5 carry the value; 6–10 are recording and must be fast — a row of chips, not a page each.
+
+**First turn is its own question.** It is decided by a roll-off and is not implied by attacker/defender, so it cannot be derived from step 8. It earns its place in the wizard rather than being defaulted because the battle round is *both players having taken a turn* — knowing who opens is what lets the round advance on its own instead of being stepped by hand (§7.4).
+
+**Step 6 draws the table.** `deployment-patterns.json` publishes the zones as real geometry — polygons or `width`/`height` rectangles, each with a `position` offset, plus each player's territory and the objective coordinates — so the pattern can be shown rather than described. "Short edge deployment with L-shaped zones" is a sentence about a shape; the shape itself is in the data. Your half is **named** on the picture, not just coloured: the patterns are symmetric under attacker/defender, so the only thing making one side yours is the declaration made several steps earlier, which is exactly what nobody remembers while unpacking models. Opponent's disposition precedes the player's so the grid can collapse to two options at the moment of choosing; if the real sequence is simultaneous, step 4 shows the full 2×5 instead.
 
 **The matchup table is asymmetric.** `(A vs B)` and `(B vs A)` are different cells yielding different missions — 25 ordered pairs, 25 distinct missions, mirrors on the diagonal. Declaring Reconnaissance against Take and Hold means **you** play Reconnaissance Sweep while **they** play Purge and Secure, simultaneously, on the same table. Setup therefore resolves two missions, not one.
 
@@ -1035,6 +1040,8 @@ State derives from the log, so undo is a pop and a post-game summary is free. It
 
 `stratagemsUsed[]` enforces 11e's one-stratagem-per-unit-per-phase rule (§4.4). Note it stores `{phase, round}` per use rather than a "this phase" list: with no tracked phase there is nothing to clear on transition, so the rule is evaluated as a query — *has this unit used a stratagem in this round and this phase?* — against the phase the player is currently reading. Same rule, no lifecycle to get wrong.
 
+**`round` is derived from the turns, not stepped.** A battle round is both players having taken a turn, so it advances when the turn returns to whoever opened. That needs the opener, which is why `MissionSetup` records `iGoFirst` (§7.3.1) — it is decided at the table by a roll-off and is *not* implied by attacker/defender. Deriving it rather than storing it means undo takes the round back with the turn in one pop, with no inverse operation to get wrong. `SetRound` survives as the override for when the app and the table disagree, and counting resumes from whatever it was corrected to.
+
 ### 7.5 Opponent mode
 
 **Scan the opponent's QR at deployment and their army is on your phone** — their datasheets, weapon profiles and rules, available for lookup without asking to borrow their book.
@@ -1182,7 +1189,7 @@ Verified on device, from the reference army: `4× Missile pod (Commander in Enfo
 
 121 tests across both packages; both analyzers clean.
 
-> **Environment note.** The native iOS simulator integration reports Xcode as unselected even though `xcode-select -p` already resolves to `/Applications/Xcode.app/Contents/Developer`. Until that is resolved (`sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`), the app is driven with plain `xcrun simctl` — build, install, launch, screenshot — which works but provides **no tap injection**, so interactive flows cannot be exercised from here.
+> **Environment note.** ~~The native iOS simulator integration reports Xcode as unselected~~ — **resolved 2026-08-16** by `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`. The simulator integration now attaches, and **tap injection works**, so interactive flows can be exercised: build with `flutter build ios --simulator --debug`, launch `build/ios/iphonesimulator/Runner.app`, then tap and screenshot. Coordinates are **device points** (402×874 on an iPhone 17 Pro), not screenshot pixels — the screenshot comes back at roughly 2.25× that, and passing pixel coordinates silently misses.
 >
 > Android is not yet set up: `flutter doctor` wants Android Studio for the SDK. Not a blocker for development, but it does mean one of the two shipping targets is currently unbuilt.
 
@@ -1317,5 +1324,30 @@ The list imports clean and prices to exactly 995, and `war_organ_incursion_1000.
 `test/shipped_bundle_test.dart` reads what the app reads. It asserts the six corrected datasheets list their drones, that a drone's gun is BS5+, that Advanced Armour is mortal-wounds-only, and that **both real exports import with no issues at all** — not merely no errors, since an info line about an unlisted drone is exactly the symptom. Verified by rebuilding the bundles with corrections disabled: all five tests fail, with the drone message the user reported.
 
 `tools/rebuild-assets.sh` regenerates the fixture, the reference roster, the snapshot and the bundles in one command, so the step is harder to skip than to do.
+
+**Done — three findings from using the app:**
+
+- **A fresh install starts empty.** The reference army was seeded on first launch so there was something to look at; it read as somebody else's list the user had to delete before their own would look like theirs. `seedIfEmpty` is gone and the empty state names both routes in — build from the datasheets, or import the text export of the list you already have. `Army.loadReference()` and the two bundled assets stay as the **test fixture** five test files read; nothing pre-installs them.
+- **A full-height sheet had no exit.** `isScrollControlled` sizes a modal sheet to its content, so a long one fills the screen: no scrim is left to tap, and the scrollable body swallows the downward drag that would dismiss it. The drag handle is a few pixels at the very top and nobody finds it. `SheetHeader` carries a close button and every sheet that can reach full height now uses it — add unit, unit editor, secondary picker. The two short sheets keep their scrim and are left alone. A test taps the close button and asserts the sheet is gone, because this is invisible in code review: the sheet looks fine, and only the height it reaches makes it a trap.
+- **The auto-hit pill read `auto`.** Now `auto hit`, since the column beside it is a skill and `auto` alone does not say what is automatic. The CLI's fixed-width table (`bin/roster.dart`) keeps `auto`, which fits its four-character column.
+
+All three verified on the simulator, interactively — the first time that has been possible (see the environment note above). The add-unit sheet confirms the diagnosis on screen: at full height it covers the display edge to edge, and the drag handle `showDragHandle` is supposed to draw **does not render at all**, so before this change the sheet had no exit of any kind.
+
+> The already-seeded roster **survives on devices that ran an earlier build** — dropping the seed stops new installs from getting it, and does not reach back. It is worth knowing that it is now un-recreatable in-app: with `seedIfEmpty` gone, deleting it means re-importing `war_organ_export.txt`. It also still shows its units as `Attached Unit 1…4`, from before units were named after their datasheets, which is a fair picture of why a pre-installed list ages badly.
+
+**Done — four findings from the second play-test:**
+
+- **Who takes the first turn is now asked, not assumed.** `MissionSetup.iGoFirst`, set in the wizard beside attacker/defender because it is a separate decision — a roll-off, not a consequence. The battle opens in the opener's turn rather than always in mine. Games saved before the field existed read as *I went first*, which is what they all were.
+- **The round advances by itself** once both players have taken a turn (§7.4). Derived in the reducer from the opener, so undo takes the round back with the turn in one pop. The header shows `→ R2` on the toggle *before* the tap, because a number that moves on its own is alarming unless it was announced. The stepper stays as the correction path.
+- **The table is drawn** (§7.3.1). `deployment-patterns.json` publishes real polygons, positions and objective coordinates, and `DeploymentPattern` had been parsing the name and description and dropping all of it. Zones, territories and objectives now render as a picture that updates as you pick, with **your** half named rather than merely coloured — the patterns are symmetric, so colour alone does not say which side is yours.
+- **The primary's scoring rule sits beside its stepper** (§7.3.3). The number is entered by hand (§7.6) and entering it right means remembering a rule that changes at battle round 2. Both sides are shown, because the matchup table is asymmetric and knowing how they score is how you decide what to contest. Collapsed by default so the totals still come first.
+
+Three things the geometry work turned up, each pinned by a test:
+
+- **Zone shapes come in two forms** — a polygon, or a `width`/`height` rectangle — and both carry a separate `position` offset. Flattening both to absolute points at parse time is what keeps the painter honest; dropping the offset stacks both players in the same corner, and the picture looks plausible while being wrong.
+- **The board is measured, not assumed.** `kotc-colosseum` is 36×36, not 60×44, so a hardcoded standard table would draw it at half scale in the corner.
+- **Labels use the polygon's area centroid**, not its bounding box. Every zone is an L or a bar, and a bounding box puts the label on the notch. The first render also carried a horizontal centre line, which was removed: the split is left/right on most patterns, so a fixed horizontal rule asserts a halving that is not there.
+
+317 core tests, 89 app tests; both analyzers clean. All four verified on the simulator interactively.
 
 **Next:** QR (§6.4), which also unlocks the opponent page, and reporting the stale Adeptus Astartes points and the local corrections upstream to 40kdc.

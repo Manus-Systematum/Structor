@@ -159,6 +159,7 @@ class _ArmyPageState extends State<ArmyPage> {
                     army: army,
                     log: _log,
                     deck: SecondaryDeck.of(_pack),
+                    pack: _pack,
                     onEvent: (event) => _apply(_log.add(event)),
                     onUndo: () => _apply(_log.undo()),
                   ),

@@ -192,5 +192,96 @@ void main() {
       expect(pack.secondaryCards.where((c) => c.requiresAction), isNotEmpty);
       expect(pack.secondaryCards.every((c) => c.text.isNotEmpty), isTrue);
     }, skip: available ? null : 'no snapshot');
+
+    test('every primary mission carries scoring text', () {
+      // What the scoring panel shows beside the stepper. A mission whose card
+      // is missing would leave the player entering VP for a rule the app
+      // declined to state.
+      final primaries =
+          pack.cards.values.where((c) => c.isPrimary).toList();
+      expect(primaries, hasLength(25));
+      expect(primaries.every((c) => c.text.isNotEmpty), isTrue);
+    }, skip: available ? null : 'no snapshot');
+  });
+
+  group('the table, as geometry', () {
+    DeploymentPattern byId(String id) =>
+        pack.deployments.firstWhere((d) => d.id == id);
+
+    test('every pattern publishes two zones and a drawable shape', () {
+      for (final pattern in pack.deployments) {
+        expect(pattern.zones, hasLength(2), reason: pattern.id);
+        expect(pattern.hasGeometry, isTrue, reason: pattern.id);
+        expect(pattern.zoneFor(attacker: true), isNotNull, reason: pattern.id);
+        expect(pattern.zoneFor(attacker: false), isNotNull, reason: pattern.id);
+      }
+    }, skip: available ? null : 'no snapshot');
+
+    test('a rectangle zone becomes four corners in board coordinates', () {
+      // Hammer and Anvil states its zones as width/height rather than a
+      // polygon. Flattening both shapes at parse time is what lets the painter
+      // draw one thing.
+      final zone = byId('hammer-and-anvil').zoneFor(attacker: true)!;
+      expect(zone.points, hasLength(4));
+    }, skip: available ? null : 'no snapshot');
+
+    test("a zone's position offset is applied, not dropped", () {
+      // The attacker's polygon is authored at the origin and moved into place
+      // by `position`. Ignoring it stacks both players in the same corner —
+      // the picture would look plausible and be wrong.
+      final attacker = byId('tipping-point').zoneFor(attacker: true)!;
+      final defender = byId('tipping-point').zoneFor(attacker: false)!;
+      final attackerLeft =
+          attacker.points.map((p) => p.x).reduce((a, b) => a < b ? a : b);
+      final defenderLeft =
+          defender.points.map((p) => p.x).reduce((a, b) => a < b ? a : b);
+      expect(attackerLeft, greaterThan(defenderLeft));
+      expect(attackerLeft, 40, reason: 'its position is x=40');
+    }, skip: available ? null : 'no snapshot');
+
+    test('the board is measured from the data, not assumed to be 60×44', () {
+      final standard = byId('tipping-point').boardSize;
+      expect(standard.x, 60);
+      expect(standard.y, 44);
+
+      // The reason it is measured: this one is not a standard table, and a
+      // hardcoded 60×44 would draw it at half scale in the corner.
+      final colosseum = byId('kotc-colosseum').boardSize;
+      expect(colosseum.x, 36);
+      expect(colosseum.y, 36);
+    }, skip: available ? null : 'no snapshot');
+
+    test('objectives are five markers, inside the board', () {
+      final pattern = byId('tipping-point');
+      final size = pattern.boardSize;
+      expect(pattern.objectives, hasLength(5));
+      for (final o in pattern.objectives) {
+        expect(o.x, inInclusiveRange(0, size.x));
+        expect(o.y, inInclusiveRange(0, size.y));
+      }
+    }, skip: available ? null : 'no snapshot');
+
+    test('a pattern with no geometry is drawable-checkable, not a crash', () {
+      const bare = DeploymentPattern(id: 'x', name: 'X', description: '');
+      expect(bare.hasGeometry, isFalse);
+      expect(bare.boardSize.x, 0);
+      expect(bare.zoneFor(attacker: true), isNull);
+    });
+
+    test('a malformed colour falls back rather than painting black', () {
+      final area = BoardArea.fromJson(const {
+        'player': 'attacker',
+        'color': 'not-a-colour',
+        'shape': {'type': 'rectangle', 'width': 2, 'height': 2},
+      });
+      expect(area.color, isNull);
+
+      final good = BoardArea.fromJson(const {
+        'player': 'defender',
+        'color': '#3b82f6',
+        'shape': {'type': 'rectangle', 'width': 2, 'height': 2},
+      });
+      expect(good.color, 0xFF3B82F6);
+    });
   });
 }

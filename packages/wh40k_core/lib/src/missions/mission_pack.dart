@@ -59,15 +59,107 @@ class Mission {
   }
 }
 
+/// A point on the table, in **inches from the bottom-left corner**.
+class BoardPoint {
+  final double x;
+  final double y;
+
+  const BoardPoint(this.x, this.y);
+
+  factory BoardPoint.fromJson(Object? v) {
+    final j = asMap(v);
+    return BoardPoint(dblOr(j['x'], 0), dblOr(j['y'], 0));
+  }
+}
+
+/// A deployment zone or a player's territory, as absolute board coordinates.
+///
+/// The source gives a shape *plus* a `position` offset, and expresses shapes
+/// as either a polygon or a `width`/`height` rectangle. Both are flattened to
+/// one absolute point list here so nothing downstream has to know the
+/// difference or remember to apply the offset — forgetting it draws both
+/// players' zones stacked in the same corner.
+class BoardArea {
+  /// `attacker` or `defender`.
+  final String player;
+
+  final String name;
+  final List<BoardPoint> points;
+
+  /// `0xAARRGGBB` from the source's hex, or null when it publishes none.
+  final int? color;
+
+  const BoardArea({
+    required this.player,
+    required this.points,
+    this.name = '',
+    this.color,
+  });
+
+  factory BoardArea.fromJson(Object? v) {
+    final j = asMap(v);
+    final origin = BoardPoint.fromJson(j['position']);
+    final shape = asMap(j['shape']);
+
+    final List<BoardPoint> local;
+    if (strOr(shape['type'], '') == 'rectangle') {
+      final w = dblOr(shape['width'], 0);
+      final h = dblOr(shape['height'], 0);
+      local = [
+        const BoardPoint(0, 0),
+        BoardPoint(w, 0),
+        BoardPoint(w, h),
+        BoardPoint(0, h),
+      ];
+    } else {
+      local = asList(shape['points']).map(BoardPoint.fromJson).toList();
+    }
+
+    return BoardArea(
+      player: strOr(j['player'], ''),
+      name: strOr(j['name'], ''),
+      points: [
+        for (final p in local) BoardPoint(origin.x + p.x, origin.y + p.y),
+      ],
+      color: _hexColor(str(j['color'])),
+    );
+  }
+
+  bool get isAttacker => player == 'attacker';
+  bool get isDefender => player == 'defender';
+}
+
+/// `#3b82f6` → `0xFF3B82F6`. Null for anything that is not a 6-digit hex, so a
+/// malformed colour falls back to the theme rather than painting black.
+int? _hexColor(String? raw) {
+  if (raw == null) return null;
+  final hex = raw.startsWith('#') ? raw.substring(1) : raw;
+  if (hex.length != 6) return null;
+  final value = int.tryParse(hex, radix: 16);
+  return value == null ? null : 0xFF000000 | value;
+}
+
 class DeploymentPattern {
   final String id;
   final String name;
   final String description;
 
+  /// Where each player sets up.
+  final List<BoardArea> zones;
+
+  /// The halves of the table each player owns, which several missions score
+  /// against. Larger than the deployment zones and not the same shape.
+  final List<BoardArea> territories;
+
+  final List<BoardPoint> objectives;
+
   const DeploymentPattern({
     required this.id,
     required this.name,
     required this.description,
+    this.zones = const [],
+    this.territories = const [],
+    this.objectives = const [],
   });
 
   factory DeploymentPattern.fromJson(Object? v) {
@@ -76,7 +168,38 @@ class DeploymentPattern {
       id: strOr(j['id'], ''),
       name: strOr(j['name'], ''),
       description: strOr(j['description'], ''),
+      zones: asList(j['zones']).map(BoardArea.fromJson).toList(),
+      territories: asList(j['territories']).map(BoardArea.fromJson).toList(),
+      objectives: asList(j['objectives']).map(BoardPoint.fromJson).toList(),
     );
+  }
+
+  bool get hasGeometry => zones.any((z) => z.points.isNotEmpty);
+
+  /// The table's extent in inches, **measured from the data** rather than
+  /// assumed to be 60×44. `kotc-colosseum` is 36×36, so a hardcoded standard
+  /// board would draw it at half scale in the corner.
+  BoardPoint get boardSize {
+    var w = 0.0;
+    var h = 0.0;
+    for (final area in [...zones, ...territories]) {
+      for (final p in area.points) {
+        if (p.x > w) w = p.x;
+        if (p.y > h) h = p.y;
+      }
+    }
+    for (final o in objectives) {
+      if (o.x > w) w = o.x;
+      if (o.y > h) h = o.y;
+    }
+    return BoardPoint(w, h);
+  }
+
+  BoardArea? zoneFor({required bool attacker}) {
+    for (final zone in zones) {
+      if (zone.isAttacker == attacker) return zone;
+    }
+    return null;
   }
 }
 

@@ -19,18 +19,22 @@ class EndPhase extends StatelessWidget {
   final SecondaryDeck deck;
   final void Function(BattleEvent) onEvent;
 
+  /// Mission data, for each side's primary. Empty until it loads.
+  final MissionPack pack;
+
   const EndPhase({
     super.key,
     required this.state,
     required this.deck,
     required this.onEvent,
+    this.pack = const MissionPack(),
   });
 
   @override
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _ScorePanel(state: state, onEvent: onEvent),
+          _ScorePanel(state: state, pack: pack, onEvent: onEvent),
           if (!deck.isEmpty)
             _SecondaryPanel(state: state, deck: deck, onEvent: onEvent),
         ],
@@ -39,9 +43,14 @@ class EndPhase extends StatelessWidget {
 
 class _ScorePanel extends StatelessWidget {
   final BattleState state;
+  final MissionPack pack;
   final void Function(BattleEvent) onEvent;
 
-  const _ScorePanel({required this.state, required this.onEvent});
+  const _ScorePanel({
+    required this.state,
+    required this.pack,
+    required this.onEvent,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +90,7 @@ class _ScorePanel extends StatelessWidget {
               score: state.me,
               round: state.round,
               ahead: state.me.total > state.opponent.total,
+              primary: pack.card(state.setup?.myMissionId ?? ''),
               onScore: (kind, delta) => onEvent(ScoreVp(
                 side: Player.me,
                 kind: kind,
@@ -96,6 +106,10 @@ class _ScorePanel extends StatelessWidget {
               score: state.opponent,
               round: state.round,
               ahead: state.opponent.total > state.me.total,
+              // Their primary is a *different* mission — the matchup table is
+              // asymmetric (§7.3.1) — and knowing how they score is how you
+              // decide what to contest (§7.3.3).
+              primary: pack.card(state.setup?.opponentMissionId ?? ''),
               onScore: (kind, delta) => onEvent(ScoreVp(
                 side: Player.opponent,
                 kind: kind,
@@ -111,7 +125,7 @@ class _ScorePanel extends StatelessWidget {
   }
 }
 
-class _SideRow extends StatelessWidget {
+class _SideRow extends StatefulWidget {
   final String label;
   final SideScore score;
   final int round;
@@ -119,6 +133,11 @@ class _SideRow extends StatelessWidget {
   /// Whose total is higher. The margin is the number that decides the game,
   /// and two bare totals make you do the subtraction yourself.
   final bool ahead;
+
+  /// This side's primary mission. Null before the pack loads, or if the
+  /// mission has no card — the row degrades to the bare stepper rather than
+  /// showing an empty disclosure.
+  final MissionCard? primary;
 
   final void Function(ScoreKind, int) onScore;
 
@@ -128,11 +147,26 @@ class _SideRow extends StatelessWidget {
     required this.round,
     required this.ahead,
     required this.onScore,
+    this.primary,
   });
+
+  @override
+  State<_SideRow> createState() => _SideRowState();
+}
+
+class _SideRowState extends State<_SideRow> {
+  var _open = false;
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final label = widget.label;
+    final score = widget.score;
+    final round = widget.round;
+    final ahead = widget.ahead;
+    final onScore = widget.onScore;
+    final primary = widget.primary;
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
       child: Column(
@@ -176,6 +210,51 @@ class _SideRow extends StatelessWidget {
               ),
             ],
           ),
+          // What the primary actually pays for. The number above is entered by
+          // hand (§7.6), and entering it correctly means remembering a scoring
+          // rule that changes at battle round 2 — so the rule is put beside the
+          // stepper rather than left on a card face-down under the table.
+          if (primary != null) ...[
+            const SizedBox(height: 4),
+            InkWell(
+              onTap: () => setState(() => _open = !_open),
+              borderRadius: BorderRadius.circular(6),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 3),
+                child: Row(
+                  children: [
+                    Icon(Icons.flag_outlined,
+                        size: 13, color: scheme.onSurfaceVariant),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text(primary.name,
+                          style: TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w700,
+                            color: scheme.onSurfaceVariant,
+                          )),
+                    ),
+                    Icon(_open ? Icons.expand_less : Icons.expand_more,
+                        size: 16, color: scheme.onSurfaceVariant),
+                  ],
+                ),
+              ),
+            ),
+            if (_open)
+              Padding(
+                padding: const EdgeInsets.only(left: 18, top: 2, bottom: 2),
+                child: Text(
+                  primary.text.isEmpty
+                      ? 'No scoring text is published for this mission.'
+                      : primary.text,
+                  style: TextStyle(
+                    fontSize: 11.5,
+                    height: 1.35,
+                    color: scheme.onSurfaceVariant,
+                  ),
+                ),
+              ),
+          ],
         ],
       ),
     );

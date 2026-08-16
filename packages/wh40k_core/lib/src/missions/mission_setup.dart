@@ -32,6 +32,13 @@ class MissionSetup {
   final String? twist;
 
   final bool iAmAttacker;
+
+  /// Who takes the first turn. Recorded rather than assumed: it is decided at
+  /// the table, it is not implied by attacker/defender, and the battle round
+  /// is defined as both players having taken a turn — so knowing who opens is
+  /// what lets the round advance on its own (§7.4).
+  final bool iGoFirst;
+
   final SecondaryMode secondaryMode;
   final String? opponentName;
 
@@ -43,6 +50,7 @@ class MissionSetup {
     this.deploymentId,
     this.twist,
     this.iAmAttacker = true,
+    this.iGoFirst = true,
     this.secondaryMode = SecondaryMode.tactical,
     this.opponentName,
   });
@@ -57,6 +65,9 @@ class MissionSetup {
       deploymentId: str(j['deploymentId']),
       twist: str(j['twist']),
       iAmAttacker: j['iAmAttacker'] != false,
+      // Absent in games saved before the choice existed, and those all ran as
+      // "I go first" — so the old default is the right reading, not a guess.
+      iGoFirst: j['iGoFirst'] != false,
       secondaryMode: strOr(j['secondaryMode'], 'tactical') == 'fixed'
           ? SecondaryMode.fixed
           : SecondaryMode.tactical,
@@ -72,6 +83,7 @@ class MissionSetup {
         if (deploymentId != null) 'deploymentId': deploymentId,
         if (twist != null) 'twist': twist,
         'iAmAttacker': iAmAttacker,
+        'iGoFirst': iGoFirst,
         'secondaryMode': secondaryMode.name,
         if (opponentName != null) 'opponentName': opponentName,
       };

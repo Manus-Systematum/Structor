@@ -33,6 +33,17 @@ int? asInt(Object? v) {
 
 int intOr(Object? v, int fallback) => asInt(v) ?? fallback;
 
+/// Board geometry arrives as a mix of ints and decimals — a deployment zone
+/// corner is `12`, a terrain footprint vertex is `7.2668` — so coordinates are
+/// read as doubles throughout rather than losing the fraction.
+double? asDouble(Object? v) {
+  if (v is num) return v.toDouble();
+  if (v is String) return double.tryParse(v.trim());
+  return null;
+}
+
+double dblOr(Object? v, double fallback) => asDouble(v) ?? fallback;
+
 /// String list from a JSON array, dropping nulls and empties.
 List<String> strList(Object? v) => asList(v)
     .map(str)

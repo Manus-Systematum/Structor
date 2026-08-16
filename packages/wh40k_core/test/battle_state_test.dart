@@ -242,5 +242,141 @@ void main() {
       expect(log.events, hasLength(1));
       expect(log.state.round, 4);
     });
+
+    test('a game saved before the first-turn choice reads as "I went first"',
+        () {
+      // Every game played before the choice existed ran that way, so the old
+      // default is the correct reading of the absent field rather than a
+      // guess — and it keeps those games' rounds advancing on the right tap.
+      final setup = MissionSetup.fromJson(const {
+        'myDisposition': 'recon',
+        'opponentDisposition': 'assault',
+        'myMissionId': 'm1',
+        'opponentMissionId': 'm2',
+      });
+      expect(setup.iGoFirst, isTrue);
+    });
+  });
+
+  group('who goes first', () {
+    MissionSetup setup({required bool iGoFirst}) => MissionSetup(
+          myDisposition: 'recon',
+          opponentDisposition: 'assault',
+          myMissionId: 'm1',
+          opponentMissionId: 'm2',
+          iGoFirst: iGoFirst,
+        );
+
+    test('the opponent opening is the state the game starts in', () {
+      final log = logOf([ConfigureBattle(setup(iGoFirst: false))]);
+      expect(log.state.activePlayer, Player.opponent);
+      expect(log.state.round, 1);
+      expect(log.state.opener, Player.opponent);
+    });
+
+    test('and it survives a round trip', () {
+      final log = logOf([ConfigureBattle(setup(iGoFirst: false))]);
+      final restored =
+          BattleLog.fromJson(jsonDecode(jsonEncode(log.toJson())));
+      expect(restored.state.activePlayer, Player.opponent);
+      expect(restored.state.setup?.iGoFirst, isFalse);
+    });
+  });
+
+  group('the round advances on its own', () {
+    BattleLog gameWhere({required bool iGoFirst}) => logOf([
+          ConfigureBattle(MissionSetup(
+            myDisposition: 'recon',
+            opponentDisposition: 'assault',
+            myMissionId: 'm1',
+            opponentMissionId: 'm2',
+            iGoFirst: iGoFirst,
+          )),
+        ]);
+
+    test('a full cycle of turns is one battle round', () {
+      var log = gameWhere(iGoFirst: true);
+      expect(log.state.round, 1);
+
+      // My turn ends: still round 1, because the opponent has not played.
+      log = log.add(const SetActivePlayer(Player.opponent));
+      expect(log.state.round, 1);
+
+      // Theirs ends and the turn comes back to me — that is a battle round.
+      log = log.add(const SetActivePlayer(Player.me));
+      expect(log.state.round, 2);
+      expect(log.state.activePlayer, Player.me);
+    });
+
+    test('and it counts from whoever opened, not from me', () {
+      var log = gameWhere(iGoFirst: false);
+      expect(log.state.activePlayer, Player.opponent);
+
+      // Passing to me is the *first* half of round 1 here, not the end of it.
+      log = log.add(const SetActivePlayer(Player.me));
+      expect(log.state.round, 1,
+          reason: 'the opponent opened, so my turn completes nothing');
+
+      log = log.add(const SetActivePlayer(Player.opponent));
+      expect(log.state.round, 2);
+    });
+
+    test('re-selecting the active player is not half a round', () {
+      // A double tap on the toggle, or a rebuild replaying the same event.
+      var log = gameWhere(iGoFirst: true)
+          .add(const SetActivePlayer(Player.opponent))
+          .add(const SetActivePlayer(Player.opponent));
+      expect(log.state.round, 1);
+
+      log = log.add(const SetActivePlayer(Player.me));
+      expect(log.state.round, 2);
+    });
+
+    test('the game stops at five rounds rather than running on', () {
+      var log = gameWhere(iGoFirst: true);
+      for (var i = 0; i < 12; i++) {
+        log = log.add(SetActivePlayer(
+            log.state.activePlayer == Player.me
+                ? Player.opponent
+                : Player.me));
+      }
+      expect(log.state.round, 5);
+    });
+
+    test('the manual stepper still overrides, and counting resumes from it',
+        () {
+      // The correction path: the app and the table disagree, the player fixes
+      // the number, and the automatic advance carries on from the new one
+      // rather than snapping back.
+      var log = gameWhere(iGoFirst: true).add(const SetRound(3));
+      expect(log.state.round, 3);
+
+      log = log
+          .add(const SetActivePlayer(Player.opponent))
+          .add(const SetActivePlayer(Player.me));
+      expect(log.state.round, 4);
+    });
+
+    test('undo takes the round back with the turn', () {
+      // The reason this is derived rather than stored: one pop puts both back,
+      // with no inverse operation to get wrong.
+      final log = gameWhere(iGoFirst: true)
+          .add(const SetActivePlayer(Player.opponent))
+          .add(const SetActivePlayer(Player.me));
+      expect(log.state.round, 2);
+
+      final undone = log.undo();
+      expect(undone.state.round, 1);
+      expect(undone.state.activePlayer, Player.opponent);
+    });
+
+    test('passing is announced before it is tapped', () {
+      final log = gameWhere(iGoFirst: true);
+      expect(log.state.passingEndsRound, isFalse,
+          reason: 'my turn is the first half');
+
+      final mid = log.add(const SetActivePlayer(Player.opponent));
+      expect(mid.state.passingEndsRound, isTrue);
+    });
   });
 }

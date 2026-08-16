@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../data/army.dart';
+import '../widgets/deployment_diagram.dart';
 
 /// Pre-game setup (DESIGN.md §7.3.1).
 ///
@@ -30,6 +31,7 @@ class _SetupScreenState extends State<SetupScreen> {
   final _twist = TextEditingController();
   final _opponentName = TextEditingController();
   var _iAmAttacker = true;
+  var _iGoFirst = true;
   var _mode = SecondaryMode.tactical;
   var _showFullGrid = false;
 
@@ -44,6 +46,13 @@ class _SetupScreenState extends State<SetupScreen> {
       widget.pack.availableTo(widget.army.roster.detachments
           .map((d) => widget.army.catalogue.detachment(d.detachmentId))
           .whereType<SourceDetachment>());
+
+  DeploymentPattern? get _deployment {
+    for (final pattern in widget.pack.deployments) {
+      if (pattern.id == _deploymentId) return pattern;
+    }
+    return null;
+  }
 
   bool get _complete =>
       _opponentDisposition != null &&
@@ -70,6 +79,7 @@ class _SetupScreenState extends State<SetupScreen> {
       deploymentId: _deploymentId,
       twist: _twist.text.trim().isEmpty ? null : _twist.text.trim(),
       iAmAttacker: _iAmAttacker,
+      iGoFirst: _iGoFirst,
       secondaryMode: _mode,
       opponentName:
           _opponentName.text.trim().isEmpty ? null : _opponentName.text.trim(),
@@ -205,6 +215,17 @@ class _SetupScreenState extends State<SetupScreen> {
                       ),
                   ],
                 ),
+                if (_deployment case final pattern?) ...[
+                  const SizedBox(height: 12),
+                  Text(pattern.description,
+                      style: TextStyle(
+                          fontSize: 12, color: scheme.onSurfaceVariant)),
+                  const SizedBox(height: 8),
+                  DeploymentDiagram(
+                    pattern: pattern,
+                    iAmAttacker: _iAmAttacker,
+                  ),
+                ],
                 const SizedBox(height: 14),
                 TextField(
                   controller: _twist,
@@ -218,26 +239,48 @@ class _SetupScreenState extends State<SetupScreen> {
                     border: OutlineInputBorder(),
                   ),
                 ),
-                const SizedBox(height: 14),
-                SegmentedButton<bool>(
-                  segments: const [
-                    ButtonSegment(value: true, label: Text('Attacker')),
-                    ButtonSegment(value: false, label: Text('Defender')),
-                  ],
-                  selected: {_iAmAttacker},
-                  onSelectionChanged: (v) =>
-                      setState(() => _iAmAttacker = v.first),
+                const SizedBox(height: 16),
+                _Choice(
+                  label: 'You are',
+                  child: SegmentedButton<bool>(
+                    segments: const [
+                      ButtonSegment(value: true, label: Text('Attacker')),
+                      ButtonSegment(value: false, label: Text('Defender')),
+                    ],
+                    selected: {_iAmAttacker},
+                    onSelectionChanged: (v) =>
+                        setState(() => _iAmAttacker = v.first),
+                  ),
                 ),
-                const SizedBox(height: 10),
-                SegmentedButton<SecondaryMode>(
-                  segments: const [
-                    ButtonSegment(
-                        value: SecondaryMode.tactical, label: Text('Tactical')),
-                    ButtonSegment(
-                        value: SecondaryMode.fixed, label: Text('Fixed')),
-                  ],
-                  selected: {_mode},
-                  onSelectionChanged: (v) => setState(() => _mode = v.first),
+                const SizedBox(height: 12),
+                // Not implied by attacker/defender, and the battle round only
+                // advances on its own once the app knows who opens (§7.4).
+                _Choice(
+                  label: 'First turn',
+                  child: SegmentedButton<bool>(
+                    segments: const [
+                      ButtonSegment(value: true, label: Text('You')),
+                      ButtonSegment(value: false, label: Text('Opponent')),
+                    ],
+                    selected: {_iGoFirst},
+                    onSelectionChanged: (v) =>
+                        setState(() => _iGoFirst = v.first),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                _Choice(
+                  label: 'Secondaries',
+                  child: SegmentedButton<SecondaryMode>(
+                    segments: const [
+                      ButtonSegment(
+                          value: SecondaryMode.tactical,
+                          label: Text('Tactical')),
+                      ButtonSegment(
+                          value: SecondaryMode.fixed, label: Text('Fixed')),
+                    ],
+                    selected: {_mode},
+                    onSelectionChanged: (v) => setState(() => _mode = v.first),
+                  ),
                 ),
               ],
             ),
@@ -423,6 +466,28 @@ class _FullGrid extends StatelessWidget {
 
   static const _head = TextStyle(
       fontSize: 9, letterSpacing: 0.7, fontWeight: FontWeight.w800);
+}
+
+/// A labelled row of segmented buttons. Three unlabelled toggles in a column
+/// is a quiz with the questions removed.
+class _Choice extends StatelessWidget {
+  final String label;
+  final Widget child;
+
+  const _Choice({required this.label, required this.child});
+
+  @override
+  Widget build(BuildContext context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label,
+              style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant)),
+          const SizedBox(height: 6),
+          child,
+        ],
+      );
 }
 
 class _Step extends StatelessWidget {
