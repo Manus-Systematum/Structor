@@ -94,7 +94,18 @@ class TerrainTemplate {
 
   bool get isFeature => kind == 'feature';
 
-  /// The marking on the physical piece — `AB`, `CO`, `EF`, `GH`, `Tower`.
+  /// Labels upstream transcribes wrongly.
+  ///
+  /// The lettered parts run `AB`, `CD`, `EF`, `GH`; upstream writes the
+  /// second as `CO`, an O for a D. The sequence gives it away and the owner
+  /// of the terrain confirms it. Corrected here rather than in
+  /// `data-corrections.yaml` because that file is keyed by faction and this
+  /// is core data — and because the fault is a display string with no rules
+  /// behind it. If terrain corrections ever grow past this one, they belong
+  /// in the corrections file properly.
+  static const _mislabelled = {'CO': 'CD'};
+
+  /// The marking on the physical piece — `AB`, `CD`, `EF`, `GH`, `Tower`.
   ///
   /// Battlemaster's parts are lettered, and the whole point of a table
   /// diagram is setting the real terrain out to match it, so the letter is
@@ -109,7 +120,8 @@ class TerrainTemplate {
       if (out.startsWith(prefix)) out = out.substring(prefix.length);
     }
     if (out.endsWith(' flip')) out = out.substring(0, out.length - 5);
-    return out.trim();
+    out = out.trim();
+    return _mislabelled[out] ?? out;
   }
 }
 

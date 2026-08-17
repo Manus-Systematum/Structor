@@ -394,7 +394,20 @@ class SourceUnit {
           for (final item in budget.items) unscope(item),
       };
 
+  /// Attaches as a **Leader**. 250 datasheets.
   bool get isLeader => attachmentRole == 'leader';
+
+  /// Attaches as **Support**. 37 datasheets, the Hospitaller among them.
+  ///
+  /// A distinct role, not a second name for Leader: a unit may be joined by
+  /// one of each **at the same time**, so they cannot share a slot. Treating
+  /// `support` as "not an attaching character" left the Hospitaller with no
+  /// way to join anything, even though `leader-attachments.json` publishes
+  /// its eligible bodyguards.
+  bool get isSupport => attachmentRole == 'support';
+
+  /// Whether this datasheet joins another unit at all, in either role.
+  bool get attachesToUnit => isLeader || isSupport;
 
   bool hasKeyword(String keyword) =>
       keywords.any((k) => k.toLowerCase() == keyword.toLowerCase());

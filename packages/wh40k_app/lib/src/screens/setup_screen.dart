@@ -70,6 +70,58 @@ class _SetupScreenState extends State<SetupScreen> {
     return null;
   }
 
+  /// The table, full width and with the tape measure on.
+  ///
+  /// **Landscape, because the board is.** A 60×44 table on a portrait phone
+  /// is a third of the screen; turned sideways it is most of it, which is the
+  /// difference between reading a shape and reading a position.
+  void _showFullScreen(DeploymentPattern pattern) {
+    final layout = _layout;
+    showDialog<void>(
+      context: context,
+      builder: (context) => Dialog.fullscreen(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(layout?.name ?? pattern.name),
+            actions: [
+              IconButton(
+                tooltip: 'Close',
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(Icons.close),
+              ),
+            ],
+          ),
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  DeploymentDiagram(
+                    pattern: pattern,
+                    iAmAttacker: _iAmAttacker,
+                    layout: layout,
+                    templates: widget.pack.terrainTemplates,
+                    measured: true,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Grid every 6″. Each number is a piece’s centre in '
+                    'inches from the bottom-left corner.',
+                    style: TextStyle(
+                        fontSize: 11.5,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   /// Picking a table also sets the deployment, because the layout is built on
   /// one — offering them as separate questions would let the two disagree.
   void _pickLayout(TerrainLayout? layout) {
@@ -280,11 +332,30 @@ class _SetupScreenState extends State<SetupScreen> {
                       style: TextStyle(
                           fontSize: 12, color: scheme.onSurfaceVariant)),
                   const SizedBox(height: 8),
-                  DeploymentDiagram(
-                    pattern: pattern,
-                    iAmAttacker: _iAmAttacker,
-                    layout: _layout,
-                    templates: widget.pack.terrainTemplates,
+                  // Tappable, because the inline picture is small enough to
+                  // show the shape and too small to set a table out from.
+                  GestureDetector(
+                    onTap: () => _showFullScreen(pattern),
+                    child: DeploymentDiagram(
+                      pattern: pattern,
+                      iAmAttacker: _iAmAttacker,
+                      layout: _layout,
+                      templates: widget.pack.terrainTemplates,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Row(
+                      children: [
+                        Icon(Icons.straighten,
+                            size: 13, color: scheme.onSurfaceVariant),
+                        const SizedBox(width: 5),
+                        Text('Tap the table for measurements',
+                            style: TextStyle(
+                                fontSize: 11,
+                                color: scheme.onSurfaceVariant)),
+                      ],
+                    ),
                   ),
                   // Named, not implied. These are community layouts, and the
                   // app must not pass them off as Games Workshop's own (§7.6).

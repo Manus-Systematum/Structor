@@ -25,12 +25,21 @@ class DeploymentDiagram extends StatelessWidget {
 
   final Map<String, TerrainTemplate> templates;
 
+  /// Draws a ruler along the edges and a distance to each piece.
+  ///
+  /// Off in the inline diagram, which is a picture of the shape, and on in
+  /// the full-screen one, which is the thing you set the table out from —
+  /// where "roughly there" is not good enough and a tape measure is already
+  /// in your hand.
+  final bool measured;
+
   const DeploymentDiagram({
     super.key,
     required this.pattern,
     required this.iAmAttacker,
     this.layout,
     this.templates = const {},
+    this.measured = false,
   });
 
   @override
@@ -62,6 +71,7 @@ class DeploymentDiagram extends StatelessWidget {
                   iAmAttacker: iAmAttacker,
                   layout: layout,
                   templates: templates,
+                  measured: measured,
                   outline: scheme.outline,
                   terrain: scheme.onSurfaceVariant,
                   objectiveFill: scheme.onSurface,
@@ -117,6 +127,7 @@ class _BoardPainter extends CustomPainter {
   final bool iAmAttacker;
   final TerrainLayout? layout;
   final Map<String, TerrainTemplate> templates;
+  final bool measured;
   final Color outline;
   final Color terrain;
   final Color objectiveFill;
@@ -127,6 +138,7 @@ class _BoardPainter extends CustomPainter {
     required this.iAmAttacker,
     required this.layout,
     required this.templates,
+    required this.measured,
     required this.outline,
     required this.terrain,
     required this.objectiveFill,
@@ -280,6 +292,38 @@ class _BoardPainter extends CustomPainter {
               if (piece.isObjective) piece.position,
           ];
 
+    // A ruler along two edges, and each piece's centre in inches from the
+    // bottom-left corner. Setting a table out is done with a tape measure
+    // from a known corner, and a picture without numbers can only ever be
+    // "about there".
+    if (measured) {
+      final grid = Paint()
+        ..color = outline.withValues(alpha: 0.18)
+        ..strokeWidth = 0.5;
+      for (var x = 6.0; x < board.x; x += 6) {
+        canvas.drawLine(
+            Offset(x * scale, 0), Offset(x * scale, size.height), grid);
+        _tick(canvas, Offset(x * scale + 2, size.height - 11), '${x.toInt()}');
+      }
+      for (var y = 6.0; y < board.y; y += 6) {
+        final dy = size.height - y * scale;
+        canvas.drawLine(Offset(0, dy), Offset(size.width, dy), grid);
+        _tick(canvas, Offset(3, dy - 11), '${y.toInt()}');
+      }
+
+      if (table != null) {
+        for (final piece in table.pieces) {
+          final at = project(piece.position);
+          _tick(
+            canvas,
+            at.translate(4, 2),
+            '${piece.position.x.round()},${piece.position.y.round()}',
+            emphasis: true,
+          );
+        }
+      }
+    }
+
     for (final objective in
         objectives.isEmpty ? pattern.objectives : objectives) {
       final o = project(objective);
@@ -296,6 +340,29 @@ class _BoardPainter extends CustomPainter {
   }
 
   static int _fallback(bool attacker) => attacker ? 0xFFEF4444 : 0xFF3B82F6;
+
+  /// A small measurement, drawn over whatever is beneath it.
+  void _tick(Canvas canvas, Offset at, String text, {bool emphasis = false}) {
+    final painter = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: TextStyle(
+          fontSize: emphasis ? 8 : 8.5,
+          fontWeight: emphasis ? FontWeight.w700 : FontWeight.w500,
+          color: emphasis
+              ? objectiveFill.withValues(alpha: 0.85)
+              : outline.withValues(alpha: 0.8),
+          // A halo, because these land on ruins as often as on bare board.
+          shadows: [
+            Shadow(color: objectiveRing, blurRadius: 2),
+            Shadow(color: objectiveRing, blurRadius: 2),
+          ],
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    painter.paint(canvas, at);
+  }
 
   /// Writes a piece's marking inside its own outline, or not at all.
   void _pieceLabel(Canvas canvas, Rect bounds, String label) {
@@ -381,6 +448,7 @@ class _BoardPainter extends CustomPainter {
       old.pattern.id != pattern.id ||
       old.iAmAttacker != iAmAttacker ||
       old.layout?.id != layout?.id ||
+      old.measured != measured ||
       old.outline != outline;
 }
 

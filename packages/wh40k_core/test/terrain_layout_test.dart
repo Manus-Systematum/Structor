@@ -390,7 +390,13 @@ void main() {
       };
       // Setting real terrain out to match the diagram is the point of having
       // it, and the letter is what makes that possible.
-      expect(labels, containsAll(['AB', 'CO', 'EF', 'GH']));
+      //
+      // The set runs AB, CD, EF, GH. Upstream writes the second as `CO`, an
+      // O for a D — the sequence gives it away and the owner of the terrain
+      // confirms it. This test asserted `CO` when it was written, which is
+      // what encoding a typo into a test looks like.
+      expect(labels, containsAll(['AB', 'CD', 'EF', 'GH']));
+      expect(labels, isNot(contains('CO')));
       expect(labels, isNot(contains('')));
     }, skip: skip);
 

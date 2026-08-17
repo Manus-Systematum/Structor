@@ -319,30 +319,49 @@ class Roster {
   /// Units grouped into combat units by `LEADS` edges: a leader and the unit it
   /// joins are one entry, headed by the leader.
   List<List<RosterUnit>> combatUnits() {
-    final ledBy = <String, String>{}; // bodyguard instance -> leader instance
+    // **A unit can be joined by a Leader and a Support at once**, so this is
+    // one bodyguard to *many* characters. Keyed the other way round it kept
+    // only the last link, and a squad with both characters split into two
+    // combat units — the squad with one of them, and the other standing
+    // alone, priced and drawn as though it were its own unit.
+    final joinedBy = <String, List<String>>{};
     for (final link in links) {
       if (link.type == LinkType.leads) {
-        ledBy[link.toInstanceId] = link.fromInstanceId;
+        (joinedBy[link.toInstanceId] ??= []).add(link.fromInstanceId);
       }
     }
+    final characters = {for (final ids in joinedBy.values) ...ids};
 
     final groups = <List<RosterUnit>>[];
     final consumed = <String>{};
 
     for (final unit in units) {
       if (consumed.contains(unit.instanceId)) continue;
-      if (ledBy.containsKey(unit.instanceId)) continue; // emitted with its leader
+      // Bodyguards are emitted from the first character that joins them.
+      if (joinedBy.containsKey(unit.instanceId)) continue;
 
-      final group = [unit];
-      consumed.add(unit.instanceId);
-      for (final entry in ledBy.entries) {
-        if (entry.value != unit.instanceId) continue;
-        final bodyguard = unitByInstance(entry.key);
-        if (bodyguard != null && consumed.add(bodyguard.instanceId)) {
+      if (characters.contains(unit.instanceId)) {
+        final bodyguardId = joinedBy.entries
+            .firstWhere((e) => e.value.contains(unit.instanceId))
+            .key;
+        // Characters in roster order, then the unit they joined, so the
+        // label still reads "<character> with <squad>" (§3.7).
+        final group = [
+          for (final member in units)
+            if (joinedBy[bodyguardId]!.contains(member.instanceId) &&
+                consumed.add(member.instanceId))
+              member,
+        ];
+        final bodyguard = unitByInstance(bodyguardId);
+        if (bodyguard != null && consumed.add(bodyguardId)) {
           group.add(bodyguard);
         }
+        groups.add(group);
+        continue;
       }
-      groups.add(group);
+
+      consumed.add(unit.instanceId);
+      groups.add([unit]);
     }
     return groups;
   }

@@ -156,7 +156,7 @@ class UnitEditorSheet extends StatelessWidget {
             carried: carried,
           ),
 
-          if (datasheet.isLeader) ...[
+          if (datasheet.attachesToUnit) ...[
             const _Heading('LEADS'),
             _AttachPicker(
               dataset: dataset,

@@ -201,6 +201,30 @@ void main() {
     expect(find.textContaining('5 objectives'), findsOneWidget);
   });
 
+  testWidgets('the table opens full screen with measurements', (tester) async {
+    // The inline picture shows the shape; setting a table out needs numbers,
+    // and "about there" is not a position.
+    await pumpSetup(tester);
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Tipping Point'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tap the table for measurements'), findsOneWidget);
+    await tester.tap(find.byType(DeploymentDiagram));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Grid every 6'), findsOneWidget);
+    // Two diagrams now exist — the inline one behind the dialog and the
+    // measured one in it.
+    final measured = tester
+        .widgetList<DeploymentDiagram>(find.byType(DeploymentDiagram))
+        .where((d) => d.measured);
+    expect(measured, hasLength(1));
+
+    await tester.tap(find.byIcon(Icons.close));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Grid every 6'), findsNothing);
+  });
+
   testWidgets('a smaller table is drawn at its own size', (tester) async {
     await pumpSetup(tester);
     await tester.tap(find.widgetWithText(ChoiceChip, 'KOTC Colosseum (9" edges)'));

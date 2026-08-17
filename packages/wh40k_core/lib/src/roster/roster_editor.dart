@@ -247,13 +247,25 @@ class RosterEditor {
   /// A character can lead one unit and a unit can be led by one character, so
   /// the old links go rather than accumulating into an illegal tangle the
   /// validator would then have to complain about.
+  /// The attachment role of whichever character holds [instanceId]'s link, or
+  /// null when nothing is attached in that role.
+  String? _roleOf(Roster roster, String instanceId) =>
+      catalogue.unit(_unit(roster, instanceId)?.datasheetId ?? '')
+          ?.attachmentRole;
+
   Roster attach(Roster roster, String leaderId, String bodyguardId) {
     if (leaderId == bodyguardId) return roster;
+    // **A unit may take one Leader and one Support at once**, so an existing
+    // attachment is only displaced by another in the same role. Dropping
+    // every link on the bodyguard meant adding a Hospitaller silently
+    // removed the Canoness already leading the squad.
+    final role = _roleOf(roster, leaderId);
     return roster.copyWith(links: [
       for (final link in roster.links)
         if (link.type != LinkType.leads ||
             (link.fromInstanceId != leaderId &&
-                link.toInstanceId != bodyguardId))
+                !(link.toInstanceId == bodyguardId &&
+                    _roleOf(roster, link.fromInstanceId) == role)))
           link,
       RosterLink(
         type: LinkType.leads,
@@ -277,9 +289,14 @@ class RosterEditor {
     final leader = _unit(roster, leaderId);
     if (leader == null) return const [];
     final allowed = catalogue.eligibleBodyguards(leader.datasheetId).toSet();
+    // Taken **in this role**: a squad with a Leader is still open to a
+    // Support, and hiding it would make the second attachment impossible.
+    final role = _roleOf(roster, leaderId);
     final ledAlready = {
       for (final link in roster.links)
-        if (link.type == LinkType.leads && link.fromInstanceId != leaderId)
+        if (link.type == LinkType.leads &&
+            link.fromInstanceId != leaderId &&
+            _roleOf(roster, link.fromInstanceId) == role)
           link.toInstanceId,
     };
     return [
