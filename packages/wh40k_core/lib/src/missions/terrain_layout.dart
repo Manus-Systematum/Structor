@@ -182,19 +182,16 @@ List<BoardPoint> _cornerMark(
 
   var chosen = 0;
   if (base.length >= 3) {
-    var cx = 0.0;
-    var cy = 0.0;
-    for (final p in base) {
-      cx += p.x;
-      cy += p.y;
-    }
-    cx /= base.length;
-    cy /= base.length;
+    // The same centre the base is anchored on. Measuring from the mean of the
+    // base's vertices instead put the centre near one end of an irregular
+    // footprint, so "furthest out" chose a corner that is not the one facing
+    // away from the middle of the piece.
+    final centre = _centroidOf(base);
 
     var best = -1.0;
     for (var i = 0; i < outline.length; i++) {
-      final dx = outline[i].x - cx;
-      final dy = outline[i].y - cy;
+      final dx = outline[i].x - centre.x;
+      final dy = outline[i].y - centre.y;
       final distance = dx * dx + dy * dy;
       if (distance > best) {
         best = distance;
@@ -214,6 +211,39 @@ List<BoardPoint> _cornerMark(
   return [towards(corner, before), corner, towards(corner, after)];
 }
 
+/// The area centroid of a closed ring, or its bounding-box centre when the
+/// ring is degenerate.
+///
+/// The **area** centroid, not the mean of the vertices: an outline with more
+/// points along one edge than another pulls its vertex mean towards the
+/// crowded side, which for a Battlemaster footprint can land near one end of
+/// the piece rather than in the middle of it.
+BoardPoint _centroidOf(List<BoardPoint> points) {
+  var twiceArea = 0.0;
+  var cx = 0.0;
+  var cy = 0.0;
+  for (var i = 0; i < points.length; i++) {
+    final a = points[i];
+    final b = points[(i + 1) % points.length];
+    final cross = a.x * b.y - b.x * a.y;
+    twiceArea += cross;
+    cx += (a.x + b.x) * cross;
+    cy += (a.y + b.y) * cross;
+  }
+  if (twiceArea.abs() >= 1e-9) {
+    return BoardPoint(cx / (3 * twiceArea), cy / (3 * twiceArea));
+  }
+  var minX = points.first.x, maxX = points.first.x;
+  var minY = points.first.y, maxY = points.first.y;
+  for (final p in points) {
+    if (p.x < minX) minX = p.x;
+    if (p.x > maxX) maxX = p.x;
+    if (p.y < minY) minY = p.y;
+    if (p.y > maxY) maxY = p.y;
+  }
+  return BoardPoint((minX + maxX) / 2, (minY + maxY) / 2);
+}
+
 /// Shifts a shape so its bounding box is centred on the origin.
 ///
 /// **The two levels are authored in different frames.** A template's features
@@ -227,50 +257,8 @@ List<BoardPoint> _cornerMark(
 /// 2.9″..57.1″ against the walls' 3.5″..56.5″.
 List<BoardPoint> _centreOnOrigin(List<BoardPoint> points) {
   if (points.isEmpty) return points;
-
-  // **The area centroid, not the bounding-box centre.** For an irregular
-  // footprint the two differ by a fraction of the piece, which is small
-  // enough to look right and large enough to be wrong: it showed up as
-  // neighbouring bases sitting a little on top of each other, reported as
-  // "a few pixels higher and to the left".
-  //
-  // Measured across all 46 layouts, anchoring on the centroid rather than
-  // the bounding box takes the deepest overlap between two bases from 2.30"
-  // to 0.39" and raises the share of walls standing inside their own base
-  // from 84% to 89%. Both numbers were available when the bounding box was
-  // chosen; the choice was argued from how an exporter probably works
-  // instead, which is how a measurement gets talked past.
-  var twiceArea = 0.0;
-  var cx = 0.0;
-  var cy = 0.0;
-  for (var i = 0; i < points.length; i++) {
-    final a = points[i];
-    final b = points[(i + 1) % points.length];
-    final cross = a.x * b.y - b.x * a.y;
-    twiceArea += cross;
-    cx += (a.x + b.x) * cross;
-    cy += (a.y + b.y) * cross;
-  }
-
-  // A degenerate ring — a line, or two coincident points — has no centroid,
-  // so it falls back to the bounding box rather than dividing by zero.
-  if (twiceArea.abs() < 1e-9) {
-    var minX = points.first.x, maxX = points.first.x;
-    var minY = points.first.y, maxY = points.first.y;
-    for (final p in points) {
-      if (p.x < minX) minX = p.x;
-      if (p.x > maxX) maxX = p.x;
-      if (p.y < minY) minY = p.y;
-      if (p.y > maxY) maxY = p.y;
-    }
-    final bx = (minX + maxX) / 2;
-    final by = (minY + maxY) / 2;
-    return [for (final p in points) BoardPoint(p.x - bx, p.y - by)];
-  }
-
-  cx /= 3 * twiceArea;
-  cy /= 3 * twiceArea;
-  return [for (final p in points) BoardPoint(p.x - cx, p.y - cy)];
+  final centre = _centroidOf(points);
+  return [for (final p in points) BoardPoint(p.x - centre.x, p.y - centre.y)];
 }
 
 /// Rotate about the origin, then translate. The one placement rule in this

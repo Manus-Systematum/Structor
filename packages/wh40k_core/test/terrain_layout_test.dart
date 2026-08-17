@@ -378,6 +378,12 @@ void main() {
       // Which corner is chosen is measured rather than picked: facing out of
       // the base puts 86% of the 630 sharing pairs back to back, against 56%
       // for the corner nearest a base vertex.
+      //
+      // "Out of the base" is measured from the base's **area centroid** — the
+      // same centre the base itself is anchored on. Using the mean of its
+      // vertices instead puts the centre near one end of an irregular
+      // footprint, and the tick then lands on a corner that is not the one
+      // facing away from the middle of the piece.
       BoardPoint centre(List<BoardPoint> points) {
         var x = 0.0;
         var y = 0.0;
