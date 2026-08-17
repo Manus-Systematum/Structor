@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math' as math;
 import 'dart:io';
 
 import 'package:test/test.dart';
@@ -244,9 +245,11 @@ void main() {
         }
       }
       expect(total, greaterThan(4000));
-      // 84% at the current revision, against 20% before. Not 100% because a
-      // ruin's wall legitimately overhangs the edge of its base.
-      expect(on / total, greaterThan(0.8));
+      // 89% at the current revision, against 20% before the frames were
+      // reconciled and 84% while the anchor was the bounding box rather than
+      // the area centroid. Not 100% because a ruin's wall legitimately
+      // overhangs the edge of its base.
+      expect(on / total, greaterThan(0.87));
     }, skip: skip);
 
     test('the areas cover the same ground as the walls', () {
@@ -368,6 +371,124 @@ void main() {
         isEmpty,
       );
     });
+
+    test('two parts on one base point away from each other', () {
+      // The real L-shapes are not in the data — every lettered part is
+      // published as a bounding box — so the tick stands in for the corner.
+      // Which corner is chosen is measured rather than picked: facing out of
+      // the base puts 86% of the 630 sharing pairs back to back, against 56%
+      // for the corner nearest a base vertex.
+      BoardPoint centre(List<BoardPoint> points) {
+        var x = 0.0;
+        var y = 0.0;
+        for (final p in points) {
+          x += p.x;
+          y += p.y;
+        }
+        return BoardPoint(x / points.length, y / points.length);
+      }
+
+      var pairs = 0;
+      var apart = 0;
+      for (final layout in pack.terrainLayouts) {
+        for (final piece in layout.pieces) {
+          final parts = piece
+              .buildings(pack.terrainTemplates)
+              .where((b) => b.cornerMark.length >= 3)
+              .toList();
+          for (var i = 0; i < parts.length; i++) {
+            for (var j = i + 1; j < parts.length; j++) {
+              pairs++;
+              final a = centre(parts[i].outline);
+              final b = centre(parts[j].outline);
+              final ta = parts[i].cornerMark[1];
+              final tb = parts[j].cornerMark[1];
+              final aAway =
+                  (ta.x - a.x) * (a.x - b.x) + (ta.y - a.y) * (a.y - b.y) > 0;
+              final bAway =
+                  (tb.x - b.x) * (b.x - a.x) + (tb.y - b.y) * (b.y - a.y) > 0;
+              if (aAway && bAway) apart++;
+            }
+          }
+        }
+      }
+      expect(pairs, greaterThan(600));
+      expect(apart / pairs, greaterThan(0.8));
+    }, skip: skip);
+
+    test('area bases touch but do not sit on top of each other', () {
+      // A gap in the earlier tests: they checked walls against walls and
+      // never areas against areas, so a reader reported two middle pieces
+      // overlapping on Purge vs Assets 02 and nothing here disagreed.
+      //
+      // The overlaps are real but shallow — 124 pairs of 5,700, none deeper
+      // than 0.39". That is pieces placed touching, not a broken transform:
+      // anchoring on the bounding box instead of the area centroid takes the
+      // deepest to 2.30", and anchoring areas at a bounding-box *corner*
+      // gives 306 overlaps. The bound is on depth, because depth is what
+      // tells a graze from a misplacement.
+      bool inside(BoardPoint p, List<BoardPoint> poly) {
+        var hit = false;
+        for (var i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+          final a = poly[i];
+          final b = poly[j];
+          if ((a.y > p.y) != (b.y > p.y) &&
+              p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x) {
+            hit = !hit;
+          }
+        }
+        return hit;
+      }
+
+      double toSegment(BoardPoint p, BoardPoint a, BoardPoint b) {
+        final vx = b.x - a.x;
+        final vy = b.y - a.y;
+        final len = vx * vx + vy * vy;
+        final t = len == 0
+            ? 0.0
+            : (((p.x - a.x) * vx + (p.y - a.y) * vy) / len).clamp(0.0, 1.0);
+        final dx = p.x - (a.x + t * vx);
+        final dy = p.y - (a.y + t * vy);
+        return math.sqrt(dx * dx + dy * dy);
+      }
+
+      double depth(List<BoardPoint> a, List<BoardPoint> b) {
+        var worst = 0.0;
+        for (final p in a) {
+          if (!inside(p, b)) continue;
+          var nearest = double.infinity;
+          for (var i = 0; i < b.length; i++) {
+            final d = toSegment(p, b[i], b[(i + 1) % b.length]);
+            if (d < nearest) nearest = d;
+          }
+          if (nearest > worst) worst = nearest;
+        }
+        return worst;
+      }
+
+      var deep = 0;
+      var worst = 0.0;
+      for (final layout in pack.terrainLayouts) {
+        final areas = [
+          for (final piece in layout.pieces)
+            if (piece.outline(pack.terrainTemplates) case final o
+                when o.length >= 3)
+              o,
+        ];
+        for (var i = 0; i < areas.length; i++) {
+          for (var j = i + 1; j < areas.length; j++) {
+            final d = math.max(depth(areas[i], areas[j]),
+                depth(areas[j], areas[i]));
+            if (d > worst) worst = d;
+            if (d > 1.0) deep++;
+          }
+        }
+      }
+      // Nothing exceeds an inch. Loose enough that a piece genuinely placed
+      // flush does not fail it, tight enough that the 2.30" the bounding-box
+      // anchor produced would.
+      expect(deep, isZero, reason: 'deepest overlap was $worst inches');
+    }, skip: skip);
 
     test('an unresolvable shape draws nothing rather than a blob', () {
       final piece = TerrainPiece.fromJson(const {
