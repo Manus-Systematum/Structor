@@ -3,7 +3,17 @@ import 'package:wh40k_core/wh40k_core.dart';
 
 import '../data/army.dart';
 import '../theme.dart';
+import '../widgets/collapsible.dart';
 import '../widgets/weapon_table.dart';
+
+/// Combat units by role, in the order [SourceUnit.roleOrder] gives.
+Map<String, List<CombatUnit>> _byRole(Army army) {
+  final out = <String, List<CombatUnit>>{};
+  for (final unit in army.combatUnits) {
+    (out[unit.battlefieldRole] ??= []).add(unit);
+  }
+  return out;
+}
 
 /// Roster overview: points, validation, and a card per combat unit.
 ///
@@ -96,7 +106,20 @@ class ArmyScreen extends StatelessWidget {
           for (final finding in army.validation.findings)
             _FindingTile(finding: finding),
         const _SectionHeader('Units'),
-        for (final unit in army.combatUnits) _UnitCard(unit: unit),
+        // Same roles and the same order as the builder, so an army reads the
+        // same way wherever you are looking at it.
+        for (final role in SourceUnit.roleOrder)
+          if (_byRole(army)[role] case final inRole?)
+            CollapsibleGroup(
+              title: role.toUpperCase(),
+              trailing: '${inRole.length}',
+              initiallyOpen: true,
+              child: Column(
+                children: [
+                  for (final unit in inRole) _UnitCard(unit: unit),
+                ],
+              ),
+            ),
       ],
     );
   }
@@ -196,8 +219,33 @@ class _UnitCard extends StatelessWidget {
               WeaponTable(result: unit.weapons(WeaponKind.ranged)),
               const _Subheader('Melee'),
               WeaponTable(result: unit.weapons(WeaponKind.melee)),
-              if (unit.rules.isNotEmpty) const _Subheader('Abilities'),
+              // Keywords first, as a row of chips. A rule whose description
+              // only repeats its name — DEEP STRIKE, FIGHTS FIRST, LEADER —
+              // is a keyword whose meaning lives in the rulebook, and given a
+              // name-and-description line apiece they read as rules the app
+              // failed to explain while costing two lines each.
+              if (unit.attributedRules.any((e) => e.rule.isBareKeyword)) ...[
+                const _Subheader('Keywords'),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 0, 12, 4),
+                  child: Wrap(
+                    spacing: 5,
+                    runSpacing: 4,
+                    children: [
+                      for (final entry in unit.attributedRules)
+                        if (entry.rule.isBareKeyword)
+                          _KeywordChip(
+                            label: entry.rule.name,
+                            source: entry.source,
+                          ),
+                    ],
+                  ),
+                ),
+              ],
+              if (unit.attributedRules.any((e) => !e.rule.isBareKeyword))
+                const _Subheader('Abilities'),
               for (final entry in unit.attributedRules)
+                if (!entry.rule.isBareKeyword)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(12, 3, 12, 3),
                   child: RichText(
@@ -233,6 +281,37 @@ class _UnitCard extends StatelessWidget {
                 ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A core keyword, shown as itself.
+class _KeywordChip extends StatelessWidget {
+  final String label;
+
+  /// Which half of an attached unit has it, when only one does.
+  final String source;
+
+  const _KeywordChip({required this.label, required this.source});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+      decoration: BoxDecoration(
+        border: Border.all(color: scheme.outlineVariant),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        source.isEmpty ? label.toUpperCase() : '${label.toUpperCase()} ($source)',
+        style: TextStyle(
+          fontSize: 9.5,
+          letterSpacing: 0.5,
+          fontWeight: FontWeight.w700,
+          color: scheme.onSurfaceVariant,
         ),
       ),
     );

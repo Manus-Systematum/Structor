@@ -40,6 +40,30 @@ class RenderedRule {
 
   bool get isComplete => unrendered.isEmpty;
 
+  /// Whether the description repeats the name and nothing else.
+  ///
+  /// 166 of 7,484 abilities render as *Deep Strike: Deep Strike* or
+  /// *Leader: grants Leader*. The effect record is honest — DEEP STRIKE is a
+  /// core keyword whose meaning lives in the rulebook, and there is nothing
+  /// for the renderer to say — but printed as a name and a description it
+  /// reads as a rule the app failed to explain, and it costs two lines
+  /// apiece on a screen read mid-game.
+  ///
+  /// These are **keywords, and should be shown as keywords**: the name alone,
+  /// in a row of chips. Detected rather than listed, because a hand-kept list
+  /// of core keywords would go stale the first time upstream adds one.
+  bool get isBareKeyword {
+    if (text.isEmpty || text == '—') return true;
+    final body = _plain(text);
+    return body == _plain(name) || body == 'grants ${_plain(name)}';
+  }
+
+  static String _plain(String value) => value
+      .toLowerCase()
+      .replaceAll(RegExp(r'[^a-z0-9 ]'), ' ')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .trim();
+
   @override
   String toString() => '$name — $text';
 }

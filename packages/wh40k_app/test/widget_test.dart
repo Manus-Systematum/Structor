@@ -206,6 +206,46 @@ void main() {
     );
   });
 
+  group('the turn page corrections', () {
+    BattleLog gameAt(int round) => BattleLog(events: [
+          const ConfigureBattle(MissionSetup(
+            myDisposition: 'reconnaissance',
+            opponentDisposition: 'take-and-hold',
+            myMissionId: 'reconnaissance-sweep',
+            opponentMissionId: 'purge-and-secure',
+          )),
+          SetRound(round),
+        ]);
+
+    testWidgets('Scouting shows in round 1 and is gone from round 2',
+        (tester) async {
+      // A Scout move not taken before the first turn cannot be taken later,
+      // so from round 2 the section describes a moment that has passed.
+      useTallSurface(tester);
+      await tester.pumpWidget(
+          host(TurnScreen(army: army, log: gameAt(1))));
+      expect(find.text('SCOUTING'), findsOneWidget);
+
+      await tester.pumpWidget(
+          host(TurnScreen(army: army, log: gameAt(2))));
+      expect(find.text('SCOUTING'), findsNothing);
+    });
+
+    testWidgets('Movement shows the number the phase turns on',
+        (tester) async {
+      useTallSurface(tester);
+      await tester.pumpWidget(
+          host(TurnScreen(army: army, log: gameAt(1))));
+
+      expect(find.text('MOVE'), findsOneWidget);
+      // The reference army's Coldstar Commander moves 12 and the Crisis suits
+      // it leads move 10, so the unit shows both rather than one averaged
+      // figure that is true of neither model.
+      expect(find.textContaining('12'), findsWidgets);
+      expect(find.textContaining('10'), findsWidgets);
+    });
+  });
+
   /// The END section, pumped on its own.
   ///
   /// It is the last thing on the turn page, below twelve units of weapon

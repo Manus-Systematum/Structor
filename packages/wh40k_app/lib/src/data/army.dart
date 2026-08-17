@@ -253,6 +253,21 @@ class CombatUnit {
 
   int get models => group.fold(0, (sum, u) => sum + u.models);
 
+  /// The heading this unit files under, taken from whichever member sorts
+  /// earliest — a Commander leading a squad is a Character, because the
+  /// Commander is the entry you go looking for (§4.8).
+  String get battlefieldRole {
+    var best = SourceUnit.roleOrder.length;
+    for (final member in group) {
+      final role = army.catalogue.unit(member.datasheetId)?.battlefieldRole;
+      final rank = SourceUnit.roleOrder.indexOf(role ?? 'Other');
+      if (rank >= 0 && rank < best) best = rank;
+    }
+    return best < SourceUnit.roleOrder.length
+        ? SourceUnit.roleOrder[best]
+        : 'Other';
+  }
+
   /// Distinct model profiles across the group. Divergent statlines within one
   /// attached unit are the norm, not an edge case (§7.3.6).
   ///

@@ -36,7 +36,7 @@ class EndPhase extends StatelessWidget {
         children: [
           ScorePanel(state: state, pack: pack, onEvent: onEvent),
           if (!deck.isEmpty)
-            _SecondaryPanel(state: state, deck: deck, onEvent: onEvent),
+            SecondaryPanel(state: state, deck: deck, onEvent: onEvent),
         ],
       );
 }
@@ -339,12 +339,19 @@ class _Tap extends StatelessWidget {
       );
 }
 
-class _SecondaryPanel extends StatelessWidget {
+/// The secondary deck: what is in hand, what it pays, and drawing the next.
+///
+/// Public for the same reason [ScorePanel] is (§7.3.11). Cards are drawn at
+/// the start of a turn and scored at the end of one, so a deck reachable only
+/// from END is a scroll away from half of what it is for. It reads and writes
+/// the same [BattleState] wherever it appears, so two copies cannot disagree.
+class SecondaryPanel extends StatelessWidget {
   final BattleState state;
   final SecondaryDeck deck;
   final void Function(BattleEvent) onEvent;
 
-  const _SecondaryPanel({
+  const SecondaryPanel({
+    super.key,
     required this.state,
     required this.deck,
     required this.onEvent,

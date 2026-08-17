@@ -64,10 +64,13 @@ class TurnScreen extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.only(bottom: 32),
             children: [
-              for (final phase in const [
-                // Scout moves happen before the first turn, and a Scout move
-                // forgotten during deployment cannot be taken later (§7.3.10).
-                'scout',
+              for (final phase in [
+                // Scout moves happen once, after deployment and before the
+                // first turn (§7.3.10) — so from the second battle round the
+                // section is not merely unused, it is describing a moment
+                // that has passed. Left in place it invites a move that
+                // cannot be taken.
+                if (state.round <= 1) 'scout',
                 'command',
                 'movement',
                 'shooting',
@@ -363,10 +366,41 @@ class _PhaseSection extends StatelessWidget {
               initiallyOpen: true,
               child: ScorePanel(state: state, pack: pack, onEvent: onEvent),
             ),
+          // Secondaries are **drawn** at the start of a turn and **scored** at
+          // the end of one, so a deck reachable only from END sat a scroll
+          // away from half of what it is for. The same panel appears in both,
+          // reading and writing the same state — including the cards that pay
+          // out at the start of your next turn, which are scored here because
+          // here is when they happen.
+          // Unwrapped, as it is in END: the panel carries its own header, and
+          // a CollapsibleGroup around it prints "SECONDARIES" twice.
+          if (phase == 'command' && !deck.isEmpty)
+            SecondaryPanel(state: state, deck: deck, onEvent: onEvent),
           // END is where both players' scores live and where the deck is
           // worked (§7.3.2, §7.3.3).
+          // The Movement phase turns on one number, and it was the one number
+          // the page did not show: every other phase had a weapon table while
+          // this one said "nothing tracked here". Scout distances appear
+          // beside it in the first round, since a Scout move is a movement
+          // the player is about to make and the two are read together.
+          if (phase == 'movement' && army != null)
+            CollapsibleGroup(
+              title: 'MOVE',
+              icon: Icons.directions_run,
+              trailing: '${army.combatUnits.length} units',
+              initiallyOpen: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (final unit in army.combatUnits)
+                    _MoveRow(unit: unit, state: state),
+                ],
+              ),
+            ),
           if (phase == 'end')
             EndPhase(state: state, deck: deck, pack: pack, onEvent: onEvent)
+          else if (phase == 'movement')
+            const SizedBox.shrink()
           else if (army == null || kind == null)
             // Only when the phase really carries nothing. Saying "nothing
             // tracked here" underneath a scoring panel contradicts itself.
@@ -555,6 +589,66 @@ class _RuleTile extends StatelessWidget {
 /// A pre-game step with a hard deadline: once deployment is finished the move
 /// cannot be taken, and nothing else in the app was asking the question. The
 /// distance comes from the ability's effect rather than its name, so a rule
+/// One unit's Move, for the phase that turns on it.
+///
+/// Distinct profiles are shown separately for the same reason the statline is
+/// (§7.3.6): a Commander at M12 leading Crisis suits at M10 moves as the
+/// slowest model in the unit, and a single averaged figure would be a number
+/// that is true of nobody.
+class _MoveRow extends StatelessWidget {
+  final CombatUnit unit;
+  final BattleState state;
+
+  const _MoveRow({required this.unit, required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final moves = <String, String>{};
+    for (final entry in unit.profiles) {
+      final m = entry.profile.m;
+      if (m != null && m.isNotEmpty) moves[entry.name] = m;
+    }
+    if (moves.isEmpty) return const SizedBox.shrink();
+
+    // One figure when the whole unit shares it, names when it does not.
+    final distinct = moves.values.toSet();
+    final destroyed = state.unit(unit.head.instanceId).isDestroyed;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+      child: Opacity(
+        opacity: destroyed ? 0.4 : 1,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Text(unit.label,
+                  style: const TextStyle(
+                      fontSize: 12.5, fontWeight: FontWeight.w600)),
+            ),
+            const SizedBox(width: 8),
+            if (distinct.length == 1)
+              Text(distinct.first,
+                  style: AppTheme.numeric(context, size: 14)
+                      .copyWith(fontWeight: FontWeight.w800))
+            else
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  for (final entry in moves.entries)
+                    Text('${entry.value}  ${entry.key}',
+                        style: TextStyle(
+                            fontSize: 11, color: scheme.onSurfaceVariant)),
+                ],
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// that grants a Scout move without saying "Scouts" — the Necrons' Enlivened
 /// Sentinels — is not silently dropped.
 class _ScoutGroup extends StatelessWidget {
