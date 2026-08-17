@@ -154,4 +154,65 @@ void main() {
     expect(restored.entryCount, reference.snapshot.entryCount);
     expect(restored.units.keys, containsAll(reference.snapshot.units.keys));
   });
+
+  group('duplicating an army', () {
+    test('writes a second roster and leaves the first alone', () async {
+      await store.save(reference);
+
+      final copy = await store.duplicate(reference.id, name: '2k ret variant');
+
+      expect(copy, isNotNull);
+      expect(copy!.id, isNot(reference.id));
+      expect(copy.roster.name, '2k ret variant');
+      expect((await store.list()).map((r) => r.name),
+          containsAll(['2k ret', '2k ret variant']));
+      expect((await store.load(reference.id))!.roster.name, '2k ret',
+          reason: 'the original keeps its own name');
+    });
+
+    test('the copy is the same list, not a rebuilt one', () async {
+      // The point of copying is to vary a list that already exists. Rebuilding
+      // the snapshot from today's dataset would hand back a differently costed
+      // army under the same name (§2.2).
+      await store.save(reference);
+      final copy = (await store.duplicate(reference.id, name: 'variant'))!;
+
+      expect(copy.points, reference.points);
+      expect(copy.combatUnits, hasLength(reference.combatUnits.length));
+      expect(copy.snapshot.entryCount, reference.snapshot.entryCount);
+      expect(copy.validation.isLegal, reference.validation.isLegal);
+    });
+
+    test('a battle in progress does not come along', () async {
+      await store.save(reference);
+      await store.saveBattle(reference.id,
+          const core.BattleLog().add(const core.SetRound(3)));
+
+      final copy = (await store.duplicate(reference.id, name: 'variant'))!;
+
+      expect((await store.loadBattle(copy.id)).events, isEmpty);
+      expect((await store.loadBattle(reference.id)).events, hasLength(1));
+    });
+
+    test('duplicating a roster that is gone does nothing', () async {
+      expect(await store.duplicate('missing', name: 'x'), isNull);
+      expect(await store.list(), isEmpty);
+    });
+  });
+
+  group('naming a copy', () {
+    test('is plain Copy when nothing is using it', () {
+      expect(copyName('2k ret', ['2k ret', 'Other']), '2k ret Copy');
+    });
+
+    test('counts up only once it has to distinguish something', () {
+      expect(copyName('2k ret', ['2k ret', '2k ret Copy']), '2k ret Copy 2');
+      expect(copyName('2k ret', ['2k ret Copy', '2k ret Copy 2']),
+          '2k ret Copy 3');
+    });
+
+    test('ignores the whitespace a typed name collects', () {
+      expect(copyName('2k ret', ['  2k ret Copy  ']), '2k ret Copy 2');
+    });
+  });
 }

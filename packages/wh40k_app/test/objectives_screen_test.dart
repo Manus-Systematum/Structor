@@ -162,8 +162,8 @@ void main() {
     testWidgets('and withheld when there is nothing to finish',
         (tester) async {
       tall(tester);
-      await tester.pumpWidget(host(
-          BattleLog(events: const [ConfigureBattle(setup)]).state));
+      await tester.pumpWidget(
+          host(const BattleLog(events: [ConfigureBattle(setup)]).state));
       await tester.pumpAndSettle();
       expect(find.text('Finish battle'), findsNothing);
     });

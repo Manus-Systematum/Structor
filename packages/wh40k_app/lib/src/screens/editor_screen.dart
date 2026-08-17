@@ -283,6 +283,8 @@ class _EditorScreenState extends State<EditorScreen> {
                         roster: _roster,
                         cost: cost,
                         onTap: () => _editUnit(group.first.instanceId),
+                        onDuplicate: () => _edit((e) =>
+                            e.duplicateUnit(_roster, group.first.instanceId)),
                       ),
                   ],
                 ),
@@ -597,6 +599,7 @@ class _UnitRow extends StatelessWidget {
   final Roster roster;
   final RosterCost cost;
   final VoidCallback onTap;
+  final VoidCallback onDuplicate;
 
   const _UnitRow({
     required this.group,
@@ -604,6 +607,7 @@ class _UnitRow extends StatelessWidget {
     required this.roster,
     required this.cost,
     required this.onTap,
+    required this.onDuplicate,
   });
 
   @override
@@ -636,9 +640,22 @@ class _UnitRow extends StatelessWidget {
         ].join(' · '),
         style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant),
       ),
-      trailing: Text('$points',
-          style: AppTheme.numeric(context, size: 14)
-              .copyWith(fontWeight: FontWeight.w700)),
+      // Three of the same squad is an ordinary list, and the duplicate
+      // buried in the unit sheet meant four taps to say so.
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('$points',
+              style: AppTheme.numeric(context, size: 14)
+                  .copyWith(fontWeight: FontWeight.w700)),
+          IconButton(
+            onPressed: onDuplicate,
+            tooltip: 'Duplicate',
+            visualDensity: VisualDensity.compact,
+            icon: const Icon(Icons.copy_all_outlined, size: 18),
+          ),
+        ],
+      ),
     );
   }
 }

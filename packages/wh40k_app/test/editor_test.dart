@@ -280,4 +280,48 @@ void main() {
     expect(rows.single.id, 'existing');
     expect(rows.single.name, 'Second company');
   });
+
+  testWidgets('a unit can be duplicated from the list itself', (tester) async {
+    // Three of the same squad is an ordinary list. The duplicate inside the
+    // unit sheet made that four taps.
+    await open(tester, initial: tau());
+
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+    await tester.enterText(find.byType(SearchBar), 'ghostkeel');
+    await settle(tester);
+    await tester.tap(find.text('Ghostkeel Battlesuit').last);
+    await settle(tester);
+    expect(find.text('Ghostkeel Battlesuit'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Duplicate'));
+    await settle(tester);
+
+    expect(find.text('Ghostkeel Battlesuit'), findsNWidgets(2));
+    expect(find.byIcon(Icons.undo), findsOneWidget);
+  });
+
+  testWidgets('the duplicate carries the loadout it was copied from',
+      (tester) async {
+    await open(tester, initial: tau());
+
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+    await tester.enterText(find.byType(SearchBar), 'crisis sunforge');
+    await settle(tester);
+    await tester.tap(find.text('Crisis Sunforge Battlesuits').last);
+    await settle(tester);
+
+    final before = tester.widgetList<Text>(find.textContaining('models')).first;
+    await tester.tap(find.byTooltip('Duplicate').first);
+    await settle(tester);
+
+    final rows = tester
+        .widgetList<Text>(find.textContaining('models'))
+        .map((t) => t.data)
+        .toList();
+    expect(rows, hasLength(2));
+    expect(rows.first, before.data);
+    expect(rows.last, before.data);
+  });
 }

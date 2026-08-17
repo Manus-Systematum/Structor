@@ -71,6 +71,24 @@ class RosterStore {
 
   Future<void> delete(String id) => db.deleteRoster(id);
 
+  /// Copies a saved roster under a new name.
+  ///
+  /// **The snapshot is copied verbatim rather than rebuilt.** A copy is made
+  /// to try a variant of a list that already exists, so it has to be the same
+  /// list — rebuilding it from today's dataset would silently hand back a
+  /// differently-costed army, which is the thing §2.2 exists to prevent.
+  Future<Army?> duplicate(String id, {required String name}) async {
+    final row = await db.rosterById(id);
+    if (row == null) return null;
+    final army = Army.fromSnapshot(
+      core.Roster.fromJson(jsonDecode(row.rosterJson)).copyWith(name: name),
+      core.RosterSnapshot.fromJson(jsonDecode(row.snapshotJson)),
+      id: 'r${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}',
+    );
+    await save(army);
+    return army;
+  }
+
   /// Rehydrates a saved roster into something the screens can render.
   Future<Army?> load(String id) async {
     final row = await db.rosterById(id);
@@ -96,5 +114,18 @@ class RosterStore {
       rosterJson: jsonEncode(army.roster.toJson()),
       snapshotJson: jsonEncode(army.snapshot.toJson()),
     ));
+  }
+}
+
+/// A name for a copy of [base] that no army in [taken] is already using.
+///
+/// Plain `Copy` first, because that is what one copy is called; the number
+/// only appears once it has to distinguish something.
+String copyName(String base, Iterable<String> taken) {
+  final used = taken.map((n) => n.trim()).toSet();
+  final first = '$base Copy';
+  if (!used.contains(first)) return first;
+  for (var n = 2;; n++) {
+    if (!used.contains('$first $n')) return '$first $n';
   }
 }

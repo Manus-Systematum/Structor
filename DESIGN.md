@@ -39,6 +39,37 @@ Established by the audit in §3.2: **BSData's encoding disagrees with the printe
 
 ---
 
+### 0.1 How the app talks
+
+Structor sounds like **a competent opponent reading the rulebook back to
+you**: it states what is true, names what is next, and does not manage how you
+feel about it. The registers it refuses are **performed cheerfulness** ("Great
+job! 🎉", "Oops!") and **performed reassurance** ("don't worry", "that's
+completely fine") — both lay managed feeling over information, and a player
+mid-turn with a timer running has no use for either. Sentence case, no
+exclamation marks, no emoji as tone-softeners, no first-person plural: there is
+no "we" a player could reach.
+
+The app has one advantage it should not spend: it is the thing on the table
+that is believed about points, ranges and what a stratagem costs. A sentence
+that is obviously pretending to feel something is the first thing a reader
+catches it lying about, and everything else gets discounted afterwards.
+
+Pairs from this app's own strings:
+
+| Not | But |
+|---|---|
+| "Oops! Couldn't save that 🙈" | "Not saved. Try again." |
+| "All done! Your battle has been saved! 🎉" | "Finish battle" → the record appears |
+| "Don't worry, deleting this won't affect anything else." | "The list is removed. Finished battles keep their own record." |
+| "No armies yet — let's build your first one!" | "No armies yet." + what the two buttons do |
+| "Great, that's a legal list!" | *(nothing — the findings panel is empty)* |
+
+This is decided here rather than at review because the register arrives as a
+package: cheerful copy has already half-decided the app will congratulate you
+for winning, badge your streak of legal lists, and celebrate a finished battle.
+Plain copy next to a celebration screen means one of the two is wrong.
+
 ## 1. Locked decisions
 
 | Decision | Choice |
@@ -555,6 +586,33 @@ Two things this surfaced. `wargear-options.json` was fetched, bundled and **neve
 Attachment is also one decision seen from two sides. The character's sheet asks which unit it joins; the unit's sheet asks which character leads it, listing every eligible character **including ones already leading something else**, because that is usually the one you meant to move. Choosing a busy character moves it rather than refusing.
 
 ---
+
+### 4.6 Managing a saved army
+
+Three things happen to a list that exists: it gets opened, it gets copied to
+try a variant, and it gets thrown away.
+
+**Copying is how a variant gets made.** A list is rarely built twice from
+nothing — the second one is the first with a squad swapped or an enhancement
+moved. The copy takes the **snapshot verbatim** rather than rebuilding it from
+today's dataset, because a copy that quietly costs differently from the list it
+was copied from is worse than no copy at all (§2.2). It asks for the name up
+front, defaulting to `<name> Copy`, numbering only once it has to distinguish
+something. The battle in progress does not come along: it belongs to the game
+being played, not to the list.
+
+**Deleting asks first.** The swipe was the only route and it had no
+confirmation behind it — an accidental drag while scrolling destroyed hours of
+work with no undo. Both routes now ask, and the question says what is and is
+not removed: finished battles keep their own record, because they copied what
+they needed (§7.3.12).
+
+The swipe stays, but it is no longer the only way in. It is undiscoverable, and
+duplicating had nowhere to live at all; a per-row menu holds both.
+
+**Duplicating a unit is inline.** It was reachable only from inside the unit
+sheet, so putting three of the same squad in a list — an ordinary thing to
+want — cost four taps each time.
 
 ## 5. Open questions
 
