@@ -5,6 +5,7 @@ import 'src/data/army.dart';
 import 'src/data/database.dart';
 import 'src/data/roster_store.dart';
 import 'src/screens/army_screen.dart';
+import 'src/screens/battles_screen.dart';
 import 'src/data/dataset_repository.dart';
 import 'src/screens/editor_screen.dart';
 import 'src/screens/objectives_screen.dart';
@@ -120,6 +121,42 @@ class _ArmyPageState extends State<ArmyPage> {
     }
   }
 
+  /// Files the finished game away and clears the board (§7.3.12).
+  ///
+  /// Confirmed, because it is the one action here that is not undoable: the
+  /// log leaves the roster, and the Turn tab goes back to the list of past
+  /// battles. The record keeps the whole log, so nothing is lost — but the
+  /// game in progress is over, and that is worth one tap to be sure of.
+  Future<void> _finishBattle(Army army) async {
+    final state = _log.state;
+    final finish = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Finish this battle?'),
+        content: Text(
+          'It is filed under past battles at '
+          '${state.me.total}–${state.opponent.total} after '
+          '${state.round} round${state.round == 1 ? '' : 's'}, and the Turn '
+          'tab is cleared for the next game.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Keep playing'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Finish'),
+          ),
+        ],
+      ),
+    );
+    if (finish != true) return;
+
+    await widget.store.finishBattle(army, _log);
+    if (mounted) setState(() => _log = const BattleLog());
+  }
+
   /// Every change appends to the log and persists it, so a game survives the
   /// app being killed mid-turn (DESIGN.md §7.4).
   Future<void> _apply(BattleLog next) async {
@@ -150,10 +187,14 @@ class _ArmyPageState extends State<ArmyPage> {
               index: _tab,
               children: [
                 ArmyScreen(army: army, onEdit: () => _editArmy(army)),
+                // With no game in progress the tab rests on the record of
+                // past ones rather than a screen that exists to hold a
+                // button (§7.3.12).
                 if (_log.state.setup == null)
-                  _SetupPrompt(
-                    ready: !_pack.isEmpty,
-                    onStart: () => _runSetup(army),
+                  BattlesScreen(
+                    store: widget.store,
+                    pack: _pack,
+                    onStart: _pack.isEmpty ? null : () => _runSetup(army),
                   )
                 else
                   TurnScreen(
@@ -163,6 +204,7 @@ class _ArmyPageState extends State<ArmyPage> {
                     pack: _pack,
                     onEvent: (event) => _apply(_log.add(event)),
                     onUndo: () => _apply(_log.undo()),
+                    onFinish: () => _finishBattle(army),
                   ),
                 ObjectivesScreen(
                   state: _log.state,
@@ -223,44 +265,3 @@ class _Message extends StatelessWidget {
       );
 }
 
-/// The Turn tab before a game has been set up.
-class _SetupPrompt extends StatelessWidget {
-  final bool ready;
-  final VoidCallback onStart;
-
-  const _SetupPrompt({required this.ready, required this.onStart});
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(Icons.flag_outlined, size: 40, color: scheme.primary),
-            const SizedBox(height: 12),
-            const Text('No battle in progress',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
-            const SizedBox(height: 6),
-            Text(
-              'Setting up decides which mission you play — and with two '
-              'detachments, that is a choice.',
-              textAlign: TextAlign.left,
-              style: TextStyle(fontSize: 12.5, color: scheme.onSurfaceVariant),
-            ),
-            const SizedBox(height: 18),
-            FilledButton.icon(
-              onPressed: ready ? onStart : null,
-              icon: const Icon(Icons.play_arrow),
-              label: const Text('Set up battle'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

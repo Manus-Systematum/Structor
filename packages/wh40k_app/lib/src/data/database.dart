@@ -38,7 +38,39 @@ class Rosters extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [Rosters])
+/// A battle that has been played to its end.
+///
+/// **The log is kept whole, not summarised into columns.** A finished battle
+/// is the same append-only history it was while being played (§7.4), so the
+/// record it leaves can be replayed — every round's scoring, every stratagem,
+/// the table it was fought on. Storing only the final numbers would make the
+/// history page cheap to build and impossible to extend.
+///
+/// The columns beside it are what the list needs to draw a row without
+/// decoding a log per battle.
+@DataClassName('BattleRow')
+class Battles extends Table {
+  TextColumn get id => text()();
+  TextColumn get rosterId => text()();
+
+  /// The army's name **as it was**, because a roster can be renamed or
+  /// deleted afterwards and a finished battle must not change with it.
+  TextColumn get rosterName => text()();
+  TextColumn get factionId => text()();
+
+  DateTimeColumn get finishedAt => dateTime()();
+  IntColumn get rounds => integer()();
+  IntColumn get myScore => integer()();
+  IntColumn get opponentScore => integer()();
+  TextColumn get opponentName => text().nullable()();
+
+  TextColumn get logJson => text()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DriftDatabase(tables: [Rosters, Battles])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
@@ -46,14 +78,29 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.memory() : super(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onUpgrade: (m, from, to) async {
           if (from < 2) await m.addColumn(rosters, rosters.battleLogJson);
+          if (from < 3) await m.createTable(battles);
         },
       );
+
+  Future<List<BattleRow>> allBattles() =>
+      (select(battles)..orderBy([(b) => OrderingTerm.desc(b.finishedAt)]))
+          .get();
+
+  Stream<List<BattleRow>> watchBattles() =>
+      (select(battles)..orderBy([(b) => OrderingTerm.desc(b.finishedAt)]))
+          .watch();
+
+  Future<void> insertBattle(BattlesCompanion battle) =>
+      into(battles).insertOnConflictUpdate(battle);
+
+  Future<int> deleteBattle(String id) =>
+      (delete(battles)..where((b) => b.id.equals(id))).go();
 
   Future<List<RosterRow>> allRosters() =>
       (select(rosters)..orderBy([(r) => OrderingTerm.desc(r.updatedAt)])).get();

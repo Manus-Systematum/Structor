@@ -1108,6 +1108,35 @@ A round that scored nothing reads as `–` rather than `0`. Zero is a result; bl
 
 **Phase content folds.** Phase-as-scroll-position (§7.2) breaks once a phase carries several kinds of content, because a phase you are not using pushes the one you are off the screen. Stratagems, profiles and scoring are each a `CollapsibleGroup`, open where the decision is made and folded where they are reference. A folded group still shows its count, so folding never hides that something exists.
 
+### 7.3.12 When a battle is over
+
+A game that has been played out has nowhere to go. The log stays on the
+roster as its *current* battle, so the Turn tab opens on a game that finished
+last Tuesday, and the only way to start another is to play over the top of it.
+
+**Finishing is one action, not two.** The log is copied into a record and the
+roster's is cleared together — a finished battle left in `battleLogJson` would
+still be the current game. It is the one action on this screen that cannot be
+undone, so it asks first, quoting the score it is about to file.
+
+**The record keeps the whole log.** A finished battle is the same append-only
+history it was while being played (§7.4), so it can be replayed — every
+round's scoring, the table it was fought on, the stratagems spent. Storing
+only the final numbers would make the history page cheap to build and
+impossible to extend. The columns beside it exist so the list draws a row
+without decoding a document per battle, which is the same split the roster
+list uses (§4.3).
+
+The army's name and faction are **copied into the record**, not referenced. A
+roster can be renamed or deleted afterwards, and what happened in a finished
+battle must not change with it.
+
+**The Play tab rests on the history.** With no game in progress it used to
+show a prompt with a button on it, which is a screen that exists to hold a
+control. What a player wants between games is the record — who they played,
+what each side declared, how it ended, and the table it was on — with the
+button to start the next one on top of it rather than instead of it.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.

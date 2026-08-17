@@ -22,12 +22,16 @@ class EndPhase extends StatelessWidget {
   /// Mission data, for each side's primary. Empty until it loads.
   final MissionPack pack;
 
+  /// Ends the game and files it away (§7.3.12).
+  final VoidCallback? onFinish;
+
   const EndPhase({
     super.key,
     required this.state,
     required this.deck,
     required this.onEvent,
     this.pack = const MissionPack(),
+    this.onFinish,
   });
 
   @override
@@ -37,6 +41,18 @@ class EndPhase extends StatelessWidget {
           ScorePanel(state: state, pack: pack, onEvent: onEvent),
           if (!deck.isEmpty)
             SecondaryPanel(state: state, deck: deck, onEvent: onEvent),
+          // Last on the page, under the scores it files away. A game ends
+          // after the fifth round's scoring, so the end of the END section
+          // is where the hand already is.
+          if (onFinish != null)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 10, 12, 4),
+              child: OutlinedButton.icon(
+                onPressed: onFinish,
+                icon: const Icon(Icons.flag_outlined, size: 18),
+                label: const Text('Finish battle'),
+              ),
+            ),
         ],
       );
 }

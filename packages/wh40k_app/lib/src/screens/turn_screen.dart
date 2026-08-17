@@ -25,6 +25,10 @@ class TurnScreen extends StatelessWidget {
   final void Function(BattleEvent) onEvent;
   final VoidCallback onUndo;
 
+  /// Ends the game and files it away (§7.3.12). Null on surfaces where that
+  /// makes no sense, such as a test pumping the page on its own.
+  final VoidCallback? onFinish;
+
   /// The secondary deck. Empty until the mission pack loads, which is why the
   /// END section degrades to the score panel alone rather than failing.
   final SecondaryDeck deck;
@@ -39,6 +43,7 @@ class TurnScreen extends StatelessWidget {
     this.log = const BattleLog(),
     this.onEvent = _ignore,
     this.onUndo = _nothing,
+    this.onFinish,
     this.deck = const SecondaryDeck([]),
     this.pack = const MissionPack(),
   });
@@ -86,6 +91,7 @@ class TurnScreen extends StatelessWidget {
                   deck: deck,
                   pack: pack,
                   onEvent: onEvent,
+                  onFinish: onFinish,
                 ),
             ],
           ),
@@ -264,6 +270,7 @@ class _PhaseSection extends StatelessWidget {
   final SecondaryDeck deck;
   final MissionPack pack;
   final void Function(BattleEvent) onEvent;
+  final VoidCallback? onFinish;
 
   const _PhaseSection({
     required this.phase,
@@ -272,6 +279,7 @@ class _PhaseSection extends StatelessWidget {
     this.deck = const SecondaryDeck([]),
     this.pack = const MissionPack(),
     this.onEvent = TurnScreen._ignore,
+    this.onFinish,
   });
 
   static const _labels = {
@@ -399,7 +407,13 @@ class _PhaseSection extends StatelessWidget {
               ),
             ),
           if (phase == 'end')
-            EndPhase(state: state, deck: deck, pack: pack, onEvent: onEvent)
+            EndPhase(
+              state: state,
+              deck: deck,
+              pack: pack,
+              onEvent: onEvent,
+              onFinish: onFinish,
+            )
           else if (phase == 'movement')
             const SizedBox.shrink()
           else if (army == null || kind == null)

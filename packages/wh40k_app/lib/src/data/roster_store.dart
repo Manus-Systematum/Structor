@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:drift/drift.dart' show Value;
+
 import 'package:wh40k_core/wh40k_core.dart' as core;
 
 import 'army.dart';
@@ -32,6 +34,40 @@ class RosterStore {
 
   Future<void> clearBattle(String rosterId) =>
       db.saveBattleLog(rosterId, null);
+
+  Stream<List<BattleRow>> watchBattles() => db.watchBattles();
+
+  Future<List<BattleRow>> battles() => db.allBattles();
+
+  Future<void> deleteBattleRecord(String id) => db.deleteBattle(id);
+
+  /// Files the battle away and clears the board.
+  ///
+  /// The two halves are one action on purpose: a finished battle that stayed
+  /// in `battleLogJson` would still be the roster's *current* game, and the
+  /// Play tab would open on a game that is over.
+  ///
+  /// **Nothing is summarised away.** The whole log is written, so a record
+  /// can be replayed later; the columns beside it exist only so the list of
+  /// battles draws without decoding one document per row.
+  Future<void> finishBattle(Army army, core.BattleLog log) async {
+    final state = log.state;
+    await db.insertBattle(BattlesCompanion.insert(
+      id: 'b${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}',
+      rosterId: army.id,
+      // Copied, not referenced: the roster can be renamed or deleted and a
+      // finished battle must not change with it.
+      rosterName: army.roster.name,
+      factionId: army.roster.factionId,
+      finishedAt: DateTime.now(),
+      rounds: state.round,
+      myScore: state.me.total,
+      opponentScore: state.opponent.total,
+      opponentName: Value(state.setup?.opponentName),
+      logJson: jsonEncode(log.toJson()),
+    ));
+    await clearBattle(army.id);
+  }
 
   Future<void> delete(String id) => db.deleteRoster(id);
 
