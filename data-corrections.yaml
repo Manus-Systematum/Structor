@@ -241,6 +241,18 @@ units:
     # and taking it spends points on a rule the model does not have.
     # Reported by the app's user, who fields the army.
 
+  - faction: adepta-sororitas
+    id: dominion-squad
+    reason: >
+      A Dominion Squad has a Cherub, and upstream lists none. Sanctifiers and
+      Retributors both carry the same rule as a standard ability rather than
+      a purchased option, so it is added the same way — a Cherub is part of
+      the squad, not something bought for it. Reported by the app's user, who
+      fields the army; not otherwise verified, since the rules text is not in
+      the dataset and §0 keeps it out of this repository.
+    upstream: not yet reported
+    standard_wargear: [cherub]
+
   - faction: tau-empire
     id: commander-in-coldstar-battlesuit
     reason: >

@@ -169,6 +169,52 @@ void main() {
     expect(army.snapshot.units, isNotEmpty);
   });
 
+  testWidgets('the picker groups by role and folds', (tester) async {
+    await open(tester, initial: tau());
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+
+    // Headings, not a flat 47-datasheet scroll.
+    expect(find.text('CHARACTERS'), findsOneWidget);
+    expect(find.text('INFANTRY'), findsOneWidget);
+
+    // Folded by default, so the sheet opens on the headings.
+    expect(find.text('Commander in Enforcer Battlesuit'), findsNothing);
+    await tester.tap(find.text('CHARACTERS'));
+    await settle(tester);
+    expect(find.text('Commander in Enforcer Battlesuit'), findsWidgets);
+  });
+
+  testWidgets('searching flattens the groups', (tester) async {
+    // A match behind a fold reads as no match.
+    await open(tester, initial: tau());
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+
+    await tester.enterText(find.byType(SearchBar), 'broadside');
+    await settle(tester);
+    expect(find.text('CHARACTERS'), findsNothing);
+    expect(find.text('Broadside Battlesuits'), findsOneWidget);
+  });
+
+  testWidgets('a datasheet lists every keyword, not the first two',
+      (tester) async {
+    // The subtitle took two, so a Canoness read "Infantry · Character" and
+    // stopped — GRENADES looked absent when it is on the datasheet.
+    await open(tester, initial: tau());
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+    await tester.enterText(find.byType(SearchBar), 'ghostkeel');
+    await settle(tester);
+
+    final subtitle = tester
+        .widgetList<Text>(find.descendant(
+            of: find.byType(ListTile), matching: find.byType(Text)))
+        .map((t) => t.data ?? '')
+        .firstWhere((d) => d.contains('·'));
+    expect(subtitle.split(' · ').length, greaterThan(2));
+  });
+
   testWidgets('edits survive leaving without tapping Save', (tester) async {
     // The bug: building an army and backing out lost the lot. Edits are now
     // written as they are made, so leaving keeps them.

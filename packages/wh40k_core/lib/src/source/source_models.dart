@@ -402,6 +402,52 @@ class SourceUnit {
   bool get isCharacter => hasKeyword('Character');
   bool get isEpicHero => hasKeyword('Epic Hero');
 
+  /// The order [battlefieldRole] headings appear in, so every list that
+  /// groups by role reads the same way round.
+  static const roleOrder = [
+    'Characters',
+    'Battleline',
+    'Infantry',
+    'Mounted',
+    'Swarms',
+    'Vehicles',
+    'Monsters',
+    'Aircraft',
+    'Transports',
+    'Fortifications',
+    'Other',
+  ];
+
+  /// The heading this datasheet files under, for a list long enough to need
+  /// headings — a faction is fifty sheets and Adeptus Astartes is 194.
+  ///
+  /// **Ordered, because the keywords overlap.** A Canoness is Infantry *and*
+  /// Character; a Chaos Lord on a bike is Mounted and Character too. Whichever
+  /// test runs first decides the heading, so the ones a player navigates by
+  /// run first: characters are looked up by who they are, transports by what
+  /// they carry, and everything else by what it is made of.
+  ///
+  /// Epic Heroes sit with characters rather than apart. They are found by
+  /// name, and a separate heading would put Marneus Calgar somewhere other
+  /// than where you go looking for a Captain.
+  String get battlefieldRole {
+    if (isCharacter || isEpicHero) return 'Characters';
+    if (hasKeyword('Battleline')) return 'Battleline';
+    if (hasKeyword('Dedicated Transport') || hasKeyword('Transport')) {
+      return 'Transports';
+    }
+    if (hasKeyword('Monster')) return 'Monsters';
+    if (hasKeyword('Aircraft')) return 'Aircraft';
+    if (hasKeyword('Fortification')) return 'Fortifications';
+    if (hasKeyword('Vehicle') || hasKeyword('Walker')) return 'Vehicles';
+    if (hasKeyword('Mounted') || hasKeyword('Beast') || hasKeyword('Cavalry')) {
+      return 'Mounted';
+    }
+    if (hasKeyword('Swarm')) return 'Swarms';
+    if (hasKeyword('Infantry')) return 'Infantry';
+    return 'Other';
+  }
+
   /// Whether this datasheet belongs in a matched-play army.
   ///
   /// **Combat Patrol datasheets cost nothing, and that is not an error.** That

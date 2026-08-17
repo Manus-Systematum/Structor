@@ -7,6 +7,7 @@ import '../data/army.dart';
 import '../data/dataset_repository.dart';
 import '../data/roster_store.dart';
 import '../theme.dart';
+import '../widgets/collapsible.dart';
 import '../widgets/sheet_header.dart';
 import '../widgets/unit_editor.dart';
 
@@ -263,16 +264,51 @@ class _EditorScreenState extends State<EditorScreen> {
         if (_roster.units.isEmpty)
           const _Note(text: 'No units yet. Add one to get started.')
         else
-          for (final group in _roster.combatUnits())
-            _UnitRow(
-              group: group,
-              dataset: dataset,
-              roster: _roster,
-              cost: cost,
-              onTap: () => _editUnit(group.first.instanceId),
-            ),
+          // Grouped by the same roles as the picker, so the army reads back
+          // in the order it was built. A combat unit is filed under the
+          // character that leads it when there is one — that is the entry you
+          // go looking for, and the squad is not separately in the list.
+          for (final role in SourceUnit.roleOrder)
+            if (_byRole(dataset)[role] case final groups?)
+              CollapsibleGroup(
+                title: role.toUpperCase(),
+                trailing: '${groups.length}',
+                initiallyOpen: true,
+                child: Column(
+                  children: [
+                    for (final group in groups)
+                      _UnitRow(
+                        group: group,
+                        dataset: dataset,
+                        roster: _roster,
+                        cost: cost,
+                        onTap: () => _editUnit(group.first.instanceId),
+                      ),
+                  ],
+                ),
+              ),
       ],
     );
+  }
+
+  /// Combat units by role, filed under whichever member carries the heading
+  /// that sorts earliest — a Commander leading a squad is a Character, not
+  /// Infantry, because the Commander is what you look for.
+  Map<String, List<List<RosterUnit>>> _byRole(Dataset dataset) {
+    final out = <String, List<List<RosterUnit>>>{};
+    for (final group in _roster.combatUnits()) {
+      var best = SourceUnit.roleOrder.length;
+      for (final member in group) {
+        final role = dataset.unit(member.datasheetId)?.battlefieldRole;
+        final rank = SourceUnit.roleOrder.indexOf(role ?? 'Other');
+        if (rank >= 0 && rank < best) best = rank;
+      }
+      final role = best < SourceUnit.roleOrder.length
+          ? SourceUnit.roleOrder[best]
+          : 'Other';
+      (out[role] ??= []).add(group);
+    }
+    return out;
   }
 
   Future<void> _addUnit() async {
@@ -348,15 +384,7 @@ class _Header extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
-            initialValue: roster.name,
-            decoration: const InputDecoration(
-              labelText: 'Army name',
-              isDense: true,
-            ),
-            onFieldSubmitted: onName,
-            onChanged: onName,
-          ),
+          _NameField(value: roster.name, onChanged: onName),
           const SizedBox(height: 10),
           // A unit belongs to its faction, so the choice is only offered while
           // the roster is empty — silently rewriting a built list would be
@@ -653,6 +681,104 @@ class _Note extends StatelessWidget {
   }
 }
 
+/// The army name, with the default placed so it does not have to be deleted.
+///
+/// A new army arrives called "New army", which is a prompt rather than a
+/// name — but it is real text in a real field, so renaming meant putting the
+/// cursor at the end and holding backspace nine times. Focusing selects it,
+/// so the first keystroke replaces it, which is what a placeholder should
+/// have done.
+///
+/// **Only while it is still the default.** Once the army has a name of its
+/// own, focusing to fix one letter must not select the lot — that would turn
+/// a small edit into a retype, which is the same annoyance the other way
+/// round.
+class _NameField extends StatefulWidget {
+  final String value;
+  final void Function(String) onChanged;
+
+  const _NameField({required this.value, required this.onChanged});
+
+  @override
+  State<_NameField> createState() => _NameFieldState();
+}
+
+class _NameFieldState extends State<_NameField> {
+  static const _default = 'New army';
+
+  late final _controller = TextEditingController(text: widget.value);
+  final _focus = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focus.addListener(() {
+      if (_focus.hasFocus && _controller.text == _default) {
+        _controller.selection =
+            TextSelection(baseOffset: 0, extentOffset: _controller.text.length);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _focus.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => TextField(
+        controller: _controller,
+        focusNode: _focus,
+        decoration: const InputDecoration(
+          labelText: 'Army name',
+          isDense: true,
+        ),
+        onChanged: widget.onChanged,
+      );
+}
+
+/// One datasheet in the picker.
+///
+/// **Every keyword, not the first two.** The subtitle used to take two, which
+/// silently dropped the rest — a Canoness reads `Infantry · Character` and
+/// stops, so GRENADES looks absent when it is on the datasheet. Keywords are
+/// how a player checks a unit is what they think it is, and a truncated list
+/// is worse than none because it looks complete.
+class _DatasheetTile extends StatelessWidget {
+  final SourceUnit unit;
+  final VoidCallback onTap;
+
+  const _DatasheetTile({required this.unit, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final cheapest = unit.points
+        .map((b) => b.cost)
+        .fold<int?>(null, (a, b) => a == null || b < a ? b : a);
+
+    return ListTile(
+      dense: true,
+      onTap: onTap,
+      title: Text(unit.name,
+          style:
+              const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+      subtitle: Text(
+        [
+          if (unit.isLeader) 'Leader',
+          ...unit.keywords,
+        ].join(' · '),
+        style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant),
+      ),
+      trailing: Text(cheapest == null ? '—' : 'from $cheapest',
+          style:
+              TextStyle(fontSize: 11.5, color: scheme.onSurfaceVariant)),
+    );
+  }
+}
+
 /// The datasheet picker. Searchable, because a faction is fifty datasheets and
 /// scrolling to Broadside past forty Kroot entries is not a design.
 class AddUnitSheet extends StatefulWidget {
@@ -678,6 +804,13 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
         .toList()
       ..sort((a, b) => a.name.compareTo(b.name));
 
+    // Grouped by role: a faction is fifty datasheets and Adeptus Astartes is
+    // 194, which is not a list anybody reads to the end.
+    final grouped = <String, List<SourceUnit>>{};
+    for (final unit in units) {
+      (grouped[unit.battlefieldRole] ??= []).add(unit);
+    }
+
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.only(
@@ -698,34 +831,46 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
               ),
             ),
             Flexible(
-              child: ListView.builder(
+              child: ListView(
                 shrinkWrap: true,
-                itemCount: units.length,
-                itemBuilder: (context, index) {
-                  final unit = units[index];
-                  final cheapest = unit.points
-                      .map((b) => b.cost)
-                      .fold<int?>(null, (a, b) => a == null || b < a ? b : a);
-                  return ListTile(
-                    dense: true,
-                    title: Text(unit.name,
-                        style: const TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.w600)),
-                    subtitle: Text(
-                      [
-                        if (unit.isCharacter) 'Character',
-                        if (unit.isLeader) 'Leader',
-                        ...unit.keywords.take(2),
-                      ].join(' · '),
-                      style: TextStyle(
-                          fontSize: 11, color: scheme.onSurfaceVariant),
+                children: [
+                  // Searching flattens the groups. A search result behind a
+                  // fold reads as no result, and headings earn their place by
+                  // making a long list navigable — which is the problem
+                  // searching has already solved.
+                  if (needle.isNotEmpty)
+                    for (final unit in units)
+                      _DatasheetTile(
+                        unit: unit,
+                        onTap: () => Navigator.of(context).pop(unit.id),
+                      )
+                  else
+                    for (final role in SourceUnit.roleOrder)
+                      if (grouped[role] case final inRole?)
+                        CollapsibleGroup(
+                          title: role.toUpperCase(),
+                          trailing: '${inRole.length}',
+                          initiallyOpen: grouped.length == 1,
+                          child: Column(
+                            children: [
+                              for (final unit in inRole)
+                                _DatasheetTile(
+                                  unit: unit,
+                                  onTap: () =>
+                                      Navigator.of(context).pop(unit.id),
+                                ),
+                            ],
+                          ),
+                        ),
+                  if (units.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Text('Nothing matches “$_query”.',
+                          style: TextStyle(
+                              fontSize: 12.5,
+                              color: scheme.onSurfaceVariant)),
                     ),
-                    trailing: Text(cheapest == null ? '—' : 'from $cheapest',
-                        style: TextStyle(
-                            fontSize: 11.5, color: scheme.onSurfaceVariant)),
-                    onTap: () => Navigator.of(context).pop(unit.id),
-                  );
-                },
+                ],
               ),
             ),
           ],

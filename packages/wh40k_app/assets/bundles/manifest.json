@@ -17,8 +17,8 @@
       "kind": "faction",
       "name": "Adepta Sororitas",
       "file": "adepta-sororitas.json.gz",
-      "sha256": "312619da517a7086469763b25a793c74448c30c5d58824820d2729b459419060",
-      "bytes": 22331,
+      "sha256": "2868a400ddf98471d84ca14aa88721f6fc2b3565e586a0670f5fb13e40389663",
+      "bytes": 22640,
       "revision": "local"
     },
     {
