@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../data/army.dart';
-import '../theme.dart';
 import '../widgets/collapsible.dart';
+import '../widgets/unit_profiles.dart';
 import '../widgets/weapon_table.dart';
 
 /// Combat units by role, in the order [SourceUnit.roleOrder] gives.
@@ -214,7 +214,7 @@ class _UnitCard extends StatelessWidget {
               style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant),
             ),
             children: [
-              _StatBlock(unit: unit),
+              UnitStatline(profiles: unit.profiles),
               const _Subheader('Ranged'),
               WeaponTable(result: unit.weapons(WeaponKind.ranged)),
               const _Subheader('Melee'),
@@ -316,75 +316,6 @@ class _KeywordChip extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Per-model statlines. Divergent profiles inside one attached unit are normal
-/// — a Commander at M8 W6 Sv2+ leading Crisis suits at M10 W4 Sv3+ (§7.3.6) —
-/// so every distinct profile gets a row.
-class _StatBlock extends StatelessWidget {
-  final CombatUnit unit;
-
-  const _StatBlock({required this.unit});
-
-  static const _columns = ['M', 'T', 'SV', 'INV', 'W', 'LD', 'OC'];
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    List<String?> values(ModelProfile p) =>
-        [p.m, p.t, p.sv, p.invulnSv, p.w, p.ld, p.oc];
-
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: DataTable(
-        headingRowHeight: 26,
-        dataRowMinHeight: 28,
-        dataRowMaxHeight: 32,
-        horizontalMargin: 0,
-        columnSpacing: 16,
-        columns: [
-          const DataColumn(label: Text('MODEL', style: _head)),
-          for (final column in _columns)
-            DataColumn(label: Text(column, style: _head)),
-        ],
-        rows: [
-          for (final entry in unit.profiles)
-            DataRow(cells: [
-              DataCell(Text(entry.name,
-                  style: const TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.w600))),
-              for (final value in values(entry.profile))
-                DataCell(Text(
-                  _format(value),
-                  style: AppTheme.numeric(context, size: 12.5),
-                )),
-            ]),
-        ],
-      ),
-    ).withFallback(context, unit, scheme);
-  }
-
-  static String _format(String? value) {
-    if (value == null || value.isEmpty) return '—';
-    return value;
-  }
-
-  static const _head = TextStyle(
-      fontSize: 9, letterSpacing: 0.6, fontWeight: FontWeight.w700);
-}
-
-extension _StatBlockFallback on Widget {
-  /// Guards against a snapshot that carried no profiles for a unit.
-  Widget withFallback(BuildContext context, CombatUnit unit, ColorScheme s) =>
-      unit.profiles.isEmpty
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              child: Text('No model profile in this snapshot',
-                  style: TextStyle(fontSize: 12, color: s.error)),
-            )
-          : this;
 }
 
 class _SectionHeader extends StatelessWidget {

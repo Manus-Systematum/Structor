@@ -78,7 +78,7 @@ class UnitEditorSheet extends StatelessWidget {
 
           // The statline sits under the name rather than behind a tap: it is
           // the thing you check while deciding what to buy (§4.5).
-          UnitStatline(datasheet: datasheet),
+          UnitStatline.of(datasheet),
 
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 6, 20, 8),

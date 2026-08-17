@@ -25,6 +25,27 @@ void main() {
       expect(render('adeptus-astartes', 'leader').isBareKeyword, isTrue);
     }, skip: skip);
 
+    test('a grant of an unpublished marker says nothing at all', () {
+      // Holy Vanguard's whole effect is a grant of `special-embark-rule`,
+      // which upstream never defines. It rendered as "While leading a unit:
+      // grants special embark rule" — a sentence that promises a rule and
+      // does not give one. 561 of 640 grant targets are unpublished; the
+      // seven marker ids are 332 of them.
+      final holyVanguard = render('adepta-sororitas', 'holy-vanguard');
+      expect(holyVanguard.isBareKeyword, isTrue);
+      expect(holyVanguard.text, isNot(contains('embark')));
+      expect(holyVanguard.text, isNot(contains('While leading')),
+          reason: 'a condition on nothing is nothing');
+    }, skip: skip);
+
+    test('a grant naming a real rule still names it', () {
+      // The other half of the same data: `benefit-of-cover` appears 99 times
+      // and is meaningful even though no record defines it. Suppressing every
+      // unpublished grant would have thrown it away too.
+      expect(render('adepta-sororitas', 'purge-and-cleanse').text,
+          contains('benefit of cover'));
+    }, skip: skip);
+
     test('a rule with something to say is not', () {
       expect(render('adepta-sororitas', 'cherub').isBareKeyword, isFalse);
       expect(render('adepta-sororitas', 'acts-of-faith').isBareKeyword,
@@ -37,8 +58,13 @@ void main() {
 
     test('detected, not listed', () {
       // A hand-kept list of core keywords goes stale the first time upstream
-      // adds one, so this is derived from what the renderer produced. 166 of
-      // 7,484 at the current revision.
+      // adds one, so this is derived from what the renderer produced.
+      //
+      // 447 of 7,484 (6.0%), up from 166 when this was written. The rise is
+      // deliberate and this test caught it: suppressing grants of unpublished
+      // marker ids left 281 more abilities with nothing to say, which is the
+      // point — they were rendering "grants special embark rule" and telling
+      // nobody anything. The bound is a regression guard, not a target.
       var total = 0;
       var bare = 0;
       for (final factionId in loader.availableFactions()) {
@@ -48,7 +74,7 @@ void main() {
         }
       }
       expect(bare, greaterThan(100));
-      expect(bare / total, lessThan(0.05),
+      expect(bare / total, lessThan(0.10),
           reason: 'if most rules look empty, the renderer has regressed');
     }, skip: skip);
 

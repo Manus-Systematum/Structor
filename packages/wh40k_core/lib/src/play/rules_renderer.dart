@@ -71,6 +71,24 @@ class RenderedRule {
 class RulesRenderer {
   const RulesRenderer();
 
+  /// Grant targets that are bookkeeping rather than rules.
+  ///
+  /// Curated rather than derived, because upstream marks them no differently
+  /// from a real rule name — both are just ids that no ability record
+  /// defines. Kept short on purpose: these seven are 332 of the 561 dangling
+  /// grants, and anything not on the list still renders its name, which is
+  /// the safer failure. Worth deleting an entry the moment upstream publishes
+  /// a record for it.
+  static const _markers = {
+    'special-embark-rule',
+    'once-per-battle-special',
+    'once-per-round-special',
+    'attached-unit-eligibility',
+    'faction-metadata',
+    'target-in-engagement',
+    'post-attack-debuff',
+  };
+
   RenderedRule render(SourceAbility ability) {
     final ctx = _Ctx();
     var text = _effect(ability.effect, ctx);
@@ -117,6 +135,11 @@ class RulesRenderer {
       case 'conditional':
         final condition = _condition(asMap(node['condition']), ctx);
         final inner = _effect(asMap(node['effect']), ctx);
+        // A condition on nothing is nothing. Holy Vanguard's whole effect is
+        // a grant of an unpublished marker, and left to itself the condition
+        // rendered as "While leading a unit: ." — a sentence promising a rule
+        // and then not giving one, which is worse than saying nothing.
+        if (inner.isEmpty) return '';
         return condition.isEmpty ? inner : '$condition: $inner';
 
       case 'dice-gated':
@@ -257,7 +280,18 @@ class RulesRenderer {
         // record genuinely says nothing: where it names the rule, saying
         // which rule costs nothing and is the whole of the answer.
         final ability = str(mod['ability']) ?? str(mod['ability_id']);
-        if (ability != null) return 'grants ${_words(ability)}';
+        if (ability != null) {
+          // A marker, not a rule. 561 of 640 grant targets are ids upstream
+          // never publishes, and they fall into two kinds: names that mean
+          // something to a player — `benefit-of-cover` appears 99 times — and
+          // internal bookkeeping like `special-embark-rule`, which rendered
+          // as "grants special embark rule" and told nobody anything. There
+          // is no flag distinguishing them, so the bookkeeping ones are
+          // listed; the list is short because they are few and heavily
+          // repeated, covering 332 of the 561.
+          if (_markers.contains(ability)) return '';
+          return 'grants ${_words(ability)}';
+        }
         // `weapon_id` is the shape a drone uses (§7.3.7); `weapon` is the
         // older free-text one. Either names the gun, which is the point.
         final weapon = str(mod['weapon']) ?? str(mod['weapon_id']);

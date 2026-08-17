@@ -6,6 +6,7 @@ import '../theme.dart';
 import '../widgets/collapsible.dart';
 import '../widgets/end_phase.dart';
 import '../widgets/stratagem_list.dart';
+import '../widgets/unit_profiles.dart';
 import '../widgets/weapon_table.dart';
 
 /// The turn page (DESIGN.md §7.2, §7.3).
@@ -519,6 +520,13 @@ class _UnitBlock extends StatelessWidget {
                 ],
               ),
             ),
+            // The statline, above the guns. Resolving an attack needs the
+            // target's Toughness and Save and your own Move and OC as much as
+            // it needs the weapon, and the play screen was the one surface
+            // that showed the guns without them — which is where the
+            // invulnerable save appeared to be missing, since it is only ever
+            // read off a statline.
+            UnitStatline(profiles: unit.profiles),
             WeaponTable(result: table),
             for (final rule in rules)
               _RuleTile(rule: rule, compact: true),

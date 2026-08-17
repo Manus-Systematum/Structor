@@ -200,7 +200,7 @@ class _Tiers extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  UnitStatline(datasheet: datasheet),
+                  UnitStatline.of(datasheet),
                   CarriedWeaponProfiles(
                     dataset: army.catalogue,
                     datasheet: datasheet,

@@ -10,34 +10,53 @@ import '../theme.dart';
 /// while you are checking what a unit even has. They were diverging into three
 /// half-implementations, so they are one here (DESIGN.md §7.3.11).
 
-/// The datasheet's statline, one line per distinct profile.
+/// A statline, one line per distinct profile.
+///
+/// Takes **resolved** profiles rather than a datasheet, because the numbers a
+/// player reads are not always the ones on the sheet: an invulnerable save
+/// granted by an ability belongs in the INV column (§3.8), and only the
+/// caller knows whether it applies. [UnitStatline.of] is the plain
+/// datasheet case.
 class UnitStatline extends StatelessWidget {
-  final SourceUnit datasheet;
+  final List<({String name, ModelProfile profile})> profiles;
 
-  const UnitStatline({super.key, required this.datasheet});
+  const UnitStatline({super.key, required this.profiles});
+
+  UnitStatline.of(SourceUnit datasheet, {super.key})
+      : profiles = [
+          for (final p in datasheet.profiles) (name: p.name, profile: p),
+        ];
 
   static const _columns = ['M', 'T', 'SV', 'W', 'LD', 'OC'];
+
+  /// Characteristics rolled against are written with the `+` the rulebook
+  /// gives them: a Save of 3 is `3+`, and printed bare it reads as a value
+  /// rather than a threshold.
+  static String? _threshold(String? value) {
+    if (value == null || value.isEmpty) return value;
+    return value.endsWith('+') ? value : '$value+';
+  }
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    if (datasheet.profiles.isEmpty) return const SizedBox.shrink();
+    if (profiles.isEmpty) return const SizedBox.shrink();
 
     List<String?> valuesOf(ModelProfile p) =>
-        [p.m, p.t, p.sv, p.w, p.ld, p.oc];
+        [p.m, p.t, _threshold(p.sv), p.w, _threshold(p.ld), p.oc];
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 2, 20, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (final (index, profile) in datasheet.profiles.indexed) ...[
+          for (final (index, entry) in profiles.indexed) ...[
             // One profile needs no name; several do, or the numbers are
             // ambiguous about which model they describe.
-            if (datasheet.profiles.length > 1)
+            if (profiles.length > 1)
               Padding(
                 padding: EdgeInsets.only(top: index == 0 ? 0 : 6, bottom: 1),
-                child: Text(profile.name,
+                child: Text(entry.name,
                     style: TextStyle(
                         fontSize: 10.5, color: scheme.onSurfaceVariant)),
               ),
@@ -55,7 +74,7 @@ class UnitStatline extends StatelessWidget {
                                 letterSpacing: 0.6,
                                 color: scheme.onSurfaceVariant,
                               )),
-                        Text(valuesOf(profile)[i] ?? '–',
+                        Text(valuesOf(entry.profile)[i] ?? '–',
                             style: AppTheme.numeric(context, size: 13)),
                       ],
                     ),
@@ -71,9 +90,9 @@ class UnitStatline extends StatelessWidget {
                               letterSpacing: 0.6,
                               color: scheme.onSurfaceVariant,
                             )),
-                      Text(profile.invulnSv ?? '–',
+                      Text(_threshold(entry.profile.invulnSv) ?? '–',
                           style: AppTheme.numeric(context, size: 13).copyWith(
-                              color: profile.invulnSv == null
+                              color: entry.profile.invulnSv == null
                                   ? scheme.outline
                                   : scheme.onSurface)),
                     ],
