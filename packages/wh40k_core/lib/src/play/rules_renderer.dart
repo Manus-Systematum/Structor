@@ -227,13 +227,57 @@ class RulesRenderer {
         return 'gains ${_keyword(strOr(mod['keyword_id'], '?'))}';
 
       case 'ability-grant':
-        final ability = str(mod['ability']);
+        // `ability_id` was not read, so the Immolator's Purge and Cleanse —
+        // which names `benefit-of-cover` outright — rendered as "grants a
+        // bonus". §3.0 calls this shape lossy, and it is, but only where the
+        // record genuinely says nothing: where it names the rule, saying
+        // which rule costs nothing and is the whole of the answer.
+        final ability = str(mod['ability']) ?? str(mod['ability_id']);
         if (ability != null) return 'grants ${_words(ability)}';
         // `weapon_id` is the shape a drone uses (§7.3.7); `weapon` is the
         // older free-text one. Either names the gun, which is the point.
         final weapon = str(mod['weapon']) ?? str(mod['weapon_id']);
         if (weapon != null) return 'grants a ${_words(weapon)}';
         return 'grants a ${_words(strOr(mod['grant_type'], 'bonus'))}';
+
+      // ------------------------------------------------- resource pools
+      //
+      // The Sisters of Battle mechanic, and the reason these were noticed:
+      // Miracle dice are the faction's whole identity, and every rule that
+      // touches the pool rendered as a bare `[type]`.
+
+      case 'resource-gain':
+        final amount = str(mod['amount']) ?? '1';
+        return 'gain $amount ${_pool(mod['pool_id'])}';
+
+      case 'pool-add-die':
+        final value = str(mod['value']);
+        return value == null
+            ? 'add a die to the ${_pool(mod['pool_id'])} pool'
+            : 'add a $value to the ${_pool(mod['pool_id'])} pool';
+
+      case 'replace-roll-from-pool':
+        final rolls = strList(mod['rolls']);
+        final which = rolls.isEmpty
+            ? 'a roll'
+            : 'a ${_list(rolls.map(_words).toList())} roll';
+        return 'replace $which with a ${_pool(mod['pool_id'])}';
+
+      case 'stratagem-cost-modifier':
+        final operation = strOr(mod['operation'], 'increase');
+        final amount = str(mod['amount']) ?? '1';
+        final sign = operation == 'reduce' || operation == 'decrease'
+            ? '-'
+            : '+';
+        final scope = str(mod['applies_to']);
+        final what = scope == null ? 'Stratagems' : _words(scope);
+        return '$sign${amount}CP to $what';
+
+      case 'modifier-immunity':
+        final scope = str(mod['scope']);
+        return scope == null
+            ? 'ignores modifiers'
+            : 'ignores modifiers to ${_words(scope)}';
 
       case 'movement-modifier':
         final distance = str(mod['distance']);
@@ -562,6 +606,26 @@ class RulesRenderer {
   /// `before-bearer-removed` becomes `before bearer removed`.
   String _words(String value) =>
       value.replaceAll('-', ' ').replaceAll('_', ' ').trim();
+
+  /// `miracle-dice-pool` becomes `Miracle dice`.
+  ///
+  /// A pool is a named game resource rather than a description of one, so it
+  /// reads as a proper noun — "gain 1 Miracle dice", not "gain 1 miracle dice
+  /// pool".
+  String _pool(Object? id) {
+    final raw = str(id);
+    if (raw == null) return 'die';
+    final name = _capitalise(
+        raw.endsWith('-pool') ? raw.substring(0, raw.length - 5) : raw);
+    return name.isEmpty ? 'die' : name;
+  }
+
+  /// `a, b or c` — the connective the rules use for a list of eligible rolls.
+  String _list(List<String> parts) {
+    if (parts.isEmpty) return '';
+    if (parts.length == 1) return parts.first;
+    return '${parts.take(parts.length - 1).join(', ')} or ${parts.last}';
+  }
 
   String _capitalise(String value) {
     final words = _words(value);
