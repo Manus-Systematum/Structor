@@ -22,11 +22,16 @@ class ObjectivesScreen extends StatelessWidget {
   final MissionPack pack;
   final SecondaryDeck deck;
 
+  /// Ends the game and files it away (§7.3.12). Null when there is nothing to
+  /// finish, or on a surface where finishing makes no sense.
+  final VoidCallback? onFinish;
+
   const ObjectivesScreen({
     super.key,
     required this.state,
     required this.pack,
     this.deck = const SecondaryDeck([]),
+    this.onFinish,
   });
 
   @override
@@ -75,6 +80,18 @@ class ObjectivesScreen extends StatelessWidget {
             initiallyOpen: false,
           ),
         if (!deck.isEmpty) _Hand(state: state, deck: deck),
+        // The other place a game ends. This page is where you read where the
+        // game stands, so it is where you conclude it has finished — and the
+        // END section is a long scroll away on the turn page (§7.2).
+        if (onFinish != null)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+            child: OutlinedButton.icon(
+              onPressed: onFinish,
+              icon: const Icon(Icons.flag_outlined, size: 18),
+              label: const Text('Finish battle'),
+            ),
+          ),
         const _Provenance(),
       ],
     );

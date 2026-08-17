@@ -45,8 +45,11 @@ void main() {
     ),
   });
 
-  Widget host(BattleState state) => MaterialApp(
-        home: Scaffold(body: ObjectivesScreen(state: state, pack: pack)),
+  Widget host(BattleState state, {VoidCallback? onFinish}) => MaterialApp(
+        home: Scaffold(
+          body: ObjectivesScreen(
+              state: state, pack: pack, onFinish: onFinish),
+        ),
       );
 
   void tall(WidgetTester tester) {
@@ -136,5 +139,33 @@ void main() {
       find.textContaining('not the printed text', findRichText: true),
       findsOneWidget,
     );
+  });
+
+  group('finishing from this page', () {
+    testWidgets('the button is offered when a game is in progress',
+        (tester) async {
+      // The other place a game ends: this page is where the standings are
+      // read, and the END section is a long scroll away on the turn page.
+      tall(tester);
+      var finished = 0;
+      await tester.pumpWidget(host(
+        BattleLog(events: const [ConfigureBattle(setup), SetRound(5)]).state,
+        onFinish: () => finished++,
+      ));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Finish battle'));
+      await tester.pumpAndSettle();
+      expect(finished, 1);
+    });
+
+    testWidgets('and withheld when there is nothing to finish',
+        (tester) async {
+      tall(tester);
+      await tester.pumpWidget(host(
+          BattleLog(events: const [ConfigureBattle(setup)]).state));
+      await tester.pumpAndSettle();
+      expect(find.text('Finish battle'), findsNothing);
+    });
   });
 }
