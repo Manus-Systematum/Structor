@@ -149,7 +149,7 @@ void main() {
       tall(tester);
       var finished = 0;
       await tester.pumpWidget(host(
-        BattleLog(events: const [ConfigureBattle(setup), SetRound(5)]).state,
+        const BattleLog(events: [ConfigureBattle(setup), SetRound(5)]).state,
         onFinish: () => finished++,
       ));
       await tester.pumpAndSettle();
