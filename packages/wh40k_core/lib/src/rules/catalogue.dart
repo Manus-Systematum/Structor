@@ -34,6 +34,11 @@ abstract interface class Catalogue {
   /// builder needs it.
   UnitComposition? composition(String datasheetId) => null;
 
+  /// Published wargear choices for [datasheetId]. Empty for roughly half of
+  /// datasheets, which is why the editor treats an empty list as "nothing is
+  /// published" rather than "nothing is allowed" (DESIGN.md §4.5).
+  List<SourceWargearOption> wargearOptions(String datasheetId) => const [];
+
   /// Datasheets [leaderDatasheetId] may join. Empty when the datasheet is not
   /// a leader, or when no attachment rule is published for it.
   List<String> eligibleBodyguards(String leaderDatasheetId);
@@ -61,6 +66,7 @@ class MapCatalogue implements Catalogue {
   final Map<String, SourceAbility> _abilities;
   final Map<String, SourceEnhancement> _enhancements;
   final Map<String, UnitComposition> _compositions;
+  final Map<String, List<SourceWargearOption>> _wargearOptions;
 
   MapCatalogue(
     Iterable<SourceUnit> units, {
@@ -70,12 +76,18 @@ class MapCatalogue implements Catalogue {
     Iterable<SourceAbility> abilities = const [],
     Iterable<SourceEnhancement> enhancements = const [],
     Iterable<UnitComposition> compositions = const [],
+    Iterable<SourceWargearOption> wargearOptions = const [],
   })  : _units = {for (final u in units) u.id: u},
         _detachments = {for (final d in detachments) d.id: d},
         _weapons = {for (final w in weapons) w.id: w},
         _abilities = {for (final a in abilities) a.abilityId: a},
         _enhancements = {for (final e in enhancements) e.id: e},
         _compositions = {for (final c in compositions) c.unitId: c},
+        _wargearOptions = wargearOptions.fold(
+          <String, List<SourceWargearOption>>{},
+          (map, option) =>
+              map..putIfAbsent(option.unitId, () => []).add(option),
+        ),
         _attachments = {
           for (final a in leaderAttachments) a.leaderId: a.eligibleBodyguardIds,
         };
@@ -89,6 +101,7 @@ class MapCatalogue implements Catalogue {
         abilities: faction.abilities,
         enhancements: faction.enhancements,
         compositions: faction.compositions,
+        wargearOptions: faction.wargearOptions,
       );
 
   @override
@@ -103,6 +116,10 @@ class MapCatalogue implements Catalogue {
   @override
   UnitComposition? composition(String datasheetId) =>
       _compositions[datasheetId];
+
+  @override
+  List<SourceWargearOption> wargearOptions(String datasheetId) =>
+      _wargearOptions[datasheetId] ?? const [];
 
   @override
   Iterable<SourceUnit> get allUnits => _units.values;

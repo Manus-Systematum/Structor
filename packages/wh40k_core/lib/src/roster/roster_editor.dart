@@ -12,15 +12,25 @@
 ///   - §2.3 already settled this for validation — findings with severity,
 ///     never a hard block.
 ///   - The wargear-option data is demonstrably incomplete. Six T'au datasheets
-///     did not list the drones their units carry (§3.8), and `wargear-options`
-///     comes in three different shapes across 87 records. An editor that
-///     enforced it would refuse legal lists, and a builder that will not let
-///     you enter the army standing on your table is worthless.
+///     did not list the drones their units carry (§3.8), and about half of all
+///     datasheets publish no options at all. An editor that enforced it would
+///     refuse legal lists, and a builder that will not let you enter the army
+///     standing on your table is worthless.
+///
+/// That still holds, but "permissive" is not the same as "shapeless", and it
+/// was being read that way: every item was an independent counter, so the
+/// editor offered to remove weapons no rule lets you remove and asked for
+/// three separate numbers where the datasheet asks one question. [UnitLoadout]
+/// sorts the published data by how far it can be trusted, and this class gains
+/// the two edits that structure implies — [swapWargear] and
+/// [selectLoadoutBundle]. Neither refuses an edit; both stop counts going
+/// negative and leave the verdict to the validator (§4.5).
 library;
 
 import '../rules/battle_size.dart';
 import '../rules/catalogue.dart';
 import 'roster.dart';
+import 'unit_loadout.dart';
 
 class RosterEditor {
   final Catalogue catalogue;
@@ -150,6 +160,65 @@ class RosterEditor {
         ]);
       });
 
+  /// Sets [itemId] to [count], giving back whatever it replaces.
+  ///
+  /// The data words most choices as a swap — *replace the plasma rifle with a
+  /// missile pod* — and a roster that only ever counted upwards ended up
+  /// carrying both, which is a unit with twice the guns it can field. Taking N
+  /// of an item removes N of what it replaces, and putting it back restores
+  /// them, so the pair behaves like the one decision it is (§4.5).
+  ///
+  /// The give-back is capped at what the unit actually has, so a swap can
+  /// never drive a count negative, and it stops at zero rather than refusing
+  /// the tap — the builder stays permissive and the validator reports an
+  /// over-full loadout (§2.3).
+  Roster swapWargear(
+    Roster roster,
+    String instanceId,
+    String itemId,
+    int count, {
+    required Iterable<String> replaces,
+  }) {
+    final unit = _unit(roster, instanceId);
+    if (unit == null) return roster;
+    final before = unit.countOf(itemId);
+    final delta = count - before;
+    var next = setWargear(roster, instanceId, itemId, count);
+    if (delta == 0 || replaces.isEmpty) return next;
+
+    for (final replaced in replaces) {
+      final held = _unit(next, instanceId)?.countOf(replaced) ?? 0;
+      // Giving one up frees one of the other; putting it back takes one again.
+      final adjusted = (held - delta).clamp(0, 1 << 30);
+      if (adjusted != held) {
+        next = setWargear(next, instanceId, replaced, adjusted);
+      }
+    }
+    return next;
+  }
+
+  /// Applies one bundle from a [LoadoutGroup], clearing the group's other
+  /// items so the selection stays mutually exclusive.
+  ///
+  /// Passing a null [bundle] clears the group. A bundle listing an item twice
+  /// means two of it, which is why this counts rather than sets a flag.
+  Roster selectLoadoutBundle(
+    Roster roster,
+    String instanceId,
+    LoadoutGroup group,
+    List<String>? bundle,
+  ) {
+    var next = roster;
+    final wanted = <String, int>{};
+    for (final item in bundle ?? const <String>[]) {
+      wanted[item] = (wanted[item] ?? 0) + 1;
+    }
+    for (final item in group.items) {
+      next = setWargear(next, instanceId, item, wanted[item] ?? 0);
+    }
+    return next;
+  }
+
   /// Restores the datasheet's default loadout, discarding what was chosen.
   Roster resetWargear(Roster roster, String instanceId) {
     final unit = _unit(roster, instanceId);
@@ -219,6 +288,35 @@ class RosterEditor {
             allowed.contains(unit.datasheetId) &&
             !ledAlready.contains(unit.instanceId))
           unit,
+    ];
+  }
+
+  /// Characters that may lead [bodyguardId], and what each is doing now.
+  ///
+  /// The mirror of [eligibleBodyguards], and it deliberately does **not** hide
+  /// characters that are busy. Attaching is one decision seen from two sides,
+  /// and from this side the useful question is "who could lead this" — an
+  /// answer that omitted the character currently leading something else would
+  /// be hiding the most likely thing you meant to change. [attach] already
+  /// drops a character's previous link, so choosing a busy one moves it.
+  List<({RosterUnit leader, String? leadingInstanceId})> eligibleLeaders(
+    Roster roster,
+    String bodyguardId,
+  ) {
+    final bodyguard = _unit(roster, bodyguardId);
+    if (bodyguard == null) return const [];
+    final leadingNow = {
+      for (final link in roster.links)
+        if (link.type == LinkType.leads)
+          link.fromInstanceId: link.toInstanceId,
+    };
+    return [
+      for (final unit in roster.units)
+        if (unit.instanceId != bodyguardId &&
+            catalogue
+                .eligibleBodyguards(unit.datasheetId)
+                .contains(bodyguard.datasheetId))
+          (leader: unit, leadingInstanceId: leadingNow[unit.instanceId]),
     ];
   }
 

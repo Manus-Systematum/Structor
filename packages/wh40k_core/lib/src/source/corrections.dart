@@ -101,12 +101,22 @@ class UnitCorrection implements Correction {
   /// invulnerable save. Naming it standard settles that.
   final List<String> standardWargear;
 
+  /// Ability ids the datasheet does not have at all.
+  ///
+  /// The counterpart to [addWargear], and needed for the same reason: a
+  /// wrongly *present* option is as misleading as a missing one. A Commander
+  /// in Enforcer Battlesuit is offered a Shield Generator, which belongs to
+  /// the Riptide and Stormsurge, and picking it spends points on a rule the
+  /// model does not have.
+  final List<String> removeWargear;
+
   const UnitCorrection({
     required this.faction,
     required this.unitId,
     required this.reason,
     this.addWargear = const [],
     this.standardWargear = const [],
+    this.removeWargear = const [],
     this.upstream,
   });
 }
@@ -436,6 +446,24 @@ class DataCorrections {
         }
       }
 
+      // Gone from both: an item the datasheet does not have is neither an
+      // option nor standard kit. A budget naming only the removed item goes
+      // with it, rather than being left as an empty choice.
+      for (final item in correction.removeWargear) {
+        abilityIds.remove(item);
+        budgets = [
+          for (final b in budgets)
+            if (b is Map)
+              if (asList(b['items']).map((i) => '$i').toSet().difference({item})
+                  case final kept when kept.isNotEmpty)
+                {...b, 'items': kept.toList()}
+              else
+                null
+            else
+              b,
+        ].whereType<Object>().toList();
+      }
+
       out.add({
         for (final e in record.entries) e.key.toString(): e.value,
         'ability_ids': abilityIds,
@@ -595,6 +623,9 @@ class DataCorrections {
           upstream: node['upstream']?.toString(),
           addWargear: wargear,
           standardWargear: standard,
+          removeWargear: [
+            for (final item in asList(_plain(node['remove_wargear']))) '$item',
+          ],
         ));
       }
     }

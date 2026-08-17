@@ -7,6 +7,7 @@ import 'src/data/roster_store.dart';
 import 'src/screens/army_screen.dart';
 import 'src/data/dataset_repository.dart';
 import 'src/screens/editor_screen.dart';
+import 'src/screens/objectives_screen.dart';
 import 'src/screens/reference_screen.dart';
 import 'src/screens/roster_list_screen.dart';
 import 'src/screens/setup_screen.dart';
@@ -163,6 +164,11 @@ class _ArmyPageState extends State<ArmyPage> {
                     onEvent: (event) => _apply(_log.add(event)),
                     onUndo: () => _apply(_log.undo()),
                   ),
+                ObjectivesScreen(
+                  state: _log.state,
+                  pack: _pack,
+                  deck: SecondaryDeck.of(_pack),
+                ),
                 ReferenceScreen(army: army),
               ],
             );
@@ -183,6 +189,11 @@ class _ArmyPageState extends State<ArmyPage> {
             icon: Icon(Icons.casino_outlined),
             selectedIcon: Icon(Icons.casino),
             label: 'Turn',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.flag_outlined),
+            selectedIcon: Icon(Icons.flag),
+            label: 'Objectives',
           ),
           NavigationDestination(
             icon: Icon(Icons.menu_book_outlined),

@@ -113,6 +113,15 @@ class Dataset implements Catalogue {
   @override
   Iterable<SourceUnit> get allUnits => _units.values;
 
+  /// The datasheets a matched-play army may be built from.
+  ///
+  /// Separate from [allUnits] rather than a filter over it, because lookup by
+  /// id must keep working: a roster saved before this existed, or imported
+  /// from somewhere else, still has to resolve every datasheet it names. This
+  /// narrows what is *offered*, not what can be read.
+  Iterable<SourceUnit> get buildableUnits =>
+      _units.values.where((u) => u.isMatchedPlay);
+
   @override
   Iterable<SourceDetachment> get allDetachments => _detachments.values;
 
@@ -139,6 +148,12 @@ class Dataset implements Catalogue {
 
   @override
   Iterable<SourceEnhancement> get enhancements => faction.enhancements;
+
+  @override
+  List<SourceWargearOption> wargearOptions(String datasheetId) => [
+        for (final option in faction.wargearOptions)
+          if (option.unitId == datasheetId) option,
+      ];
 
   @override
   UnitComposition? composition(String datasheetId) {

@@ -36,4 +36,5 @@ export 'src/roster/roster_editor.dart';
 export 'src/rules/catalogue.dart';
 export 'src/rules/validator.dart';
 export 'src/roster/roster.dart';
+export 'src/roster/unit_loadout.dart';
 export 'src/rules/battle_size.dart';

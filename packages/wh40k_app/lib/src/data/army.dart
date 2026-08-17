@@ -165,6 +165,59 @@ class Army {
     factionRuleId: snapshot.factionRuleId,
   );
 
+  /// Everything the roster's copies of [datasheetId] carry between them.
+  ///
+  /// Merged across copies because the rules summary shows one row per
+  /// datasheet, not per squad: two Stealth teams with different drones are one
+  /// entry, and the profiles under it are the union of what the army fields.
+  Map<String, int> carriedBy(String datasheetId) {
+    final tally = <String, int>{};
+    for (final unit in roster.units) {
+      if (unit.datasheetId != datasheetId) continue;
+      for (final item in unit.wargear) {
+        tally[item.itemId] = (tally[item.itemId] ?? 0) + item.count;
+      }
+    }
+    return tally;
+  }
+
+  /// Units that may make a Scout move before the first turn, with how far.
+  ///
+  /// A pre-game step that pays for itself: a Scout move forgotten before
+  /// deployment finishes cannot be taken later, and nothing else in the app
+  /// was asking the question (§7.3.10). Read from the ability's effect rather
+  /// than its name — a Necron Enlivened Sentinels grants 5" and never says
+  /// "Scouts".
+  List<({CombatUnit unit, int distance})> get scoutMoves {
+    int? scoutOf(RosterUnit rosterUnit) {
+      int? best;
+      for (final abilityId in _activeAbilityIds(rosterUnit)) {
+        final raw = snapshot.abilities[abilityId];
+        if (raw == null) continue;
+        final distance = SourceAbility.fromJson(raw).scoutDistance;
+        if (distance != null && (best == null || distance > best)) {
+          best = distance;
+        }
+      }
+      return best;
+    }
+
+    final out = <({CombatUnit unit, int distance})>[];
+    for (final combat in combatUnits) {
+      // A led unit moves as one, and Scouts is worded "if every model in this
+      // unit has this ability". So a character without it takes the move away
+      // from the squad it joined, and where both have it the shorter distance
+      // governs. Listing a move the unit cannot make is worse than listing
+      // none — it is the kind of thing a player acts on and cannot undo.
+      final distances = [for (final unit in combat.group) scoutOf(unit)];
+      if (distances.isEmpty || distances.any((d) => d == null)) continue;
+      final shortest =
+          distances.cast<int>().reduce((a, b) => a < b ? a : b);
+      if (shortest > 0) out.add((unit: combat, distance: shortest));
+    }
+    return out;
+  }
+
   /// Units a stratagem may be played on, with a reason against each that
   /// cannot be.
   List<StratagemTarget> targetsFor(

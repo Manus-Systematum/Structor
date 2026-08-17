@@ -266,7 +266,11 @@ class BattleLog {
           final table = e.kind == ScoreKind.primary
               ? primary[e.side]!
               : secondary[e.side]!;
-          table[e.round] = (table[e.round] ?? 0) + e.vp;
+          // A round cannot score negative. The events are deltas so that undo
+          // and correction share one mechanism, but correcting an over-count
+          // twice used to leave a round owing points and drag the running
+          // total down with it — the same clamp [AdjustCp] already has.
+          table[e.round] = ((table[e.round] ?? 0) + e.vp).clamp(0, 1 << 30);
         case final SetUnitStatus e:
           units[e.instanceId] = of(e.instanceId).copyWith(status: e.status);
         case final SetModelsRemaining e:

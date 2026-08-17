@@ -194,6 +194,147 @@ void main() {
     }, skip: available ? null : 'no snapshot');
   });
 
+  group('a replacement is one decision, not two counters', () {
+    test('taking more of one gives up the same number of the other', () {
+      // A Fireknife suit has two hardpoints, so the default is three plasma
+      // rifles *and* three missile pods across three suits. The datasheet
+      // words the choice as "replace the plasma rifle with a missile pod";
+      // counting only upwards left the suit holding more guns than it has
+      // places to put them.
+      var roster = editor.addUnit(blank(), 'crisis-fireknife-battlesuits');
+      final id = roster.units.single.instanceId;
+      expect(roster.units.single.countOf('plasma-rifle'), 3);
+      expect(roster.units.single.countOf('missile-pod'), 3);
+
+      roster = editor.swapWargear(roster, id, 'missile-pod', 5,
+          replaces: const ['plasma-rifle']);
+
+      expect(roster.units.single.countOf('missile-pod'), 5);
+      expect(roster.units.single.countOf('plasma-rifle'), 1,
+          reason: 'two more pods cost two rifles');
+    }, skip: available ? null : 'no snapshot');
+
+    test('giving one up hands the other back', () {
+      var roster = editor.addUnit(blank(), 'crisis-fireknife-battlesuits');
+      final id = roster.units.single.instanceId;
+
+      roster = editor.swapWargear(roster, id, 'missile-pod', 5,
+          replaces: const ['plasma-rifle']);
+      roster = editor.swapWargear(roster, id, 'missile-pod', 3,
+          replaces: const ['plasma-rifle']);
+
+      expect(roster.units.single.countOf('missile-pod'), 3);
+      expect(roster.units.single.countOf('plasma-rifle'), 3,
+          reason: 'back where it started');
+    }, skip: available ? null : 'no snapshot');
+
+    test('a swap never drives the other count negative', () {
+      var roster = editor.addUnit(blank(), 'crisis-fireknife-battlesuits');
+      final id = roster.units.single.instanceId;
+
+      // More replacements than there are things to replace. The builder is
+      // permissive, so this is allowed — it must not produce a negative.
+      roster = editor.swapWargear(roster, id, 'missile-pod', 20,
+          replaces: const ['plasma-rifle']);
+
+      expect(roster.units.single.countOf('plasma-rifle'), 0);
+      expect(roster.units.single.countOf('missile-pod'), 20);
+    }, skip: available ? null : 'no snapshot');
+  });
+
+  group('a spelled-out choice is mutually exclusive', () {
+    LoadoutGroup droneGroup() {
+      final datasheet = dataset.unit('stealth-battlesuits')!;
+      final loadout = UnitLoadout.forDatasheet(
+        datasheet,
+        catalogue: dataset,
+        vocabulary: {
+          for (final b in datasheet.wargearBudgets) ...b.items,
+        },
+      );
+      return loadout.groups.singleWhere((g) => g.items.contains('gun-drone'));
+    }
+
+    test('selecting a bundle clears the alternatives', () {
+      var roster = editor.addUnit(blank(), 'stealth-battlesuits');
+      final id = roster.units.single.instanceId;
+      final group = droneGroup();
+
+      roster = editor.selectLoadoutBundle(
+          roster, id, group, ['marker-drone', 'gun-drone']);
+      expect(roster.units.single.countOf('marker-drone'), 1);
+      expect(roster.units.single.countOf('gun-drone'), 1);
+
+      // One kind only: the other must go, or the unit carries three drones
+      // where the datasheet allows two.
+      roster = editor.selectLoadoutBundle(roster, id, group, ['gun-drone']);
+      expect(roster.units.single.countOf('gun-drone'), 1);
+      expect(roster.units.single.countOf('marker-drone'), 0);
+    }, skip: available ? null : 'no snapshot');
+
+    test('clearing the group takes every item in it', () {
+      var roster = editor.addUnit(blank(), 'stealth-battlesuits');
+      final id = roster.units.single.instanceId;
+      final group = droneGroup();
+
+      roster = editor.selectLoadoutBundle(
+          roster, id, group, ['marker-drone', 'gun-drone']);
+      roster = editor.selectLoadoutBundle(roster, id, group, null);
+
+      for (final item in group.items) {
+        expect(roster.units.single.countOf(item), 0, reason: item);
+      }
+    }, skip: available ? null : 'no snapshot');
+  });
+
+  group('attaching seen from the unit rather than the character', () {
+    test('a unit lists the characters that may lead it', () {
+      var roster = editor.addUnit(blank(), 'crisis-fireknife-battlesuits');
+      roster = editor.addUnit(roster, 'commander-in-enforcer-battlesuit');
+      final squad = roster.units.first.instanceId;
+      final commander = roster.units.last.instanceId;
+
+      final leaders = editor.eligibleLeaders(roster, squad);
+      expect(leaders.map((l) => l.leader.instanceId), contains(commander));
+      expect(leaders.single.leadingInstanceId, isNull);
+    }, skip: available ? null : 'no snapshot');
+
+    test('a character busy elsewhere is listed, and says so', () {
+      // Hiding it would omit the most likely thing you meant to change.
+      var roster = editor.addUnit(blank(), 'crisis-fireknife-battlesuits');
+      roster = editor.addUnit(roster, 'crisis-starscythe-battlesuits');
+      roster = editor.addUnit(roster, 'commander-in-enforcer-battlesuit');
+      final first = roster.units[0].instanceId;
+      final second = roster.units[1].instanceId;
+      final commander = roster.units[2].instanceId;
+
+      roster = editor.attach(roster, commander, first);
+
+      final leaders = editor.eligibleLeaders(roster, second);
+      final entry =
+          leaders.singleWhere((l) => l.leader.instanceId == commander);
+      expect(entry.leadingInstanceId, first);
+    }, skip: available ? null : 'no snapshot');
+
+    test('choosing a busy character moves it', () {
+      var roster = editor.addUnit(blank(), 'crisis-fireknife-battlesuits');
+      roster = editor.addUnit(roster, 'crisis-starscythe-battlesuits');
+      roster = editor.addUnit(roster, 'commander-in-enforcer-battlesuit');
+      final first = roster.units[0].instanceId;
+      final second = roster.units[1].instanceId;
+      final commander = roster.units[2].instanceId;
+
+      roster = editor.attach(roster, commander, first);
+      roster = editor.attach(roster, commander, second);
+
+      final leads = roster.links
+          .where((l) => l.type == LinkType.leads)
+          .toList();
+      expect(leads, hasLength(1), reason: 'it moved rather than multiplied');
+      expect(leads.single.toInstanceId, second);
+    }, skip: available ? null : 'no snapshot');
+  });
+
   group('the editor is permissive, the validator is honest', () {
     test('an over-points list is built and then reported, not refused', () {
       // §2.3: findings with severity, never a hard block. A builder that

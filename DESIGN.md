@@ -531,6 +531,29 @@ Onslaught gets more Detachment Points but **not** a higher unit cap — it inher
 - **Objective markers are gone** — terrain pieces and key positions are the objectives, standardised by a 16-template Terrain Area set.
 - **10e codexes remain legal** at launch, so the dataset spans both 10e-era and 11e detachments.
 
+### 4.5 Loadouts — permissive is not the same as shapeless
+
+§9 recorded that no wargear-option engine was built, and that "when the option records are complete and uniform, the counters can become constrained choices". They are still neither, and waiting for them was the wrong test. Measured across three factions:
+
+| | T'au | Adeptus Astartes | Necrons |
+| --- | --- | --- | --- |
+| datasheets publishing `wargear-options` | 30 / 47 | 103 / 194 | 19 / 57 |
+| datasheets publishing `default_weapon_ids` | 42 / 47 | 174 / 194 | 51 / 57 |
+
+Roughly **half of datasheets publish no options at all**, so an editor that treated the file as permission would let you build nothing on a Ballistus Dreadnought. That is the §2.3 failure and it still stands. But treating the file as absent produced its own wrongness: the editor offered to remove a Crisis suit's Battlesuit Fists, asked for three separate drone counters where the datasheet asks one question, and let "replace the plasma rifle with a missile pod" leave the unit holding both.
+
+The fix is not to enforce or to ignore, but to **sort the published data by how much of it is a closed statement**:
+
+- **Fixed** — a default weapon that appears in no option record's `replaces`. There is no legal list without it, so it is stated rather than offered. Derived, never hand-listed: on a datasheet with no options published, nothing is fixed, because absence of data is not evidence of a restriction.
+- **Enumerated choices** — `replacement_choice` bundles that spell out whole selections. Stealth Battlesuits publish `[gun] | [marker, gun] | [marker]`, which is the rulebook's *up to two drones, of different types* written out. A closed list can be trusted as one, and becomes a single mutually-exclusive control. A bundle that repeats an item (`[heavy-flamer, heavy-flamer]`) means two of them, which is why selection counts rather than sets a flag.
+- **Bare caps** — a `max_count` over single items. Shown, coloured when exceeded, and **never used to refuse the tap**, because the reference list disproves them: a validated 2,000 point export carries four T'au flamers on a Commander whose record says `max_count: 3`.
+
+Replacement is one decision rather than two counters. Taking N of an item removes N of what it replaces and putting it back restores them, clamped at zero — a Fireknife suit has two hardpoints, so its default is three plasma rifles *and* three missile pods, and swapping moves guns between the two rather than adding to both.
+
+Two things this surfaced. `wargear-options.json` was fetched, bundled and **never parsed** — neither `DatasetLoader` nor the app's bundle reader mapped it, so every datasheet looked unpublished for the right answer by accident. And `weapon_ids` carries scoped ids while `wargear_budgets` sometimes does and sometimes does not, so a Commander's Cyclic Ion Blaster appeared twice under one name; `SourceUnit.wargearVocabulary` is now the single place a datasheet's item ids are derived.
+
+Attachment is also one decision seen from two sides. The character's sheet asks which unit it joins; the unit's sheet asks which character leads it, listing every eligible character **including ones already leading something else**, because that is usually the one you meant to move. Choosing a busy character moves it rather than refusing.
+
 ---
 
 ## 5. Open questions
@@ -1063,6 +1086,28 @@ So rules are filed by how far they reach:
 
 Two data consequences fell out of building this, both now fixed. `factions.json` has always carried `faction_rule_id`, but nothing read the file, so For the Greater Good and Oath of Moment were the one rule true of the whole army and the one rule the app never showed. And upstream transcribes an ability once per datasheet without agreeing on the plural — `battlesuit-support-system` and `battlesuit-support-systems` are the same effect — which splits one shared rule into two nobody shares. §3.6 gains an `aliases` correction that folds a duplicate into the id it repeats, and a test fails if a new one appears.
 
+### 7.3.10 The Scouting step
+
+Scout moves happen after deployment and before the first turn, and a Scout move not taken then cannot be taken later. Nothing in the app asked the question, so the turn page gains a **SCOUTING** section ahead of COMMAND — a pre-game list, not a phase of the turn, carrying none of the per-phase machinery.
+
+**The distance comes from the effect, not the name.** Upstream writes it into both — `Scouts 7"` and `{move_type: scout, distance: 7}` — and the name is the half that varies. Reading the effect immediately found a case name-matching would have dropped: the Necrons' **Enlivened Sentinels** grants a 5" Scout move and never says "Scouts".
+
+**A led unit is listed only if every part of it has the move.** Scouts is worded *if every model in this unit has this ability*, so a character without it takes the move away from the squad it joined, and where both have it the shorter distance governs. Listing a move a unit cannot make is worse than listing none: it is the kind of thing a player acts on and cannot undo. This is read from the rulebook's wording, not from the data — the dataset does not encode attachment interaction — and is the one place on this screen the app is interpreting rather than reporting.
+
+### 7.3.11 Where scoring happens, and where the game is read
+
+Two questions, and the turn page can only answer one of them.
+
+**Scoring stays on the turn page**, next to the tap that records it. But it was all in END, and that is not where half of it happens: across all 43 cards **every** `end-of-phase` award is `phase: command` and **every** one is gated at `battle_round >= 2`. That is the primary mission's round-2-onward tier — the largest single source of victory points in a game — and the player was meeting it a phase and a scroll away from where the rulebook says to score it. The COMMAND section now carries the same `ScorePanel` widget, shown when the mission data says something pays out this round rather than when the round number looks right, so a new tier upstream is picked up rather than missed.
+
+**One panel, not two.** `ScorePanel` reads [BattleState] and emits events; wherever it appears it is showing the same numbers, because there is nowhere for a second copy of them to live. A second place to *enter* points would have been a second source of truth and the first thing to drift.
+
+**The objectives page answers the other question** — *where does the game stand* — which the turn page structurally cannot, because the answer spans five rounds and two missions and the turn page only ever shows the round you are in. It carries the margin (two bare totals make the player do the subtraction), a per-round breakdown split primary from secondary, each side's mission in full with which tiers are live this round, and the secondaries in hand. It is entirely derived: nothing on it can be edited, so it cannot disagree with the turn page.
+
+A round that scored nothing reads as `–` rather than `0`. Zero is a result; blank is *not yet*.
+
+**Phase content folds.** Phase-as-scroll-position (§7.2) breaks once a phase carries several kinds of content, because a phase you are not using pushes the one you are off the screen. Stratagems, profiles and scoring are each a `CollapsibleGroup`, open where the decision is made and folded where they are reference. A folded group still shows its count, so folding never hides that something exists.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.
@@ -1350,6 +1395,8 @@ Calling it "the stratagem screen" was the wrong frame. §7.2 says relevance come
 > **The builder is permissive and the validator is honest.** It will let you build an illegal list and say exactly how it is illegal, rather than refusing the tap. §2.3 settled that for validation, and the wargear-option data settles it again: `wargear-options` comes in three shapes across 87 records, and §3.8 found six datasheets that did not list the drones their units demonstrably carry. An editor that enforced that data would refuse legal lists, and a builder that will not let you enter the army standing on your table is worthless.
 
 **What is deliberately not built is a wargear-option engine.** Wargear is a counter per item over the datasheet's own vocabulary — its weapons plus its budgeted drones and support systems — rather than a gated `replace X with Y` flow. That is the honest ceiling of the current data. When the option records are complete and uniform, the counters can become constrained choices without changing the roster model.
+
+> **Superseded by §4.5.** The option records are still neither complete nor uniform, and waiting for them was the wrong test — half of datasheets publish none at all, and that will not change. What the records *do* contain is a mix of closed statements and bare numbers, and sorting them by which is which gives fixed kit, enumerated choices and advisory caps without any of it refusing a tap. The roster model was indeed unchanged, as predicted.
 
 **Done — Enhancements were never priced.** A second real export, a 1,000 pt Incursion list, came in 30 points light. Three faults behind one symptom:
 

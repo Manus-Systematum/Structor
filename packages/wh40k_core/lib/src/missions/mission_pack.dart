@@ -209,6 +209,82 @@ class DeploymentPattern {
 /// [text] is an original paraphrase written by the data project, not GW's
 /// printed wording (§7.3.4). Enough to play from; not authoritative for a
 /// rules dispute, and the UI must not imply otherwise.
+/// When one of a card's payouts becomes available (DESIGN.md §7.3.11).
+///
+/// The awards were carried raw because nothing asked them anything. Putting
+/// scoring where it happens does: across all 43 cards, **every** `end-of-phase`
+/// award is `phase: command` and **every** one is gated at `battle_round >= 2`
+/// — which is the primary mission's round-2-onward tier, and the single
+/// largest source of victory points in a game. Leaving it in the END section
+/// meant the player met it a phase and a scroll away from where the rulebook
+/// says to score it.
+class MissionAward {
+  /// `end-of-turn`, `end-of-phase`, `end-of-battle`.
+  final String timing;
+
+  /// The phase for an `end-of-phase` award. Always `command` in the current
+  /// data, but read rather than assumed.
+  final String? phase;
+
+  final int? roundMin;
+  final int? roundMax;
+
+  /// A flat payout, when the award names one.
+  final int? vp;
+
+  /// A payout per something the app cannot see — per controlled objective, per
+  /// unit destroyed. These name no total, so the UI offers a stepper.
+  final int? vpPer;
+  final String? per;
+
+  const MissionAward({
+    required this.timing,
+    this.phase,
+    this.roundMin,
+    this.roundMax,
+    this.vp,
+    this.vpPer,
+    this.per,
+  });
+
+  factory MissionAward.fromJson(Object? v) {
+    final j = asMap(v);
+    final trigger = asMap(j['trigger']);
+    final round = asMap(trigger['battle_round']);
+    return MissionAward(
+      timing: strOr(trigger['timing'], ''),
+      phase: str(trigger['phase']),
+      roundMin: asInt(round['min']),
+      roundMax: asInt(round['max']),
+      vp: asInt(j['vp']),
+      vpPer: asInt(j['vp_per']),
+      per: str(j['per']),
+    );
+  }
+
+  /// True when this award can pay out in [phase] of [round].
+  ///
+  /// A round outside the trigger's window is not "not yet" — it is a different
+  /// tier of the same mission, and showing it would offer points that cannot
+  /// be taken.
+  bool appliesIn({required String phase, required int round}) {
+    if (roundMin != null && round < roundMin!) return false;
+    if (roundMax != null && round > roundMax!) return false;
+    return switch (timing) {
+      'end-of-phase' => this.phase == phase,
+      'end-of-turn' => phase == 'end',
+      // Scored once the game is over, which the END section is the only place
+      // to offer.
+      'end-of-battle' => phase == 'end',
+      _ => false,
+    };
+  }
+
+  /// A payout the app can offer as a button, or null when only the player can
+  /// know the total.
+  int? get flatPayout => vp;
+}
+
 class MissionCard {
   final String id;
   final String name;
@@ -248,6 +324,31 @@ class MissionCard {
   bool get isPrimary => cardType == 'primary';
   bool get isSecondary => cardType == 'secondary';
   bool get requiresAction => actions.isNotEmpty;
+
+  /// The card's payouts, typed.
+  List<MissionAward> get scoringAwards =>
+      [for (final raw in awards) MissionAward.fromJson(raw)];
+
+  /// Payouts available in [phase] of [round], distinct flat amounts first.
+  List<MissionAward> awardsIn({required String phase, required int round}) => [
+        for (final award in scoringAwards)
+          if (award.appliesIn(phase: phase, round: round)) award,
+      ];
+
+  /// Distinct flat payouts available in [phase] of [round], ascending — the
+  /// figures the UI can offer as buttons.
+  List<int> payoutsIn({required String phase, required int round}) {
+    final seen = <int>{
+      for (final award in awardsIn(phase: phase, round: round))
+        if (award.flatPayout case final vp?) vp,
+    };
+    return seen.toList()..sort();
+  }
+
+  /// True when something on this card pays out in [phase] of [round], whether
+  /// or not the app can name the figure.
+  bool scoresIn({required String phase, required int round}) =>
+      awardsIn(phase: phase, round: round).isNotEmpty;
 }
 
 class MissionMatchupEntry {

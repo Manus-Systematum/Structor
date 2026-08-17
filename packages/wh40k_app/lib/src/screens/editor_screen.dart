@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
@@ -48,6 +50,12 @@ class _EditorScreenState extends State<EditorScreen> {
   bool _saving = false;
   bool _dirty = false;
 
+  /// The id this army is being written under. Fixed on the first autosave of
+  /// a new army so every later one overwrites rather than piling up copies.
+  late String? _id = widget.rosterId;
+
+  Timer? _autosave;
+
   /// Prior states, newest last. Building is fiddly and undo costs one list.
   final _history = <Roster>[];
 
@@ -55,6 +63,45 @@ class _EditorScreenState extends State<EditorScreen> {
   void initState() {
     super.initState();
     _load();
+  }
+
+  @override
+  void dispose() {
+    // Fire whatever is pending rather than dropping it: leaving the screen is
+    // exactly the moment the debounce would otherwise lose the last edit.
+    _autosave?.cancel();
+    if (_dirty) unawaited(_persist());
+    super.dispose();
+  }
+
+  /// Writes the roster in the background, debounced.
+  ///
+  /// **A draft is not saved until it is worth saving.** Opening the builder
+  /// and backing out immediately should not leave an empty "New army" in the
+  /// list, so nothing is written until the roster has something in it.
+  void _scheduleAutosave() {
+    _autosave?.cancel();
+    _autosave = Timer(const Duration(milliseconds: 700), () {
+      if (mounted) unawaited(_persist());
+    });
+  }
+
+  bool get _worthSaving =>
+      _roster.units.isNotEmpty || _roster.detachments.isNotEmpty;
+
+  Future<void> _persist() async {
+    if (_dataset == null || !_worthSaving) return;
+    try {
+      final builder = await widget.datasets.snapshotBuilder(_roster.factionId);
+      final id = _id ??=
+          'r${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}';
+      await widget.store
+          .save(Army.fromSnapshot(_roster, builder.build(_roster), id: id));
+      if (mounted) setState(() => _dirty = false);
+    } catch (_) {
+      // Left dirty on purpose: a failed background write must not report
+      // success, and the explicit Save surfaces the error properly.
+    }
   }
 
   Future<void> _load() async {
@@ -91,6 +138,7 @@ class _EditorScreenState extends State<EditorScreen> {
       _dirty = true;
       _dataset = null;
     });
+    _scheduleAutosave();
     final dataset = await widget.datasets.faction(factionId);
     if (mounted) setState(() => _dataset = dataset);
   }
@@ -103,6 +151,7 @@ class _EditorScreenState extends State<EditorScreen> {
       _roster = change(_editor);
       _dirty = true;
     });
+    _scheduleAutosave();
   }
 
   void _undo() {
@@ -111,21 +160,24 @@ class _EditorScreenState extends State<EditorScreen> {
       _roster = _history.removeLast();
       _dirty = true;
     });
+    _scheduleAutosave();
   }
 
   Future<void> _save() async {
     final dataset = _dataset;
     if (dataset == null) return;
+    // A pending autosave would otherwise land after this one and re-save a
+    // roster the screen has already finished with.
+    _autosave?.cancel();
     setState(() => _saving = true);
     try {
       final builder =
           await widget.datasets.snapshotBuilder(_roster.factionId);
-      final army = Army.fromSnapshot(
-        _roster,
-        builder.build(_roster),
-        id: widget.rosterId ??
-            'r${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}',
-      );
+      // The same id the autosave used, or this becomes a second copy of the
+      // army beside the one already written.
+      final id = _id ??=
+          'r${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}';
+      final army = Army.fromSnapshot(_roster, builder.build(_roster), id: id);
       await widget.store.save(army);
       if (mounted) Navigator.of(context).pop(true);
     } catch (error) {
@@ -143,11 +195,13 @@ class _EditorScreenState extends State<EditorScreen> {
     final dataset = _dataset;
     final error = _error;
 
+    // No discard prompt any more: edits are written as they are made, so
+    // leaving keeps them. Asking "discard changes?" about work that is
+    // already saved would be a lie, and the answer people give under time
+    // pressure is the one that loses the army.
     return PopScope(
-      canPop: !_dirty,
-      onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) _confirmDiscard();
-      },
+      canPop: true,
+      onPopInvokedWithResult: (_, __) {},
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.initial == null ? 'New army' : 'Edit army'),
@@ -240,45 +294,30 @@ class _EditorScreenState extends State<EditorScreen> {
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
-      builder: (_) => UnitEditorSheet(
-        dataset: dataset,
-        roster: _roster,
-        instanceId: instanceId,
-        onEdit: (change) {
-          _edit(change);
-          // The sheet reads the roster it was given, so it is rebuilt from the
-          // new one rather than left showing stale counts.
-          Navigator.of(context).pop();
-          _editUnit(instanceId);
-        },
-        onRemove: () {
-          _edit((e) => e.removeUnit(_roster, instanceId));
-          Navigator.of(context).pop();
-        },
+      // The sheet rebuilds in place rather than being closed and reopened.
+      // Reopening replayed the modal's slide-up on every single tap of a
+      // counter, so changing a loadout looked like the page reloading from the
+      // bottom of the screen each time.
+      builder: (_) => StatefulBuilder(
+        builder: (_, redrawSheet) => UnitEditorSheet(
+          dataset: dataset,
+          roster: _roster,
+          instanceId: instanceId,
+          onEdit: (change) {
+            _edit(change);
+            // `_roster` is read fresh on each rebuild, so redrawing the sheet
+            // is enough to bring the new counts across.
+            redrawSheet(() {});
+          },
+          onRemove: () {
+            _edit((e) => e.removeUnit(_roster, instanceId));
+            Navigator.of(context).pop();
+          },
+        ),
       ),
     );
   }
 
-  Future<void> _confirmDiscard() async {
-    final discard = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Discard changes?'),
-        content: const Text('This army has unsaved changes.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Keep editing'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Discard'),
-          ),
-        ],
-      ),
-    );
-    if (discard == true && mounted) Navigator.of(context).pop();
-  }
 }
 
 class _Header extends StatelessWidget {
@@ -632,7 +671,9 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final needle = _query.trim().toLowerCase();
-    final units = widget.dataset.allUnits
+    // Buildable, not all: Combat Patrol datasheets cost nothing and shadow
+    // the real ones by name (§4.6).
+    final units = widget.dataset.buildableUnits
         .where((u) => needle.isEmpty || u.name.toLowerCase().contains(needle))
         .toList()
       ..sort((a, b) => a.name.compareTo(b.name));

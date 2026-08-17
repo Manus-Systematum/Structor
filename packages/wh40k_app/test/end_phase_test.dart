@@ -85,9 +85,31 @@ void main() {
     expect(find.text('3 left'), findsOneWidget);
     expect(find.text('No cards in hand.'), findsOneWidget);
 
-    await tester.tap(find.text('Draw a card'));
+    await tester.tap(find.text('Draw'));
     await tester.pump();
     expect(events.single, isA<DrawSecondary>());
+  });
+
+  testWidgets('a tactical mission can also pick the card by hand',
+      (tester) async {
+    // Drawing blind is the rule, but the app records what happened at the
+    // table rather than refereeing it: cards get drawn by hand, missed or
+    // corrected, and a player who cannot enter the card in front of them
+    // stops using the app.
+    tall(tester);
+    final events = <BattleEvent>[];
+    await tester.pumpWidget(host(const BattleState(), events.add));
+
+    expect(find.text('Draw'), findsOneWidget);
+    await tester.tap(find.text('Choose'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Choose a secondary'), findsOneWidget);
+    // And the full description travels with it, not a three-line clamp.
+    expect(
+      find.textContaining('the printed card text', findRichText: true),
+      findsOneWidget,
+    );
   });
 
   testWidgets('a card offers the payouts it names, and a discard',

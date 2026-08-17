@@ -126,6 +126,17 @@ class WeaponAggregator {
 
         final weapon = resolved;
         if (weapon == null) {
+          // Kit that carries no gun and no rule. A Dominion Squad's
+          // Simulacrum Imperialis is in the datasheet's own wargear budget
+          // but is not a weapon and not in `ability_ids`, so it fell through
+          // to "unresolved" — which reads as *the app could not find this*
+          // when the truth is *there is nothing to show for it*. The
+          // datasheet vouching for the id is what separates the two: an id
+          // the datasheet never mentions is still a genuine miss.
+          if (datasheet.wargearVocabulary
+              .contains(datasheet.unscope(selection.itemId))) {
+            continue;
+          }
           unresolved.add(UnresolvedWargear(
             instanceId: rosterUnit.instanceId,
             itemId: selection.itemId,

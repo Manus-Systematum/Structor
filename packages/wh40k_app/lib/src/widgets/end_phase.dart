@@ -34,19 +34,26 @@ class EndPhase extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _ScorePanel(state: state, pack: pack, onEvent: onEvent),
+          ScorePanel(state: state, pack: pack, onEvent: onEvent),
           if (!deck.isEmpty)
             _SecondaryPanel(state: state, deck: deck, onEvent: onEvent),
         ],
       );
 }
 
-class _ScorePanel extends StatelessWidget {
+/// Both sides' victory points, with the payouts each primary names.
+///
+/// Public because the Command phase shows it too: the primary's round-2-onward
+/// tier is scored there, and a second copy of this control would be a second
+/// source of truth. It reads [BattleState] and emits events, so wherever it
+/// appears it shows the same numbers (DESIGN.md §7.3.11).
+class ScorePanel extends StatelessWidget {
   final BattleState state;
   final MissionPack pack;
   final void Function(BattleEvent) onEvent;
 
-  const _ScorePanel({
+  const ScorePanel({
+    super.key,
     required this.state,
     required this.pack,
     required this.onEvent,
@@ -408,15 +415,34 @@ class _SecondaryPanel extends StatelessWidget {
               ),
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 6, 12, 4),
+              // Two buttons share the row rather than sitting at their natural
+              // widths, which overflowed at phone size.
               child: Row(
                 children: [
-                  FilledButton.tonalIcon(
-                    onPressed: remaining.isEmpty
-                        ? null
-                        : () => _take(context, remaining),
-                    icon: Icon(_isTactical ? Icons.casino_outlined : Icons.add,
-                        size: 17),
-                    label: Text(_isTactical ? 'Draw a card' : 'Choose a card'),
+                  if (_isTactical) ...[
+                    Expanded(
+                      child: FilledButton.tonalIcon(
+                        onPressed:
+                            remaining.isEmpty ? null : () => _drawAtRandom(),
+                        icon: const Icon(Icons.casino_outlined, size: 17),
+                        label: const Text('Draw'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                  // Drawing blind is the rule, but the app is a record of what
+                  // happened at the table, not the referee: cards get drawn by
+                  // hand, missed, or corrected, and a player who cannot enter
+                  // the card actually in front of them stops using the app.
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: remaining.isEmpty
+                          ? null
+                          : () => _choose(context, remaining),
+                      icon: Icon(_isTactical ? Icons.list_alt : Icons.add,
+                          size: 17),
+                      label: const Text('Choose'),
+                    ),
                   ),
                 ],
               ),
@@ -430,15 +456,16 @@ class _SecondaryPanel extends StatelessWidget {
     );
   }
 
-  /// Tactical draws at random from what is left; fixed lets the player pick.
-  /// Either way the chosen card is the event, so undo puts it back and a
-  /// replay of the log deals the same hand.
-  Future<void> _take(BuildContext context, List<MissionCard> remaining) async {
-    if (_isTactical) {
-      final drawn = deck.draw(state.secondaries);
-      if (drawn != null) onEvent(DrawSecondary(drawn.id));
-      return;
-    }
+  /// Either way the card that ends up in hand is the event, so undo puts it
+  /// back and a replay of the log deals the same hand — the randomness never
+  /// enters the state (§7.3.2).
+  void _drawAtRandom() {
+    final drawn = deck.draw(state.secondaries);
+    if (drawn != null) onEvent(DrawSecondary(drawn.id));
+  }
+
+  Future<void> _choose(
+      BuildContext context, List<MissionCard> remaining) async {
     final chosen = await showModalBottomSheet<String>(
       context: context,
       showDragHandle: true,
@@ -463,20 +490,59 @@ class _PickSheet extends StatelessWidget {
         children: [
           const SheetHeader(title: 'Choose a secondary'),
           for (final card in cards)
-            ListTile(
-              dense: true,
-              title: Text(card.name,
-                  style: const TextStyle(
-                      fontSize: 13, fontWeight: FontWeight.w600)),
-              subtitle: Text(card.text,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style:
-                      TextStyle(fontSize: 11, color: scheme.onSurfaceVariant)),
+            InkWell(
               onTap: () => Navigator.of(context).pop(card.id),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(card.name,
+                        style: const TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.w600)),
+                    // In full. These run to 800 characters and describe tiers,
+                    // timings and exclusions — a three-line clamp cut the half
+                    // that decides whether the card is worth taking.
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(card.text,
+                          style: TextStyle(
+                              fontSize: 11.5,
+                              height: 1.35,
+                              color: scheme.onSurfaceVariant)),
+                    ),
+                  ],
+                ),
+              ),
             ),
+          const _CardTextProvenance(),
           const SizedBox(height: 8),
         ],
+      ),
+    );
+  }
+}
+
+/// Whose words these are (§7.3.4, §7.6).
+///
+/// The descriptions are community-authored summaries, which is exactly why
+/// they can be redistributed — but they are good enough to *play* from and not
+/// good enough to *argue* from. Saying so once at the foot of the list beats
+/// repeating a disclaimer on every card, and beats leaving a player to assume
+/// this is the printed wording.
+class _CardTextProvenance extends StatelessWidget {
+  const _CardTextProvenance();
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 10, 16, 4),
+      child: Text(
+        'Descriptions are summaries written by the 40kdc community, not the '
+        'printed card text. They are enough to play from; for a rules dispute '
+        'the card itself is authoritative.',
+        style: TextStyle(fontSize: 10.5, height: 1.35, color: scheme.outline),
       ),
     );
   }

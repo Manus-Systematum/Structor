@@ -38,6 +38,25 @@ void main() {
       }
     });
 
+    test('a Commander is offered drones, not a Shield Generator', () {
+      // The Shield Generator is a Riptide and Stormsurge support system.
+      // Upstream lists it in the Enforcer Commander's wargear budget, where
+      // it sits beside the drones and reads as the shield you meant — and
+      // taking it spends points on a rule the model does not have.
+      final enforcer = tau.unit('commander-in-enforcer-battlesuit')!;
+      expect(enforcer.wargearVocabulary, contains('shield-drone'));
+      expect(enforcer.wargearVocabulary, isNot(contains('shield-generator')));
+      expect(enforcer.abilityIds, isNot(contains('shield-generator')));
+
+      // The Coldstar keeps its generator, because there it is standard kit
+      // and the 4+ invulnerable save comes from it (§3.8). Standard means it
+      // is a rule the model has, never an option to buy.
+      final coldstar = tau.unit('commander-in-coldstar-battlesuit')!;
+      expect(coldstar.abilityIds, contains('shield-generator'));
+      expect(coldstar.wargearVocabulary, isNot(contains('shield-generator')));
+      expect(coldstar.wargearVocabulary, contains('shield-drone'));
+    });
+
     test('a drone fires its own gun, at BS5+', () {
       for (final id in [
         'drone-missile-pod',

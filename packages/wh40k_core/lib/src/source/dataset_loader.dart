@@ -79,6 +79,11 @@ class FactionData {
   /// unit a legal starting loadout.
   final List<UnitComposition> compositions;
 
+  /// Published wargear choices, by datasheet. About half of datasheets have
+  /// none, which is why the builder reads these as guidance rather than as
+  /// permission (§4.5).
+  final List<SourceWargearOption> wargearOptions;
+
   /// The army rule every unit in the faction has — For the Greater Good, Oath
   /// of Moment. `factions.json` has always carried it; nothing read the file,
   /// so the one rule that is true of the whole army was the one rule the app
@@ -107,6 +112,7 @@ class FactionData {
     required this.enhancementIds,
     this.enhancements = const [],
     this.compositions = const [],
+    this.wargearOptions = const [],
     this.factionRuleId,
     this.factionName,
     this.parentFactionId,
@@ -285,6 +291,10 @@ class DatasetLoader {
       compositions: sheets('core', 'unit-compositions.json')
           .map(UnitComposition.fromJson)
           .where((c) => c.unitId.isNotEmpty)
+          .toList(growable: false),
+      wargearOptions: sheets('core', 'wargear-options.json')
+          .map(SourceWargearOption.fromJson)
+          .where((o) => o.unitId.isNotEmpty)
           .toList(growable: false),
       enhancements: enhancementRecords
           .map(SourceEnhancement.fromJson)

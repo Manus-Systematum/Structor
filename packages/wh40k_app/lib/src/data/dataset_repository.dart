@@ -248,6 +248,13 @@ class DatasetRepository {
           .map(UnitComposition.fromJson)
           .where((c) => c.unitId.isNotEmpty)
           .toList(),
+      // The bundle has carried these since the first build and nothing read
+      // them, so the editor saw every datasheet as publishing no options at
+      // all — which is the permissive path, but for the wrong reason (§4.5).
+      wargearOptions: sheets('wargear-options')
+          .map(SourceWargearOption.fromJson)
+          .where((o) => o.unitId.isNotEmpty)
+          .toList(),
       missingFiles: const [],
     );
 

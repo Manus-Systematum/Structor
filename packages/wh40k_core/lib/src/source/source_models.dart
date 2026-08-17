@@ -220,6 +220,93 @@ class UnitComposition {
   }
 }
 
+/// One published wargear choice for one datasheet (`wargear-options.json`).
+///
+/// The file was fetched from the start and never parsed, because §2.3 settled
+/// that the builder stays permissive and enforcing this data would refuse
+/// legal lists. That is still true of one half of it and not the other, and
+/// the difference is worth stating precisely (DESIGN.md §4.5):
+///
+///   * [choices] **enumerates** the legal selections — Stealth Battlesuits
+///     publish `[gun] | [marker, gun] | [marker]`, which is the rulebook's "up
+///     to two drones, of different types" written out. An enumeration is a
+///     closed list and can be trusted as one.
+///   * [maxCount] on its own is a bare number, and the reference list — a
+///     validated 2,000 point export — carries four T'au flamers on a Commander
+///     whose record says `max_count: 3`. So a bare cap is shown and validated
+///     against, never used to refuse the tap.
+///
+/// A bundle repeating an item (`[heavy-flamer, heavy-flamer]`) means exactly
+/// what it says: two of them is one legal choice.
+class SourceWargearOption {
+  final String id;
+  final String unitId;
+
+  /// Items this choice takes away. Empty when the choice only adds.
+  final List<String> replaces;
+
+  /// A single fixed replacement, when the choice is not an enumeration.
+  final List<String> replacement;
+
+  /// Alternative bundles, each one a complete legal selection.
+  final List<List<String>> choices;
+
+  /// Which model in the unit may take it, when the record says.
+  final String? modelName;
+
+  /// How many may be taken, when the record says. Advisory — see above.
+  final int? maxCount;
+
+  /// One per this many models, when the record says.
+  final int? perModels;
+
+  final bool anyNumber;
+  final bool isFree;
+
+  const SourceWargearOption({
+    required this.id,
+    required this.unitId,
+    this.replaces = const [],
+    this.replacement = const [],
+    this.choices = const [],
+    this.modelName,
+    this.maxCount,
+    this.perModels,
+    this.anyNumber = false,
+    this.isFree = true,
+  });
+
+  factory SourceWargearOption.fromJson(Object? v) {
+    final j = asMap(v);
+    final constraint = asMap(j['model_constraint']);
+    return SourceWargearOption(
+      id: strOr(j['id'], ''),
+      unitId: strOr(j['unit_id'], ''),
+      replaces: [for (final r in asList(j['replaces'])) '$r'],
+      replacement: [for (final r in asList(j['replacement'])) '$r'],
+      choices: [
+        for (final bundle in asList(j['replacement_choice']))
+          [for (final item in asList(bundle)) '$item'],
+      ],
+      modelName: str(constraint['model_name']),
+      maxCount: int.tryParse(strOr(constraint['max_count'], '')),
+      perModels: int.tryParse(strOr(constraint['per_n_models'], '')),
+      anyNumber: constraint['any_number'] == true,
+      isFree: j['is_free'] != false,
+    );
+  }
+
+  /// Everything this record could put on the unit.
+  Set<String> get offered => {
+        ...replacement,
+        for (final bundle in choices) ...bundle,
+      };
+
+  /// True when the bundles spell out whole selections rather than listing
+  /// single items under a cap. Only these are worth enforcing.
+  bool get isEnumeration => choices.any((bundle) => bundle.length > 1);
+}
+
 class SourceUnit {
   final String id;
   final String name;
@@ -233,6 +320,15 @@ class SourceUnit {
   final List<String> abilityIds;
   final List<String> weaponIds;
   final String? attachmentRole;
+
+  /// Which game modes this datasheet belongs to.
+  ///
+  /// **Empty means every mode**, which `game-modes.json` states outright:
+  /// matched play is "the default scope for every entity that omits
+  /// game_modes". Only the Combat Patrol datasheets name a mode, and they are
+  /// the reason this is read at all — see [isMatchedPlay].
+  final List<String> gameModes;
+
   final GameVersion gameVersion;
 
   const SourceUnit({
@@ -248,6 +344,7 @@ class SourceUnit {
     required this.abilityIds,
     required this.weaponIds,
     required this.attachmentRole,
+    this.gameModes = const [],
     required this.gameVersion,
   });
 
@@ -269,9 +366,33 @@ class SourceUnit {
       abilityIds: strList(j['ability_ids']),
       weaponIds: strList(j['weapon_ids']),
       attachmentRole: str(j['attachment_role']),
+      gameModes: strList(j['game_modes']),
       gameVersion: GameVersion.fromJson(j['game_version']),
     );
   }
+
+  /// The item id the roster stores for [scopedId].
+  ///
+  /// Weapons are per-carrier, so the same gun is `cyclic-ion-blaster` in one
+  /// place and `cyclic-ion-blaster-commander-in-enforcer-battlesuit` in
+  /// another, and the two files disagree about which to use: `weapon_ids`
+  /// carries the scoped form while `wargear_budgets` sometimes carries it and
+  /// sometimes not. A roster keyed by both ends up listing one weapon twice
+  /// under one name, so everything that builds a datasheet's vocabulary goes
+  /// through here (§7.3.5).
+  String unscope(String scopedId) {
+    final suffix = '-$id';
+    return scopedId.endsWith(suffix)
+        ? scopedId.substring(0, scopedId.length - suffix.length)
+        : scopedId;
+  }
+
+  /// Everything this datasheet can carry, as roster item ids.
+  Set<String> get wargearVocabulary => {
+        for (final weaponId in weaponIds) unscope(weaponId),
+        for (final budget in wargearBudgets)
+          for (final item in budget.items) unscope(item),
+      };
 
   bool get isLeader => attachmentRole == 'leader';
 
@@ -280,6 +401,23 @@ class SourceUnit {
 
   bool get isCharacter => hasKeyword('Character');
   bool get isEpicHero => hasKeyword('Epic Hero');
+
+  /// Whether this datasheet belongs in a matched-play army.
+  ///
+  /// **Combat Patrol datasheets cost nothing, and that is not an error.** That
+  /// mode plays a fixed boxed roster, so its sheets are priced at zero and
+  /// scoped with `game_modes: ["combat-patrol"]`. 98 of them exist across 21
+  /// factions and the builder was offering every one — free units in a
+  /// points-limited army, and worse, near-duplicates of the real datasheets:
+  /// *Sanctuary Guardians Celestian Sacresants* sits beside *Celestian
+  /// Sacresants* in the picker, and picking the wrong one gives a unit no
+  /// character can be attached to, because the attachment rules name the
+  /// matched-play sheet.
+  ///
+  /// Absence means every mode, per `game-modes.json`, so this stays true for
+  /// the 33 of 37 Sororitas sheets that say nothing.
+  bool get isMatchedPlay =>
+      gameModes.isEmpty || gameModes.contains('matched-play');
 
   /// Battleline and Dedicated Transport share a doubled duplicate cap
   /// (DESIGN.md §4.4), so they are tested together.
@@ -598,6 +736,64 @@ class SourceEnhancement {
     );
   }
 
+  /// Whether [unit] may carry this, given the faction it belongs to.
+  ///
+  /// Four rules, in the order they eliminate:
+  ///
+  /// - **An Epic Hero takes nothing.** They arrive with their own wargear and
+  ///   the rulebook says so; upstream encodes it nowhere, so it is stated
+  ///   here rather than derived.
+  /// - **An Enhancement goes on a Character.** Unit Upgrades are exempt —
+  ///   they are a separate mechanic (§2.1) and name their own targets, one of
+  ///   which is *Exorcist*, a tank.
+  /// - **Every `keyword_restrictions` entry must be satisfied**, and
+  /// - **no `exclusion_keywords` entry may be.**
+  ///
+  /// A restriction is satisfied by a keyword, a faction keyword, the
+  /// datasheet's own **name** — *Canoness with Jump Pack* is written as a
+  /// restriction — the **faction's** name, since `Chaos Space Marines` is
+  /// written against datasheets whose faction keyword is `Heretic Astartes`,
+  /// or by a **compound** of those: `Adepta Sororitas Character` is the
+  /// faction keyword and `Character` run together. Measured across all 35
+  /// factions, that reads 805 of 880 restrictions; without names and faction
+  /// names it reads 791, and every enhancement in two whole factions becomes
+  /// impossible to take.
+  bool canBeTakenBy(SourceUnit unit, {String? factionName}) {
+    if (unit.isEpicHero) return false;
+    if (!isUpgrade && !unit.isCharacter) return false;
+
+    final vocabulary = <String>{
+      for (final k in unit.keywords) _fold(k),
+      for (final k in unit.factionKeywords) _fold(k),
+      _fold(unit.name),
+      if (factionName != null) _fold(factionName),
+    }..remove('');
+
+    for (final restriction in keywordRestrictions) {
+      if (!_satisfies(_fold(restriction), vocabulary)) return false;
+    }
+    for (final exclusion in exclusionKeywords) {
+      if (vocabulary.contains(_fold(exclusion))) return false;
+    }
+    return true;
+  }
+
+  static String _fold(String value) =>
+      value.toLowerCase().replaceAll('’', "'").split(RegExp(r'\s+')).join(' ').trim();
+
+  /// Exact, or a compound whose parts are each satisfied.
+  static bool _satisfies(String restriction, Set<String> vocabulary) {
+    if (vocabulary.contains(restriction)) return true;
+    final words = restriction.split(' ');
+    for (var i = 1; i < words.length; i++) {
+      if (vocabulary.contains(words.take(i).join(' ')) &&
+          _satisfies(words.skip(i).join(' '), vocabulary)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /// `T'AU EMPIRE, not SHAPER` — who may take it, in one line.
   String get restrictionSummary {
     final parts = <String>[
@@ -732,6 +928,32 @@ class SourceAbility {
   /// a twin pulse carbine (§7.3.7). Only an explicit `weapon_id` counts:
   /// `{grant_type: ranged-weapon}` with no id names nothing, and guessing
   /// which weapon was meant is the invention §7.6 forbids.
+  /// Inches this ability lets the unit move before the first turn, or null
+  /// when it is not a Scout move.
+  ///
+  /// Read from the effect rather than the name. Upstream writes the distance
+  /// into both — `Scouts 7"` and `{move_type: scout, distance: 7}` — and the
+  /// name is the half that varies: the same rule is spelled `Scouts` and
+  /// `Scout` across factions, and a screen keyed on the spelling would quietly
+  /// miss units (§7.3.10).
+  int? get scoutDistance => _scoutIn(effect);
+
+  static int? _scoutIn(Map<String, dynamic> node) {
+    if (strOr(node['type'], '') == 'movement-modifier') {
+      final modifier = asMap(node['modifier']);
+      if (strOr(modifier['move_type'], '') == 'scout') {
+        return asInt(modifier['distance']);
+      }
+    }
+    for (final step in asList(node['steps'])) {
+      final found = _scoutIn(asMap(step));
+      if (found != null) return found;
+    }
+    final inner = node['effect'];
+    if (inner is Map) return _scoutIn(asMap(inner));
+    return null;
+  }
+
   String? get grantedWeaponId => _grantedWeaponIn(effect);
 
   static String? _grantedWeaponIn(Map<String, dynamic> node) {

@@ -234,6 +234,12 @@ units:
       of a legal 2,000 point list.
     upstream: not yet reported
     add_wargear: [gun-drone, shield-drone]
+    remove_wargear: [shield-generator]
+    # The Shield Generator is a Riptide and Stormsurge support system, not a
+    # Commander option, and upstream lists it in the Enforcer's wargear
+    # budget. Offered beside the drones it reads as the shield you wanted,
+    # and taking it spends points on a rule the model does not have.
+    # Reported by the app's user, who fields the army.
 
   - faction: tau-empire
     id: commander-in-coldstar-battlesuit

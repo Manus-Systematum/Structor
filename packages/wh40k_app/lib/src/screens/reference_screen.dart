@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../data/army.dart';
+import '../widgets/collapsible.dart';
+import '../widgets/unit_profiles.dart';
 
 /// The reference page (DESIGN.md §7.3, §7.3.8, §7.3.9).
 ///
@@ -186,6 +188,27 @@ class _Tiers extends StatelessWidget {
             onPin: ({String? unit, String? rule}) => onPin(unit: unit),
           ),
         ],
+        // Statlines and the guns each unit is carrying. The tiers above say
+        // what a unit's rules are; this says what it *is*, which is the other
+        // half of "what does this unit do" and was only on the Army page.
+        _SectionHeader(label: 'PROFILES', count: rules.units.length),
+        for (final unit in rules.units)
+          if (army.catalogue.unit(unit.datasheetId) case final datasheet?)
+            CollapsibleGroup(
+              title: datasheet.name.toUpperCase(),
+              trailing: unit.count > 1 ? '×${unit.count}' : null,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  UnitStatline(datasheet: datasheet),
+                  CarriedWeaponProfiles(
+                    dataset: army.catalogue,
+                    datasheet: datasheet,
+                    carried: army.carriedBy(unit.datasheetId),
+                  ),
+                ],
+              ),
+            ),
         const _SectionHeader(label: 'ONLY THIS UNIT', count: null),
         for (final unit in rules.units)
           if (unit.only.isNotEmpty)

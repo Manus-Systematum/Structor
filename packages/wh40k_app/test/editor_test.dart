@@ -169,6 +169,60 @@ void main() {
     expect(army.snapshot.units, isNotEmpty);
   });
 
+  testWidgets('edits survive leaving without tapping Save', (tester) async {
+    // The bug: building an army and backing out lost the lot. Edits are now
+    // written as they are made, so leaving keeps them.
+    await open(tester, initial: tau());
+
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+    await tester.enterText(find.byType(SearchBar), 'riptide');
+    await settle(tester);
+    await tester.tap(find.text('Riptide Battlesuit').last);
+    await settle(tester);
+
+    // Past the debounce, without touching Save.
+    await tester.pump(const Duration(seconds: 1));
+    await settle(tester);
+
+    final rows = await store.list();
+    expect(rows, hasLength(1));
+    expect(rows.single.unitCount, 1);
+  });
+
+  testWidgets('autosave then Save leaves one army, not two', (tester) async {
+    // The trap in writing as you go: the explicit Save minted a fresh id and
+    // the roster appeared twice. Opened with no `initial`, so there is no id
+    // to start from and the autosave has to mint one — passing a rosterId
+    // here would make this pass without testing anything.
+    await open(tester);
+
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+    // A new army defaults to the first faction in the manifest, which is
+    // Adepta Sororitas — not the one `open` warms for the other tests.
+    await tester.enterText(find.byType(SearchBar), 'canoness');
+    await settle(tester);
+    await tester.tap(find.text('Canoness').last);
+    await settle(tester);
+    await tester.pump(const Duration(seconds: 1));
+    await settle(tester);
+    expect(await store.list(), hasLength(1));
+
+    await tester.tap(find.text('Save'));
+    await settle(tester);
+    expect(await store.list(), hasLength(1));
+  });
+
+  testWidgets('an untouched draft is not saved at all', (tester) async {
+    // Opening the builder and backing out should not leave an empty
+    // "New army" in the list.
+    await open(tester, initial: tau());
+    await tester.pump(const Duration(seconds: 2));
+    await settle(tester);
+    expect(await store.list(), isEmpty);
+  });
+
   testWidgets('editing an existing roster keeps its id', (tester) async {
     await open(tester, initial: tau(name: 'Second company'));
 

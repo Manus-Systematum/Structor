@@ -81,13 +81,6 @@
         },
         {
           "items": [
-            "shield-generator"
-          ],
-          "count": 1,
-          "per_models": 0
-        },
-        {
-          "items": [
             "weapon-support-system"
           ],
           "count": 1,

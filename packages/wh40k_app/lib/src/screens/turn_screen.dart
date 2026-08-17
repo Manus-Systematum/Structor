@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../data/army.dart';
+import '../theme.dart';
+import '../widgets/collapsible.dart';
 import '../widgets/end_phase.dart';
 import '../widgets/stratagem_list.dart';
 import '../widgets/weapon_table.dart';
@@ -63,6 +65,9 @@ class TurnScreen extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 32),
             children: [
               for (final phase in const [
+                // Scout moves happen before the first turn, and a Scout move
+                // forgotten during deployment cannot be taken later (§7.3.10).
+                'scout',
                 'command',
                 'movement',
                 'shooting',
@@ -266,6 +271,7 @@ class _PhaseSection extends StatelessWidget {
   });
 
   static const _labels = {
+    'scout': 'SCOUTING',
     'command': 'COMMAND',
     'movement': 'MOVEMENT',
     'shooting': 'SHOOTING',
@@ -273,6 +279,25 @@ class _PhaseSection extends StatelessWidget {
     'fight': 'FIGHT',
     'end': 'END',
   };
+
+  /// Whether either side's primary pays out in this Command phase.
+  ///
+  /// Asked of the mission data rather than assumed from the round: every
+  /// phased award in the shipped cards is a command-phase one gated at round
+  /// two, but a screen that hard-coded "round >= 2" would quietly stop being
+  /// right the moment upstream adds a tier.
+  bool get _scoresNow {
+    final setup = state.setup;
+    if (setup == null) return false;
+    for (final id in [setup.myMissionId, setup.opponentMissionId]) {
+      final card = pack.card(id);
+      if (card != null &&
+          card.scoresIn(phase: 'command', round: state.round)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -304,29 +329,71 @@ class _PhaseSection extends StatelessWidget {
             ),
           ),
         ),
-        // Stratagems lead the section. They are the decision the phase turns
-        // on, and the weapon tables below are the reference for making it.
-        if (army != null)
-          StratagemList(
-            army: army,
-            phase: phase,
-            state: state,
-            onEvent: onEvent,
-          ),
-        // END is where both players' scores live and where the deck is
-        // worked (§7.3.2, §7.3.3).
-        if (phase == 'end')
-          EndPhase(state: state, deck: deck, pack: pack, onEvent: onEvent)
-        else if (army == null || kind == null)
-          _phasePlaceholder(context, army, hasStratagems: hasStratagems)
-        else
-          for (final unit in army.combatUnits)
-            _UnitBlock(
-              unit: unit,
-              kind: kind,
-              phase: phase,
-              state: state,
+        // Scouting is a pre-game list, not a phase of the turn, so it carries
+        // its own content and none of the per-phase machinery.
+        if (phase == 'scout')
+          _ScoutGroup(army: army)
+        else ...[
+          // Stratagems lead the section. They are the decision the phase turns
+          // on, and the weapon tables below are the reference for making it.
+          if (army != null && hasStratagems)
+            CollapsibleGroup(
+              title: 'STRATAGEMS',
+              icon: Icons.bolt,
+              trailing:
+                  '${army.stratagems.forPhase(phase, state: state).length}',
+              // Open where the decision is made, folded where it is reference.
+              initiallyOpen: true,
+              child: StratagemList(
+                army: army,
+                phase: phase,
+                state: state,
+                onEvent: onEvent,
+              ),
             ),
+          // The primary's round-2-onward tier is scored in the Command phase,
+          // and every phased award in the data is a command-phase one. It
+          // reads and writes the same BattleState as the END section, so the
+          // two can never show different numbers (§7.3.11).
+          if (phase == 'command' && _scoresNow)
+            CollapsibleGroup(
+              title: 'SCORE THE PRIMARY',
+              icon: Icons.emoji_events_outlined,
+              trailing: 'round ${state.round}',
+              initiallyOpen: true,
+              child: ScorePanel(state: state, pack: pack, onEvent: onEvent),
+            ),
+          // END is where both players' scores live and where the deck is
+          // worked (§7.3.2, §7.3.3).
+          if (phase == 'end')
+            EndPhase(state: state, deck: deck, pack: pack, onEvent: onEvent)
+          else if (army == null || kind == null)
+            // Only when the phase really carries nothing. Saying "nothing
+            // tracked here" underneath a scoring panel contradicts itself.
+            if (!(phase == 'command' && _scoresNow))
+              _phasePlaceholder(context, army, hasStratagems: hasStratagems)
+            else
+              const SizedBox.shrink()
+          else
+            CollapsibleGroup(
+              title: 'PROFILES',
+              icon: Icons.grid_on,
+              trailing: '${army.combatUnits.length} units',
+              initiallyOpen: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (final unit in army.combatUnits)
+                    _UnitBlock(
+                      unit: unit,
+                      kind: kind,
+                      phase: phase,
+                      state: state,
+                    ),
+                ],
+              ),
+            ),
+        ],
         const SizedBox(height: 12),
       ],
     );
@@ -475,6 +542,74 @@ class _RuleTile extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Units that may make a Scout move, and how far (DESIGN.md §7.3.10).
+///
+/// A pre-game step with a hard deadline: once deployment is finished the move
+/// cannot be taken, and nothing else in the app was asking the question. The
+/// distance comes from the ability's effect rather than its name, so a rule
+/// that grants a Scout move without saying "Scouts" — the Necrons' Enlivened
+/// Sentinels — is not silently dropped.
+class _ScoutGroup extends StatelessWidget {
+  final Army? army;
+
+  const _ScoutGroup({this.army});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final army = this.army;
+    final moves = army?.scoutMoves ?? const [];
+
+    if (moves.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+        child: Text(
+          army == null
+              ? 'No army loaded.'
+              : 'Nothing in this army makes a Scout move.',
+          style: TextStyle(fontSize: 12, color: scheme.onSurfaceVariant),
+        ),
+      );
+    }
+
+    return CollapsibleGroup(
+      title: 'SCOUT MOVES',
+      icon: Icons.directions_run,
+      trailing: '${moves.length} unit${moves.length == 1 ? '' : 's'}',
+      initiallyOpen: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (final move in moves)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 3, 16, 3),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(move.unit.label,
+                        style: const TextStyle(fontSize: 12.5)),
+                  ),
+                  Text('${move.distance}"',
+                      style: AppTheme.numeric(context, size: 13)
+                          .copyWith(fontWeight: FontWeight.w800)),
+                ],
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 6, 16, 8),
+            child: Text(
+              'Before the first turn, after both armies are deployed. A unit '
+              'led by a character without a Scout move does not get one.',
+              style: TextStyle(
+                  fontSize: 10.5, height: 1.35, color: scheme.outline),
             ),
           ),
         ],

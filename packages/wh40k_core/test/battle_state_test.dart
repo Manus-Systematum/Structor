@@ -159,6 +159,36 @@ void main() {
       ]).state;
       expect(state.me.primaryTotal, 20);
     });
+
+    test('a round cannot be driven below zero', () {
+      // Scores are deltas so that undo and correction share one mechanism,
+      // but correcting an over-count twice left the round owing points.
+      final state = logOf(const [
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 1, vp: 5),
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 1, vp: -5),
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 1, vp: -5),
+      ]).state;
+      expect(state.me.primary[1], 0);
+      expect(state.me.primaryTotal, 0);
+    });
+
+    test('a corrected round does not drag the total down', () {
+      final state = logOf(const [
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 1, vp: 10),
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 2, vp: 3),
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 2, vp: -9),
+      ]).state;
+      expect(state.me.primary[2], 0, reason: 'round 2 bottoms out');
+      expect(state.me.primaryTotal, 10, reason: 'round 1 is untouched');
+    });
+
+    test('a negative correction still works above zero', () {
+      final state = logOf(const [
+        ScoreVp(side: Player.me, kind: ScoreKind.secondary, round: 1, vp: 8),
+        ScoreVp(side: Player.me, kind: ScoreKind.secondary, round: 1, vp: -3),
+      ]).state;
+      expect(state.me.secondary[1], 5);
+    });
   });
 
   group('the secondary deck', () {
