@@ -198,6 +198,21 @@ class BsMapper {
       unit['weapon_ids'] = resolved;
     }
 
+    // Detachment rules and enhancements are declared in shared groups rather
+    // than on any datasheet, so the unit walk never reaches them. What they
+    // carry is their **printed wording**, which 40kdc has for neither: a
+    // detachment rule and an enhancement are exactly the two things a player
+    // looks up mid-game and the app could only name (§3.10).
+    //
+    // Only the text is taken. Which enhancements exist stays 40kdc's, because
+    // BSData expresses an enhancement's keyword restrictions as modifier
+    // condition groups — and an enhancement imported without its restrictions
+    // is one the builder will happily offer to a character that cannot take
+    // it, which is worse than not offering it at all.
+    for (final group in index.sharedGroups) {
+      _harvestText(group, abilities, 0);
+    }
+
     return BsFaction(
       factionId: factionId,
       units: units.values.toList(growable: false),
@@ -370,6 +385,60 @@ class BsMapper {
       }
     }
     return 0;
+  }
+
+  /// Collects printed wording from a shared group, and nothing else.
+  ///
+  /// Deliberately not the datasheet walk: that one skips anything named
+  /// "enhancement" — it is not a datasheet's own rule — and reads `profiles`
+  /// but not `rules`, which is where a detachment keeps its rule. Reusing it
+  /// would mean loosening both, and both exist for good reasons.
+  void _harvestText(
+      BsEntry entry, Map<String, Map<String, Object?>> out, int depth) {
+    if (depth > 6) return;
+
+    void take(String name, String? description) {
+      if (description == null || description.trim().isEmpty) return;
+      final id = bsSlug(name);
+      if (id.isEmpty) return;
+      out.putIfAbsent(
+        id,
+        () => {
+          'ability_id': id,
+          'name': name,
+          'description': description,
+          'game_version': bsGameVersion,
+        },
+      );
+    }
+
+    for (final raw in asList(entry.json['rules'])) {
+      final rule = asMap(raw);
+      take(strOr(rule['name'], ''), str(rule['description']));
+    }
+    for (final raw in entry.profiles) {
+      final profile = asMap(raw);
+      for (final rawChar in asList(profile['characteristics'])) {
+        final c = asMap(rawChar);
+        if (str(c['name']) != 'Description') continue;
+        take(strOr(profile['name'], ''), str(c[r'$text']));
+      }
+    }
+    for (final raw in entry.infoLinks) {
+      if (index.resolve(raw) case final target?) {
+        _harvestText(target, out, depth + 1);
+      }
+    }
+    for (final key in const ['selectionEntries', 'selectionEntryGroups']) {
+      for (final raw in asList(entry.json[key])) {
+        _harvestText(BsEntry(asMap(raw), entry.sourceId), out, depth + 1);
+      }
+    }
+    for (final raw in entry.entryLinks) {
+      if (index.resolve(raw) case final target?) {
+        _harvestText(target, out, depth + 1);
+      }
+    }
   }
 
   /// A datasheet is a selectable unit or single model with a battlefield role.

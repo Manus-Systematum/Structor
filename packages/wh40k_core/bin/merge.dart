@@ -15,6 +15,8 @@ import 'dart:io';
 import 'package:wh40k_core/src/source/bsdata/bs_document.dart';
 import 'package:wh40k_core/src/source/bsdata/bs_mapper.dart';
 import 'package:wh40k_core/src/source/bsdata/bs_merge.dart';
+import 'package:wh40k_core/src/source/bsdata/bs_slug.dart';
+import 'package:wh40k_core/src/source/json.dart';
 
 const _root = '../..';
 const _bsRoot = '$_root/data/bsdata';
@@ -74,6 +76,10 @@ void main(List<String> args) {
           .toList();
 
   final allConflicts = <Map<String, Object?>>[];
+
+  /// Ability ids harvested from each faction's shared groups — detachment
+  /// rules and enhancements — used below to give an enhancement its wording.
+  final harvested = <String, Set<String>>{};
   var totalUnits = 0;
   var totalAdded = 0;
 
@@ -132,6 +138,41 @@ void main(List<String> args) {
       if (!reportOnly) _write('$_outRoot/$relative', result.records);
     }
 
+    // An enhancement's wording, now that there is some. 40kdc leaves
+    // `ability_id` null on most of them, so the record naming the rule and the
+    // record holding its text were never connected — the app could show an
+    // enhancement's name and cost and nothing about what it does.
+    if (!reportOnly) {
+      final enhPath = 'core/$factionId/enhancements.json';
+      final abilityIds = {
+        for (final raw in produced['abilities']!)
+          if (str(asMap(raw)['ability_id']) case final id?) id,
+      };
+      final enhancements = _readArray('$_outRoot/$enhPath');
+      var linked = 0;
+      final updated = [
+        for (final raw in enhancements)
+          if (asMap(raw) case final record)
+            if (str(record['ability_id']) == null &&
+                abilityIds.contains(bsSlug(strOr(record['name'], ''))))
+              () {
+                linked++;
+                return {
+                  ...record,
+                  'ability_id': bsSlug(strOr(record['name'], '')),
+                };
+              }()
+            else
+              record,
+      ];
+      if (linked > 0) _write('$_outRoot/$enhPath', updated);
+    }
+
+    harvested[factionId] = {
+      for (final raw in mapped.abilities)
+        if (str(raw['ability_id']) case final abilityId?) abilityId,
+    };
+
     for (final collision in mapped.collisions) {
       stderr.writeln('  COLLISION $factionId: $collision');
     }
@@ -141,6 +182,8 @@ void main(List<String> args) {
 
   if (!reportOnly) {
     _copyRemaining(factions);
+    stdout.writeln('\n${_linkEnhancementText(factions, harvested)} '
+        'enhancements linked to their printed text');
     File(_conflictsPath).writeAsStringSync(
         '${const JsonEncoder.withIndent('  ').convert({
               'note': 'BSData over 40kdc; BSData wins every row here. '
@@ -152,6 +195,50 @@ void main(List<String> args) {
   stdout.writeln('\n$totalUnits datasheets, $totalAdded added by BSData');
   stdout.writeln('${allConflicts.length} conflicts'
       '${reportOnly ? '' : ' -> ${_conflictsPath.replaceFirst('$_root/', '')}'}');
+}
+
+/// Gives each enhancement the id of the ability holding its printed wording.
+///
+/// 40kdc leaves `ability_id` null on most enhancements, so the record naming
+/// the rule and the record holding its text were never connected — the app
+/// could show an enhancement's name and its cost and nothing about what it
+/// does. BSData publishes the wording, and the two meet at the slug.
+///
+/// Runs **after** `_copyRemaining`, which is what puts the enhancements file
+/// in the merged tree at all; doing it inside the per-faction loop read
+/// whatever a previous build had left there.
+int _linkEnhancementText(
+    List<String> factions, Map<String, Set<String>> harvested) {
+  var total = 0;
+  for (final factionId in factions) {
+    final path = '$_outRoot/core/$factionId/enhancements.json';
+    final ids = harvested[factionId] ?? const <String>{};
+    if (ids.isEmpty) continue;
+    final records = _readArray(path);
+    if (records.isEmpty) continue;
+
+    var linked = 0;
+    final updated = [
+      for (final raw in records)
+        if (asMap(raw) case final record)
+          if (str(record['ability_id']) == null &&
+              ids.contains(bsSlug(strOr(record['name'], ''))))
+            () {
+              linked++;
+              return {
+                ...record,
+                'ability_id': bsSlug(strOr(record['name'], '')),
+              };
+            }()
+          else
+            record,
+    ];
+    if (linked > 0) {
+      _write(path, updated);
+      total += linked;
+    }
+  }
+  return total;
 }
 
 /// Copies every 40kdc file the merge did not rewrite.

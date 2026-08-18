@@ -113,6 +113,10 @@ class BsIndex {
   /// Catalogue display names by id, for provenance in the conflict log.
   final Map<String, String> catalogueNames = {};
 
+  /// Top-level shared groups. Detachments and enhancements live here rather
+  /// than inside any datasheet, so anything walking only [roots] misses them.
+  final List<BsEntry> sharedGroups = [];
+
   BsIndex();
 
   /// Reads one BattleScribe JSON file — game system or catalogue — into the
@@ -169,6 +173,10 @@ class BsIndex {
       'forceEntries',
     ]) {
       collect(body[key]);
+    }
+
+    for (final raw in asList(body['sharedSelectionEntryGroups'])) {
+      sharedGroups.add(BsEntry(asMap(raw), id));
     }
 
     if (asRoot && body['library'] != true) {

@@ -2099,7 +2099,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "supersedes": null,
@@ -2128,7 +2128,12 @@
         "range": "unit",
         "duration": "phase"
       },
-      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21",
+      "description": "In your Shooting phase, when a friendly **PATHFINDER TEAM/STEALTH BATTLESUITS** unit is **selected to shoot**, those ranged attacks do not prevent your unit from being **hidden**.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "negation-emitters-advanced-acquisition-cadre": {
       "ability_id": "negation-emitters-advanced-acquisition-cadre",
@@ -2233,6 +2238,33 @@
         "duration": "permanent"
       },
       "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+    },
+    "supernova-launcher": {
+      "ability_id": "supernova-launcher",
+      "name": "Supernova Launcher",
+      "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s Airbursting Fragmentation Projector weapons. That weapon’s attacks have:\n- +3 **S**\n- +1 **AP** and **D**.",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      }
+    },
+    "thermoneutronic-projector": {
+      "ability_id": "thermoneutronic-projector",
+      "name": "Thermoneutronic Projector",
+      "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s T’au Flamer weapons. That weapon’s attacks have:\n- +2 **S**\n- +1 **AP** and **D**.",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      }
+    },
+    "plasma-accelerator-rifle": {
+      "ability_id": "plasma-accelerator-rifle",
+      "name": "Plasma Accelerator Rifle",
+      "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s Plasma Rifle weapons. That weapon’s attacks have:\n- +2 **S**\n- +1 **A**, **AP** and **D**.",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      }
     },
     "enforcer-commander": {
       "ability_id": "enforcer-commander",
@@ -3790,7 +3822,7 @@
       "keyword_restrictions": [
         "T’au Empire"
       ],
-      "ability_id": null,
+      "ability_id": "supernova-launcher",
       "is_unique": true,
       "game_version": {
         "edition": "11th",
@@ -3808,7 +3840,7 @@
       "keyword_restrictions": [
         "T’au Empire"
       ],
-      "ability_id": null,
+      "ability_id": "thermoneutronic-projector",
       "is_unique": true,
       "game_version": {
         "edition": "11th",
@@ -3826,7 +3858,7 @@
       "keyword_restrictions": [
         "T’au Empire"
       ],
-      "ability_id": null,
+      "ability_id": "plasma-accelerator-rifle",
       "is_unique": true,
       "game_version": {
         "edition": "11th",

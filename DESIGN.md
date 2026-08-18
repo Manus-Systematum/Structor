@@ -1665,3 +1665,41 @@ reading error here rather than a disagreement between the sources:
 
 **Points now agree on 1,632 of 1,648 datasheets.** The 16 that do not are
 recorded in `data-conflicts.json` with both values, and BSData's ships.
+
+#### Detachments and enhancements — measured, then mostly left alone
+
+The obvious next step after datasheets was to take detachments and
+enhancements from BSData too. Measuring first said not to, and the measurement
+is the useful part:
+
+| | in both | only BSData | only 40kdc | **disagree** |
+| --- | --- | --- | --- | --- |
+| Detachments | 174 | 62 | 281 | **0 on DP** |
+| Enhancements | 627 | 607 | 933 | **0 on cost** |
+
+**Not one disagreement on points.** Whatever this migration was going to be
+worth here, it was never going to be accuracy — the two lineages agree exactly
+on every detachment's Detachment Points and every enhancement's cost.
+
+So the question is coverage, and coverage has a catch. BSData expresses an
+enhancement's keyword restrictions as **modifier condition groups** — the
+general modifier-evaluation problem this migration deliberately does not
+solve — so its 607 extra enhancements would arrive with no restrictions at
+all. §4's eligibility filter would then offer each of them to every Character
+in the army. An enhancement the builder offers illegally is worse than one it
+does not offer, so the records stay 40kdc's.
+
+**What BSData does add here is the wording.** A detachment rule and an
+enhancement are the two things most often looked up mid-game, and 40kdc
+publishes text for neither — the app could show an enhancement's name and its
+cost and nothing about what it does. Those rules live in shared groups rather
+than on any datasheet, so the datasheet walk never reached them; a separate
+harvest reads them, and a pass after the merge gives each enhancement the id
+of the ability holding its text. **535 enhancements across 35 factions gained
+their printed rule**, and every detachment rule did.
+
+The harvest is deliberately not the datasheet walk. That one skips anything
+named "enhancement" — it is not a datasheet's own rule — and reads `profiles`
+but not `rules`, which is where a detachment keeps its. Both exclusions are
+right for datasheets and wrong here, and loosening them would have quietly
+put every faction's enhancement list back onto every Character.

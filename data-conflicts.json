@@ -521,6 +521,24 @@
       "resolution": "bsdata"
     },
     {
+      "faction": "adeptus-astartes",
+      "kind": "abilities",
+      "id": "close-range-eradication",
+      "field": "name",
+      "bsdata": "Close-Range Eradication",
+      "40kdc": "Close-range Eradication",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-astartes",
+      "kind": "abilities",
+      "id": "skystrike",
+      "field": "name",
+      "bsdata": "Skystrike",
+      "40kdc": "SKYSTRIKE",
+      "resolution": "bsdata"
+    },
+    {
       "faction": "adeptus-custodes",
       "kind": "units",
       "id": "custodian-guard-with-adrasite-and-pyrithite-spears",
@@ -659,6 +677,33 @@
       "field": "name",
       "bsdata": "Attached Unit",
       "40kdc": "ATTACHED UNIT",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "abilities",
+      "id": "rad-bombardment",
+      "field": "name",
+      "bsdata": "Rad-bombardment",
+      "40kdc": "Rad-Bombardment",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "abilities",
+      "id": "acquisition-at-any-cost",
+      "field": "name",
+      "bsdata": "Acquisition at any cost",
+      "40kdc": "Acquisition at any Cost",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "abilities",
+      "id": "cyber-psalm-programming",
+      "field": "name",
+      "bsdata": "Cyber Psalm-Programming",
+      "40kdc": "Cyber-psalm Programming",
       "resolution": "bsdata"
     },
     {
@@ -914,6 +959,24 @@
       "field": "name",
       "bsdata": "Grav Talon",
       "40kdc": "Grav-talon",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "abilities",
+      "id": "defend-at-all-costs",
+      "field": "name",
+      "bsdata": "Defend at All Costs",
+      "40kdc": "Defend At All Costs",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "abilities",
+      "id": "strength-from-death",
+      "field": "name",
+      "bsdata": "Strength From Death",
+      "40kdc": "Strength from Death",
       "resolution": "bsdata"
     },
     {
@@ -2187,6 +2250,33 @@
       "resolution": "bsdata"
     },
     {
+      "faction": "grey-knights",
+      "kind": "abilities",
+      "id": "dauntless-champions",
+      "field": "name",
+      "bsdata": "Dauntless Champions",
+      "40kdc": "DAUNTLESS CHAMPIONS",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "abilities",
+      "id": "searing-soulflame",
+      "field": "name",
+      "bsdata": "Searing Soulflame",
+      "40kdc": "SEARING SOULFLAME",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "abilities",
+      "id": "echojump",
+      "field": "name",
+      "bsdata": "Echojump",
+      "40kdc": "ECHOJUMP",
+      "resolution": "bsdata"
+    },
+    {
       "faction": "imperial-knights",
       "kind": "units",
       "id": "canis-rex",
@@ -2212,6 +2302,15 @@
       "field": "name",
       "bsdata": "Super-Heavy Walker",
       "40kdc": "Super-heavy Walker",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "imperial-knights",
+      "kind": "abilities",
+      "id": "driven-from-their-lairs",
+      "field": "name",
+      "bsdata": "Driven From Their Lairs",
+      "40kdc": "Driven from Their Lairs",
       "resolution": "bsdata"
     },
     {
@@ -2706,6 +2805,24 @@
       "field": "name",
       "bsdata": "Big Gunz",
       "40kdc": "BIG GUNZ",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "abilities",
+      "id": "here-be-loot",
+      "field": "name",
+      "bsdata": "Here Be Loot",
+      "40kdc": "Here be Loot",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "abilities",
+      "id": "eager-for-the-fight",
+      "field": "name",
+      "bsdata": "Eager For The Fight",
+      "40kdc": "Eager for the Fight",
       "resolution": "bsdata"
     },
     {
