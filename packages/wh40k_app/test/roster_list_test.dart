@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wh40k_app/src/data/army.dart';
 import 'package:wh40k_app/src/data/database.dart';
+import 'package:wh40k_app/src/data/dataset_repository.dart';
 import 'package:wh40k_app/src/data/roster_store.dart';
+import 'package:wh40k_app/src/screens/editor_screen.dart';
 import 'package:wh40k_app/src/screens/roster_list_screen.dart';
 
 void main() {
@@ -33,6 +35,32 @@ void main() {
   /// The view is pumped rather than the screen: a database *stream* in a
   /// widget test leaves a timer pending when the tree is disposed, and the
   /// test then fails on that invariant instead of on what it was checking.
+  /// As [open], but with a dataset repository, so the copy can open the
+  /// builder rather than stopping at the save.
+  Future<void> openWithDatasets(WidgetTester tester) async {
+    tester.view.physicalSize = const Size(500, 1400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    late List<RosterRow> rows;
+    await tester.runAsync(() async {
+      await store.save(reference);
+      rows = await store.list();
+    });
+
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: RosterListView(
+          store: store,
+          datasets: DatasetRepository(),
+          rows: rows,
+          onOpen: (_) {},
+        ),
+      ),
+    ));
+    await tester.pumpAndSettle();
+  }
+
   Future<void> open(WidgetTester tester) async {
     tester.view.physicalSize = const Size(500, 1400);
     tester.view.devicePixelRatio = 1;
@@ -152,5 +180,22 @@ void main() {
 
       expect(await names(tester), containsAll(['2k ret', 'Melee variant']));
     });
+  });
+
+  testWidgets('a copy opens in the builder', (tester) async {
+    // A copy is made to become a variant — the same list with one thing
+    // swapped — so the edit is the point of it. Left on the list the reader
+    // has two near-identical names and no way to tell which is which.
+    await openWithDatasets(tester);
+    await openMenu(tester);
+    await tester.tap(find.text('Duplicate'));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextField), 'Melee variant');
+    await tester.tap(find.widgetWithText(FilledButton, 'Duplicate'));
+    await flush(tester);
+
+    expect(find.byType(EditorScreen), findsOneWidget);
+    expect(find.text('Melee variant'), findsWidgets);
   });
 }

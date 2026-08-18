@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wh40k_core/wh40k_core.dart';
 
 import '../data/database.dart';
 import '../data/dataset_repository.dart';
@@ -49,7 +50,17 @@ class RosterListScreen extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (_) => ImportScreen(datasets: datasets)),
               );
-              if (army != null) await store.save(army);
+              if (army == null) return;
+              await store.save(army);
+              // An import lands in the builder for the same reason a copy
+              // does: what follows an import is almost always a correction,
+              // since the export it came from is rarely the list you meant to
+              // field. Saving and returning to the list hides the army behind
+              // one more tap at exactly the moment it needs looking at.
+              if (context.mounted) {
+                await openEditor(context, store, datasets,
+                    roster: army.roster, rosterId: army.id);
+              }
             },
             child: const Icon(Icons.download),
           ),
@@ -68,8 +79,12 @@ class RosterListScreen extends StatelessWidget {
       ),
       body: StreamBuilder<List<RosterRow>>(
         stream: store.watch(),
-        builder: (context, snapshot) =>
-            RosterListView(store: store, rows: snapshot.data, onOpen: onOpen),
+        builder: (context, snapshot) => RosterListView(
+          store: store,
+          datasets: datasets,
+          rows: snapshot.data,
+          onOpen: onOpen,
+        ),
       ),
     );
   }
@@ -84,6 +99,10 @@ class RosterListScreen extends StatelessWidget {
 class RosterListView extends StatelessWidget {
   final RosterStore store;
 
+  /// Needed to open the builder on a copy. Null in tests that only exercise
+  /// the list itself, which is why duplicating without it still saves.
+  final DatasetRepository? datasets;
+
   /// Null while the first read is still in flight.
   final List<RosterRow>? rows;
 
@@ -94,6 +113,7 @@ class RosterListView extends StatelessWidget {
     required this.store,
     required this.rows,
     required this.onOpen,
+    this.datasets,
   });
 
   @override
@@ -170,9 +190,40 @@ class RosterListView extends StatelessWidget {
       initial: copyName(row.name, rows.map((r) => r.name)),
     );
     if (name == null) return;
-    await store.duplicate(row.id, name: name);
+    final copy = await store.duplicate(row.id, name: name);
+
+    // Straight into the builder. A copy is made to become a *variant* — the
+    // same list with one thing swapped — so the edit is the point of it, and
+    // leaving the reader on a list holding two near-identical names is the
+    // one place they cannot tell which is which.
+    final datasets = this.datasets;
+    if (copy == null || datasets == null) return;
+    if (!context.mounted) return;
+    await openEditor(context, store, datasets,
+        roster: copy.roster, rosterId: copy.id);
   }
 }
+
+/// Opens the builder on an existing army.
+///
+/// Shared by the copy and the import: both make an army the reader has not
+/// seen yet, and both are followed by an edit often enough that arriving
+/// anywhere else is a wasted step.
+Future<void> openEditor(
+  BuildContext context,
+  RosterStore store,
+  DatasetRepository datasets, {
+  required Roster roster,
+  required String rosterId,
+}) =>
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => EditorScreen(
+        store: store,
+        datasets: datasets,
+        initial: roster,
+        rosterId: rosterId,
+      ),
+    ));
 
 /// The name for a copy, or null if the dialog was dismissed.
 ///
