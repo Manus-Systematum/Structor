@@ -16,6 +16,7 @@ import 'package:wh40k_core/src/source/bsdata/bs_document.dart';
 import 'package:wh40k_core/src/source/bsdata/bs_mapper.dart';
 import 'package:wh40k_core/src/source/bsdata/bs_merge.dart';
 import 'package:wh40k_core/src/source/bsdata/bs_slug.dart';
+import 'package:wh40k_core/src/import/name_match.dart';
 import 'package:wh40k_core/src/source/json.dart';
 
 const _root = '../..';
@@ -23,6 +24,15 @@ const _bsRoot = '$_root/data/bsdata';
 const _dcRoot = '$_root/data/40kdc';
 const _outRoot = '$_root/data/merged';
 const _conflictsPath = '$_root/data-conflicts.json';
+
+/// Enhancements whose printed wording could not be found by name, with
+/// suggestions — and the hand-made matches for them.
+///
+/// **Both a worklist and the answer sheet.** Entries with `ability_id` filled
+/// in are applied by the merge and preserved verbatim on the next run; the
+/// rest are regenerated. That way a hand-made match is made once and survives
+/// every rebuild, which a purely generated report would not.
+const _manualPath = '$_root/data-enhancement-text.json';
 
 /// Which BSData-derived list replaces which 40kdc file, and which fields of it
 /// are worth diffing when both sources state one.
@@ -226,6 +236,8 @@ void main(List<String> args) {
 /// whatever a previous build had left there.
 int _linkEnhancementText(
     List<String> factions, Map<String, Set<String>> harvested) {
+  final manual = _handMadeMatches();
+  final unmatched = <Map<String, Object?>>[];
   var total = 0;
   for (final factionId in factions) {
     final path = '$_outRoot/core/$factionId/enhancements.json';
@@ -246,12 +258,15 @@ int _linkEnhancementText(
     // pointing at one with any text: 40kdc names the rule and publishes no
     // wording for it, which is the whole gap being closed here.
     final described = _describedAbilities(factionId, parentId);
+    final named = _namedAbilities(factionId, parentId);
 
     var linked = 0;
     final updated = [
       for (final raw in records)
         if (asMap(raw) case final record)
-          if (_textIdFor(record, ids, described) case final id?)
+          if (manual['$factionId/${str(record['id'])}'] ??
+                  _textIdFor(record, ids, described, named)
+              case final id?)
             () {
               linked++;
               return {...record, 'ability_id': id};
@@ -263,8 +278,153 @@ int _linkEnhancementText(
       _write(path, updated);
       total += linked;
     }
+
+    for (final raw in updated) {
+      final record = asMap(raw);
+      final id = str(record['ability_id']);
+      if (id != null && described.contains(id)) continue;
+      if (manual.containsKey('$factionId/${str(record['id'])}')) continue;
+      unmatched.add(_worklistEntry(factionId, parentId, record));
+    }
   }
+
+  _writeWorklist(manual, unmatched);
   return total;
+}
+
+/// Matches a person filled in, keyed `faction/enhancement-id`.
+Map<String, String> _handMadeMatches() {
+  final file = File(_manualPath);
+  if (!file.existsSync()) return {};
+  final decoded = asMap(jsonDecode(file.readAsStringSync()));
+  final out = <String, String>{};
+  for (final raw in asList(decoded['unmatched'])) {
+    final entry = asMap(raw);
+    final abilityId = str(entry['ability_id']);
+    if (abilityId == null || abilityId.isEmpty) continue;
+    final faction = str(entry['faction']);
+    final id = str(entry['id']);
+    if (faction != null && id != null) out['$faction/$id'] = abilityId;
+  }
+  return out;
+}
+
+/// One row of the worklist: the enhancement, and the likeliest abilities.
+///
+/// Suggestions are scored by name against every ability in the faction that
+/// actually has text, because a match with nothing to say is not a match. Only
+/// the first line of each is shown — enough to recognise the rule without
+/// making the file unreadable.
+Map<String, Object?> _worklistEntry(
+    String factionId, String? parentId, Map<String, dynamic> record) {
+  final name = strOr(record['name'], '');
+  final candidates = <({String id, String name, String text})>[];
+  for (final source in [factionId, if (parentId != null) parentId]) {
+    for (final raw in _readArray('$_outRoot/enrichment/$source/abilities.json')) {
+      final ability = asMap(raw);
+      final text = str(ability['description']);
+      final id = str(ability['ability_id']);
+      if (text == null || text.trim().isEmpty || id == null) continue;
+      candidates.add((id: id, name: strOr(ability['name'], id), text: text));
+    }
+  }
+
+  final scored = [
+    for (final candidate in candidates)
+      (candidate: candidate, score: _similarity(name, candidate.name)),
+  ]..sort((a, b) => b.score.compareTo(a.score));
+
+  return {
+    'faction': factionId,
+    'id': str(record['id']),
+    'name': name,
+    'detachment': str(record['detachment_id']),
+    'cost': asInt(record['cost']),
+    // Fill this in to match by hand. It is read back on the next merge and
+    // this entry is then kept verbatim rather than regenerated.
+    'ability_id': null,
+    'suggestions': [
+      for (final entry in scored.take(3))
+        {
+          'ability_id': entry.candidate.id,
+          'name': entry.candidate.name,
+          'score': double.parse(entry.score.toStringAsFixed(2)),
+          'text': _firstLine(entry.candidate.text),
+        },
+    ],
+  };
+}
+
+/// How alike two rule names are, as an overlap of their words.
+///
+/// Not `scoreName`, which is tuned for choosing among a *scoped* candidate
+/// list — the profiles of one datasheet — and rewards a short candidate. Asked
+/// to rank one enhancement against every ability in a faction it put `leader`
+/// above `master-of-the-machine-war` for "Master of Machine War".
+///
+/// This measures both directions at once, so an inserted "the" costs a little
+/// and an unrelated short name scores nothing.
+double _similarity(String a, String b) {
+  final mine = _words(a);
+  final theirs = _words(b);
+  if (mine.isEmpty || theirs.isEmpty) return 0;
+  final shared = mine.intersection(theirs).length;
+  if (shared == 0) return 0;
+  final precision = shared / mine.length;
+  final recall = shared / theirs.length;
+  return 2 * precision * recall / (precision + recall);
+}
+
+/// Words worth comparing: normalised, singularised, and without the joining
+/// words every third rule name contains.
+const _stopWords = {'of', 'the', 'a', 'and', 'to', 'in'};
+
+Set<String> _words(String value) => {
+      for (final token in tokens(value))
+        if (!_stopWords.contains(token))
+          token.endsWith('s') && token.length > 3
+              ? token.substring(0, token.length - 1)
+              : token,
+    };
+
+String _firstLine(String text) {
+  final line = text.split('\n').first.trim();
+  return line.length <= 160 ? line : '${line.substring(0, 157)}…';
+}
+
+void _writeWorklist(
+    Map<String, String> manual, List<Map<String, Object?>> unmatched) {
+  // A hand-made match is kept exactly as written, including any note beside
+  // it — regenerating over someone's work is how a file like this stops being
+  // trusted.
+  final existing = File(_manualPath).existsSync()
+      ? asList(asMap(jsonDecode(File(_manualPath).readAsStringSync()))['unmatched'])
+      : const <Object?>[];
+  final kept = [
+    for (final raw in existing)
+      if (str(asMap(raw)['ability_id'])?.isNotEmpty ?? false) asMap(raw),
+  ];
+
+  final rows = [...kept, ...unmatched]
+    ..sort((a, b) {
+      final byFaction =
+          strOr(a['faction'], '').compareTo(strOr(b['faction'], ''));
+      return byFaction != 0
+          ? byFaction
+          : strOr(a['name'], '').compareTo(strOr(b['name'], ''));
+    });
+
+  File(_manualPath).writeAsStringSync(
+      '${const JsonEncoder.withIndent('  ').convert({
+            'note': 'Enhancements whose printed wording could not be found by '
+                'name. Fill in `ability_id` from `suggestions` — or with any '
+                'other id from the faction\'s abilities — and the next merge '
+                'applies it and keeps the entry as written. Leave it null and '
+                'the entry is regenerated. DESIGN.md §3.10.',
+            'matched_by_hand': kept.length,
+            'still_unmatched': unmatched.length,
+            'unmatched': rows,
+          })}\n');
 }
 
 /// `Hagiomnifex (Upgrade)` and `Fear Made Manifest (Aura)`.
@@ -274,8 +434,8 @@ int _linkEnhancementText(
 final _nameSuffix = RegExp(r'\s*\([^)]*\)\s*$');
 
 /// The ability id holding this enhancement's wording, or null.
-String? _textIdFor(
-    Map<String, dynamic> record, Set<String> ids, Set<String> described) {
+String? _textIdFor(Map<String, dynamic> record, Set<String> ids,
+    Set<String> described, List<({String id, String name})> named) {
   final existing = str(record['ability_id']);
   if (existing != null && described.contains(existing)) return null;
 
@@ -286,7 +446,38 @@ String? _textIdFor(
   ]) {
     if (candidate.isNotEmpty && ids.contains(candidate)) return candidate;
   }
+
+  // Same words, different joining: `Master of Machine War` against
+  // `master-of-the-machine-war`, `Eye of the Hunter` against
+  // `eyes-of-the-hunter`. Once "the" and a plural are set aside these are the
+  // same name, which is the rule the aliases already work by (§3.6) — not a
+  // guess, and it accounted for a sixth of what was left unmatched.
+  final wanted = _words(name.replaceAll(_nameSuffix, ''));
+  if (wanted.isEmpty) return null;
+  for (final candidate in named) {
+    if (_words(candidate.name).difference(wanted).isEmpty &&
+        wanted.difference(_words(candidate.name)).isEmpty) {
+      return candidate.id;
+    }
+  }
   return null;
+}
+
+/// Abilities carrying text, with their names, for word-set matching.
+List<({String id, String name})> _namedAbilities(
+    String factionId, String? parentId) {
+  final out = <({String id, String name})>[];
+  for (final id in [factionId, if (parentId != null) parentId]) {
+    for (final raw in _readArray('$_outRoot/enrichment/$id/abilities.json')) {
+      final record = asMap(raw);
+      final text = str(record['description']);
+      if (text == null || text.trim().isEmpty) continue;
+      if (str(record['ability_id']) case final abilityId?) {
+        out.add((id: abilityId, name: strOr(record['name'], abilityId)));
+      }
+    }
+  }
+  return out;
 }
 
 /// Ability ids that actually carry text, for this faction and its parent.

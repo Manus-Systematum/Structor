@@ -1,0 +1,2891 @@
+{
+  "note": "Enhancements whose printed wording could not be found by name. Fill in `ability_id` from `suggestions` — or with any other id from the faction's abilities — and the next merge applies it and keeps the entry as written. Leave it null and the entry is regenerated. DESIGN.md §3.10.",
+  "matched_by_hand": 0,
+  "still_unmatched": 103,
+  "unmatched": [
+    {
+      "faction": "adepta-sororitas",
+      "id": "divine-miracle-sanctuary-guardians",
+      "name": "Divine Miracle",
+      "detachment": "sanctuary-guardians",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "divine-deliverance",
+          "name": "Divine Deliverance",
+          "score": 0.5,
+          "text": "Once per battle, at the start of the Fight phase, this model can use this ability. If it does, until the end of the phase, add 3 to the Attacks characteristi…"
+        },
+        {
+          "ability_id": "divine-authority",
+          "name": "Divine Authority",
+          "score": 0.5,
+          "text": "Each time a model in this unit makes an attack, re-roll a Hit roll of 1."
+        },
+        {
+          "ability_id": "divine-aspect",
+          "name": "Divine Aspect",
+          "score": 0.5,
+          "text": "ADEPTA SORORITAS model only. In your Movement phase, you can select one enemy unit within 12\" of that bearer; that unit must take a Battle-shock test. If tha…"
+        }
+      ]
+    },
+    {
+      "faction": "adepta-sororitas",
+      "id": "symphonic-payload-upgrade-chorus-of-condemnation",
+      "name": "Symphonic Payload (Upgrade)",
+      "detachment": "chorus-of-condemnation",
+      "cost": 10,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.33,
+          "text": "**Mek** model only."
+        },
+        {
+          "ability_id": "psalm-of-remorseless-persecution",
+          "name": "Psalm of Remorseless Persecution",
+          "score": 0.0,
+          "text": "While this model is leading a unit, each time a model in that unit makes a melee attack, if that unit made a Charge move this turn, you can re-roll the Hit r…"
+        },
+        {
+          "ability_id": "anchorite-sarcophagus",
+          "name": "Anchorite Sarcophagus",
+          "score": 0.0,
+          "text": "The bearer has a Move characteristic of 7\" and a Save Characteristic of 3+."
+        }
+      ]
+    },
+    {
+      "faction": "adepta-sororitas",
+      "id": "writ-of-compunction-upgrade-sacred-champions",
+      "name": "Writ of Compunction (Upgrade)",
+      "detachment": "sacred-champions",
+      "cost": 20,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "writ-of-acquisition",
+          "name": "Writ of Acquisition",
+          "score": 0.4,
+          "text": "In your Shooting phase, after the bearer's unit has shot, you gain 1YP for each assailed unit hit by one or more of those attacks (to a maximum of 3YP)."
+        },
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.33,
+          "text": "**Mek** model only."
+        },
+        {
+          "ability_id": "psalm-of-remorseless-persecution",
+          "name": "Psalm of Remorseless Persecution",
+          "score": 0.0,
+          "text": "While this model is leading a unit, each time a model in that unit makes a melee attack, if that unit made a Charge move this turn, you can re-roll the Hit r…"
+        }
+      ]
+    },
+    {
+      "faction": "adeptus-astartes",
+      "id": "battle-line-veterans-assault-force",
+      "name": "Battle-line Veterans",
+      "detachment": "assault-force",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "veteran-of-the-kataphraktoi",
+          "name": "Veteran of the Kataphraktoi",
+          "score": 0.4,
+          "text": "ADEPTUS CUSTODES INFANTRY or ADEPTUS CUSTODES MOUNTED model only. In your Command phase, select one ADEPTUS CUSTODES VEHICLE or ADEPTUS CUSTODES MOUNTED unit…"
+        },
+        {
+          "ability_id": "rites-of-battle",
+          "name": "Rites of Battle",
+          "score": 0.4,
+          "text": "Once per battle round, one unit from your army with this ability can use it when its unit is targeted with a Stratagem. If it does, reduce the CP cost of tha…"
+        },
+        {
+          "ability_id": "battle-lust",
+          "name": "Battle-lust",
+          "score": 0.4,
+          "text": "You can re-roll Charge rolls made for the bearer's unit. In addition, while the Unbridled Bloodlust Blessing of Khorne is active for your army, add 1 to Char…"
+        }
+      ]
+    },
+    {
+      "faction": "adeptus-astartes",
+      "id": "blade-masters-assault-force",
+      "name": "Blade Masters",
+      "detachment": "assault-force",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "master-regenesist",
+          "name": "Master Regenesist",
+          "score": 0.5,
+          "text": "Haemonculus model only. Each time the bearer uses its Fleshcraft ability, you can return up to D3+3 destroyed Bodyguard models to the bearer's unit instead o…"
+        },
+        {
+          "ability_id": "master-of-deceit",
+          "name": "Master of Deceit",
+          "score": 0.5,
+          "text": "After both players have deployed their armies, if your army includes one or more models with this ability, you can select up to three friendly ADEPTUS ASTART…"
+        },
+        {
+          "ability_id": "shadow-masters",
+          "name": "Shadow Masters",
+          "score": 0.5,
+          "text": "Each time a ranged attack targets an ADEPTUS ASTARTES unit from your army, unless the attacking model is within 12\", the target has the benefit of cover."
+        }
+      ]
+    },
+    {
+      "faction": "adeptus-custodes",
+      "id": "comrades-in-wrath-tristraens-gilded-blades",
+      "name": "Comrades in Wrath",
+      "detachment": "tristraens-gilded-blades",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "the-destroyers-wrath",
+          "name": "The Destroyer's Wrath",
+          "score": 0.5,
+          "text": "The first time this model is destroyed, at the end of the past, add one **Bloodthirster** model to your Crusade army (ignoring the points value for your batt…"
+        },
+        {
+          "ability_id": "wrath-of-the-emperor",
+          "name": "Wrath of the Emperor",
+          "score": 0.5,
+          "text": "Complete two battles in which you have destroyed four or more units by the start of the third battle round."
+        },
+        {
+          "ability_id": "armoured-wrath",
+          "name": "Armoured Wrath",
+          "score": 0.5,
+          "text": "Once per phase for each Adeptus Astartes unit in your army, you can re-roll one Hit roll, one Wound roll, or one Damage roll made for a model in that unit."
+        }
+      ]
+    },
+    {
+      "faction": "adeptus-custodes",
+      "id": "shattering-charge-tristraens-gilded-blades",
+      "name": "Shattering Charge",
+      "detachment": "tristraens-gilded-blades",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "soul-shattering-charge",
+          "name": "Soul-shattering Charge",
+          "score": 0.8,
+          "text": "When this unit is **selected to fight**, if this unit made a **charge move** this turn, you can use this ability. If you do, when determining which models in…"
+        },
+        {
+          "ability_id": "aggressive-charge",
+          "name": "Aggressive Charge",
+          "score": 0.5,
+          "text": "This model is eligible to declare a charge in a turn in which it Advanced. In addition, if this model's Hunting Pack is Ascendant, each time this model makes…"
+        },
+        {
+          "ability_id": "crushing-charge",
+          "name": "Crushing Charge",
+          "score": 0.5,
+          "text": "Each time this unit ends a Charge move, select one enemy unit within Engagement Range of it, then roll one D6 for each model in this unit that is within Enga…"
+        }
+      ]
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "id": "autoclavic-denunciation-rad-zone-corps",
+      "name": "Autoclavic Denunciation",
+      "detachment": "rad-zone-corps",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "obsessive-denunciation",
+          "name": "Obsessive Denunciation",
+          "score": 0.5,
+          "text": "While this model is leading a unit, ranged weapons equipped by models in that unit have the [**Sustained Hits 1**] ability."
+        },
+        {
+          "ability_id": "autoclavic-denounciation",
+          "name": "Autoclavic Denounciation",
+          "score": 0.5,
+          "text": "Ranged weapons equipped by the bearer have the [ANTI-INFANTRY 2+] and [ANTI-MONSTER 4+] abilities."
+        },
+        {
+          "ability_id": "merciless-denunciation",
+          "name": "Merciless Denunciation",
+          "score": 0.5,
+          "text": "CHAPLAIN or JUDICIAR model only. Each time a model in the bearer's unit makes a melee attack, you can re-roll the hit roll."
+        }
+      ]
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "id": "empowered-mechanisms-purge-corps-deltic-9",
+      "name": "Empowered Mechanisms",
+      "detachment": "purge-corps-deltic-9",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "master-of-mechanisms",
+          "name": "Master of Mechanisms",
+          "score": 0.5,
+          "text": "In your Command phase, select one friendly Heretic Astartes Vehicle**model within 3\" of this model. That**Vehicle**model regains up to D3 lost wounds and, un…"
+        },
+        {
+          "ability_id": "empowered-manifestation",
+          "name": "Empowered Manifestation",
+          "score": 0.5,
+          "text": "While the bearer’s unit is wholly within your army’s Flow of Magic, you can add 6\" to the range of Psychic abilities the bearer has that specify a range (inc…"
+        },
+        {
+          "ability_id": "self-repair-mechanisms",
+          "name": "Self-repair Mechanisms",
+          "score": 0.4,
+          "text": "At the start of your Command phase, this model regains up to D3 lost wounds."
+        }
+      ]
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "id": "miniaturised-autosimulacra-purge-corps-deltic-9",
+      "name": "Miniaturised Autosimulacra",
+      "detachment": "purge-corps-deltic-9",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "miniaturised-nebuloscope",
+          "name": "Miniaturised Nebuloscope",
+          "score": 0.5,
+          "text": "Ranged weapons equipped by models in the bearer’s unit have the [IGNORES COVER] ability."
+        },
+        {
+          "ability_id": "inured-to-agony",
+          "name": "Inured To Agony",
+          "score": 0.0,
+          "text": "- **Death Company** models in this unit have the Feel No Pain 5+ ability."
+        },
+        {
+          "ability_id": "command-uplink",
+          "name": "Command Uplink",
+          "score": 0.0,
+          "text": "Each time you select the bearer’s unit as the target of a Stratagem, roll one D6: on a 5+, you gain 1CP."
+        }
+      ]
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "id": "sanctified-ordnance-haloscreed-battle-clade",
+      "name": "Sanctified Ordnance",
+      "detachment": "haloscreed-battle-clade",
+      "cost": 10,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "sanctified-amulet",
+          "name": "Sanctified Amulet",
+          "score": 0.5,
+          "text": "ADEPTA SORORITAS model only. Enemy units that are set up on the battlefield from Reserves cannot be set up within 12\" of the bearer"
+        },
+        {
+          "ability_id": "santified-ordnance",
+          "name": "Santified Ordnance",
+          "score": 0.5,
+          "text": "ADEPTUS MECHANICUS model only. Add 6\" to the range characteristic of ranged weapons equipped by models in the bearer’s unit and, each time a Hazardous test i…"
+        },
+        {
+          "ability_id": "sanctified-engine",
+          "name": "Sanctified Engine",
+          "score": 0.5,
+          "text": "Each time this unit Advances, do not make an Advance roll. Instead, until the end of the phase, add 6\" to the Move characteristic of models in this unit."
+        }
+      ]
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "id": "stealth-screened-cybercanids-upgrade-cohort-acquisitus",
+      "name": "Stealth-screened Cybercanids (Upgrade)",
+      "detachment": "cohort-acquisitus",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "stealth",
+          "name": "Stealth",
+          "score": 0.4,
+          "text": "If every model in a unit has this ability, each time a ranged attack targets that unit, that unit has the **benefit of cover** against that attack (13.08)."
+        },
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.29,
+          "text": "**Mek** model only."
+        },
+        {
+          "ability_id": "inured-to-agony",
+          "name": "Inured To Agony",
+          "score": 0.0,
+          "text": "- **Death Company** models in this unit have the Feel No Pain 5+ ability."
+        }
+      ]
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "id": "tl-4-9-lords-of-the-forge",
+      "name": "TL-4ø9",
+      "detachment": "lords-of-the-forge",
+      "cost": 30,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "damaged-1-4-wounds-remaining",
+          "name": "Damaged: 1-4 wounds remaining",
+          "score": 0.25,
+          "text": "While this mdel has 1-4 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        },
+        {
+          "ability_id": "inured-to-agony",
+          "name": "Inured To Agony",
+          "score": 0.0,
+          "text": "- **Death Company** models in this unit have the Feel No Pain 5+ ability."
+        },
+        {
+          "ability_id": "command-uplink",
+          "name": "Command Uplink",
+          "score": 0.0,
+          "text": "Each time you select the bearer’s unit as the target of a Stratagem, roll one D6: on a 5+, you gain 1CP."
+        }
+      ]
+    },
+    {
+      "faction": "aeldari",
+      "id": "guided-jump-kygharils-protectors",
+      "name": "Guided Jump",
+      "detachment": "kygharils-protectors",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "jump-pack",
+          "name": "Jump Pack",
+          "score": 0.5,
+          "text": "**Infantry** only. Change this model's Move characteristic to 12\", add the **Fly** and **Jump Pack** keywords, it gains the Deep Strike ability and replace t…"
+        },
+        {
+          "ability_id": "guided-by-the-whispers",
+          "name": "Guided by the Whispers",
+          "score": 0.4,
+          "text": "In the Select Crusade Blessings step, roll one D6 for each model from your Crusade army with this reward: if one or more of those result is a 4+, you can sel…"
+        },
+        {
+          "ability_id": "guided-by-fate",
+          "name": "Guided by Fate",
+          "score": 0.4,
+          "text": "Each time this model makes an attack, you can re-roll the Hit roll and you can re-roll the Wound roll."
+        }
+      ]
+    },
+    {
+      "faction": "aeldari",
+      "id": "guileful-strategist-armoured-warhost",
+      "name": "Guileful Strategist",
+      "detachment": "armoured-warhost",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "warrior-strategist",
+          "name": "Warrior Strategist",
+          "score": 0.5,
+          "text": "Once per battle round, one model from your army with this ability can use it when its unit is targeted with a Stratagem. If it does, reduce the CP cost of th…"
+        },
+        {
+          "ability_id": "superlative-strategist",
+          "name": "Superlative Strategist",
+          "score": 0.5,
+          "text": "While this model is leading a unit, you can re-roll Advance rolls made for that unit, and you can re-roll any rolls made for that unit while it is performing…"
+        },
+        {
+          "ability_id": "timeless-strategist",
+          "name": "Timeless Strategist",
+          "score": 0.5,
+          "text": "**Asuryani** model only. At the start of the battle round, if the bearer is on the battlefield (or any Transport it is embarked within is on the battlefield)…"
+        }
+      ]
+    },
+    {
+      "faction": "aeldari",
+      "id": "harmonisation-matrix-armoured-warhost",
+      "name": "Harmonisation Matrix",
+      "detachment": "armoured-warhost",
+      "cost": 30,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "crystal-matrix",
+          "name": "Crystal Matrix",
+          "score": 0.5,
+          "text": "Each time this model is selected to shoot, you can re-roll one Hit roll and you can re-roll one Wound roll when resolving those attacks."
+        },
+        {
+          "ability_id": "crystalline-targeting-matrix",
+          "name": "Crystalline Targeting Matrix",
+          "score": 0.4,
+          "text": "Ranged weapons equipped by models in this unit have the **[ASSAULT]** ability."
+        },
+        {
+          "ability_id": "obfuscation",
+          "name": "Obfuscation",
+          "score": 0.0,
+          "text": "ADEPTUS ASTARTES PSYKER model only."
+        }
+      ]
+    },
+    {
+      "faction": "aeldari",
+      "id": "seers-hand-kygharils-protectors",
+      "name": "Seer’s Hand",
+      "detachment": "kygharils-protectors",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "seers-bane",
+          "name": "Seer's Bane",
+          "score": 0.5,
+          "text": "Each time the bearer makes an attack with a Psychic melee weapon, improve the Strength, Armour Penetration and Damage characteristics of that attack by 1. Ea…"
+        },
+        {
+          "ability_id": "hand-of-asuryan",
+          "name": "Hand of Asuryan",
+          "score": 0.5,
+          "text": "Once per battle, when this model is selected to shoot, it can use this ability. If it does, until the end of the phase, its Bloody Twins weapon has a Damage …"
+        },
+        {
+          "ability_id": "hands-of-the-pious",
+          "name": "Hands of the Pious",
+          "score": 0.5,
+          "text": "Add 1 to Charge rolls made for the bearer's unit. Each time the bearer's unit is selected to fight, if that unit made a Charge move this turn, until the end …"
+        }
+      ]
+    },
+    {
+      "faction": "aeldari",
+      "id": "stave-of-kurnos-spirit-conclave",
+      "name": "Stave of Kurnos",
+      "detachment": "spirit-conclave",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "murmuring-stave",
+          "name": "Murmuring Stave",
+          "score": 0.5,
+          "text": "**Grimnyr** only. When selecting Agendas for a battle, you can select one additional **Leagues of Votann** Agenda for that battle."
+        },
+        {
+          "ability_id": "stave-of-kurnous",
+          "name": "Stave of Kurnous",
+          "score": 0.5,
+          "text": "Spiritseer model only. In your Command phase, select one friendly Wraith Construct unit within 12\" of the bearer (excluding Titanic units). Until the start o…"
+        },
+        {
+          "ability_id": "stave-abominus",
+          "name": "Stave Abominus",
+          "score": 0.5,
+          "text": "The bearer's melee weapons have the [Sustained Hits D3] and [Devastating Wounds] abilities."
+        }
+      ]
+    },
+    {
+      "faction": "agents-of-the-imperium",
+      "id": "killer-reflexes-inquisitors-hand",
+      "name": "Killer Reflexes",
+      "detachment": "inquisitors-hand",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "lightning-reflexes",
+          "name": "Lightning Reflexes",
+          "score": 0.5,
+          "text": "This model has a 4+ invulnerable save against ranged attacks."
+        },
+        {
+          "ability_id": "onslaught-killers",
+          "name": "Onslaught Killers",
+          "score": 0.5,
+          "text": "Each time a model in this unit makes a melee attack, if this unit made a Charge move this turn, add 1 to the Hit roll."
+        },
+        {
+          "ability_id": "killer-reputation",
+          "name": "Killer Reputation",
+          "score": 0.5,
+          "text": "Friendly **KELERMORPH/LOCUS/REDUCTUS SABOTEUR/SANCTUS** models have **KILLER**."
+        }
+      ]
+    },
+    {
+      "faction": "agents-of-the-imperium",
+      "id": "sanctic-slayers-inquisitors-hand",
+      "name": "Sanctic Slayers",
+      "detachment": "inquisitors-hand",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "slayers-of-champions",
+          "name": "Slayers of Champions",
+          "score": 0.5,
+          "text": "Melee weapons equipped by models in this unit have the **[PRECISION]** ability."
+        },
+        {
+          "ability_id": "titan-slayer",
+          "name": "Titan Slayer",
+          "score": 0.5,
+          "text": "Each time a model in this unit makes an attack that targets a **Monster** or **Vehicle** unit, re-roll a Hit roll of 1. If that attack targets a **Titanic** …"
+        },
+        {
+          "ability_id": "daemon-slayer",
+          "name": "Daemon Slayer",
+          "score": 0.5,
+          "text": "Add 1 to the Attacks characteristic of the bearer's melee weapons, and those weapons have the **[ANTI-DAEMON 3+]** ability."
+        }
+      ]
+    },
+    {
+      "faction": "astra-militarum",
+      "id": "call-up-the-reserves-draydens-lance",
+      "name": "Call Up the Reserves",
+      "detachment": "draydens-lance",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "mount-up",
+          "name": "Mount Up!",
+          "score": 0.4,
+          "text": "At the end of your opponent’s Movement phase, if there are no models currently embarked within this **Transport**, you can select one friendly **Astra Milita…"
+        },
+        {
+          "ability_id": "enraged-reserves",
+          "name": "Enraged Reserves",
+          "score": 0.4,
+          "text": "**Tyranids Monster** only. If the bearer is destroyed by a melee attack, if it has not fought this phase, roll one D6: on a 3+, do not remove it from play. I…"
+        },
+        {
+          "ability_id": "depleted-transmaterial-reserves",
+          "name": "Depleted Transmaterial Reserves",
+          "score": 0.33,
+          "text": "- Add 1 to the Attacks characteristic of melee weapons equipped by models in this unit."
+        }
+      ]
+    },
+    {
+      "faction": "astra-militarum",
+      "id": "draydens-drill-draydens-lance",
+      "name": "Drayden’s Drill",
+      "detachment": "draydens-lance",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "drill-commander",
+          "name": "Drill Commander",
+          "score": 0.5,
+          "text": "**Officer** model only. While the bearer is leading a unit, each time a model in that unit makes a ranged attack, if that unit Remained Stationary this turn,…"
+        },
+        {
+          "ability_id": "paragons-of-drills-discipline",
+          "name": "Paragons of Drills Discipline",
+          "score": 0.4,
+          "text": "While a unit in your Crusade army is under the effects of the First Rank Fire! Second Rank Fire! Order, if that unit Remains Stationary, its Rapid Fire weapo…"
+        },
+        {
+          "ability_id": "master-of-combat",
+          "name": "Master of Combat",
+          "score": 0.0,
+          "text": "Once per battle, in your Command phase, this model can use this ability. If it does, until the end of the turn, add 2 to the Damage characteristic of weapons…"
+        }
+      ]
+    },
+    {
+      "faction": "black-templars",
+      "id": "divine-endurance-vow-sworn-of-vedrenn",
+      "name": "Divine Endurance",
+      "detachment": "vow-sworn-of-vedrenn",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "divine-authority",
+          "name": "Divine Authority",
+          "score": 0.5,
+          "text": "Each time a model in this unit makes an attack, re-roll a Hit roll of 1."
+        },
+        {
+          "ability_id": "enhanced-endurance",
+          "name": "Enhanced Endurance",
+          "score": 0.5,
+          "text": "Add 1 to the Toughness characteristic of models in this unit."
+        },
+        {
+          "ability_id": "great-endurance",
+          "name": "Great Endurance",
+          "score": 0.5,
+          "text": "Add 2\" to the Move characteristic of models in this unit."
+        }
+      ]
+    },
+    {
+      "faction": "black-templars",
+      "id": "divine-protection-vow-sworn-of-vedrenn",
+      "name": "Divine Protection",
+      "detachment": "vow-sworn-of-vedrenn",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "litany-of-divine-protection",
+          "name": "Litany of Divine Protection",
+          "score": 0.8,
+          "text": "While this model is leading a unit, each time a ranged attack targets that unit, that unit has the Benefit of Cover against that attack."
+        },
+        {
+          "ability_id": "verse-of-divine-protection",
+          "name": "Verse of Divine Protection",
+          "score": 0.8,
+          "text": "Each time an attack with an unmodified Damage characteristic of 1 is allocated to a model in this unit, add 1 to any armour saving throw made against that at…"
+        },
+        {
+          "ability_id": "litany-of-divine-protection",
+          "name": "Litany of Divine Protection",
+          "score": 0.8,
+          "text": "While this model is leading a unit, each time a ranged attack targets that unit, that unit has the Benefit of Cover against that attack."
+        }
+      ]
+    },
+    {
+      "faction": "black-templars",
+      "id": "fervent-exemplars-upgrade-marshals-household",
+      "name": "Fervent Exemplars (Upgrade)",
+      "detachment": "marshals-household",
+      "cost": 10,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "exemplars-of-the-order",
+          "name": "Exemplars of the Order",
+          "score": 0.4,
+          "text": "This unit can perform 1 additional Act of Faith per phase."
+        },
+        {
+          "ability_id": "inspirational-exemplar",
+          "name": "Inspirational Exemplar",
+          "score": 0.4,
+          "text": "While this model is leading a unit, each time a model in that unit makes a melee attack, an unmodified Hit roll of 5+ scores a Critical Hit."
+        },
+        {
+          "ability_id": "oathbound-exemplar",
+          "name": "Oathbound Exemplar",
+          "score": 0.4,
+          "text": "ADEPTUS ASTARTES INFANTRY model only. Add 1 to the Advance rolls made for the bearer's unit. If the mission pack you are playing features Actions, the bearer…"
+        }
+      ]
+    },
+    {
+      "faction": "black-templars",
+      "id": "inheritors-of-sigismund-upgrade-marshals-household",
+      "name": "Inheritors of Sigismund (Upgrade)",
+      "detachment": "marshals-household",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "sigismunds-heir",
+          "name": "Sigismund's Heir",
+          "score": 0.4,
+          "text": "• When this unit declares a charge, If an enemy CHARACTER unit is within 12\" of this unit, you can use this part of this ability. If you do:"
+        },
+        {
+          "ability_id": "sigismunds-seal",
+          "name": "Sigismund's Seal",
+          "score": 0.4,
+          "text": "At the start of the battle, select one unit from your opponent's army. Each time a model in the bearer's unit makes a melee attack that targets that unit, th…"
+        },
+        {
+          "ability_id": "sigismunds-seal",
+          "name": "Sigismund's Seal",
+          "score": 0.4,
+          "text": "At the start of the battle, select one unit from your opponent's army. Each time a model in the bearer's unit makes a melee attack that targets that unit, th…"
+        }
+      ]
+    },
+    {
+      "faction": "black-templars",
+      "id": "oathbound-examplar-companions-of-vehemence",
+      "name": "Oathbound Examplar",
+      "detachment": "companions-of-vehemence",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "oathbound-speculator",
+          "name": "Oathbound Speculator",
+          "score": 0.5,
+          "text": "Each time a model in the bearer's unit makes an attack, re-roll a Wound roll of 1. Each time the bearer's unit is selected to shoot or fight, you can spend 3…"
+        },
+        {
+          "ability_id": "oathbound-exemplar",
+          "name": "Oathbound Exemplar",
+          "score": 0.5,
+          "text": "ADEPTUS ASTARTES INFANTRY model only. Add 1 to the Advance rolls made for the bearer's unit. If the mission pack you are playing features Actions, the bearer…"
+        },
+        {
+          "ability_id": "oathbound-speculator",
+          "name": "Oathbound Speculator",
+          "score": 0.5,
+          "text": "Each time a model in the bearer's unit makes an attack, re-roll a Wound roll of 1. Each time the bearer's unit is selected to shoot or fight, you can spend 3…"
+        }
+      ]
+    },
+    {
+      "faction": "blood-angels",
+      "id": "masterful-fighter-sanguinary-spearhead",
+      "name": "Masterful Fighter",
+      "detachment": "sanguinary-spearhead",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "peerless-fighters",
+          "name": "Peerless Fighters",
+          "score": 0.5,
+          "text": "Each time a model in this unit makes a melee attack, re-roll a Hit roll of 1. If this unit made a Charge move this turn then, until the end of the turn, each…"
+        },
+        {
+          "ability_id": "inspirational-fighter",
+          "name": "Inspirational Fighter",
+          "score": 0.5,
+          "text": "Each time this model's unit has fought, if one or more **Character** models were destroyed as a result of attacks made by this model this phase, until the en…"
+        },
+        {
+          "ability_id": "skirmish-fighters",
+          "name": "Skirmish Fighters",
+          "score": 0.5,
+          "text": "**Kroot** models from your army have a 6+ invulnerable save against melee attacks and a 5+ invulnerable save against ranged attacks."
+        }
+      ]
+    },
+    {
+      "faction": "blood-angels",
+      "id": "overwhelming-charge-sanguinary-spearhead",
+      "name": "Overwhelming Charge",
+      "detachment": "sanguinary-spearhead",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "overwhelming-avarice",
+          "name": "Overwhelming Avarice",
+          "score": 0.5,
+          "text": "While this model is leading a unit, each time a model in that unit makes a Pile-in or Consolidation move, it can move up to 6\" instead of up to 3\"."
+        },
+        {
+          "ability_id": "crushing-charge",
+          "name": "Crushing Charge",
+          "score": 0.5,
+          "text": "Each time this unit ends a Charge move, select one enemy unit within Engagement Range of it, then roll one D6 for each model in this unit that is within Enga…"
+        },
+        {
+          "ability_id": "breaching-charges",
+          "name": "Breaching Charges",
+          "score": 0.5,
+          "text": "In your Movement phase, when the bearer is selected to move, at the start or the end of that move if the bearer is within 1\" of a Weakened Wall that has not …"
+        }
+      ]
+    },
+    {
+      "faction": "chaos-knights",
+      "id": "octagram-of-conjuration-helhunt-lance",
+      "name": "Octagram of Conjuration",
+      "detachment": "helhunt-lance",
+      "cost": 40,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "octagram-of-conjuration-aura",
+          "name": "Octagram of Conjuration (Aura)",
+          "score": 0.8,
+          "text": "While a friendly War Dog**model is within 9” of this model, after that**War Dog model has shot, you can select one enemy unit hit by one or more of those att…"
+        },
+        {
+          "ability_id": "amplification-psychic",
+          "name": "Amplification (Psychic)",
+          "score": 0.0,
+          "text": "In your Command phase, you can select one friendly **Adeptus Astartes** unit within 18\" of this **Psyker** and roll one D6: on a 1, this **Psyker**'s unit su…"
+        },
+        {
+          "ability_id": "executioner",
+          "name": "Executioner",
+          "score": 0.0,
+          "text": "Each time this model makes an attack that targets a unit Below Half-strength, add 1 to the Hit roll. Each time an enemy unit is destroyed as the result of th…"
+        }
+      ]
+    },
+    {
+      "faction": "chaos-knights",
+      "id": "snarling-rivalry-upgrade-hunting-warpack",
+      "name": "Snarling Rivalry (Upgrade)",
+      "detachment": "hunting-warpack",
+      "cost": 10,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.33,
+          "text": "**Mek** model only."
+        },
+        {
+          "ability_id": "amplification-psychic",
+          "name": "Amplification (Psychic)",
+          "score": 0.0,
+          "text": "In your Command phase, you can select one friendly **Adeptus Astartes** unit within 18\" of this **Psyker** and roll one D6: on a 1, this **Psyker**'s unit su…"
+        },
+        {
+          "ability_id": "executioner",
+          "name": "Executioner",
+          "score": 0.0,
+          "text": "Each time this model makes an attack that targets a unit Below Half-strength, add 1 to the Hit roll. Each time an enemy unit is destroyed as the result of th…"
+        }
+      ]
+    },
+    {
+      "faction": "chaos-knights",
+      "id": "soul-spoor-auspicator-upgrade-hunting-warpack",
+      "name": "Soul-spoor Auspicator (Upgrade)",
+      "detachment": "hunting-warpack",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "pure-of-soul",
+          "name": "Pure of Soul",
+          "score": 0.33,
+          "text": "Each time a Psychic Attack targets this unit, subtract 1 from the Wound roll."
+        },
+        {
+          "ability_id": "spoor-seeker",
+          "name": "Spoor Seeker",
+          "score": 0.33,
+          "text": "In your Movement phase, when the bearer is selected to move, at the start or the end of that move if the bearer is within 1\" of a Weakened Wall that has not …"
+        },
+        {
+          "ability_id": "soul-glutton",
+          "name": "Soul Glutton",
+          "score": 0.33,
+          "text": "LEGIONES DAEMONICA SLAANESH MONSTER model only. At the end of the Fight phase, if one or more enemy models were destroyed this phase as a result of one or mo…"
+        }
+      ]
+    },
+    {
+      "faction": "chaos-space-marines",
+      "id": "prey-on-the-weak-zarkans-daemonkin",
+      "name": "Prey on the Weak",
+      "detachment": "zarkans-daemonkin",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "prey-taker",
+          "name": "Prey Taker",
+          "score": 0.4,
+          "text": "Add 1 to Advance and Charge rolls made for this unit."
+        },
+        {
+          "ability_id": "prey-slayers",
+          "name": "Prey Slayers",
+          "score": 0.4,
+          "text": "At the start of the battle, select one unit from your opponent’s army. Until the end of the battle, each time this **Kroot** unit makes an attack that target…"
+        },
+        {
+          "ability_id": "on-gilded-wings",
+          "name": "On Gilded Wings",
+          "score": 0.33,
+          "text": "This unit has the Stealth ability. Each time this unit Remains Stationary, it loses this ability until the start of your next Movement phase."
+        }
+      ]
+    },
+    {
+      "faction": "dark-angels",
+      "id": "dutiful-defenders-the-vengeful-brethren",
+      "name": "Dutiful Defenders",
+      "detachment": "the-vengeful-brethren",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "dutiful-tenacity",
+          "name": "Dutiful Tenacity",
+          "score": 0.5,
+          "text": "Each time an attack targets an Adeptus Astartes Infantry or Adeptus Astartes Mounted unit from your army, if the Strength characteristic of that attack is gr…"
+        },
+        {
+          "ability_id": "stoic-defender",
+          "name": "Stoic Defender",
+          "score": 0.5,
+          "text": "Adeptus Astartes model only. While the bearer is leading a unit, models in that unit have the Feel No Pain 6+ ability while they are within range of an objec…"
+        },
+        {
+          "ability_id": "defenders-of-humanity",
+          "name": "Defenders of Humanity",
+          "score": 0.5,
+          "text": "Once per battle, at the start of your Command phase, this unit can use this ability. If it does, until the start of your next Command phase, add 1 to the Obj…"
+        }
+      ]
+    },
+    {
+      "faction": "dark-angels",
+      "id": "entreaty-of-perpetual-ardour-upgrade-dark-age-arsenal",
+      "name": "Entreaty of Perpetual Ardour (Upgrade)",
+      "detachment": "dark-age-arsenal",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.29,
+          "text": "**Mek** model only."
+        },
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.29,
+          "text": "**Mek** model only."
+        },
+        {
+          "ability_id": "martial-apotheosis",
+          "name": "Martial Apotheosis",
+          "score": 0.0,
+          "text": "Each time this model makes an attack, re-roll a Hit roll of 1 and re-roll a Wound roll of 1."
+        }
+      ]
+    },
+    {
+      "faction": "dark-angels",
+      "id": "nightforged-battery-upgrade-darkflight-pursuit",
+      "name": "Nightforged Battery (Upgrade)",
+      "detachment": "darkflight-pursuit",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.33,
+          "text": "**Mek** model only."
+        },
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.33,
+          "text": "**Mek** model only."
+        },
+        {
+          "ability_id": "martial-apotheosis",
+          "name": "Martial Apotheosis",
+          "score": 0.0,
+          "text": "Each time this model makes an attack, re-roll a Hit roll of 1 and re-roll a Wound roll of 1."
+        }
+      ]
+    },
+    {
+      "faction": "dark-angels",
+      "id": "supreme-combatant-the-vengeful-brethren",
+      "name": "Supreme Combatant",
+      "detachment": "the-vengeful-brethren",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "honourable-combatant",
+          "name": "Honourable Combatant",
+          "score": 0.5,
+          "text": "OVERLORD model only. Each time the bearer's unit destroys an enemy CHARACTER unit, your opponent loses 1CP if they have any."
+        },
+        {
+          "ability_id": "deadly-combatant",
+          "name": "Deadly Combatant",
+          "score": 0.5,
+          "text": "All melee weapon equipped by **Character** models in this unit have the **[SUSTAINED HITS 1]** ability."
+        },
+        {
+          "ability_id": "honourable-combatant",
+          "name": "Honourable Combatant",
+          "score": 0.5,
+          "text": "OVERLORD model only. Each time the bearer's unit destroys an enemy CHARACTER unit, your opponent loses 1CP if they have any."
+        }
+      ]
+    },
+    {
+      "faction": "death-guard",
+      "id": "bountiful-regeneration-maggot-lords",
+      "name": "Bountiful Regeneration",
+      "detachment": "maggot-lords",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "mutagenic-regeneration",
+          "name": "Mutagenic Regeneration",
+          "score": 0.5,
+          "text": "**Abominant**, **Biophagus** or **Patriarch** model only. In each Command phase, one model in the bearer's unit regains 1 lost wound."
+        },
+        {
+          "ability_id": "revolting-regeneration",
+          "name": "Revolting Regeneration",
+          "score": 0.5,
+          "text": "At the start of your Command phase, this model regains up to D3 lost wounds."
+        },
+        {
+          "ability_id": "grotesque-regeneration",
+          "name": "Grotesque Regeneration",
+          "score": 0.5,
+          "text": "At the end of each phase, if a Beasts of Nurgle model in this unit has lost any wounds but is not destroyed, that model regains all of its lost wounds."
+        }
+      ]
+    },
+    {
+      "faction": "death-guard",
+      "id": "insectile-murmuration-upgrade-flyblown-host",
+      "name": "Insectile Murmuration (Upgrade)",
+      "detachment": "flyblown-host",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.33,
+          "text": "**Mek** model only."
+        },
+        {
+          "ability_id": "in-preparation-victory",
+          "name": "In Preparation, Victory",
+          "score": 0.0,
+          "text": "You can target this unit with the Heroic Intervention Stratagem for 0CP, and you can do so even if you have already used that Stratagem on a different unit t…"
+        },
+        {
+          "ability_id": "shroud-of-disease",
+          "name": "Shroud of Disease",
+          "score": 0.0,
+          "text": "While this model is leading a unit, that unit cannot be targeted by ranged attacks unless the attacking unit is within 18\"."
+        }
+      ]
+    },
+    {
+      "faction": "death-guard",
+      "id": "noisome-veil-maggot-lords",
+      "name": "Noisome Veil",
+      "detachment": "maggot-lords",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "veil-of-darkness",
+          "name": "Veil of Darkness",
+          "score": 0.5,
+          "text": "NECRONS model only. (Once per battle, per army) At the end of your opponent’s turn, if this unit is unengaged, you can use this ability. If you do:"
+        },
+        {
+          "ability_id": "veil-of-ancients",
+          "name": "Veil of Ancients",
+          "score": 0.5,
+          "text": "The bearer has a 4+ invulnerable save."
+        },
+        {
+          "ability_id": "veil-of-flies",
+          "name": "Veil of Flies",
+          "score": 0.5,
+          "text": "Models in this model's unit have the Stealth ability."
+        }
+      ]
+    },
+    {
+      "faction": "death-guard",
+      "id": "plagueveil-upgrade-flyblown-host",
+      "name": "Plagueveil (Upgrade)",
+      "detachment": "flyblown-host",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.4,
+          "text": "**Mek** model only."
+        },
+        {
+          "ability_id": "in-preparation-victory",
+          "name": "In Preparation, Victory",
+          "score": 0.0,
+          "text": "You can target this unit with the Heroic Intervention Stratagem for 0CP, and you can do so even if you have already used that Stratagem on a different unit t…"
+        },
+        {
+          "ability_id": "shroud-of-disease",
+          "name": "Shroud of Disease",
+          "score": 0.0,
+          "text": "While this model is leading a unit, that unit cannot be targeted by ranged attacks unless the attacking unit is within 18\"."
+        }
+      ]
+    },
+    {
+      "faction": "drukhari",
+      "id": "superior-soulcraft-coven-of-agonies",
+      "name": "Superior Soulcraft",
+      "detachment": "coven-of-agonies",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "superior-creation",
+          "name": "Superior Creation",
+          "score": 0.5,
+          "text": "**Adeptus Custodes Infantry** model only. The first time the bearer is destroyed, roll one D6 at the end of the phase. On a 2+, set the bearer back up on the…"
+        },
+        {
+          "ability_id": "superior-craftmanship",
+          "name": "Superior Craftmanship",
+          "score": 0.5,
+          "text": "Friendly **BATTLESUIT CHARACTER** units’ ranged attacks have +6\" **R**."
+        },
+        {
+          "ability_id": "superior-boarding-tactics",
+          "name": "Superior Boarding Tactics",
+          "score": 0.4,
+          "text": "You start the battle with 2CP."
+        }
+      ]
+    },
+    {
+      "faction": "drukhari",
+      "id": "toxin-laced-blades-coven-of-agonies",
+      "name": "Toxin-laced Blades",
+      "detachment": "coven-of-agonies",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "bloodstep-blade",
+          "name": "Bloodstep Blade",
+          "score": 0.4,
+          "text": "Each time the bearer's unit destroys one or more units in the Fight phase, if there are no enemy units within 3\" of the bearer's unit at the Consolidate step…"
+        },
+        {
+          "ability_id": "storm-of-blades",
+          "name": "Storm of Blades",
+          "score": 0.4,
+          "text": "While this model is leading a unit, melee weapons equipped by models in that unit have the **[SUSTAINED HITS 1]** ability."
+        },
+        {
+          "ability_id": "blur-of-blades",
+          "name": "Blur of Blades",
+          "score": 0.4,
+          "text": "While this model is leading a unit, models in that unit have the Fights First ability."
+        }
+      ]
+    },
+    {
+      "faction": "emperors-children",
+      "id": "beguiling-grotesquerie-upgrade-spectacle-of-slaughter",
+      "name": "Beguiling Grotesquerie (Upgrade)",
+      "detachment": "spectacle-of-slaughter",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.33,
+          "text": "**Mek** model only."
+        },
+        {
+          "ability_id": "the-chronicle-of-istrouma",
+          "name": "The Chronicle of Istrouma",
+          "score": 0.0,
+          "text": "Once per battle, in your Command phase, if your Crusade force is embarked on an Oathsworn Campaign, you can change your Bonus Oathsworn Agenda for a differen…"
+        },
+        {
+          "ability_id": "lethal-obsession",
+          "name": "Lethal Obsession",
+          "score": 0.0,
+          "text": "In your Shooting phase, after this unit has shot, you can use this ability. If you do, select one enemy unit hit by those ranged attacks. Until the end of th…"
+        }
+      ]
+    },
+    {
+      "faction": "emperors-children",
+      "id": "eager-patrons-upgrade-spectacle-of-slaughter",
+      "name": "Eager Patrons (Upgrade)",
+      "detachment": "spectacle-of-slaughter",
+      "cost": 20,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "daemonic-patrons",
+          "name": "Daemonic Patrons",
+          "score": 0.4,
+          "text": "Each time this unit is selected to fight, it can call upon daemonic patrons. If it does, until the end of the phase, each time a model in this unit makes an …"
+        },
+        {
+          "ability_id": "eager-to-prove",
+          "name": "Eager to Prove",
+          "score": 0.4,
+          "text": "You can re-roll Charge rolls made for the bearer's unit. While the bearer's unit is your army's Favoured Champions, add 2\" to the Move characteristic of mode…"
+        },
+        {
+          "ability_id": "exalted-patron",
+          "name": "Exalted Patron",
+          "score": 0.4,
+          "text": "Add 1\" to the Move characteristic of the bearer."
+        }
+      ]
+    },
+    {
+      "faction": "emperors-children",
+      "id": "frenzied-ferocity-upgrade-elegant-brutes",
+      "name": "Frenzied Ferocity (Upgrade)",
+      "detachment": "elegant-brutes",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "frenzied-focus",
+          "name": "Frenzied Focus",
+          "score": 0.4,
+          "text": "Each time a model in the bearer's unit makes an attack, a Critical Hit is scored on an unmodified Hit roll of 5+, instead of only a 6."
+        },
+        {
+          "ability_id": "maddened-ferocity",
+          "name": "Maddened Ferocity",
+          "score": 0.4,
+          "text": "Each time an Adeptus Astartes model from your army makes a melee attack, re-roll a Wound roll of 1."
+        },
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.33,
+          "text": "**Mek** model only."
+        }
+      ]
+    },
+    {
+      "faction": "emperors-children",
+      "id": "invigorating-agonies-callous-blades",
+      "name": "Invigorating Agonies",
+      "detachment": "callous-blades",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "wracking-agonies-psychic",
+          "name": "Wracking Agonies (Psychic)",
+          "score": 0.4,
+          "text": "In your Shooting phase, after this model has shot, select one INFANTRY unit hit by one or more of those attacks made with its Agonising Energies. Until the s…"
+        },
+        {
+          "ability_id": "the-chronicle-of-istrouma",
+          "name": "The Chronicle of Istrouma",
+          "score": 0.0,
+          "text": "Once per battle, in your Command phase, if your Crusade force is embarked on an Oathsworn Campaign, you can change your Bonus Oathsworn Agenda for a differen…"
+        },
+        {
+          "ability_id": "lethal-obsession",
+          "name": "Lethal Obsession",
+          "score": 0.0,
+          "text": "In your Shooting phase, after this unit has shot, you can use this ability. If you do, select one enemy unit hit by those ranged attacks. Until the end of th…"
+        }
+      ]
+    },
+    {
+      "faction": "emperors-children",
+      "id": "martial-perfection-callous-blades",
+      "name": "Martial Perfection",
+      "detachment": "callous-blades",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "martial-supremacy",
+          "name": "Martial Supremacy",
+          "score": 0.5,
+          "text": "At the end of a battle, at least twice as many enemy units were destroyed in that battle than units from your Crusade army."
+        },
+        {
+          "ability_id": "tactical-perfection",
+          "name": "Tactical Perfection",
+          "score": 0.5,
+          "text": "After both players have deployed their armies, select up to two Emperor's Children units from your army and redeploy them. When doing so, you can set those u…"
+        },
+        {
+          "ability_id": "flawless-perfection",
+          "name": "Flawless Perfection",
+          "score": 0.5,
+          "text": "While this unit is under the effects of one or more Combat Elixirs, each time a model in this unit makes an attack, you can re-roll the Hit roll."
+        }
+      ]
+    },
+    {
+      "faction": "emperors-children",
+      "id": "sublime-prescience-rapid-evisceration",
+      "name": "Sublime Prescience",
+      "detachment": "rapid-evisceration",
+      "cost": 25,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "prescience",
+          "name": "Prescience",
+          "score": 0.67,
+          "text": "ADEPTUS ASTARTES PSYKER model only (excluding TERMINATOR models). (Once per turn per unit) In your opponent’s Movement phase, when an enemy unit ends a move …"
+        },
+        {
+          "ability_id": "prescience-psychic",
+          "name": "Prescience (Psychic)",
+          "score": 0.5,
+          "text": "Each time an attack targets this unit, subtract 1 from the Hit roll."
+        },
+        {
+          "ability_id": "sublime-presence",
+          "name": "Sublime Presence",
+          "score": 0.5,
+          "text": "Once per turn, in your Movement phase, the bearer can use this Enhancement. If it does, select one friendly Emperor's Children Transport that is in Strategic…"
+        }
+      ]
+    },
+    {
+      "faction": "genestealer-cults",
+      "id": "biomorph-adaptation-biosanctic-broodsurge",
+      "name": "Biomorph Adaptation",
+      "detachment": "biosanctic-broodsurge",
+      "cost": 25,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "winged-biomorph",
+          "name": "Winged Biomorph",
+          "score": 0.5,
+          "text": "**Node Organism** or **Prime Organism** only. Change this model's Move characteristic to 12\", add the **Fly** and **Vanguard Invader** keywords, and it gains…"
+        },
+        {
+          "ability_id": "rapid-adaptation",
+          "name": "Rapid Adaptation",
+          "score": 0.5,
+          "text": "Select any one of the Battle Honours from the Monster Hunters upgrade path for this unit to gain, regardless of the ones it has already unlocked. The Battle …"
+        },
+        {
+          "ability_id": "ocular-adaptation",
+          "name": "Ocular Adaptation",
+          "score": 0.5,
+          "text": "**WINGED TYRANID PRIME/TYRANID PRIME WITH LASH WHIP** model only. This unit’s melee attacks have +1 to **hit rolls**."
+        }
+      ]
+    },
+    {
+      "faction": "genestealer-cults",
+      "id": "heavy-munitions-claw-of-ascension",
+      "name": "Heavy Munitions",
+      "detachment": "claw-of-ascension",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "heavy",
+          "name": "Heavy",
+          "score": 0.67,
+          "text": "In your Shooting phase, each time an attack is made with a **[HEAVY]** weapon, add 1 to the **hit roll** if all of the following apply to the attacking unit:"
+        },
+        {
+          "ability_id": "contraband-munitions",
+          "name": "Contraband Munitions",
+          "score": 0.5,
+          "text": "**KELERMORPH/REDUCTUS SABOTEUR** model only. This unit’s ranged attacks have +2 **S**."
+        },
+        {
+          "ability_id": "exotic-munitions",
+          "name": "Exotic Munitions",
+          "score": 0.5,
+          "text": "Anhrathe**unit only. Ranged weapons equipped by models in this unit have the**[ANTI-MONSTER 5+]**and**[ANTI-VEHICLE 5+] abilities."
+        }
+      ]
+    },
+    {
+      "faction": "genestealer-cults",
+      "id": "practiced-eye-claw-of-ascension",
+      "name": "Practiced Eye",
+      "detachment": "claw-of-ascension",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "eye-of-the-kalamandra",
+          "name": "Eye of the Kalamandra",
+          "score": 0.5,
+          "text": "Each time the bearer's unit Advances, do not make an Advance roll. Instead, until the end of the phase, add 6\" to the Move characteristic of models in that u…"
+        },
+        {
+          "ability_id": "eye-of-mars",
+          "name": "Eye of Mars",
+          "score": 0.5,
+          "text": "After both players have deployed their armies, select one unit from your Crusade army and redeploy it. When doing so, you can set that unit up in Strategic R…"
+        },
+        {
+          "ability_id": "eyes-of-the-cult",
+          "name": "Eyes of the Cult",
+          "score": 0.5,
+          "text": "Models in this unit have the **Crossfire** keyword."
+        }
+      ]
+    },
+    {
+      "faction": "grey-knights",
+      "id": "eye-of-the-augurim-hallowed-conclave",
+      "name": "Eye of the Augurim",
+      "detachment": "hallowed-conclave",
+      "cost": 25,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "eye-of-the-kalamandra",
+          "name": "Eye of the Kalamandra",
+          "score": 0.5,
+          "text": "Each time the bearer's unit Advances, do not make an Advance roll. Instead, until the end of the phase, add 6\" to the Move characteristic of models in that u…"
+        },
+        {
+          "ability_id": "lucid-eye",
+          "name": "Lucid Eye",
+          "score": 0.5,
+          "text": "Asuryani Psyker model only. In your Command phase, you can add 1 to or subtract 1 from the value of one Fate dice in your Fate dice pool."
+        },
+        {
+          "ability_id": "eye-of-mars",
+          "name": "Eye of Mars",
+          "score": 0.5,
+          "text": "After both players have deployed their armies, select one unit from your Crusade army and redeploy it. When doing so, you can set that unit up in Strategic R…"
+        }
+      ]
+    },
+    {
+      "faction": "grey-knights",
+      "id": "purifying-force-crowes-sanctifiers",
+      "name": "Purifying Force",
+      "detachment": "crowes-sanctifiers",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "secret-forces",
+          "name": "Secret Forces",
+          "score": 0.5,
+          "text": "If the bearer is included in a Crusade army whose Army Faction is not **Agents of the Imperium**, the maximum number of **Requisitioned**, **Retinue** and **…"
+        },
+        {
+          "ability_id": "channelled-force",
+          "name": "Channelled Force",
+          "score": 0.5,
+          "text": "Each time a Grey Knights unit from your army is selected to fight, that unit can take a Leadership test. If that test is passed, select one of the following …"
+        },
+        {
+          "ability_id": "force-acuity",
+          "name": "Force Acuity",
+          "score": 0.5,
+          "text": "Improve the Armour Penetration characteristic of melee weapons equipped by models in this unit by 1 (this is not cumulative with any other rule that improves…"
+        }
+      ]
+    },
+    {
+      "faction": "grey-knights",
+      "id": "sanctified-auspexes-crowes-sanctifiers",
+      "name": "Sanctified Auspexes",
+      "detachment": "crowes-sanctifiers",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "sanctified-amulet",
+          "name": "Sanctified Amulet",
+          "score": 0.5,
+          "text": "ADEPTA SORORITAS model only. Enemy units that are set up on the battlefield from Reserves cannot be set up within 12\" of the bearer"
+        },
+        {
+          "ability_id": "sanctified-engine",
+          "name": "Sanctified Engine",
+          "score": 0.5,
+          "text": "Each time this unit Advances, do not make an Advance roll. Instead, until the end of the phase, add 6\" to the Move characteristic of models in this unit."
+        },
+        {
+          "ability_id": "amplification-psychic",
+          "name": "Amplification (Psychic)",
+          "score": 0.0,
+          "text": "In your Command phase, you can select one friendly **Adeptus Astartes** unit within 18\" of this **Psyker** and roll one D6: on a 1, this **Psyker**'s unit su…"
+        }
+      ]
+    },
+    {
+      "faction": "imperial-knights",
+      "id": "omnissian-champion-questor-forgepact",
+      "name": "Omnissian Champion",
+      "detachment": "questor-forgepact",
+      "cost": 30,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "slayers-of-champions",
+          "name": "Slayers of Champions",
+          "score": 0.5,
+          "text": "Melee weapons equipped by models in this unit have the **[PRECISION]** ability."
+        },
+        {
+          "ability_id": "subtle-champions",
+          "name": "Subtle Champions",
+          "score": 0.5,
+          "text": "If your Crusade army includes one or more **Epic Hero** models with this Crusade Ability, at the Determine Attacker and Defender step, you can re-roll your d…"
+        },
+        {
+          "ability_id": "inspirational-champions",
+          "name": "Inspirational Champions",
+          "score": 0.5,
+          "text": "While an **Epic Hero** model with this Crusade ability is leading a unit, you can ignore any and/or all Battle Scars that Bodyguard unit has. In addition, if…"
+        }
+      ]
+    },
+    {
+      "faction": "imperial-knights",
+      "id": "vocifer-magnificat-aura-questor-forgepact",
+      "name": "Vocifer Magnificat (Aura)",
+      "detachment": "questor-forgepact",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "blinding-aura",
+          "name": "Blinding Aura",
+          "score": 0.4,
+          "text": "Grey Knights model only. Each time the bearer's unit is set up using the Deep Strike ability, until the end of the turn, enemy units cannot use the Fire Over…"
+        },
+        {
+          "ability_id": "slaughterthirst-aura",
+          "name": "Slaughterthirst (Aura)",
+          "score": 0.4,
+          "text": "LEGIONES DAEMONICA KHORNE model only. While a friendly LEGIONES DAEMONICA KHORNE unit (excluding MONSTERS) is within 6\" of the bearer, weapons equipped by mo…"
+        },
+        {
+          "ability_id": "cankerblight-aura",
+          "name": "Cankerblight (Aura)",
+          "score": 0.4,
+          "text": "LEGIONES DAEMONICA NURGLE model only. Each time an enemy unit (excluding MONSTERS and VEHICLES) that is within 6\" of the bearer fails a Battle-shock test, th…"
+        }
+      ]
+    },
+    {
+      "faction": "leagues-of-votann",
+      "id": "brokhyr-barrage-bane-slayers-bulwark",
+      "name": "Brôkhyr Barrage",
+      "detachment": "bane-slayers-bulwark",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "br-khyr-guild-support",
+          "name": "Brôkhyr Guild Support",
+          "score": 0.57,
+          "text": "While this unit is within 3\" of one or more friendly Leagues of Votann Vehicle**or**Ironkin Steeljacks units, if this unit is not an attached unit, it has th…"
+        },
+        {
+          "ability_id": "blades-of-the-emperor",
+          "name": "Blades of the Emperor",
+          "score": 0.0,
+          "text": "Each time this unit makes a Charge move, until the end of the turn, melee weapons equipped by models in this unit have the **[LETHAL HITS]** ability."
+        },
+        {
+          "ability_id": "predictive-guidance",
+          "name": "Predictive Guidance",
+          "score": 0.0,
+          "text": "Once per battle round, when you target this unit with the **Fire Overwatch/Heroic Intervention** stratagem, you can use this ability. If you do, that use of …"
+        }
+      ]
+    },
+    {
+      "faction": "leagues-of-votann",
+      "id": "delvewerke-navigator-delve-assault-shift",
+      "name": "Dêlvewerke Navigator",
+      "detachment": "delve-assault-shift",
+      "cost": 25,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "d-lvwerke-navigator",
+          "name": "Dêlvwerke Navigator",
+          "score": 0.67,
+          "text": "In the Reinforcements step of your Movement phase, the bearer can use this Enhancement. If it does, select one friendly Cthonian Beserks unit visible to the …"
+        },
+        {
+          "ability_id": "blades-of-the-emperor",
+          "name": "Blades of the Emperor",
+          "score": 0.0,
+          "text": "Each time this unit makes a Charge move, until the end of the turn, melee weapons equipped by models in this unit have the **[LETHAL HITS]** ability."
+        },
+        {
+          "ability_id": "predictive-guidance",
+          "name": "Predictive Guidance",
+          "score": 0.0,
+          "text": "Once per battle round, when you target this unit with the **Fire Overwatch/Heroic Intervention** stratagem, you can use this ability. If you do, that use of …"
+        }
+      ]
+    },
+    {
+      "faction": "leagues-of-votann",
+      "id": "indomitable-exemplar-bane-slayers-bulwark",
+      "name": "Indomitable Exemplar",
+      "detachment": "bane-slayers-bulwark",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "exemplars-of-the-order",
+          "name": "Exemplars of the Order",
+          "score": 0.5,
+          "text": "This unit can perform 1 additional Act of Faith per phase."
+        },
+        {
+          "ability_id": "exemplar-of-the-einhyr",
+          "name": "Exemplar of the Einhyr",
+          "score": 0.5,
+          "text": "While this model is leading a unit, add 1 to Advance and Charge rolls made for that unit."
+        },
+        {
+          "ability_id": "indomitable-defiance",
+          "name": "Indomitable Defiance",
+          "score": 0.5,
+          "text": "While this unit is within Engagement Range of any enemy **Monster** or **Vehicle** models, it automatically passes Battle-shock and Leadership tests."
+        }
+      ]
+    },
+    {
+      "faction": "leagues-of-votann",
+      "id": "optimised-attack-lines-upgrade-armoured-trailblazers",
+      "name": "Optimised Attack Lines (Upgrade)",
+      "detachment": "armoured-trailblazers",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "optimised-aggressors",
+          "name": "Optimised Aggressors",
+          "score": 0.33,
+          "text": "You can re-roll Advance and Charge rolls made for this unit."
+        },
+        {
+          "ability_id": "extra-attacks",
+          "name": "Extra Attacks",
+          "score": 0.33,
+          "text": "Each time a unit containing one or more models with an **[EXTRA ATTACKS]** weapon fights, those models will make attacks with those weapons in addition to an…"
+        },
+        {
+          "ability_id": "hamstringing-attacks",
+          "name": "Hamstringing Attacks",
+          "score": 0.33,
+          "text": "In your Shooting phase, each time this unit is selected to shoot, after resolving its attacks, select one **Monster** or **Vehicle** unit that lost one or mo…"
+        }
+      ]
+    },
+    {
+      "faction": "leagues-of-votann",
+      "id": "pan-spectral-lockons-upgrade-farseekers",
+      "name": "Pan-spectral Lockons (Upgrade)",
+      "detachment": "farseekers",
+      "cost": 10,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "pan-spectral-scanning",
+          "name": "Pan-spectral Scanning",
+          "score": 0.57,
+          "text": "Each time a model in this unit makes a ranged attack, re-roll a Hit roll of 1."
+        },
+        {
+          "ability_id": "pan-spectral-scanner",
+          "name": "Pan-spectral scanner",
+          "score": 0.57,
+          "text": "Each time a model in the bearer's unit makes a ranged attack, re-roll a Hit roll of 1."
+        },
+        {
+          "ability_id": "spectral-disassembly-targeters",
+          "name": "Spectral Disassembly Targeters",
+          "score": 0.29,
+          "text": "Ranged weapons equipped by models in this unit have the **[IGNORES COVER]** ability."
+        }
+      ]
+    },
+    {
+      "faction": "leagues-of-votann",
+      "id": "saturation-rounds-upgrade-armoured-trailblazers",
+      "name": "Saturation Rounds (Upgrade)",
+      "detachment": "armoured-trailblazers",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "nemesis-rounds",
+          "name": "Nemesis Rounds",
+          "score": 0.4,
+          "text": "Grey Knights Terminator model only. Each time you target the bearer's unit with the Fire Overwatch Stratagem, hits are scored on unmodified Hit rolls of 5+ w…"
+        },
+        {
+          "ability_id": "wyrmtooth-rounds",
+          "name": "Wyrmtooth Rounds",
+          "score": 0.4,
+          "text": "**Kelermorph** model only. Once per battle, in your Shooting phase, after this unit has shot, select one enemy unit (excluding **Vehicles**) hit by one or mo…"
+        },
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.33,
+          "text": "**Mek** model only."
+        }
+      ]
+    },
+    {
+      "faction": "necrons",
+      "id": "enlivened-sentinels-upgrade-hand-of-the-dynasty",
+      "name": "Enlivened Sentinels (Upgrade)",
+      "detachment": "hand-of-the-dynasty",
+      "cost": 20,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "sentinel-construct",
+          "name": "Sentinel Construct",
+          "score": 0.4,
+          "text": "Each time you target this unit with the Fire Overwatch Stratagem, while resolving that Stratagem, hits are scored on unmodified Hit rolls of 5+."
+        },
+        {
+          "ability_id": "weapon-sentinels",
+          "name": "Weapon Sentinels",
+          "score": 0.4,
+          "text": "Each time a model in this unit makes a ranged attack that targets a unit within 12\", you can ignore any or all modifiers to the following: that attack’s Ball…"
+        },
+        {
+          "ability_id": "virtuous-sentinel-of-orthodoxy",
+          "name": "Virtuous - Sentinel of Orthodoxy",
+          "score": 0.33,
+          "text": "While this unit is not Battle-shocked, add 5 to its Objective Control characteristic."
+        }
+      ]
+    },
+    {
+      "faction": "necrons",
+      "id": "mask-of-the-nekrosor-cursed-legion",
+      "name": "Mask of the Nekrosor",
+      "detachment": "cursed-legion",
+      "cost": 20,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "shadowfall-masks",
+          "name": "Shadowfall Masks",
+          "score": 0.5,
+          "text": "**TROUPE** unit only. This unit has **Fights First**."
+        },
+        {
+          "ability_id": "mark-of-the-nekrosor",
+          "name": "Mark of the Nekrosor",
+          "score": 0.5,
+          "text": "Each time a model in the bearer’s unit makes an attack, add 1 to the Hit roll."
+        },
+        {
+          "ability_id": "mask-of-secrets",
+          "name": "Mask of Secrets",
+          "score": 0.5,
+          "text": "**Harlequins** model only. The bearer has the Twisted Phantasm (Aura) ability."
+        }
+      ]
+    },
+    {
+      "faction": "necrons",
+      "id": "metalline-might-amonhotekhs-guard",
+      "name": "Metalline Might",
+      "detachment": "amonhotekhs-guard",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "morbid-might",
+          "name": "Morbid Might",
+          "score": 0.5,
+          "text": "Succubus model only. Each time the bearer makes a melee attack, you can re-roll the Wound roll."
+        },
+        {
+          "ability_id": "elevated-might",
+          "name": "Elevated Might",
+          "score": 0.5,
+          "text": "**WINGED TYRANID PRIME/TYRANID PRIME WITH LASH WHIP** model only. This model’s melee attacks:"
+        },
+        {
+          "ability_id": "arcane-might",
+          "name": "Arcane Might",
+          "score": 0.5,
+          "text": "Add 1 to the Strength characteristic of Psychic weapons equipped by models in the bearer’s unit. While the bearer’s unit is wholly within your army’s Flow of…"
+        }
+      ]
+    },
+    {
+      "faction": "necrons",
+      "id": "mortality-shroud-aura-the-phaerons-armoury",
+      "name": "Mortality Shroud (aura)",
+      "detachment": "the-phaerons-armoury",
+      "cost": 10,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "droning-shroud-aura",
+          "name": "Droning Shroud (Aura)",
+          "score": 0.67,
+          "text": "LEGIONES DAEMONICA NURGLE MONSTER model only. While a friendly LEGIONES DAEMONICA NURGLE unit is within 6\" of the bearer, that unit can only be targeted by a…"
+        },
+        {
+          "ability_id": "nightmare-shroud-aura",
+          "name": "Nightmare Shroud (Aura)",
+          "score": 0.67,
+          "text": "In the Battle-shock step of your opponent's Command phase, if an enemy unit that is below its Starting Strength is within 6\" of this model, that enemy unit m…"
+        },
+        {
+          "ability_id": "blinding-aura",
+          "name": "Blinding Aura",
+          "score": 0.4,
+          "text": "Grey Knights model only. Each time the bearer's unit is set up using the Deep Strike ability, until the end of the turn, enemy units cannot use the Fire Over…"
+        }
+      ]
+    },
+    {
+      "faction": "necrons",
+      "id": "recursive-reanimation-upgrade-skyshroud-spearhead",
+      "name": "Recursive Reanimation (Upgrade)",
+      "detachment": "skyshroud-spearhead",
+      "cost": 5,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "rites-of-reanimation",
+          "name": "Rites of Reanimation",
+          "score": 0.4,
+          "text": "While this model is leading a unit, models in that unit have the Feel No Pain 5+ ability."
+        },
+        {
+          "ability_id": "reanimation-protocols",
+          "name": "Reanimation Protocols",
+          "score": 0.4,
+          "text": "If your Army Faction is NECRONS, at the end of your Command phase, each friendly unit with this ability that is on the battlefield activates its Reanimation …"
+        },
+        {
+          "ability_id": "rapid-reanimation",
+          "name": "Rapid Reanimation",
+          "score": 0.4,
+          "text": "Once per battle round, you can re-roll the roll for one unit in your Crusade army's Reanimation Protocols ability."
+        }
+      ]
+    },
+    {
+      "faction": "necrons",
+      "id": "tools-of-dominion-upgrade-hand-of-the-dynasty",
+      "name": "Tools of Dominion (Upgrade)",
+      "detachment": "hand-of-the-dynasty",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "hate-filled-dominion",
+          "name": "Hate-filled Dominion",
+          "score": 0.33,
+          "text": "This unit can re-roll rolls to determine the **A** of a weapon."
+        },
+        {
+          "ability_id": "glowy-gizmo-upgrade",
+          "name": "Glowy Gizmo Upgrade",
+          "score": 0.33,
+          "text": "**Mek** model only."
+        },
+        {
+          "ability_id": "hatreds-disciples",
+          "name": "Hatred's Disciples",
+          "score": 0.0,
+          "text": "Each time this unit ends a Charge move, select one enemy unit within Engagement Range of it, then roll one D6 for each model in this unit that is within Enga…"
+        }
+      ]
+    },
+    {
+      "faction": "necrons",
+      "id": "unblemished-legions-amonhotekhs-guard",
+      "name": "Unblemished Legions",
+      "detachment": "amonhotekhs-guard",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "endless-legions",
+          "name": "Endless Legions",
+          "score": 0.5,
+          "text": "At the end of the battle of the battle, if this model is part of your Crusade army and it gained 3 or more XP (excluding XP gained from Marked for Greatness)…"
+        },
+        {
+          "ability_id": "weapons-of-the-first-legion",
+          "name": "Weapons of the First Legion",
+          "score": 0.4,
+          "text": "**Adeptus Astartes** model only. Add 1 to the Attacks, Strength and Damage characteristics of the bearer’s melee weapons. While the bearer is Battle-shocked,…"
+        },
+        {
+          "ability_id": "their-number-is-legion",
+          "name": "Their Number is Legion",
+          "score": 0.33,
+          "text": "Each time this unit’s Reanimation Protocols activate, you can re-roll the dice to see how many wounds are regenerated."
+        }
+      ]
+    },
+    {
+      "faction": "orks",
+      "id": "gob-boomer-taktikal-brigade",
+      "name": "Gob Boomer",
+      "detachment": "taktikal-brigade",
+      "cost": 10,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "big-gob",
+          "name": "Big Gob",
+          "score": 0.5,
+          "text": "**Infantry Warboss** model only. At the start of the Fight phase, select one enemy unit within Engagement range of the bearer. That unit must take a Battle-s…"
+        },
+        {
+          "ability_id": "death-companion",
+          "name": "Death Companion",
+          "score": 0.0,
+          "text": "**Infantry** only. This model gains the Feel No Pain 6+ ability and unless it's unit is within 12\" of one or more friendly **Chaplain** models, it cannot be …"
+        },
+        {
+          "ability_id": "da-jump-psychic",
+          "name": "Da Jump (Psychic)",
+          "score": 0.0,
+          "text": "Once per turn, at the end of your Movement phase, one WEIRDBOY from your army can use this ability. If it does, roll one D6: on a 1, that WEIRDBOY’s unit suf…"
+        }
+      ]
+    },
+    {
+      "faction": "orks",
+      "id": "mek-kaptin-taktikal-brigade",
+      "name": "Mek Kaptin",
+      "detachment": "taktikal-brigade",
+      "cost": 45,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "boss-mek",
+          "name": "Boss Mek",
+          "score": 0.5,
+          "text": "At the end of the battle, if this model part of your Crusade army and is not destroyed, you can ignore one failed Out of Action test taken for an ORKS VEHICL…"
+        },
+        {
+          "ability_id": "da-kaptin",
+          "name": "Da Kaptin",
+          "score": 0.5,
+          "text": "**Warboss** model only. Once per battle round, at the start of any phase, you can select one friendly **Orks** unit that is Battle-shocked and within 12\" of …"
+        },
+        {
+          "ability_id": "death-companion",
+          "name": "Death Companion",
+          "score": 0.0,
+          "text": "**Infantry** only. This model gains the Feel No Pain 6+ ability and unless it's unit is within 12\" of one or more friendly **Chaplain** models, it cannot be …"
+        }
+      ]
+    },
+    {
+      "faction": "orks",
+      "id": "rallying-war-cry-ardmob",
+      "name": "Rallying War Cry",
+      "detachment": "ardmob",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "icon-of-war",
+          "name": "Icon of War",
+          "score": 0.4,
+          "text": "While a friendly Blood Legions unit is within 6\" of the bearer, that unit has the Blessings of Khorne ability. If the Might of Khorne ability is active for y…"
+        },
+        {
+          "ability_id": "war-beasts",
+          "name": "War Beasts",
+          "score": 0.4,
+          "text": "Add 1 to Advance and Charge rolls made for this unit."
+        },
+        {
+          "ability_id": "architect-of-war",
+          "name": "Architect of War",
+          "score": 0.4,
+          "text": "Adeptus Astartes model only. While the bearer is leading a unit, ranged weapons equipped by models in that unit have the [IGNORES COVER] ability."
+        }
+      ]
+    },
+    {
+      "faction": "orks",
+      "id": "skwad-leader-taktikal-brigade",
+      "name": "Skwad Leader",
+      "detachment": "taktikal-brigade",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "leader",
+          "name": "Leader",
+          "score": 0.67,
+          "text": "This model can be attached to the following unit:"
+        },
+        {
+          "ability_id": "raid-leader",
+          "name": "Raid Leader",
+          "score": 0.5,
+          "text": "Each time the bearer’s unit is set up after disembarking from a Transport that has made a Normal move this turn, the bearer’s unit is still eligible to decla…"
+        },
+        {
+          "ability_id": "natural-leader",
+          "name": "Natural Leader",
+          "score": 0.5,
+          "text": "Each time you take a Battle-shock or Leadership test for this unit, you can re-roll that test."
+        }
+      ]
+    },
+    {
+      "faction": "orks",
+      "id": "targetin-squigs-more-dakka",
+      "name": "Targetin’ Squigs",
+      "detachment": "more-dakka",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "targetin-gizmos",
+          "name": "Targetin' Gizmos",
+          "score": 0.5,
+          "text": "**WAGON** unit only. While a **BIG MEK** model is embarked within this unit:"
+        },
+        {
+          "ability_id": "buzzer-squigs",
+          "name": "Buzzer Squigs",
+          "score": 0.5,
+          "text": "In your Shooting phase, after this model has shot, select one enemy unit (excluding MONSTERS and VEHICLES) hit by one or more of those attacks made with squi…"
+        },
+        {
+          "ability_id": "squig-mine",
+          "name": "Squig Mine",
+          "score": 0.5,
+          "text": "Once per battle, at the start of any phase, select one enemy unit within 3\" of this model and roll one D6: on a 4+, that enemy unit suffers D6 mortal wounds."
+        }
+      ]
+    },
+    {
+      "faction": "orks",
+      "id": "zog-off-and-eat-dakka-more-dakka",
+      "name": "Zog Off and Eat Dakka!",
+      "detachment": "more-dakka",
+      "cost": 10,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "dakka-dakka-dakka",
+          "name": "Dakka! Dakka! Dakka!",
+          "score": 0.4,
+          "text": "Friendly **ORKS INFANTRY** units’ ranged attacks have **[ASSAULT]**."
+        },
+        {
+          "ability_id": "rivetin-dakka",
+          "name": "Rivetin’ Dakka",
+          "score": 0.33,
+          "text": "In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks made with a rivet kannon. Until the start of you…"
+        },
+        {
+          "ability_id": "more-dakka",
+          "name": "More Dakka",
+          "score": 0.33,
+          "text": "While this model is leading a unit, each time a model in that unit makes a ranged attack, re-roll a Hit roll of 1."
+        }
+      ]
+    },
+    {
+      "faction": "raven-guard",
+      "id": "unparalleled-tactician-shadowmark-talon",
+      "name": "Unparalleled Tactician",
+      "detachment": "shadowmark-talon",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "accomplished-tactician",
+          "name": "Accomplished Tactician",
+          "score": 0.5,
+          "text": "Once per turn, in your opponent's Shooting phase, just after an enemy unit has shot, you can select one friendly Emperor's Children unit within 9\" of the bea…"
+        },
+        {
+          "ability_id": "perceptive-tacticians",
+          "name": "Perceptive Tacticians",
+          "score": 0.5,
+          "text": "Each time you select this unit as the target of a Stratagem, roll one D6: on a 5+, you gain 1CP."
+        },
+        {
+          "ability_id": "accomplished-tactician",
+          "name": "Accomplished Tactician",
+          "score": 0.5,
+          "text": "Once per turn, in your opponent's Shooting phase, just after an enemy unit has shot, you can select one friendly Emperor's Children unit within 9\" of the bea…"
+        }
+      ]
+    },
+    {
+      "faction": "space-wolves",
+      "id": "aggressive-response-askars-wolfpack",
+      "name": "Aggressive Response",
+      "detachment": "askars-wolfpack",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "aggressive-deployment",
+          "name": "Aggressive Deployment",
+          "score": 0.5,
+          "text": "In the Declare Battle Formations step, if the bearer starts the battle embarked within a Dedicated Transport, that Dedicated Transport has the Scouts 9\" abil…"
+        },
+        {
+          "ability_id": "aggressive-hunter",
+          "name": "Aggressive Hunter",
+          "score": 0.5,
+          "text": "Once per battle, in your opponent’s Shooting phase, after an enemy unit has finished making its attacks, if this model’s unit was targeted by one or more of …"
+        },
+        {
+          "ability_id": "aggressive-strain",
+          "name": "Aggressive Strain",
+          "score": 0.5,
+          "text": "Each time this unit Piles In or Consolidates, models in this unit can move an additional 2\"."
+        }
+      ]
+    },
+    {
+      "faction": "space-wolves",
+      "id": "fierce-example-upgrade-legends-of-saga-and-song",
+      "name": "Fierce Example (Upgrade)",
+      "detachment": "legends-of-saga-and-song",
+      "cost": 25,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "the-fierce-eye",
+          "name": "The Fierce Eye",
+          "score": 0.4,
+          "text": "In your Shooting phase, you can select one enemy INFANTRY unit within 12\" of and visible to this model. That enemy unit must take a Battle-shock test."
+        },
+        {
+          "ability_id": "steadfast-example",
+          "name": "Steadfast Example",
+          "score": 0.4,
+          "text": "Once per battle, at the start of your Command phase, this model can use this ability. If it does, until the end of the turn, this model has the following abi…"
+        },
+        {
+          "ability_id": "saintly-example",
+          "name": "Saintly Example",
+          "score": 0.4,
+          "text": "ADEPTA SORORITAS model only. When the bearer is destroyed, you gain an additional D3 Miracle dice."
+        }
+      ]
+    },
+    {
+      "faction": "space-wolves",
+      "id": "howling-onslaught-saga-of-the-great-wolf",
+      "name": "Howling Onslaught",
+      "detachment": "saga-of-the-great-wolf",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "mindless-onslaught",
+          "name": "Mindless Onslaught",
+          "score": 0.5,
+          "text": "This unit is eligible to shoot and declare a charge in a turn in which it Fell Back."
+        },
+        {
+          "ability_id": "thundering-onslaught",
+          "name": "Thundering Onslaught",
+          "score": 0.5,
+          "text": "Add 1 to Advance and Charge rolls made for this unit."
+        },
+        {
+          "ability_id": "vengeful-onslaught",
+          "name": "Vengeful Onslaught",
+          "score": 0.5,
+          "text": "Death Company model only. If the bearer is destroyed, until the end of your next turn, each time a friendly Death Company model make an attack, add 1 to the …"
+        }
+      ]
+    },
+    {
+      "faction": "space-wolves",
+      "id": "lone-hunter-askars-wolfpack",
+      "name": "Lone Hunter",
+      "detachment": "askars-wolfpack",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "patient-hunter",
+          "name": "Patient Hunter",
+          "score": 0.5,
+          "text": "During the third, fourth and fifth battle rounds, ranged weapons equipped by **T’AU EMPIRE** models from your army have the **[SUSTAINED HITS 1]** ability. D…"
+        },
+        {
+          "ability_id": "speed-of-the-hunter",
+          "name": "Speed of the Hunter",
+          "score": 0.5,
+          "text": "Add 1 to Advance and Charge rolls made for this model’s unit."
+        },
+        {
+          "ability_id": "aggressive-hunter",
+          "name": "Aggressive Hunter",
+          "score": 0.5,
+          "text": "Once per battle, in your opponent’s Shooting phase, after an enemy unit has finished making its attacks, if this model’s unit was targeted by one or more of …"
+        }
+      ]
+    },
+    {
+      "faction": "space-wolves",
+      "id": "weaver-of-sagas-veterans-of-the-fang",
+      "name": "Weaver of Sagas",
+      "detachment": "veterans-of-the-fang",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "weavers-wail",
+          "name": "Weavers' Wail",
+          "score": 0.5,
+          "text": "Troupe Master model only. Add 3 to the Strength and add 1 to the Attacks characteristics of the bearer’s melee weapons."
+        },
+        {
+          "ability_id": "weavers-wail",
+          "name": "Weavers' Wail",
+          "score": 0.5,
+          "text": "Troupe Master model only. Add 3 to the Strength and add 1 to the Attacks characteristics of the bearer’s melee weapons."
+        },
+        {
+          "ability_id": "metalodermal-tesla-weave",
+          "name": "Metalodermal Tesla Weave",
+          "score": 0.0,
+          "text": "CRYPTEK model only. Once per phase, when an enemy unit selects the bearer's unit as a target of a charge, roll one D6: on a 2-5, that enemy unit suffers D3 m…"
+        }
+      ]
+    },
+    {
+      "faction": "tau-empire",
+      "id": "earth-caste-modifications-sudden-dawn-cadre",
+      "name": "Earth Caste Modifications",
+      "detachment": "sudden-dawn-cadre",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "field-modifications",
+          "name": "Field Modifications",
+          "score": 0.4,
+          "text": "Add 6\" to the Range characteristic of ranged weapons equipped by models in this unit."
+        },
+        {
+          "ability_id": "air-caste-colossus",
+          "name": "Air Caste Colossus",
+          "score": 0.33,
+          "text": "Each time you target this model with a Stratagem, you must spend three times that Stratagem’s stated CP cost to do so."
+        },
+        {
+          "ability_id": "pack-of-one",
+          "name": "Pack of One",
+          "score": 0.0,
+          "text": "- This model has the Infiltrators and Scouts 6\" abilities."
+        }
+      ]
+    },
+    {
+      "faction": "tau-empire",
+      "id": "fanatical-convert-auxiliary-cadre",
+      "name": "Fanatical Convert",
+      "detachment": "auxiliary-cadre",
+      "cost": 10,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "pack-of-one",
+          "name": "Pack of One",
+          "score": 0.0,
+          "text": "- This model has the Infiltrators and Scouts 6\" abilities."
+        },
+        {
+          "ability_id": "hover",
+          "name": "Hover",
+          "score": 0.0,
+          "text": "Each time this unit **takes to the skies** (21.03), do not subtract 2\" from the **maximum distance**."
+        },
+        {
+          "ability_id": "aggressive-deployment",
+          "name": "Aggressive Deployment",
+          "score": 0.0,
+          "text": "In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks. Until the end of the phase, each time a friendl…"
+        }
+      ]
+    },
+    {
+      "faction": "tau-empire",
+      "id": "fusion-blades-experimental-prototype-cadre",
+      "name": "Fusion Blades",
+      "detachment": "experimental-prototype-cadre",
+      "cost": 25,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "bloodstep-blade",
+          "name": "Bloodstep Blade",
+          "score": 0.5,
+          "text": "Each time the bearer's unit destroys one or more units in the Fight phase, if there are no enemy units within 3\" of the bearer's unit at the Consolidate step…"
+        },
+        {
+          "ability_id": "blade-of-the-dynast",
+          "name": "Blade of the Dynast",
+          "score": 0.5,
+          "text": "Improve the Strength, Damage and Armour Penetration characteristics of the bearer's melee weapons by 1. Once per battle, in your Charge phase, if your Crusad…"
+        },
+        {
+          "ability_id": "blades-of-valour",
+          "name": "Blades of Valour",
+          "score": 0.5,
+          "text": "Adeptus Astartes model only. Improve the Armour Penetration characteristic of melee weapons equipped by the bearer and Battleline models in the bearer’s unit…"
+        }
+      ]
+    },
+    {
+      "faction": "tau-empire",
+      "id": "proximity-scanners-sudden-dawn-cadre",
+      "name": "Proximity Scanners",
+      "detachment": "sudden-dawn-cadre",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "pack-of-one",
+          "name": "Pack of One",
+          "score": 0.0,
+          "text": "- This model has the Infiltrators and Scouts 6\" abilities."
+        },
+        {
+          "ability_id": "hover",
+          "name": "Hover",
+          "score": 0.0,
+          "text": "Each time this unit **takes to the skies** (21.03), do not subtract 2\" from the **maximum distance**."
+        },
+        {
+          "ability_id": "aggressive-deployment",
+          "name": "Aggressive Deployment",
+          "score": 0.0,
+          "text": "In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks. Until the end of the phase, each time a friendl…"
+        }
+      ]
+    },
+    {
+      "faction": "tau-empire",
+      "id": "transponder-lock-module-auxiliary-cadre",
+      "name": "Transponder Lock Module",
+      "detachment": "auxiliary-cadre",
+      "cost": 25,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "astartes-teleportation-transponder",
+          "name": "Astartes Teleportation Transponder",
+          "score": 0.33,
+          "text": "During the Declare Battle Formations step, if this model is attached a unit, until the end of the battle, that unit has the Deep Strike ability."
+        },
+        {
+          "ability_id": "pack-of-one",
+          "name": "Pack of One",
+          "score": 0.0,
+          "text": "- This model has the Infiltrators and Scouts 6\" abilities."
+        },
+        {
+          "ability_id": "aggressive-deployment",
+          "name": "Aggressive Deployment",
+          "score": 0.0,
+          "text": "In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks. Until the end of the phase, each time a friendl…"
+        }
+      ]
+    },
+    {
+      "faction": "thousand-sons",
+      "id": "diabolic-savant-changehost-of-deceit",
+      "name": "Diabolic Savant",
+      "detachment": "changehost-of-deceit",
+      "cost": 20,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "strategic-savant",
+          "name": "Strategic Savant",
+          "score": 0.5,
+          "text": "Autarch or Autarch Wayleaper model only. While the bearer is leading an Aspect Warriors unit, add 1 to the Objective Control characteristic of models in that…"
+        },
+        {
+          "ability_id": "diabolic-servant",
+          "name": "Diabolic Servant",
+          "score": 0.5,
+          "text": "While the bearer is within 6\" of one or more friendly Scintillating Legion units, each time the bearer Channels the Warp, add 1 to the Psychic test result."
+        },
+        {
+          "ability_id": "machine-savant",
+          "name": "Machine Savant",
+          "score": 0.5,
+          "text": "At the end of the battle, if this unit was part of your Crusade army and was not destroyed during the battle, you can ignore one failed Out of Action test ta…"
+        }
+      ]
+    },
+    {
+      "faction": "thousand-sons",
+      "id": "foresight-of-the-changer-prism-of-zadophon",
+      "name": "Foresight of the Changer",
+      "detachment": "prism-of-zadophon",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "prognosticars-foresight",
+          "name": "Prognosticars' Foresight",
+          "score": 0.5,
+          "text": "This model has the Scouts 6\" ability."
+        },
+        {
+          "ability_id": "gift-of-foresight",
+          "name": "Gift of Foresight",
+          "score": 0.5,
+          "text": "Adeptus Astartes model only. Once per battle round, just after making a Hit roll, a Wound roll or a saving throw for the bearer, you can treat the result as …"
+        },
+        {
+          "ability_id": "warped-foresight",
+          "name": "Warped Foresight",
+          "score": 0.5,
+          "text": "While the bearer is leading a unit with the Scouts 6” ability, every model in the bearer’s unit has the Scouts 6” ability."
+        }
+      ]
+    },
+    {
+      "faction": "thousand-sons",
+      "id": "incandaeum-grand-coven",
+      "name": "Incandaeum",
+      "detachment": "grand-coven",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "t-nnhausers-bones",
+          "name": "Tännhauser's Bones",
+          "score": 0.0,
+          "text": "Each time an attack is allocated to the bearer, change the Damage characteristic of that attack to 1."
+        },
+        {
+          "ability_id": "terrifying-assault",
+          "name": "Terrifying Assault",
+          "score": 0.0,
+          "text": "In your Shooting phase and the Fight phase, after this model has shot, select one enemy unit hit by one or more of those attacks. That unit must take a Battl…"
+        },
+        {
+          "ability_id": "mutating-vortex-aura",
+          "name": "Mutating Vortex (Aura)",
+          "score": 0.0,
+          "text": "At the end of your Movement phase, roll one D6 for each enemy unit within 6\" of this model: on a 2-3, that unit suffers 1 mortal wound; on a 4-5, that unit s…"
+        }
+      ]
+    },
+    {
+      "faction": "thousand-sons",
+      "id": "warp-tainted-shells-prism-of-zadophon",
+      "name": "Warp-tainted Shells",
+      "detachment": "prism-of-zadophon",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "warp-strength",
+          "name": "Warp Strength",
+          "score": 0.4,
+          "text": "Improve the Strength characteristic of melee weapons equipped by this model by 2. If this model destroys one or more **Monster** models and/or one or more **…"
+        },
+        {
+          "ability_id": "warp-rifts",
+          "name": "Warp Rifts",
+          "score": 0.4,
+          "text": "Each time a LEGIONES DAEMONICA unit from your army is set up on the battlefield using the Deep Strike ability, if it is set up wholly within your army’s Shad…"
+        },
+        {
+          "ability_id": "warp-hunters",
+          "name": "Warp Hunters",
+          "score": 0.4,
+          "text": "Each time a model in this unit makes an attack that targets the closest eligible target, you can re-roll a Wound roll of 1. If the target of that is an **Unb…"
+        }
+      ]
+    },
+    {
+      "faction": "tyranids",
+      "id": "adapted-organism-the-vardenghast-swarm",
+      "name": "Adapted Organism",
+      "detachment": "the-vardenghast-swarm",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "perfectly-adapted",
+          "name": "Perfectly Adapted",
+          "score": 0.5,
+          "text": "**Tyranids** model only. Once per turn, you can re-roll one Hit roll, one Wound roll, one Damage roll, one Advance roll, one Charge roll or one saving throw …"
+        },
+        {
+          "ability_id": "hunter-organism",
+          "name": "Hunter Organism",
+          "score": 0.5,
+          "text": "This model cannot be your Warlord"
+        },
+        {
+          "ability_id": "resilient-organism",
+          "name": "Resilient Organism",
+          "score": 0.5,
+          "text": "Once per battle, when an attack is allocated to this model, you can change the Damage characteristic of that attack to 0."
+        }
+      ]
+    },
+    {
+      "faction": "tyranids",
+      "id": "instinctive-defence-assimilation-swarm",
+      "name": "Instinctive Defence",
+      "detachment": "assimilation-swarm",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "timed-defence",
+          "name": "Timed Defence",
+          "score": 0.5,
+          "text": "Once per battle, when a ranged attack is allocated to this model, change the Damage characteristic of that attack to 0."
+        },
+        {
+          "ability_id": "hive-defences",
+          "name": "Hive Defences",
+          "score": 0.5,
+          "text": "You can target this model with the Fire Overwatch stratagem for 0CP, and can do so even if you have already targeted a different unit with that stratagem thi…"
+        },
+        {
+          "ability_id": "hardened-defences",
+          "name": "Hardened Defences",
+          "score": 0.5,
+          "text": "Models in this unit have the Feel No Pain 6+ ability."
+        }
+      ]
+    },
+    {
+      "faction": "tyranids",
+      "id": "naturalised-camouflage-unending-swarm",
+      "name": "Naturalised Camouflage",
+      "detachment": "unending-swarm",
+      "cost": 30,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "masters-of-camouflage",
+          "name": "Masters of Camouflage",
+          "score": 0.5,
+          "text": "**ASTRA MILITARUM WALKER** and **REGIMENT** units from your army have the Benefit of Cover. While such a unit has the Benefit of Cover for any other reason, …"
+        },
+        {
+          "ability_id": "adaptive-camouflage",
+          "name": "Adaptive Camouflage",
+          "score": 0.5,
+          "text": "This unit has the Stealth ability and if this unit is in Strategic Reserves, it counts the battle round number as one higher than the current battle round nu…"
+        },
+        {
+          "ability_id": "naturalised-camoflage",
+          "name": "Naturalised Camoflage",
+          "score": 0.5,
+          "text": "**Tyranids** model only. At the start of the first battle round, select up to three friendly **Endless Multitude** units within 9\" of the bearer. Until the e…"
+        }
+      ]
+    },
+    {
+      "faction": "tyranids",
+      "id": "psychoclastic-overload-the-vardenghast-swarm",
+      "name": "Psychoclastic Overload",
+      "detachment": "the-vardenghast-swarm",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "death-on-dark-wings",
+          "name": "Death On Dark Wings",
+          "score": 0.0,
+          "text": "Each time a ranged attack targets this unit, if this unit Advanced in your previous Movement phase, subtract 1 from the Hit roll."
+        },
+        {
+          "ability_id": "subterranean-tunnels",
+          "name": "Subterranean Tunnels",
+          "score": 0.0,
+          "text": "In your Movement phase, when this model is set up on the battlefield using the Deep Strike ability, it can use a subterranean tunnel. If it does, this model …"
+        },
+        {
+          "ability_id": "terror-from-the-deep",
+          "name": "Terror from the Deep",
+          "score": 0.0,
+          "text": "Each time this unit is set up on the battlefield using the Deep Strike ability, roll one D6 for each enemy unit within 12\" of this model: on a 2-4, that unit…"
+        }
+      ]
+    },
+    {
+      "faction": "tyranids",
+      "id": "psychostatic-disruption-synaptic-nexus",
+      "name": "Psychostatic Disruption",
+      "detachment": "synaptic-nexus",
+      "cost": 30,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "psychostatic-disruption-aura",
+          "name": "Psychostatic Disruption (Aura)",
+          "score": 0.8,
+          "text": "**Tyranids Synapse** model only. Enemy units that arrive on the battlefield from Reserves cannot be set up with 12\" of the bearer. In addition, once per batt…"
+        },
+        {
+          "ability_id": "neural-disruption",
+          "name": "Neural Disruption",
+          "score": 0.5,
+          "text": "In your Command phase, select one enemy unit within 12\" of this model. That unit must take a Battle-shock test"
+        },
+        {
+          "ability_id": "disruption-bombardment",
+          "name": "Disruption Bombardment",
+          "score": 0.5,
+          "text": "In your Shooting phase, after this unit has shot, select one enemy INFANTRY unit hit by one or more of those attacks. Until the end of your opponent’s next t…"
+        }
+      ]
+    },
+    {
+      "faction": "tyranids",
+      "id": "sensory-assimilation-warrior-bioform-onslaught",
+      "name": "Sensory Assimilation",
+      "detachment": "warrior-bioform-onslaught",
+      "cost": 20,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "death-on-dark-wings",
+          "name": "Death On Dark Wings",
+          "score": 0.0,
+          "text": "Each time a ranged attack targets this unit, if this unit Advanced in your previous Movement phase, subtract 1 from the Hit roll."
+        },
+        {
+          "ability_id": "subterranean-tunnels",
+          "name": "Subterranean Tunnels",
+          "score": 0.0,
+          "text": "In your Movement phase, when this model is set up on the battlefield using the Deep Strike ability, it can use a subterranean tunnel. If it does, this model …"
+        },
+        {
+          "ability_id": "terror-from-the-deep",
+          "name": "Terror from the Deep",
+          "score": 0.0,
+          "text": "Each time this unit is set up on the battlefield using the Deep Strike ability, roll one D6 for each enemy unit within 12\" of this model: on a 2-4, that unit…"
+        }
+      ]
+    },
+    {
+      "faction": "tyranids",
+      "id": "synaptic-lynchpin-invasion-fleet",
+      "name": "Synaptic Lynchpin",
+      "detachment": "invasion-fleet",
+      "cost": 20,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "synaptic-impetus",
+          "name": "Synaptic Impetus",
+          "score": 0.5,
+          "text": "Each time this model makes an attack, add 1 to the Hit roll if this model is leading a unit of 5 or more models, and 1 to the Wound roll as well if this mode…"
+        },
+        {
+          "ability_id": "synaptic-linchpin",
+          "name": "Synaptic Linchpin",
+          "score": 0.5,
+          "text": "**Tyranids** model only. While a friendly **Tyranids** unit is within 9\" of the bearer, that unit is within Synapse Range of your army."
+        },
+        {
+          "ability_id": "synaptic-control",
+          "name": "Synaptic Control",
+          "score": 0.5,
+          "text": "**Tyranids Synapse** model only. Each time an attack is allocated to the bearer, subtract 1 from the Damage characteristic of the attack."
+        }
+      ]
+    },
+    {
+      "faction": "tyranids",
+      "id": "synaptic-tyrant-warrior-bioform-onslaught",
+      "name": "Synaptic Tyrant",
+      "detachment": "warrior-bioform-onslaught",
+      "cost": 10,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "voice-of-the-tyrant",
+          "name": "Voice of the Tyrant",
+          "score": 0.5,
+          "text": "The bearer’s unit has both abilities from the Tyrannical Motivation Detachment rule."
+        },
+        {
+          "ability_id": "synaptic-linchpin",
+          "name": "Synaptic Linchpin",
+          "score": 0.5,
+          "text": "**Tyranids** model only. While a friendly **Tyranids** unit is within 9\" of the bearer, that unit is within Synapse Range of your army."
+        },
+        {
+          "ability_id": "synaptic-control",
+          "name": "Synaptic Control",
+          "score": 0.5,
+          "text": "**Tyranids Synapse** model only. Each time an attack is allocated to the bearer, subtract 1 from the Damage characteristic of the attack."
+        }
+      ]
+    },
+    {
+      "faction": "world-eaters",
+      "id": "bane-of-the-craven-frenzied-reavers",
+      "name": "Bane of the Craven",
+      "detachment": "frenzied-reavers",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "seers-bane",
+          "name": "Seer's Bane",
+          "score": 0.5,
+          "text": "Each time the bearer makes an attack with a Psychic melee weapon, improve the Strength, Armour Penetration and Damage characteristics of that attack by 1. Ea…"
+        },
+        {
+          "ability_id": "bane-of-cowards",
+          "name": "Bane of Cowards",
+          "score": 0.5,
+          "text": "Each time an enemy unit (excluding Monsters and Vehicles) within Engagement Range of one or more units from your army with this ability Falls Back, models in…"
+        },
+        {
+          "ability_id": "titans-bane",
+          "name": "Titan's Bane",
+          "score": 0.5,
+          "text": "Weapons equipped by models in this unit have the **[ANTI-MONSTER 4+]** and **[ANTI-VEHICLE 4+]** abilities."
+        }
+      ]
+    },
+    {
+      "faction": "world-eaters",
+      "id": "fearsome-presence-frenzied-reavers",
+      "name": "Fearsome Presence",
+      "detachment": "frenzied-reavers",
+      "cost": 0,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "guiding-presence",
+          "name": "Guiding Presence",
+          "score": 0.5,
+          "text": "**AELDARI PSYKER** model only. At the start of your Shooting phase, select one **visible** friendly **AELDARI VEHICLE** unit within 6\" of this model. That **…"
+        },
+        {
+          "ability_id": "wrathful-presence",
+          "name": "Wrathful Presence",
+          "score": 0.5,
+          "text": "At the start of the battle round, select one Wrathful Presence ability. Until the start of the next battle round, this model has that ability."
+        },
+        {
+          "ability_id": "totemic-presence",
+          "name": "Totemic Presence",
+          "score": 0.5,
+          "text": "Add 2 to the Objective Control characteristic of one model in this unit."
+        }
+      ]
+    },
+    {
+      "faction": "world-eaters",
+      "id": "gore-stained-veterans-upgrade-butchers-of-khorne",
+      "name": "Gore-stained Veterans (Upgrade)",
+      "detachment": "butchers-of-khorne",
+      "cost": 20,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "veteran-of-the-kataphraktoi",
+          "name": "Veteran of the Kataphraktoi",
+          "score": 0.33,
+          "text": "ADEPTUS CUSTODES INFANTRY or ADEPTUS CUSTODES MOUNTED model only. In your Command phase, select one ADEPTUS CUSTODES VEHICLE or ADEPTUS CUSTODES MOUNTED unit…"
+        },
+        {
+          "ability_id": "resolute-veterans",
+          "name": "Resolute Veterans",
+          "score": 0.33,
+          "text": "Each time you take a Battle-shock, Leadership or Desperate Escape test for this unit, add 1 to that test."
+        },
+        {
+          "ability_id": "gore-frenzy",
+          "name": "Gore Frenzy",
+          "score": 0.33,
+          "text": "At the start of the Fight phase, if this unit is below its Starting Strength, until the end of the phase, add 1 to the Attacks characteristic of melee weapon…"
+        }
+      ]
+    },
+    {
+      "faction": "world-eaters",
+      "id": "sanctified-in-slaughter-upgrade-butchers-of-khorne",
+      "name": "Sanctified in Slaughter (Upgrade)",
+      "detachment": "butchers-of-khorne",
+      "cost": 15,
+      "ability_id": null,
+      "suggestions": [
+        {
+          "ability_id": "sanctified-amulet",
+          "name": "Sanctified Amulet",
+          "score": 0.4,
+          "text": "ADEPTA SORORITAS model only. Enemy units that are set up on the battlefield from Reserves cannot be set up within 12\" of the bearer"
+        },
+        {
+          "ability_id": "direct-the-slaughter",
+          "name": "Direct the Slaughter",
+          "score": 0.4,
+          "text": "Once per battle round, one model from your army with this ability can use it when a friendly World Eaters unit within 12\" of this model is targeted with a St…"
+        },
+        {
+          "ability_id": "lord-of-slaughter",
+          "name": "Lord of Slaughter",
+          "score": 0.4,
+          "text": "Once per battle round, one unit from your army with this ability can be targeted with a Strategem for 0CP, even if a different unit from your army has alread…"
+        }
+      ]
+    }
+  ]
+}
