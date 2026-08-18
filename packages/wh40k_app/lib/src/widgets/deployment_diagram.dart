@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
@@ -76,6 +78,7 @@ class DeploymentDiagram extends StatelessWidget {
                   terrain: scheme.onSurfaceVariant,
                   objectiveFill: scheme.onSurface,
                   objectiveRing: scheme.surface,
+                  measure: scheme.primary,
                 ),
                 child: const SizedBox.expand(),
               ),
@@ -133,6 +136,13 @@ class _BoardPainter extends CustomPainter {
   final Color objectiveFill;
   final Color objectiveRing;
 
+  /// The measuring colour, used for nothing else on the board.
+  ///
+  /// A distance drawn in the terrain's own colour reads as part of the
+  /// terrain. These lines are the one thing on the diagram that is not a
+  /// physical object, so they say so.
+  final Color measure;
+
   _BoardPainter({
     required this.pattern,
     required this.iAmAttacker,
@@ -143,6 +153,7 @@ class _BoardPainter extends CustomPainter {
     required this.terrain,
     required this.objectiveFill,
     required this.objectiveRing,
+    required this.measure,
   });
 
   @override
@@ -292,34 +303,61 @@ class _BoardPainter extends CustomPainter {
               if (piece.isObjective) piece.position,
           ];
 
-    // A ruler along two edges, and each piece's centre in inches from the
-    // bottom-left corner. Setting a table out is done with a tape measure
-    // from a known corner, and a picture without numbers can only ever be
-    // "about there".
+    // A grid, and every piece's distance from the two edges you measure from.
+    //
+    // Setting a table out is done with a tape measure hooked over a corner, so
+    // the number that helps is the one you can actually pull: from the left
+    // edge to the piece's leftmost corner, and from the bottom edge to its
+    // lowest corner. A centre coordinate — what this used to print — is the
+    // one point on a piece you cannot put a tape on.
     if (measured) {
-      final grid = Paint()
-        ..color = outline.withValues(alpha: 0.18)
+      const step = 3.0;
+
+      // Every 3", labelled every 6". The fine lines are for counting across;
+      // a number on each of nineteen of them is unreadable at this size.
+      final minor = Paint()
+        ..color = outline.withValues(alpha: 0.10)
         ..strokeWidth = 0.5;
-      for (var x = 6.0; x < board.x; x += 6) {
-        canvas.drawLine(
-            Offset(x * scale, 0), Offset(x * scale, size.height), grid);
-        _tick(canvas, Offset(x * scale + 2, size.height - 11), '${x.toInt()}');
+      final major = Paint()
+        ..color = outline.withValues(alpha: 0.22)
+        ..strokeWidth = 0.5;
+
+      for (var x = step; x < board.x; x += step) {
+        final labelled = x % 6 == 0;
+        canvas.drawLine(Offset(x * scale, 0), Offset(x * scale, size.height),
+            labelled ? major : minor);
+        if (labelled) {
+          _tick(canvas, Offset(x * scale + 2, size.height - 11),
+              '${x.toInt()}');
+        }
       }
-      for (var y = 6.0; y < board.y; y += 6) {
+      for (var y = step; y < board.y; y += step) {
         final dy = size.height - y * scale;
-        canvas.drawLine(Offset(0, dy), Offset(size.width, dy), grid);
-        _tick(canvas, Offset(3, dy - 11), '${y.toInt()}');
+        final labelled = y % 6 == 0;
+        canvas.drawLine(
+            Offset(0, dy), Offset(size.width, dy), labelled ? major : minor);
+        if (labelled) _tick(canvas, Offset(3, dy - 11), '${y.toInt()}');
       }
 
       if (table != null) {
         for (final piece in table.pieces) {
-          final at = project(piece.position);
-          _tick(
-            canvas,
-            at.translate(4, 2),
-            '${piece.position.x.round()},${piece.position.y.round()}',
-            emphasis: true,
-          );
+          final points = piece.outline(templates);
+          if (points.isEmpty) continue;
+
+          // The corner the tape reaches first from each edge. Ties break
+          // towards the other axis so the leader line meets the piece at a
+          // corner rather than crossing it.
+          final leftmost = points.reduce((a, b) => b.x < a.x ||
+                  (b.x == a.x && b.y < a.y)
+              ? b
+              : a);
+          final lowest = points.reduce((a, b) =>
+              b.y < a.y || (b.y == a.y && b.x < a.x) ? b : a);
+
+          _leader(canvas, project(BoardPoint(0, leftmost.y)), project(leftmost),
+              leftmost.x);
+          _leader(canvas, project(BoardPoint(lowest.x, 0)), project(lowest),
+              lowest.y);
         }
       }
     }
@@ -341,17 +379,75 @@ class _BoardPainter extends CustomPainter {
 
   static int _fallback(bool attacker) => attacker ? 0xFFEF4444 : 0xFF3B82F6;
 
+  /// A distance from a board edge to a piece, with the number on the line.
+  ///
+  /// Dashed, so it reads as a measurement rather than as a wall — the board is
+  /// already full of solid lines, and a solid one from the edge to a ruin
+  /// looks like something you could walk into.
+  void _leader(Canvas canvas, Offset from, Offset to, double inches) {
+    if (inches < 0.5) return; // A piece against the edge needs no arrow.
+
+    final paint = Paint()
+      ..color = measure.withValues(alpha: 0.55)
+      ..strokeWidth = 0.9
+      ..strokeCap = StrokeCap.round;
+
+    final dx = to.dx - from.dx;
+    final dy = to.dy - from.dy;
+    final length = math.sqrt(dx * dx + dy * dy);
+    if (length <= 0) return;
+    final ux = dx / length;
+    final uy = dy / length;
+
+    const dash = 3.0;
+    const gap = 2.5;
+    for (var at = 0.0; at < length; at += dash + gap) {
+      final end = math.min(at + dash, length);
+      canvas.drawLine(
+        Offset(from.dx + ux * at, from.dy + uy * at),
+        Offset(from.dx + ux * end, from.dy + uy * end),
+        paint,
+      );
+    }
+
+    // A stop at the edge end, so the line is visibly measured *from* there
+    // rather than just passing through.
+    canvas.drawLine(
+      Offset(from.dx - uy * 2.5, from.dy + ux * 2.5),
+      Offset(from.dx + uy * 2.5, from.dy - ux * 2.5),
+      paint,
+    );
+
+    // The number sits at the **piece** end, not the middle of the line.
+    //
+    // A midpoint reads well for one measurement and not for thirty-two: on a
+    // sixteen-piece table the lines all cross the middle of the board, and the
+    // numbers landed in a heap there with no way to tell which line each
+    // belonged to. Against its own piece, a number is attributable.
+    const back = 12.0;
+    _tick(
+      canvas,
+      Offset(to.dx - ux * back + 2, to.dy - uy * back - 11),
+      '${inches.round()}',
+      measurement: true,
+    );
+  }
+
   /// A small measurement, drawn over whatever is beneath it.
-  void _tick(Canvas canvas, Offset at, String text, {bool emphasis = false}) {
+  void _tick(Canvas canvas, Offset at, String text,
+      {bool emphasis = false, bool measurement = false}) {
     final painter = TextPainter(
       text: TextSpan(
         text: text,
         style: TextStyle(
-          fontSize: emphasis ? 8 : 8.5,
-          fontWeight: emphasis ? FontWeight.w700 : FontWeight.w500,
-          color: emphasis
-              ? objectiveFill.withValues(alpha: 0.85)
-              : outline.withValues(alpha: 0.8),
+          fontSize: emphasis || measurement ? 8 : 8.5,
+          fontWeight:
+              emphasis || measurement ? FontWeight.w700 : FontWeight.w500,
+          color: measurement
+              ? measure
+              : emphasis
+                  ? objectiveFill.withValues(alpha: 0.85)
+                  : outline.withValues(alpha: 0.8),
           // A halo, because these land on ruins as often as on bare board.
           shadows: [
             Shadow(color: objectiveRing, blurRadius: 2),
@@ -449,6 +545,7 @@ class _BoardPainter extends CustomPainter {
       old.iAmAttacker != iAmAttacker ||
       old.layout?.id != layout?.id ||
       old.measured != measured ||
+      old.measure != measure ||
       old.outline != outline;
 }
 

@@ -107,8 +107,10 @@ class _SetupScreenState extends State<SetupScreen> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Grid every 6″. Each number is a piece’s centre in '
-                    'inches from the bottom-left corner.',
+                    'Grid every 3″, numbered every 6″. Each piece is measured '
+                    'from the left edge to its leftmost corner and from the '
+                    'bottom edge to its lowest corner — the two pulls you can '
+                    'make with a tape.',
                     style: TextStyle(
                         fontSize: 11.5,
                         color: Theme.of(context).colorScheme.onSurfaceVariant),

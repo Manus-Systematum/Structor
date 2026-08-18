@@ -212,7 +212,8 @@ void main() {
     await tester.tap(find.byType(DeploymentDiagram));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Grid every 6'), findsOneWidget);
+    expect(find.textContaining('Grid every 3'), findsOneWidget);
+    expect(find.textContaining('leftmost corner'), findsOneWidget);
     // Two diagrams now exist — the inline one behind the dialog and the
     // measured one in it.
     final measured = tester
