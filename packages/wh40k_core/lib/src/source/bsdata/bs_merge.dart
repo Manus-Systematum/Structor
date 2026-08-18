@@ -80,6 +80,10 @@ MergeResult mergeRecords({
   required List<Object?> bsdata,
   required List<Object?> fortykdc,
   required Set<String> compare,
+  /// When true, a BSData record only fills a gap: where 40kdc already has one,
+  /// the 40kdc record stands untouched. For data BSData produces more thinly
+  /// than 40kdc does, overwriting loses more than it gains.
+  bool fillOnly = false,
 }) {
   final conflicts = <DataConflict>[];
   final byId = <String, Map<String, dynamic>>{};
@@ -101,6 +105,7 @@ MergeResult mergeRecords({
     if (id == null) continue;
 
     final existing = byId[id];
+    if (existing != null && fillOnly) continue;
     if (existing == null) {
       byId[id] = incoming;
       order.add(id);

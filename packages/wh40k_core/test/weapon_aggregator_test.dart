@@ -268,7 +268,7 @@ void main() {
   });
 
   group('the reference list', () {
-    final snapshot = Directory('../../data/40kdc');
+    final snapshot = Directory('../../data/merged');
     final available = snapshot.existsSync();
 
     test('Attached Unit 1 fields ten missile pods across two skills', () {

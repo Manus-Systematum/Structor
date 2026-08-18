@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:wh40k_core/wh40k_core.dart';
 
-final snapshotDir = Directory('../../data/40kdc');
+final snapshotDir = Directory('../../data/merged');
 
 bool get snapshotAvailable => snapshotDir.existsSync();
 

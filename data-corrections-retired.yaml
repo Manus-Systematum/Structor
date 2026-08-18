@@ -1,0 +1,60 @@
+# Corrections that no longer apply, and why.
+#
+# Hand-written, unlike data-conflicts.json, which bin/merge.dart regenerates
+# and would overwrite. Kept because a correction is a recorded observation —
+# usually someone's table experience — and deleting it loses the observation
+# along with the entry (DESIGN.md §3.10).
+
+retired:
+  - faction: tau-empire
+    id: crisis-starscythe-battlesuits
+    was: "add_wargear: [gun-drone, shield-drone]"
+    outcome: retired
+    reason: >
+      BSData lists gun, shield and marker drones on this datasheet. The
+      correction became redundant rather than wrong.
+
+  - faction: tau-empire
+    id: ghostkeel-battlesuit
+    was: "add_wargear: [battlesuit-support-system]"
+    outcome: retired
+    reason: >
+      BSData carries the support system on the datasheet.
+
+  - faction: tau-empire
+    id: crisis-fireknife-battlesuits
+    was: "add_wargear: [gun-drone, shield-drone]"
+    outcome: retired
+    reason: >
+      BSData lists both.
+
+# Narrowed rather than retired: BSData covers part of what the correction
+# added, and the reference export — a validated 2,000 point list that prices
+# to its printed total — still contradicts BSData on the rest. These are the
+# places §3.10's "BSData wins" is overridden, and only on that evidence.
+narrowed:
+  - faction: tau-empire
+    id: commander-in-enforcer-battlesuit
+    was: "add_wargear: [gun-drone, shield-drone]"
+    now: "add_wargear: [gun-drone]"
+    reason: BSData carries the shield drone; it has no gun drone.
+
+  - faction: tau-empire
+    id: commander-in-coldstar-battlesuit
+    was: "add_wargear: [gun-drone, shield-drone]"
+    now: "add_wargear: [gun-drone]"
+    reason: As the Enforcer.
+
+  - faction: tau-empire
+    id: stealth-battlesuits
+    was: "add_wargear: [gun-drone, marker-drone]"
+    now: "add_wargear: [gun-drone]"
+    reason: BSData carries the marker drone.
+
+  - faction: tau-empire
+    id: broadside-battlesuits
+    was: "add_wargear: [missile-drone]"
+    now: "add_wargear: [missile-drone]"
+    reason: >
+      Unchanged. BSData lists marker, shield and guardian drones here and no
+      missile drone; the export lists two missile drones on each Broadside.

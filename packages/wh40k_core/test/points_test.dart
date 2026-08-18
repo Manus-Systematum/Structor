@@ -162,7 +162,7 @@ void main() {
   group('reference list end to end', () {
     // Needs a fetched snapshot, which is gitignored. Skipped on a fresh clone
     // rather than failing; run tools/fetch-40kdc.sh to enable.
-    final snapshot = Directory('../../data/40kdc');
+    final snapshot = Directory('../../data/merged');
     final available = snapshot.existsSync();
 
     late Roster roster;

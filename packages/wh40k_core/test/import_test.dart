@@ -114,7 +114,7 @@ void main() {
   });
 
   group('resolution against the catalogue', () {
-    final snapshot = Directory('../../data/40kdc');
+    final snapshot = Directory('../../data/merged');
     final available = snapshot.existsSync();
 
     late ImportResult result;

@@ -283,7 +283,7 @@ abilities:
       // only by a plural and whose effect is identical is one rule, and
       // leaving it as two splits it across tiers on the rules screen.
       final loader = DatasetLoader(
-        '../../data/40kdc',
+        '../../data/merged',
         corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
       );
       if (!loader.root.existsSync()) return;
@@ -307,7 +307,7 @@ abilities:
 
     test('every correction still matches an ability in the snapshot', () {
       final loader = DatasetLoader(
-        '../../data/40kdc',
+        '../../data/merged',
         corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
       );
       if (!loader.root.existsSync()) return;
@@ -337,7 +337,7 @@ abilities:
 
     test('the corrected T\'au abilities read as the rulebook has them', () {
       final loader = DatasetLoader(
-        '../../data/40kdc',
+        '../../data/merged',
         corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
       );
       if (!loader.root.existsSync()) return;
@@ -377,7 +377,7 @@ abilities:
       // weapon named and no record to name — so Broadsides fielded drones
       // that shot nothing.
       final loader = DatasetLoader(
-        '../../data/40kdc',
+        '../../data/merged',
         corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
       );
       if (!loader.root.existsSync()) return;
@@ -424,7 +424,7 @@ abilities:
       const knownDangling = <String>{};
 
       final loader = DatasetLoader(
-        '../../data/40kdc',
+        '../../data/merged',
         corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
       );
       if (!loader.root.existsSync()) return;
@@ -447,7 +447,7 @@ abilities:
       // Pointing the Gun Drone's grant at the plain twin-pulse-carbine had it
       // shooting at BS4+ — the battlesuit's skill, on the drone's gun.
       final loader = DatasetLoader(
-        '../../data/40kdc',
+        '../../data/merged',
         corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
       );
       if (!loader.root.existsSync()) return;
@@ -466,7 +466,7 @@ abilities:
 
     test('Stealth is the Benefit of Cover in every faction that has it', () {
       final loader = DatasetLoader(
-        '../../data/40kdc',
+        '../../data/merged',
         corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
       );
       if (!loader.root.existsSync()) return;
@@ -488,7 +488,7 @@ abilities:
 
     test('Advanced Armour renders as a mortal-wounds-only save', () {
       final loader = DatasetLoader(
-        '../../data/40kdc',
+        '../../data/merged',
         corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'),
       );
       if (!loader.root.existsSync()) return;

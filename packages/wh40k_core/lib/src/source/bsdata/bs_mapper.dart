@@ -130,31 +130,41 @@ class BsMapper {
       }
     }
 
-    final ids = _resolveWeaponIds(weapons, variantUsers, _anchorProfiles(anchors));
-    for (final unit in units.values) {
-      final linked = unit['weapon_ids']! as List;
-      // Two of a unit's entries can now resolve to one id — a Crisis suit's
-      // missile pod and its drone's — so the list is deduplicated while
-      // keeping the order the datasheet lists them in.
-      final seen = <String>{};
-      unit['weapon_ids'] = [
-        for (final key in linked)
-          if (ids[key] case final resolved?)
-            if (seen.add(resolved)) resolved,
-      ];
-    }
+    // The anchor variant of each slug — the one 40kdc published under the
+    // plain name — decides which datasheets keep the plain id.
+    final anchorKeys = _anchorKeys(weapons, variantUsers, _anchorProfiles(anchors));
 
-    // One record per id: the anchor-preferred variant, which sorted first.
     final byId = <String, Map<String, Object?>>{};
     final discarded = <String>[];
-    for (final entry in weapons.entries) {
-      final id = ids[entry.key] ?? entry.key;
-      entry.value['id'] = id;
-      if (byId.containsKey(id)) {
-        discarded.add('$id <- ${entry.key}');
-      } else {
-        byId[id] = entry.value;
+
+    for (final unit in units.values) {
+      final unitId = unit['id']! as String;
+      final linked = unit['weapon_ids']! as List;
+      final seen = <String>{};
+      final resolved = <String>[];
+
+      for (final raw in linked) {
+        final key = raw as String;
+        final record = weapons[key];
+        if (record == null) continue;
+        final slug = key.split('|').first;
+
+        // **Per unit, not per entry.** BSData shares one weapon entry across
+        // several datasheets, so scoping by the entry named whichever
+        // datasheet sorted first — an Enforcer Commander's missile pod came
+        // out scoped to the Coldstar. 40kdc scopes by the carrier, and the
+        // carrier is the unit being written.
+        final id = anchorKeys[slug] == key ? slug : '$slug-$unitId';
+        if (!seen.add(id)) continue;
+        resolved.add(id);
+
+        if (!byId.containsKey(id)) {
+          byId[id] = {...record, 'id': id};
+        } else if (byId[id]!['profiles'] != record['profiles']) {
+          discarded.add('$id <- $key');
+        }
       }
+      unit['weapon_ids'] = resolved;
     }
 
     return BsFaction(
@@ -214,7 +224,8 @@ class BsMapper {
     return out;
   }
 
-  Map<String, String> _resolveWeaponIds(
+  /// The variant of each slug that keeps the plain id, by slug.
+  Map<String, String> _anchorKeys(
     Map<String, Map<String, Object?>> weapons,
     Map<String, Set<String>> users,
     Map<String, Map<String, dynamic>> anchors,
@@ -240,22 +251,17 @@ class BsMapper {
           final byUse = (users[b]?.length ?? 0).compareTo(users[a]?.length ?? 0);
           return byUse != 0 ? byUse : a.compareTo(b);
         });
-      // **Every variant resolves to the plain slug.**
+      // **40kdc's own convention**: the common variant keeps the plain slug
+      // and the rest are scoped to the datasheet that carries them —
+      // `missile-pod`, then `missile-pod-commander-in-enforcer-battlesuit`.
       //
-      // Giving them distinct ids was the first attempt and it broke the app:
-      // `wargear_costs` names `missile-pod`, a saved roster's wargear names
-      // `missile-pod`, and the corrections name `missile-pod`, so renaming the
-      // one a datasheet carries to `missile-pod-bs5` silently detached all
-      // three. The reference list dropped from 2,000 points to 1,830.
-      //
-      // Keeping them apart needs the *unit* to say which profile it uses, and
-      // nothing in the roster model can express that yet (§3.10). Until it
-      // can, the variant matching what 40kdc published wins the id and the
-      // rest are dropped — recorded in the conflict log rather than lost, so
-      // the work is there when the app can use it.
-      for (final key in variants) {
-        out[key] = slug;
-      }
+      // Inventing a scheme of my own (`missile-pod-bs5`) was the first attempt
+      // and it broke everything downstream, because `wargear_costs`, saved
+      // rosters and the corrections all name `missile-pod`. Then collapsing
+      // every variant onto the plain slug was the second, and it threw away
+      // the BS3+/BS5+ distinction 40kdc had *already* encoded this way. The
+      // convention was there to be followed.
+      out[slug] = variants.first;
     }
     return out;
   }

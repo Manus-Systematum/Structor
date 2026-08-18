@@ -107,7 +107,7 @@ void main() {
   });
 
   group('against the shipped cards', () {
-    final root = Directory('../../data/40kdc');
+    final root = Directory('../../data/merged');
     final available = root.existsSync();
 
     test('every primary scores in the command phase from round 2', () {

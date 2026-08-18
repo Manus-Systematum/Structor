@@ -314,7 +314,7 @@ void main() {
   });
 
   group('the reference list validates clean', () {
-    final snapshot = Directory('../../data/40kdc');
+    final snapshot = Directory('../../data/merged');
     final available = snapshot.existsSync();
 
     test('a real 2,000 pt list produces no errors', () {

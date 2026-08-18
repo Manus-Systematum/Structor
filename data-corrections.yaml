@@ -268,6 +268,52 @@ units:
 #
 # The duplicate is dropped and every reference to it rewritten to `canonical`,
 # which must already exist upstream.
+  - faction: tau-empire
+    id: commander-in-enforcer-battlesuit
+    reason: >
+      Takes a Gun Drone. BSData lists marker, shield and guardian drones on
+      this datasheet and no gun drone; the reference export — a validated
+      2,000 point list that prices to exactly its printed total — lists
+      "1x Gun drone with twin pulse carbine" on every Commander in it. A real
+      army that totals correctly outweighs a catalogue omission, so this is
+      one of the places §3.10's "BSData wins" is overridden on evidence. The
+      divergence is in data-conflicts.json.
+    upstream: not yet reported
+    add_wargear: [gun-drone]
+
+  - faction: tau-empire
+    id: commander-in-coldstar-battlesuit
+    reason: >
+      Gun Drone, as for the Enforcer Commander and on the same evidence.
+    upstream: not yet reported
+    add_wargear: [gun-drone]
+
+  - faction: tau-empire
+    id: stealth-battlesuits
+    reason: >
+      The Shas'vre takes a Gun Drone. BSData offers the marker drone beside it
+      but not this; the export lists both on both Stealth teams.
+    upstream: not yet reported
+    add_wargear: [gun-drone]
+
+  - faction: tau-empire
+    id: broadside-battlesuits
+    reason: >
+      Takes Missile Drones. BSData lists marker, shield and guardian drones
+      here instead; the export lists "2x Missile drone" on both Broadsides.
+    upstream: not yet reported
+    add_wargear: [missile-drone]
+
+  - faction: tau-empire
+    id: riptide-battlesuit
+    reason: >
+      Takes Missile Drones. 40kdc carries them and BSData does not, and
+      BSData's ability list replaces 40kdc's wholesale on a merged record, so
+      without this the drones are lost rather than merely unlisted. The export
+      lists "2x Missile drones" on the first Riptide.
+    upstream: not yet reported
+    add_wargear: [missile-drone]
+
 aliases:
   - faction: tau-empire
     id: battlesuit-support-systems

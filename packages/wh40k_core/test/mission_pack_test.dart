@@ -22,7 +22,7 @@ MissionPack loadPack(String root) {
 }
 
 void main() {
-  final root = Directory('../../data/40kdc');
+  final root = Directory('../../data/merged');
   final available = root.existsSync();
   final pack = available ? loadPack(root.path) : const MissionPack();
 

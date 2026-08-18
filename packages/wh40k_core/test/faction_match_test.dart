@@ -49,7 +49,7 @@ void main() {
   });
 
   group('against the real exports', () {
-    final root = Directory('../../data/40kdc');
+    final root = Directory('../../data/merged');
 
     test('the reference export names a faction the data knows', () {
       final file = File('test/fixtures/war_organ_export.txt');
@@ -81,8 +81,8 @@ void main() {
   });
 
   group('a chapter inherits its parent’s datasheets', () {
-    final root = Directory('../../data/40kdc');
-    final loader = DatasetLoader('../../data/40kdc',
+    final root = Directory('../../data/merged');
+    final loader = DatasetLoader('../../data/merged',
         corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'));
 
     test('Blood Angels fields Adeptus Astartes units', () {

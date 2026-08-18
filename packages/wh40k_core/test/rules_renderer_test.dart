@@ -458,7 +458,7 @@ void main() {
   });
 
   group('coverage against real data', () {
-    final snapshot = Directory('../../data/40kdc');
+    final snapshot = Directory('../../data/merged');
 
     ({int total, int complete, Set<String> gaps}) coverageOf(String faction) {
       final data = correctedLoader().loadFaction(faction);

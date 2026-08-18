@@ -4,9 +4,9 @@ import 'package:test/test.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 void main() {
-  final root = Directory('../../data/40kdc');
+  final root = Directory('../../data/merged');
   final skip = root.existsSync() ? null : 'no snapshot';
-  final loader = DatasetLoader('../../data/40kdc',
+  final loader = DatasetLoader('../../data/merged',
       corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'));
 
   group('who may carry an enhancement', () {

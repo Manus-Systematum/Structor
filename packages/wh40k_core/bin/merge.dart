@@ -29,21 +29,29 @@ const _files = {
     path: 'core/%s/units.json',
     idField: 'id',
     compare: {'name', 'points', 'is_legend'},
+    fillOnly: false,
   ),
   'weapons': (
     path: 'core/%s/weapons.json',
     idField: 'id',
     compare: {'name', 'type', 'profiles'},
+    fillOnly: false,
   ),
+  // Fill-only. A 40kdc composition carries `default_weapon_ids` and
+  // `base_size_mm`, and BSData has neither — so letting its record win
+  // replaced a datasheet's starting loadout with nothing, and every new unit
+  // arrived on the builder's table unarmed.
   'compositions': (
     path: 'core/%s/unit-compositions.json',
     idField: 'unit_id',
     compare: <String>{},
+    fillOnly: true,
   ),
   'abilities': (
     path: 'enrichment/%s/abilities.json',
     idField: 'ability_id',
     compare: {'name'},
+    fillOnly: false,
   ),
 };
 
@@ -103,6 +111,7 @@ void main(List<String> args) {
         bsdata: produced[entry.key]!,
         fortykdc: existing,
         compare: spec.compare,
+        fillOnly: spec.fillOnly,
       );
 
       allConflicts.addAll([for (final c in result.conflicts) c.toJson()]);

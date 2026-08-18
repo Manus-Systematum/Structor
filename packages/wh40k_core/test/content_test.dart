@@ -48,7 +48,7 @@ void main() {
   });
 
   group('dataset', () {
-    final snapshot = Directory('../../data/40kdc');
+    final snapshot = Directory('../../data/merged');
     final available = snapshot.existsSync();
 
     Dataset load(String faction) => Dataset.of(
@@ -124,7 +124,7 @@ void main() {
   });
 
   group('roster snapshot', () {
-    final dir = Directory('../../data/40kdc');
+    final dir = Directory('../../data/merged');
     final available = dir.existsSync();
 
     RosterSnapshot buildSnapshot() {
