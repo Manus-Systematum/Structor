@@ -1195,6 +1195,20 @@ control. What a player wants between games is the record — who they played,
 what each side declared, how it ended, and the table it was on — with the
 button to start the next one on top of it rather than instead of it.
 
+**And it is that army's history, not every army's.** The page opens on the
+Play tab of one list; a roll-up of every roster's games answers a question
+nobody asked there, and two armies of the same faction produce rows that look
+interchangeable. The record already keeps the roster id it was played with, so
+the filter costs nothing.
+
+The army's name then stops earning its place on the row — repeating it on
+every line of its own history says nothing, and the opponent is what tells the
+rows apart. It is kept for the one case where it is the most interesting thing
+there: a record holds the name it was **played under**, so a list renamed since
+shows what it used to be called on the games played before the rename. A copy,
+having a new roster id, starts with no history — correctly, since the games
+belong to the list it was copied from.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.

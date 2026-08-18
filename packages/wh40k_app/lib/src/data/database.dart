@@ -88,13 +88,23 @@ class AppDatabase extends _$AppDatabase {
         },
       );
 
-  Future<List<BattleRow>> allBattles() =>
-      (select(battles)..orderBy([(b) => OrderingTerm.desc(b.finishedAt)]))
-          .get();
+  /// Finished battles, newest first — every roster's, or one roster's.
+  ///
+  /// A record keeps the roster id it was played with as well as a copy of the
+  /// name, so it can be filed under the army it belongs to without depending
+  /// on that army still existing (§7.3.12).
+  SimpleSelectStatement<$BattlesTable, BattleRow> _battles(String? rosterId) {
+    final query = select(battles)
+      ..orderBy([(b) => OrderingTerm.desc(b.finishedAt)]);
+    if (rosterId != null) query.where((b) => b.rosterId.equals(rosterId));
+    return query;
+  }
 
-  Stream<List<BattleRow>> watchBattles() =>
-      (select(battles)..orderBy([(b) => OrderingTerm.desc(b.finishedAt)]))
-          .watch();
+  Future<List<BattleRow>> allBattles({String? rosterId}) =>
+      _battles(rosterId).get();
+
+  Stream<List<BattleRow>> watchBattles({String? rosterId}) =>
+      _battles(rosterId).watch();
 
   Future<void> insertBattle(BattlesCompanion battle) =>
       into(battles).insertOnConflictUpdate(battle);

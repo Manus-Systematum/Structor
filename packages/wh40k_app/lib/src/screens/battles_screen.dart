@@ -23,6 +23,19 @@ class BattlesScreen extends StatelessWidget {
   final RosterStore store;
   final MissionPack pack;
 
+  /// The army whose history this is.
+  ///
+  /// Scoped rather than global: the page opens on the Play tab of one army,
+  /// and a list mixing in every other army's games answers a question nobody
+  /// asked there — worse, two armies of the same faction produce rows that
+  /// look interchangeable. Null shows every battle, which is what a
+  /// standalone history screen would want.
+  final String? rosterId;
+
+  /// What the army is called now, so a row played under an older name can
+  /// say so instead of repeating the current one on every line.
+  final String? armyName;
+
   /// Starts a new battle. Null while the mission data is still loading, which
   /// disables the button rather than letting it fail.
   final VoidCallback? onStart;
@@ -31,15 +44,18 @@ class BattlesScreen extends StatelessWidget {
     super.key,
     required this.store,
     required this.pack,
+    this.rosterId,
+    this.armyName,
     this.onStart,
   });
 
   @override
   Widget build(BuildContext context) => StreamBuilder<List<BattleRow>>(
-        stream: store.watchBattles(),
+        stream: store.watchBattles(rosterId: rosterId),
         builder: (context, snapshot) => BattlesView(
           rows: snapshot.data,
           pack: pack,
+          armyName: armyName,
           onStart: onStart,
           onDelete: store.deleteBattleRecord,
         ),
@@ -57,6 +73,15 @@ class BattlesView extends StatelessWidget {
   final List<BattleRow>? rows;
 
   final MissionPack pack;
+
+  /// The army these battles belong to, as it is called now.
+  ///
+  /// When the page is one army's history, repeating that army's name on every
+  /// row says nothing. What is worth saying is the exception: a record keeps
+  /// the name it was **played under** (§7.3.12), so a list renamed since shows
+  /// what it used to be called on the games played before the rename.
+  final String? armyName;
+
   final VoidCallback? onStart;
   final void Function(String id)? onDelete;
 
@@ -64,6 +89,7 @@ class BattlesView extends StatelessWidget {
     super.key,
     required this.rows,
     required this.pack,
+    this.armyName,
     this.onStart,
     this.onDelete,
   });
@@ -130,6 +156,7 @@ class BattlesView extends StatelessWidget {
             _BattleCard(
               row: row,
               pack: pack,
+              armyName: armyName,
               onDelete: onDelete == null ? null : () => onDelete!(row.id),
             ),
         ],
@@ -141,13 +168,27 @@ class BattlesView extends StatelessWidget {
 class _BattleCard extends StatelessWidget {
   final BattleRow row;
   final MissionPack pack;
+  final String? armyName;
   final VoidCallback? onDelete;
 
   const _BattleCard({
     required this.row,
     required this.pack,
+    this.armyName,
     this.onDelete,
   });
+
+  /// `vs Kara`, or `2k ret vs Kara` where the army is not implied — a history
+  /// covering every army, or a row played before this one was renamed.
+  String get _title {
+    final playedAs = row.rosterName;
+    if (armyName != null && armyName == playedAs) return 'vs $_opponentName';
+    return '$playedAs vs $_opponentName';
+  }
+
+  String get _opponentName => row.opponentName?.trim().isNotEmpty ?? false
+      ? row.opponentName!.trim()
+      : 'Opponent';
 
   @override
   Widget build(BuildContext context) {
@@ -155,9 +196,7 @@ class _BattleCard extends StatelessWidget {
     final log = BattleLog.fromJson(jsonDecode(row.logJson));
     final state = log.state;
     final setup = state.setup;
-    final opponent = (row.opponentName?.trim().isNotEmpty ?? false)
-        ? row.opponentName!.trim()
-        : 'Opponent';
+    final opponent = _opponentName;
 
     // Won, lost or drawn — said outright, because two totals side by side
     // still leave the reader doing the subtraction.
@@ -179,7 +218,7 @@ class _BattleCard extends StatelessWidget {
             title: Row(
               children: [
                 Expanded(
-                  child: Text('${row.rosterName} vs $opponent',
+                  child: Text(_title,
                       style: const TextStyle(
                           fontSize: 14, fontWeight: FontWeight.w700)),
                 ),

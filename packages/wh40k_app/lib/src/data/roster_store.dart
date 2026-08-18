@@ -35,9 +35,14 @@ class RosterStore {
   Future<void> clearBattle(String rosterId) =>
       db.saveBattleLog(rosterId, null);
 
-  Stream<List<BattleRow>> watchBattles() => db.watchBattles();
+  /// Finished battles, newest first. Scoped to one roster when [rosterId] is
+  /// given, which is how the Play tab shows an army its own history and not
+  /// somebody else's.
+  Stream<List<BattleRow>> watchBattles({String? rosterId}) =>
+      db.watchBattles(rosterId: rosterId);
 
-  Future<List<BattleRow>> battles() => db.allBattles();
+  Future<List<BattleRow>> battles({String? rosterId}) =>
+      db.allBattles(rosterId: rosterId);
 
   Future<void> deleteBattleRecord(String id) => db.deleteBattle(id);
 

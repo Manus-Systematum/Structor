@@ -194,6 +194,8 @@ class _ArmyPageState extends State<ArmyPage> {
                   BattlesScreen(
                     store: widget.store,
                     pack: _pack,
+                    rosterId: army.id,
+                    armyName: army.roster.name,
                     onStart: _pack.isEmpty ? null : () => _runSetup(army),
                   )
                 else

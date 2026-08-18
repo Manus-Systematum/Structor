@@ -152,4 +152,83 @@ void main() {
       expect(find.text('Tipping Point'), findsOneWidget);
     });
   });
+
+  group('a history belongs to one army', () {
+    test('battles are filtered to the roster that played them', () async {
+      // The page opens on the Play tab of one army. A list mixing in every
+      // other army's games answers a question nobody asked there — and two
+      // armies of the same faction produce rows that look interchangeable.
+      final other = Army.fromSnapshot(
+        army.roster.copyWith(name: 'Second list'),
+        army.snapshot,
+        id: 'r-other',
+      );
+      await store.save(army);
+      await store.save(other);
+
+      await store.finishBattle(army, played());
+      await store.finishBattle(other, played());
+      await store.finishBattle(other, played());
+
+      expect(await store.battles(), hasLength(3), reason: 'every army');
+      expect(await store.battles(rosterId: army.id), hasLength(1));
+      expect(
+        (await store.battles(rosterId: other.id)).map((r) => r.rosterName),
+        ['Second list', 'Second list'],
+      );
+    });
+
+    test('a copy starts with no history of its own', () async {
+      // A copy is a new roster id, so it inherits nothing — which is right:
+      // the games were played with the list it was copied from.
+      await store.save(army);
+      await store.finishBattle(army, played());
+
+      final copy = (await store.duplicate(army.id, name: 'Variant'))!;
+      expect(await store.battles(rosterId: copy.id), isEmpty);
+      expect(await store.battles(rosterId: army.id), hasLength(1));
+    });
+
+    testWidgets('the army name is dropped where it is implied', (tester) async {
+      // Repeating the army's own name on every row of its own history says
+      // nothing; the opponent is what tells the rows apart.
+      tester.view.physicalSize = const Size(1200, 3000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+
+      await store.finishBattle(army, played());
+      final rows = await store.battles();
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: BattlesView(rows: rows, pack: pack, armyName: '2k ret'),
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.text('vs Dave'), findsOneWidget);
+      expect(find.text('2k ret vs Dave'), findsNothing);
+    });
+
+    testWidgets('and kept where the army has been renamed since',
+        (tester) async {
+      // A record keeps the name it was *played under*. Once the list is
+      // renamed that is the one thing on the row worth saying.
+      tester.view.physicalSize = const Size(1200, 3000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+
+      await store.finishBattle(army, played());
+      final rows = await store.battles();
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: BattlesView(rows: rows, pack: pack, armyName: 'Renamed list'),
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.text('2k ret vs Dave'), findsOneWidget);
+    });
+  });
 }
