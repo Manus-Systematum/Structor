@@ -17,6 +17,7 @@ library;
 
 import 'dart:convert';
 
+import '../../play/rule_text.dart';
 import '../json.dart';
 import 'bs_document.dart';
 import 'bs_slug.dart';
@@ -406,7 +407,7 @@ class BsMapper {
         () => {
           'ability_id': id,
           'name': name,
-          'description': description,
+          'description': normaliseRuleText(description),
           'game_version': bsGameVersion,
         },
       );
@@ -883,7 +884,7 @@ class _Walk {
       () => {
         'ability_id': id,
         'name': rule.name,
-        'description': description,
+        'description': normaliseRuleText(description),
         'ability_type': 'core',
         'game_version': bsGameVersion,
       },
@@ -949,7 +950,7 @@ class _Walk {
           () => {
             'ability_id': id,
             'name': name,
-            'description': text,
+            'description': normaliseRuleText(text),
             if (typeName != 'Abilities') 'ability_type': typeName,
             'game_version': bsGameVersion,
           },

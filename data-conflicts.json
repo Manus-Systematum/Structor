@@ -539,6 +539,15 @@
       "resolution": "bsdata"
     },
     {
+      "faction": "adeptus-astartes",
+      "kind": "abilities",
+      "id": "titan-killer",
+      "field": "name",
+      "bsdata": "Titan Killer",
+      "40kdc": "Titan-killer",
+      "resolution": "bsdata"
+    },
+    {
       "faction": "adeptus-custodes",
       "kind": "units",
       "id": "custodian-guard-with-adrasite-and-pyrithite-spears",
@@ -1860,6 +1869,15 @@
       "resolution": "bsdata"
     },
     {
+      "faction": "chaos-space-marines",
+      "kind": "abilities",
+      "id": "forwards-for-blood",
+      "field": "name",
+      "bsdata": "Forwards, for Blood",
+      "40kdc": "Forwards, for Blood!",
+      "resolution": "bsdata"
+    },
+    {
       "faction": "death-guard",
       "kind": "units",
       "id": "daemon-prince-of-nurgle-with-wings",
@@ -1941,6 +1959,42 @@
       "field": "name",
       "bsdata": "Diseased icon",
       "40kdc": "Diseased Icon",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "drukhari",
+      "kind": "abilities",
+      "id": "power-from-pain",
+      "field": "name",
+      "bsdata": "Power from Pain",
+      "40kdc": "Power From Pain",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "drukhari",
+      "kind": "abilities",
+      "id": "eviscerating-fly-by",
+      "field": "name",
+      "bsdata": "Eviscerating Fly-by",
+      "40kdc": "Eviscerating Fly‑by",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "drukhari",
+      "kind": "abilities",
+      "id": "cluster-caltrops",
+      "field": "name",
+      "bsdata": "Cluster Caltrops",
+      "40kdc": "Cluster caltrops",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "drukhari",
+      "kind": "abilities",
+      "id": "grav-talon",
+      "field": "name",
+      "bsdata": "Grav Talon",
+      "40kdc": "Grav-talon",
       "resolution": "bsdata"
     },
     {

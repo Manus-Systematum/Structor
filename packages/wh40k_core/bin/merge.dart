@@ -97,6 +97,23 @@ void main(List<String> args) {
       if (f.path.endsWith('.json')) index.add(f);
     }
 
+    // Catalogues borrow from one another. `Aeldari - Drukhari.json` holds no
+    // entries at all — its datasheets are entry links into the Aeldari
+    // library, which is filed under a different faction. Without the other
+    // factions' files in the index those links resolve to nothing, and
+    // Drukhari came through with zero BSData datasheets.
+    //
+    // Added as targets, never as roots: the Aeldari library holds Craftworlds'
+    // datasheets too, and Drukhari fields the ones it links to, not all of
+    // them.
+    for (final other in Directory(_bsRoot).listSync().whereType<Directory>()) {
+      if (other.path.endsWith('/$factionId')) continue;
+      for (final f in other.listSync().whereType<File>()) {
+        if (f.path.endsWith('.json')) index.add(f, asRoot: false);
+      }
+    }
+    index.resolveRootLinks();
+
     // 40kdc's weapons decide which variant of a repeated weapon keeps the
     // plain id, so they are read before the mapping rather than at merge time.
     final mapped = BsMapper(index).faction(
@@ -212,23 +229,32 @@ int _linkEnhancementText(
   var total = 0;
   for (final factionId in factions) {
     final path = '$_outRoot/core/$factionId/enhancements.json';
-    final ids = harvested[factionId] ?? const <String>{};
+
+    // A chapter's enhancements are the parent's, and only the parent's
+    // catalogue was harvested — Blood Angels linked 1 of 83 without this.
+    final parentId = _parentOf(factionId);
+    final ids = {
+      ...?harvested[factionId],
+      ...?harvested[parentId],
+    };
     if (ids.isEmpty) continue;
+
     final records = _readArray(path);
     if (records.isEmpty) continue;
+
+    // An enhancement already pointing at an ability is not necessarily
+    // pointing at one with any text: 40kdc names the rule and publishes no
+    // wording for it, which is the whole gap being closed here.
+    final described = _describedAbilities(factionId, parentId);
 
     var linked = 0;
     final updated = [
       for (final raw in records)
         if (asMap(raw) case final record)
-          if (str(record['ability_id']) == null &&
-              ids.contains(bsSlug(strOr(record['name'], ''))))
+          if (_textIdFor(record, ids, described) case final id?)
             () {
               linked++;
-              return {
-                ...record,
-                'ability_id': bsSlug(strOr(record['name'], '')),
-              };
+              return {...record, 'ability_id': id};
             }()
           else
             record,
@@ -239,6 +265,51 @@ int _linkEnhancementText(
     }
   }
   return total;
+}
+
+/// `Hagiomnifex (Upgrade)` and `Fear Made Manifest (Aura)`.
+///
+/// 40kdc appends what kind of enhancement it is to the name; BSData does not.
+/// Slugging the whole string missed 42 of them over a parenthesis.
+final _nameSuffix = RegExp(r'\s*\([^)]*\)\s*$');
+
+/// The ability id holding this enhancement's wording, or null.
+String? _textIdFor(
+    Map<String, dynamic> record, Set<String> ids, Set<String> described) {
+  final existing = str(record['ability_id']);
+  if (existing != null && described.contains(existing)) return null;
+
+  final name = strOr(record['name'], '');
+  for (final candidate in [
+    bsSlug(name),
+    bsSlug(name.replaceAll(_nameSuffix, '')),
+  ]) {
+    if (candidate.isNotEmpty && ids.contains(candidate)) return candidate;
+  }
+  return null;
+}
+
+/// Ability ids that actually carry text, for this faction and its parent.
+Set<String> _describedAbilities(String factionId, String? parentId) {
+  final out = <String>{};
+  for (final id in [factionId, if (parentId != null) parentId]) {
+    for (final raw in _readArray('$_outRoot/enrichment/$id/abilities.json')) {
+      final record = asMap(raw);
+      final text = str(record['description']);
+      if (text == null || text.trim().isEmpty) continue;
+      if (str(record['ability_id']) case final abilityId?) out.add(abilityId);
+    }
+  }
+  return out;
+}
+
+/// The faction whose datasheets and enhancements this one fields, if any.
+String? _parentOf(String factionId) {
+  for (final raw in _readArray('$_outRoot/core/$factionId/factions.json')) {
+    final record = asMap(raw);
+    if (str(record['id']) == factionId) return str(record['parent_faction_id']);
+  }
+  return null;
 }
 
 /// Copies every 40kdc file the merge did not rewrite.

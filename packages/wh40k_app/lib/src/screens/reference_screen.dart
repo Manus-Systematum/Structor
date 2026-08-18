@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import '../widgets/rule_text.dart';
+
 import '../data/army.dart';
 import '../widgets/collapsible.dart';
 import '../widgets/unit_profiles.dart';
@@ -485,7 +487,7 @@ class _PinnedDetail extends StatelessWidget {
             if (column.text.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 2),
-                child: Text(column.text,
+                child: RuleText(column.text,
                     style: TextStyle(
                         fontSize: 11.5, height: 1.35, color: scheme.onSurface)),
               ),
@@ -623,7 +625,7 @@ class _ArmyRuleTile extends StatelessWidget {
           if (entry.body.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 2),
-              child: Text(entry.body,
+              child: RuleText(entry.body,
                   style: TextStyle(
                       fontSize: 12, height: 1.35, color: scheme.onSurface)),
             ),
@@ -739,7 +741,7 @@ class _EntryTile extends StatelessWidget {
           if (entry.body.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 2),
-              child: Text(entry.body,
+              child: RuleText(entry.body,
                   style: TextStyle(
                     fontSize: 12,
                     color: dimmed

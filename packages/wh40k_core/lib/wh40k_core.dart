@@ -24,6 +24,7 @@ export 'src/missions/terrain_layout.dart';
 export 'src/play/army_rules.dart';
 export 'src/play/attacks.dart';
 export 'src/play/reference_index.dart';
+export 'src/play/rule_text.dart';
 export 'src/play/rules_renderer.dart';
 export 'src/play/stratagem_book.dart';
 export 'src/play/weapon_aggregator.dart';

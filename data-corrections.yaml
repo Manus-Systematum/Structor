@@ -274,6 +274,13 @@ units:
 #
 # The duplicate is dropped and every reference to it rewritten to `canonical`,
 # which must already exist upstream.
+#
+# All of these are `faction: "*"`. They were scoped to the faction that first
+# showed the split, which held while each faction's data was read in isolation;
+# a faction's index now resolves links into sibling catalogues (§3.10), so a
+# rule declared in the Astra Militarum library reaches Genestealer Cults and
+# splits there too. An alias is a merge and cannot introduce an id upstream
+# does not have, so widening one costs nothing where it does not apply.
   - faction: tau-empire
     id: crisis-fireknife-battlesuits
     reason: >
@@ -319,7 +326,7 @@ units:
     add_wargear: [missile-drone]
 
 aliases:
-  - faction: tau-empire
+  - faction: "*"
     id: battlesuit-support-systems
     canonical: battlesuit-support-system
     reason: >
@@ -329,7 +336,7 @@ aliases:
       names one rule.
     upstream: not yet reported
 
-  - faction: tau-empire
+  - faction: "*"
     id: weapon-support-systems
     canonical: weapon-support-system
     reason: >
@@ -338,7 +345,7 @@ aliases:
       to all rolls in the Shooting phase.
     upstream: not yet reported
 
-  - faction: tau-empire
+  - faction: "*"
     id: support-system
     canonical: weapon-support-system
     reason: >
@@ -354,7 +361,7 @@ aliases:
   # transcribed per datasheet, and the datasheets disagree about the plural —
   # and all three were found by the duplicate-fingerprint test rather than by
   # reading, which is the point of having it.
-  - faction: adepta-sororitas
+  - faction: "*"
     id: cherubs
     canonical: cherub
     reason: >
@@ -363,7 +370,7 @@ aliases:
       under two ids and neither reads as shared.
     upstream: not yet reported
 
-  - faction: astra-militarum
+  - faction: "*"
     id: mobile-hunter-killers
     canonical: mobile-hunter-killer
     reason: >
@@ -371,10 +378,35 @@ aliases:
       effect; upstream pluralises on the datasheets that mount more than one.
     upstream: not yet reported
 
-  - faction: orks
+  - faction: "*"
     id: bomb-squigs
     canonical: bomb-squig
     reason: >
       "Bomb Squigs" and "Bomb Squig" encode the same effect. Same plural
       split as the two above.
     upstream: not yet reported
+
+  - faction: "*"
+    id: leader-beasts
+    canonical: leader-beast
+    reason: >
+      BSData carries the rule under both spellings, and now that a faction's
+      index resolves links into sibling catalogues both reach every faction.
+      Left alone §7.3.9 counts them as two unshared rules and files the same
+      sentence twice on the rules screen.
+    upstream: not yet reported
+
+  - faction: "*"
+    id: dark-blessings
+    canonical: dark-blessing
+    reason: >
+      The same, and from the same source.
+    upstream: not yet reported
+
+  - faction: "*"
+    id: predatory-instincts
+    canonical: predatory-instinct
+    reason: >
+      Both spellings, from a shared catalogue.
+    upstream: not yet reported
+

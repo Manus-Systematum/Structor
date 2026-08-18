@@ -113,6 +113,14 @@ class BsIndex {
   /// Catalogue display names by id, for provenance in the conflict log.
   final Map<String, String> catalogueNames = {};
 
+  /// Top-level entry links, kept until every file is loaded.
+  ///
+  /// A catalogue may hold no entries at all and simply *select* from a
+  /// library: `Aeldari - Drukhari.json` is one such, and Craftworlds is 106
+  /// links and nothing else. Its datasheets are the ones it links to — not
+  /// everything in the library, which also holds the other faction's.
+  final List<Object?> _rootLinks = [];
+
   /// Top-level shared groups. Detachments and enhancements live here rather
   /// than inside any datasheet, so anything walking only [roots] misses them.
   final List<BsEntry> sharedGroups = [];
@@ -179,19 +187,27 @@ class BsIndex {
       sharedGroups.add(BsEntry(asMap(raw), id));
     }
 
-    if (asRoot && body['library'] != true) {
+    if (asRoot) {
       for (final raw in asList(body['sharedSelectionEntries'])) {
         roots.add(BsEntry(asMap(raw), id));
       }
+      _rootLinks.addAll(asList(body['entryLinks']));
     }
-    // A library's entries are roots too when nothing links to them: the
-    // Aeldari library holds the datasheets and Craftworlds holds only links,
-    // so refusing to walk libraries would lose the entire faction.
-    if (asRoot && body['library'] == true) {
-      for (final raw in asList(body['sharedSelectionEntries'])) {
-        roots.add(BsEntry(asMap(raw), id));
-      }
+  }
+
+  /// Resolves the top-level links of every root catalogue into roots.
+  ///
+  /// Call once, after the last [add]. Until every file is in the index a link
+  /// may point at a catalogue not yet loaded, so this cannot happen inline.
+  void resolveRootLinks() {
+    final seen = {for (final root in roots) root.id};
+    for (final raw in _rootLinks) {
+      final target = resolve(raw);
+      if (target == null) continue;
+      if (!seen.add(target.id)) continue;
+      roots.add(target);
     }
+    _rootLinks.clear();
   }
 
   BsEntry? byId(String? id) => id == null ? null : _byId[id];

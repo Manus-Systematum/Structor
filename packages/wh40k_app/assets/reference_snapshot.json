@@ -2129,84 +2129,29 @@
         "duration": "phase"
       },
       "community_notes": "community-authored from 10e source (provisional 11e); see #21",
-      "description": "In your Shooting phase, when a friendly **PATHFINDER TEAM/STEALTH BATTLESUITS** unit is **selected to shoot**, those ranged attacks do not prevent your unit from being **hidden**.",
+      "description": "In your Shooting phase, when a friendly **PATHFINDER TEAM/STEALTH BATTLESUITS** unit is **selected to shoot**, those ranged attacks do not prevent your unit from being **hidden**.",
       "sources": [
         "bsdata",
         "40kdc"
       ]
     },
-    "negation-emitters-advanced-acquisition-cadre": {
-      "ability_id": "negation-emitters-advanced-acquisition-cadre",
+    "negation-emitters": {
+      "ability_id": "negation-emitters",
       "name": "Negation Emitters",
-      "authored_by": "40kdc-community",
+      "description": "**STEALTH BATTLESUITS** unit only. This unit has -3\" **detection range**.",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "supersedes": null,
-      "unit_ids": [],
-      "faction_id": "tau-empire",
-      "detachment_id": "advanced-acquisition-cadre",
-      "ability_type": "enhancement",
-      "behavior": "passive",
-      "effect": {
-        "type": "stat-modifier",
-        "target": "self",
-        "modifier": {
-          "stat": "detection-range",
-          "operation": "subtract",
-          "value": 3
-        }
-      },
-      "scope": {
-        "range": "self",
-        "duration": "permanent"
-      },
-      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+        "dataslate": "bsdata"
+      }
     },
-    "unmasking-suite-advanced-acquisition-cadre": {
-      "ability_id": "unmasking-suite-advanced-acquisition-cadre",
+    "unmasking-suite": {
+      "ability_id": "unmasking-suite",
       "name": "Unmasking Suite",
-      "authored_by": "40kdc-community",
+      "description": "**GHOSTKEEL BATTLESUIT/PATHFINDER TEAM/STEALTH BATTLESUITS** unit only. When this unit is **selected to shoot**, you can select one enemy unit within 24\" of this unit. That enemy unit has +9\" **detection range** until this unit has shot.",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "supersedes": null,
-      "unit_ids": [],
-      "faction_id": "tau-empire",
-      "detachment_id": "advanced-acquisition-cadre",
-      "ability_type": "enhancement",
-      "behavior": "passive",
-      "effect": {
-        "type": "designate-target",
-        "designation": "unmasked",
-        "select": {
-          "scope": "enemy-unit",
-          "count": 1,
-          "timing": "when-this-unit-selected-to-shoot"
-        },
-        "applies": {
-          "to": "target",
-          "effect": {
-            "type": "stat-modifier",
-            "target": "defender",
-            "modifier": {
-              "stat": "detection-range",
-              "operation": "add",
-              "value": 9
-            }
-          }
-        },
-        "duration": "phase"
-      },
-      "scope": {
-        "range": "any-visible",
-        "duration": "phase"
-      },
-      "community_notes": "When the bearer's unit is selected to shoot, mark one enemy unit within 24\"; that enemy unit has +9\" detection range until this unit has shot."
+        "dataslate": "bsdata"
+      }
     },
     "superior-craftsmanship": {
       "ability_id": "superior-craftsmanship",
@@ -2242,7 +2187,7 @@
     "supernova-launcher": {
       "ability_id": "supernova-launcher",
       "name": "Supernova Launcher",
-      "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s Airbursting Fragmentation Projector weapons. That weapon’s attacks have:\n- +3 **S**\n- +1 **AP** and **D**.",
+      "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s Airbursting Fragmentation Projector weapons. That weapon’s attacks have:\n- +3 **S**\n- +1 **AP** and **D**.",
       "game_version": {
         "edition": "11th",
         "dataslate": "bsdata"
@@ -2251,7 +2196,7 @@
     "thermoneutronic-projector": {
       "ability_id": "thermoneutronic-projector",
       "name": "Thermoneutronic Projector",
-      "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s T’au Flamer weapons. That weapon’s attacks have:\n- +2 **S**\n- +1 **AP** and **D**.",
+      "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s T’au Flamer weapons. That weapon’s attacks have:\n- +2 **S**\n- +1 **AP** and **D**.",
       "game_version": {
         "edition": "11th",
         "dataslate": "bsdata"
@@ -2260,7 +2205,7 @@
     "plasma-accelerator-rifle": {
       "ability_id": "plasma-accelerator-rifle",
       "name": "Plasma Accelerator Rifle",
-      "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s Plasma Rifle weapons. That weapon’s attacks have:\n- +2 **S**\n- +1 **A**, **AP** and **D**.",
+      "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s Plasma Rifle weapons. That weapon’s attacks have:\n- +2 **S**\n- +1 **A**, **AP** and **D**.",
       "game_version": {
         "edition": "11th",
         "dataslate": "bsdata"
@@ -2440,7 +2385,7 @@
       "unit_ids": [
         "taunar-supremacy-armour"
       ],
-      "description": "If your Army Faction is **T’AU EMPIRE**, at the start of your Shooting phase you can select units from your army with this ability to become Observer units.\n\nDuring your Shooting phase, for each Observer unit from your army that has not been selected to shoot this phase and is eligible to shoot (excluding **FORTIFICATION** and Battle-shocked units) select one enemy unit that is visible to be marked as their Spotted unit until the end of the phase. Each enemy unit can only be marked as a Spotted unit once per phase.\n\nUnits from your army with the For the Greater Good ability (excluding Observer units) are Guided units while targeting one or more Spotted units.\n\nUntil the end of the phase, each time a model from your army in a Guided unit makes an attack that targets a Spotted unit, improve the Ballistic Skill characteristic of that attack by 1 and, if the Spotted unit was marked by an Observer unit that has the Markerlight keyword, that attack has the **[IGNORES COVER]** ability.",
+      "description": "If your Army Faction is **T’AU EMPIRE**, at the start of your Shooting phase you can select units from your army with this ability to become Observer units.\n\nDuring your Shooting phase, for each Observer unit from your army that has not been selected to shoot this phase and is eligible to shoot (excluding **FORTIFICATION** and Battle-shocked units) select one enemy unit that is visible to be marked as their Spotted unit until the end of the phase. Each enemy unit can only be marked as a Spotted unit once per phase.\n\nUnits from your army with the For the Greater Good ability (excluding Observer units) are Guided units while targeting one or more Spotted units.\n\nUntil the end of the phase, each time a model from your army in a Guided unit makes an attack that targets a Spotted unit, improve the Ballistic Skill characteristic of that attack by 1 and, if the Spotted unit was marked by an Observer unit that has the Markerlight keyword, that attack has the **[IGNORES COVER]** ability.",
       "sources": [
         "bsdata",
         "40kdc"
@@ -2543,7 +2488,7 @@
       ],
       "ability_type": "unit",
       "behavior": "passive",
-      "description": "The bearer is eligible to shoot in a turn in which it Fell Back but it loses the **^^Smoke^^** keyword.",
+      "description": "The bearer is eligible to shoot in a turn in which it Fell Back but it loses the **Smoke** keyword.",
       "sources": [
         "bsdata",
         "40kdc"
@@ -2592,7 +2537,7 @@
       "ability_type": "unit",
       "behavior": "passive",
       "community_notes": "community-authored from 10e source (provisional 11e); see #21",
-      "description": "The bearer’s unit has the **^^Markerlight^^** keyword and can act as an Observer unit for another unit even if it Advanced this turn.",
+      "description": "The bearer’s unit has the **Markerlight** keyword and can act as an Observer unit for another unit even if it Advanced this turn.",
       "sources": [
         "bsdata",
         "40kdc"
@@ -2676,7 +2621,7 @@
     "precise": {
       "ability_id": "precise",
       "name": "Precise",
-      "description": "Each time a Critical Wound is scored for an attack made with this weapon, that attack has the **[PRECISION]** ability.",
+      "description": "Each time a Critical Wound is scored for an attack made with this weapon, that attack has the **[PRECISION]** ability.",
       "game_version": {
         "edition": "11th",
         "dataslate": "bsdata"
@@ -2920,7 +2865,7 @@
       ],
       "ability_type": "unit",
       "behavior": "passive",
-      "description": "At the start of your opponent’s Charge phase, you can select one visible enemy unit (excluding **MONSTER** and **VEHICLE** units) within 12\" of this unit. That unit must take a Battle-shock test and, until the end of the turn, subtract 1 from Charge rolls made for that unit.",
+      "description": "At the start of your opponent’s Charge phase, you can select one visible enemy unit (excluding **MONSTER** and **VEHICLE** units) within 12\" of this unit. That unit must take a Battle-shock test and, until the end of the turn, subtract 1 from Charge rolls made for that unit.",
       "sources": [
         "bsdata",
         "40kdc"
@@ -2929,7 +2874,7 @@
     "exemplars-of-montka": {
       "ability_id": "exemplars-of-montka",
       "name": "Exemplars of Mont’ka",
-      "description": "Each time a model in this unit makes a ranged attack that targets the closest eligible target, that attack has the **[SUSTAINED HITS 1]** and **[IGNORES COVER]** abilities.",
+      "description": "Each time a model in this unit makes a ranged attack that targets the closest eligible target, that attack has the **[SUSTAINED HITS 1]** and **[IGNORES COVER]** abilities.",
       "game_version": {
         "edition": "11th",
         "dataslate": "bsdata"
@@ -2967,7 +2912,7 @@
       ],
       "ability_type": "unit",
       "behavior": "passive",
-      "description": "At the end of the Fight phase, if this unit was eligible to fight this phase, this unit can either make a Normal move of up to 6\" or a Fall Back move.",
+      "description": "At the end of the Fight phase, if this unit was eligible to fight this phase, this unit can either make a Normal move of up to 6\" or a Fall Back move.",
       "sources": [
         "bsdata",
         "40kdc"
@@ -2976,7 +2921,7 @@
     "scouts": {
       "ability_id": "scouts",
       "name": "Scouts",
-      "description": "This ability always takes the form **Scouts X\"**. In the Resolve Pre-battle Abilities step, if every model in a unit has this ability, you can do one of the following: \n- If that unit is in **strategic reserves**, you can set up that unit anywhere that is wholly within your deployment zone. \n- If that unit is wholly within your deployment zone, it can make a **scout move**. \n- If that unit is embarked within a **DEDICATED TRANSPORT** that is wholly within your deployment zone, and if every model embarked within that **DEDICATED TRANSPORT** has the Scouts ability, that **DEDICATED TRANSPORT** can make a **scout move**.",
+      "description": "This ability always takes the form **Scouts X\"**. In the Resolve Pre-battle Abilities step, if every model in a unit has this ability, you can do one of the following:\n- If that unit is in **strategic reserves**, you can set up that unit anywhere that is wholly within your deployment zone.\n- If that unit is wholly within your deployment zone, it can make a **scout move**.\n- If that unit is embarked within a **DEDICATED TRANSPORT** that is wholly within your deployment zone, and if every model embarked within that **DEDICATED TRANSPORT** has the Scouts ability, that **DEDICATED TRANSPORT** can make a **scout move**.",
       "ability_type": "core",
       "game_version": {
         "edition": "11th",
@@ -3065,7 +3010,7 @@
     "feel-no-pain": {
       "ability_id": "feel-no-pain",
       "name": "Feel No Pain",
-      "description": "This ability always takes the form **Feel No Pain X+**. Each time a model with this ability would lose a wound, roll one D6: on an **X+**, that wound is not lost. ",
+      "description": "This ability always takes the form **Feel No Pain X+**. Each time a model with this ability would lose a wound, roll one D6: on an **X+**, that wound is not lost.",
       "ability_type": "core",
       "game_version": {
         "edition": "11th",
@@ -3144,7 +3089,7 @@
     "deadly-demise": {
       "ability_id": "deadly-demise",
       "name": "Deadly Demise",
-      "description": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have made their **emergency disembark moves**, roll one D6. On a 6, that model suffers a **deadly demise**; each unit within 6\" of that model suffers a number of **mortal wounds** denoted by **X** (if this is a random number, roll separately for each unit within 6\"). \n***Example:** An Impulsor with a unit of Intercessors embarked within it is **destroyed** by ranged attacks. First, any unresolved attacks made by the attacking unit are resolved. Then the Intercessors make an **emergency disembark move**. Then the roll is made for the **Deadly Demise** ability, and on a 6, that ability is resolved. Finally, the Impulsor is removed from the battlefield.*",
+      "description": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have made their **emergency disembark moves**, roll one D6. On a 6, that model suffers a **deadly demise**; each unit within 6\" of that model suffers a number of **mortal wounds** denoted by **X** (if this is a random number, roll separately for each unit within 6\").\n***Example:** An Impulsor with a unit of Intercessors embarked within it is **destroyed** by ranged attacks. First, any unresolved attacks made by the attacking unit are resolved. Then the Intercessors make an **emergency disembark move**. Then the roll is made for the **Deadly Demise** ability, and on a 6, that ability is resolved. Finally, the Impulsor is removed from the battlefield.*",
       "ability_type": "core",
       "game_version": {
         "edition": "11th",
@@ -3209,7 +3154,7 @@
       ],
       "ability_type": "core",
       "behavior": "passive",
-      "description": "Unless part of an **attached** unit, this unit is not **visible** to enemy models unless they are within 12\" of this unit, and it cannot be targeted by **[INDIRECT FIRE]** weapons unless the attacking model is within 12\" of this unit. \nIf this ability takes the form **Lone Operative X\"**, unless part of an **attached** unit, this unit is not **visible** to enemy models unless they are within **X\"** of this unit, and it cannot be targeted by **[INDIRECT FIRE]** weapons unless the attacking model is within **X\"** of this unit.",
+      "description": "Unless part of an **attached** unit, this unit is not **visible** to enemy models unless they are within 12\" of this unit, and it cannot be targeted by **[INDIRECT FIRE]** weapons unless the attacking model is within 12\" of this unit.\nIf this ability takes the form **Lone Operative X\"**, unless part of an **attached** unit, this unit is not **visible** to enemy models unless they are within **X\"** of this unit, and it cannot be targeted by **[INDIRECT FIRE]** weapons unless the attacking model is within **X\"** of this unit.",
       "sources": [
         "bsdata",
         "40kdc"
@@ -3283,7 +3228,7 @@
       ],
       "ability_type": "unit",
       "behavior": "activated",
-      "description": "Once per battle, when this unit is selected to shoot in your Shooting phase, select one ranged weapon equipped by this model. Until the end of the phase, that weapon has the **[DEVASTATING WOUNDS]** ability.",
+      "description": "Once per battle, when this unit is selected to shoot in your Shooting phase, select one ranged weapon equipped by this model. Until the end of the phase, that weapon has the **[DEVASTATING WOUNDS]** ability.",
       "sources": [
         "bsdata",
         "40kdc"
@@ -3355,7 +3300,7 @@
       "ability_type": "unit",
       "behavior": "passive",
       "community_notes": "auto-generated, partial",
-      "description": "Each time this unit is an Observer unit, until the end of the phase, each time a ranged attack is made by a model in a Guided unit that targets their Spotted unit, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.",
+      "description": "Each time this unit is an Observer unit, until the end of the phase, each time a ranged attack is made by a model in a Guided unit that targets their Spotted unit, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.",
       "sources": [
         "bsdata",
         "40kdc"
@@ -3386,7 +3331,7 @@
       ],
       "ability_type": "unit",
       "behavior": "activated",
-      "description": "Once per battle, you can use the Rapid Ingress Stratagem for 0CP. The target must be set up within 3\" of the bearer’s unit and more than 8\" away from all enemy units.\n**Designer’s Note:** *Place a Homing Beacon token next to this unit, removing it once this ability is used.*",
+      "description": "Once per battle, you can use the Rapid Ingress Stratagem for 0CP. The target must be set up within 3\" of the bearer’s unit and more than 8\" away from all enemy units.\n**Designer’s Note:** *Place a Homing Beacon token next to this unit, removing it once this ability is used.*",
       "sources": [
         "bsdata",
         "40kdc"
@@ -3786,7 +3731,7 @@
       "keyword_restrictions": [
         "T’au Empire"
       ],
-      "ability_id": "negation-emitters-advanced-acquisition-cadre",
+      "ability_id": "negation-emitters",
       "is_unique": true,
       "game_version": {
         "edition": "11th",
@@ -3804,7 +3749,7 @@
       "keyword_restrictions": [
         "T’au Empire"
       ],
-      "ability_id": "unmasking-suite-advanced-acquisition-cadre",
+      "ability_id": "unmasking-suite",
       "is_unique": true,
       "game_version": {
         "edition": "11th",

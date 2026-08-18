@@ -591,11 +591,19 @@ class _RuleTile extends StatelessWidget {
                     style: const TextStyle(
                         fontSize: 11.5, fontWeight: FontWeight.w700),
                   ),
-                  TextSpan(
-                    text: rule.text,
-                    style: TextStyle(
-                        fontSize: 11.5, color: scheme.onSurfaceVariant),
-                  ),
+                  // Emphasis rendered, not printed: the rule arrives with
+                  // its keywords marked, and the markers themselves are
+                  // noise on the screen (§3.10).
+                  for (final span in ruleSpans(rule.text))
+                    TextSpan(
+                      text: span.text,
+                      style: TextStyle(
+                        fontSize: 11.5,
+                        color: scheme.onSurfaceVariant,
+                        fontWeight: span.bold ? FontWeight.w700 : null,
+                        fontStyle: span.italic ? FontStyle.italic : null,
+                      ),
+                    ),
                 ],
               ),
             ),
