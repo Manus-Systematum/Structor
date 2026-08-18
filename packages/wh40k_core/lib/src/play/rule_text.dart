@@ -27,10 +27,13 @@ library;
 
 final _nbsp = RegExp('[  ]');
 final _nbHyphen = RegExp('[‐‑]');
-/// `**^^X^^**` — both markers on the same words, and the commonest shape in
-/// the data. Handled before the bare form, or folding small caps into bold
-/// doubles the markers and the collapse then eats all four.
-final _boldSmallCaps = RegExp(r'\*\*\s*\^\^(.*?)\^\^\s*\*\*', dotAll: true);
+/// Both markers on the same words, in either order — `**^^X^^**` and
+/// `^^**X**^^`, and the data uses both. Handled before the bare form: folding
+/// small caps into bold otherwise doubles the markers, and cleaning up after
+/// that left a stray `**` in the middle of a sentence.
+final _boldSmallCaps = RegExp(
+    r'\*\*\s*\^\^(.*?)\^\^\s*\*\*|\^\^\s*\*\*(.*?)\*\*\s*\^\^',
+    dotAll: true);
 final _smallCaps = RegExp(r'\^\^(.*?)\^\^', dotAll: true);
 final _bullets = RegExp('[▪▫■•]');
 final _trailingSpace = RegExp(r'[ \t]+$', multiLine: true);
@@ -45,7 +48,8 @@ String normaliseRuleText(String raw) {
       .replaceAll(_nbHyphen, '-')
       // Small caps and bold both mark a keyword; the app has one emphasis
       // level, so they become the same thing rather than two.
-      .replaceAllMapped(_boldSmallCaps, (m) => '**${m[1]!.trim()}**')
+      .replaceAllMapped(
+          _boldSmallCaps, (m) => '**${(m[1] ?? m[2]!).trim()}**')
       .replaceAllMapped(_smallCaps, (m) => '**${m[1]!.trim()}**')
       .replaceAll(_emptyEmphasis, '');
 

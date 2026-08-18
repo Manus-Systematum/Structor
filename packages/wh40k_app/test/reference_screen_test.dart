@@ -90,7 +90,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.textContaining('Tap a rule or a unit'), findsNothing);
-      expect(find.textContaining('+1 Wound'), findsWidgets);
+      // The printed rule, not our paraphrase of its structure: 40kdc's
+      // `{stat: W, operation: add, value: 1}` rendered as "+1 Wound", and
+      // BSData says "Add 1 to the bearer's Wounds characteristic" (§3.10).
+      expect(find.textContaining('Wounds characteristic'), findsWidgets);
       expect(
         find.textContaining('Commander in Enforcer Battlesuit'),
         findsWidgets,
@@ -183,5 +186,27 @@ void main() {
     await tester.drag(horizontal.first, const Offset(-200, 0));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('no markup reaches the screen', (tester) async {
+    // BSData writes rules as a codex prints them and marks the keywords.
+    // Through a plain Text the markers appear literally, and a player reads
+    // `**T’au Empire**` mid-game (§3.10). Every rule-bearing surface renders
+    // the emphasis instead, and this is the guard that one does not get
+    // added back without it.
+    await open(tester);
+
+    final raw = <String>[];
+    for (final widget in tester.allWidgets) {
+      final strings = <String?>[
+        if (widget is Text) widget.data,
+        if (widget is Text) widget.textSpan?.toPlainText(),
+      ];
+      for (final text in strings) {
+        if (text == null) continue;
+        if (text.contains('**') || text.contains('^^')) raw.add(text);
+      }
+    }
+    expect(raw, isEmpty, reason: raw.take(2).join(' | '));
   });
 }

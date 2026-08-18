@@ -576,10 +576,16 @@ class _UnitRules extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 10, color: scheme.onSurfaceVariant),
                       ),
-                    TextSpan(
-                      text: ' — ${rule.text}',
-                      style: TextStyle(color: scheme.onSurfaceVariant),
-                    ),
+                    const TextSpan(text: ' — '),
+                    for (final span in ruleSpans(rule.text))
+                      TextSpan(
+                        text: span.text,
+                        style: TextStyle(
+                          color: scheme.onSurfaceVariant,
+                          fontWeight: span.bold ? FontWeight.w700 : null,
+                          fontStyle: span.italic ? FontStyle.italic : null,
+                        ),
+                      ),
                   ],
                 ),
               ),

@@ -349,19 +349,19 @@ abilities:
       };
 
       expect(
-        rendered['advanced-armour']?.text,
+        rendered['advanced-armour']?.derived,
         'Against mortal wounds: Feel No Pain 4+.',
       );
       // The whole squad's ranged weapons, not just the Commander's — being
       // able to shoot after Advancing is the point of the ability.
       expect(
-        rendered['coldstar-commander']?.text,
+        rendered['coldstar-commander']?.derived,
         'While leading a unit: Move set to 12; ranged weapons gain ASSAULT.',
       );
       // The exclusion is the rule: -1 AP against everything the Starscythe
       // is not built to kill would be a promise the datasheet does not make.
       expect(
-        rendered['starscythe']?.text,
+        rendered['starscythe']?.derived,
         'Shooting phase, except vs VEHICLE or MONSTER: -1 AP.',
       );
 
@@ -477,7 +477,7 @@ abilities:
           if (ability.abilityId != 'stealth') continue;
           seen++;
           expect(
-            const RulesRenderer().render(ability).text,
+            const RulesRenderer().render(ability).derived,
             'Has the Benefit of Cover.',
             reason: '$factionId still carries the 10th edition -1 to Hit',
           );
@@ -501,7 +501,7 @@ abilities:
       if (ability.isEmpty) return;
 
       expect(
-        const RulesRenderer().render(ability.single).text,
+        const RulesRenderer().render(ability.single).derived,
         'Against mortal wounds: Feel No Pain 4+.',
       );
     });

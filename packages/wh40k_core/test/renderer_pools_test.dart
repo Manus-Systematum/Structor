@@ -10,12 +10,20 @@ void main() {
       corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'));
   const renderer = RulesRenderer();
 
+  /// The sentence built from the **structured effect**, which is what these
+  /// tests are about.
+  ///
+  /// Not what a screen shows any more: where BSData supplies the rule as
+  /// printed, that is what a player reads, and no paraphrase of ours improves
+  /// on it (§3.10). The derivation still has to be right — the phase tags, the
+  /// invulnerable save and §3.6's corrections all come off the same walk — so
+  /// it is still tested, just not through the display.
   String render(String factionId, String abilityId) => renderer
       .render(loader
           .loadFaction(factionId)
           .abilities
           .firstWhere((a) => a.abilityId == abilityId))
-      .text;
+      .derived;
 
   group('a grant says what it grants', () {
     test('the Immolator names the rule it hands out', () {

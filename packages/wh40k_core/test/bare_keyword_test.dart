@@ -16,14 +16,30 @@ void main() {
       .firstWhere((a) => a.abilityId == id));
 
   group('a rule that only repeats its name is a keyword', () {
-    test('Deep Strike and Leader are keywords, not descriptions', () {
-      // "Deep Strike: Deep Strike" and "Leader: grants Leader" are honest —
-      // the meaning lives in the rulebook and there is nothing to render —
-      // but printed as name-and-description they read as rules the app
-      // failed to explain, at two lines each.
-      expect(render('adeptus-astartes', 'deep-strike').isBareKeyword, isTrue);
-      expect(render('adeptus-astartes', 'leader').isBareKeyword, isTrue);
+    test('a rule with printed wording is never a bare keyword', () {
+      // This used to assert the opposite of Deep Strike and Leader: 40kdc
+      // encodes them as a grant of themselves, there was nothing to render,
+      // and "Deep Strike: Deep Strike" read as a rule the app had failed to
+      // explain. BSData publishes both rules in full, so there is now a
+      // sentence worth two lines (§3.10) — the compression is for rules with
+      // *nothing* to say, and these have something.
+      final deepStrike = render('adeptus-astartes', 'deep-strike');
+      expect(deepStrike.isPrinted, isTrue);
+      expect(deepStrike.isBareKeyword, isFalse);
+      // The derivation underneath is still the empty one it always was.
+      expect(deepStrike.derived, anyOf('—', contains('Deep Strike')));
     }, skip: skip);
+
+    test('a rule with neither structure nor wording still is one', () {
+      const renderer = RulesRenderer();
+      final bare = renderer.render(const SourceAbility(
+        abilityId: 'some-keyword',
+        name: 'Some Keyword',
+        gameVersion: GameVersion(edition: '11th', dataslate: 'test'),
+      ));
+      expect(bare.isBareKeyword, isTrue);
+      expect(bare.isPrinted, isFalse);
+    });
 
     test('a grant of an unpublished marker says nothing at all', () {
       // Holy Vanguard's whole effect is a grant of `special-embark-rule`,
@@ -32,9 +48,11 @@ void main() {
       // does not give one. 561 of 640 grant targets are unpublished; the
       // seven marker ids are 332 of them.
       final holyVanguard = render('adepta-sororitas', 'holy-vanguard');
-      expect(holyVanguard.isBareKeyword, isTrue);
-      expect(holyVanguard.text, isNot(contains('embark')));
-      expect(holyVanguard.text, isNot(contains('While leading')),
+      // The derivation is what this is about: the grant target is unpublished,
+      // so the structured effect says nothing. Whether a *screen* shows
+      // nothing now depends on whether BSData printed the rule.
+      expect(holyVanguard.derived, isNot(contains('embark')));
+      expect(holyVanguard.derived, isNot(contains('While leading')),
           reason: 'a condition on nothing is nothing');
     }, skip: skip);
 
@@ -42,7 +60,7 @@ void main() {
       // The other half of the same data: `benefit-of-cover` appears 99 times
       // and is meaningful even though no record defines it. Suppressing every
       // unpublished grant would have thrown it away too.
-      expect(render('adepta-sororitas', 'purge-and-cleanse').text,
+      expect(render('adepta-sororitas', 'purge-and-cleanse').derived,
           contains('benefit of cover'));
     }, skip: skip);
 
@@ -73,7 +91,9 @@ void main() {
           if (renderer.render(ability).isBareKeyword) bare++;
         }
       }
-      expect(bare, greaterThan(100));
+      // Far fewer than the 447 this once guarded, and for a good reason: a
+      // rule BSData printed is never bare, whatever its structure says. What
+      // is left are the rules neither source has anything to say about.
       expect(bare / total, lessThan(0.10),
           reason: 'if most rules look empty, the renderer has regressed');
     }, skip: skip);

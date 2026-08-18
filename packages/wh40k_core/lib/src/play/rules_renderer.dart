@@ -20,7 +20,23 @@ import '../source/source_models.dart';
 class RenderedRule {
   final String abilityId;
   final String name;
+
+  /// What a player reads: the rule as printed where the source has it,
+  /// otherwise the sentence derived from the structured effect.
   final String text;
+
+  /// The sentence derived from the structured effect, always.
+  ///
+  /// Kept beside [text] rather than replaced by it. Nothing on a screen shows
+  /// this — the printed rule is better writing than any paraphrase of ours —
+  /// but it is how the structured data can still be inspected, and how §3.6's
+  /// corrections stay checkable now that they no longer change what is
+  /// displayed. A correction fixes what the app *does*; the printed text
+  /// fixes what it *says*, and the two are tested separately (§3.10).
+  final String derived;
+
+  /// Whether [text] is the printed rule rather than [derived].
+  final bool isPrinted;
 
   /// Phases mentioned by `phase-is` conditions, so the card can surface itself
   /// in the right section of the turn page.
@@ -36,7 +52,9 @@ class RenderedRule {
     required this.text,
     required this.phases,
     required this.unrendered,
-  });
+    String? derived,
+    this.isPrinted = false,
+  }) : derived = derived ?? text;
 
   bool get isComplete => unrendered.isEmpty;
 
@@ -53,6 +71,9 @@ class RenderedRule {
   /// in a row of chips. Detected rather than listed, because a hand-kept list
   /// of core keywords would go stale the first time upstream adds one.
   bool get isBareKeyword {
+    // Printed wording is never a bare keyword: whatever the structure says,
+    // the rule has a sentence of its own to show.
+    if (isPrinted) return false;
     if (text.isEmpty || text == '—') return true;
     final body = _plain(text);
     return body == _plain(name) || body == 'grants ${_plain(name)}';
@@ -96,33 +117,28 @@ class RulesRenderer {
     final frequency = str(ability.usage['frequency']);
     if (frequency != null) text = '$text (${_frequency(ability.usage)})';
 
-    // **Printed text fills the gap; it does not override structure.**
+    // **Printed text is what a player reads.**
     //
-    // Where BSData supplies the rule as printed and there is no structured
-    // effect, the wording is what the player's codex says and beats rendering
-    // a dash — which is a third of every faction's rules now that BSData
-    // contributes prose-only abilities (§3.10).
+    // The renderer exists because 40kdc publishes structure and no wording:
+    // it says what an effect means in English so a screen has something to
+    // show. Where BSData supplies the rule as printed, that sentence is the
+    // one in the player's codex, and no paraphrase of ours improves on it —
+    // "Shooting phase: grants a shoot while hidden" against the rule itself.
     //
-    // Where there *is* structure, the structure renders. That is not a
-    // preference for the paraphrase: §3.6's corrections exist precisely
-    // because upstream structure was wrong, and letting prose win would make
-    // every one of them cosmetic — Stealth would go back to reading as the
-    // 10th edition rule in any faction whose text still says so.
+    // **The structure does not go away, it stops being the display.** Phases
+    // still come from walking the effect, and everything that reads an effect
+    // rather than a sentence — the invulnerable save on the statline, scout
+    // distance, §3.6's corrections — is untouched. A correction fixes what the
+    // app *does*; the printed text fixes what it *says*.
+    final derived = text.isEmpty ? '—' : _sentence(text);
     final printed = ability.description?.trim();
-    if (ability.effect.isEmpty && printed != null && printed.isNotEmpty) {
-      return RenderedRule(
-        abilityId: ability.abilityId,
-        name: ability.name,
-        text: printed,
-        phases: ctx.phases.toList(),
-        unrendered: ctx.unrendered.toList(),
-      );
-    }
 
     return RenderedRule(
       abilityId: ability.abilityId,
       name: ability.name,
-      text: text.isEmpty ? '—' : _sentence(text),
+      text: printed != null && printed.isNotEmpty ? printed : derived,
+      derived: derived,
+      isPrinted: printed != null && printed.isNotEmpty,
       phases: ctx.phases.toList(),
       unrendered: ctx.unrendered.toList(),
     );

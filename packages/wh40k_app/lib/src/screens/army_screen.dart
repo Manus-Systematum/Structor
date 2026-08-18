@@ -257,12 +257,20 @@ class _UnitCard extends StatelessWidget {
                           style: const TextStyle(
                               fontSize: 11.5, fontWeight: FontWeight.w700),
                         ),
-                        TextSpan(
-                          text: entry.rule.text,
-                          style: TextStyle(
+                        // Emphasis rendered rather than printed: the rule
+                        // arrives with its keywords marked (§3.10).
+                        for (final span in ruleSpans(entry.rule.text))
+                          TextSpan(
+                            text: span.text,
+                            style: TextStyle(
                               fontSize: 11.5,
-                              color: scheme.onSurfaceVariant),
-                        ),
+                              color: scheme.onSurfaceVariant,
+                              fontWeight:
+                                  span.bold ? FontWeight.w700 : null,
+                              fontStyle:
+                                  span.italic ? FontStyle.italic : null,
+                            ),
+                          ),
                         // Only when it could be either half: a Shield
                         // Generator on the Commander is not one on the suits
                         // it leads. Empty when both halves have the rule.

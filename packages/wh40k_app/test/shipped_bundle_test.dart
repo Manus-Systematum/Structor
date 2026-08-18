@@ -78,7 +78,7 @@ void main() {
     test('Advanced Armour is restricted to mortal wounds', () {
       final ability = tau.ability('advanced-armour');
       expect(ability, isNotNull);
-      expect(const RulesRenderer().render(ability!).text,
+      expect(const RulesRenderer().render(ability!).derived,
           'Against mortal wounds: Feel No Pain 4+.');
     });
   });

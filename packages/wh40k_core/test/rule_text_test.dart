@@ -10,6 +10,10 @@ void main() {
           '**T’au Empire** models');
       expect(normaliseRuleText('^^Grey Knights Infantry^^ model only.'),
           '**Grey Knights Infantry** model only.');
+      // Both orders appear. This one left a stray `**` mid-sentence: "If your
+      // Army Faction is Adepta Sororitas**, each unit…".
+      expect(normaliseRuleText('is ^^**Adepta Sororitas**^^, each unit'),
+          'is **Adepta Sororitas**, each unit');
     });
 
     test('invisible characters go', () {

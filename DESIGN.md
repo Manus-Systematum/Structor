@@ -1703,3 +1703,34 @@ named "enhancement" — it is not a datasheet's own rule — and reads `profiles
 but not `rules`, which is where a detachment keeps its. Both exclusions are
 right for datasheets and wrong here, and loosening them would have quietly
 put every faction's enhancement list back onto every Character.
+
+#### The printed rule is the one on screen
+
+The renderer (§7.3.6) exists because 40kdc publishes structure and no wording:
+it says what an effect *means* in English so a screen has something to show.
+Where BSData supplies the rule as printed, that sentence is the one in the
+player's codex, and no paraphrase of ours improves on it:
+
+| Rendered from structure | As printed |
+| --- | --- |
+| `+1 Wound.` | Add 1 to the bearer's Wounds characteristic. |
+| `Shooting phase: grants a shoot while hidden.` | In your Shooting phase, when a friendly **PATHFINDER TEAM** unit… |
+| `Gain 1 Miracle dice.` | Once per battle, after this unit has performed an Act of Faith, you gain 1 Miracle dice. |
+
+**The structure does not go away, it stops being the display.**
+`RenderedRule.derived` still carries the sentence built from the effect, and
+everything that reads an effect rather than a sentence is untouched: phase
+tags, the invulnerable save on the statline, scout distance, and §3.6's
+corrections. A correction fixes what the app **does**; the printed text fixes
+what it **says**, and the two are now tested separately — the display through
+`text`, the derivation through `derived`.
+
+One consequence worth stating: a rule BSData printed is never a bare keyword
+(§7.3.11), whatever its structure says. Deep Strike used to compress to a chip
+because 40kdc encodes it as a grant of itself and there was nothing to render.
+There is now.
+
+**Saved rosters keep the wording they were built with.** A snapshot is frozen
+by design (§2.2), so an army saved before this shows the old derived
+sentences until its units are re-added. That is the same property that let a
+roster built against 40kdc survive the source swap at all.

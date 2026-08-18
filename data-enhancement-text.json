@@ -127,7 +127,7 @@
           "ability_id": "master-regenesist",
           "name": "Master Regenesist",
           "score": 0.5,
-          "text": "Haemonculus model only. Each time the bearer uses its Fleshcraft ability, you can return up to D3+3 destroyed Bodyguard models to the bearer's unit instead o…"
+          "text": "**Haemonculus** model only. Each time the bearer uses its Fleshcraft ability, you can return up to D3+3 destroyed Bodyguard models to the bearer's unit inste…"
         },
         {
           "ability_id": "master-of-deceit",
@@ -239,7 +239,7 @@
           "ability_id": "master-of-mechanisms",
           "name": "Master of Mechanisms",
           "score": 0.5,
-          "text": "In your Command phase, select one friendly Heretic Astartes Vehicle**model within 3\" of this model. That**Vehicle**model regains up to D3 lost wounds and, un…"
+          "text": "In your Command phase, select one friendly **Heretic Astartes Vehicle** model within 3\" of this model. That **Vehicle** model regains up to D3 lost wounds an…"
         },
         {
           "ability_id": "empowered-manifestation",
@@ -827,7 +827,7 @@
           "ability_id": "octagram-of-conjuration-aura",
           "name": "Octagram of Conjuration (Aura)",
           "score": 0.8,
-          "text": "While a friendly War Dog**model is within 9” of this model, after that**War Dog model has shot, you can select one enemy unit hit by one or more of those att…"
+          "text": "While a friendly **War Dog** model is within 9” of this model, after that **War Dog** model has shot, you can select one enemy unit hit by one or more of tho…"
         },
         {
           "ability_id": "amplification-psychic",
@@ -1427,7 +1427,7 @@
           "ability_id": "exotic-munitions",
           "name": "Exotic Munitions",
           "score": 0.5,
-          "text": "Anhrathe**unit only. Ranged weapons equipped by models in this unit have the**[ANTI-MONSTER 5+]**and**[ANTI-VEHICLE 5+] abilities."
+          "text": "**Anhrathe** unit only. Ranged weapons equipped by models in this unit have the **[ANTI-MONSTER 5+]** and **[ANTI-VEHICLE 5+]** abilities."
         }
       ]
     },
@@ -1611,7 +1611,7 @@
           "ability_id": "br-khyr-guild-support",
           "name": "Brôkhyr Guild Support",
           "score": 0.57,
-          "text": "While this unit is within 3\" of one or more friendly Leagues of Votann Vehicle**or**Ironkin Steeljacks units, if this unit is not an attached unit, it has th…"
+          "text": "While this unit is within 3\" of one or more friendly **Leagues of Votann Vehicle** or **Ironkin Steeljacks** units, if this unit is not an attached unit, it …"
         },
         {
           "ability_id": "blades-of-the-emperor",
@@ -1639,7 +1639,7 @@
           "ability_id": "d-lvwerke-navigator",
           "name": "Dêlvwerke Navigator",
           "score": 0.67,
-          "text": "In the Reinforcements step of your Movement phase, the bearer can use this Enhancement. If it does, select one friendly Cthonian Beserks unit visible to the …"
+          "text": "In the Reinforcements step of your Movement phase, the bearer can use this Enhancement. If it does, select one friendly **Cthonian Beserks unit visible to th…"
         },
         {
           "ability_id": "blades-of-the-emperor",
@@ -2065,7 +2065,7 @@
           "ability_id": "raid-leader",
           "name": "Raid Leader",
           "score": 0.5,
-          "text": "Each time the bearer’s unit is set up after disembarking from a Transport that has made a Normal move this turn, the bearer’s unit is still eligible to decla…"
+          "text": "Each time the bearer’s unit is set up after disembarking from a **Transport** that has made a Normal move this turn, the bearer’s unit is still eligible to d…"
         },
         {
           "ability_id": "natural-leader",
@@ -2283,13 +2283,13 @@
           "ability_id": "weavers-wail",
           "name": "Weavers' Wail",
           "score": 0.5,
-          "text": "Troupe Master model only. Add 3 to the Strength and add 1 to the Attacks characteristics of the bearer’s melee weapons."
+          "text": "**Troupe Master** model only. Add 3 to the Strength and add 1 to the Attacks characteristics of the bearer’s melee weapons."
         },
         {
           "ability_id": "weavers-wail",
           "name": "Weavers' Wail",
           "score": 0.5,
-          "text": "Troupe Master model only. Add 3 to the Strength and add 1 to the Attacks characteristics of the bearer’s melee weapons."
+          "text": "**Troupe Master** model only. Add 3 to the Strength and add 1 to the Attacks characteristics of the bearer’s melee weapons."
         },
         {
           "ability_id": "metalodermal-tesla-weave",

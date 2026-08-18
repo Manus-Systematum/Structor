@@ -113,8 +113,14 @@ void main() {
       final rule = unitWith('u03')
           .rules
           .firstWhere((r) => r.abilityId == 'coldstar-commander');
+      // The screen shows the printed rule. The `set` versus `add` distinction
+      // this test was written for lives in the derivation — rendering `set 12`
+      // as "+12 Move" on a suit that already moves 12 was the original bug
+      // (§3.7), and the guard belongs on the sentence that can still make it.
+      expect(rule.isPrinted, isTrue);
+      expect(rule.text, contains('Move characteristic of 12"'));
       expect(
-        rule.text,
+        rule.derived,
         'While leading a unit: Move set to 12; ranged weapons gain ASSAULT.',
       );
     });
@@ -200,9 +206,9 @@ void main() {
 
     expect(find.textContaining('Fireknife:', findRichText: true), findsWidgets);
     expect(
-      find.textContaining('re-roll Hit rolls of 1', findRichText: true),
+      find.textContaining('re-roll a Hit roll of 1', findRichText: true),
       findsWidgets,
-      reason: 'generated from the structured effect, not transcribed',
+      reason: 'the rule as printed, beside the weapons it modifies',
     );
   });
 
