@@ -389,6 +389,19 @@ class RosterResolver {
     required Map<String, int> tally,
     required List<ResolutionIssue> issues,
   }) {
+    // `X with Y` names a thing and what it carries, and the thing is the one
+    // the roster records: a Gun Drone with a twin pulse carbine is a drone,
+    // not a carbine (§3.8). This runs *before* the whole-string match because
+    // BSData lists the drone's own gun on the datasheet, so the full string
+    // matched `Twin pulse carbine` outright and the split that would have
+    // found the drone never ran. Only a leading part that names an ability
+    // counts, so a weapon legitimately called "... with ..." is unaffected.
+    final carrier = _carrierOf(node.name, abilityCandidates);
+    if (carrier != null) {
+      tally.update(carrier, (n) => n + node.count, ifAbsent: () => node.count);
+      return;
+    }
+
     final direct = bestMatch<_Candidate>(
       node.name,
       candidates,
@@ -512,6 +525,19 @@ class RosterResolver {
   }
 
   /// The id of the datasheet ability [name] refers to, if any.
+  /// The ability named before a `with`, when the string is `X with Y`.
+  ///
+  /// Returns null when there is no `with`, or when what precedes it is not an
+  /// ability this datasheet has — which is what keeps a weapon whose printed
+  /// name contains "with" resolving as a weapon.
+  String? _carrierOf(String name, List<_Candidate> abilityCandidates) {
+    final split = RegExp(r'\s+with\s+', caseSensitive: false).firstMatch(name);
+    if (split == null) return null;
+    final head = name.substring(0, split.start).trim();
+    if (head.isEmpty) return null;
+    return _abilityFor(head, abilityCandidates);
+  }
+
   String? _abilityFor(String name, List<_Candidate> candidates) =>
       bestMatch<_Candidate>(name, candidates, (c) => c.name, threshold: 0.7)
           ?.value

@@ -13,13 +13,13 @@
       "profiles": [
         {
           "name": "Commander in Enforcer Battlesuit",
-          "M": 8,
-          "T": 5,
-          "W": 6,
-          "Sv": 2,
+          "M": "8\"",
+          "T": "5",
+          "W": "6",
+          "Sv": "2+",
           "invuln_sv": null,
-          "Ld": 7,
-          "OC": 2
+          "Ld": "7+",
+          "OC": "2"
         }
       ],
       "points": [
@@ -29,15 +29,17 @@
         }
       ],
       "keywords": [
+        "Character",
         "Vehicle",
         "Walker",
         "Fly",
-        "Character",
         "Battlesuit",
-        "Commander in Enforcer Battlesuit"
+        "Commander in Enforcer Battlesuit",
+        "Non-Kroot",
+        "Leader"
       ],
       "faction_keywords": [
-        "T’au Empire"
+        "T'au Empire"
       ],
       "base_size_mm": {
         "shape": "round",
@@ -48,25 +50,32 @@
         "max": 1
       },
       "weapon_ids": [
+        "battlesuit-fists",
+        "twin-pulse-carbine",
+        "missile-pod",
+        "burst-cannon",
         "airbursting-fragmentation-projector",
-        "battlesuit-fists-commander-in-enforcer-battlesuit",
-        "burst-cannon-commander-in-enforcer-battlesuit",
-        "cyclic-ion-blaster-commander-in-enforcer-battlesuit",
-        "fusion-blaster-commander-in-enforcer-battlesuit",
-        "missile-pod-commander-in-enforcer-battlesuit",
-        "plasma-rifle-commander-in-enforcer-battlesuit",
-        "tau-flamer"
+        "cyclic-ion-blaster",
+        "tau-flamer",
+        "fusion-blaster",
+        "plasma-rifle"
       ],
       "ability_ids": [
         "enforcer-commander",
         "leader",
         "deep-strike",
-        "gun-drone",
-        "shield-drone"
+        "for-the-greater-good",
+        "marker-drone",
+        "shield-drone",
+        "guardian-drone",
+        "precise",
+        "precision",
+        "lethal-hits",
+        "shield-generator"
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "launch"
+        "dataslate": "bsdata"
       },
       "is_legend": false,
       "points_provisional": false,
@@ -75,6 +84,13 @@
         {
           "items": [
             "cyclic-ion-blaster-commander-in-enforcer-battlesuit"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
+        {
+          "items": [
+            "shield-generator"
           ],
           "count": 1,
           "per_models": 0
@@ -99,26 +115,13 @@
           ],
           "count": 1,
           "per_models": 0
-        },
-        {
-          "items": [
-            "gun-drone"
-          ],
-          "count": 1,
-          "per_models": 0
-        },
-        {
-          "items": [
-            "shield-drone"
-          ],
-          "count": 1,
-          "per_models": 0
         }
       ],
-      "corrected": {
-        "reason": "Commander battlesuits take drones. Upstream lists neither the abilities nor the wargear budget, so a Commander's Gun Drone was dropped on import — its twin pulse carbine missing from the shooting table and its Shield Drone missing from the rules. Evidenced by a validated War Organ export of a legal 2,000 point list.",
-        "upstream": "not yet reported"
-      }
+      "battlefield_role": "Character",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "crisis-fireknife-battlesuits": {
       "id": "crisis-fireknife-battlesuits",
@@ -127,13 +130,23 @@
       "profiles": [
         {
           "name": "Crisis Fireknife Shas’ui",
-          "M": 10,
-          "T": 5,
-          "W": 4,
-          "Sv": 3,
+          "M": "10\"",
+          "T": "5",
+          "W": "4",
+          "Sv": "3+",
           "invuln_sv": null,
-          "Ld": 7,
-          "OC": 2
+          "Ld": "7+",
+          "OC": "2"
+        },
+        {
+          "name": "Crisis Fireknife Shas’vre",
+          "M": "10\"",
+          "T": "5",
+          "W": "4",
+          "Sv": "3+",
+          "invuln_sv": null,
+          "Ld": "7+",
+          "OC": "2"
         }
       ],
       "points": [
@@ -146,8 +159,7 @@
         {
           "models": 3,
           "cost": 110,
-          "unit_count_min": 3,
-          "unit_count_max": null
+          "unit_count_min": 3
         }
       ],
       "keywords": [
@@ -156,10 +168,11 @@
         "Fly",
         "Battlesuit",
         "Crisis",
-        "Fireknife"
+        "Fireknife",
+        "Non-Kroot"
       ],
       "faction_keywords": [
-        "T’au Empire"
+        "T'au Empire"
       ],
       "base_size_mm": {
         "shape": "round",
@@ -170,21 +183,26 @@
         "max": 3
       },
       "weapon_ids": [
-        "battlesuit-fists",
+        "twin-pulse-carbine",
         "missile-pod",
+        "battlesuit-fists",
         "plasma-rifle"
       ],
       "ability_ids": [
-        "deep-strike",
         "fireknife",
-        "gun-drone",
+        "weapon-support-system",
+        "deep-strike",
+        "for-the-greater-good",
         "marker-drone",
         "shield-drone",
-        "weapon-support-system"
+        "guardian-drone",
+        "precise",
+        "precision",
+        "lethal-hits"
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "launch"
+        "dataslate": "bsdata"
       },
       "is_legend": false,
       "points_provisional": false,
@@ -216,6 +234,11 @@
           "count": 3,
           "per_models": 3
         }
+      ],
+      "battlefield_role": "Vehicle",
+      "sources": [
+        "bsdata",
+        "40kdc"
       ]
     },
     "commander-in-coldstar-battlesuit": {
@@ -226,13 +249,13 @@
       "profiles": [
         {
           "name": "Commander in Coldstar Battlesuit",
-          "M": 12,
-          "T": 5,
-          "W": 6,
-          "Sv": 3,
+          "M": "12\"",
+          "T": "5",
+          "W": "6",
+          "Sv": "3+",
           "invuln_sv": null,
-          "Ld": 7,
-          "OC": 2
+          "Ld": "7+",
+          "OC": "2"
         }
       ],
       "points": [
@@ -242,15 +265,17 @@
         }
       ],
       "keywords": [
+        "Character",
         "Vehicle",
         "Walker",
         "Fly",
-        "Character",
         "Battlesuit",
-        "Commander in Coldstar Battlesuit"
+        "Commander in Coldstar Battlesuit",
+        "Non-Kroot",
+        "Leader"
       ],
       "faction_keywords": [
-        "T’au Empire"
+        "T'au Empire"
       ],
       "base_size_mm": {
         "shape": "round",
@@ -261,27 +286,33 @@
         "max": 1
       },
       "weapon_ids": [
-        "airbursting-fragmentation-projector",
-        "battlesuit-fists-commander-in-coldstar-battlesuit",
-        "burst-cannon-commander-in-coldstar-battlesuit",
-        "cyclic-ion-blaster-commander-in-coldstar-battlesuit",
-        "fusion-blaster-commander-in-coldstar-battlesuit",
+        "battlesuit-fists",
+        "twin-pulse-carbine",
+        "missile-pod",
         "high-output-burst-cannon",
-        "missile-pod-commander-in-coldstar-battlesuit",
-        "plasma-rifle-commander-in-coldstar-battlesuit",
-        "tau-flamer"
+        "burst-cannon",
+        "airbursting-fragmentation-projector",
+        "cyclic-ion-blaster",
+        "tau-flamer",
+        "fusion-blaster",
+        "plasma-rifle"
       ],
       "ability_ids": [
-        "coldstar-commander",
         "leader",
-        "shield-generator",
+        "coldstar-commander",
         "deep-strike",
-        "gun-drone",
-        "shield-drone"
+        "for-the-greater-good",
+        "marker-drone",
+        "shield-drone",
+        "guardian-drone",
+        "precise",
+        "precision",
+        "lethal-hits",
+        "shield-generator"
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "launch"
+        "dataslate": "bsdata"
       },
       "is_legend": false,
       "points_provisional": false,
@@ -314,24 +345,15 @@
           ],
           "count": 1,
           "per_models": 0
-        },
-        {
-          "items": [
-            "gun-drone"
-          ],
-          "count": 1,
-          "per_models": 0
-        },
-        {
-          "items": [
-            "shield-drone"
-          ],
-          "count": 1,
-          "per_models": 0
         }
       ],
+      "battlefield_role": "Character",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ],
       "corrected": {
-        "reason": "Drones as for the Enforcer Commander. The Shield Generator is a separate problem: upstream lists it BOTH as a standard ability and as a wargear option, so the app could not tell whether a list that never mentions buying one has a 4+ invulnerable save. Treated as standard, which is what the ability list implies and what makes the statline agree with the rules text. If a Coldstar has to pay for its Shield Generator, this entry is the thing to change.",
+        "reason": "40kdc lists the Shield Generator BOTH as a standard ability and as a wargear option, so the app could not tell whether a list that never mentions buying one has a 4+ invulnerable save. Treated as standard, which is what the ability list implies and what makes the statline agree with the rules. If a Coldstar has to pay for its Shield Generator, this entry is the thing to change.",
         "upstream": "not yet reported"
       }
     },
@@ -342,13 +364,23 @@
       "profiles": [
         {
           "name": "Crisis Starscythe Shas’ui",
-          "M": 10,
-          "T": 5,
-          "W": 4,
-          "Sv": 3,
+          "M": "10\"",
+          "T": "5",
+          "W": "4",
+          "Sv": "3+",
           "invuln_sv": null,
-          "Ld": 7,
-          "OC": 2
+          "Ld": "7+",
+          "OC": "2"
+        },
+        {
+          "name": "Crisis Starscythe Shas’vre",
+          "M": "10\"",
+          "T": "5",
+          "W": "4",
+          "Sv": "3+",
+          "invuln_sv": null,
+          "Ld": "7+",
+          "OC": "2"
         }
       ],
       "points": [
@@ -361,8 +393,7 @@
         {
           "models": 3,
           "cost": 100,
-          "unit_count_min": 3,
-          "unit_count_max": null
+          "unit_count_min": 3
         }
       ],
       "keywords": [
@@ -371,10 +402,11 @@
         "Fly",
         "Battlesuit",
         "Crisis",
-        "Starscythe"
+        "Starscythe",
+        "Non-Kroot"
       ],
       "faction_keywords": [
-        "T’au Empire"
+        "T'au Empire"
       ],
       "base_size_mm": {
         "shape": "round",
@@ -385,20 +417,27 @@
         "max": 3
       },
       "weapon_ids": [
+        "twin-pulse-carbine",
+        "missile-pod",
         "battlesuit-fists",
         "burst-cannon",
         "tau-flamer"
       ],
       "ability_ids": [
-        "battlesuit-support-system",
         "starscythe",
+        "battlesuit-support-system",
         "deep-strike",
-        "gun-drone",
-        "shield-drone"
+        "for-the-greater-good",
+        "marker-drone",
+        "shield-drone",
+        "guardian-drone",
+        "precise",
+        "precision",
+        "lethal-hits"
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "launch"
+        "dataslate": "bsdata"
       },
       "is_legend": false,
       "points_provisional": false,
@@ -431,10 +470,11 @@
           "per_models": 3
         }
       ],
-      "corrected": {
-        "reason": "Crisis Starscythe suits take the same drones as Crisis Fireknife suits, whose datasheet does list them. The omission looks like a transcription slip rather than a rule.",
-        "upstream": "not yet reported"
-      }
+      "battlefield_role": "Vehicle",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "the-twin-lance": {
       "id": "the-twin-lance",
@@ -460,16 +500,17 @@
         }
       ],
       "keywords": [
+        "Epic Hero",
         "Vehicle",
         "Walker",
         "Fly",
         "Character",
-        "Epic Hero",
         "Battlesuit",
+        "Non-Kroot",
         "The Twin Lance"
       ],
       "faction_keywords": [
-        "T’au Empire"
+        "T'au Empire"
       ],
       "base_size_mm": {
         "shape": "round",
@@ -481,24 +522,33 @@
       },
       "weapon_ids": [
         "fusion-eliminator",
-        "ion-scattercannon",
         "shardstorm-burst-system",
-        "xv-pulse-pistol"
+        "twin-pulse-blaster",
+        "xv-pulse-pistol",
+        "ion-scattercannon"
       ],
       "ability_ids": [
-        "exemplars-of-mont-ka",
-        "mv15-gun-drone",
         "neocapacitor-shields",
+        "exemplars-of-montka",
         "retro-thrusters",
-        "scouts-8",
-        "deep-strike"
+        "sustained-hits",
+        "for-the-greater-good",
+        "scouts",
+        "ignores-cover",
+        "deep-strike",
+        "mv15-gun-drone"
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "launch"
+        "dataslate": "bsdata"
       },
       "is_legend": false,
       "points_provisional": false,
+      "battlefield_role": "Epic Hero",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ],
       "wargear_budgets": []
     },
     "broadside-battlesuits": {
@@ -507,14 +557,24 @@
       "faction_id": "tau-empire",
       "profiles": [
         {
-          "name": "Broadside Shas’vre",
-          "M": 5,
-          "T": 6,
-          "W": 8,
-          "Sv": 2,
+          "name": "Broadside Shas’ui",
+          "M": "5\"",
+          "T": "6",
+          "W": "8",
+          "Sv": "2+",
           "invuln_sv": null,
-          "Ld": 7,
-          "OC": 2
+          "Ld": "7+",
+          "OC": "2"
+        },
+        {
+          "name": "Broadside Shas’vre",
+          "M": "5\"",
+          "T": "6",
+          "W": "8",
+          "Sv": "2+",
+          "invuln_sv": null,
+          "Ld": "7+",
+          "OC": "2"
         }
       ],
       "points": [
@@ -525,10 +585,20 @@
           "unit_count_max": 2
         },
         {
+          "models": 1,
+          "cost": 95,
+          "unit_count_min": 3
+        },
+        {
           "models": 2,
           "cost": 150,
           "unit_count_min": 1,
           "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 170,
+          "unit_count_min": 3
         },
         {
           "models": 3,
@@ -537,32 +607,20 @@
           "unit_count_max": 2
         },
         {
-          "models": 1,
-          "cost": 95,
-          "unit_count_min": 3,
-          "unit_count_max": null
-        },
-        {
-          "models": 2,
-          "cost": 170,
-          "unit_count_min": 3,
-          "unit_count_max": null
-        },
-        {
           "models": 3,
           "cost": 275,
-          "unit_count_min": 3,
-          "unit_count_max": null
+          "unit_count_min": 3
         }
       ],
       "keywords": [
         "Vehicle",
         "Walker",
         "Battlesuit",
-        "Broadside"
+        "Broadside",
+        "Non-Kroot"
       ],
       "faction_keywords": [
-        "T’au Empire"
+        "T'au Empire"
       ],
       "base_size_mm": {
         "shape": "round",
@@ -573,20 +631,29 @@
         "max": 3
       },
       "weapon_ids": [
-        "crushing-bulk",
         "heavy-rail-rifle",
         "high-yield-missile-pods",
         "seeker-missile",
         "twin-plasma-rifle",
-        "twin-smart-missile-system-broadside-battlesuits"
+        "twin-smart-missile-system",
+        "twin-pulse-carbine",
+        "missile-pod",
+        "crushing-bulk"
       ],
       "ability_ids": [
         "advanced-armour",
-        "missile-drone"
+        "for-the-greater-good",
+        "feel-no-pain",
+        "marker-drone",
+        "shield-drone",
+        "guardian-drone",
+        "precise",
+        "precision",
+        "lethal-hits"
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "launch"
+        "dataslate": "bsdata"
       },
       "is_legend": false,
       "points_provisional": false,
@@ -596,19 +663,12 @@
           "cost": 5
         }
       ],
-      "wargear_budgets": [
-        {
-          "items": [
-            "missile-drone"
-          ],
-          "count": 1,
-          "per_models": 0
-        }
+      "battlefield_role": "Vehicle",
+      "sources": [
+        "bsdata",
+        "40kdc"
       ],
-      "corrected": {
-        "reason": "Broadsides take Missile Drones. The ability exists and is attached to the Riptide, but not here.",
-        "upstream": "not yet reported"
-      }
+      "wargear_budgets": []
     },
     "ghostkeel-battlesuit": {
       "id": "ghostkeel-battlesuit",
@@ -617,13 +677,13 @@
       "profiles": [
         {
           "name": "Ghostkeel Battlesuit",
-          "M": 10,
-          "T": 8,
-          "W": 12,
-          "Sv": 2,
+          "M": "10\"",
+          "T": "8",
+          "W": "12",
+          "Sv": "2+",
           "invuln_sv": null,
-          "Ld": 7,
-          "OC": 3
+          "Ld": "7+",
+          "OC": "3"
         }
       ],
       "points": [
@@ -636,8 +696,7 @@
         {
           "models": 1,
           "cost": 165,
-          "unit_count_min": 3,
-          "unit_count_max": null
+          "unit_count_min": 3
         }
       ],
       "keywords": [
@@ -646,10 +705,11 @@
         "Fly",
         "Smoke",
         "Battlesuit",
-        "Ghostkeel"
+        "Ghostkeel",
+        "Non-Kroot"
       ],
       "faction_keywords": [
-        "T’au Empire"
+        "T'au Empire"
       ],
       "base_size_mm": {
         "shape": "oval",
@@ -661,24 +721,28 @@
         "max": 1
       },
       "weapon_ids": [
-        "cyclic-ion-raker",
-        "fusion-collider",
         "ghostkeel-fists",
-        "twin-burst-cannon-ghostkeel-battlesuit",
+        "twin-burst-cannon",
+        "twin-tau-flamer",
         "twin-fusion-blaster",
-        "twin-tau-flamer"
+        "fusion-collider",
+        "cyclic-ion-raker"
       ],
       "ability_ids": [
         "stealth-drones",
-        "stealth",
+        "deadly-demise",
         "infiltrators",
-        "deadly-demise-d3",
         "lone-operative",
+        "stealth",
+        "for-the-greater-good",
+        "precise",
+        "precision",
+        "lethal-hits",
         "battlesuit-support-system"
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "launch"
+        "dataslate": "bsdata"
       },
       "is_legend": false,
       "points_provisional": false,
@@ -688,19 +752,12 @@
           "cost": 15
         }
       ],
-      "wargear_budgets": [
-        {
-          "items": [
-            "battlesuit-support-system"
-          ],
-          "count": 1,
-          "per_models": 0
-        }
+      "battlefield_role": "Vehicle",
+      "sources": [
+        "bsdata",
+        "40kdc"
       ],
-      "corrected": {
-        "reason": "The Ghostkeel takes a Battlesuit Support System. The ability exists and is attached to other battlesuits, but not to this one.",
-        "upstream": "not yet reported"
-      }
+      "wargear_budgets": []
     },
     "riptide-battlesuit": {
       "id": "riptide-battlesuit",
@@ -709,13 +766,13 @@
       "profiles": [
         {
           "name": "Riptide Battlesuit",
-          "M": 10,
-          "T": 9,
-          "W": 14,
-          "Sv": 2,
-          "invuln_sv": 4,
-          "Ld": 7,
-          "OC": 4
+          "M": "10\"",
+          "T": "9",
+          "W": "14",
+          "Sv": "2+",
+          "invuln_sv": "4+",
+          "Ld": "7+",
+          "OC": "4"
         }
       ],
       "points": [
@@ -728,8 +785,7 @@
         {
           "models": 1,
           "cost": 220,
-          "unit_count_min": 3,
-          "unit_count_max": null
+          "unit_count_min": 3
         }
       ],
       "keywords": [
@@ -737,10 +793,11 @@
         "Walker",
         "Fly",
         "Battlesuit",
-        "Riptide"
+        "Riptide",
+        "Non-Kroot"
       ],
       "faction_keywords": [
-        "T’au Empire"
+        "T'au Empire"
       ],
       "base_size_mm": {
         "shape": "oval",
@@ -752,23 +809,26 @@
         "max": 1
       },
       "weapon_ids": [
+        "riptide-fists",
         "heavy-burst-cannon",
         "ion-accelerator",
-        "riptide-fists",
+        "missile-pod",
+        "twin-smart-missile-system",
         "twin-fusion-blaster",
-        "twin-plasma-rifle",
-        "twin-smart-missile-system-riptide-battlesuit"
+        "twin-plasma-rifle"
       ],
       "ability_ids": [
-        "battlesuit-support-system",
-        "deadly-demise-d6",
-        "missile-drone",
         "nova-charge",
-        "weapon-support-system"
+        "deadly-demise",
+        "for-the-greater-good",
+        "devastating-wounds",
+        "precise",
+        "precision",
+        "lethal-hits"
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "launch"
+        "dataslate": "bsdata"
       },
       "is_legend": false,
       "points_provisional": false,
@@ -778,6 +838,11 @@
           "cost": 25
         }
       ],
+      "battlefield_role": "Vehicle",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ],
       "wargear_budgets": []
     },
     "stealth-battlesuits": {
@@ -786,14 +851,24 @@
       "faction_id": "tau-empire",
       "profiles": [
         {
-          "name": "Stealth Shas’ui",
-          "M": 8,
-          "T": 4,
-          "W": 2,
-          "Sv": 3,
+          "name": "Stealth Shas'ui",
+          "M": "8\"",
+          "T": "4",
+          "W": "2",
+          "Sv": "3+",
           "invuln_sv": null,
-          "Ld": 7,
-          "OC": 1
+          "Ld": "7+",
+          "OC": "1"
+        },
+        {
+          "name": "Stealth Shas'vre",
+          "M": "8\"",
+          "T": "4",
+          "W": "2",
+          "Sv": "3+",
+          "invuln_sv": null,
+          "Ld": "7+",
+          "OC": "1"
         }
       ],
       "points": [
@@ -806,20 +881,20 @@
         {
           "models": 5,
           "cost": 110,
-          "unit_count_min": 3,
-          "unit_count_max": null
+          "unit_count_min": 3
         }
       ],
       "keywords": [
         "Infantry",
         "Fly",
         "Battlesuit",
+        "Stealth",
         "Grenades",
         "Markerlight",
-        "Stealth"
+        "Non-Kroot"
       ],
       "faction_keywords": [
-        "T’au Empire"
+        "T'au Empire"
       ],
       "base_size_mm": {
         "shape": "round",
@@ -830,22 +905,29 @@
         "max": 5
       },
       "weapon_ids": [
-        "battlesuit-fists-stealth-battlesuits",
+        "battlesuit-fists",
         "burst-cannon",
         "fusion-blaster",
+        "twin-pulse-carbine",
+        "missile-pod",
         "pulse-pistol"
       ],
       "ability_ids": [
         "forward-observers",
-        "homing-beacon",
         "infiltrators",
         "stealth",
-        "gun-drone",
-        "marker-drone"
+        "for-the-greater-good",
+        "homing-beacon",
+        "marker-drone",
+        "shield-drone",
+        "guardian-drone",
+        "precise",
+        "precision",
+        "lethal-hits"
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "launch"
+        "dataslate": "bsdata"
       },
       "is_legend": false,
       "points_provisional": false,
@@ -856,31 +938,18 @@
           ],
           "count": 2,
           "per_models": 0
-        },
-        {
-          "items": [
-            "gun-drone"
-          ],
-          "count": 1,
-          "per_models": 0
-        },
-        {
-          "items": [
-            "marker-drone"
-          ],
-          "count": 1,
-          "per_models": 0
         }
       ],
-      "corrected": {
-        "reason": "Stealth Battlesuits take a Gun Drone and a Marker Drone. Both abilities exist in the faction data; neither is attached to this datasheet.",
-        "upstream": "not yet reported"
-      }
+      "battlefield_role": "Infantry",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     }
   },
   "weapons": {
-    "battlesuit-fists-commander-in-enforcer-battlesuit": {
-      "id": "battlesuit-fists-commander-in-enforcer-battlesuit",
+    "battlesuit-fists": {
+      "id": "battlesuit-fists",
       "name": "Battlesuit fists",
       "type": "melee",
       "profiles": [
@@ -889,33 +958,37 @@
           "range": "Melee",
           "stats": {
             "A": 3,
+            "WS": 4,
             "S": 5,
             "AP": 0,
-            "D": 1,
-            "WS": 4
+            "D": 1
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
-    "drone-twin-pulse-carbine": {
-      "id": "drone-twin-pulse-carbine",
-      "name": "Drone twin pulse carbine",
+    "twin-pulse-carbine": {
+      "id": "twin-pulse-carbine",
+      "name": "Twin pulse carbine",
       "type": "ranged",
       "profiles": [
         {
-          "name": "Drone twin pulse carbine",
+          "name": "Twin pulse carbine",
           "range": 20,
           "stats": {
             "A": 2,
+            "BS": 5,
             "S": 5,
             "AP": 0,
-            "D": 1,
-            "BS": 5
+            "D": 1
           },
           "keywords": [
             {
@@ -929,35 +1002,12 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
-      "corrected": {
-        "reason": "The Gun Drone's gun. Pointing the grant at the plain `twin-pulse-carbine` had the drone firing at BS4+, the skill of the battlesuit carrying it, which is a better weapon than the drone has.",
-        "upstream": "not yet reported"
-      }
-    },
-    "missile-pod-commander-in-enforcer-battlesuit": {
-      "id": "missile-pod-commander-in-enforcer-battlesuit",
-      "name": "Missile pod",
-      "type": "ranged",
-      "profiles": [
-        {
-          "name": "Missile pod",
-          "range": 30,
-          "stats": {
-            "A": 2,
-            "S": 7,
-            "AP": -1,
-            "D": 2,
-            "BS": 3
-          },
-          "keywords": []
-        }
-      ],
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "missile-pod": {
       "id": "missile-pod",
@@ -969,79 +1019,37 @@
           "range": 30,
           "stats": {
             "A": 2,
+            "BS": 5,
             "S": 7,
             "AP": -1,
-            "D": 2,
-            "BS": 4
+            "D": 2
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
-    },
-    "battlesuit-fists": {
-      "id": "battlesuit-fists",
-      "name": "Battlesuit fists",
-      "type": "melee",
-      "profiles": [
-        {
-          "name": "Battlesuit fists",
-          "range": "Melee",
-          "stats": {
-            "A": 3,
-            "S": 5,
-            "AP": 0,
-            "D": 1,
-            "WS": 5
-          },
-          "keywords": []
-        }
-      ],
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
-    },
-    "battlesuit-fists-commander-in-coldstar-battlesuit": {
-      "id": "battlesuit-fists-commander-in-coldstar-battlesuit",
-      "name": "Battlesuit fists",
-      "type": "melee",
-      "profiles": [
-        {
-          "name": "Battlesuit fists",
-          "range": "Melee",
-          "stats": {
-            "A": 3,
-            "S": 5,
-            "AP": 0,
-            "D": 1,
-            "WS": 4
-          },
-          "keywords": []
-        }
-      ],
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "tau-flamer": {
       "id": "tau-flamer",
-      "name": "T’au flamer",
+      "name": "T'au flamer",
       "type": "ranged",
       "profiles": [
         {
-          "name": "T’au flamer",
+          "name": "T'au flamer",
           "range": 12,
           "stats": {
             "A": "D6",
+            "BS": null,
             "S": 4,
             "AP": 0,
-            "D": 1,
-            "BS": null
+            "D": 1
           },
           "keywords": [
             {
@@ -1055,8 +1063,12 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "fusion-eliminator": {
       "id": "fusion-eliminator",
@@ -1064,14 +1076,14 @@
       "type": "ranged",
       "profiles": [
         {
-          "name": "Ranged",
+          "name": "Fusion eliminator",
           "range": 18,
           "stats": {
             "A": 2,
+            "BS": 2,
             "S": 10,
             "AP": -4,
-            "D": "D6",
-            "BS": 2
+            "D": "D6"
           },
           "keywords": [
             {
@@ -1083,14 +1095,14 @@
           ]
         },
         {
-          "name": "Melee",
+          "name": "Fusion eliminator",
           "range": "Melee",
           "stats": {
             "A": 1,
+            "WS": 4,
             "S": 10,
             "AP": -4,
-            "D": "D6+2",
-            "WS": 4
+            "D": "D6+2"
           },
           "keywords": [
             {
@@ -1101,8 +1113,12 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "xv-pulse-pistol": {
       "id": "xv-pulse-pistol",
@@ -1110,14 +1126,14 @@
       "type": "ranged",
       "profiles": [
         {
-          "name": "Ranged",
+          "name": "XV pulse pistol",
           "range": 12,
           "stats": {
             "A": 2,
+            "BS": 2,
             "S": 6,
             "AP": -1,
-            "D": 2,
-            "BS": 2
+            "D": 2
           },
           "keywords": [
             {
@@ -1129,22 +1145,26 @@
           ]
         },
         {
-          "name": "Melee",
+          "name": "XV pulse pistol",
           "range": "Melee",
           "stats": {
             "A": 4,
+            "WS": 3,
             "S": 6,
             "AP": -1,
-            "D": 2,
-            "WS": 3
+            "D": 2
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "shardstorm-burst-system": {
       "id": "shardstorm-burst-system",
@@ -1156,10 +1176,10 @@
           "range": 18,
           "stats": {
             "A": "D6",
+            "BS": 2,
             "S": 5,
             "AP": 0,
-            "D": 1,
-            "BS": 2
+            "D": 1
           },
           "keywords": [
             {
@@ -1170,8 +1190,12 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "twin-pulse-blaster": {
       "id": "twin-pulse-blaster",
@@ -1209,33 +1233,14 @@
       "type": "ranged",
       "profiles": [
         {
-          "name": "Standard",
-          "range": 18,
-          "stats": {
-            "A": 4,
-            "S": 7,
-            "AP": -2,
-            "D": 2,
-            "BS": 2
-          },
-          "keywords": [
-            {
-              "keyword_id": "rapid-fire",
-              "parameters": {
-                "value": 2
-              }
-            }
-          ]
-        },
-        {
           "name": "Overcharge",
           "range": 18,
           "stats": {
             "A": 4,
+            "BS": 2,
             "S": 8,
             "AP": -3,
-            "D": 3,
-            "BS": 2
+            "D": 3
           },
           "keywords": [
             {
@@ -1250,26 +1255,49 @@
           ]
         },
         {
-          "name": "Melee",
+          "name": "Ion scattercannon",
           "range": "Melee",
           "stats": {
             "A": 3,
+            "WS": 4,
             "S": 7,
             "AP": -2,
-            "D": 2,
-            "WS": 4
+            "D": 2
           },
           "keywords": [
             {
               "keyword_id": "extra-attacks"
             }
           ]
+        },
+        {
+          "name": "Standard",
+          "range": 18,
+          "stats": {
+            "A": 4,
+            "BS": 2,
+            "S": 7,
+            "AP": -2,
+            "D": 2
+          },
+          "keywords": [
+            {
+              "keyword_id": "rapid-fire",
+              "parameters": {
+                "value": 2
+              }
+            }
+          ]
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "crushing-bulk": {
       "id": "crushing-bulk",
@@ -1281,18 +1309,22 @@
           "range": "Melee",
           "stats": {
             "A": 3,
+            "WS": 5,
             "S": 6,
             "AP": 0,
-            "D": 1,
-            "WS": 5
+            "D": 1
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "heavy-rail-rifle": {
       "id": "heavy-rail-rifle",
@@ -1304,52 +1336,29 @@
           "range": 60,
           "stats": {
             "A": 2,
+            "BS": 4,
             "S": 12,
             "AP": -4,
-            "D": "D6+1",
-            "BS": 4
+            "D": "D6+1"
           },
           "keywords": [
             {
-              "keyword_id": "devastating-wounds"
+              "keyword_id": "heavy"
             },
             {
-              "keyword_id": "heavy"
+              "keyword_id": "devastating-wounds"
             }
           ]
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
-    },
-    "drone-missile-pod": {
-      "id": "drone-missile-pod",
-      "name": "Drone missile pod",
-      "type": "ranged",
-      "profiles": [
-        {
-          "name": "Drone missile pod",
-          "range": 30,
-          "stats": {
-            "A": 2,
-            "S": 7,
-            "AP": -1,
-            "D": 2,
-            "BS": 5
-          },
-          "keywords": []
-        }
-      ],
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
-      "corrected": {
-        "reason": "The Missile Drone's gun: a missile pod at BS5+. Upstream records the drone as granting `{grant_type: ranged-weapon}` with no weapon named and has no record for it either, so Broadsides and Riptides were fielding drones that shot nothing.",
-        "upstream": "not yet reported"
-      }
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "seeker-missile": {
       "id": "seeker-missile",
@@ -1361,10 +1370,10 @@
           "range": 48,
           "stats": {
             "A": 1,
+            "BS": 4,
             "S": 14,
             "AP": -3,
-            "D": "D6+1",
-            "BS": 4
+            "D": "D6+1"
           },
           "keywords": [
             {
@@ -1375,11 +1384,15 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
-    "twin-smart-missile-system-broadside-battlesuits": {
-      "id": "twin-smart-missile-system-broadside-battlesuits",
+    "twin-smart-missile-system": {
+      "id": "twin-smart-missile-system",
       "name": "Twin smart missile system",
       "type": "ranged",
       "profiles": [
@@ -1388,10 +1401,10 @@
           "range": 30,
           "stats": {
             "A": 4,
+            "BS": 4,
             "S": 5,
             "AP": 0,
-            "D": 1,
-            "BS": 4
+            "D": 1
           },
           "keywords": [
             {
@@ -1405,8 +1418,12 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "fusion-collider": {
       "id": "fusion-collider",
@@ -1418,10 +1435,10 @@
           "range": 18,
           "stats": {
             "A": 2,
+            "BS": 4,
             "S": 12,
             "AP": -4,
-            "D": "D6",
-            "BS": 4
+            "D": "D6"
           },
           "keywords": [
             {
@@ -1435,8 +1452,12 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "ghostkeel-fists": {
       "id": "ghostkeel-fists",
@@ -1448,18 +1469,22 @@
           "range": "Melee",
           "stats": {
             "A": 3,
+            "WS": 5,
             "S": 6,
             "AP": 0,
-            "D": 2,
-            "WS": 5
+            "D": 2
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "twin-fusion-blaster": {
       "id": "twin-fusion-blaster",
@@ -1471,10 +1496,10 @@
           "range": 12,
           "stats": {
             "A": 1,
+            "BS": 4,
             "S": 9,
             "AP": -4,
-            "D": "D6",
-            "BS": 4
+            "D": "D6"
           },
           "keywords": [
             {
@@ -1491,8 +1516,12 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "ion-accelerator": {
       "id": "ion-accelerator",
@@ -1504,10 +1533,10 @@
           "range": 72,
           "stats": {
             "A": 6,
+            "BS": 4,
             "S": 9,
             "AP": -2,
-            "D": 3,
-            "BS": 4
+            "D": 3
           },
           "keywords": []
         },
@@ -1516,10 +1545,10 @@
           "range": 72,
           "stats": {
             "A": 6,
+            "BS": 4,
             "S": 10,
             "AP": -3,
-            "D": 4,
-            "BS": 4
+            "D": 4
           },
           "keywords": [
             {
@@ -1530,8 +1559,12 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "riptide-fists": {
       "id": "riptide-fists",
@@ -1543,71 +1576,22 @@
           "range": "Melee",
           "stats": {
             "A": 6,
+            "WS": 5,
             "S": 6,
             "AP": 0,
-            "D": 2,
-            "WS": 5
+            "D": 2
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
-    },
-    "twin-smart-missile-system-riptide-battlesuit": {
-      "id": "twin-smart-missile-system-riptide-battlesuit",
-      "name": "Twin smart missile system",
-      "type": "ranged",
-      "profiles": [
-        {
-          "name": "Twin smart missile system",
-          "range": 30,
-          "stats": {
-            "A": 3,
-            "S": 5,
-            "AP": 0,
-            "D": 1,
-            "BS": 4
-          },
-          "keywords": [
-            {
-              "keyword_id": "indirect-fire"
-            },
-            {
-              "keyword_id": "twin-linked"
-            }
-          ]
-        }
-      ],
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
-    },
-    "battlesuit-fists-stealth-battlesuits": {
-      "id": "battlesuit-fists-stealth-battlesuits",
-      "name": "Battlesuit fists",
-      "type": "melee",
-      "profiles": [
-        {
-          "name": "Battlesuit fists",
-          "range": "Melee",
-          "stats": {
-            "A": 2,
-            "S": 4,
-            "AP": 0,
-            "D": 1,
-            "WS": 5
-          },
-          "keywords": []
-        }
-      ],
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "pulse-pistol": {
       "id": "pulse-pistol",
@@ -1619,10 +1603,10 @@
           "range": 12,
           "stats": {
             "A": 1,
+            "BS": 3,
             "S": 5,
             "AP": 0,
-            "D": 1,
-            "BS": 4
+            "D": 1
           },
           "keywords": [
             {
@@ -1633,8 +1617,12 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "fusion-blaster": {
       "id": "fusion-blaster",
@@ -1646,10 +1634,10 @@
           "range": 12,
           "stats": {
             "A": 1,
+            "BS": 3,
             "S": 9,
             "AP": -4,
-            "D": "D6",
-            "BS": 4
+            "D": "D6"
           },
           "keywords": [
             {
@@ -1663,8 +1651,12 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "burst-cannon": {
       "id": "burst-cannon",
@@ -1676,18 +1668,22 @@
           "range": 18,
           "stats": {
             "A": 4,
+            "BS": 3,
             "S": 5,
             "AP": 0,
-            "D": 1,
-            "BS": 4
+            "D": 1
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      }
+        "dataslate": "bsdata"
+      },
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     }
   },
   "detachments": {
@@ -2018,7 +2014,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2056,7 +2052,12 @@
       ],
       "ability_type": "unit",
       "behavior": "passive",
-      "community_notes": "defensive ability (skipped for damage calc)"
+      "community_notes": "defensive ability (skipped for damage calc)",
+      "description": "While this model is leading a unit, each time a ranged attack targets that unit, worsen the Armour Penetration characteristic of that attack by 1.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "leader": {
       "ability_id": "leader",
@@ -2064,7 +2065,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2082,7 +2083,12 @@
         "ethereal"
       ],
       "ability_type": "core",
-      "behavior": "passive"
+      "behavior": "passive",
+      "description": "This model can be attached to the following units:\n- **CRISIS BATTLESUITS**\n- **CRISIS FIREKNIFE BATTLESUITS**\n- **CRISIS STARSCYTHE BATTLESUITS**\n- **CRISIS SUNFORGE BATTLESUITS**",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "deep-strike": {
       "ability_id": "deep-strike",
@@ -2090,7 +2096,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2106,28 +2112,117 @@
         "crisis-fireknife-battlesuits"
       ],
       "ability_type": "core",
-      "behavior": "activated"
+      "behavior": "activated",
+      "description": "Each time this unit makes an **ingress move** (20.04), if every model in this unit has this ability, it can be set up anywhere on the battlefield that is more than 8\" horizontally from all enemy units, even if that is within your opponent’s deployment zone.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
-    "gun-drone": {
-      "ability_id": "gun-drone",
-      "name": "Gun Drone",
+    "for-the-greater-good": {
+      "ability_id": "for-the-greater-good",
+      "name": "For The Greater Good",
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
-        "type": "ability-grant",
-        "target": "bearer",
-        "modifier": {
-          "grant_type": "weapon-grant",
-          "weapon_id": "drone-twin-pulse-carbine",
-          "count": 1
+        "type": "conditional",
+        "condition": {
+          "operator": "and",
+          "operands": [
+            {
+              "type": "phase-is",
+              "parameters": {
+                "phase": "shooting"
+              }
+            },
+            {
+              "type": "target-has-keyword",
+              "parameters": {
+                "keyword": "SPOTTED"
+              }
+            }
+          ]
+        },
+        "effect": {
+          "type": "sequence",
+          "steps": [
+            {
+              "type": "roll-modifier",
+              "target": "unit",
+              "modifier": {
+                "roll": "hit",
+                "operation": "add",
+                "value": 1
+              }
+            },
+            {
+              "type": "keyword-grant",
+              "target": "unit",
+              "modifier": {
+                "keywords": [
+                  "Ignores Cover"
+                ]
+              }
+            }
+          ]
         }
       },
       "scope": {
-        "range": "self",
+        "range": "unit",
+        "duration": "phase"
+      },
+      "faction_id": "tau-empire",
+      "ability_type": "core",
+      "behavior": "activated",
+      "community_notes": "Assumes targets are SPOTTED (observer unit sacrifices shooting). +1 BS is the primary offensive benefit; Ignores Cover is kept for completeness but has no effect in the current damage engine (cover not simulated).",
+      "unit_ids": [
+        "taunar-supremacy-armour"
+      ],
+      "description": "If your Army Faction is **T’AU EMPIRE**, at the start of your Shooting phase you can select units from your army with this ability to become Observer units.\n\nDuring your Shooting phase, for each Observer unit from your army that has not been selected to shoot this phase and is eligible to shoot (excluding **FORTIFICATION** and Battle-shocked units) select one enemy unit that is visible to be marked as their Spotted unit until the end of the phase. Each enemy unit can only be marked as a Spotted unit once per phase.\n\nUnits from your army with the For the Greater Good ability (excluding Observer units) are Guided units while targeting one or more Spotted units.\n\nUntil the end of the phase, each time a model from your army in a Guided unit makes an attack that targets a Spotted unit, improve the Ballistic Skill characteristic of that attack by 1 and, if the Spotted unit was marked by an Observer unit that has the Markerlight keyword, that attack has the **[IGNORES COVER]** ability.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
+    "marker-drone": {
+      "ability_id": "marker-drone",
+      "name": "Marker Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "sequence",
+        "steps": [
+          {
+            "type": "keyword-grant",
+            "target": "unit",
+            "modifier": {
+              "keywords": [
+                "markerlight"
+              ]
+            }
+          },
+          {
+            "type": "ability-grant",
+            "target": "unit",
+            "modifier": {
+              "ability": "observer-unit",
+              "bypass_restrictions": [
+                "advanced-this-turn"
+              ]
+            }
+          }
+        ]
+      },
+      "scope": {
+        "range": "unit",
         "duration": "permanent"
       },
       "unit_ids": [
@@ -2136,10 +2231,11 @@
       "ability_type": "unit",
       "behavior": "passive",
       "community_notes": "community-authored from 10e source (provisional 11e); see #21",
-      "corrected": {
-        "reason": "A Gun Drone brings a twin pulse carbine. Upstream records only `{grant_type: ranged-weapon}` with no weapon named, so the app could say \"grants a ranged weapon\" and nothing more — no profile, no attacks, and nothing in the shooting table. The Recon Drone in the same file shows the intended shape, with an explicit weapon_id.",
-        "upstream": "not yet reported"
-      }
+      "description": "The bearer’s unit has the **^^Markerlight^^** keyword and can act as an Observer unit for another unit even if it Advanced this turn.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "shield-drone": {
       "ability_id": "shield-drone",
@@ -2147,7 +2243,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2167,7 +2263,114 @@
         "crisis-fireknife-battlesuits"
       ],
       "ability_type": "unit",
-      "behavior": "passive"
+      "behavior": "passive",
+      "description": "Add 1 to the bearer’s Wounds characteristic.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
+    "guardian-drone": {
+      "ability_id": "guardian-drone",
+      "name": "Guardian Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "phase-is",
+          "parameters": {
+            "phase": "shooting"
+          }
+        },
+        "effect": {
+          "type": "roll-modifier",
+          "target": "unit",
+          "modifier": {
+            "roll": "wound",
+            "operation": "subtract",
+            "value": 1
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "strike-team"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "description": "Each time a model makes a ranged attack that targets the bearer’s unit, subtract 1 from the Wound roll.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
+    "precise": {
+      "ability_id": "precise",
+      "name": "Precise",
+      "description": "Each time a Critical Wound is scored for an attack made with this weapon, that attack has the **[PRECISION]** ability.",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      }
+    },
+    "precision": {
+      "ability_id": "precision",
+      "name": "Precision",
+      "description": "While resolving attacks made with one or more **[PRECISION]** weapons, at the start of the Allocation Order step (05.03), if the target unit contains one or more **CHARACTER** models **visible** to one or more of the attacking models, the active player can select one allocation group that contains one of those **visible CHARACTER** models. If they do, until those attacks are resolved, or until that **CHARACTER** group is **destroyed** (whichever happens first), that **CHARACTER** group is the current allocation group.",
+      "ability_type": "core",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      }
+    },
+    "lethal-hits": {
+      "ability_id": "lethal-hits",
+      "name": "Lethal Hits",
+      "description": "Each time an attack made with a **[LETHAL HITS]** weapon results in a **critical hit**, you can choose for that attack to automatically wound the target. \n***Designer’s Note:** Choosing to automatically wound the target means that no **wound roll** is made for that attack. You may decide against this, as it means that attack cannot result in a **critical wound** and so cannot trigger other abilities such as [DEVASTATING WOUNDS].*",
+      "ability_type": "core",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      }
+    },
+    "shield-generator": {
+      "ability_id": "shield-generator",
+      "name": "Shield Generator",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "invulnerable-save",
+        "target": "self",
+        "modifier": {
+          "invuln_sv": 4
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "commander-in-coldstar-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "description": "The bearer has a 4+ invulnerable save.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "fireknife": {
       "ability_id": "fireknife",
@@ -2175,7 +2378,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2226,51 +2429,12 @@
         "crisis-fireknife-battlesuits"
       ],
       "ability_type": "unit",
-      "behavior": "passive"
-    },
-    "marker-drone": {
-      "ability_id": "marker-drone",
-      "name": "Marker Drone",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "sequence",
-        "steps": [
-          {
-            "type": "keyword-grant",
-            "target": "unit",
-            "modifier": {
-              "keywords": [
-                "markerlight"
-              ]
-            }
-          },
-          {
-            "type": "ability-grant",
-            "target": "unit",
-            "modifier": {
-              "ability": "observer-unit",
-              "bypass_restrictions": [
-                "advanced-this-turn"
-              ]
-            }
-          }
-        ]
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "crisis-fireknife-battlesuits"
-      ],
-      "ability_type": "unit",
       "behavior": "passive",
-      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+      "description": "Each time a model in this unit makes a ranged attack, re-roll a Hit roll of 1. If that attack targets a unit that is at its Starting Strength, you can re-roll the Hit roll instead.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "weapon-support-system": {
       "ability_id": "weapon-support-system",
@@ -2278,7 +2442,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2306,7 +2470,12 @@
         "riptide-battlesuit"
       ],
       "ability_type": "unit",
-      "behavior": "passive"
+      "behavior": "passive",
+      "description": "Each time a model in this unit makes a ranged attack, you can ignore any or all modifiers to the Hit roll.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "coldstar-commander": {
       "ability_id": "coldstar-commander",
@@ -2314,7 +2483,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2356,60 +2525,15 @@
       ],
       "ability_type": "unit",
       "behavior": "passive",
+      "description": "While this model is leading a unit, models in that unit have a Move characteristic of 12\" and ranged weapons equipped by models in that unit have the **[ASSAULT]** ability.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ],
       "corrected": {
         "reason": "While the Commander leads a unit, the whole squad's ranged weapons gain ASSAULT as well as moving 12\". Upstream carries only the Move part, so the app showed a mobility buff and said nothing about being able to shoot after Advancing — which is the reason to take the detachment.",
         "upstream": "not yet reported"
       }
-    },
-    "shield-generator": {
-      "ability_id": "shield-generator",
-      "name": "Shield Generator",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "invulnerable-save",
-        "target": "self",
-        "modifier": {
-          "invuln_sv": 4
-        }
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "commander-in-coldstar-battlesuit"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive"
-    },
-    "battlesuit-support-system": {
-      "ability_id": "battlesuit-support-system",
-      "name": "Battlesuit Support System",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "fallback-and-act",
-        "target": "unit",
-        "modifier": {}
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "riptide-battlesuit"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive"
     },
     "starscythe": {
       "ability_id": "starscythe",
@@ -2417,7 +2541,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2461,106 +2585,44 @@
       ],
       "ability_type": "unit",
       "behavior": "passive",
+      "description": "Each time a model in this unit makes a ranged attack (excluding attacks that target MONSTERS and VEHICLES), improve the Armour Penetration characteristic of that attack by 1.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ],
       "corrected": {
         "reason": "The AP improvement does not apply against VEHICLE or MONSTER targets. Upstream has no restriction, so the app promised -1 AP against exactly the targets where it does not help.",
         "upstream": "not yet reported"
       }
     },
-    "exemplars-of-mont-ka": {
-      "ability_id": "exemplars-of-mont-ka",
-      "name": "Exemplars of Mont’ka",
+    "battlesuit-support-system": {
+      "ability_id": "battlesuit-support-system",
+      "name": "Battlesuit Support System",
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
-        "type": "conditional",
-        "condition": {
-          "operator": "and",
-          "operands": [
-            {
-              "type": "phase-is",
-              "parameters": {
-                "phase": "shooting"
-              }
-            },
-            {
-              "type": "opponent-unit-within-range",
-              "parameters": {
-                "target_qualifier": "closest-eligible-enemy-unit"
-              }
-            }
-          ]
-        },
-        "effect": {
-          "type": "sequence",
-          "steps": [
-            {
-              "type": "keyword-grant",
-              "target": "unit",
-              "modifier": {
-                "keywords": [
-                  "Sustained Hits 1"
-                ]
-              }
-            },
-            {
-              "type": "keyword-grant",
-              "target": "unit",
-              "modifier": {
-                "keywords": [
-                  "Ignores Cover"
-                ]
-              }
-            }
-          ]
-        }
+        "type": "fallback-and-act",
+        "target": "unit",
+        "modifier": {}
       },
       "scope": {
         "range": "unit",
         "duration": "permanent"
       },
       "unit_ids": [
-        "the-twin-lance"
+        "riptide-battlesuit"
       ],
       "ability_type": "unit",
       "behavior": "passive",
-      "community_notes": "auto-generated, partial"
-    },
-    "mv15-gun-drone": {
-      "ability_id": "mv15-gun-drone",
-      "name": "MV15 Gun Drone",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "ability-grant",
-        "target": "bearer",
-        "modifier": {
-          "grant_type": "weapon-grant",
-          "weapon_id": "twin-pulse-blaster",
-          "count": 1
-        }
-      },
-      "scope": {
-        "range": "self",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "the-twin-lance"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive",
-      "community_notes": "community-authored from 10e source (provisional 11e); see #21",
-      "corrected": {
-        "reason": "Names the weapon by id rather than as free text, so the grant resolves to a profile the shooting table can show.",
-        "upstream": "not yet reported"
-      }
+      "description": "The bearer is eligible to shoot in a turn in which it Fell Back but it loses the **^^Smoke^^** keyword.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "neocapacitor-shields": {
       "ability_id": "neocapacitor-shields",
@@ -2568,7 +2630,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2586,7 +2648,21 @@
         "the-twin-lance"
       ],
       "ability_type": "unit",
-      "behavior": "passive"
+      "behavior": "passive",
+      "description": "At the start of your opponent’s Charge phase, you can select one visible enemy unit (excluding **MONSTER** and **VEHICLE** units) within 12\" of this unit. That unit must take a Battle-shock test and, until the end of the turn, subtract 1 from Charge rolls made for that unit.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
+    "exemplars-of-montka": {
+      "ability_id": "exemplars-of-montka",
+      "name": "Exemplars of Mont’ka",
+      "description": "Each time a model in this unit makes a ranged attack that targets the closest eligible target, that attack has the **[SUSTAINED HITS 1]** and **[IGNORES COVER]** abilities.",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      }
     },
     "retro-thrusters": {
       "ability_id": "retro-thrusters",
@@ -2594,7 +2670,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2619,34 +2695,80 @@
         "the-twin-lance"
       ],
       "ability_type": "unit",
-      "behavior": "passive"
+      "behavior": "passive",
+      "description": "At the end of the Fight phase, if this unit was eligible to fight this phase, this unit can either make a Normal move of up to 6\" or a Fall Back move.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
-    "scouts-8": {
-      "ability_id": "scouts-8",
-      "name": "Scouts 8\"",
+    "sustained-hits": {
+      "ability_id": "sustained-hits",
+      "name": "Sustained Hits",
+      "description": "This ability always takes the form **[SUSTAINED HITS X]**. Each time an attack made with a **[SUSTAINED HITS]** weapon results in a **critical hit**, that attack results in a number of additional hits on the target as denoted by **X**.\n***Example:** An attack made with a **[SUSTAINED HITS 2]** weapon results in a **critical hit**. That attack therefore hits the target three times (once from the **critical hit**, and twice more from the **[SUSTAINED HITS 2]** ability).*",
+      "ability_type": "core",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      }
+    },
+    "scouts": {
+      "ability_id": "scouts",
+      "name": "Scouts",
+      "description": "This ability always takes the form **Scouts X\"**. In the Resolve Pre-battle Abilities step, if every model in a unit has this ability, you can do one of the following: \n- If that unit is in **strategic reserves**, you can set up that unit anywhere that is wholly within your deployment zone. \n- If that unit is wholly within your deployment zone, it can make a **scout move**. \n- If that unit is embarked within a **DEDICATED TRANSPORT** that is wholly within your deployment zone, and if every model embarked within that **DEDICATED TRANSPORT** has the Scouts ability, that **DEDICATED TRANSPORT** can make a **scout move**.",
+      "ability_type": "core",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      }
+    },
+    "ignores-cover": {
+      "ability_id": "ignores-cover",
+      "name": "Ignores Cover",
+      "description": "Each time an attack is made with an **[IGNORES COVER]** weapon, the target cannot have the **benefit of cover** against that attack (13.08), including from rules that give a model or unit the **benefit of cover** (e.g. **Stealth**).",
+      "ability_type": "core",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      }
+    },
+    "mv15-gun-drone": {
+      "ability_id": "mv15-gun-drone",
+      "name": "MV15 Gun Drone",
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
-        "type": "movement-modifier",
-        "target": "unit",
+        "type": "ability-grant",
+        "target": "bearer",
         "modifier": {
-          "move_type": "scout",
-          "distance": 8
+          "grant_type": "weapon-grant",
+          "weapon_id": "twin-pulse-blaster",
+          "count": 1
         }
       },
       "scope": {
-        "range": "unit",
+        "range": "self",
         "duration": "permanent"
       },
       "unit_ids": [
         "the-twin-lance"
       ],
-      "ability_type": "core",
-      "behavior": "activated"
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21",
+      "description": "The bearer is equipped with 1 twin pulse blaster.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ],
+      "corrected": {
+        "reason": "Names the weapon by id rather than as free text, so the grant resolves to a profile the shooting table can show.",
+        "upstream": "not yet reported"
+      }
     },
     "advanced-armour": {
       "ability_id": "advanced-armour",
@@ -2654,7 +2776,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2679,42 +2801,24 @@
       ],
       "ability_type": "unit",
       "behavior": "passive",
+      "description": "Models in this unit have the Feel No Pain 4+ ability against mortal wounds.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ],
       "corrected": {
         "reason": "Advanced Armour is Feel No Pain 4+ against mortal wounds only. The upstream effect has no qualifier, so the app rendered an unrestricted Feel No Pain 4+ — a much stronger ability than the Broadside has, and exactly the kind of confidently wrong number that loses games.",
         "upstream": "not yet reported"
       }
     },
-    "missile-drone": {
-      "ability_id": "missile-drone",
-      "name": "Missile Drone",
-      "authored_by": "40kdc-community",
+    "feel-no-pain": {
+      "ability_id": "feel-no-pain",
+      "name": "Feel No Pain",
+      "description": "This ability always takes the form **Feel No Pain X+**. Each time a model with this ability would lose a wound, roll one D6: on an **X+**, that wound is not lost. ",
+      "ability_type": "core",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "ability-grant",
-        "target": "bearer",
-        "modifier": {
-          "grant_type": "weapon-grant",
-          "weapon_id": "drone-missile-pod",
-          "count": 1
-        }
-      },
-      "scope": {
-        "range": "self",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "riptide-battlesuit"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive",
-      "community_notes": "community-authored from 10e source (provisional 11e); see #21",
-      "corrected": {
-        "reason": "Names the weapon the drone brings, as the Recon Drone already does. Without a weapon_id the grant is unresolvable and the drone's shots never reach the table.",
-        "upstream": "not yet reported"
+        "dataslate": "bsdata"
       }
     },
     "stealth-drones": {
@@ -2723,7 +2827,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2746,33 +2850,21 @@
       "usage": {
         "frequency": "n-per-battle",
         "count": 2
-      }
+      },
+      "description": "Twice per battle, after an attack has been allocated to this model, you can change the Damage characteristic of that attack to 0.\n\nDesigner’s Note: Place two Stealth Drone tokens next to the unit, removing one each time this ability has been used.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
-    "stealth": {
-      "ability_id": "stealth",
-      "name": "Stealth",
-      "authored_by": "40kdc-community",
+    "deadly-demise": {
+      "ability_id": "deadly-demise",
+      "name": "Deadly Demise",
+      "description": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have made their **emergency disembark moves**, roll one D6. On a 6, that model suffers a **deadly demise**; each unit within 6\" of that model suffers a number of **mortal wounds** denoted by **X** (if this is a random number, roll separately for each unit within 6\"). \n***Example:** An Impulsor with a unit of Intercessors embarked within it is **destroyed** by ranged attacks. First, any unresolved attacks made by the attacking unit are resolved. Then the Intercessors make an **emergency disembark move**. Then the roll is made for the **Deadly Demise** ability, and on a 6, that ability is resolved. Finally, the Impulsor is removed from the battlefield.*",
+      "ability_type": "core",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "cover-benefit",
-        "target": "unit"
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "stealth-battlesuits"
-      ],
-      "ability_type": "core",
-      "behavior": "passive",
-      "corrected": {
-        "reason": "In 11th edition Stealth gives the unit the Benefit of Cover. Upstream still carries the 10th edition rule, -1 to the attacker's Hit roll, in all three faction files. Reported by the app's user against the current rulebook. The two are not interchangeable: cover changes the save, a hit penalty changes the roll, and they stack differently with everything else on the table.",
-        "upstream": "not yet reported"
+        "dataslate": "bsdata"
       }
     },
     "infiltrators": {
@@ -2781,7 +2873,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2799,51 +2891,12 @@
         "stealth-battlesuits"
       ],
       "ability_type": "core",
-      "behavior": "activated"
-    },
-    "deadly-demise-d3": {
-      "ability_id": "deadly-demise-d3",
-      "name": "Deadly Demise D3",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "conditional",
-        "condition": {
-          "type": "timing-is",
-          "parameters": {
-            "timing": "before-bearer-removed"
-          }
-        },
-        "effect": {
-          "type": "dice-gated",
-          "dice": "D6",
-          "threshold": 6,
-          "comparison": "gte",
-          "on_success": {
-            "type": "mortal-wounds",
-            "target": "enemy-within-aura",
-            "modifier": {
-              "count": "D3",
-              "range": 6
-            }
-          },
-          "on_fail": null
-        }
-      },
-      "scope": {
-        "range": "aura-6",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "sun-shark-bomber",
-        "tidewall-shieldline"
-      ],
-      "ability_type": "core",
-      "behavior": "reactive"
+      "behavior": "activated",
+      "description": "During deployment, if every model in a unit has this ability, it can be set up anywhere on the battlefield that is more than 8\" horizontally from your opponent’s deployment zone and all enemy units.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "lone-operative": {
       "ability_id": "lone-operative",
@@ -2851,7 +2904,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2871,50 +2924,44 @@
         "commander-shadowsun"
       ],
       "ability_type": "core",
-      "behavior": "passive"
+      "behavior": "passive",
+      "description": "Unless part of an **attached** unit, this unit is not **visible** to enemy models unless they are within 12\" of this unit, and it cannot be targeted by **[INDIRECT FIRE]** weapons unless the attacking model is within 12\" of this unit. \nIf this ability takes the form **Lone Operative X\"**, unless part of an **attached** unit, this unit is not **visible** to enemy models unless they are within **X\"** of this unit, and it cannot be targeted by **[INDIRECT FIRE]** weapons unless the attacking model is within **X\"** of this unit.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
-    "deadly-demise-d6": {
-      "ability_id": "deadly-demise-d6",
-      "name": "Deadly Demise D6",
+    "stealth": {
+      "ability_id": "stealth",
+      "name": "Stealth",
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
-        "type": "conditional",
-        "condition": {
-          "type": "timing-is",
-          "parameters": {
-            "timing": "before-bearer-removed"
-          }
-        },
-        "effect": {
-          "type": "dice-gated",
-          "dice": "D6",
-          "threshold": 6,
-          "comparison": "gte",
-          "on_success": {
-            "type": "mortal-wounds",
-            "target": "enemy-within-aura",
-            "modifier": {
-              "count": "D6",
-              "range": 6
-            }
-          },
-          "on_fail": null
-        }
+        "type": "cover-benefit",
+        "target": "unit"
       },
       "scope": {
-        "range": "aura-6",
+        "range": "unit",
         "duration": "permanent"
       },
       "unit_ids": [
-        "riptide-battlesuit"
+        "stealth-battlesuits"
       ],
       "ability_type": "core",
-      "behavior": "reactive"
+      "behavior": "passive",
+      "description": "If every model in a unit has this ability, each time a ranged attack targets that unit, that unit has the **benefit of cover** against that attack (13.08).",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ],
+      "corrected": {
+        "reason": "In 11th edition Stealth gives the unit the Benefit of Cover. Upstream still carries the 10th edition rule, -1 to the attacker's Hit roll, in all three faction files. Reported by the app's user against the current rulebook. The two are not interchangeable: cover changes the save, a hit penalty changes the roll, and they stack differently with everything else on the table.",
+        "upstream": "not yet reported"
+      }
     },
     "nova-charge": {
       "ability_id": "nova-charge",
@@ -2922,7 +2969,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -2951,7 +2998,22 @@
         "riptide-battlesuit"
       ],
       "ability_type": "unit",
-      "behavior": "activated"
+      "behavior": "activated",
+      "description": "Once per battle, when this unit is selected to shoot in your Shooting phase, select one ranged weapon equipped by this model. Until the end of the phase, that weapon has the **[DEVASTATING WOUNDS]** ability.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
+    "devastating-wounds": {
+      "ability_id": "devastating-wounds",
+      "name": "Devastating Wounds",
+      "description": "Each time an attack made with a **[DEVASTATING WOUNDS]** weapon results in a **critical wound**, the attack sequence for that attack ends and the target unit suffers a number of **mortal wounds** equal to the **D** characteristic of that weapon. These are inflicted after resolving any normal damage inflicted by those attacks. \n**Mortal wounds** inflicted by **[DEVASTATING WOUNDS]** weapons can damage a maximum of one model for each **critical wound**; any remaining **mortal wounds** inflicted by that attack are lost. \n***Example:** An attack made with a **[DEVASTATING WOUNDS]** weapon with a **D** characteristic of 3 results in a **critical wound** against an Intercessor Squad, so inflicts 3 **mortal wounds**. The first 2 **mortal wounds** are sufficient to **destroy** 1 Intercessor model, so the remaining **mortal wound** is lost.*",
+      "ability_type": "core",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      }
     },
     "forward-observers": {
       "ability_id": "forward-observers",
@@ -2959,7 +3021,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -3018,7 +3080,12 @@
       ],
       "ability_type": "unit",
       "behavior": "passive",
-      "community_notes": "auto-generated, partial"
+      "community_notes": "auto-generated, partial",
+      "description": "Each time this unit is an Observer unit, until the end of the phase, each time a ranged attack is made by a model in a Guided unit that targets their Spotted unit, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "homing-beacon": {
       "ability_id": "homing-beacon",
@@ -3026,7 +3093,7 @@
       "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "pre-launch-provisional"
+        "dataslate": "bsdata"
       },
       "version": "2025-q3",
       "effect": {
@@ -3044,70 +3111,11 @@
         "stealth-battlesuits"
       ],
       "ability_type": "unit",
-      "behavior": "activated"
-    },
-    "for-the-greater-good": {
-      "ability_id": "for-the-greater-good",
-      "name": "For the Greater Good",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "pre-launch-provisional"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "conditional",
-        "condition": {
-          "operator": "and",
-          "operands": [
-            {
-              "type": "phase-is",
-              "parameters": {
-                "phase": "shooting"
-              }
-            },
-            {
-              "type": "target-has-keyword",
-              "parameters": {
-                "keyword": "SPOTTED"
-              }
-            }
-          ]
-        },
-        "effect": {
-          "type": "sequence",
-          "steps": [
-            {
-              "type": "roll-modifier",
-              "target": "unit",
-              "modifier": {
-                "roll": "hit",
-                "operation": "add",
-                "value": 1
-              }
-            },
-            {
-              "type": "keyword-grant",
-              "target": "unit",
-              "modifier": {
-                "keywords": [
-                  "Ignores Cover"
-                ]
-              }
-            }
-          ]
-        }
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "phase"
-      },
-      "faction_id": "tau-empire",
-      "ability_type": "faction",
       "behavior": "activated",
-      "community_notes": "Assumes targets are SPOTTED (observer unit sacrifices shooting). +1 BS is the primary offensive benefit; Ignores Cover is kept for completeness but has no effect in the current damage engine (cover not simulated).",
-      "unit_ids": [
-        "taunar-supremacy-armour"
+      "description": "Once per battle, you can use the Rapid Ingress Stratagem for 0CP. The target must be set up within 3\" of the bearer’s unit and more than 8\" away from all enemy units.\n**Designer’s Note:** *Place a Homing Beacon token next to this unit, removing it once this ability is used.*",
+      "sources": [
+        "bsdata",
+        "40kdc"
       ]
     }
   },
@@ -3607,20 +3615,38 @@
   },
   "factionRuleId": "for-the-greater-good",
   "sharedAbilities": [
-    "scouts-7",
+    "scouts",
+    "deadly-demise",
+    "hover",
+    "for-the-greater-good",
+    "precise",
+    "precision",
+    "lethal-hits",
+    "weapon-support-system",
     "deep-strike",
-    "gun-drone",
     "marker-drone",
     "shield-drone",
-    "weapon-support-system",
+    "guardian-drone",
     "infiltrators",
     "stealth",
-    "deadly-demise-d3",
+    "ignores-cover",
+    "ds8-support-turret",
+    "sustained-hits",
     "battlesuit-support-system",
-    "deadly-demise-d6-2",
-    "firing-deck-11",
+    "firing-deck",
     "leader",
-    "missile-drone",
-    "lone-operative"
+    "feel-no-pain",
+    "devastating-wounds",
+    "lone-operative",
+    "shield-generator",
+    "volley-fire",
+    "armour-hunter",
+    "fire-and-fade",
+    "ritual-butchery",
+    "reinforced-cover",
+    "crucible",
+    "cunning-ambush",
+    "warrior-bond",
+    "fire-discipline"
   ]
 }

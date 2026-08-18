@@ -30,6 +30,10 @@ class BsFaction {
   final List<Map<String, Object?>> abilities;
   final List<Map<String, Object?>> compositions;
 
+  /// Weapon profiles dropped because the app cannot yet say which of a
+  /// datasheet's variants of one weapon it carries. See §3.10.
+  final List<String> droppedWeaponVariants;
+
   /// Names that slugged to the same id.
   ///
   /// Reported rather than resolved. A collision means two datasheets would
@@ -44,6 +48,7 @@ class BsFaction {
     required this.abilities,
     required this.compositions,
     required this.collisions,
+    this.droppedWeaponVariants = const [],
   });
 }
 
@@ -128,19 +133,35 @@ class BsMapper {
     final ids = _resolveWeaponIds(weapons, variantUsers, _anchorProfiles(anchors));
     for (final unit in units.values) {
       final linked = unit['weapon_ids']! as List;
+      // Two of a unit's entries can now resolve to one id — a Crisis suit's
+      // missile pod and its drone's — so the list is deduplicated while
+      // keeping the order the datasheet lists them in.
+      final seen = <String>{};
       unit['weapon_ids'] = [
         for (final key in linked)
-          if (ids[key] case final resolved?) resolved else key,
+          if (ids[key] case final resolved?)
+            if (seen.add(resolved)) resolved,
       ];
     }
+
+    // One record per id: the anchor-preferred variant, which sorted first.
+    final byId = <String, Map<String, Object?>>{};
+    final discarded = <String>[];
     for (final entry in weapons.entries) {
-      entry.value['id'] = ids[entry.key] ?? entry.key;
+      final id = ids[entry.key] ?? entry.key;
+      entry.value['id'] = id;
+      if (byId.containsKey(id)) {
+        discarded.add('$id <- ${entry.key}');
+      } else {
+        byId[id] = entry.value;
+      }
     }
 
     return BsFaction(
       factionId: factionId,
       units: units.values.toList(growable: false),
-      weapons: weapons.values.toList(growable: false),
+      weapons: byId.values.toList(growable: false),
+      droppedWeaponVariants: discarded,
       abilities: abilities.values.toList(growable: false),
       compositions: compositions.values.toList(growable: false),
       collisions: collisions,
@@ -219,18 +240,21 @@ class BsMapper {
           final byUse = (users[b]?.length ?? 0).compareTo(users[a]?.length ?? 0);
           return byUse != 0 ? byUse : a.compareTo(b);
         });
-      out[variants.first] = slug;
-      final taken = <String>{slug};
-      for (final key in variants.skip(1)) {
-        var id = '$slug-${_skillOf(weapons[key])}';
-        if (!taken.add(id)) {
-          var n = 2;
-          while (!taken.add('$id-$n')) {
-            n++;
-          }
-          id = '$id-$n';
-        }
-        out[key] = id;
+      // **Every variant resolves to the plain slug.**
+      //
+      // Giving them distinct ids was the first attempt and it broke the app:
+      // `wargear_costs` names `missile-pod`, a saved roster's wargear names
+      // `missile-pod`, and the corrections name `missile-pod`, so renaming the
+      // one a datasheet carries to `missile-pod-bs5` silently detached all
+      // three. The reference list dropped from 2,000 points to 1,830.
+      //
+      // Keeping them apart needs the *unit* to say which profile it uses, and
+      // nothing in the roster model can express that yet (§3.10). Until it
+      // can, the variant matching what 40kdc published wins the id and the
+      // rest are dropped — recorded in the conflict log rather than lost, so
+      // the work is there when the app can use it.
+      for (final key in variants) {
+        out[key] = slug;
       }
     }
     return out;
@@ -255,19 +279,6 @@ class BsMapper {
       }
     }
     return 0;
-  }
-
-  /// `bs3`, `ws4`, or `alt` when the profiles differ in some other way.
-  String _skillOf(Map<String, Object?>? weapon) {
-    for (final raw in asList(weapon?['profiles'])) {
-      final stats = asMap(asMap(raw)['stats']);
-      for (final key in const ['BS', 'WS']) {
-        if (asInt(stats[key]) case final value?) {
-          return '${key.toLowerCase()}$value';
-        }
-      }
-    }
-    return 'alt';
   }
 
   /// A datasheet is a selectable unit or single model with a battlefield role.
@@ -596,6 +607,16 @@ class _Walk {
 
     for (final child in children) {
       visit(child, depth: depth + 1);
+    }
+
+    // **Groups nest.** A Riptide's `Wargear` group holds one entry and a
+    // sub-group, and the sub-group is where its ion accelerator, heavy burst
+    // cannon and smart missile system live. Reading only a group's own
+    // entries left the Riptide holding nothing but its fists, and the
+    // reference list 110 points short.
+    for (final raw in group.selectionEntryGroups) {
+      final nested = BsEntry(asMap(raw), owner.sourceId);
+      if (_belongs(nested.name)) _group(nested, owner, depth);
     }
   }
 

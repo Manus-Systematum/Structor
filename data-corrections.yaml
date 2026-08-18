@@ -227,19 +227,14 @@ units:
   - faction: tau-empire
     id: commander-in-enforcer-battlesuit
     reason: >
-      Commander battlesuits take drones. Upstream lists neither the abilities
-      nor the wargear budget, so a Commander's Gun Drone was dropped on import
-      — its twin pulse carbine missing from the shooting table and its Shield
-      Drone missing from the rules. Evidenced by a validated War Organ export
-      of a legal 2,000 point list.
+      The Shield Generator is a Riptide and Stormsurge support system, not a
+      Commander option, and 40kdc lists it in the Enforcer's wargear budget.
+      Offered beside the drones it reads as the shield you wanted, and taking
+      it spends points on a rule the model does not have. Reported by the
+      app's user, who fields the army. BSData does not list it either way, so
+      this is still ours to state (§3.10).
     upstream: not yet reported
-    add_wargear: [gun-drone, shield-drone]
     remove_wargear: [shield-generator]
-    # The Shield Generator is a Riptide and Stormsurge support system, not a
-    # Commander option, and upstream lists it in the Enforcer's wargear
-    # budget. Offered beside the drones it reads as the shield you wanted,
-    # and taking it spends points on a rule the model does not have.
-    # Reported by the app's user, who fields the army.
 
   - faction: adepta-sororitas
     id: dominion-squad
@@ -256,49 +251,14 @@ units:
   - faction: tau-empire
     id: commander-in-coldstar-battlesuit
     reason: >
-      Drones as for the Enforcer Commander. The Shield Generator is a separate
-      problem: upstream lists it BOTH as a standard ability and as a wargear
-      option, so the app could not tell whether a list that never mentions
-      buying one has a 4+ invulnerable save. Treated as standard, which is
-      what the ability list implies and what makes the statline agree with
-      the rules text. If a Coldstar has to pay for its Shield Generator, this
+      40kdc lists the Shield Generator BOTH as a standard ability and as a
+      wargear option, so the app could not tell whether a list that never
+      mentions buying one has a 4+ invulnerable save. Treated as standard,
+      which is what the ability list implies and what makes the statline agree
+      with the rules. If a Coldstar has to pay for its Shield Generator, this
       entry is the thing to change.
     upstream: not yet reported
-    add_wargear: [gun-drone, shield-drone]
     standard_wargear: [shield-generator]
-
-  - faction: tau-empire
-    id: crisis-starscythe-battlesuits
-    reason: >
-      Crisis Starscythe suits take the same drones as Crisis Fireknife suits,
-      whose datasheet does list them. The omission looks like a transcription
-      slip rather than a rule.
-    upstream: not yet reported
-    add_wargear: [gun-drone, shield-drone]
-
-  - faction: tau-empire
-    id: stealth-battlesuits
-    reason: >
-      Stealth Battlesuits take a Gun Drone and a Marker Drone. Both abilities
-      exist in the faction data; neither is attached to this datasheet.
-    upstream: not yet reported
-    add_wargear: [gun-drone, marker-drone]
-
-  - faction: tau-empire
-    id: broadside-battlesuits
-    reason: >
-      Broadsides take Missile Drones. The ability exists and is attached to
-      the Riptide, but not here.
-    upstream: not yet reported
-    add_wargear: [missile-drone]
-
-  - faction: tau-empire
-    id: ghostkeel-battlesuit
-    reason: >
-      The Ghostkeel takes a Battlesuit Support System. The ability exists and
-      is attached to other battlesuits, but not to this one.
-    upstream: not yet reported
-    add_wargear: [battlesuit-support-system]
 
 # Two ids for one rule. Upstream transcribes an ability once per datasheet, and
 # the datasheets disagree about the plural — the effect records are identical.

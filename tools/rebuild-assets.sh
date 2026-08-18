@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 #
-# Rebuilds every derived asset from data/40kdc and data-corrections.yaml.
+# Rebuilds every derived asset from the merged dataset and data-corrections.yaml.
+#
+# The merge runs first: data/merged is BSData written over 40kdc (§3.10), and
+# it is what every later step reads. Skipping it leaves the app on whatever
+# was merged last, which is the same class of mistake as forgetting the
+# bundles.
 #
 # Three outputs, all committed, all easy to forget:
 #
@@ -23,12 +28,19 @@ if [ ! -d "$root/data/40kdc" ]; then
   echo "no snapshot at data/40kdc — run tools/fetch-40kdc.sh first" >&2
   exit 2
 fi
+if [ ! -d "$root/data/bsdata" ]; then
+  echo "no snapshot at data/bsdata — run tools/fetch-bsdata.sh first" >&2
+  exit 2
+fi
 
 cd "$core"
 
+echo "==> merging BSData over 40kdc"
+dart run bin/merge.dart
+
 echo "==> importing the reference export"
 dart run bin/import.dart test/fixtures/war_organ_export.txt \
-  --out /tmp/reference-roster.json
+  --data ../../data/merged --out /tmp/reference-roster.json
 
 # Keep the fixture's header comment, which says how to regenerate it.
 python3 - "$core/test/fixtures/tau_strike_force_2000.json" <<'PY'
@@ -49,10 +61,10 @@ cp "$core/test/fixtures/tau_strike_force_2000.json" \
 
 echo "==> writing the reference snapshot"
 dart run bin/roster.dart test/fixtures/tau_strike_force_2000.json \
-  --snapshot "$app/assets/reference_snapshot.json"
+  --data ../../data/merged --snapshot "$app/assets/reference_snapshot.json"
 
 echo "==> building the bundles"
-dart run bin/bundle.dart --out "$app/assets/bundles"
+dart run bin/bundle.dart --data ../../data/merged --out "$app/assets/bundles"
 
 echo
 echo "done — now run both test suites before committing"

@@ -30,7 +30,7 @@
           "count": 1
         },
         {
-          "itemId": "gun-drone",
+          "itemId": "twin-pulse-carbine",
           "count": 1
         },
         {
@@ -57,11 +57,7 @@
           "count": 3
         },
         {
-          "itemId": "gun-drone",
-          "count": 3
-        },
-        {
-          "itemId": "shield-drone",
+          "itemId": "twin-pulse-carbine",
           "count": 3
         }
       ]
@@ -76,7 +72,7 @@
           "count": 1
         },
         {
-          "itemId": "gun-drone",
+          "itemId": "twin-pulse-carbine",
           "count": 1
         },
         {
@@ -103,11 +99,7 @@
           "count": 3
         },
         {
-          "itemId": "gun-drone",
-          "count": 3
-        },
-        {
-          "itemId": "shield-drone",
+          "itemId": "twin-pulse-carbine",
           "count": 3
         }
       ]
@@ -122,7 +114,7 @@
           "count": 1
         },
         {
-          "itemId": "gun-drone",
+          "itemId": "twin-pulse-carbine",
           "count": 1
         },
         {
@@ -149,11 +141,7 @@
           "count": 6
         },
         {
-          "itemId": "gun-drone",
-          "count": 3
-        },
-        {
-          "itemId": "shield-drone",
+          "itemId": "twin-pulse-carbine",
           "count": 3
         }
       ]
@@ -168,7 +156,7 @@
           "count": 1
         },
         {
-          "itemId": "gun-drone",
+          "itemId": "twin-pulse-carbine",
           "count": 1
         },
         {
@@ -195,11 +183,7 @@
           "count": 3
         },
         {
-          "itemId": "gun-drone",
-          "count": 3
-        },
-        {
-          "itemId": "shield-drone",
+          "itemId": "twin-pulse-carbine",
           "count": 3
         }
       ]
@@ -245,10 +229,6 @@
           "count": 1
         },
         {
-          "itemId": "missile-drone",
-          "count": 2
-        },
-        {
           "itemId": "seeker-missile",
           "count": 1
         },
@@ -270,10 +250,6 @@
         {
           "itemId": "heavy-rail-rifle",
           "count": 1
-        },
-        {
-          "itemId": "missile-drone",
-          "count": 2
         },
         {
           "itemId": "twin-smart-missile-system",
@@ -309,10 +285,6 @@
       "datasheetId": "riptide-battlesuit",
       "models": 1,
       "wargear": [
-        {
-          "itemId": "missile-drone",
-          "count": 2
-        },
         {
           "itemId": "ion-accelerator",
           "count": 1
@@ -356,7 +328,7 @@
           "count": 5
         },
         {
-          "itemId": "gun-drone",
+          "itemId": "twin-pulse-carbine",
           "count": 1
         },
         {
@@ -391,7 +363,7 @@
           "count": 1
         },
         {
-          "itemId": "gun-drone",
+          "itemId": "twin-pulse-carbine",
           "count": 1
         },
         {
