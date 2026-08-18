@@ -59,6 +59,10 @@
         {
           "itemId": "gun-drone",
           "count": 3
+        },
+        {
+          "itemId": "shield-drone",
+          "count": 3
         }
       ]
     },
@@ -100,6 +104,10 @@
         },
         {
           "itemId": "gun-drone",
+          "count": 3
+        },
+        {
+          "itemId": "shield-drone",
           "count": 3
         }
       ]
@@ -143,6 +151,10 @@
         {
           "itemId": "gun-drone",
           "count": 3
+        },
+        {
+          "itemId": "shield-drone",
+          "count": 3
         }
       ]
     },
@@ -184,6 +196,10 @@
         },
         {
           "itemId": "gun-drone",
+          "count": 3
+        },
+        {
+          "itemId": "shield-drone",
           "count": 3
         }
       ]

@@ -2447,6 +2447,209 @@
         "upstream": "not yet reported"
       }
     },
+    "weapon-support-system": {
+      "ability_id": "weapon-support-system",
+      "name": "Weapon Support System",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "phase-is",
+          "parameters": {
+            "phase": "shooting"
+          }
+        },
+        "effect": {
+          "type": "roll-modifier",
+          "target": "unit",
+          "modifier": {
+            "roll": "all",
+            "operation": "ignore-modifiers"
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "riptide-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "description": "Each time a model in this unit makes a ranged attack, you can ignore any or all modifiers to the Hit roll.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
+    "battlesuit-support-system": {
+      "ability_id": "battlesuit-support-system",
+      "name": "Battlesuit Support System",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "fallback-and-act",
+        "target": "unit",
+        "modifier": {}
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "riptide-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "description": "The bearer is eligible to shoot in a turn in which it Fell Back but it loses the **^^Smoke^^** keyword.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
+    "marker-drone": {
+      "ability_id": "marker-drone",
+      "name": "Marker Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "sequence",
+        "steps": [
+          {
+            "type": "keyword-grant",
+            "target": "unit",
+            "modifier": {
+              "keywords": [
+                "markerlight"
+              ]
+            }
+          },
+          {
+            "type": "ability-grant",
+            "target": "unit",
+            "modifier": {
+              "ability": "observer-unit",
+              "bypass_restrictions": [
+                "advanced-this-turn"
+              ]
+            }
+          }
+        ]
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "crisis-fireknife-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21",
+      "description": "The bearer’s unit has the **^^Markerlight^^** keyword and can act as an Observer unit for another unit even if it Advanced this turn.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
+    "shield-drone": {
+      "ability_id": "shield-drone",
+      "name": "Shield Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "stat-modifier",
+        "target": "self",
+        "modifier": {
+          "stat": "W",
+          "operation": "add",
+          "value": 1
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "crisis-fireknife-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "description": "Add 1 to the bearer’s Wounds characteristic.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
+    "guardian-drone": {
+      "ability_id": "guardian-drone",
+      "name": "Guardian Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "phase-is",
+          "parameters": {
+            "phase": "shooting"
+          }
+        },
+        "effect": {
+          "type": "roll-modifier",
+          "target": "unit",
+          "modifier": {
+            "roll": "wound",
+            "operation": "subtract",
+            "value": 1
+          }
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "strike-team"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "description": "Each time a model makes a ranged attack that targets the bearer’s unit, subtract 1 from the Wound roll.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
+    "precise": {
+      "ability_id": "precise",
+      "name": "Precise",
+      "description": "Each time a Critical Wound is scored for an attack made with this weapon, that attack has the **[PRECISION]** ability.",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      }
+    },
     "fireknife": {
       "ability_id": "fireknife",
       "name": "Fireknife",
@@ -2506,47 +2709,6 @@
       "ability_type": "unit",
       "behavior": "passive",
       "description": "Each time a model in this unit makes a ranged attack, re-roll a Hit roll of 1. If that attack targets a unit that is at its Starting Strength, you can re-roll the Hit roll instead.",
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
-    },
-    "weapon-support-system": {
-      "ability_id": "weapon-support-system",
-      "name": "Weapon Support System",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "conditional",
-        "condition": {
-          "type": "phase-is",
-          "parameters": {
-            "phase": "shooting"
-          }
-        },
-        "effect": {
-          "type": "roll-modifier",
-          "target": "unit",
-          "modifier": {
-            "roll": "all",
-            "operation": "ignore-modifiers"
-          }
-        }
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "riptide-battlesuit"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive",
-      "description": "Each time a model in this unit makes a ranged attack, you can ignore any or all modifiers to the Hit roll.",
       "sources": [
         "bsdata",
         "40kdc"
@@ -2701,35 +2863,6 @@
         "upstream": "not yet reported"
       }
     },
-    "battlesuit-support-system": {
-      "ability_id": "battlesuit-support-system",
-      "name": "Battlesuit Support System",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "fallback-and-act",
-        "target": "unit",
-        "modifier": {}
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "riptide-battlesuit"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive",
-      "description": "The bearer is eligible to shoot in a turn in which it Fell Back but it loses the **^^Smoke^^** keyword.",
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
-    },
     "neocapacitor-shields": {
       "ability_id": "neocapacitor-shields",
       "name": "Neocapacitor Shields",
@@ -2816,6 +2949,44 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "bsdata"
+      }
+    },
+    "mv15-gun-drone": {
+      "ability_id": "mv15-gun-drone",
+      "name": "MV15 Gun Drone",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "ability-grant",
+        "target": "bearer",
+        "modifier": {
+          "grant_type": "weapon-grant",
+          "weapon_id": "twin-pulse-blaster",
+          "count": 1
+        }
+      },
+      "scope": {
+        "range": "self",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "the-twin-lance"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21",
+      "description": "The bearer is equipped with 1 twin pulse blaster.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ],
+      "corrected": {
+        "reason": "Names the weapon by id rather than as free text, so the grant resolves to a profile the shooting table can show.",
+        "upstream": "not yet reported"
       }
     },
     "advanced-armour": {
@@ -3153,6 +3324,37 @@
       "behavior": "passive",
       "community_notes": "auto-generated, partial",
       "description": "Each time this unit is an Observer unit, until the end of the phase, each time a ranged attack is made by a model in a Guided unit that targets their Spotted unit, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
+    "homing-beacon": {
+      "ability_id": "homing-beacon",
+      "name": "Homing Beacon",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "cp-refund",
+        "target": "self",
+        "modifier": {
+          "type": "stratagem-for-0cp"
+        }
+      },
+      "scope": {
+        "range": "aura-6",
+        "duration": "one-use"
+      },
+      "unit_ids": [
+        "stealth-battlesuits"
+      ],
+      "ability_type": "unit",
+      "behavior": "activated",
+      "description": "Once per battle, you can use the Rapid Ingress Stratagem for 0CP. The target must be set up within 3\" of the bearer’s unit and more than 8\" away from all enemy units.\n**Designer’s Note:** *Place a Homing Beacon token next to this unit, removing it once this ability is used.*",
       "sources": [
         "bsdata",
         "40kdc"

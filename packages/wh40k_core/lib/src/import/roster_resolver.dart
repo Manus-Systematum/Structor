@@ -405,10 +405,24 @@ class RosterResolver {
     // matched `Twin pulse carbine` outright and the split that would have
     // found the drone never ran. Only a leading part that names an ability
     // counts, so a weapon legitimately called "... with ..." is unaffected.
-    final carrier = _carrierOf(node.name, abilityCandidates);
-    if (carrier != null) {
-      tally.update(carrier, (n) => n + node.count, ifAbsent: () => node.count);
-      return;
+    // `X with Y and Z` is one line naming two things a model carries: the
+    // export writes "Gun Drone With Twin Pulse Carbine and Shield Drone" for a
+    // suit that has both. Matching the carrier alone recorded the gun drone
+    // and silently lost the shield drone.
+    if (_carrierOf(node.name, abilityCandidates) != null) {
+      var any = false;
+      for (final part in splitCompound(node.name)) {
+        final id = _carrierOf(part, abilityCandidates) ??
+            _abilityFor(part, abilityCandidates) ??
+            bestMatch<_Candidate>(part, candidates, (c) => c.name,
+                    threshold: 0.7)
+                ?.value
+                .id;
+        if (id == null) continue;
+        tally.update(id, (n) => n + node.count, ifAbsent: () => node.count);
+        any = true;
+      }
+      if (any) return;
     }
 
     final direct = bestMatch<_Candidate>(

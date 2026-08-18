@@ -178,6 +178,14 @@ class ArmyRules {
       ));
     }
 
+    // Whatever the army-wide tier has claimed does not appear again below it.
+    //
+    // 40kdc named the army rule only on the faction record, so this could not
+    // arise. BSData puts For The Greater Good on every T'au datasheet as well,
+    // and the rule then showed twice on one screen — once as the army rule and
+    // once as a column every unit shares (§7.3.9).
+    final claimed = {for (final entry in armyWide) entry.id};
+
     // Distinct datasheets in roster order, with how many the list has of each
     // and the wargear any copy of it bought.
     final order = <String>[];
@@ -211,7 +219,8 @@ class ArmyRules {
       final bought = taken[datasheetId] ?? const <String>{};
       return [
         for (final id in datasheet.ruleVocabulary.toSet())
-          if (!optional.contains(id) || bought.contains(id)) id,
+          if (!claimed.contains(id))
+            if (!optional.contains(id) || bought.contains(id)) id,
       ];
     }
 

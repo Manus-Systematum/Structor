@@ -205,7 +205,11 @@ class SnapshotBuilder {
       final rawUnit = rawUnits[datasheet.id];
       if (rawUnit != null) units[datasheet.id] = rawUnit;
 
-      for (final abilityId in datasheet.abilityIds) {
+      // The whole vocabulary, not `ability_ids` alone: a drone is optional
+      // wargear and its rule lives behind a budget line, so capturing only
+      // the innate ones left a snapshot that could not explain a drone the
+      // list had actually bought (§3.10).
+      for (final abilityId in datasheet.ruleVocabulary) {
         takeAbility(abilityId);
       }
 

@@ -35,7 +35,8 @@ void main() {
       await open(tester);
       // Nothing read factions.json before, so this is the rule the page could
       // not previously show at all.
-      expect(find.text('For the Greater Good'), findsOneWidget);
+      // BSData's spelling, which ships because BSData wins on names (§3.10).
+      expect(find.text('For The Greater Good'), findsOneWidget);
       // Both detachments contribute a rule under it.
       expect(find.text('Expert Fieldcraft'), findsOneWidget);
       expect(find.text('Superior Craftsmanship'), findsOneWidget);
