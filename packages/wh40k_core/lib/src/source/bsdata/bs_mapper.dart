@@ -98,7 +98,10 @@ class BsMapper {
         'keywords': _keywords(root),
         'faction_keywords': _factionKeywords(root),
         'weapon_ids': walk.weaponIds.toList(),
-        'ability_ids': walk.abilityIds.toList(),
+        'ability_ids': [
+          for (final id in walk.abilityIds)
+            if (!walk.weaponKeywordIds.contains(id)) id,
+        ],
         'model_count': {'min': walk.modelCount, 'max': walk.modelCountMax},
         'is_legend': isLegends(root.name),
         'battlefield_role': root.primaryCategory,
@@ -442,6 +445,18 @@ class _Walk {
   /// two routes would otherwise be walked twice.
   final _seen = <String>{};
 
+  /// Keyword ids seen on this faction's weapon profiles.
+  ///
+  /// BattleScribe links the rule for `[ASSAULT]` from every weapon that has
+  /// it, so a datasheet's rules came out listing ten weapon keywords among its
+  /// abilities. They are keywords printed on a gun, not rules the unit has —
+  /// and now that BSData supplies their text, leaving them in would render
+  /// each one on the rules screen as though it were the datasheet's own.
+  ///
+  /// The records are still kept: the text is worth having where a player looks
+  /// a keyword up. Only the unit's ability list is filtered.
+  final weaponKeywordIds = <String>{};
+
   _Walk(this.index, this.pts);
 
   /// Models when every minimum is taken — the datasheet's starting size, which
@@ -483,6 +498,21 @@ class _Walk {
           },
       ];
 
+  /// Subtrees that hang off a datasheet without belonging to it.
+  ///
+  /// A BattleScribe datasheet links the whole Crusade apparatus — battle
+  /// traits, relics, specialisms, battle scars — and those links reach shared
+  /// trees covering the entire game. Walking them gave an Enforcer Commander
+  /// 180 abilities, most of them from other factions, and a Dominion Squad the
+  /// Sisters' entire hymn list. None of it is on the datasheet.
+  static final _notThisDatasheet = RegExp(
+    r'crusade|battle\s*trait|battle\s*scar|relic|specialism|'
+    r'expanding the empire|white dwarf|warlord|requisition|enhancement',
+    caseSensitive: false,
+  );
+
+  bool _belongs(String name) => !_notThisDatasheet.hasMatch(name);
+
   void visit(BsEntry entry, {int depth = 0}) {
     if (depth > 8) return;
     if (!_seen.add(entry.id.isEmpty ? '${entry.name}@$depth' : entry.id)) {
@@ -521,11 +551,14 @@ class _Walk {
       _child(child, depth);
     }
     for (final rawGroup in entry.selectionEntryGroups) {
-      _group(BsEntry(asMap(rawGroup), entry.sourceId), entry, depth);
+      final group = BsEntry(asMap(rawGroup), entry.sourceId);
+      if (!_belongs(group.name)) continue;
+      _group(group, entry, depth);
     }
     for (final raw in entry.entryLinks) {
+      if (!_belongs(strOr(asMap(raw)['name'], ''))) continue;
       final target = index.resolve(raw);
-      if (target != null) _child(target, depth);
+      if (target != null && _belongs(target.name)) _child(target, depth);
     }
   }
 
@@ -534,7 +567,8 @@ class _Walk {
     final children = <BsEntry>[
       for (final raw in group.selectionEntries) BsEntry(asMap(raw), owner.sourceId),
       for (final raw in group.entryLinks)
-        if (index.resolve(raw) case final target?) target,
+        if (_belongs(strOr(asMap(raw)['name'], '')))
+          if (index.resolve(raw) case final target?) target,
     ];
 
     final modelChildren = children.where(_hasUnitProfile).toList();
@@ -743,6 +777,11 @@ class _Walk {
       'stats': stats,
       'keywords': _weaponKeywords(chars['Keywords']),
     };
+    for (final keyword in profile['keywords']! as List) {
+      if (str(asMap(keyword)['keyword_id']) case final id?) {
+        weaponKeywordIds.add(id);
+      }
+    }
 
     // Two profiles of one weapon — an ion rifle's standard and overcharge —
     // belong to the same record, and two datasheets' versions of the same
