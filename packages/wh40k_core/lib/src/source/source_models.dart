@@ -914,6 +914,18 @@ class SourceAbility {
   final String? behavior;
   final Map<String, dynamic> effect;
 
+  /// The rule as printed, when the source carries it.
+  ///
+  /// 40kdc deliberately publishes no rules text, which is why the renderer
+  /// (§7.3.6) exists: it says what a structured effect means in English rather
+  /// than quoting anything. BattleScribe does carry the printed wording, and
+  /// §3.10 records the decision to keep it — so an ability can now arrive with
+  /// prose, structure, or both, and a consumer that has one should not assume
+  /// the other.
+  ///
+  /// Null and empty are the same thing here: no text.
+  final String? description;
+
   /// `{frequency: once-per-turn}` and similar. Kept raw — the renderer reads
   /// it, nothing else needs a typed view yet.
   final Map<String, dynamic> usage;
@@ -928,12 +940,13 @@ class SourceAbility {
   const SourceAbility({
     required this.abilityId,
     required this.name,
-    required this.abilityType,
-    required this.behavior,
-    required this.effect,
-    required this.usage,
-    required this.trigger,
-    required this.unitIds,
+    this.abilityType,
+    this.behavior,
+    this.effect = const {},
+    this.description,
+    this.usage = const {},
+    this.trigger = const {},
+    this.unitIds = const [],
     required this.gameVersion,
   });
 
@@ -945,6 +958,7 @@ class SourceAbility {
       abilityType: str(j['ability_type']),
       behavior: str(j['behavior']),
       effect: asMap(j['effect']),
+      description: str(j['description']),
       usage: asMap(j['usage']),
       trigger: asMap(j['trigger']),
       unitIds: strList(j['unit_ids']),

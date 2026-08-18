@@ -1560,3 +1560,108 @@ Verified on the simulator: Blood Angels lists *Angelic Inheritors*, *Encarmine S
 352 core tests, 96 app tests; both analyzers clean. Verified on the simulator: *Take vs Take 01* draws 16 pieces and 6 objectives on Tipping Point with the walls forming L-shapes and the whole table 180° rotationally symmetric, which is the shape a competitive layout is supposed to have; switching to variant 2 moves it to Dawn of War with the pieces rotated.
 
 **Next:** QR (§6.4), which also unlocks the opponent page, and reporting upstream: the stale Adeptus Astartes points, the local corrections, and the four factions' dangling `detachment_id` references (§3.9).
+
+### 3.10 Source decision, revisited — BattleScribe primary
+
+**Superseding §3.0.** The user asked for the real BattleScribe files rather
+than 40kdc's scrape, with 40kdc retained wherever BSData has nothing, BSData
+winning every conflict, and every conflict written down.
+
+Two constraints this collides with, both raised before any code was written
+and both **decided by the user, against the recommendation**:
+
+- **§3.0's licensing premise is gone.** `BSData/wh40k-11e` has no licence file
+  of any kind — LICENSE, LICENSE.md, .txt and COPYING all 404, and GitHub
+  reports none. 40kdc was chosen *because* CC BY 4.0 made vendoring and
+  shipping lawful. The user chose to vendor and ship anyway. In practice this
+  lands in the same place 40kdc already sits: `tools/fetch-bsdata.sh` pulls a
+  pinned revision into a gitignored `data/bsdata/`, and what ships is the
+  derived bundle, not the catalogue.
+- **§0 and §7.6's ban on GW rules text is lifted.** BSData carries the printed
+  wording verbatim — Shadowsun's Agile Combatant reads "This model is eligible
+  to shoot in a turn in which it Fell Back." The user chose to keep it.
+  `SourceAbility.description` is where it lands, beside rather than instead of
+  the structured effect, so the renderer (§7.3.6) still works on abilities that
+  have structure and prose is a second source of explanation rather than a
+  replacement. The upside is real: it closes the "abilities with no
+  description" complaint outright, with 232 T'au ability texts against a
+  handful of hand-written corrections.
+
+**Why BSData is worth it.** It is more complete and more current. 66 T'au
+datasheets against 47, 9 detachments against 7, 555 datasheets across the
+project that 40kdc does not have at all. It also settles §3.5's open finding:
+the Repulsor Executioner is 255/275 and the Vanguard Veterans 105/210 in both
+BSData and the Munitorum, and 40kdc is stale in exactly the direction the
+cross-check predicted.
+
+**What BSData does not have, and 40kdc keeps.** Missions, mission matchups,
+secondary cards, deployment patterns, terrain layouts and templates, force
+dispositions, stratagems, phase mappings, leader attachments, wargear options,
+and the entire enrichment layer of structured ability effects. None of it is
+in a list-building catalogue. Every play surface in §7 still runs on 40kdc,
+and `tools/merge` copies those files through untouched.
+
+#### The shape of the pipeline
+
+    data/bsdata  ──┐
+                   ├─> bin/merge.dart ─> data/merged ─> bin/bundle.dart
+    data/40kdc   ──┘         │
+                             └────────> data-conflicts.json
+
+`data/merged` is a 40kdc-shaped tree, which is the point: the bundler, the
+snapshot writer, the coverage report and the loader all read it unchanged.
+That is also why the mapper emits **raw JSON records rather than typed
+models** — every one of those consumers works on the records the loader read,
+never on the DTOs, so JSON keeps the merge a field-by-field diff of two things
+that already speak the same language.
+
+#### Ids, and why saved rosters survive
+
+BattleScribe ids are opaque (`4d0d-af9d-53c2-bc31`) and nothing else in this
+project speaks them. Records are keyed by **slugified name** instead, which
+puts them in the same id space as 40kdc, corrections, the reference fixture
+and every roster a player has already saved. Measured on T'au: 43 of 47 40kdc
+datasheets are hit exactly, and the four misses are Combat Patrol formations
+BSData does not carry.
+
+#### One weapon name is not one weapon
+
+BSData holds **four separate `Missile pod` entries** — BS 3+, 4+ and two at
+5+ — one per datasheet that fields one. 40kdc collapses them into a single
+BS4+ record, so the app has been showing one number for three guns, which is
+precisely the distinction §7.3.5 says must survive.
+
+They are kept apart, which means their ids must differ. The variant matching
+**what 40kdc published under that name** keeps the plain id, so saved rosters
+and corrections go on resolving; the rest are suffixed with the skill that
+distinguishes them (`missile-pod-bs5`). Ties break on the id, never on walk
+order — otherwise a rebuild would silently renumber every weapon in a faction.
+
+#### What the first run found, which was mostly our own bugs
+
+The same lesson §3.5 recorded, at the same ratio. T'au opened at **106
+conflicts and closed at 23**, and every one of the 83 that disappeared was a
+reading error here rather than a disagreement between the sources:
+
+- Group constraints bound the **group**, not each entry in it — Stealth
+  Battlesuits counted as nine models instead of five.
+- The datasheet root carries the statline **and** its models are in groups
+  below, so counting the root added a phantom model to every squad and Vespid
+  Stingwings lost its five-model price bracket entirely.
+- Silence and `max 2` are different: a group stating nothing is one model, a
+  group stating only a maximum starts at zero. Conflating them cost Broadsides
+  their 75-point row.
+- `type: model` is how BattleScribe marks a model. Testing for a `Unit`
+  profile instead misses most of them, because the statline sits on the root.
+- Characteristics are printed, not stored: `24"`, `2+`, `N/A`. Compared raw,
+  every weapon in the game reported a conflict about its own punctuation — and
+  the genuine ones underneath were invisible.
+- Model-count price brackets are `set N when at least M models`, where the
+  condition names either the literal `model` or **the id of the composition
+  group**. Reading only the first form left every Space Marine squad at its
+  five-model price.
+- An absence is not a disagreement. Seven units produced no points at all, and
+  without "empty never wins" the merge would have shipped them free.
+
+**Points now agree on 1,632 of 1,648 datasheets.** The 16 that do not are
+recorded in `data-conflicts.json` with both values, and BSData's ships.

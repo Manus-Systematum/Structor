@@ -5,8 +5,14 @@ build/
 pubspec.lock
 *.iml
 
-# Vendored upstream snapshot — refetch with tools/fetch-40kdc.sh
+# Vendored upstream snapshots — refetch with tools/fetch-40kdc.sh and
+# tools/fetch-bsdata.sh. Neither is committed: they are large, they are
+# reproducible from a pinned revision, and what ships is the derived bundle.
 data/40kdc/
+data/bsdata/
+
+# Built by tools/merge — BSData over 40kdc (DESIGN.md §3.10).
+data/merged/
 
 # macOS
 .DS_Store
