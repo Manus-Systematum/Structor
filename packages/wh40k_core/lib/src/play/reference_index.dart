@@ -132,7 +132,7 @@ class ReferenceIndex {
     for (final rosterUnit in roster.units) {
       final datasheet = catalogue.unit(rosterUnit.datasheetId);
       if (datasheet == null) continue;
-      for (final abilityId in datasheet.abilityIds) {
+      for (final abilityId in datasheet.ruleVocabulary) {
         final owners = abilityOwners.putIfAbsent(abilityId, () {
           abilityOrder.add(abilityId);
           return <String>[];

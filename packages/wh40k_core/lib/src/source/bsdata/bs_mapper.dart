@@ -84,6 +84,15 @@ class BsMapper {
     final compositions = <String, Map<String, Object?>>{};
     final collisions = <String>[];
 
+    /// Every keyword seen on any weapon profile in the faction.
+    ///
+    /// Collected across the whole faction rather than per datasheet: the rule
+    /// for `[PRECISION]` is linked from the weapon entry, so a unit whose own
+    /// guns do not spell the keyword still picked the rule up and filed it as
+    /// wargear it could buy.
+    final weaponKeywords = <String>{};
+    final pending = <String, _Walk>{};
+
     for (final root in index.roots) {
       if (!_isDatasheet(root)) continue;
       final id = bsSlug(root.name);
@@ -105,10 +114,8 @@ class BsMapper {
         'keywords': _keywords(root),
         'faction_keywords': _factionKeywords(root),
         'weapon_ids': walk.weaponIds.toList(),
-        'ability_ids': [
-          for (final id in walk.abilityIds)
-            if (!walk.weaponKeywordIds.contains(id)) id,
-        ],
+        // Filled in below, once every datasheet's keywords are known.
+        'ability_ids': const <String>[],
         'model_count': {'min': walk.modelCount, 'max': walk.modelCountMax},
         'is_legend': isLegends(root.name),
         'battlefield_role': root.primaryCategory,
@@ -122,6 +129,8 @@ class BsMapper {
       for (final a in walk.abilities.entries) {
         abilities.putIfAbsent(a.key, () => a.value);
       }
+      weaponKeywords.addAll(walk.weaponKeywordIds);
+      pending[id] = walk;
       if (walk.models.isNotEmpty) {
         compositions[id] = {
           'unit_id': id,
@@ -130,6 +139,24 @@ class BsMapper {
           'game_version': bsGameVersion,
         };
       }
+    }
+
+    for (final entry in pending.entries) {
+      final walk = entry.value;
+      final unit = units[entry.key]!;
+      unit['ability_ids'] = [
+        for (final id in walk.abilityIds)
+          if (!weaponKeywords.contains(id)) id,
+      ];
+      final budgets = [
+        for (final id in walk.wargearAbilityIds)
+          if (!weaponKeywords.contains(id) && !walk.abilityIds.contains(id))
+            {
+              'items': [id],
+              'count': 1,
+            },
+      ];
+      if (budgets.isNotEmpty) unit['wargear_budgets'] = budgets;
     }
 
     // The anchor variant of each slug — the one 40kdc published under the
@@ -512,6 +539,16 @@ class _Walk {
   final modelGroups = <_ModelGroup>[];
   final weaponIds = <String>{};
   final abilityIds = <String>{};
+
+  /// Abilities reached through a wargear choice rather than printed on the
+  /// datasheet — a Commander's `Drones (0-2)` group.
+  ///
+  /// **Wargear a datasheet may take is not wargear it has** (§3.8). Filed as
+  /// plain abilities they showed on every unit that *could* buy one: a marker
+  /// drone on a Commander that bought a gun drone, which is a rule on the
+  /// screen that is not on the table. They become budget lines instead, which
+  /// is where 40kdc puts them and what the app's existing filter reads.
+  final wargearAbilityIds = <String>{};
   final weapons = <String, Map<String, Object?>>{};
   final abilities = <String, Map<String, Object?>>{};
   final wargearCosts = <Map<String, Object?>>[];
@@ -588,11 +625,17 @@ class _Walk {
 
   bool _belongs(String name) => !_notThisDatasheet.hasMatch(name);
 
-  void visit(BsEntry entry, {int depth = 0}) {
+  /// Whether the entry currently being read hangs off a wargear choice.
+  bool _inWargear = false;
+
+  void visit(BsEntry entry, {int depth = 0, bool wargear = false}) {
     if (depth > 8) return;
     if (!_seen.add(entry.id.isEmpty ? '${entry.name}@$depth' : entry.id)) {
       return;
     }
+
+    final outer = _inWargear;
+    _inWargear = wargear || entry.type == 'upgrade';
 
     _readProfiles(entry);
 
@@ -623,7 +666,7 @@ class _Walk {
           _constraint(child, 'max') ?? _constraint(child, 'min') ?? 1,
         ));
       }
-      _child(child, depth);
+      _child(child, depth, wargear: _inWargear);
     }
     for (final rawGroup in entry.selectionEntryGroups) {
       final group = BsEntry(asMap(rawGroup), entry.sourceId);
@@ -633,8 +676,12 @@ class _Walk {
     for (final raw in entry.entryLinks) {
       if (!_belongs(strOr(asMap(raw)['name'], ''))) continue;
       final target = index.resolve(raw);
-      if (target != null && _belongs(target.name)) _child(target, depth);
+      if (target != null && _belongs(target.name)) {
+        _child(target, depth, wargear: _inWargear);
+      }
     }
+
+    _inWargear = outer;
   }
 
   /// One composition group: how many models, and which loadouts they may take.
@@ -669,8 +716,11 @@ class _Walk {
       ));
     }
 
+    // A group with no models in it is a wargear group: `Drones (0-2)`,
+    // `Wargear`. What hangs off it is bought, not printed on the datasheet.
+    final isWargearGroup = modelChildren.isEmpty;
     for (final child in children) {
-      visit(child, depth: depth + 1);
+      visit(child, depth: depth + 1, wargear: _inWargear || isWargearGroup);
     }
 
     // **Groups nest.** A Riptide's `Wargear` group holds one entry and a
@@ -706,8 +756,8 @@ class _Walk {
     return name.isEmpty ? children.first.name : name;
   }
 
-  void _child(BsEntry child, int depth) {
-    visit(child, depth: depth + 1);
+  void _child(BsEntry child, int depth, {bool wargear = false}) {
+    visit(child, depth: depth + 1, wargear: wargear);
   }
 
   /// Whether this entry is one of the datasheet's models.
@@ -758,7 +808,7 @@ class _Walk {
     }
     final id = bsSlug(rule.name);
     if (id.isEmpty) return;
-    abilityIds.add(id);
+    (_inWargear ? wargearAbilityIds : abilityIds).add(id);
     abilities.putIfAbsent(
       id,
       () => {
@@ -824,7 +874,7 @@ class _Walk {
         if (text == null) return;
         final id = bsSlug(name);
         if (id.isEmpty) return;
-        abilityIds.add(id);
+        (_inWargear ? wargearAbilityIds : abilityIds).add(id);
         abilities.putIfAbsent(
           id,
           () => {

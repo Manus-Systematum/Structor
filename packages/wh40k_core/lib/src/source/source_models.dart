@@ -388,6 +388,22 @@ class SourceUnit {
   }
 
   /// Everything this datasheet can carry, as roster item ids.
+  /// Every rule this datasheet can have: printed on it, or brought by wargear
+  /// it may buy.
+  ///
+  /// The two live in different fields and both are rules. 40kdc files a drone
+  /// under `wargear_budgets` and BSData reaches one through a `Drones (0-2)`
+  /// group, so neither source puts them all in `ability_ids` — and a screen
+  /// reading `ability_ids` alone stopped showing a Marker Drone the army had
+  /// actually bought. Whether a *particular* unit has one is a separate
+  /// question, answered by checking its roster entry against the budget.
+  List<String> get ruleVocabulary => [
+        ...abilityIds,
+        for (final budget in wargearBudgets)
+          for (final item in budget.items)
+            if (!abilityIds.contains(item)) item,
+      ];
+
   Set<String> get wargearVocabulary => {
         for (final weaponId in weaponIds) unscope(weaponId),
         for (final budget in wargearBudgets)

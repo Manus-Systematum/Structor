@@ -204,19 +204,19 @@ class DatasetRepository {
         .where((j) => j['id']?.toString() == id)
         .firstOrNull;
 
-    // A Space Marine chapter publishes detachments, stratagems and
-    // enhancements but no datasheets — a Blood Angels army fields Adeptus
-    // Astartes units. The datasheets come from the parent; everything the
-    // chapter publishes stays the chapter's own, since its own files already
-    // carry the parent's entries plus its own.
+    // A Space Marine chapter fields its parent's datasheets **and its own**.
+    // This used to be a fall-through — the chapter published none, so the
+    // parent's were simply used instead. BSData gives Blood Angels twenty-six
+    // of their own, and a fall-through then meant a Blood Angels army could
+    // field Sanguinary Guard and not an Intercessor Squad (§3.10). The
+    // parent's are still not copied into the chapter's bundle: that would add
+    // roughly 840 KB across the twelve for data already downloaded.
     final parentId = self?['parent_faction_id']?.toString();
     final parent = parentId == null ? null : await bundle(parentId);
 
     List<Object?> file(String name) => data.file(name);
-    List<Object?> sheets(String name) {
-      final own = data.file(name);
-      return own.isEmpty && parent != null ? parent.file(name) : own;
-    }
+    List<Object?> sheets(String name) => _merge(data.file(name),
+        parent == null ? const [] : parent.file(name));
 
     final faction = FactionData(
       factionId: id,
@@ -280,10 +280,8 @@ class DatasetRepository {
     final parentId = dataset.faction.parentFactionId;
     final parent = parentId == null ? null : await bundle(parentId);
 
-    List<Object?> sheets(String name) {
-      final own = data.file(name);
-      return own.isEmpty && parent != null ? parent.file(name) : own;
-    }
+    List<Object?> sheets(String name) => _merge(data.file(name),
+        parent == null ? const [] : parent.file(name));
 
     Map<String, Object?> index(List<Object?> records, {String key = 'id'}) => {
           for (final record in records)
@@ -320,4 +318,28 @@ class DatasetRepository {
       terrainTemplates: data.file('terrain-templates'),
     );
   }
+}
+
+/// A chapter's own records, plus its parent's that it does not restate.
+///
+/// The chapter's wins where both name an id: a chapter that republishes a
+/// datasheet is saying something about it.
+List<Object?> _merge(List<Object?> own, List<Object?> inherited) {
+  if (own.isEmpty) return inherited;
+  if (inherited.isEmpty) return own;
+  String? idOf(Object? raw) {
+    final map = raw is Map ? raw : const {};
+    return (map['id'] ?? map['ability_id'] ?? map['unit_id'])?.toString();
+  }
+
+  final ids = {
+    for (final raw in own)
+      if (idOf(raw) case final id?) id,
+  };
+  return [
+    ...own,
+    for (final raw in inherited)
+      if (idOf(raw) case final id?)
+        if (!ids.contains(id)) raw,
+  ];
 }

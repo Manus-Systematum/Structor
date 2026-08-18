@@ -128,7 +128,7 @@ class Army {
     };
     final taken = {for (final item in unit.wargear) item.itemId};
     return [
-      for (final id in datasheet.abilityIds)
+      for (final id in datasheet.ruleVocabulary)
         if (!optional.contains(id) || taken.contains(id)) id,
     ];
   }

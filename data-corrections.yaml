@@ -233,7 +233,12 @@ units:
       it spends points on a rule the model does not have. Reported by the
       app's user, who fields the army. BSData does not list it either way, so
       this is still ours to state (§3.10).
+
+      It does take a Gun Drone, which BSData does not list: the reference
+      export — a validated 2,000 point list that prices to its printed total —
+      has "1x Gun drone with twin pulse carbine" on every Commander in it.
     upstream: not yet reported
+    add_wargear: [gun-drone]
     remove_wargear: [shield-generator]
 
   - faction: adepta-sororitas
@@ -258,6 +263,7 @@ units:
       with the rules. If a Coldstar has to pay for its Shield Generator, this
       entry is the thing to change.
     upstream: not yet reported
+    add_wargear: [gun-drone]
     standard_wargear: [shield-generator]
 
 # Two ids for one rule. Upstream transcribes an ability once per datasheet, and
@@ -268,26 +274,6 @@ units:
 #
 # The duplicate is dropped and every reference to it rewritten to `canonical`,
 # which must already exist upstream.
-  - faction: tau-empire
-    id: commander-in-enforcer-battlesuit
-    reason: >
-      Takes a Gun Drone. BSData lists marker, shield and guardian drones on
-      this datasheet and no gun drone; the reference export — a validated
-      2,000 point list that prices to exactly its printed total — lists
-      "1x Gun drone with twin pulse carbine" on every Commander in it. A real
-      army that totals correctly outweighs a catalogue omission, so this is
-      one of the places §3.10's "BSData wins" is overridden on evidence. The
-      divergence is in data-conflicts.json.
-    upstream: not yet reported
-    add_wargear: [gun-drone]
-
-  - faction: tau-empire
-    id: commander-in-coldstar-battlesuit
-    reason: >
-      Gun Drone, as for the Enforcer Commander and on the same evidence.
-    upstream: not yet reported
-    add_wargear: [gun-drone]
-
   - faction: tau-empire
     id: crisis-fireknife-battlesuits
     reason: >

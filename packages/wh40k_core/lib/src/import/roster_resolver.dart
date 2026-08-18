@@ -295,11 +295,20 @@ class RosterResolver {
       weaponCandidates.add(_Candidate(itemId, weapon.name));
     }
 
-    // Abilities the datasheet can carry, keyed by id. A drone is wargear on
-    // the printed list and an ability in the data (§7.3.7), so matching one
-    // has to yield something the roster can store, not just a yes/no.
+    // Everything the datasheet can carry that is not a weapon, keyed by id.
+    // A drone is wargear on the printed list and an ability in the data
+    // (§7.3.7), so matching one has to yield something the roster can store,
+    // not just a yes/no.
+    //
+    // Budget lines count, not only `ability_ids`. BSData reaches a Commander's
+    // drones through a `Drones (0-2)` wargear group, so they are budgeted
+    // rather than innate — and matching abilities alone stopped finding them
+    // the moment that distinction was recorded properly (§3.10).
     final abilityCandidates = <_Candidate>[
-      for (final id in datasheet.abilityIds)
+      for (final id in {
+        ...datasheet.abilityIds,
+        for (final budget in datasheet.wargearBudgets) ...budget.items,
+      })
         _Candidate(id, abilityLookup?.call(id)?.name ?? id.replaceAll('-', ' ')),
     ];
 

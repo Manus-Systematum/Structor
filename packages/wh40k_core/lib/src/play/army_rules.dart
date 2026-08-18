@@ -128,7 +128,7 @@ class ArmyRules {
   static Set<String> sharedAcross(Iterable<SourceUnit> units) {
     final counts = <String, int>{};
     for (final unit in units) {
-      for (final id in unit.abilityIds.toSet()) {
+      for (final id in unit.ruleVocabulary.toSet()) {
         counts[id] = (counts[id] ?? 0) + 1;
       }
     }
@@ -210,7 +210,7 @@ class ArmyRules {
       };
       final bought = taken[datasheetId] ?? const <String>{};
       return [
-        for (final id in datasheet.abilityIds.toSet())
+        for (final id in datasheet.ruleVocabulary.toSet())
           if (!optional.contains(id) || bought.contains(id)) id,
       ];
     }

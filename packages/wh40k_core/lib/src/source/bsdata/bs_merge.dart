@@ -86,6 +86,13 @@ MergeResult mergeRecords({
   bool fillOnly = false,
   /// Fields where 40kdc's value stands even though BSData produced one.
   Set<String> keepFrom40kdc = const {},
+  /// List fields where both sources' entries are kept, deduplicated.
+  ///
+  /// Wargear budgets are the case: 40kdc lists what a datasheet may buy and
+  /// BSData lists what its wargear groups offer, and the two overlap without
+  /// either being complete. Taking one and dropping the other loses options a
+  /// player has.
+  Set<String> union = const {},
 }) {
   final conflicts = <DataConflict>[];
   final byId = <String, Map<String, dynamic>>{};
@@ -150,6 +157,10 @@ MergeResult mergeRecords({
           !_isEmpty(existing[entry.key])) {
         continue;
       }
+      if (union.contains(entry.key)) {
+        merged[entry.key] = _union(existing[entry.key], entry.value);
+        continue;
+      }
       merged[entry.key] = entry.value;
     }
     // Both lineages are in the record now, so it says so.
@@ -169,6 +180,21 @@ MergeResult mergeRecords({
 bool _touchedByBsdata(Map<String, dynamic>? record) =>
     record != null && record['sources'] != null ||
     strOr(asMap(record?['game_version'])['dataslate'], '') == 'bsdata';
+
+/// Both lists, with entries naming an item already present dropped.
+List<Object?> _union(Object? mine, Object? theirs) {
+  final out = <Object?>[...asList(mine)];
+  final seen = <String>{
+    for (final raw in out) ...strList(asMap(raw)['items']),
+  };
+  for (final raw in asList(theirs)) {
+    final items = strList(asMap(raw)['items']);
+    if (items.any(seen.contains)) continue;
+    seen.addAll(items);
+    out.add(raw);
+  }
+  return out;
+}
 
 bool _isEmpty(Object? v) =>
     v == null || (v is Iterable && v.isEmpty) || (v is Map && v.isEmpty);

@@ -119,6 +119,7 @@ void main(List<String> args) {
         compare: spec.compare,
         fillOnly: spec.fillOnly,
         keepFrom40kdc: entry.key == 'units' ? const {'weapon_ids'} : const {},
+        union: entry.key == 'units' ? const {'wargear_budgets'} : const {},
       );
 
       allConflicts.addAll([for (final c in result.conflicts) c.toJson()]);

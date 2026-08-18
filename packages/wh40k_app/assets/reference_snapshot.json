@@ -64,13 +64,6 @@
         "leader",
         "deep-strike",
         "for-the-greater-good",
-        "marker-drone",
-        "shield-drone",
-        "guardian-drone",
-        "precise",
-        "precision",
-        "lethal-hits",
-        "shield-generator",
         "gun-drone"
       ],
       "game_version": {
@@ -84,13 +77,6 @@
         {
           "items": [
             "cyclic-ion-blaster-commander-in-enforcer-battlesuit"
-          ],
-          "count": 1,
-          "per_models": 0
-        },
-        {
-          "items": [
-            "shield-generator"
           ],
           "count": 1,
           "per_models": 0
@@ -118,6 +104,30 @@
         },
         {
           "items": [
+            "marker-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "shield-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "guardian-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "precise"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
             "gun-drone"
           ],
           "count": 1,
@@ -130,7 +140,7 @@
         "40kdc"
       ],
       "corrected": {
-        "reason": "Takes a Gun Drone. BSData lists marker, shield and guardian drones on this datasheet and no gun drone; the reference export — a validated 2,000 point list that prices to exactly its printed total — lists \"1x Gun drone with twin pulse carbine\" on every Commander in it. A real army that totals correctly outweighs a catalogue omission, so this is one of the places §3.10's \"BSData wins\" is overridden on evidence. The divergence is in data-conflicts.json.",
+        "reason": "The Shield Generator is a Riptide and Stormsurge support system, not a Commander option, and 40kdc lists it in the Enforcer's wargear budget. Offered beside the drones it reads as the shield you wanted, and taking it spends points on a rule the model does not have. Reported by the app's user, who fields the army. BSData does not list it either way, so this is still ours to state (§3.10).\nIt does take a Gun Drone, which BSData does not list: the reference export — a validated 2,000 point list that prices to its printed total — has \"1x Gun drone with twin pulse carbine\" on every Commander in it.",
         "upstream": "not yet reported"
       }
     },
@@ -203,12 +213,6 @@
         "weapon-support-system",
         "deep-strike",
         "for-the-greater-good",
-        "marker-drone",
-        "shield-drone",
-        "guardian-drone",
-        "precise",
-        "precision",
-        "lethal-hits",
         "gun-drone"
       ],
       "game_version": {
@@ -244,6 +248,18 @@
           ],
           "count": 3,
           "per_models": 3
+        },
+        {
+          "items": [
+            "guardian-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "precise"
+          ],
+          "count": 1
         }
       ],
       "battlefield_role": "Vehicle",
@@ -316,12 +332,6 @@
         "coldstar-commander",
         "deep-strike",
         "for-the-greater-good",
-        "marker-drone",
-        "shield-drone",
-        "guardian-drone",
-        "precise",
-        "precision",
-        "lethal-hits",
         "shield-generator",
         "gun-drone"
       ],
@@ -333,13 +343,6 @@
       "points_provisional": false,
       "attachment_role": "leader",
       "wargear_budgets": [
-        {
-          "items": [
-            "shield-generator"
-          ],
-          "count": 1,
-          "per_models": 0
-        },
         {
           "items": [
             "cyclic-ion-blaster-commander-in-coldstar-battlesuit"
@@ -370,6 +373,30 @@
         },
         {
           "items": [
+            "marker-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "shield-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "guardian-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "precise"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
             "gun-drone"
           ],
           "count": 1,
@@ -382,7 +409,7 @@
         "40kdc"
       ],
       "corrected": {
-        "reason": "Gun Drone, as for the Enforcer Commander and on the same evidence.",
+        "reason": "40kdc lists the Shield Generator BOTH as a standard ability and as a wargear option, so the app could not tell whether a list that never mentions buying one has a 4+ invulnerable save. Treated as standard, which is what the ability list implies and what makes the statline agree with the rules. If a Coldstar has to pay for its Shield Generator, this entry is the thing to change.",
         "upstream": "not yet reported"
       }
     },
@@ -455,12 +482,6 @@
         "battlesuit-support-system",
         "deep-strike",
         "for-the-greater-good",
-        "marker-drone",
-        "shield-drone",
-        "guardian-drone",
-        "precise",
-        "precision",
-        "lethal-hits",
         "gun-drone"
       ],
       "game_version": {
@@ -496,6 +517,18 @@
           ],
           "count": 3,
           "per_models": 3
+        },
+        {
+          "items": [
+            "guardian-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "precise"
+          ],
+          "count": 1
         }
       ],
       "battlefield_role": "Vehicle",
@@ -562,12 +595,9 @@
         "neocapacitor-shields",
         "exemplars-of-montka",
         "retro-thrusters",
-        "sustained-hits",
         "for-the-greater-good",
         "scouts",
-        "ignores-cover",
-        "deep-strike",
-        "mv15-gun-drone"
+        "deep-strike"
       ],
       "game_version": {
         "edition": "11th",
@@ -576,11 +606,18 @@
       "is_legend": false,
       "points_provisional": false,
       "battlefield_role": "Epic Hero",
+      "wargear_budgets": [
+        {
+          "items": [
+            "mv15-gun-drone"
+          ],
+          "count": 1
+        }
+      ],
       "sources": [
         "bsdata",
         "40kdc"
-      ],
-      "wargear_budgets": []
+      ]
     },
     "broadside-battlesuits": {
       "id": "broadside-battlesuits",
@@ -673,12 +710,6 @@
         "advanced-armour",
         "for-the-greater-good",
         "feel-no-pain",
-        "marker-drone",
-        "shield-drone",
-        "guardian-drone",
-        "precise",
-        "precision",
-        "lethal-hits",
         "missile-drone"
       ],
       "game_version": {
@@ -694,11 +725,31 @@
         }
       ],
       "battlefield_role": "Vehicle",
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ],
       "wargear_budgets": [
+        {
+          "items": [
+            "marker-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "shield-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "guardian-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "precise"
+          ],
+          "count": 1
+        },
         {
           "items": [
             "missile-drone"
@@ -706,6 +757,10 @@
           "count": 1,
           "per_models": 0
         }
+      ],
+      "sources": [
+        "bsdata",
+        "40kdc"
       ],
       "corrected": {
         "reason": "Takes Missile Drones. BSData lists marker, shield and guardian drones here instead; the export lists \"2x Missile drone\" on both Broadsides.",
@@ -776,11 +831,7 @@
         "infiltrators",
         "lone-operative",
         "stealth",
-        "for-the-greater-good",
-        "precise",
-        "precision",
-        "lethal-hits",
-        "battlesuit-support-system"
+        "for-the-greater-good"
       ],
       "game_version": {
         "edition": "11th",
@@ -795,11 +846,24 @@
         }
       ],
       "battlefield_role": "Vehicle",
+      "wargear_budgets": [
+        {
+          "items": [
+            "precise"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "battlesuit-support-system"
+          ],
+          "count": 1
+        }
+      ],
       "sources": [
         "bsdata",
         "40kdc"
-      ],
-      "wargear_budgets": []
+      ]
     },
     "riptide-battlesuit": {
       "id": "riptide-battlesuit",
@@ -862,10 +926,6 @@
         "nova-charge",
         "deadly-demise",
         "for-the-greater-good",
-        "devastating-wounds",
-        "precise",
-        "precision",
-        "lethal-hits",
         "missile-drone"
       ],
       "game_version": {
@@ -881,11 +941,13 @@
         }
       ],
       "battlefield_role": "Vehicle",
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ],
       "wargear_budgets": [
+        {
+          "items": [
+            "precise"
+          ],
+          "count": 1
+        },
         {
           "items": [
             "missile-drone"
@@ -893,6 +955,10 @@
           "count": 1,
           "per_models": 0
         }
+      ],
+      "sources": [
+        "bsdata",
+        "40kdc"
       ],
       "corrected": {
         "reason": "Takes Missile Drones. 40kdc carries them and BSData does not, and BSData's ability list replaces 40kdc's wholesale on a merged record, so without this the drones are lost rather than merely unlisted. The export lists \"2x Missile drones\" on the first Riptide.",
@@ -969,13 +1035,6 @@
         "infiltrators",
         "stealth",
         "for-the-greater-good",
-        "homing-beacon",
-        "marker-drone",
-        "shield-drone",
-        "guardian-drone",
-        "precise",
-        "precision",
-        "lethal-hits",
         "gun-drone"
       ],
       "game_version": {
@@ -991,6 +1050,36 @@
           ],
           "count": 2,
           "per_models": 0
+        },
+        {
+          "items": [
+            "homing-beacon"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "marker-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "shield-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "guardian-drone"
+          ],
+          "count": 1
+        },
+        {
+          "items": [
+            "precise"
+          ],
+          "count": 1
         },
         {
           "items": [
@@ -2325,190 +2414,6 @@
         "40kdc"
       ]
     },
-    "marker-drone": {
-      "ability_id": "marker-drone",
-      "name": "Marker Drone",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "sequence",
-        "steps": [
-          {
-            "type": "keyword-grant",
-            "target": "unit",
-            "modifier": {
-              "keywords": [
-                "markerlight"
-              ]
-            }
-          },
-          {
-            "type": "ability-grant",
-            "target": "unit",
-            "modifier": {
-              "ability": "observer-unit",
-              "bypass_restrictions": [
-                "advanced-this-turn"
-              ]
-            }
-          }
-        ]
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "crisis-fireknife-battlesuits"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive",
-      "community_notes": "community-authored from 10e source (provisional 11e); see #21",
-      "description": "The bearer’s unit has the **^^Markerlight^^** keyword and can act as an Observer unit for another unit even if it Advanced this turn.",
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
-    },
-    "shield-drone": {
-      "ability_id": "shield-drone",
-      "name": "Shield Drone",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "stat-modifier",
-        "target": "self",
-        "modifier": {
-          "stat": "W",
-          "operation": "add",
-          "value": 1
-        }
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "crisis-fireknife-battlesuits"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive",
-      "description": "Add 1 to the bearer’s Wounds characteristic.",
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
-    },
-    "guardian-drone": {
-      "ability_id": "guardian-drone",
-      "name": "Guardian Drone",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "conditional",
-        "condition": {
-          "type": "phase-is",
-          "parameters": {
-            "phase": "shooting"
-          }
-        },
-        "effect": {
-          "type": "roll-modifier",
-          "target": "unit",
-          "modifier": {
-            "roll": "wound",
-            "operation": "subtract",
-            "value": 1
-          }
-        }
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "strike-team"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive",
-      "description": "Each time a model makes a ranged attack that targets the bearer’s unit, subtract 1 from the Wound roll.",
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
-    },
-    "precise": {
-      "ability_id": "precise",
-      "name": "Precise",
-      "description": "Each time a Critical Wound is scored for an attack made with this weapon, that attack has the **[PRECISION]** ability.",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      }
-    },
-    "precision": {
-      "ability_id": "precision",
-      "name": "Precision",
-      "description": "While resolving attacks made with one or more **[PRECISION]** weapons, at the start of the Allocation Order step (05.03), if the target unit contains one or more **CHARACTER** models **visible** to one or more of the attacking models, the active player can select one allocation group that contains one of those **visible CHARACTER** models. If they do, until those attacks are resolved, or until that **CHARACTER** group is **destroyed** (whichever happens first), that **CHARACTER** group is the current allocation group.",
-      "ability_type": "core",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      }
-    },
-    "lethal-hits": {
-      "ability_id": "lethal-hits",
-      "name": "Lethal Hits",
-      "description": "Each time an attack made with a **[LETHAL HITS]** weapon results in a **critical hit**, you can choose for that attack to automatically wound the target. \n***Designer’s Note:** Choosing to automatically wound the target means that no **wound roll** is made for that attack. You may decide against this, as it means that attack cannot result in a **critical wound** and so cannot trigger other abilities such as [DEVASTATING WOUNDS].*",
-      "ability_type": "core",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      }
-    },
-    "shield-generator": {
-      "ability_id": "shield-generator",
-      "name": "Shield Generator",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "invulnerable-save",
-        "target": "self",
-        "modifier": {
-          "invuln_sv": 4
-        }
-      },
-      "scope": {
-        "range": "unit",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "commander-in-coldstar-battlesuit"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive",
-      "description": "The bearer has a 4+ invulnerable save.",
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
-    },
     "gun-drone": {
       "ability_id": "gun-drone",
       "name": "Gun Drone",
@@ -2705,6 +2610,37 @@
         "upstream": "not yet reported"
       }
     },
+    "shield-generator": {
+      "ability_id": "shield-generator",
+      "name": "Shield Generator",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "invulnerable-save",
+        "target": "self",
+        "modifier": {
+          "invuln_sv": 4
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "commander-in-coldstar-battlesuit"
+      ],
+      "ability_type": "unit",
+      "behavior": "passive",
+      "description": "The bearer has a 4+ invulnerable save.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
     "starscythe": {
       "ability_id": "starscythe",
       "name": "Starscythe",
@@ -2872,16 +2808,6 @@
         "40kdc"
       ]
     },
-    "sustained-hits": {
-      "ability_id": "sustained-hits",
-      "name": "Sustained Hits",
-      "description": "This ability always takes the form **[SUSTAINED HITS X]**. Each time an attack made with a **[SUSTAINED HITS]** weapon results in a **critical hit**, that attack results in a number of additional hits on the target as denoted by **X**.\n***Example:** An attack made with a **[SUSTAINED HITS 2]** weapon results in a **critical hit**. That attack therefore hits the target three times (once from the **critical hit**, and twice more from the **[SUSTAINED HITS 2]** ability).*",
-      "ability_type": "core",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      }
-    },
     "scouts": {
       "ability_id": "scouts",
       "name": "Scouts",
@@ -2890,54 +2816,6 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "bsdata"
-      }
-    },
-    "ignores-cover": {
-      "ability_id": "ignores-cover",
-      "name": "Ignores Cover",
-      "description": "Each time an attack is made with an **[IGNORES COVER]** weapon, the target cannot have the **benefit of cover** against that attack (13.08), including from rules that give a model or unit the **benefit of cover** (e.g. **Stealth**).",
-      "ability_type": "core",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      }
-    },
-    "mv15-gun-drone": {
-      "ability_id": "mv15-gun-drone",
-      "name": "MV15 Gun Drone",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "ability-grant",
-        "target": "bearer",
-        "modifier": {
-          "grant_type": "weapon-grant",
-          "weapon_id": "twin-pulse-blaster",
-          "count": 1
-        }
-      },
-      "scope": {
-        "range": "self",
-        "duration": "permanent"
-      },
-      "unit_ids": [
-        "the-twin-lance"
-      ],
-      "ability_type": "unit",
-      "behavior": "passive",
-      "community_notes": "community-authored from 10e source (provisional 11e); see #21",
-      "description": "The bearer is equipped with 1 twin pulse blaster.",
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ],
-      "corrected": {
-        "reason": "Names the weapon by id rather than as free text, so the grant resolves to a profile the shooting table can show.",
-        "upstream": "not yet reported"
       }
     },
     "advanced-armour": {
@@ -3208,16 +3086,6 @@
         "40kdc"
       ]
     },
-    "devastating-wounds": {
-      "ability_id": "devastating-wounds",
-      "name": "Devastating Wounds",
-      "description": "Each time an attack made with a **[DEVASTATING WOUNDS]** weapon results in a **critical wound**, the attack sequence for that attack ends and the target unit suffers a number of **mortal wounds** equal to the **D** characteristic of that weapon. These are inflicted after resolving any normal damage inflicted by those attacks. \n**Mortal wounds** inflicted by **[DEVASTATING WOUNDS]** weapons can damage a maximum of one model for each **critical wound**; any remaining **mortal wounds** inflicted by that attack are lost. \n***Example:** An attack made with a **[DEVASTATING WOUNDS]** weapon with a **D** characteristic of 3 results in a **critical wound** against an Intercessor Squad, so inflicts 3 **mortal wounds**. The first 2 **mortal wounds** are sufficient to **destroy** 1 Intercessor model, so the remaining **mortal wound** is lost.*",
-      "ability_type": "core",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      }
-    },
     "forward-observers": {
       "ability_id": "forward-observers",
       "name": "Forward Observers",
@@ -3285,37 +3153,6 @@
       "behavior": "passive",
       "community_notes": "auto-generated, partial",
       "description": "Each time this unit is an Observer unit, until the end of the phase, each time a ranged attack is made by a model in a Guided unit that targets their Spotted unit, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.",
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
-    },
-    "homing-beacon": {
-      "ability_id": "homing-beacon",
-      "name": "Homing Beacon",
-      "authored_by": "40kdc-community",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "version": "2025-q3",
-      "effect": {
-        "type": "cp-refund",
-        "target": "self",
-        "modifier": {
-          "type": "stratagem-for-0cp"
-        }
-      },
-      "scope": {
-        "range": "aura-6",
-        "duration": "one-use"
-      },
-      "unit_ids": [
-        "stealth-battlesuits"
-      ],
-      "ability_type": "unit",
-      "behavior": "activated",
-      "description": "Once per battle, you can use the Rapid Ingress Stratagem for 0CP. The target must be set up within 3\" of the bearer’s unit and more than 8\" away from all enemy units.\n**Designer’s Note:** *Place a Homing Beacon token next to this unit, removing it once this ability is used.*",
       "sources": [
         "bsdata",
         "40kdc"
@@ -3823,27 +3660,23 @@
     "hover",
     "for-the-greater-good",
     "precise",
-    "precision",
-    "lethal-hits",
     "weapon-support-system",
     "deep-strike",
-    "marker-drone",
-    "shield-drone",
-    "guardian-drone",
     "gun-drone",
+    "shield-drone",
+    "marker-drone",
+    "guardian-drone",
     "infiltrators",
     "stealth",
-    "ignores-cover",
     "ds8-support-turret",
-    "sustained-hits",
     "battlesuit-support-system",
     "firing-deck",
     "leader",
     "feel-no-pain",
-    "devastating-wounds",
     "missile-drone",
     "lone-operative",
     "shield-generator",
+    "airbursting-fragmentation-projector",
     "volley-fire",
     "armour-hunter",
     "fire-and-fade",

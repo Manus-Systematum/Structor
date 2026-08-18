@@ -23,6 +23,12 @@ void main() {
   group('corrections reached the shipped bundle', () {
     test('the datasheets that were missing their drones now list them', () {
       // §3.8. Each of these was importing without its drones.
+      //
+      // Checked against the whole rule vocabulary rather than `ability_ids`:
+      // a drone is optional wargear, and both sources say so — 40kdc as a
+      // budget line, BSData through a `Drones (0-2)` group. Which field it
+      // lands in is bookkeeping; that the datasheet can take one is the
+      // thing being asserted (§3.10).
       const expected = {
         'commander-in-enforcer-battlesuit': ['gun-drone', 'shield-drone'],
         'commander-in-coldstar-battlesuit': ['gun-drone', 'shield-drone'],
@@ -34,7 +40,8 @@ void main() {
       for (final entry in expected.entries) {
         final unit = tau.unit(entry.key);
         expect(unit, isNotNull, reason: entry.key);
-        expect(unit!.abilityIds, containsAll(entry.value), reason: entry.key);
+        expect(unit!.ruleVocabulary, containsAll(entry.value),
+            reason: entry.key);
       }
     });
 
@@ -44,17 +51,17 @@ void main() {
       // it sits beside the drones and reads as the shield you meant — and
       // taking it spends points on a rule the model does not have.
       final enforcer = tau.unit('commander-in-enforcer-battlesuit')!;
-      expect(enforcer.wargearVocabulary, contains('shield-drone'));
-      expect(enforcer.wargearVocabulary, isNot(contains('shield-generator')));
-      expect(enforcer.abilityIds, isNot(contains('shield-generator')));
+      expect(enforcer.ruleVocabulary, contains('shield-drone'));
+      expect(enforcer.ruleVocabulary, isNot(contains('shield-generator')));
 
       // The Coldstar keeps its generator, because there it is standard kit
       // and the 4+ invulnerable save comes from it (§3.8). Standard means it
       // is a rule the model has, never an option to buy.
       final coldstar = tau.unit('commander-in-coldstar-battlesuit')!;
-      expect(coldstar.abilityIds, contains('shield-generator'));
+      expect(coldstar.abilityIds, contains('shield-generator'),
+          reason: 'standard kit, so a rule the model has and not an option');
       expect(coldstar.wargearVocabulary, isNot(contains('shield-generator')));
-      expect(coldstar.wargearVocabulary, contains('shield-drone'));
+      expect(coldstar.ruleVocabulary, contains('shield-drone'));
     });
 
     test('a drone fires its own gun, at BS5+', () {
@@ -146,11 +153,17 @@ void main() {
     });
 
     test('datasheets are inherited, not published twice', () {
-      // Blood Angels publishes no units of its own. Copying the parent's into
-      // each of the twelve chapters would have added roughly 840 KB to the
-      // download for data that is already there.
+      // The parent's datasheets are still not copied into the chapter bundle
+      // — that would add roughly 840 KB across the twelve for data already
+      // downloaded. What changed is that the chapter now publishes some of
+      // its own too, so this is no longer an equality (§3.10).
       expect(bloodAngels.allUnits, isNotEmpty);
-      expect(bloodAngels.allUnits.length, astartes.allUnits.length);
+      expect(bloodAngels.allUnits.length,
+          greaterThan(astartes.allUnits.length));
+
+      final ids = {for (final u in bloodAngels.allUnits) u.id};
+      expect(ids, contains('intercessor-squad'), reason: 'inherited');
+      expect(ids, contains('sanguinary-guard'), reason: 'its own');
     });
 
     test('but detachments and stratagems are its own', () {
