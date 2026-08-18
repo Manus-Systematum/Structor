@@ -213,7 +213,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('Grid every 3'), findsOneWidget);
-    expect(find.textContaining('leftmost corner'), findsOneWidget);
+    expect(find.textContaining('two nearest edges'), findsOneWidget);
     // Two diagrams now exist — the inline one behind the dialog and the
     // measured one in it.
     final measured = tester

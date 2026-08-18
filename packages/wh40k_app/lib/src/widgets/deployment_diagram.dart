@@ -303,13 +303,13 @@ class _BoardPainter extends CustomPainter {
               if (piece.isObjective) piece.position,
           ];
 
-    // A grid, and every piece's distance from the two edges you measure from.
+    // A grid, and every piece's distance to its two nearest edges.
     //
-    // Setting a table out is done with a tape measure hooked over a corner, so
-    // the number that helps is the one you can actually pull: from the left
-    // edge to the piece's leftmost corner, and from the bottom edge to its
-    // lowest corner. A centre coordinate — what this used to print — is the
-    // one point on a piece you cannot put a tape on.
+    // Setting a table out is done with a tape hooked over an edge, so the
+    // number that helps is one you can actually pull: across to the nearer
+    // side edge, and up or down to the nearer end. A centre coordinate — what
+    // this printed first — names the one point on a piece you cannot put a
+    // tape on.
     if (measured) {
       const step = 3.0;
 
@@ -344,20 +344,44 @@ class _BoardPainter extends CustomPainter {
           final points = piece.outline(templates);
           if (points.isEmpty) continue;
 
-          // The corner the tape reaches first from each edge. Ties break
-          // towards the other axis so the leader line meets the piece at a
-          // corner rather than crossing it.
-          final leftmost = points.reduce((a, b) => b.x < a.x ||
-                  (b.x == a.x && b.y < a.y)
-              ? b
-              : a);
-          final lowest = points.reduce((a, b) =>
-              b.y < a.y || (b.y == a.y && b.x < a.x) ? b : a);
+          // **To the nearest edge, not always the same two.**
+          //
+          // Measuring everything from the left and the bottom meant a piece in
+          // the far corner carried two lines most of the board long, and
+          // sixteen pieces drew thirty-two of them across each other. The edge
+          // you actually reach for is the one you are standing next to, and
+          // the measurement is the same number either way.
+          final minX = points.map((p) => p.x).reduce(math.min);
+          final maxX = points.map((p) => p.x).reduce(math.max);
+          final minY = points.map((p) => p.y).reduce(math.min);
+          final maxY = points.map((p) => p.y).reduce(math.max);
 
-          _leader(canvas, project(BoardPoint(0, leftmost.y)), project(leftmost),
-              leftmost.x);
-          _leader(canvas, project(BoardPoint(lowest.x, 0)), project(lowest),
-              lowest.y);
+          final fromLeft = minX <= board.x - maxX;
+          final fromBottom = minY <= board.y - maxY;
+
+          // The corner on the side being measured from, so the line leaves the
+          // piece at a corner rather than crossing it.
+          final acrossX = fromLeft ? minX : maxX;
+          final acrossY = fromBottom ? minY : maxY;
+          final atX = points
+              .where((p) => p.x == acrossX)
+              .reduce((a, b) => b.y < a.y ? b : a);
+          final atY = points
+              .where((p) => p.y == acrossY)
+              .reduce((a, b) => b.x < a.x ? b : a);
+
+          _leader(
+            canvas,
+            project(BoardPoint(fromLeft ? 0 : board.x, atX.y)),
+            project(atX),
+            fromLeft ? minX : board.x - maxX,
+          );
+          _leader(
+            canvas,
+            project(BoardPoint(atY.x, fromBottom ? 0 : board.y)),
+            project(atY),
+            fromBottom ? minY : board.y - maxY,
+          );
         }
       }
     }
