@@ -1,6 +1,8 @@
 /// Reads a vendored BSData faction and reports what the mapper made of it.
 ///
 /// Exists to be run by a person during the migration, not by the build.
+library;
+
 import 'dart:convert';
 import 'dart:io';
 
