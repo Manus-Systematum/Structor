@@ -17,8 +17,8 @@
       "kind": "faction",
       "name": "Adepta Sororitas",
       "file": "adepta-sororitas.json.gz",
-      "sha256": "e8c56007fd2f5dd76917e55794c079a128d0c46b92f17a50018d289d71863459",
-      "bytes": 35086,
+      "sha256": "2a4521f5d72f70f768da86c54db8491bca762ccda0e50d2629c8f40a6b21166d",
+      "bytes": 34166,
       "revision": "local"
     },
     {
@@ -26,8 +26,8 @@
       "kind": "faction",
       "name": "Adeptus Astartes",
       "file": "adeptus-astartes.json.gz",
-      "sha256": "ccec55b25d5dd10ec7af3f96a25815e8117d96495f8f4ec02821004f6be223ca",
-      "bytes": 105130,
+      "sha256": "c17aa8bfd0dc5a48bf7a16964e4a218f522cb7979ea20d369a83aee0115e82f7",
+      "bytes": 102547,
       "revision": "local",
       "aliases": [
         "Space Marines"
@@ -38,8 +38,8 @@
       "kind": "faction",
       "name": "Adeptus Custodes",
       "file": "adeptus-custodes.json.gz",
-      "sha256": "abcc798d837e5b437703bbbb1fdb5ef30774a475af5283fd753fef13544edec8",
-      "bytes": 26951,
+      "sha256": "ac8b01a5dab4ee95b2c1a14c6a860c8ce57768555d5a7d25fa5599fffa248cb0",
+      "bytes": 26277,
       "revision": "local"
     },
     {
@@ -47,8 +47,8 @@
       "kind": "faction",
       "name": "Adeptus Mechanicus",
       "file": "adeptus-mechanicus.json.gz",
-      "sha256": "dd2ea83a8317cdaf56392442761c1c8b7fb7a7296351c5478648237d8f03b957",
-      "bytes": 37444,
+      "sha256": "0c79e6a88eb9c1c2c9c72d862268f29974e5f129f9adf1c94a4450293858cd23",
+      "bytes": 36152,
       "revision": "local"
     },
     {
@@ -56,8 +56,8 @@
       "kind": "faction",
       "name": "Aeldari",
       "file": "aeldari.json.gz",
-      "sha256": "316ba6b0cfcdfb7e4849a19cfcd9042bf13ac01ab48acad2ee92828d925e96be",
-      "bytes": 80579,
+      "sha256": "860304b335984c118073a6eeabd8d4bbaf7b8758366a6393be316812e70fc77b",
+      "bytes": 76047,
       "revision": "local"
     },
     {
@@ -65,8 +65,8 @@
       "kind": "faction",
       "name": "Agents of the Imperium",
       "file": "agents-of-the-imperium.json.gz",
-      "sha256": "e538bf910dd249a4748fb8717a3eb459071243180d43fcf2c9be885ac10fcc77",
-      "bytes": 43042,
+      "sha256": "59f399e1a87421479ab4d2416aa45e54413cf00e27ce12eb67a6c66ae31948cc",
+      "bytes": 42002,
       "revision": "local",
       "aliases": [
         "Imperial Agents"
@@ -77,8 +77,8 @@
       "kind": "faction",
       "name": "Astra Militarum",
       "file": "astra-militarum.json.gz",
-      "sha256": "d7b5d29c153784b042ecbdc21089aec2882a7debf35d14c64fb6a31d56e682f6",
-      "bytes": 70518,
+      "sha256": "af6424507c585319678530197fc6adc2287964778f6911c6118977ad2f6a5891",
+      "bytes": 69127,
       "revision": "local"
     },
     {
@@ -86,8 +86,8 @@
       "kind": "faction",
       "name": "Black Templars",
       "file": "black-templars.json.gz",
-      "sha256": "d565cf90eeea5b373e6491e197b4c08409c784cace89c6e924784625365d41b2",
-      "bytes": 15980,
+      "sha256": "9509d59aa24d22dd634f8f59dc9eb2ebe3dfd169e4fa4697fb3ded91ab87098e",
+      "bytes": 15961,
       "revision": "local",
       "parentId": "adeptus-astartes"
     },
@@ -96,8 +96,8 @@
       "kind": "faction",
       "name": "Blood Angels",
       "file": "blood-angels.json.gz",
-      "sha256": "fdb5e8cb68473268598a7092cabcdef5fdab9137f5d127de96a0584318be5a9e",
-      "bytes": 18264,
+      "sha256": "669619a2c827689b1e258373e0ab7f133e681984c92aabd7d2057ffbb0a81af5",
+      "bytes": 18219,
       "revision": "local",
       "parentId": "adeptus-astartes"
     },
@@ -106,8 +106,8 @@
       "kind": "faction",
       "name": "Chaos Daemons",
       "file": "chaos-daemons.json.gz",
-      "sha256": "3801bb55a2e3e73ad29e932b016c9bf6989df5254745b0983e8bb3a71e1e73bc",
-      "bytes": 40892,
+      "sha256": "5904460031ce5b3ebda1dfb308d610cd7aac09582661334a74218ca7e7ffc338",
+      "bytes": 40402,
       "revision": "local"
     },
     {
@@ -115,8 +115,8 @@
       "kind": "faction",
       "name": "Chaos Knights",
       "file": "chaos-knights.json.gz",
-      "sha256": "2243d28255b1629ab4ee9995993ab6d3edf9f9b347ee64e5ea9f7e2820143813",
-      "bytes": 26078,
+      "sha256": "100df4be20a65b105b4155d370a52165ffaec695cee030777fdec1c85a0a5188",
+      "bytes": 25951,
       "revision": "local"
     },
     {
@@ -124,8 +124,8 @@
       "kind": "faction",
       "name": "Chaos Space Marines",
       "file": "chaos-space-marines.json.gz",
-      "sha256": "f0b1339e0b7afe7a88814fd8612cb524ae79daae999c75db4d603ab714920b02",
-      "bytes": 64098,
+      "sha256": "88d2385e77896ed5ad5ca3c286acefa1d7aa1c1a0a8c7fa2dcd70871c1058c84",
+      "bytes": 62083,
       "revision": "local"
     },
     {
@@ -143,8 +143,8 @@
       "kind": "faction",
       "name": "Dark Angels",
       "file": "dark-angels.json.gz",
-      "sha256": "1180582564ed41e568fd89dfa02b9a3e43c10d93f6d80978ee449900a92d75e3",
-      "bytes": 17824,
+      "sha256": "6627c84f670b19c4422b0bae32c9f270545fe99815575599d45dde22b22a551e",
+      "bytes": 17693,
       "revision": "local",
       "parentId": "adeptus-astartes"
     },
@@ -153,8 +153,8 @@
       "kind": "faction",
       "name": "Death Guard",
       "file": "death-guard.json.gz",
-      "sha256": "4f5ca0a838fdcef3b2a172f33f314476f45d344edf2c2356124ab240f2539da1",
-      "bytes": 35647,
+      "sha256": "a49740fbca323efb6b4b46c3f3cac3ab994eee1583ea861d220495fe8234312d",
+      "bytes": 34614,
       "revision": "local"
     },
     {
@@ -162,8 +162,8 @@
       "kind": "faction",
       "name": "Deathwatch",
       "file": "deathwatch.json.gz",
-      "sha256": "055f45c5c0d3b680d9515268ee994a4f181dede3dea8b66ded1c5fc40b437257",
-      "bytes": 14392,
+      "sha256": "4143592a2c67efc5e42fc07931f22b268be5d09a84bdb0f91ef623fcad096684",
+      "bytes": 14267,
       "revision": "local",
       "parentId": "adeptus-astartes"
     },
@@ -181,8 +181,8 @@
       "kind": "faction",
       "name": "Emperor’s Children",
       "file": "emperors-children.json.gz",
-      "sha256": "85f7f7edde4cb66748f8eae977e4cdb3630e59813d8c83f6691d4c615d821531",
-      "bytes": 27362,
+      "sha256": "8f92a142f843223c2f250f4bd8ef674bcb7994d36df02738fe38abaf0e9ea48e",
+      "bytes": 26839,
       "revision": "local"
     },
     {
@@ -190,8 +190,8 @@
       "kind": "faction",
       "name": "Genestealer Cults",
       "file": "genestealer-cults.json.gz",
-      "sha256": "e5351c6e7a7f83bfd139d878e957e8f9dba4bc3088a476fd1602d53023d65b35",
-      "bytes": 28528,
+      "sha256": "7281ec8252f1ab994f909e254362c81ef4bdc02b89ce9a1111936c76c98bd43f",
+      "bytes": 28163,
       "revision": "local"
     },
     {
@@ -199,8 +199,8 @@
       "kind": "faction",
       "name": "Grey Knights",
       "file": "grey-knights.json.gz",
-      "sha256": "22f6a2b45a05bb6adffadf1f997638509f19b25505b9f10df3e38606cc938b0f",
-      "bytes": 25179,
+      "sha256": "40de2985dfa57e94fedce8442f2ca3bd7b75e4e6756fa8c0ee947db751a0a43b",
+      "bytes": 24972,
       "revision": "local"
     },
     {
@@ -218,8 +218,8 @@
       "kind": "faction",
       "name": "Imperial Knights",
       "file": "imperial-knights.json.gz",
-      "sha256": "8f776ae6da89bfc7b806dcf44c71d3623b91ef5723d1af9a5941eceb22bc2a3a",
-      "bytes": 21973,
+      "sha256": "1a19ea6ffdd4ddcb687560836c1a7414d7d3d179e7d803b6e5c645b6c652b0b3",
+      "bytes": 21835,
       "revision": "local"
     },
     {
@@ -237,8 +237,8 @@
       "kind": "faction",
       "name": "Leagues of Votann",
       "file": "leagues-of-votann.json.gz",
-      "sha256": "c470d2eada66fa3eba991a472d193498921e9afe57d56985d3cd4899e55b4544",
-      "bytes": 28892,
+      "sha256": "1e6e91e284d70ed230c75c1c6bce79e5587f4a9212263126b15ccf4d29784ad9",
+      "bytes": 27897,
       "revision": "local"
     },
     {
@@ -246,8 +246,8 @@
       "kind": "faction",
       "name": "Necrons",
       "file": "necrons.json.gz",
-      "sha256": "9bca34c76f0aedef349c3c01ac4d77d46a5d115248d1a15c2eb41cf83bac4061",
-      "bytes": 46375,
+      "sha256": "898d8c13984177a6f4f050cfa5677b0c3ac78ec7c67109d21d975207f66a603d",
+      "bytes": 45778,
       "revision": "local"
     },
     {
@@ -255,8 +255,8 @@
       "kind": "faction",
       "name": "Orks",
       "file": "orks.json.gz",
-      "sha256": "549a3abbac8b7d6f764eae13360e4cc1f2041b21e0ab95f45e25f4fb2ecc01d0",
-      "bytes": 51717,
+      "sha256": "5fb2e9763ed11c5430c679dae299135099714f4e8be92ad8756206e0d51a9fb7",
+      "bytes": 50936,
       "revision": "local"
     },
     {
@@ -284,8 +284,8 @@
       "kind": "faction",
       "name": "Space Wolves",
       "file": "space-wolves.json.gz",
-      "sha256": "cf32d4a5d37c3e844aeb61b724a8b5bada7b0c70f31fb080088b9f569051adc3",
-      "bytes": 22920,
+      "sha256": "f06d746ca9f4d74d6f19c243cb41630b55a3e67bd37d6f0aec01f965cc4b2b59",
+      "bytes": 22840,
       "revision": "local",
       "parentId": "adeptus-astartes"
     },
@@ -294,8 +294,8 @@
       "kind": "faction",
       "name": "T’au Empire",
       "file": "tau-empire.json.gz",
-      "sha256": "f28bdb5335530475814c9a95dccc6494a8f594aa1d14b482471447a12b8f60e6",
-      "bytes": 43966,
+      "sha256": "432664fa506ee357c5dc17dfb1aa4ec37c4e04bd87e7126ff005b683d218a597",
+      "bytes": 42897,
       "revision": "local"
     },
     {
@@ -303,8 +303,8 @@
       "kind": "faction",
       "name": "Thousand Sons",
       "file": "thousand-sons.json.gz",
-      "sha256": "35c3ca833c6566c66a97ae6ef519ae9dcf8578f7ea5423de50d43d3fb9f00e99",
-      "bytes": 35580,
+      "sha256": "280d610f0d9b5437967c67b2f7d86320a32635b6e075204334adf99a96eaf52a",
+      "bytes": 34800,
       "revision": "local"
     },
     {
@@ -312,8 +312,8 @@
       "kind": "faction",
       "name": "Tyranids",
       "file": "tyranids.json.gz",
-      "sha256": "94c12fc0cf3a80cc1bc3fca3a3891afa658d00f8fd172654e0a1cef37043c28a",
-      "bytes": 37411,
+      "sha256": "85b37a0c664542a3af6b3b01d5896a32a82ba6ee04fd6e4ba553650def33793f",
+      "bytes": 36925,
       "revision": "local"
     },
     {
@@ -321,8 +321,8 @@
       "kind": "faction",
       "name": "Ultramarines",
       "file": "ultramarines.json.gz",
-      "sha256": "56b806ab1833777bea04c0ee94a9e0f4615df66799265f376966898754696777",
-      "bytes": 15213,
+      "sha256": "b9cf9fd721e776ba38ff8361f0f264d446bc843daeef8f5a9ab036e8750e075d",
+      "bytes": 15171,
       "revision": "local",
       "parentId": "adeptus-astartes"
     },
@@ -341,8 +341,8 @@
       "kind": "faction",
       "name": "World Eaters",
       "file": "world-eaters.json.gz",
-      "sha256": "06bc25cf29a3c0e08469c967daa9889af1a64d77a946a03b7baec50c1133693f",
-      "bytes": 37240,
+      "sha256": "e0f14a4d5482a74b70a583c4a1e9b8240d695ab9993bcd9becb11c2158410a25",
+      "bytes": 36540,
       "revision": "local"
     }
   ]

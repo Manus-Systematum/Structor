@@ -46,7 +46,13 @@ class ContentHasher {
 
   ContentHasher(Iterable<String> ids) : _byHash = {} {
     for (final id in ids) {
-      _byHash.putIfAbsent(contentHash24(id), () => []).add(id);
+      final bucket = _byHash.putIfAbsent(contentHash24(id), () => []);
+      // One id registered from two tables is not a collision. A Thunderfire
+      // Cannon is a datasheet *and* the gun on it, and both name the same
+      // thing — reporting `[thunderfire-cannon, thunderfire-cannon]` said the
+      // namespace needed widening when what it needed was a set.
+      if (bucket.contains(id)) continue;
+      bucket.add(id);
     }
   }
 

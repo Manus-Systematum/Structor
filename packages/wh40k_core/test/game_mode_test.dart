@@ -74,14 +74,22 @@ void main() {
 
   test('budgeted kit with no gun is not an unresolved miss', () {
     // A Dominion Squad's Simulacrum Imperialis is in the datasheet's own
-    // wargear budget, is not a weapon and is not in ability_ids. It used to
-    // report as unresolved wargear, which reads as "the app could not find
-    // this" when the truth is "there is nothing to show for it".
+    // wargear budget and is not a weapon. It used to report as unresolved
+    // wargear, which reads as "the app could not find this" when the truth
+    // was "there is nothing to show for it".
+    //
+    // There is something to show for it now: BSData carries the rule as
+    // printed, so it is an ability as well as a budget line (§3.10). What
+    // still must not happen is the aggregator calling it a miss.
     final sororitas = loader.loadFaction('adepta-sororitas');
     final dominions =
         sororitas.units.firstWhere((u) => u.id == 'dominion-squad');
     expect(dominions.wargearVocabulary, contains('simulacrum-imperialis'));
-    expect(dominions.abilityIds, isNot(contains('simulacrum-imperialis')));
+    final simulacrum = sororitas.abilities
+        .where((a) => a.abilityId == 'simulacrum-imperialis')
+        .firstOrNull;
+    expect(simulacrum?.description, isNotNull,
+        reason: 'it is an ability now because it has something to say');
 
     final catalogue = MapCatalogue.ofFaction(sororitas);
     final result = WeaponAggregator(catalogue).aggregate([

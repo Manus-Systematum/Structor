@@ -289,6 +289,24 @@ units:
     add_wargear: [gun-drone]
 
   - faction: tau-empire
+    id: crisis-fireknife-battlesuits
+    reason: >
+      Takes a Gun Drone. BSData offers one in the datasheet's wargear budget
+      but not among its abilities, and the importer resolves a drone by its
+      ability — so "Gun Drone With Twin Pulse Carbine and Shield Drone" landed
+      on the shield drone alone and the carbines went missing. The export
+      lists one on every Crisis suit in the list.
+    upstream: not yet reported
+    add_wargear: [gun-drone]
+
+  - faction: tau-empire
+    id: crisis-starscythe-battlesuits
+    reason: >
+      Gun Drone, as for the Fireknife and on the same evidence.
+    upstream: not yet reported
+    add_wargear: [gun-drone]
+
+  - faction: tau-empire
     id: stealth-battlesuits
     reason: >
       The Shas'vre takes a Gun Drone. BSData offers the marker drone beside it

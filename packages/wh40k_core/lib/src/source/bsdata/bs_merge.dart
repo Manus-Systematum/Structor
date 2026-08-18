@@ -84,6 +84,8 @@ MergeResult mergeRecords({
   /// the 40kdc record stands untouched. For data BSData produces more thinly
   /// than 40kdc does, overwriting loses more than it gains.
   bool fillOnly = false,
+  /// Fields where 40kdc's value stands even though BSData produced one.
+  Set<String> keepFrom40kdc = const {},
 }) {
   final conflicts = <DataConflict>[];
   final byId = <String, Map<String, dynamic>>{};
@@ -141,6 +143,13 @@ MergeResult mergeRecords({
       // has none — and seven units came through with no points at all, which
       // would have shipped them as free.
       if (_isEmpty(entry.value) && !_isEmpty(existing[entry.key])) continue;
+      // A unit's weapon list stays 40kdc's for the same reason its weapons do:
+      // 40kdc scopes a Commander's missile pod to the Commander and BSData
+      // does not, so taking BSData's list points the unit at the generic gun.
+      if (keepFrom40kdc.contains(entry.key) &&
+          !_isEmpty(existing[entry.key])) {
+        continue;
+      }
       merged[entry.key] = entry.value;
     }
     // Both lineages are in the record now, so it says so.

@@ -6,13 +6,6 @@
 # along with the entry (DESIGN.md §3.10).
 
 retired:
-  - faction: tau-empire
-    id: crisis-starscythe-battlesuits
-    was: "add_wargear: [gun-drone, shield-drone]"
-    outcome: retired
-    reason: >
-      BSData lists gun, shield and marker drones on this datasheet. The
-      correction became redundant rather than wrong.
 
   - faction: tau-empire
     id: ghostkeel-battlesuit
@@ -21,12 +14,6 @@ retired:
     reason: >
       BSData carries the support system on the datasheet.
 
-  - faction: tau-empire
-    id: crisis-fireknife-battlesuits
-    was: "add_wargear: [gun-drone, shield-drone]"
-    outcome: retired
-    reason: >
-      BSData lists both.
 
 # Narrowed rather than retired: BSData covers part of what the correction
 # added, and the reference export — a validated 2,000 point list that prices
@@ -50,6 +37,21 @@ narrowed:
     was: "add_wargear: [gun-drone, marker-drone]"
     now: "add_wargear: [gun-drone]"
     reason: BSData carries the marker drone.
+
+  - faction: tau-empire
+    id: crisis-fireknife-battlesuits
+    was: "add_wargear: [gun-drone, shield-drone]"
+    now: "add_wargear: [gun-drone]"
+    reason: >
+      BSData carries the shield drone as an ability and the gun drone only in
+      the wargear budget. The importer resolves a drone by its ability, so the
+      budget alone is not enough.
+
+  - faction: tau-empire
+    id: crisis-starscythe-battlesuits
+    was: "add_wargear: [gun-drone, shield-drone]"
+    now: "add_wargear: [gun-drone]"
+    reason: As the Fireknife.
 
   - faction: tau-empire
     id: broadside-battlesuits

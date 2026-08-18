@@ -126,9 +126,16 @@ void main() {
 
     test('no entry renders an unresolved placeholder', () {
       // A reference page is the last place a `[some-type]` should surface.
+      //
+      // "Any brackets" was the old test and it no longer works: GW's printed
+      // text spells keywords `[PRECISION]` and `[SUSTAINED HITS 2]`, and
+      // BSData supplies that text verbatim (§3.10). The thing being looked
+      // for is the renderer's own placeholder, which is a lowercase kebab
+      // effect type — a shape the printed notation never takes.
+      final placeholder = RegExp(r'\[[a-z][a-z0-9-]*\]');
       final broken = [
         for (final e in index.entries)
-          if (e.body.contains('[') && e.body.contains(']')) '${e.title}: ${e.body}',
+          if (placeholder.hasMatch(e.body)) '${e.title}: ${e.body}',
       ];
       expect(broken, isEmpty);
     }, skip: available ? null : 'no snapshot');

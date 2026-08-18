@@ -41,9 +41,30 @@ void main() {
       final clean = ContentHasher(['alpha', 'beta']);
       expect(clean.collisions, isEmpty);
 
-      // Force a collision by seeding the namespace with a known duplicate.
-      final colliding = ContentHasher(['alpha', 'alpha']);
-      expect(colliding.collisions.single, ['alpha', 'alpha']);
+      // A real pair, found rather than assumed: 24 bits over a few thousand
+      // short ids is well past the birthday bound, so one always exists.
+      final seen = <int, String>{};
+      List<String>? pair;
+      for (var i = 0; pair == null && i < 100000; i++) {
+        final id = 'id-$i';
+        final hash = contentHash24(id);
+        if (seen[hash] case final other?) {
+          pair = [other, id];
+        } else {
+          seen[hash] = id;
+        }
+      }
+      expect(pair, isNotNull, reason: 'no colliding pair in 100k ids');
+      expect(ContentHasher(pair!).collisions.single, pair);
+    });
+
+    test('the same id twice is not a collision', () {
+      // A Thunderfire Cannon is a datasheet *and* the gun on it, so the id
+      // arrives from two tables. Reported as a collision it said the QR
+      // namespace needed widening to four bytes, when nothing was ambiguous.
+      final hasher = ContentHasher(['alpha', 'alpha']);
+      expect(hasher.collisions, isEmpty);
+      expect(hasher.resolve(contentHash24('alpha')), 'alpha');
     });
   });
 

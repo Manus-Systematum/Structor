@@ -96,6 +96,29 @@ class RulesRenderer {
     final frequency = str(ability.usage['frequency']);
     if (frequency != null) text = '$text (${_frequency(ability.usage)})';
 
+    // **Printed text fills the gap; it does not override structure.**
+    //
+    // Where BSData supplies the rule as printed and there is no structured
+    // effect, the wording is what the player's codex says and beats rendering
+    // a dash — which is a third of every faction's rules now that BSData
+    // contributes prose-only abilities (§3.10).
+    //
+    // Where there *is* structure, the structure renders. That is not a
+    // preference for the paraphrase: §3.6's corrections exist precisely
+    // because upstream structure was wrong, and letting prose win would make
+    // every one of them cosmetic — Stealth would go back to reading as the
+    // 10th edition rule in any faction whose text still says so.
+    final printed = ability.description?.trim();
+    if (ability.effect.isEmpty && printed != null && printed.isNotEmpty) {
+      return RenderedRule(
+        abilityId: ability.abilityId,
+        name: ability.name,
+        text: printed,
+        phases: ctx.phases.toList(),
+        unrendered: ctx.unrendered.toList(),
+      );
+    }
+
     return RenderedRule(
       abilityId: ability.abilityId,
       name: ability.name,

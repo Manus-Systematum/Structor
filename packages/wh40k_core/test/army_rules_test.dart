@@ -58,7 +58,7 @@ void main() {
     });
 
     test('the army rule leads the whole-army tier', () {
-      expect(rules.armyWide.first.title, 'For the Greater Good');
+      expect(rules.armyWide.first.title, 'For The Greater Good');
       expect(rules.armyWide.first.source, 'Army rule');
       expect(rules.armyWide.first.body, isNotEmpty);
     }, skip: available ? null : 'no snapshot');

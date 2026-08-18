@@ -50,15 +50,14 @@
         "max": 1
       },
       "weapon_ids": [
-        "battlesuit-fists-commander-in-enforcer-battlesuit",
-        "twin-pulse-carbine-commander-in-enforcer-battlesuit",
-        "missile-pod-commander-in-enforcer-battlesuit",
-        "burst-cannon-commander-in-enforcer-battlesuit",
         "airbursting-fragmentation-projector",
+        "battlesuit-fists-commander-in-enforcer-battlesuit",
+        "burst-cannon-commander-in-enforcer-battlesuit",
         "cyclic-ion-blaster-commander-in-enforcer-battlesuit",
-        "tau-flamer",
         "fusion-blaster-commander-in-enforcer-battlesuit",
-        "plasma-rifle-commander-in-enforcer-battlesuit"
+        "missile-pod-commander-in-enforcer-battlesuit",
+        "plasma-rifle-commander-in-enforcer-battlesuit",
+        "tau-flamer"
       ],
       "ability_ids": [
         "enforcer-commander",
@@ -195,11 +194,9 @@
         "max": 3
       },
       "weapon_ids": [
-        "twin-pulse-carbine-crisis-fireknife-battlesuits",
-        "missile-pod-crisis-fireknife-battlesuits",
         "battlesuit-fists",
-        "plasma-rifle",
-        "missile-pod"
+        "missile-pod",
+        "plasma-rifle"
       ],
       "ability_ids": [
         "fireknife",
@@ -211,7 +208,8 @@
         "guardian-drone",
         "precise",
         "precision",
-        "lethal-hits"
+        "lethal-hits",
+        "gun-drone"
       ],
       "game_version": {
         "edition": "11th",
@@ -252,7 +250,11 @@
       "sources": [
         "bsdata",
         "40kdc"
-      ]
+      ],
+      "corrected": {
+        "reason": "Takes a Gun Drone. BSData offers one in the datasheet's wargear budget but not among its abilities, and the importer resolves a drone by its ability — so \"Gun Drone With Twin Pulse Carbine and Shield Drone\" landed on the shield drone alone and the carbines went missing. The export lists one on every Crisis suit in the list.",
+        "upstream": "not yet reported"
+      }
     },
     "commander-in-coldstar-battlesuit": {
       "id": "commander-in-coldstar-battlesuit",
@@ -299,16 +301,15 @@
         "max": 1
       },
       "weapon_ids": [
-        "battlesuit-fists-commander-in-coldstar-battlesuit",
-        "twin-pulse-carbine-commander-in-coldstar-battlesuit",
-        "missile-pod-commander-in-coldstar-battlesuit",
-        "high-output-burst-cannon",
-        "burst-cannon-commander-in-coldstar-battlesuit",
         "airbursting-fragmentation-projector",
+        "battlesuit-fists-commander-in-coldstar-battlesuit",
+        "burst-cannon-commander-in-coldstar-battlesuit",
         "cyclic-ion-blaster-commander-in-coldstar-battlesuit",
-        "tau-flamer",
         "fusion-blaster-commander-in-coldstar-battlesuit",
-        "plasma-rifle-commander-in-coldstar-battlesuit"
+        "high-output-burst-cannon",
+        "missile-pod-commander-in-coldstar-battlesuit",
+        "plasma-rifle-commander-in-coldstar-battlesuit",
+        "tau-flamer"
       ],
       "ability_ids": [
         "leader",
@@ -445,8 +446,6 @@
         "max": 3
       },
       "weapon_ids": [
-        "twin-pulse-carbine-crisis-starscythe-battlesuits",
-        "missile-pod-crisis-starscythe-battlesuits",
         "battlesuit-fists",
         "burst-cannon",
         "tau-flamer"
@@ -461,7 +460,8 @@
         "guardian-drone",
         "precise",
         "precision",
-        "lethal-hits"
+        "lethal-hits",
+        "gun-drone"
       ],
       "game_version": {
         "edition": "11th",
@@ -502,7 +502,11 @@
       "sources": [
         "bsdata",
         "40kdc"
-      ]
+      ],
+      "corrected": {
+        "reason": "Gun Drone, as for the Fireknife and on the same evidence.",
+        "upstream": "not yet reported"
+      }
     },
     "the-twin-lance": {
       "id": "the-twin-lance",
@@ -550,10 +554,9 @@
       },
       "weapon_ids": [
         "fusion-eliminator",
+        "ion-scattercannon",
         "shardstorm-burst-system",
-        "twin-pulse-blaster",
-        "xv-pulse-pistol",
-        "ion-scattercannon"
+        "xv-pulse-pistol"
       ],
       "ability_ids": [
         "neocapacitor-shields",
@@ -659,14 +662,12 @@
         "max": 3
       },
       "weapon_ids": [
+        "crushing-bulk",
         "heavy-rail-rifle",
         "high-yield-missile-pods",
         "seeker-missile",
         "twin-plasma-rifle",
-        "twin-smart-missile-system",
-        "twin-pulse-carbine-broadside-battlesuits",
-        "missile-pod-broadside-battlesuits",
-        "crushing-bulk"
+        "twin-smart-missile-system-broadside-battlesuits"
       ],
       "ability_ids": [
         "advanced-armour",
@@ -762,12 +763,12 @@
         "max": 1
       },
       "weapon_ids": [
+        "cyclic-ion-raker",
+        "fusion-collider",
         "ghostkeel-fists",
         "twin-burst-cannon-ghostkeel-battlesuit",
-        "twin-tau-flamer",
         "twin-fusion-blaster",
-        "fusion-collider",
-        "cyclic-ion-raker"
+        "twin-tau-flamer"
       ],
       "ability_ids": [
         "stealth-drones",
@@ -850,13 +851,12 @@
         "max": 1
       },
       "weapon_ids": [
-        "riptide-fists",
         "heavy-burst-cannon",
         "ion-accelerator",
-        "missile-pod-riptide-battlesuit",
-        "twin-smart-missile-system-riptide-battlesuit",
+        "riptide-fists",
         "twin-fusion-blaster",
-        "twin-plasma-rifle"
+        "twin-plasma-rifle",
+        "twin-smart-missile-system-riptide-battlesuit"
       ],
       "ability_ids": [
         "nova-charge",
@@ -962,8 +962,6 @@
         "battlesuit-fists-stealth-battlesuits",
         "burst-cannon",
         "fusion-blaster",
-        "twin-pulse-carbine-stealth-battlesuits",
-        "missile-pod-stealth-battlesuits",
         "pulse-pistol"
       ],
       "ability_ids": [
@@ -1024,22 +1022,18 @@
           "range": "Melee",
           "stats": {
             "A": 3,
-            "WS": 4,
             "S": 5,
             "AP": 0,
-            "D": 1
+            "D": 1,
+            "WS": 4
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "drone-twin-pulse-carbine": {
       "id": "drone-twin-pulse-carbine",
@@ -1051,29 +1045,25 @@
           "range": 20,
           "stats": {
             "A": 2,
-            "BS": 5,
             "S": 5,
             "AP": 0,
-            "D": 1
+            "D": 1,
+            "BS": 5
           },
           "keywords": [
             {
-              "keyword_id": "twin-linked"
+              "keyword_id": "assault"
             },
             {
-              "keyword_id": "assault"
+              "keyword_id": "twin-linked"
             }
           ]
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
+        "dataslate": "pre-launch-provisional"
       },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ],
       "corrected": {
         "reason": "The Gun Drone's gun. Pointing the grant at the plain `twin-pulse-carbine` had the drone firing at BS4+, the skill of the battlesuit carrying it, which is a better weapon than the drone has.",
         "upstream": "not yet reported"
@@ -1089,25 +1079,21 @@
           "range": 30,
           "stats": {
             "A": 2,
-            "BS": 5,
             "S": 7,
             "AP": -1,
-            "D": 2
+            "D": 2,
+            "BS": 3
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
-    "missile-pod-crisis-fireknife-battlesuits": {
-      "id": "missile-pod-crisis-fireknife-battlesuits",
+    "missile-pod": {
+      "id": "missile-pod",
       "name": "Missile pod",
       "type": "ranged",
       "profiles": [
@@ -1116,17 +1102,17 @@
           "range": 30,
           "stats": {
             "A": 2,
-            "BS": 5,
             "S": 7,
             "AP": -1,
-            "D": 2
+            "D": 2,
+            "BS": 4
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
+        "dataslate": "pre-launch-provisional"
       }
     },
     "battlesuit-fists": {
@@ -1139,51 +1125,17 @@
           "range": "Melee",
           "stats": {
             "A": 3,
-            "WS": 5,
             "S": 5,
             "AP": 0,
-            "D": 1
+            "D": 1,
+            "WS": 5
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
-    },
-    "twin-pulse-carbine-crisis-fireknife-battlesuits": {
-      "id": "twin-pulse-carbine-crisis-fireknife-battlesuits",
-      "name": "Twin pulse carbine",
-      "type": "ranged",
-      "profiles": [
-        {
-          "name": "Twin pulse carbine",
-          "range": 20,
-          "stats": {
-            "A": 2,
-            "BS": 5,
-            "S": 5,
-            "AP": 0,
-            "D": 1
-          },
-          "keywords": [
-            {
-              "keyword_id": "assault"
-            },
-            {
-              "keyword_id": "twin-linked"
-            }
-          ]
-        }
-      ],
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
+        "dataslate": "pre-launch-provisional"
       }
     },
     "battlesuit-fists-commander-in-coldstar-battlesuit": {
@@ -1196,37 +1148,33 @@
           "range": "Melee",
           "stats": {
             "A": 3,
-            "WS": 4,
             "S": 5,
             "AP": 0,
-            "D": 1
+            "D": 1,
+            "WS": 4
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "tau-flamer": {
       "id": "tau-flamer",
-      "name": "T'au flamer",
+      "name": "T’au flamer",
       "type": "ranged",
       "profiles": [
         {
-          "name": "T'au flamer",
+          "name": "T’au flamer",
           "range": 12,
           "stats": {
             "A": "D6",
-            "BS": null,
             "S": 4,
             "AP": 0,
-            "D": 1
+            "D": 1,
+            "BS": null
           },
           "keywords": [
             {
@@ -1240,41 +1188,7 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
-    },
-    "twin-pulse-carbine-crisis-starscythe-battlesuits": {
-      "id": "twin-pulse-carbine-crisis-starscythe-battlesuits",
-      "name": "Twin pulse carbine",
-      "type": "ranged",
-      "profiles": [
-        {
-          "name": "Twin pulse carbine",
-          "range": 20,
-          "stats": {
-            "A": 2,
-            "BS": 5,
-            "S": 5,
-            "AP": 0,
-            "D": 1
-          },
-          "keywords": [
-            {
-              "keyword_id": "assault"
-            },
-            {
-              "keyword_id": "twin-linked"
-            }
-          ]
-        }
-      ],
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
+        "dataslate": "pre-launch-provisional"
       }
     },
     "fusion-eliminator": {
@@ -1283,14 +1197,14 @@
       "type": "ranged",
       "profiles": [
         {
-          "name": "Fusion eliminator",
+          "name": "Ranged",
           "range": 18,
           "stats": {
             "A": 2,
-            "BS": 2,
             "S": 10,
             "AP": -4,
-            "D": "D6"
+            "D": "D6",
+            "BS": 2
           },
           "keywords": [
             {
@@ -1302,14 +1216,14 @@
           ]
         },
         {
-          "name": "Fusion eliminator",
+          "name": "Melee",
           "range": "Melee",
           "stats": {
             "A": 1,
-            "WS": 4,
             "S": 10,
             "AP": -4,
-            "D": "D6+2"
+            "D": "D6+2",
+            "WS": 4
           },
           "keywords": [
             {
@@ -1320,12 +1234,8 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "xv-pulse-pistol": {
       "id": "xv-pulse-pistol",
@@ -1333,14 +1243,14 @@
       "type": "ranged",
       "profiles": [
         {
-          "name": "XV pulse pistol",
+          "name": "Ranged",
           "range": 12,
           "stats": {
             "A": 2,
-            "BS": 2,
             "S": 6,
             "AP": -1,
-            "D": 2
+            "D": 2,
+            "BS": 2
           },
           "keywords": [
             {
@@ -1352,26 +1262,22 @@
           ]
         },
         {
-          "name": "XV pulse pistol",
+          "name": "Melee",
           "range": "Melee",
           "stats": {
             "A": 4,
-            "WS": 3,
             "S": 6,
             "AP": -1,
-            "D": 2
+            "D": 2,
+            "WS": 3
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "shardstorm-burst-system": {
       "id": "shardstorm-burst-system",
@@ -1383,10 +1289,10 @@
           "range": 18,
           "stats": {
             "A": "D6",
-            "BS": 2,
             "S": 5,
             "AP": 0,
-            "D": 1
+            "D": 1,
+            "BS": 2
           },
           "keywords": [
             {
@@ -1397,12 +1303,8 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "twin-pulse-blaster": {
       "id": "twin-pulse-blaster",
@@ -1440,14 +1342,33 @@
       "type": "ranged",
       "profiles": [
         {
+          "name": "Standard",
+          "range": 18,
+          "stats": {
+            "A": 4,
+            "S": 7,
+            "AP": -2,
+            "D": 2,
+            "BS": 2
+          },
+          "keywords": [
+            {
+              "keyword_id": "rapid-fire",
+              "parameters": {
+                "value": 2
+              }
+            }
+          ]
+        },
+        {
           "name": "Overcharge",
           "range": 18,
           "stats": {
             "A": 4,
-            "BS": 2,
             "S": 8,
             "AP": -3,
-            "D": 3
+            "D": 3,
+            "BS": 2
           },
           "keywords": [
             {
@@ -1462,49 +1383,26 @@
           ]
         },
         {
-          "name": "Ion scattercannon",
+          "name": "Melee",
           "range": "Melee",
           "stats": {
             "A": 3,
-            "WS": 4,
             "S": 7,
             "AP": -2,
-            "D": 2
+            "D": 2,
+            "WS": 4
           },
           "keywords": [
             {
               "keyword_id": "extra-attacks"
             }
           ]
-        },
-        {
-          "name": "Standard",
-          "range": 18,
-          "stats": {
-            "A": 4,
-            "BS": 2,
-            "S": 7,
-            "AP": -2,
-            "D": 2
-          },
-          "keywords": [
-            {
-              "keyword_id": "rapid-fire",
-              "parameters": {
-                "value": 2
-              }
-            }
-          ]
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "crushing-bulk": {
       "id": "crushing-bulk",
@@ -1516,22 +1414,18 @@
           "range": "Melee",
           "stats": {
             "A": 3,
-            "WS": 5,
             "S": 6,
             "AP": 0,
-            "D": 1
+            "D": 1,
+            "WS": 5
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "heavy-rail-rifle": {
       "id": "heavy-rail-rifle",
@@ -1543,29 +1437,25 @@
           "range": 60,
           "stats": {
             "A": 2,
-            "BS": 4,
             "S": 12,
             "AP": -4,
-            "D": "D6+1"
+            "D": "D6+1",
+            "BS": 4
           },
           "keywords": [
             {
-              "keyword_id": "heavy"
+              "keyword_id": "devastating-wounds"
             },
             {
-              "keyword_id": "devastating-wounds"
+              "keyword_id": "heavy"
             }
           ]
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "drone-missile-pod": {
       "id": "drone-missile-pod",
@@ -1577,22 +1467,18 @@
           "range": 30,
           "stats": {
             "A": 2,
-            "BS": 5,
             "S": 7,
             "AP": -1,
-            "D": 2
+            "D": 2,
+            "BS": 5
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
+        "dataslate": "pre-launch-provisional"
       },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ],
       "corrected": {
         "reason": "The Missile Drone's gun: a missile pod at BS5+. Upstream records the drone as granting `{grant_type: ranged-weapon}` with no weapon named and has no record for it either, so Broadsides and Riptides were fielding drones that shot nothing.",
         "upstream": "not yet reported"
@@ -1608,10 +1494,10 @@
           "range": 48,
           "stats": {
             "A": 1,
-            "BS": 4,
             "S": 14,
             "AP": -3,
-            "D": "D6+1"
+            "D": "D6+1",
+            "BS": 4
           },
           "keywords": [
             {
@@ -1622,15 +1508,11 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
-    "twin-smart-missile-system": {
-      "id": "twin-smart-missile-system",
+    "twin-smart-missile-system-broadside-battlesuits": {
+      "id": "twin-smart-missile-system-broadside-battlesuits",
       "name": "Twin smart missile system",
       "type": "ranged",
       "profiles": [
@@ -1639,10 +1521,10 @@
           "range": 30,
           "stats": {
             "A": 4,
-            "BS": 4,
             "S": 5,
             "AP": 0,
-            "D": 1
+            "D": 1,
+            "BS": 4
           },
           "keywords": [
             {
@@ -1656,12 +1538,8 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "fusion-collider": {
       "id": "fusion-collider",
@@ -1673,10 +1551,10 @@
           "range": 18,
           "stats": {
             "A": 2,
-            "BS": 4,
             "S": 12,
             "AP": -4,
-            "D": "D6"
+            "D": "D6",
+            "BS": 4
           },
           "keywords": [
             {
@@ -1690,12 +1568,8 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "ghostkeel-fists": {
       "id": "ghostkeel-fists",
@@ -1707,22 +1581,18 @@
           "range": "Melee",
           "stats": {
             "A": 3,
-            "WS": 5,
             "S": 6,
             "AP": 0,
-            "D": 2
+            "D": 2,
+            "WS": 5
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "twin-fusion-blaster": {
       "id": "twin-fusion-blaster",
@@ -1734,10 +1604,10 @@
           "range": 12,
           "stats": {
             "A": 1,
-            "BS": 4,
             "S": 9,
             "AP": -4,
-            "D": "D6"
+            "D": "D6",
+            "BS": 4
           },
           "keywords": [
             {
@@ -1754,12 +1624,8 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "ion-accelerator": {
       "id": "ion-accelerator",
@@ -1771,10 +1637,10 @@
           "range": 72,
           "stats": {
             "A": 6,
-            "BS": 4,
             "S": 9,
             "AP": -2,
-            "D": 3
+            "D": 3,
+            "BS": 4
           },
           "keywords": []
         },
@@ -1783,10 +1649,10 @@
           "range": 72,
           "stats": {
             "A": 6,
-            "BS": 4,
             "S": 10,
             "AP": -3,
-            "D": 4
+            "D": 4,
+            "BS": 4
           },
           "keywords": [
             {
@@ -1797,12 +1663,8 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "riptide-fists": {
       "id": "riptide-fists",
@@ -1814,22 +1676,18 @@
           "range": "Melee",
           "stats": {
             "A": 6,
-            "WS": 5,
             "S": 6,
             "AP": 0,
-            "D": 2
+            "D": 2,
+            "WS": 5
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "twin-smart-missile-system-riptide-battlesuit": {
       "id": "twin-smart-missile-system-riptide-battlesuit",
@@ -1841,10 +1699,10 @@
           "range": 30,
           "stats": {
             "A": 3,
-            "BS": 4,
             "S": 5,
             "AP": 0,
-            "D": 1
+            "D": 1,
+            "BS": 4
           },
           "keywords": [
             {
@@ -1858,12 +1716,8 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "battlesuit-fists-stealth-battlesuits": {
       "id": "battlesuit-fists-stealth-battlesuits",
@@ -1875,22 +1729,18 @@
           "range": "Melee",
           "stats": {
             "A": 2,
-            "WS": 5,
             "S": 4,
             "AP": 0,
-            "D": 1
+            "D": 1,
+            "WS": 5
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "pulse-pistol": {
       "id": "pulse-pistol",
@@ -1902,10 +1752,10 @@
           "range": 12,
           "stats": {
             "A": 1,
-            "BS": 4,
             "S": 5,
             "AP": 0,
-            "D": 1
+            "D": 1,
+            "BS": 4
           },
           "keywords": [
             {
@@ -1916,12 +1766,8 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "fusion-blaster": {
       "id": "fusion-blaster",
@@ -1933,10 +1779,10 @@
           "range": 12,
           "stats": {
             "A": 1,
-            "BS": 4,
             "S": 9,
             "AP": -4,
-            "D": "D6"
+            "D": "D6",
+            "BS": 4
           },
           "keywords": [
             {
@@ -1950,12 +1796,8 @@
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     },
     "burst-cannon": {
       "id": "burst-cannon",
@@ -1967,22 +1809,18 @@
           "range": 18,
           "stats": {
             "A": 4,
-            "BS": 4,
             "S": 5,
             "AP": 0,
-            "D": 1
+            "D": 1,
+            "BS": 4
           },
           "keywords": []
         }
       ],
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      },
-      "sources": [
-        "bsdata",
-        "40kdc"
-      ]
+        "dataslate": "pre-launch-provisional"
+      }
     }
   },
   "detachments": {
@@ -3992,9 +3830,9 @@
     "marker-drone",
     "shield-drone",
     "guardian-drone",
+    "gun-drone",
     "infiltrators",
     "stealth",
-    "gun-drone",
     "ignores-cover",
     "ds8-support-turret",
     "sustained-hits",

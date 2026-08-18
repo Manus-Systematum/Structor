@@ -15,6 +15,8 @@
 /// pretend to produce it.
 library;
 
+import 'dart:convert';
+
 import '../json.dart';
 import 'bs_document.dart';
 import 'bs_slug.dart';
@@ -133,6 +135,7 @@ class BsMapper {
     // The anchor variant of each slug — the one 40kdc published under the
     // plain name — decides which datasheets keep the plain id.
     final anchorKeys = _anchorKeys(weapons, variantUsers, _anchorProfiles(anchors));
+    final variantIds = _variantIds(weapons, variantUsers, anchorKeys);
 
     final byId = <String, Map<String, Object?>>{};
     final discarded = <String>[];
@@ -154,7 +157,8 @@ class BsMapper {
         // datasheet sorted first — an Enforcer Commander's missile pod came
         // out scoped to the Coldstar. 40kdc scopes by the carrier, and the
         // carrier is the unit being written.
-        final id = anchorKeys[slug] == key ? slug : '$slug-$unitId';
+        final id = variantIds['$slug|${jsonEncode(record['profiles'])}'] ??
+            '$slug-$unitId';
         if (!seen.add(id)) continue;
         resolved.add(id);
 
@@ -220,6 +224,60 @@ class BsMapper {
     for (final raw in anchors) {
       final record = asMap(raw);
       if (str(record['id']) case final id?) out[id] = record;
+    }
+    return out;
+  }
+
+  /// An id per *distinct profile*, not per carrier.
+  ///
+  /// BSData declares a weapon entry on every datasheet that can reach the gun,
+  /// including through wargear: nineteen `Missile pod` entries exist on T'au,
+  /// and eighteen are the **missile drone's** BS5+ pod linked from every unit
+  /// that may take a drone. Scoping by carrier turned that into nineteen
+  /// near-identical records.
+  ///
+  /// So variants are grouped by profile. The one matching what 40kdc published
+  /// generically keeps the plain slug; each genuinely different profile gets
+  /// one id, scoped to the first datasheet that carries it. Two records for a
+  /// missile pod, which is what there are.
+  Map<String, String> _variantIds(
+    Map<String, Map<String, Object?>> weapons,
+    Map<String, Set<String>> users,
+    Map<String, String> anchorKeys,
+  ) {
+    final byProfile = <String, List<String>>{};
+    for (final entry in weapons.entries) {
+      final slug = entry.key.split('|').first;
+      final signature = '$slug|${jsonEncode(entry.value['profiles'])}';
+      (byProfile[signature] ??= []).add(entry.key);
+    }
+
+    final out = <String, String>{};
+    final taken = <String>{};
+    for (final entry in byProfile.entries) {
+      final slug = entry.key.split('|').first;
+      final anchor = anchorKeys[slug];
+      if (anchor != null && entry.value.contains(anchor)) {
+        out[entry.key] = slug;
+        taken.add(slug);
+      }
+    }
+    for (final entry in byProfile.entries) {
+      if (out.containsKey(entry.key)) continue;
+      final slug = entry.key.split('|').first;
+      final carriers = <String>{
+        for (final key in entry.value) ...?users[key],
+      }.toList()
+        ..sort();
+      var id = carriers.isEmpty ? slug : '$slug-${carriers.first}';
+      if (!taken.add(id)) {
+        var n = 2;
+        while (!taken.add('$id-$n')) {
+          n++;
+        }
+        id = '$id-$n';
+      }
+      out[entry.key] = id;
     }
     return out;
   }

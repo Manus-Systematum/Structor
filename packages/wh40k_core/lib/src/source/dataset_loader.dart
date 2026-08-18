@@ -237,14 +237,35 @@ class DatasetLoader {
     /// A datasheet file, from the parent when this faction publishes none.
     /// Absent-and-inherited is not a missing file, so it is not reported as
     /// one — otherwise every chapter would list eight.
+    /// A datasheet file: the parent's, plus whatever the chapter adds.
+    ///
+    /// This used to be a fall-through — own file if non-empty, else the
+    /// parent's — because a chapter published no datasheets at all and the two
+    /// cases could never both apply. BSData changed that: it gives Blood
+    /// Angels twenty-six of their own, and a fall-through then meant a Blood
+    /// Angels army could field Sanguinary Guard and *not* an Intercessor
+    /// Squad. Both are true at once, so both are read (§3.10).
     List<Object?> sheets(String dir, String name) {
-      final own = _readArray('$dir/$factionId/$name');
-      if (own != null && own.isNotEmpty) return own;
-      if (parentId != null) {
-        final inherited = _readArray('$dir/$parentId/$name');
-        if (inherited != null) return inherited;
+      final own = _readArray('$dir/$factionId/$name') ?? const [];
+      if (parentId == null) {
+        return own.isEmpty ? read('$dir/$factionId/$name') : own;
       }
-      return read('$dir/$factionId/$name');
+      final inherited = _readArray('$dir/$parentId/$name') ?? const [];
+      if (own.isEmpty) return inherited;
+
+      // The chapter's own record wins where both name the same id: a chapter
+      // that republishes a datasheet is saying something about it.
+      final ids = {
+        for (final raw in own)
+          if (str(asMap(raw)['id'] ?? asMap(raw)['ability_id']) case final id?)
+            id,
+      };
+      return [
+        ...own,
+        for (final raw in inherited)
+          if (str(asMap(raw)['id'] ?? asMap(raw)['ability_id']) case final id?)
+            if (!ids.contains(id)) raw,
+      ];
     }
 
     // Corrections are keyed by the faction that *owns* the record, so an

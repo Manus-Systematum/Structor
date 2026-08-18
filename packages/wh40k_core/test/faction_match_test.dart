@@ -80,19 +80,27 @@ void main() {
     }, skip: root.existsSync() ? null : 'no snapshot');
   });
 
-  group('a chapter inherits its parent’s datasheets', () {
+  group('a chapter fields its parent’s datasheets and its own', () {
     final root = Directory('../../data/merged');
     final loader = DatasetLoader('../../data/merged',
         corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'));
 
-    test('Blood Angels fields Adeptus Astartes units', () {
+    test('Blood Angels fields Adeptus Astartes units and Blood Angels ones',
+        () {
+      // This used to assert the chapter had *exactly* the parent's
+      // datasheets, because 40kdc published none of its own and the loader
+      // fell through to the parent. BSData publishes twenty-six for Blood
+      // Angels, and a fall-through would then have meant a Blood Angels army
+      // could field Sanguinary Guard and not an Intercessor Squad (§3.10).
       final chapter = loader.loadFaction('blood-angels');
       final parent = loader.loadFaction('adeptus-astartes');
 
       expect(chapter.parentFactionId, 'adeptus-astartes');
-      expect(chapter.units, isNotEmpty);
-      expect(chapter.units.length, parent.units.length);
-      expect(chapter.weapons.length, parent.weapons.length);
+      expect(chapter.units.length, greaterThan(parent.units.length));
+
+      final ids = {for (final u in chapter.units) u.id};
+      expect(ids, contains('intercessor-squad'), reason: 'the parent\'s');
+      expect(ids, contains('sanguinary-guard'), reason: 'its own');
     }, skip: root.existsSync() ? null : 'no snapshot');
 
     test('but keeps its own detachments and army rule', () {
@@ -120,10 +128,13 @@ void main() {
           parentStealth!.effectFingerprint);
     }, skip: root.existsSync() ? null : 'no snapshot');
 
-    test('a faction with its own datasheets is untouched by any of this', () {
+    test('a faction with no parent gets no inheritance at all', () {
       final tau = loader.loadFaction('tau-empire');
       expect(tau.parentFactionId, isNull);
-      expect(tau.units, hasLength(47));
+      // Not a fixed count any more: what the union must not do is add
+      // datasheets to a faction that has nobody to inherit from.
+      expect(tau.units.map((u) => u.factionId).toSet(), {'tau-empire'});
+      expect(tau.units.length, greaterThan(40));
     }, skip: root.existsSync() ? null : 'no snapshot');
   });
 }

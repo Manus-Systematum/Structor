@@ -31,11 +31,17 @@ const _files = {
     compare: {'name', 'points', 'is_legend'},
     fillOnly: false,
   ),
+  // Fill-only, and this one is a reversal. BSData declares a weapon entry on
+  // every datasheet that can reach the gun, but for T'au almost all of them
+  // are BS5+ — the BS3+/BS4+ distinction between a Commander's missile pod,
+  // a Crisis suit's and a drone's exists **only in 40kdc**, which curates
+  // carrier-scoped records for exactly that. Letting BSData win replaced
+  // richer data with poorer and cost the reference list 60 points.
   'weapons': (
     path: 'core/%s/weapons.json',
     idField: 'id',
     compare: {'name', 'type', 'profiles'},
-    fillOnly: false,
+    fillOnly: true,
   ),
   // Fill-only. A 40kdc composition carries `default_weapon_ids` and
   // `base_size_mm`, and BSData has neither — so letting its record win
@@ -112,6 +118,7 @@ void main(List<String> args) {
         fortykdc: existing,
         compare: spec.compare,
         fillOnly: spec.fillOnly,
+        keepFrom40kdc: entry.key == 'units' ? const {'weapon_ids'} : const {},
       );
 
       allConflicts.addAll([for (final c in result.conflicts) c.toJson()]);
