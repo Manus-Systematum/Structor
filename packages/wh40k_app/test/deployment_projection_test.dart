@@ -69,4 +69,69 @@ void main() {
       const Offset(360, 360),
     );
   });
+
+  group('a piece label and its objective marker', () {
+    // A ruin 40x40 with room to spare, and a 10x6 marking.
+    const piece = Rect.fromLTWH(0, 0, 40, 40);
+    const label = Size(10, 6);
+
+    Rect boxAt(Offset at) =>
+        Rect.fromLTWH(at.dx, at.dy, label.width, label.height);
+
+    test('takes the middle when nothing is in the way', () {
+      final at = labelSpot(
+          bounds: piece,
+          label: label,
+          marker: null,
+          markerRadius: 5,
+          margin: 2);
+      expect(at, isNotNull);
+      expect(boxAt(at!).center, const Offset(20, 20));
+    });
+
+    test('moves off a marker rather than covering it', () {
+      // 270 of the 275 objective-bearing pieces are ruins, so the marker
+      // landing on the marking is the common case. Covered, neither reads.
+      const marker = Offset(20, 20);
+      final at = labelSpot(
+          bounds: piece,
+          label: label,
+          marker: marker,
+          markerRadius: 5,
+          margin: 2);
+      expect(at, isNotNull);
+      expect(boxAt(at!).inflate(2).contains(marker), isFalse,
+          reason: 'the marker stays visible');
+      expect(piece.contains(boxAt(at).topLeft), isTrue);
+      expect(piece.contains(boxAt(at).bottomRight), isTrue);
+    });
+
+    test('goes above when below would leave the piece', () {
+      // A marker low in its own outline: there is no room under it.
+      const marker = Offset(20, 37);
+      final at = labelSpot(
+          bounds: piece,
+          label: label,
+          marker: marker,
+          markerRadius: 5,
+          margin: 2);
+      expect(at, isNotNull);
+      expect(boxAt(at!).center.dy, lessThan(marker.dy));
+    });
+
+    test('is dropped rather than spilled onto a neighbour', () {
+      // A 0.5" barrier at any zoom: nothing fits, and a label hanging off
+      // its own piece labels the piece beside it.
+      const sliver = Rect.fromLTWH(0, 0, 4, 3);
+      expect(
+        labelSpot(
+            bounds: sliver,
+            label: label,
+            marker: null,
+            markerRadius: 5,
+            margin: 2),
+        isNull,
+      );
+    });
+  });
 }

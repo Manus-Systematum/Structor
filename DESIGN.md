@@ -967,6 +967,15 @@ One thing this made visible that was always true: a piece whose name is too
 long to fit at 1× is left unlabelled, and zooming in is now the way to read
 it. `Generator` and `Pipes` only appear once there is room.
 
+It also exposed a defect that predates the zoom. 275 of the 745 pieces carry
+an objective and 270 of those are ruins, so the marker and the piece's marking
+were both drawn at the middle of the same shape — `Gen⊙tor`, with neither
+readable. **The marker wins the middle**, because an objective inside a ruin
+is the one thing on the table you must still be able to find; the writing
+moves. It tries the centre, then below the marker, then above it, and is
+dropped if none of the three fits — dropping being the same rule that has
+always applied to a 0.5″ barrier with no room for a word.
+
 **Turning is a rotation, not a transpose.** `(x, y) → (y, x)` puts the board
 neatly in the turned box and mirrors it; a player copying a mirrored map sets
 out a mirrored table, and nothing on screen would say so. The upright

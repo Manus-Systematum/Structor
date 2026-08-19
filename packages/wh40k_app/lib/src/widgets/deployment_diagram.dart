@@ -222,6 +222,45 @@ Offset projectOnto(
       : Offset(p.x * scale, canvas.height - p.y * scale);
 }
 
+/// Where a piece's marking goes inside its own outline, or null for nowhere.
+///
+/// **The objective marker wins the middle.** An objective sitting in a ruin is
+/// the one thing on the table you must still be able to find, so where the two
+/// want the same spot the writing moves and the marker does not. Drawing the
+/// label over the marker instead loses both: `Gen⊙tor`.
+///
+/// Centre first, then below the marker, then above it. Null when none of the
+/// three fits, which is not a failure — a 0.5" barrier has never had room for
+/// a word, and a label spilling past its own piece labels its neighbour.
+@visibleForTesting
+Offset? labelSpot({
+  required Rect bounds,
+  required Size label,
+  required Offset? marker,
+  required double markerRadius,
+  required double margin,
+}) {
+  final half = Offset(label.width / 2, label.height / 2);
+  final clear = markerRadius + label.height / 2 + margin;
+  final room = bounds.deflate(margin / 2);
+  for (final centre in [
+    bounds.center,
+    if (marker != null) ...[
+      Offset(bounds.center.dx, marker.dy + clear),
+      Offset(bounds.center.dx, marker.dy - clear),
+    ],
+  ]) {
+    final at = centre - half;
+    final box = Rect.fromLTWH(at.dx, at.dy, label.width, label.height);
+    if (marker != null && box.inflate(margin).contains(marker)) continue;
+    if (!room.contains(box.topLeft) || !room.contains(box.bottomRight)) {
+      continue;
+    }
+    return at;
+  }
+  return null;
+}
+
 class _BoardPainter extends CustomPainter {
   final DeploymentPattern pattern;
   final bool iAmAttacker;
@@ -399,7 +438,15 @@ class _BoardPainter extends CustomPainter {
             // can be followed while setting the real terrain out. Drawn only
             // where it fits: a 0.5"-thick barrier has no room for a word, and
             // a label spilling past its own piece labels its neighbour.
-            _pieceLabel(canvas, path.getBounds(), building.label);
+            _pieceLabel(
+              canvas,
+              path.getBounds(),
+              building.label,
+              // 270 of the 275 objective-bearing pieces are ruins, so a
+              // marker landing on this label is the common case, not a
+              // corner one.
+              marker: piece.isObjective ? project(piece.position) : null,
+            );
           }
         }
       }
@@ -613,8 +660,9 @@ class _BoardPainter extends CustomPainter {
     painter.paint(canvas, at);
   }
 
-  /// Writes a piece's marking inside its own outline, or not at all.
-  void _pieceLabel(Canvas canvas, Rect bounds, String label) {
+  /// Writes a piece's marking inside its own outline, or not at all. Where
+  /// it goes, and whether it goes at all, is [labelSpot].
+  void _pieceLabel(Canvas canvas, Rect bounds, String label, {Offset? marker}) {
     if (label.isEmpty) return;
 
     final painter = TextPainter(
@@ -638,10 +686,15 @@ class _BoardPainter extends CustomPainter {
         painter.height > bounds.height - _px(2)) {
       return;
     }
-    painter.paint(
-      canvas,
-      bounds.center - Offset(painter.width / 2, painter.height / 2),
+
+    final at = labelSpot(
+      bounds: bounds,
+      label: Size(painter.width, painter.height),
+      marker: marker,
+      markerRadius: _px(5),
+      margin: _px(2),
     );
+    if (at != null) painter.paint(canvas, at);
   }
 
   /// The polygon's area centroid, not its bounding-box centre. Every zone in
