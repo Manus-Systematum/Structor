@@ -720,16 +720,68 @@ void main() {
       expect(b.y, closeTo(27.45, 0.15));
     }, skip: skip);
 
-    test('a part with no confirmed corner still gets the heuristic', () {
-      // Only EF and GH have been matched so far. Everything else must keep
-      // the measured fallback rather than silently losing its tick.
+    test('AB and CD stand in different corners from EF and GH', () {
+      // The first reading assumed one corner served all four lettered ruins.
+      // Re-rendering the layout into the picture's own frame showed EF and GH
+      // agreeing and AB and CD plainly not, which is the value of comparing
+      // drawings rather than counting pixels.
       final layout = pack.terrainLayouts
           .firstWhere((l) => l.id == 'take-and-hold-vs-purge-the-foe-1');
       final templates = pack.terrainTemplates;
-      final piece = layout.pieces.firstWhere((p) => p.id == 'area-02');
-      for (final b in piece.buildings(templates)) {
-        expect(b.cornerMark, hasLength(3), reason: b.label);
+
+      BoardPoint tick(String pieceId, String label) => layout.pieces
+          .firstWhere((p) => p.id == pieceId)
+          .buildings(templates)
+          .firstWhere((b) => b.label == label)
+          .cornerMark[1];
+
+      final ab = tick('area-02', 'AB');
+      expect(ab.x, closeTo(22.438, 0.05));
+      expect(ab.y, closeTo(15.558, 0.05));
+      final cd = tick('area-11', 'CD');
+      expect(cd.x, closeTo(17.0, 0.05));
+      expect(cd.y, closeTo(32.5, 0.05));
+    }, skip: skip);
+
+    test('the two placements of a part mirror through the board centre', () {
+      // This layout is point-symmetric, so every part appears twice at 180
+      // degrees. The pair must reflect through (30, 22) exactly — a corner
+      // recorded on the wrong vertex still satisfies one placement and
+      // breaks this.
+      final layout = pack.terrainLayouts
+          .firstWhere((l) => l.id == 'take-and-hold-vs-purge-the-foe-1');
+      final templates = pack.terrainTemplates;
+
+      BoardPoint tick(String pieceId, String label) => layout.pieces
+          .firstWhere((p) => p.id == pieceId)
+          .buildings(templates)
+          .firstWhere((b) => b.label == label)
+          .cornerMark[1];
+
+      for (final pair in const [
+        ('area-02', 'area-10', 'AB'),
+        ('area-11', 'area-03', 'CD'),
+        ('area-04', 'area-12', 'EF'),
+        ('area-04', 'area-12', 'GH'),
+      ]) {
+        final a = tick(pair.$1, pair.$3);
+        final b = tick(pair.$2, pair.$3);
+        expect(a.x + b.x, closeTo(60, 0.05), reason: pair.$3);
+        expect(a.y + b.y, closeTo(44, 0.05), reason: pair.$3);
       }
+    }, skip: skip);
+
+    test('an obstacle keeps the heuristic, having no L to point at', () {
+      // Small L, Corner and the barriers are obstacles rather than ruins, so
+      // there is no wall corner to record. They must still get a tick.
+      final layout = pack.terrainLayouts
+          .firstWhere((l) => l.id == 'take-and-hold-vs-purge-the-foe-1');
+      final templates = pack.terrainTemplates;
+      final piece = layout.pieces.firstWhere((p) => p.id == 'area-11');
+      final small =
+          piece.buildings(templates).firstWhere((b) => b.label == 'Small L');
+      expect(small.cornerMark, hasLength(3));
+      expect(templates['bm-bm-terrain-11e-1-part-small-l']!.wallCorner, isNull);
     }, skip: skip);
   });
 }

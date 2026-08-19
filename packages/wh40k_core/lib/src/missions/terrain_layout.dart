@@ -120,12 +120,19 @@ class TerrainTemplate {
   /// The value indexes the centred rectangle footprint, whose vertices run
   /// `0:(-w,-h) 1:(+w,-h) 2:(+w,+h) 3:(-w,+h)`.
   ///
-  /// **Only the parts actually confirmed are listed.** Everything absent
-  /// falls back to the measured heuristic in [_cornerMark], because a wrong
-  /// corner here is worse than no corner: it states a wall position with the
-  /// same confidence as a right one, and the player sets their table out
-  /// from it.
+  /// **All four lettered ruins are confirmed.** They were not read off the
+  /// picture by eye — the layout was re-rendered into the picture's own frame
+  /// and the shapes compared, which turns "what pixel is that wall on" into
+  /// "do these two drawings agree". The first attempt assumed one corner for
+  /// all four; `EF` and `GH` matched and `AB` and `CD` visibly did not, and
+  /// the corrected pair matches on all eight placements.
+  ///
+  /// `Small L`, `Corner` and the barriers are deliberately absent: they are
+  /// obstacles, not ruins, so they have no L to point at. They keep the
+  /// measured heuristic in [_cornerMark].
   static const _wallCorner = <String, int>{
+    'bm-bm-terrain-11e-1-part-ab': 3,
+    'bm-bm-terrain-11e-1-part-co': 1,
     'bm-bm-terrain-11e-1-part-ef': 2,
     'bm-bm-terrain-11e-1-part-gh': 2,
   };
