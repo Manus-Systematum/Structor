@@ -199,8 +199,9 @@ class _StratagemRow extends StatelessWidget {
         targets: targets,
       ),
     );
-    if (chosen != null)
+    if (chosen != null) {
       _commit(chosen == _TargetSheet.noTarget ? null : chosen);
+    }
   }
 
   void _commit(String? instanceId) => onEvent(UseStratagem(

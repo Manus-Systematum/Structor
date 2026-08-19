@@ -163,7 +163,8 @@ class BsMapper {
 
     // The anchor variant of each slug — the one 40kdc published under the
     // plain name — decides which datasheets keep the plain id.
-    final anchorKeys = _anchorKeys(weapons, variantUsers, _anchorProfiles(anchors));
+    final anchorKeys =
+        _anchorKeys(weapons, variantUsers, _anchorProfiles(anchors));
     final variantIds = _variantIds(weapons, variantUsers, anchorKeys);
 
     final byId = <String, Map<String, Object?>>{};
@@ -350,7 +351,8 @@ class BsMapper {
           final byAnchor = _anchorScore(weapons[b], anchor)
               .compareTo(_anchorScore(weapons[a], anchor));
           if (byAnchor != 0) return byAnchor;
-          final byUse = (users[b]?.length ?? 0).compareTo(users[a]?.length ?? 0);
+          final byUse =
+              (users[b]?.length ?? 0).compareTo(users[a]?.length ?? 0);
           return byUse != 0 ? byUse : a.compareTo(b);
         });
       // **40kdc's own convention**: the common variant keeps the plain slug
@@ -514,7 +516,8 @@ class BsMapper {
 
       Map<String, Object?> row(int value, int? min, int? max) => {
             'models': models,
-            if (modelsMax != null && modelsMax != models) 'models_max': modelsMax,
+            if (modelsMax != null && modelsMax != models)
+              'models_max': modelsMax,
             'cost': value,
             if (min != null) 'unit_count_min': min,
             if (max != null) 'unit_count_max': max,
@@ -576,7 +579,8 @@ class BsMapper {
       final delta = asInt(m['value']);
       if (delta == null) continue;
       for (final rawGroup in asList(m['conditionGroups'])) {
-        for (final rawLocal in asList(asMap(rawGroup)['localConditionGroups'])) {
+        for (final rawLocal
+            in asList(asMap(rawGroup)['localConditionGroups'])) {
           final local = asMap(rawLocal);
           if (str(local['type']) != 'atLeast') continue;
           final before = asInt(local['value']);
@@ -655,9 +659,8 @@ class _Walk {
   /// a model up front added one phantom model to every squad: Vespid
   /// Stingwings came out as six, and its five-model price bracket vanished
   /// under the six-model one.
-  List<_ModelGroup> get _groups => modelGroups.isEmpty
-      ? [_ModelGroup(_rootName, 1, 1)]
-      : modelGroups;
+  List<_ModelGroup> get _groups =>
+      modelGroups.isEmpty ? [_ModelGroup(_rootName, 1, 1)] : modelGroups;
 
   int get modelCount {
     final total = _groups.fold(0, (sum, g) => sum + g.min);
@@ -688,9 +691,20 @@ class _Walk {
   /// trees covering the entire game. Walking them gave an Enforcer Commander
   /// 180 abilities, most of them from other factions, and a Dominion Squad the
   /// Sisters' entire hymn list. None of it is on the datasheet.
+  /// Subtrees that are not this datasheet's own equipment.
+  ///
+  /// `weapon modification` is the game system's Crusade upgrade group —
+  /// `Armour Piercing (AP+1)`, `Brutal (S+1)`, `Precise` and four others.
+  /// Six of the seven carry no ability profile and were dropped by accident;
+  /// `Precise` carries one, so it alone became a buyable wargear line on
+  /// **1,113 datasheets across 29 factions**, rendered as "Precise" with a
+  /// `+` beside it. Filtering the group is the fix rather than filtering the
+  /// one entry, because the other six are the same kind of thing and would
+  /// arrive the moment upstream gave them a profile.
   static final _notThisDatasheet = RegExp(
     r'crusade|battle\s*trait|battle\s*scar|relic|specialism|'
-    r'expanding the empire|white dwarf|warlord|requisition|enhancement',
+    r'expanding the empire|white dwarf|warlord|requisition|enhancement|'
+    r'weapon\s*modification',
     caseSensitive: false,
   );
 
@@ -699,6 +713,17 @@ class _Walk {
   /// Whether the entry currently being read hangs off a wargear choice.
   bool _inWargear = false;
 
+  /// Whether the entry currently being read *is* a weapon, or hangs off one.
+  ///
+  /// **A rule attached to a gun is not a thing you can buy.** BSData models
+  /// weapons as `upgrade` entries, which is the same shape a wargear choice
+  /// has, so every rule linked from a weapon arrived looking like purchasable
+  /// wargear: `Precise` appeared as a buyable line with a `+` beside it on
+  /// 1,113 datasheets, `Lethal Hits` on 304. Filtering the weapon *keywords*
+  /// was not enough — the keyword is `[PRECISION]` and the rule that grants
+  /// it is named `Precise`, so the ids never met.
+  bool _inWeapon = false;
+
   void visit(BsEntry entry, {int depth = 0, bool wargear = false}) {
     if (depth > 8) return;
     if (!_seen.add(entry.id.isEmpty ? '${entry.name}@$depth' : entry.id)) {
@@ -706,9 +731,11 @@ class _Walk {
     }
 
     final outer = _inWargear;
+    final outerWeapon = _inWeapon;
     _inWargear = wargear || entry.type == 'upgrade';
-
-    _readProfiles(entry);
+    // Read first: whether this entry is a weapon is decided by the profiles
+    // hanging on it, and its own linked rules are read straight afterwards.
+    _inWeapon = outerWeapon | _readProfiles(entry);
 
     final cost = entry.costFor(pts);
     if (depth > 0 && cost != null && cost != 0) {
@@ -726,7 +753,7 @@ class _Walk {
       final type = str(link['type']);
       if (type != 'rule' && type != 'profile') continue;
       final target = index.resolve(link);
-      if (target != null) _readRule(target);
+      if (target != null) _readRule(target, linked: true);
     }
 
     if (depth == 0) _rootName = entry.name;
@@ -759,12 +786,14 @@ class _Walk {
     }
 
     _inWargear = outer;
+    _inWeapon = outerWeapon;
   }
 
   /// One composition group: how many models, and which loadouts they may take.
   void _group(BsEntry group, BsEntry owner, int depth) {
     final children = <BsEntry>[
-      for (final raw in group.selectionEntries) BsEntry(asMap(raw), owner.sourceId),
+      for (final raw in group.selectionEntries)
+        BsEntry(asMap(raw), owner.sourceId),
       for (final raw in group.entryLinks)
         if (_belongs(strOr(asMap(raw)['name'], '')))
           if (index.resolve(raw) case final target?) target,
@@ -869,13 +898,27 @@ class _Walk {
     return null;
   }
 
-  void _readProfiles(BsEntry entry) {
+  /// Reads [entry]'s profiles, reporting whether any of them made it a weapon.
+  bool _readProfiles(BsEntry entry) {
+    var weapon = false;
     for (final raw in entry.profiles) {
-      _readProfile(asMap(raw), entry);
+      final profile = asMap(raw);
+      final typeName = strOr(profile['typeName'], '');
+      if (typeName == 'Ranged Weapons' || typeName == 'Melee Weapons') {
+        weapon = true;
+      }
+      _readProfile(profile, entry);
     }
+    return weapon;
   }
 
-  void _readRule(BsEntry rule) {
+  /// [linked] marks a rule reached through an `infoLink` rather than through
+  /// the entry's own profile. The distinction only matters inside a wargear
+  /// choice: `Ratling Battlemutt` is an upgrade whose own profile makes it the
+  /// wargear, and it links the rule `Lethal Hits`, which is what the mutt
+  /// *does* — not a second thing to buy. Filing both as budget lines put
+  /// "Lethal Hits" in the builder with a `+` beside it.
+  void _readRule(BsEntry rule, {bool linked = false}) {
     // A shared rule carries its text on the record itself; a profile carries
     // it in a characteristic. Both shapes appear, and both are rules.
     final description = str(rule.json['description']);
@@ -885,7 +928,12 @@ class _Walk {
     }
     final id = bsSlug(rule.name);
     if (id.isEmpty) return;
-    (_inWargear ? wargearAbilityIds : abilityIds).add(id);
+    // The record is still kept below — the text is worth having where a
+    // player looks a weapon rule up. It is only kept off the unit's own
+    // ability list and out of its wargear budget.
+    if (!_inWeapon && !(_inWargear && linked)) {
+      (_inWargear ? wargearAbilityIds : abilityIds).add(id);
+    }
     abilities.putIfAbsent(
       id,
       () => {
@@ -1071,8 +1119,8 @@ class _Walk {
   }
 
   Map<String, Object?> _weaponKeyword(String body) {
-    final anti =
-        RegExp(r'^ANTI-(.+?)\s+(\d+)\+$', caseSensitive: false).firstMatch(body);
+    final anti = RegExp(r'^ANTI-(.+?)\s+(\d+)\+$', caseSensitive: false)
+        .firstMatch(body);
     if (anti != null) {
       return {
         'keyword_id': 'anti',

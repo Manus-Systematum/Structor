@@ -122,12 +122,6 @@
         },
         {
           "items": [
-            "precise"
-          ],
-          "count": 1
-        },
-        {
-          "items": [
             "gun-drone"
           ],
           "count": 1,
@@ -252,12 +246,6 @@
         {
           "items": [
             "guardian-drone"
-          ],
-          "count": 1
-        },
-        {
-          "items": [
-            "precise"
           ],
           "count": 1
         }
@@ -391,12 +379,6 @@
         },
         {
           "items": [
-            "precise"
-          ],
-          "count": 1
-        },
-        {
-          "items": [
             "gun-drone"
           ],
           "count": 1,
@@ -521,12 +503,6 @@
         {
           "items": [
             "guardian-drone"
-          ],
-          "count": 1
-        },
-        {
-          "items": [
-            "precise"
           ],
           "count": 1
         }
@@ -746,12 +722,6 @@
         },
         {
           "items": [
-            "precise"
-          ],
-          "count": 1
-        },
-        {
-          "items": [
             "missile-drone"
           ],
           "count": 1,
@@ -849,12 +819,6 @@
       "wargear_budgets": [
         {
           "items": [
-            "precise"
-          ],
-          "count": 1
-        },
-        {
-          "items": [
             "battlesuit-support-system"
           ],
           "count": 1
@@ -941,13 +905,11 @@
         }
       ],
       "battlefield_role": "Vehicle",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ],
       "wargear_budgets": [
-        {
-          "items": [
-            "precise"
-          ],
-          "count": 1
-        },
         {
           "items": [
             "missile-drone"
@@ -955,10 +917,6 @@
           "count": 1,
           "per_models": 0
         }
-      ],
-      "sources": [
-        "bsdata",
-        "40kdc"
       ],
       "corrected": {
         "reason": "Takes Missile Drones. 40kdc carries them and BSData does not, and BSData's ability list replaces 40kdc's wholesale on a merged record, so without this the drones are lost rather than merely unlisted. The export lists \"2x Missile drones\" on the first Riptide.",
@@ -1072,12 +1030,6 @@
         {
           "items": [
             "guardian-drone"
-          ],
-          "count": 1
-        },
-        {
-          "items": [
-            "precise"
           ],
           "count": 1
         },
@@ -2618,15 +2570,6 @@
         "40kdc"
       ]
     },
-    "precise": {
-      "ability_id": "precise",
-      "name": "Precise",
-      "description": "Each time a Critical Wound is scored for an attack made with this weapon, that attack has the **[PRECISION]** ability.",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      }
-    },
     "fireknife": {
       "ability_id": "fireknife",
       "name": "Fireknife",
@@ -3852,7 +3795,6 @@
     "deadly-demise",
     "hover",
     "for-the-greater-good",
-    "precise",
     "weapon-support-system",
     "deep-strike",
     "gun-drone",
