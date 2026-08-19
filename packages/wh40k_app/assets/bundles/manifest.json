@@ -17,8 +17,8 @@
       "kind": "faction",
       "name": "Adepta Sororitas",
       "file": "adepta-sororitas.json.gz",
-      "sha256": "feea0a0a3ec446a07f4ea026ffd149b999932b4ab06aa57d55ff66b9c06e79dc",
-      "bytes": 185102,
+      "sha256": "4f5a9928d6ef537dd03644192744603c6696e8e5467fab691a200cfefd8a798d",
+      "bytes": 185100,
       "revision": "local"
     },
     {
@@ -26,7 +26,7 @@
       "kind": "faction",
       "name": "Adeptus Astartes",
       "file": "adeptus-astartes.json.gz",
-      "sha256": "1bf63f0252c01b9400870487bb2c2bb128fee7c1045ec4025ee6e2a73064e645",
+      "sha256": "cd68c8f07b5f30612e6118499fd65ed5099177f70d4eae1a85c0cfe296bc077e",
       "bytes": 252355,
       "revision": "local",
       "aliases": [
@@ -162,8 +162,8 @@
       "kind": "faction",
       "name": "Deathwatch",
       "file": "deathwatch.json.gz",
-      "sha256": "d7c92467facb9298d1b791eb404875c76f97b77c269a24c08853b8e2ff33239c",
-      "bytes": 166192,
+      "sha256": "0fc3996727d0a4b84d7c988e41ced78e9bec6e94383ef5a037db11f5168aef16",
+      "bytes": 166186,
       "revision": "local",
       "parentId": "adeptus-astartes"
     },

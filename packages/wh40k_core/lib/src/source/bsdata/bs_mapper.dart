@@ -111,7 +111,8 @@ class BsMapper {
         'faction_id': factionId,
         'profiles': walk.profiles,
         'points': _points(root, walk),
-        if (walk.wargearCosts.isNotEmpty) 'wargear_costs': walk.wargearCosts,
+        if (walk.wargearCosts.isNotEmpty)
+          'wargear_costs': walk.wargearCosts.values.toList(),
         'keywords': _keywords(root),
         'faction_keywords': _factionKeywords(root),
         'weapon_ids': walk.weaponIds.toList(),
@@ -621,7 +622,7 @@ class _Walk {
   final wargearAbilityIds = <String>{};
   final weapons = <String, Map<String, Object?>>{};
   final abilities = <String, Map<String, Object?>>{};
-  final wargearCosts = <Map<String, Object?>>[];
+  final wargearCosts = <String, Map<String, Object?>>{};
 
   /// Guards the graph's cycles and its diamonds: a shared entry reachable by
   /// two routes would otherwise be walked twice.
@@ -711,7 +712,13 @@ class _Walk {
 
     final cost = entry.costFor(pts);
     if (depth > 0 && cost != null && cost != 0) {
-      wargearCosts.add({'item_id': bsSlug(entry.name), 'cost': cost});
+      // Keyed, not appended. A datasheet with two model groups reaches the
+      // same upgrade once per group — a Paragon Warsuits multi-melta arrived
+      // twice at 10 points and the unit priced it at 20.
+      wargearCosts[bsSlug(entry.name)] = {
+        'item_id': bsSlug(entry.name),
+        'cost': cost,
+      };
     }
 
     for (final raw in entry.infoLinks) {

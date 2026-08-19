@@ -303,7 +303,8 @@ class RosterValidator {
     if (used > battleSize.enhancementSlots) {
       findings.add(ValidationFinding(
         code: 'slots.over',
-        message: '$used slots used of ${battleSize.enhancementSlots} at '
+        message: '$used enhancement slots used of '
+            '${battleSize.enhancementSlots} at '
             '${battleSize.name}.',
         severity: Severity.error,
       ));
@@ -311,7 +312,7 @@ class RosterValidator {
       findings.add(ValidationFinding(
         code: 'slots.unused',
         message: '${battleSize.enhancementSlots - used} of '
-            '${battleSize.enhancementSlots} slots unused.',
+            '${battleSize.enhancementSlots} enhancement slots unused.',
         severity: Severity.info,
       ));
     }

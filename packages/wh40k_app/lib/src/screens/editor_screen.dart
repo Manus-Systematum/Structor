@@ -328,6 +328,14 @@ class _EditorScreenState extends State<EditorScreen> {
   Future<void> _editUnit(String instanceId) async {
     final dataset = _dataset;
     if (dataset == null) return;
+
+    // Which member of the combat unit the sheet is showing. A row in the list
+    // is a *group* — a character and the squad it joined — and opening it went
+    // straight to `group.first`, which is the character. The squad was then
+    // unreachable: its loadout, its size and its removal were all behind a row
+    // that only ever opened the leader (§7.3.9).
+    var editing = instanceId;
+
     await showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
@@ -337,21 +345,38 @@ class _EditorScreenState extends State<EditorScreen> {
       // counter, so changing a loadout looked like the page reloading from the
       // bottom of the screen each time.
       builder: (_) => StatefulBuilder(
-        builder: (_, redrawSheet) => UnitEditorSheet(
-          dataset: dataset,
-          roster: _roster,
-          instanceId: instanceId,
-          onEdit: (change) {
-            _edit(change);
-            // `_roster` is read fresh on each rebuild, so redrawing the sheet
-            // is enough to bring the new counts across.
-            redrawSheet(() {});
-          },
-          onRemove: () {
-            _edit((e) => e.removeUnit(_roster, instanceId));
-            Navigator.of(context).pop();
-          },
-        ),
+        builder: (_, redrawSheet) {
+          // Read fresh: attaching or detaching from inside the sheet changes
+          // who is in the group.
+          final group = _roster
+              .combatUnits()
+              .firstWhere(
+                (g) => g.any((u) => u.instanceId == editing),
+                orElse: () => const [],
+              )
+              .map((u) => u.instanceId)
+              .toList();
+
+          return UnitEditorSheet(
+            dataset: dataset,
+            roster: _roster,
+            instanceId: editing,
+            // Only when there is a choice to make; a lone datasheet needs no
+            // switcher above it.
+            groupInstanceIds: group.length > 1 ? group : const [],
+            onSelect: (next) => redrawSheet(() => editing = next),
+            onEdit: (change) {
+              _edit(change);
+              // `_roster` is read fresh on each rebuild, so redrawing the
+              // sheet is enough to bring the new counts across.
+              redrawSheet(() {});
+            },
+            onRemove: () {
+              _edit((e) => e.removeUnit(_roster, editing));
+              Navigator.of(context).pop();
+            },
+          );
+        },
       ),
     );
   }

@@ -33,6 +33,16 @@ class UnitEditorSheet extends StatelessWidget {
   final void Function(Roster Function(RosterEditor)) onEdit;
   final VoidCallback onRemove;
 
+  /// The whole combat unit this datasheet belongs to, when it is part of one.
+  ///
+  /// A character and the squad it joined are one row in the army list, and the
+  /// row opens the character. Without a way across, the squad's loadout and
+  /// its size were unreachable from the builder entirely.
+  final List<String> groupInstanceIds;
+
+  /// Switches which member the sheet is editing.
+  final void Function(String instanceId)? onSelect;
+
   const UnitEditorSheet({
     super.key,
     required this.dataset,
@@ -40,6 +50,8 @@ class UnitEditorSheet extends StatelessWidget {
     required this.instanceId,
     required this.onEdit,
     required this.onRemove,
+    this.groupInstanceIds = const [],
+    this.onSelect,
   });
 
   @override
@@ -76,6 +88,15 @@ class UnitEditorSheet extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.w700)),
           ),
 
+          if (groupInstanceIds.length > 1 && onSelect != null)
+            _GroupSwitcher(
+              dataset: dataset,
+              roster: roster,
+              instanceIds: groupInstanceIds,
+              current: instanceId,
+              onSelect: onSelect!,
+            ),
+
           // The statline sits under the name rather than behind a tap: it is
           // the thing you check while deciding what to buy (§4.5).
           UnitStatline.of(datasheet),
@@ -102,7 +123,10 @@ class UnitEditorSheet extends StatelessWidget {
           for (final entry in loadout.fixed.entries)
             _FixedRow(
               label: _nameOf(entry.key, datasheet),
-              count: entry.value,
+              // What the unit carries, not what the datasheet's smallest legal
+              // form carries. Resizing scales the default kit now, so a
+              // four-model unit showed "×3" beside a weapon table listing four.
+              count: carried[entry.key] ?? entry.value,
             ),
 
           for (final group in loadout.groups)
@@ -747,6 +771,67 @@ class _Heading extends StatelessWidget {
                   style: TextStyle(fontSize: 10, color: scheme.outline)),
             ),
           ],
+        ],
+      ),
+    );
+  }
+}
+
+/// The members of one combat unit, so the sheet can move between them.
+///
+/// A character and the squad it leads are one entry in the army list — that is
+/// §7.3.9's decision and it is right for reading the list. It is wrong for
+/// editing it, because there is only one row to tap and it opens the
+/// character: the squad's own size and loadout had no route at all.
+class _GroupSwitcher extends StatelessWidget {
+  final Dataset dataset;
+  final Roster roster;
+  final List<String> instanceIds;
+  final String current;
+  final void Function(String instanceId) onSelect;
+
+  const _GroupSwitcher({
+    required this.dataset,
+    required this.roster,
+    required this.instanceIds,
+    required this.current,
+    required this.onSelect,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 0, 12, 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'THIS COMBAT UNIT',
+            style: TextStyle(
+              fontSize: 10,
+              letterSpacing: 1.1,
+              fontWeight: FontWeight.w800,
+              color: scheme.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: [
+              for (final id in instanceIds)
+                if (roster.unitByInstance(id) case final unit?)
+                  if (dataset.unit(unit.datasheetId) case final sheet?)
+                    ChoiceChip(
+                      selected: id == current,
+                      onSelected: (_) => onSelect(id),
+                      visualDensity: VisualDensity.compact,
+                      label: Text(sheet.name,
+                          style: const TextStyle(fontSize: 12)),
+                    ),
+            ],
+          ),
         ],
       ),
     );

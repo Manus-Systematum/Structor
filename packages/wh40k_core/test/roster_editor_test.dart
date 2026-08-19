@@ -393,4 +393,114 @@ void main() {
       expect(priceOf(roster), 850);
     }, skip: available ? null : 'no snapshot');
   });
+
+  // Paragon Warsuits are the case these were reported against, and they are
+  // Sororitas — the shared fixture above is T'au.
+  late Dataset sisters;
+  late RosterEditor sistersEditor;
+  Roster paragons() => sistersEditor.addUnit(
+      RosterEditor.blank(name: 'x', factionId: 'adepta-sororitas'),
+      'paragon-warsuits');
+
+  setUpAll(() {
+    if (!available) return;
+    sisters = Dataset.of(correctedLoader().loadFaction('adepta-sororitas'),
+        revision: 's');
+    sistersEditor = RosterEditor(sisters);
+  });
+
+  group('resizing a unit brings its wargear with it', () {
+    test('added models arrive with the default kit', () {
+      // Six Paragon Warsuits carried three heavy bolters: the guns were only
+      // ever set when the unit was created, so growing it changed nothing but
+      // the number.
+      var roster = paragons();
+      final editor = sistersEditor;
+      final id = roster.units.single.instanceId;
+      final before = roster.units.single;
+      final perModel = {
+        for (final w in before.wargear) w.itemId: w.count ~/ before.models,
+      };
+
+      roster = editor.setModels(roster, id, before.models * 2);
+      final after = roster.units.single;
+
+      expect(after.models, before.models * 2);
+      for (final w in before.wargear) {
+        expect(after.countOf(w.itemId), w.count + perModel[w.itemId]! * before.models,
+            reason: w.itemId);
+      }
+    });
+
+    test('shrinking takes the same share back', () {
+      var roster = paragons();
+      final editor = sistersEditor;
+      final id = roster.units.single.instanceId;
+      final start = roster.units.single.wargear.toList();
+
+      roster = editor.setModels(roster, id, roster.units.single.models * 2);
+      roster = editor.setModels(roster, id, start.isEmpty ? 1 : 3);
+
+      for (final w in start) {
+        expect(roster.units.single.countOf(w.itemId), w.count, reason: w.itemId);
+      }
+    });
+
+    test('a deliberate swap is not scaled with the unit', () {
+      // A multi-melta bought for one model is one model's multi-melta.
+      // Doubling the unit must not double a choice the player made.
+      var roster = paragons();
+      final editor = sistersEditor;
+      final id = roster.units.single.instanceId;
+      roster = editor.setWargear(roster, id, 'multi-melta', 1);
+
+      roster = editor.setModels(roster, id, roster.units.single.models * 2);
+      expect(roster.units.single.countOf('multi-melta'), 1);
+    });
+  });
+
+  test('taking a bundle gives up what it replaces', () {
+    // Choosing a Paragon's multi-melta left the heavy bolter it replaces on
+    // the unit — a model carrying both guns.
+    var roster = paragons();
+    final editor = sistersEditor;
+    final id = roster.units.single.instanceId;
+    final datasheet = sisters.unit('paragon-warsuits')!;
+    final loadout = UnitLoadout.forDatasheet(datasheet,
+        catalogue: sisters, vocabulary: datasheet.wargearVocabulary);
+
+    // The option is published carrier-scoped as `multi-melta-paragon-warsuits`
+    // and the roster stores `multi-melta`; unscoped, they are the same item.
+    // Read raw this found nothing and the test passed by doing nothing, which
+    // is how the bug survived being written about.
+    final counter = loadout.counters
+        .where((c) => c.itemId == 'multi-melta')
+        .single;
+    expect(counter.replaces, contains('heavy-bolter'),
+        reason: 'the option says what it gives up');
+
+    final bolters = roster.units.single.countOf('heavy-bolter');
+    expect(bolters, greaterThan(0));
+
+    roster = editor.swapWargear(roster, id, 'multi-melta', 1,
+        replaces: counter.replaces);
+    expect(roster.units.single.countOf('multi-melta'), 1);
+    expect(roster.units.single.countOf('heavy-bolter'), bolters - 1,
+        reason: 'the bolter it replaces is given up');
+
+    // And putting it back restores the bolter.
+    roster = editor.swapWargear(roster, id, 'multi-melta', 0,
+        replaces: counter.replaces);
+    expect(roster.units.single.countOf('heavy-bolter'), bolters);
+  });
+
+  test('a Paragon multi-melta costs what the datasheet says', () {
+    // It priced at 20: the same 10-point upgrade arrived once per model group
+    // and the costs were summed.
+    final datasheet = sisters.unit('paragon-warsuits')!;
+    final costs =
+        datasheet.wargearCosts.where((c) => c.itemId == 'multi-melta').toList();
+    expect(costs, hasLength(1));
+    expect(costs.single.cost, 10);
+  });
 }

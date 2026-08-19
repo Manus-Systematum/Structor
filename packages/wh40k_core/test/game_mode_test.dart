@@ -115,4 +115,20 @@ void main() {
     ]);
     expect(bogus.unresolved, hasLength(1));
   }, skip: skip);
+
+  test('Epic Heroes file apart from the rest of the Characters', () {
+    // They are Characters by keyword, but they are the *named* ones — one to
+    // an army, chosen by name rather than picked off a list. A player looking
+    // for Shadowsun is not looking through Commanders.
+    final tau = loader.loadFaction('tau-empire');
+    final shadowsun =
+        tau.units.firstWhere((u) => u.id == 'commander-shadowsun');
+    final commander = tau.units
+        .firstWhere((u) => u.id == 'commander-in-enforcer-battlesuit');
+
+    expect(shadowsun.isEpicHero, isTrue);
+    expect(shadowsun.battlefieldRole, 'Epic Heroes');
+    expect(commander.battlefieldRole, 'Characters');
+    expect(SourceUnit.roleOrder, contains('Epic Heroes'));
+  }, skip: skip);
 }

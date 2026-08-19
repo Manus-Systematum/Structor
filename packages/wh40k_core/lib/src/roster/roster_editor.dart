@@ -139,8 +139,54 @@ class RosterEditor {
     ]);
   }
 
-  Roster setModels(Roster roster, String instanceId, int models) =>
-      _mapUnit(roster, instanceId, (u) => u.copyWith(models: models.clamp(1, 30)));
+  /// Resizes a unit, bringing its wargear with it.
+  ///
+  /// Adding models used to change nothing but the number: six Paragon Warsuits
+  /// still carried three heavy bolters, because the guns were only ever set
+  /// when the unit was created. Every added model arrives with what the
+  /// datasheet gives it by default, and a removed one takes its share away.
+  ///
+  /// **Only the default kit scales.** Anything swapped in deliberately is left
+  /// exactly as it is — a multi-melta bought for one model is one model's
+  /// multi-melta, and doubling the unit does not double a choice the player
+  /// made. The validator reports a loadout that no longer adds up (§2.3).
+  Roster setModels(Roster roster, String instanceId, int models) {
+    final unit = _unit(roster, instanceId);
+    if (unit == null) return roster;
+    final wanted = models.clamp(1, 30);
+    final delta = wanted - unit.models;
+    if (delta == 0) return roster;
+
+    final composition = catalogue.composition(unit.datasheetId);
+    final base = composition?.defaultModels ?? 0;
+    if (composition == null || base <= 0) {
+      return _mapUnit(roster, instanceId, (u) => u.copyWith(models: wanted));
+    }
+
+    // What one model brings, from the smallest legal unit.
+    final perModel = <String, int>{};
+    for (final entry in composition.defaultWargear().entries) {
+      final share = entry.value ~/ base;
+      if (share > 0) perModel[entry.key] = share;
+    }
+
+    return _mapUnit(roster, instanceId, (u) {
+      final counts = {for (final w in u.wargear) w.itemId: w.count};
+      for (final entry in perModel.entries) {
+        final held = counts[entry.key] ?? 0;
+        counts[entry.key] =
+            (held + entry.value * delta).clamp(0, 1 << 20).toInt();
+      }
+      return u.copyWith(
+        models: wanted,
+        wargear: [
+          for (final entry in counts.entries)
+            if (entry.value > 0)
+              WargearSelection(itemId: entry.key, count: entry.value),
+        ],
+      );
+    });
+  }
 
   /// Sets how many of [itemId] the unit carries. Zero removes it.
   Roster setWargear(
@@ -213,10 +259,34 @@ class RosterEditor {
     for (final item in bundle ?? const <String>[]) {
       wanted[item] = (wanted[item] ?? 0) + 1;
     }
+
+    final before = _totalOf(roster, instanceId, group.items);
     for (final item in group.items) {
       next = setWargear(next, instanceId, item, wanted[item] ?? 0);
     }
+
+    // **Taking a bundle gives up what it replaces.** `setWargear` alone only
+    // counted upwards, so choosing a Paragon's multi-melta left the heavy
+    // bolter it replaces still on the unit — a model with both guns. The
+    // group-level swap is the same rule [swapWargear] applies to a counter
+    // (§4.5), applied to the whole mutually exclusive choice.
+    final delta = _totalOf(next, instanceId, group.items) - before;
+    if (delta == 0) return next;
+    for (final replaced in group.replaces) {
+      if (group.items.contains(replaced)) continue;
+      final held = _unit(next, instanceId)?.countOf(replaced) ?? 0;
+      final adjusted = (held - delta).clamp(0, 1 << 30);
+      if (adjusted != held) {
+        next = setWargear(next, instanceId, replaced, adjusted);
+      }
+    }
     return next;
+  }
+
+  int _totalOf(Roster roster, String instanceId, Iterable<String> items) {
+    final unit = _unit(roster, instanceId);
+    if (unit == null) return 0;
+    return items.fold(0, (sum, item) => sum + unit.countOf(item));
   }
 
   /// Restores the datasheet's default loadout, discarding what was chosen.

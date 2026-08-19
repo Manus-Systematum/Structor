@@ -265,7 +265,7 @@ void main() {
       expect(validation.isLegal, isTrue, reason: validation.errors.join('\n'));
       // Incursion allows two slots and this list spends one.
       expect(validation.findings.map((f) => f.message).join(' '),
-          contains('1 of 2 slots unused'));
+          contains('1 of 2 enhancement slots unused'));
     }, skip: available ? null : 'no snapshot');
 
     test('each bearer is charged for the upgrade', () {

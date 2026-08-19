@@ -119,7 +119,16 @@ class UnitLoadout {
     required Catalogue catalogue,
     required Iterable<String> vocabulary,
   }) {
-    final options = catalogue.wargearOptions(datasheet.id);
+    // **Option ids are carrier-scoped; roster ids are not.** A Paragon's
+    // multi-melta is published as `multi-melta-paragon-warsuits` and stored on
+    // the roster as `multi-melta` (§7.3.5), so an option read raw matches
+    // nothing the unit actually carries: the multi-melta showed as a bare
+    // counter with no `replaces`, and taking one left the heavy bolter it
+    // replaces on the model.
+    final options = [
+      for (final option in catalogue.wargearOptions(datasheet.id))
+        option.mapIds(datasheet.unscope),
+    ];
     final composition = catalogue.composition(datasheet.id);
     final defaults = composition?.defaultWargear() ?? const <String, int>{};
 

@@ -4,6 +4,7 @@ import 'package:wh40k_app/src/data/database.dart';
 import 'package:wh40k_app/src/data/dataset_repository.dart';
 import 'package:wh40k_app/src/data/roster_store.dart';
 import 'package:wh40k_app/src/screens/editor_screen.dart';
+import 'package:wh40k_app/src/widgets/sheet_header.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 void main() {
@@ -323,5 +324,49 @@ void main() {
     expect(rows, hasLength(2));
     expect(rows.first, before.data);
     expect(rows.last, before.data);
+  });
+
+  testWidgets('an attached squad is reachable, not just its character',
+      (tester) async {
+    // A row in the army list is a *combat unit* — the character and the squad
+    // it joined — and tapping it opened the character. The squad's loadout,
+    // its size and its removal had no route at all from the builder.
+    await open(tester, initial: tau());
+
+    Future<void> add(String search, String name) async {
+      await tester.tap(find.text('Add unit'));
+      await settle(tester);
+      await tester.enterText(find.byType(SearchBar), search);
+      await settle(tester);
+      await tester.tap(find.text(name).last);
+      await settle(tester);
+    }
+
+    await add('enforcer', 'Commander in Enforcer Battlesuit');
+    await add('fireknife', 'Crisis Fireknife Battlesuits');
+
+    // Attach through the character's own sheet, then reopen the row.
+    await tester.tap(find.text('Commander in Enforcer Battlesuit').first);
+    await settle(tester);
+    final attach = find.text('Crisis Fireknife Battlesuits');
+    if (attach.evaluate().isNotEmpty) {
+      await tester.tap(attach.last);
+      await settle(tester);
+    }
+    await tester.tapAt(const Offset(10, 10));
+    await settle(tester);
+
+    await tester.tap(find.textContaining('Commander in Enforcer').first);
+    await settle(tester);
+
+    // The switcher names both halves, and picking the squad shows the squad.
+    expect(find.text('THIS COMBAT UNIT'), findsOneWidget);
+    // The attach picker further down offers the same name; the switcher
+    // sits directly under the header.
+    await tester.tap(
+        find.widgetWithText(ChoiceChip, 'Crisis Fireknife Battlesuits').first);
+    await settle(tester);
+    expect(find.widgetWithText(SheetHeader, 'Crisis Fireknife Battlesuits'),
+        findsOneWidget);
   });
 }

@@ -276,6 +276,26 @@ class SourceWargearOption {
     this.isFree = true,
   });
 
+  /// The same record with every item id passed through [rename].
+  ///
+  /// Used to bring published option ids into the roster's id space, which is
+  /// unscoped — see [SourceUnit.unscope].
+  SourceWargearOption mapIds(String Function(String) rename) =>
+      SourceWargearOption(
+        id: id,
+        unitId: unitId,
+        replaces: [for (final r in replaces) rename(r)],
+        replacement: [for (final r in replacement) rename(r)],
+        choices: [
+          for (final bundle in choices) [for (final item in bundle) rename(item)],
+        ],
+        modelName: modelName,
+        maxCount: maxCount,
+        perModels: perModels,
+        anyNumber: anyNumber,
+        isFree: isFree,
+      );
+
   factory SourceWargearOption.fromJson(Object? v) {
     final j = asMap(v);
     final constraint = asMap(j['model_constraint']);
@@ -435,6 +455,7 @@ class SourceUnit {
   /// groups by role reads the same way round.
   static const roleOrder = [
     'Characters',
+    'Epic Heroes',
     'Battleline',
     'Infantry',
     'Mounted',
@@ -460,7 +481,12 @@ class SourceUnit {
   /// name, and a separate heading would put Marneus Calgar somewhere other
   /// than where you go looking for a Captain.
   String get battlefieldRole {
-    if (isCharacter || isEpicHero) return 'Characters';
+    // Epic Heroes file apart from the rest. They are Characters by keyword,
+    // but they are the named ones — one to an army, chosen by name rather
+    // than picked off a list — and a player looking for Shadowsun is not
+    // looking through Commanders (§4.1).
+    if (isEpicHero) return 'Epic Heroes';
+    if (isCharacter) return 'Characters';
     if (hasKeyword('Battleline')) return 'Battleline';
     if (hasKeyword('Dedicated Transport') || hasKeyword('Transport')) {
       return 'Transports';
