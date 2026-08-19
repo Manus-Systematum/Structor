@@ -922,6 +922,63 @@ Three things the layout data settles:
 
 **Step 6 also draws the zones.** `deployment-patterns.json` publishes them as real geometry — polygons or `width`/`height` rectangles, each with a `position` offset, plus each player's territory and the objective coordinates — so the pattern can be shown rather than described. "Short edge deployment with L-shaped zones" is a sentence about a shape; the shape itself is in the data. Your half is **named** on the picture, not just coloured: the patterns are symmetric under attacker/defender, so the only thing making one side yours is the declaration made several steps earlier, which is exactly what nobody remembers while unpacking models. Opponent's disposition precedes the player's so the grid can collapse to two options at the moment of choosing; if the real sequence is simultaneous, step 4 shows the full 2×5 instead.
 
+#### The full-screen table is turned, and it is pinchable
+
+A phone is tall and a table is wide, and the mismatch costs more than it looks
+like it should. Measured on the real content box (378×625pt in the full-screen
+dialog on a 402×874 phone), across the two shipped board shapes:
+
+| | Battlemaster (45 of 46 layouts) | KOTC Colosseum (1 of 46) |
+| --- | --- | --- |
+| board | 60×44″, aspect 1.36 | 36×36″, aspect 1.00 |
+| pieces | 16, 6 objectives | 25, 5 objectives |
+| upright | 6.30 px/inch, fills **44%** of the height | 10.50 px/inch, 60% |
+| turned | 8.59 px/inch, fills **82%** | 10.50 px/inch — **no change** |
+| phone physically turned | **5.11 px/inch** | 6.25 px/inch |
+
+Three things the numbers settled:
+
+- **Turning buys 1.36×, which is exactly the board's own aspect ratio**, and it
+  buys it on every layout except the square one, where a quarter turn is the
+  identity. The widget therefore turns a board only when it is wider than it is
+  tall, rather than unconditionally.
+- **Turning the phone is the worst of the three options**, not the best. iOS
+  allows landscape and nothing here locks it, so this was worth checking: the
+  app bar, the key row and the caption all live on the short dimension, and in
+  landscape there is not enough of it. 5.11 px/inch against 8.59 for staying
+  in portrait and turning the picture.
+- **The writing does not turn.** The numbers are the entire point of the
+  measured view, and a number you tilt your head to read is worse than a
+  smaller upright one. Only the geometry is rotated.
+
+**Zoom is a different fix from turning, and it is the one that unpicks the
+labels.** Across all 46 layouts, 33 pairs of measurement numbers overlap at
+the size they are first drawn; turning cuts that to 21, and **1.5× clears
+every one of them**. That is a property of *this* zoom and not of zoom in
+general: a plain `InteractiveViewer` transform magnifies the numbers along
+with the board, so two overlapping labels stay overlapping however far in you
+go — larger, and still on top of each other. So the board is **repainted at
+the live scale** rather than merely transformed, and every paper length —
+text, hairlines, the dashes in a leader, the offset a number sits at from its
+anchor — is divided by the zoom to hold its size. The board grows; the
+annotation does not.
+
+One thing this made visible that was always true: a piece whose name is too
+long to fit at 1× is left unlabelled, and zooming in is now the way to read
+it. `Generator` and `Pipes` only appear once there is room.
+
+**Turning is a rotation, not a transpose.** `(x, y) → (y, x)` puts the board
+neatly in the turned box and mirrors it; a player copying a mirrored map sets
+out a mirrored table, and nothing on screen would say so. The upright
+projection already flips y once — board coordinates count up from the bottom,
+screens count down — so the turned one must flip exactly once too. The test is
+the sign of the Jacobian determinant rather than where the corners land,
+because both versions put the corners somewhere plausible.
+
+**The inline diagram is left alone** — not turned, not pinchable. It sits in a
+form that scrolls, where a tall picture pushes the questions below it off the
+screen and a pinch gesture competes with the scroll.
+
 **The matchup table is asymmetric.** `(A vs B)` and `(B vs A)` are different cells yielding different missions — 25 ordered pairs, 25 distinct missions, mirrors on the diagonal. Declaring Reconnaissance against Take and Hold means **you** play Reconnaissance Sweep while **they** play Purge and Secure, simultaneously, on the same table. Setup therefore resolves two missions, not one.
 
 **Deployment collapses `LEADS` pairs.** An attached Commander + Crisis squad is one drop, not two. The §2.2 edge model must render as a single deployable entity here — the T'au list is 12 drops, not 16.

@@ -22,8 +22,8 @@ void main() {
     tester.view.physicalSize = const Size(1200, 4200);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(
-        MaterialApp(home: SetupScreen(army: army, pack: pack)));
+    await tester
+        .pumpWidget(MaterialApp(home: SetupScreen(army: army, pack: pack)));
     await tester.pumpAndSettle();
   }
 
@@ -62,13 +62,14 @@ void main() {
     expect(find.text('Purge and Secure'), findsOneWidget);
   });
 
-  testWidgets('the same choice yields a different mission against a '
+  testWidgets(
+      'the same choice yields a different mission against a '
       'different opponent', (tester) async {
     await pumpSetup(tester);
     await tester.tap(find.widgetWithText(ChoiceChip, 'Disruption'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('You would play Surveil the Foe'),
-        findsOneWidget);
+    expect(
+        find.textContaining('You would play Surveil the Foe'), findsOneWidget);
   });
 
   testWidgets('start stays disabled until every question is answered',
@@ -166,11 +167,10 @@ void main() {
 
     // The opponent going first is not implied by attacker/defender, and until
     // it could be said the app ran every game as though it opened.
-    await tester.tap(find.widgetWithText(ButtonSegment<bool>, 'Opponent')
-        .evaluate()
-        .isEmpty
-        ? find.text('Opponent').last
-        : find.text('Opponent').last);
+    await tester.tap(
+        find.widgetWithText(ButtonSegment<bool>, 'Opponent').evaluate().isEmpty
+            ? find.text('Opponent').last
+            : find.text('Opponent').last);
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Start battle'));
@@ -226,9 +226,67 @@ void main() {
     expect(find.textContaining('Grid every 6'), findsNothing);
   });
 
+  testWidgets('the full-screen table turns to fit a tall screen',
+      (tester) async {
+    // A phone is tall and a table is wide. Drawn upright the 60x44 board
+    // fills 44% of the height it is given, at 6.3 pixels to the inch; turned
+    // it fills 82%, at 8.6 — the board's own aspect ratio, 1.36x, and the
+    // difference between reading a number and guessing it.
+    await pumpSetup(tester);
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Tipping Point'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(DeploymentDiagram));
+    await tester.pumpAndSettle();
+
+    final measured = tester
+        .widgetList<DeploymentDiagram>(find.byType(DeploymentDiagram))
+        .firstWhere((d) => d.measured);
+    expect(measured.turned, isTrue);
+    expect(measured.zoomable, isTrue);
+
+    // The inline one is not turned: it sits in a scrolling form, where a tall
+    // picture pushes the questions below it off the screen.
+    final inline = tester
+        .widgetList<DeploymentDiagram>(find.byType(DeploymentDiagram))
+        .firstWhere((d) => !d.measured);
+    expect(inline.turned, isFalse);
+
+    final box = tester.widgetList<AspectRatio>(find.byType(AspectRatio));
+    expect(box.map((a) => a.aspectRatio), contains(closeTo(44 / 60, 0.001)),
+        reason: 'the long edge runs down the screen');
+  });
+
+  testWidgets('a square table is left alone', (tester) async {
+    // kotc-colosseum is 36x36, where a quarter turn is the identity. Turning
+    // it would relabel the edges and change nothing else.
+    await pumpSetup(tester);
+    await tester
+        .tap(find.widgetWithText(ChoiceChip, 'KOTC Colosseum (9" edges)'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(DeploymentDiagram));
+    await tester.pumpAndSettle();
+
+    final box = tester.widgetList<AspectRatio>(find.byType(AspectRatio));
+    expect(box.map((a) => a.aspectRatio), everyElement(closeTo(1, 0.001)));
+  });
+
+  testWidgets('the measured table can be pinched, the inline one cannot',
+      (tester) async {
+    await pumpSetup(tester);
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Tipping Point'));
+    await tester.pumpAndSettle();
+    expect(find.byType(InteractiveViewer), findsNothing,
+        reason: 'a pinchable picture inside a scrolling form fights the form');
+
+    await tester.tap(find.byType(DeploymentDiagram));
+    await tester.pumpAndSettle();
+    expect(find.byType(InteractiveViewer), findsOneWidget);
+  });
+
   testWidgets('a smaller table is drawn at its own size', (tester) async {
     await pumpSetup(tester);
-    await tester.tap(find.widgetWithText(ChoiceChip, 'KOTC Colosseum (9" edges)'));
+    await tester
+        .tap(find.widgetWithText(ChoiceChip, 'KOTC Colosseum (9" edges)'));
     await tester.pumpAndSettle();
 
     expect(find.textContaining('36″ × 36″'), findsOneWidget);

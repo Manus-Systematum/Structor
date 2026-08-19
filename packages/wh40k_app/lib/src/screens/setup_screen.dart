@@ -53,7 +53,8 @@ class _SetupScreenState extends State<SetupScreen> {
           .map((d) => widget.army.catalogue.detachment(d.detachmentId))
           .whereType<SourceDetachment>());
 
-  DeploymentPattern? get _deployment => widget.pack.deployment(_deploymentId ?? '');
+  DeploymentPattern? get _deployment =>
+      widget.pack.deployment(_deploymentId ?? '');
 
   /// The tables published for this matchup. Empty until both dispositions are
   /// declared, since a layout is keyed by the pairing.
@@ -74,9 +75,11 @@ class _SetupScreenState extends State<SetupScreen> {
 
   /// The table, full width and with the tape measure on.
   ///
-  /// **Landscape, because the board is.** A 60×44 table on a portrait phone
-  /// is a third of the screen; turned sideways it is most of it, which is the
-  /// difference between reading a shape and reading a position.
+  /// **The picture turns, the phone does not.** A 60×44 table drawn upright
+  /// here fills 44% of the height it is given; turned a quarter it fills 82%,
+  /// which is the difference between reading a shape and reading a position.
+  /// Going to landscape instead was measured and is worse than either — the
+  /// app bar and this caption live on the short dimension (§7.3.1).
   void _showFullScreen(DeploymentPattern pattern) {
     final layout = _layout;
     showDialog<void>(
@@ -106,9 +109,16 @@ class _SetupScreenState extends State<SetupScreen> {
                     layout: layout,
                     templates: widget.pack.terrainTemplates,
                     measured: true,
+                    // Turned and pinchable only here. The inline diagram is a
+                    // picture of the shape, sitting in a form that scrolls;
+                    // this is the one you set the table out from.
+                    turned: true,
+                    zoomable: true,
                   ),
                   const SizedBox(height: 10),
                   Text(
+                    'The long edge runs down the screen. Pinch to zoom — the '
+                    'numbers stay their own size, so crowded ones come apart. '
                     'Grid every 3″, numbered every 6″. Each piece is measured '
                     'to its two nearest edges — the tape pull you would '
                     'actually make, from wherever you are standing.',
@@ -178,12 +188,10 @@ class _SetupScreenState extends State<SetupScreen> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
           child: FilledButton(
-            onPressed: _complete
-                ? () => Navigator.of(context).pop(_build())
-                : null,
-            child: Text(_complete
-                ? 'Start battle'
-                : 'Answer the questions above'),
+            onPressed:
+                _complete ? () => Navigator.of(context).pop(_build()) : null,
+            child:
+                Text(_complete ? 'Start battle' : 'Answer the questions above'),
           ),
         ),
       ),
@@ -261,9 +269,8 @@ class _SetupScreenState extends State<SetupScreen> {
                       TextButton.icon(
                         onPressed: () =>
                             setState(() => _showFullGrid = !_showFullGrid),
-                        icon: Icon(_showFullGrid
-                            ? Icons.expand_less
-                            : Icons.grid_on),
+                        icon: Icon(
+                            _showFullGrid ? Icons.expand_less : Icons.grid_on),
                         label: Text(_showFullGrid
                             ? 'Hide the full grid'
                             : 'Show every matchup'),
@@ -355,8 +362,7 @@ class _SetupScreenState extends State<SetupScreen> {
                         const SizedBox(width: 5),
                         Text('Tap the table for measurements',
                             style: TextStyle(
-                                fontSize: 11,
-                                color: scheme.onSurfaceVariant)),
+                                fontSize: 11, color: scheme.onSurfaceVariant)),
                       ],
                     ),
                   ),
@@ -614,8 +620,8 @@ class _FullGrid extends StatelessWidget {
     );
   }
 
-  static const _head = TextStyle(
-      fontSize: 9, letterSpacing: 0.7, fontWeight: FontWeight.w800);
+  static const _head =
+      TextStyle(fontSize: 9, letterSpacing: 0.7, fontWeight: FontWeight.w800);
 }
 
 /// A labelled row of segmented buttons. Three unlabelled toggles in a column
@@ -682,8 +688,8 @@ class _Step extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 30, top: 2),
               child: Text(subtitle!,
-                  style: TextStyle(
-                      fontSize: 12, color: scheme.onSurfaceVariant)),
+                  style:
+                      TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
             ),
           const SizedBox(height: 10),
           child,

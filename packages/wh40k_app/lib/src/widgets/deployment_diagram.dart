@@ -14,7 +14,7 @@ import 'package:wh40k_core/wh40k_core.dart';
 /// attacker/defender, so the only thing that makes one half yours is the
 /// declaration made two steps earlier in the wizard — and that is exactly what
 /// nobody remembers while unpacking models.
-class DeploymentDiagram extends StatelessWidget {
+class DeploymentDiagram extends StatefulWidget {
   final DeploymentPattern pattern;
 
   /// Which half is yours. Flips the labels, never the geometry.
@@ -35,6 +35,39 @@ class DeploymentDiagram extends StatelessWidget {
   /// in your hand.
   final bool measured;
 
+  /// Turns the board a quarter so its long edge runs down the screen.
+  ///
+  /// A phone is tall and a table is wide, and the mismatch is expensive: the
+  /// standard 60×44 board drawn upright in the full-screen dialog fills 44%
+  /// of the height available to it and renders at 6.3 pixels to the inch.
+  /// Turned, the same board fills 82% and renders at 8.6 — **1.36× larger,
+  /// which is exactly the board's own aspect ratio**, on 45 of the 46 shipped
+  /// layouts.
+  ///
+  /// **The geometry is turned, the writing is not.** The numbers are the point
+  /// of the measured view, and a number you have to tilt your head to read is
+  /// worse than a smaller upright one. Turning the phone instead was measured
+  /// and is the worst of the three: the app bar and the caption eat the short
+  /// dimension, leaving 5.1 pixels to the inch.
+  ///
+  /// Ignored for a square board — `kotc-colosseum` is 36×36, where a quarter
+  /// turn is the identity and pretending otherwise would just relabel the
+  /// edges.
+  final bool turned;
+
+  /// Lets the board be pinched and panned.
+  ///
+  /// Zoom is what makes the *labels* readable, and it is a different fix from
+  /// turning. Across the 46 shipped layouts 33 pairs of measurement numbers
+  /// overlap at the size they are first drawn; turning cuts that to 21, and
+  /// **1.5× clears every one of them**.
+  ///
+  /// That only holds because the board magnifies and the writing does not.
+  /// A plain transform scales the numbers along with the geometry, so two
+  /// overlapping labels stay overlapping however far you zoom in — bigger,
+  /// and still on top of each other.
+  final bool zoomable;
+
   const DeploymentDiagram({
     super.key,
     required this.pattern,
@@ -42,15 +75,52 @@ class DeploymentDiagram extends StatelessWidget {
     this.layout,
     this.templates = const {},
     this.measured = false,
+    this.turned = false,
+    this.zoomable = false,
   });
+
+  @override
+  State<DeploymentDiagram> createState() => _DeploymentDiagramState();
+}
+
+class _DeploymentDiagramState extends State<DeploymentDiagram> {
+  final _zoom = TransformationController();
+
+  @override
+  void dispose() {
+    _zoom.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final pattern = widget.pattern;
     final size = pattern.boardSize;
     if (!pattern.hasGeometry || size.x <= 0 || size.y <= 0) {
       return const SizedBox.shrink();
     }
+
+    // A square table gains nothing from being turned, so it is not.
+    final turned = widget.turned && size.x > size.y;
+
+    Widget board(double zoom) => CustomPaint(
+          painter: _BoardPainter(
+            pattern: pattern,
+            iAmAttacker: widget.iAmAttacker,
+            layout: widget.layout,
+            templates: widget.templates,
+            measured: widget.measured,
+            turned: turned,
+            zoom: zoom,
+            outline: scheme.outline,
+            terrain: scheme.onSurfaceVariant,
+            objectiveFill: scheme.onSurface,
+            objectiveRing: scheme.surface,
+            measure: scheme.primary,
+          ),
+          child: const SizedBox.expand(),
+        );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +128,7 @@ class DeploymentDiagram extends StatelessWidget {
         // The board's own proportions, so a 60×44 table is not stretched to
         // whatever box the layout happens to give it.
         AspectRatio(
-          aspectRatio: size.x / size.y,
+          aspectRatio: turned ? size.y / size.x : size.x / size.y,
           child: Container(
             decoration: BoxDecoration(
               color: scheme.surfaceContainerHighest,
@@ -67,21 +137,21 @@ class DeploymentDiagram extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: CustomPaint(
-                painter: _BoardPainter(
-                  pattern: pattern,
-                  iAmAttacker: iAmAttacker,
-                  layout: layout,
-                  templates: templates,
-                  measured: measured,
-                  outline: scheme.outline,
-                  terrain: scheme.onSurfaceVariant,
-                  objectiveFill: scheme.onSurface,
-                  objectiveRing: scheme.surface,
-                  measure: scheme.primary,
-                ),
-                child: const SizedBox.expand(),
-              ),
+              child: widget.zoomable
+                  ? InteractiveViewer(
+                      transformationController: _zoom,
+                      minScale: 1,
+                      maxScale: 6,
+                      child: AnimatedBuilder(
+                        animation: _zoom,
+                        // Repainted at the live scale rather than merely
+                        // transformed, so the writing keeps its size while
+                        // the table grows under it.
+                        builder: (_, __) =>
+                            board(_zoom.value.getMaxScaleOnAxis()),
+                      ),
+                    )
+                  : board(1),
             ),
           ),
         ),
@@ -90,18 +160,18 @@ class DeploymentDiagram extends StatelessWidget {
           children: [
             _Key(
               label: 'You',
-              color: _zoneColor(iAmAttacker),
+              color: _zoneColor(widget.iAmAttacker),
               emphasised: true,
             ),
             const SizedBox(width: 14),
-            _Key(label: 'Opponent', color: _zoneColor(!iAmAttacker)),
+            _Key(label: 'Opponent', color: _zoneColor(!widget.iAmAttacker)),
             const Spacer(),
             Text(
               [
                 '${_inches(size.x)}″ × ${_inches(size.y)}″',
-                if (layout != null) ...[
-                  '${layout!.pieces.length} pieces',
-                  '${layout!.pieces.where((p) => p.isObjective).length} '
+                if (widget.layout case final table?) ...[
+                  '${table.pieces.length} pieces',
+                  '${table.pieces.where((p) => p.isObjective).length} '
                       'objectives',
                 ] else if (pattern.objectives.isNotEmpty)
                   '${pattern.objectives.length} objectives',
@@ -115,7 +185,7 @@ class DeploymentDiagram extends StatelessWidget {
   }
 
   Color _zoneColor(bool attacker) {
-    final raw = pattern.zoneFor(attacker: attacker)?.color;
+    final raw = widget.pattern.zoneFor(attacker: attacker)?.color;
     return raw == null
         ? (attacker ? const Color(0xFFEF4444) : const Color(0xFF3B82F6))
         : Color(raw);
@@ -125,12 +195,53 @@ class DeploymentDiagram extends StatelessWidget {
       v == v.roundToDouble() ? v.toInt().toString() : v.toStringAsFixed(1);
 }
 
+/// Board inches to canvas pixels.
+///
+/// Board coordinates run from the bottom-left and canvas coordinates from the
+/// top-left, so y is flipped once here rather than at every call site.
+///
+/// **Turned, the board is rotated a quarter clockwise** — its bottom edge
+/// becomes the screen's left edge, its left edge becomes the top.
+///
+/// The upright projection already flips y once, so the turned one must flip
+/// exactly once too or the map comes out mirrored, and a player copying a
+/// mirrored map sets out a mirrored table with nothing on screen to say so.
+/// The test for this is the sign of the Jacobian determinant, not the corners:
+/// both `(y, x)` and `(w - y, x)` put the board in the right box and only one
+/// of them is a rotation.
+@visibleForTesting
+Offset projectOnto(
+  BoardPoint p, {
+  required Size canvas,
+  required BoardPoint board,
+  required bool turned,
+}) {
+  final scale = canvas.width / (turned ? board.y : board.x);
+  return turned
+      ? Offset(p.y * scale, p.x * scale)
+      : Offset(p.x * scale, canvas.height - p.y * scale);
+}
+
 class _BoardPainter extends CustomPainter {
   final DeploymentPattern pattern;
   final bool iAmAttacker;
   final TerrainLayout? layout;
   final Map<String, TerrainTemplate> templates;
   final bool measured;
+
+  /// Board x runs down the screen and board y runs across it.
+  final bool turned;
+
+  /// The magnification the board is currently being viewed at.
+  ///
+  /// Everything on this diagram is one of two kinds of length: **board
+  /// lengths**, which are inches and must grow with the zoom, and **paper
+  /// lengths** — text, hairlines, the dashes in a leader line, the gap a
+  /// number sits off its anchor — which are properties of the page and must
+  /// not. Paper lengths go through [_px], which divides out the transform
+  /// the viewer has already applied.
+  final double zoom;
+
   final Color outline;
   final Color terrain;
   final Color objectiveFill;
@@ -149,6 +260,8 @@ class _BoardPainter extends CustomPainter {
     required this.layout,
     required this.templates,
     required this.measured,
+    required this.turned,
+    required this.zoom,
     required this.outline,
     required this.terrain,
     required this.objectiveFill,
@@ -156,17 +269,16 @@ class _BoardPainter extends CustomPainter {
     required this.measure,
   });
 
+  /// A paper length: the same size on screen whatever the zoom.
+  double _px(double v) => v / zoom;
+
   @override
   void paint(Canvas canvas, Size size) {
     final board = pattern.boardSize;
     if (board.x <= 0 || board.y <= 0) return;
 
-    final scale = size.width / board.x;
-
-    // Board coordinates run from the bottom-left, canvas coordinates from the
-    // top-left, so y is flipped once here rather than at every call site.
     Offset project(BoardPoint p) =>
-        Offset(p.x * scale, size.height - p.y * scale);
+        projectOnto(p, canvas: size, board: board, turned: turned);
 
     Path pathOf(BoardArea area) {
       final path = Path();
@@ -200,10 +312,10 @@ class _BoardPainter extends CustomPainter {
         Paint()
           ..color = color.withValues(alpha: mine ? 1 : 0.55)
           ..style = PaintingStyle.stroke
-          ..strokeWidth = mine ? 2 : 1,
+          ..strokeWidth = _px(mine ? 2 : 1),
       );
-      _label(canvas, _centroid(zone, project), mine ? 'YOU' : 'THEM', color,
-          mine);
+      _label(
+          canvas, _centroid(zone, project), mine ? 'YOU' : 'THEM', color, mine);
     }
 
     // Terrain sits above the zones and below the objective markers: it is what
@@ -242,7 +354,7 @@ class _BoardPainter extends CustomPainter {
             Paint()
               ..color = terrain.withValues(alpha: 0.30)
               ..style = PaintingStyle.stroke
-              ..strokeWidth = 0.6,
+              ..strokeWidth = _px(0.6),
           );
         }
       }
@@ -259,7 +371,7 @@ class _BoardPainter extends CustomPainter {
               Paint()
                 ..color = terrain.withValues(alpha: 0.9)
                 ..style = PaintingStyle.stroke
-                ..strokeWidth = 0.8,
+                ..strokeWidth = _px(0.8),
             );
             // The corner tick, showing which way the piece is turned. The
             // published footprint is a symmetric box, so without this the
@@ -277,7 +389,7 @@ class _BoardPainter extends CustomPainter {
                 Paint()
                   ..color = objectiveRing
                   ..style = PaintingStyle.stroke
-                  ..strokeWidth = 1.8
+                  ..strokeWidth = _px(1.8)
                   ..strokeCap = StrokeCap.round
                   ..strokeJoin = StrokeJoin.round,
               );
@@ -317,26 +429,43 @@ class _BoardPainter extends CustomPainter {
       // a number on each of nineteen of them is unreadable at this size.
       final minor = Paint()
         ..color = outline.withValues(alpha: 0.10)
-        ..strokeWidth = 0.5;
+        ..strokeWidth = _px(0.5);
       final major = Paint()
         ..color = outline.withValues(alpha: 0.22)
-        ..strokeWidth = 0.5;
+        ..strokeWidth = _px(0.5);
 
+      // Drawn end to end in **board** coordinates, so one expression serves
+      // both orientations: a line of constant x is vertical upright and
+      // horizontal turned, and `project` already knows which.
       for (var x = step; x < board.x; x += step) {
         final labelled = x % 6 == 0;
-        canvas.drawLine(Offset(x * scale, 0), Offset(x * scale, size.height),
-            labelled ? major : minor);
+        canvas.drawLine(project(BoardPoint(x, 0)),
+            project(BoardPoint(x, board.y)), labelled ? major : minor);
         if (labelled) {
-          _tick(canvas, Offset(x * scale + 2, size.height - 11),
-              '${x.toInt()}');
+          final at = project(BoardPoint(x, 0));
+          _tick(
+            canvas,
+            turned
+                ? Offset(at.dx + _px(3), at.dy + _px(2))
+                : Offset(at.dx + _px(2), at.dy - _px(11)),
+            '${x.toInt()}',
+          );
         }
       }
       for (var y = step; y < board.y; y += step) {
-        final dy = size.height - y * scale;
         final labelled = y % 6 == 0;
-        canvas.drawLine(
-            Offset(0, dy), Offset(size.width, dy), labelled ? major : minor);
-        if (labelled) _tick(canvas, Offset(3, dy - 11), '${y.toInt()}');
+        canvas.drawLine(project(BoardPoint(0, y)),
+            project(BoardPoint(board.x, y)), labelled ? major : minor);
+        if (labelled) {
+          final at = project(BoardPoint(0, y));
+          _tick(
+            canvas,
+            turned
+                ? Offset(at.dx + _px(3), at.dy + _px(2))
+                : Offset(at.dx + _px(3), at.dy - _px(11)),
+            '${y.toInt()}',
+          );
+        }
       }
 
       if (table != null) {
@@ -386,17 +515,17 @@ class _BoardPainter extends CustomPainter {
       }
     }
 
-    for (final objective in
-        objectives.isEmpty ? pattern.objectives : objectives) {
+    for (final objective
+        in objectives.isEmpty ? pattern.objectives : objectives) {
       final o = project(objective);
-      canvas.drawCircle(o, 5, Paint()..color = objectiveRing);
+      canvas.drawCircle(o, _px(5), Paint()..color = objectiveRing);
       canvas.drawCircle(
         o,
-        4,
+        _px(4),
         Paint()
           ..color = objectiveFill.withValues(alpha: 0.55)
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.4,
+          ..strokeWidth = _px(1.4),
       );
     }
   }
@@ -413,7 +542,7 @@ class _BoardPainter extends CustomPainter {
 
     final paint = Paint()
       ..color = measure.withValues(alpha: 0.55)
-      ..strokeWidth = 0.9
+      ..strokeWidth = _px(0.9)
       ..strokeCap = StrokeCap.round;
 
     final dx = to.dx - from.dx;
@@ -423,8 +552,8 @@ class _BoardPainter extends CustomPainter {
     final ux = dx / length;
     final uy = dy / length;
 
-    const dash = 3.0;
-    const gap = 2.5;
+    final dash = _px(3.0);
+    final gap = _px(2.5);
     for (var at = 0.0; at < length; at += dash + gap) {
       final end = math.min(at + dash, length);
       canvas.drawLine(
@@ -437,8 +566,8 @@ class _BoardPainter extends CustomPainter {
     // A stop at the edge end, so the line is visibly measured *from* there
     // rather than just passing through.
     canvas.drawLine(
-      Offset(from.dx - uy * 2.5, from.dy + ux * 2.5),
-      Offset(from.dx + uy * 2.5, from.dy - ux * 2.5),
+      Offset(from.dx - uy * _px(2.5), from.dy + ux * _px(2.5)),
+      Offset(from.dx + uy * _px(2.5), from.dy - ux * _px(2.5)),
       paint,
     );
 
@@ -448,10 +577,10 @@ class _BoardPainter extends CustomPainter {
     // sixteen-piece table the lines all cross the middle of the board, and the
     // numbers landed in a heap there with no way to tell which line each
     // belonged to. Against its own piece, a number is attributable.
-    const back = 12.0;
+    final back = _px(12.0);
     _tick(
       canvas,
-      Offset(to.dx - ux * back + 2, to.dy - uy * back - 11),
+      Offset(to.dx - ux * back + _px(2), to.dy - uy * back - _px(11)),
       '${inches.round()}',
       measurement: true,
     );
@@ -464,7 +593,7 @@ class _BoardPainter extends CustomPainter {
       text: TextSpan(
         text: text,
         style: TextStyle(
-          fontSize: emphasis || measurement ? 8 : 8.5,
+          fontSize: _px(emphasis || measurement ? 8 : 8.5),
           fontWeight:
               emphasis || measurement ? FontWeight.w700 : FontWeight.w500,
           color: measurement
@@ -474,8 +603,8 @@ class _BoardPainter extends CustomPainter {
                   : outline.withValues(alpha: 0.8),
           // A halo, because these land on ruins as often as on bare board.
           shadows: [
-            Shadow(color: objectiveRing, blurRadius: 2),
-            Shadow(color: objectiveRing, blurRadius: 2),
+            Shadow(color: objectiveRing, blurRadius: _px(2)),
+            Shadow(color: objectiveRing, blurRadius: _px(2)),
           ],
         ),
       ),
@@ -492,9 +621,9 @@ class _BoardPainter extends CustomPainter {
       text: TextSpan(
         text: label,
         style: TextStyle(
-          fontSize: 7,
+          fontSize: _px(7),
           height: 1,
-          letterSpacing: 0.2,
+          letterSpacing: _px(0.2),
           fontWeight: FontWeight.w800,
           color: objectiveRing,
         ),
@@ -505,8 +634,8 @@ class _BoardPainter extends CustomPainter {
     // Its own box, with a hair of margin. Anything that does not fit is left
     // unlabelled rather than shrunk to illegibility or spilled onto a
     // neighbour.
-    if (painter.width > bounds.width - 2 ||
-        painter.height > bounds.height - 2) {
+    if (painter.width > bounds.width - _px(2) ||
+        painter.height > bounds.height - _px(2)) {
       return;
     }
     painter.paint(
@@ -518,8 +647,7 @@ class _BoardPainter extends CustomPainter {
   /// The polygon's area centroid, not its bounding-box centre. Every zone in
   /// the shipped patterns is an L or a bar, and a bounding box puts the label
   /// on the notch — over the boundary rather than inside the shape it names.
-  static Offset _centroid(
-      BoardArea area, Offset Function(BoardPoint) project) {
+  static Offset _centroid(BoardArea area, Offset Function(BoardPoint) project) {
     final points = [for (final p in area.points) project(p)];
     if (points.length < 3) {
       return points.isEmpty ? Offset.zero : points.first;
@@ -549,8 +677,8 @@ class _BoardPainter extends CustomPainter {
       text: TextSpan(
         text: text,
         style: TextStyle(
-          fontSize: 9,
-          letterSpacing: 0.8,
+          fontSize: _px(9),
+          letterSpacing: _px(0.8),
           fontWeight: FontWeight.w800,
           color: color.withValues(alpha: mine ? 1 : 0.7),
         ),
@@ -569,6 +697,8 @@ class _BoardPainter extends CustomPainter {
       old.iAmAttacker != iAmAttacker ||
       old.layout?.id != layout?.id ||
       old.measured != measured ||
+      old.turned != turned ||
+      old.zoom != zoom ||
       old.measure != measure ||
       old.outline != outline;
 }
