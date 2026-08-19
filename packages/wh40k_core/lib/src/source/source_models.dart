@@ -202,6 +202,24 @@ class UnitComposition {
   int get defaultModels =>
       models.fold(0, (sum, m) => sum + m.min);
 
+  /// The largest legal unit, or null when the record does not say.
+  ///
+  /// Read from the composition rather than the datasheet's `model_count`,
+  /// which is derived and demonstrably wrong on eight datasheets — a Loota mob
+  /// comes to five and its `model_count.max` says one. The composition is the
+  /// curated record: it names each model and how many of it the unit may
+  /// field.
+  ///
+  /// Null rather than a guess where the maxima are absent or add up to less
+  /// than the minimum, because a cap below the unit's own smallest legal size
+  /// would refuse a list the rules allow — which is the failure §2.3 exists to
+  /// avoid.
+  int? get maxModels {
+    if (models.isEmpty) return null;
+    final total = models.fold(0, (sum, m) => sum + m.max);
+    return total >= defaultModels && total > 0 ? total : null;
+  }
+
   /// The default loadout as wargear counts, keyed by the **item id** the
   /// roster stores — the weapon id with any `-<unitId>` suffix removed, so
   /// `Catalogue.weaponFor` can re-scope it (§7.3.5).

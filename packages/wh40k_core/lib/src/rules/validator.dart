@@ -217,6 +217,31 @@ class RosterValidator {
       byDatasheet.putIfAbsent(unit.datasheetId, () => []).add(unit);
     }
 
+    // A unit larger than anything the data supports.
+    //
+    // The builder will not grow one past its cap, but a list can arrive that
+    // way — imported, shared, or saved before the data said otherwise — and
+    // the symptom is silent: no points bracket covers the size, so the unit
+    // prices at **zero** and the army looks cheaper than it is.
+    for (final unit in roster.units) {
+      final datasheet = catalogue.unit(unit.datasheetId);
+      if (datasheet == null) continue;
+      final composition = catalogue.composition(unit.datasheetId);
+      var cap = composition?.maxModels;
+      for (final bracket in datasheet.points) {
+        final priced = bracket.modelsMax ?? bracket.models;
+        if (priced > (cap ?? 0)) cap = priced;
+      }
+      if (cap == null || cap <= 0 || unit.models <= cap) continue;
+      findings.add(ValidationFinding(
+        code: 'unit.over-size',
+        message: '${datasheet.name} has ${unit.models} models; the largest '
+            'the data supports is $cap, and no points bracket covers it.',
+        severity: Severity.error,
+        instanceIds: [unit.instanceId],
+      ));
+    }
+
     for (final entry in byDatasheet.entries) {
       final datasheet = catalogue.unit(entry.key);
       if (datasheet == null) continue; // reported by pricing

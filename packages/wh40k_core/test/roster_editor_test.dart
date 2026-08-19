@@ -182,15 +182,22 @@ void main() {
     }, skip: available ? null : 'no snapshot');
 
     test('reset restores the default loadout, scaled to the unit', () {
-      var roster = editor.addUnit(blank(), 'crisis-fireknife-battlesuits');
+      // Kroot Carnivores rather than a Crisis team: both sources cap a Crisis
+      // team at three, so growing one to six was exercising a size the data
+      // has never supported and the cap now refuses.
+      var roster = editor.addUnit(blank(), 'kroot-carnivores');
       final id = roster.units.single.instanceId;
+      final before = roster.units.single;
+      final item = before.wargear.first.itemId;
+      final perModel = before.countOf(item) / before.models;
 
-      roster = editor.setWargear(roster, id, 'battlesuit-fists', 0);
-      roster = editor.setModels(roster, id, 6);
+      roster = editor.setWargear(roster, id, item, 0);
+      roster = editor.setModels(roster, id, before.models * 2);
       roster = editor.resetWargear(roster, id);
 
-      expect(roster.units.single.countOf('battlesuit-fists'), 6,
-          reason: 'the composition describes three; the unit is six');
+      expect(roster.units.single.countOf(item),
+          (perModel * before.models * 2).round(),
+          reason: 'the composition describes the smallest unit; this is twice it');
     }, skip: available ? null : 'no snapshot');
   });
 
@@ -411,11 +418,11 @@ void main() {
 
   group('resizing a unit brings its wargear with it', () {
     test('added models arrive with the default kit', () {
-      // Six Paragon Warsuits carried three heavy bolters: the guns were only
-      // ever set when the unit was created, so growing it changed nothing but
-      // the number.
-      var roster = paragons();
-      final editor = sistersEditor;
+      // A squad's guns were only ever set when the unit was created, so
+      // growing it changed nothing but the number. Kroot Carnivores, because
+      // Paragons cap at their starting size and cannot be grown at all.
+      var roster = RosterEditor(dataset).addUnit(blank(), 'kroot-carnivores');
+      final editor = RosterEditor(dataset);
       final id = roster.units.single.instanceId;
       final before = roster.units.single;
       final perModel = {
@@ -492,6 +499,71 @@ void main() {
     roster = editor.swapWargear(roster, id, 'multi-melta', 0,
         replaces: counter.replaces);
     expect(roster.units.single.countOf('heavy-bolter'), bolters);
+  });
+
+  group('a unit cannot be grown past what the data supports', () {
+    test('the cap is the looser of the composition and the points table', () {
+      // They disagree on 35 of 1,961 datasheets. Refusing the size the points
+      // table prices would be the builder calling a legal list illegal, which
+      // is the failure §2.3 exists to avoid.
+      for (final factionId in ['tau-empire', 'adepta-sororitas', 'orks']) {
+        final faction = correctedLoader().loadFaction(factionId);
+        final data = Dataset.of(faction, revision: 'x');
+        final ed = RosterEditor(data);
+        for (final unit in faction.units) {
+          final cap = ed.maxModels(unit.id);
+          if (cap == null) continue;
+          final composition = data.composition(unit.id);
+          if (composition != null) {
+            expect(cap, greaterThanOrEqualTo(composition.defaultModels),
+                reason: '${unit.id}: a cap below the smallest legal size');
+          }
+          for (final bracket in unit.points) {
+            expect(cap, greaterThanOrEqualTo(bracket.modelsMax ?? bracket.models),
+                reason: '${unit.id}: a priced size the builder would refuse');
+          }
+        }
+      }
+    });
+
+    test('setModels stops at the cap rather than going past it', () {
+      var roster = paragons();
+      final id = roster.units.single.instanceId;
+      final cap = sistersEditor.maxModels('paragon-warsuits')!;
+
+      roster = sistersEditor.setModels(roster, id, cap + 5);
+      expect(roster.units.single.models, cap);
+    });
+
+    test('an over-size unit is reported rather than silently free', () {
+      // The builder will not create one, but an import or an older save can
+      // be in that state, and the symptom is invisible: no bracket covers the
+      // size, so the unit prices at zero and the army looks cheaper.
+      var roster = paragons();
+      final id = roster.units.single.instanceId;
+      final cap = sistersEditor.maxModels('paragon-warsuits')!;
+      roster = roster.copyWith(units: [
+        for (final u in roster.units) u.copyWith(models: cap + 1),
+      ]);
+
+      final result = RosterValidator(sisters).validate(roster);
+      final finding =
+          result.findings.where((f) => f.code == 'unit.over-size').toList();
+      expect(finding, hasLength(1));
+      expect(finding.single.instanceIds, [id]);
+      expect(finding.single.message, contains('no points bracket covers it'));
+    });
+
+    test('and a unit at its cap still prices', () {
+      // The reason for the cap: a unit grown past every bracket had none to
+      // price it and silently cost nothing.
+      var roster = paragons();
+      final id = roster.units.single.instanceId;
+      roster = sistersEditor.setModels(
+          roster, id, sistersEditor.maxModels('paragon-warsuits')!);
+      final cost = PointsCalculator(sisters).price(roster);
+      expect(cost.total, greaterThan(0));
+    });
   });
 
   test('a Paragon multi-melta costs what the datasheet says', () {

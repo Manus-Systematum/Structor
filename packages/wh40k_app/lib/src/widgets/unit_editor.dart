@@ -76,6 +76,7 @@ class UnitEditorSheet extends StatelessWidget {
     final carried = {
       for (final item in unit.wargear) item.itemId: item.count,
     };
+    final maxModels = RosterEditor(dataset).maxModels(datasheet.id);
 
     return SafeArea(
       child: ListView(
@@ -110,8 +111,18 @@ class UnitEditorSheet extends StatelessWidget {
 
           _Row(
             label: 'Models',
+            // The one counter that *is* capped. A unit grown past every
+            // published bracket priced at zero — there was no bracket to
+            // price it — so the builder let you make a unit that silently
+            // cost nothing. Unlike wargear, the size is stated twice over
+            // (composition and points table) and the looser of the two is
+            // taken, so the cap only ever refuses what neither supports.
+            detail: maxModels == null || maxModels == unit.models
+                ? null
+                : 'max $maxModels',
             child: _Counter(
               value: unit.models,
+              max: maxModels,
               onChange: (n) =>
                   onEdit((e) => e.setModels(roster, instanceId, n)),
             ),
@@ -704,6 +715,11 @@ class _Row extends StatelessWidget {
 class _Counter extends StatelessWidget {
   final int value;
   final int min;
+
+  /// A ceiling the data actually states. Null leaves the counter open, which
+  /// is right for wargear: §4.5 keeps a stated `max_count` as guidance rather
+  /// than a stop, because the option data is demonstrably incomplete.
+  final int? max;
   final bool overLimit;
   final void Function(int) onChange;
 
@@ -711,6 +727,7 @@ class _Counter extends StatelessWidget {
     required this.value,
     required this.onChange,
     this.min = 1,
+    this.max,
     this.overLimit = false,
   });
 
@@ -736,7 +753,8 @@ class _Counter extends StatelessWidget {
         ),
         IconButton(
           visualDensity: VisualDensity.compact,
-          onPressed: () => onChange(value + 1),
+          onPressed:
+              max != null && value >= max! ? null : () => onChange(value + 1),
           icon: const Icon(Icons.add, size: 18),
         ),
       ],

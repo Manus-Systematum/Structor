@@ -587,6 +587,34 @@ Attachment is also one decision seen from two sides. The character's sheet asks 
 
 ---
 
+### 4.5.1 The one place the builder does refuse
+
+§2.3 settled that the builder is permissive and the validator honest, and that
+still holds for wargear: the option data is demonstrably incomplete, so a
+`max_count` is guidance and never a stop.
+
+**Unit size is different, and it is refused.** It is stated twice over — the
+composition names each model and how many the unit may field, and the points
+table prices whole brackets — and the failure it prevents is silent. A unit
+grown past every bracket has none to price it, so it costs **zero** and the
+army reads as cheaper than it is. That is worse than a refused tap.
+
+The cap is **the looser of the two sources**, never one alone. They disagree on
+35 of 1,961 datasheets — Cadian Shock Troops compose to twenty and are priced
+to twenty-seven — and taking the tighter would be the builder calling a legal
+list illegal. Where neither says anything, nothing is capped: a cap invented
+from silence is the same mistake.
+
+Two smaller findings came out of measuring it first, and neither was visible
+from the report:
+
+- `model_count.max` is **derived and wrong on eight datasheets** — a Loota mob
+  comes to five and its max says one. Nothing reads it; the composition is the
+  curated record and is what the cap uses.
+- A list can still arrive over-size — imported, shared, or saved before the
+  data said otherwise — so the validator names it. The builder stops you
+  creating the state; the validator explains one that already exists.
+
 ### 4.6 Managing a saved army
 
 Three things happen to a list that exists: it gets opened, it gets copied to

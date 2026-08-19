@@ -28,6 +28,7 @@
 library;
 
 import '../rules/battle_size.dart';
+import '../source/source_models.dart';
 import '../rules/catalogue.dart';
 import 'roster.dart';
 import 'unit_loadout.dart';
@@ -139,6 +140,33 @@ class RosterEditor {
     ]);
   }
 
+  /// The largest unit the published data supports, or null when nothing says.
+  ///
+  /// **Two sources, and the looser wins.** The composition names each model
+  /// and how many the unit may field; the points table prices whole brackets.
+  /// They disagree on 35 of 1,961 datasheets — Cadian Shock Troops compose to
+  /// twenty and are priced to twenty-seven — and where they do, refusing the
+  /// size the points table prices would be the builder telling a player their
+  /// legal list is illegal, which is the failure §2.3 exists to avoid.
+  ///
+  /// Null is a real answer: with no evidence either way nothing is capped,
+  /// because a cap invented from silence is the same mistake.
+  int? maxModels(String datasheetId) {
+    final composition = catalogue.composition(datasheetId);
+    final unit = catalogue.unit(datasheetId);
+
+    var cap = composition?.maxModels;
+    for (final bracket in unit?.points ?? const <PointsBracket>[]) {
+      final priced = bracket.modelsMax ?? bracket.models;
+      if (priced > (cap ?? 0)) cap = priced;
+    }
+    if (cap == null || cap <= 0) return null;
+
+    // Never below the unit's own smallest legal size.
+    final floor = composition?.defaultModels ?? 1;
+    return cap < floor ? floor : cap;
+  }
+
   /// Resizes a unit, bringing its wargear with it.
   ///
   /// Adding models used to change nothing but the number: six Paragon Warsuits
@@ -153,7 +181,10 @@ class RosterEditor {
   Roster setModels(Roster roster, String instanceId, int models) {
     final unit = _unit(roster, instanceId);
     if (unit == null) return roster;
-    final wanted = models.clamp(1, 30);
+    // The datasheet's own ceiling, not a flat 30: a unit could be grown past
+    // any legal size and then priced at zero, because no bracket covers it.
+    final ceiling = maxModels(unit.datasheetId) ?? 30;
+    final wanted = models.clamp(1, ceiling);
     final delta = wanted - unit.models;
     if (delta == 0) return roster;
 
