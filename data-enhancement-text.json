@@ -167,7 +167,7 @@
           "ability_id": "armoured-wrath",
           "name": "Armoured Wrath",
           "score": 0.5,
-          "text": "Once per phase for each Adeptus Astartes unit in your army, you can re-roll one Hit roll, one Wound roll, or one Damage roll made for a model in that unit."
+          "text": "Once per phase for each **Adeptus Astartes** unit in your army, you can re-roll one Hit roll, one Wound roll, or one Damage roll made for a model in that unit."
         }
       ]
     },
@@ -911,7 +911,7 @@
           "ability_id": "dutiful-tenacity",
           "name": "Dutiful Tenacity",
           "score": 0.5,
-          "text": "Each time an attack targets an Adeptus Astartes Infantry or Adeptus Astartes Mounted unit from your army, if the Strength characteristic of that attack is gr…"
+          "text": "Each time an attack targets an **Adeptus Astartes Infantry** or **Adeptus Astartes Mounted** unit from your army, if the Strength characteristic of that atta…"
         },
         {
           "ability_id": "stoic-defender",
@@ -1253,7 +1253,7 @@
           "ability_id": "maddened-ferocity",
           "name": "Maddened Ferocity",
           "score": 0.4,
-          "text": "Each time an Adeptus Astartes model from your army makes a melee attack, re-roll a Wound roll of 1."
+          "text": "Each time an **Adeptus Astartes** model from your army makes a melee attack, re-roll a Wound roll of 1."
         },
         {
           "ability_id": "glowy-gizmo-upgrade",
@@ -1309,7 +1309,7 @@
           "ability_id": "tactical-perfection",
           "name": "Tactical Perfection",
           "score": 0.5,
-          "text": "After both players have deployed their armies, select up to two Emperor's Children units from your army and redeploy them. When doing so, you can set those u…"
+          "text": "After both players have deployed their armies, select up to two **Emperor's Children** units from your army and redeploy them. When doing so, you can set tho…"
         },
         {
           "ability_id": "flawless-perfection",
@@ -1343,7 +1343,7 @@
           "ability_id": "sublime-presence",
           "name": "Sublime Presence",
           "score": 0.5,
-          "text": "Once per turn, in your Movement phase, the bearer can use this Enhancement. If it does, select one friendly Emperor's Children Transport that is in Strategic…"
+          "text": "Once per turn, in your Movement phase, the bearer can use this Enhancement. If it does, select one friendly **Emperor's Children Transport** that is in Strat…"
         }
       ]
     },
@@ -1477,7 +1477,7 @@
           "ability_id": "channelled-force",
           "name": "Channelled Force",
           "score": 0.5,
-          "text": "Each time a Grey Knights unit from your army is selected to fight, that unit can take a Leadership test. If that test is passed, select one of the following …"
+          "text": "Each time a **Grey Knights** unit from your army is selected to fight, that unit can take a Leadership test. If that test is passed, select one of the follow…"
         },
         {
           "ability_id": "force-acuity",
@@ -1555,7 +1555,7 @@
           "ability_id": "blinding-aura",
           "name": "Blinding Aura",
           "score": 0.4,
-          "text": "Grey Knights model only. Each time the bearer's unit is set up using the Deep Strike ability, until the end of the turn, enemy units cannot use the Fire Over…"
+          "text": "**Grey Knights** model only. Each time the bearer's unit is set up using the Deep Strike ability, until the end of the turn, enemy units cannot use the Fire …"
         },
         {
           "ability_id": "slaughterthirst-aura",
@@ -1611,13 +1611,13 @@
           "ability_id": "d-lvwerke-navigator",
           "name": "Dêlvwerke Navigator",
           "score": 0.67,
-          "text": "In the Reinforcements step of your Movement phase, the bearer can use this Enhancement. If it does, select one friendly **Cthonian Beserks unit visible to th…"
+          "text": "In the Reinforcements step of your Movement phase, the bearer can use this Enhancement. If it does, select one friendly **Cthonian Beserks** unit visible to …"
         },
         {
           "ability_id": "fury-from-the-d-lve",
           "name": "Fury from the Dêlve",
           "score": 0.29,
-          "text": "Cthonian Beserks units from your army have the Deep Strike ability."
+          "text": "**Cthonian Beserks** units from your army have the Deep Strike ability."
         },
         {
           "ability_id": "litany-of-divine-protection",
@@ -1723,7 +1723,7 @@
           "ability_id": "nemesis-rounds",
           "name": "Nemesis Rounds",
           "score": 0.4,
-          "text": "Grey Knights Terminator model only. Each time you target the bearer's unit with the Fire Overwatch Stratagem, hits are scored on unmodified Hit rolls of 5+ w…"
+          "text": "**Grey Knights Terminator** model only. Each time you target the bearer's unit with the Fire Overwatch Stratagem, hits are scored on unmodified Hit rolls of …"
         },
         {
           "ability_id": "wyrmtooth-rounds",
@@ -1847,7 +1847,7 @@
           "ability_id": "blinding-aura",
           "name": "Blinding Aura",
           "score": 0.4,
-          "text": "Grey Knights model only. Each time the bearer's unit is set up using the Deep Strike ability, until the end of the turn, enemy units cannot use the Fire Over…"
+          "text": "**Grey Knights** model only. Each time the bearer's unit is set up using the Deep Strike ability, until the end of the turn, enemy units cannot use the Fire …"
         }
       ]
     },
@@ -2003,7 +2003,7 @@
           "ability_id": "icon-of-war",
           "name": "Icon of War",
           "score": 0.4,
-          "text": "While a friendly Blood Legions unit is within 6\" of the bearer, that unit has the Blessings of Khorne ability. If the Might of Khorne ability is active for y…"
+          "text": "While a friendly **Blood Legions** unit is within 6\" of the bearer, that unit has the Blessings of Khorne ability. If the Might of Khorne ability is active f…"
         },
         {
           "ability_id": "war-beasts",
@@ -2115,7 +2115,7 @@
           "ability_id": "accomplished-tactician",
           "name": "Accomplished Tactician",
           "score": 0.5,
-          "text": "Once per turn, in your opponent's Shooting phase, just after an enemy unit has shot, you can select one friendly Emperor's Children unit within 9\" of the bea…"
+          "text": "Once per turn, in your opponent's Shooting phase, just after an enemy unit has shot, you can select one friendly **Emperor's Children** unit within 9\" of the…"
         },
         {
           "ability_id": "perceptive-tacticians",
@@ -2127,7 +2127,7 @@
           "ability_id": "accomplished-tactician",
           "name": "Accomplished Tactician",
           "score": 0.5,
-          "text": "Once per turn, in your opponent's Shooting phase, just after an enemy unit has shot, you can select one friendly Emperor's Children unit within 9\" of the bea…"
+          "text": "Once per turn, in your opponent's Shooting phase, just after an enemy unit has shot, you can select one friendly **Emperor's Children** unit within 9\" of the…"
         }
       ]
     },
@@ -2143,7 +2143,7 @@
           "ability_id": "aggressive-deployment",
           "name": "Aggressive Deployment",
           "score": 0.5,
-          "text": "In the Declare Battle Formations step, if the bearer starts the battle embarked within a Dedicated Transport, that Dedicated Transport has the Scouts 9\" abil…"
+          "text": "In the Declare Battle Formations step, if the bearer starts the battle embarked within a **Dedicated Transport**, that **Dedicated Transport** has the Scouts…"
         },
         {
           "ability_id": "aggressive-hunter",
@@ -2429,7 +2429,7 @@
           "ability_id": "diabolic-servant",
           "name": "Diabolic Servant",
           "score": 0.5,
-          "text": "While the bearer is within 6\" of one or more friendly Scintillating Legion units, each time the bearer Channels the Warp, add 1 to the Psychic test result."
+          "text": "While the bearer is within 6\" of one or more friendly **Scintillating Legion** units, each time the bearer Channels the Warp, add 1 to the Psychic test result."
         },
         {
           "ability_id": "machine-savant",
@@ -2849,7 +2849,7 @@
           "ability_id": "direct-the-slaughter",
           "name": "Direct the Slaughter",
           "score": 0.4,
-          "text": "Once per battle round, one model from your army with this ability can use it when a friendly World Eaters unit within 12\" of this model is targeted with a St…"
+          "text": "Once per battle round, one model from your army with this ability can use it when a friendly **World Eaters** unit within 12\" of this model is targeted with …"
         },
         {
           "ability_id": "lord-of-slaughter",

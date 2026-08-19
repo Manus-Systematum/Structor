@@ -127,4 +127,39 @@ void main() {
     expect(described / total, greaterThan(0.85),
         reason: '$described of $total detachment rules are printed');
   });
+  test('bold and small caps fold in every order the data writes them', () {
+    // Four orders exist and only two were handled. The missed pair came from
+    // Custodes' Revered Companions, which opens nested and closes
+    // interleaved. The bare small-caps rule then ran on half a pair and ate
+    // the space in front of it — `All other**Adeptus Custodes` — which is a
+    // spacing bug produced by a markup bug, and reads as a source typo.
+    for (final raw in const [
+      'a **^^Foo^^** b', // nested, bold outside
+      'a ^^**Foo**^^ b', // nested, small caps outside
+      'a ^^**Foo^^** b', // interleaved
+      'a **^^Foo**^^ b', // interleaved, the other way
+      'a ^^Foo^^ b', // small caps alone
+      'a **Foo** b', // bold alone
+    ]) {
+      expect(normaliseRuleText(raw), 'a **Foo** b', reason: raw);
+    }
+  });
+
+  test('no ability description carries a caret or a tripled marker', () {
+    final loader = DatasetLoader('../../data/merged',
+        corrections:
+            DatasetLoader.correctionsAt('../../data-corrections.yaml'));
+    if (!loader.root.existsSync()) return;
+
+    final offenders = <String>[];
+    for (final factionId in loader.availableFactions()) {
+      for (final ability in loader.loadFaction(factionId).abilities) {
+        final text = ability.description ?? '';
+        if (text.contains('^') || text.contains('***')) {
+          offenders.add('$factionId/${ability.abilityId}');
+        }
+      }
+    }
+    expect(offenders, isEmpty, reason: offenders.take(5).join(', '));
+  });
 }

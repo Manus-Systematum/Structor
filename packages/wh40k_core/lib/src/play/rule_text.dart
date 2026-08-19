@@ -28,14 +28,22 @@ library;
 final _nbsp = RegExp('[  ]');
 final _nbHyphen = RegExp('[‐‑]');
 
-/// Both markers on the same words, in either order — `**^^X^^**` and
-/// `^^**X**^^`, and the data uses both. Handled before the bare form: folding
-/// small caps into bold otherwise doubles the markers, and cleaning up after
-/// that left a stray `**` in the middle of a sentence.
-final _boldSmallCaps = RegExp(
-    r'\*\*\s*\^\^(.*?)\^\^\s*\*\*|\^\^\s*\*\*(.*?)\*\*\s*\^\^',
-    dotAll: true);
-final _smallCaps = RegExp(r'\^\^(.*?)\^\^', dotAll: true);
+/// Small caps, written as bold, because the app has one emphasis level.
+///
+/// **Both markers are folded before either is matched as a pair.** Matching
+/// pairs first meant enumerating the orders the data puts them in, and the
+/// enumeration was wrong: `**^^X^^**` and `^^**X**^^` were handled, but
+/// Custodes' `Revered Companions` writes `^^**Adeptus Custodes^^**` — opened
+/// nested, closed interleaved — and `**^^Adeptus Custodes**^^` in the next
+/// sentence. Neither matched, the bare small-caps rule then ran on half a
+/// pair, and the result lost the space in front of it: `All other**Adeptus`.
+///
+/// Once `^^` *is* `**`, all four orders collapse to the same thing — a run of
+/// four asterisks around the words — and no ordering has to be anticipated.
+final _smallCaps = RegExp(r'\^\^');
+
+/// Three or more asterisks are one emphasis run that was written twice.
+final _markerRun = RegExp(r'\*{3,}');
 final _bullets = RegExp('[▪▫■•]');
 final _trailingSpace = RegExp(r'[ \t]+$', multiLine: true);
 final _blankRun = RegExp(r'\n{3,}');
@@ -52,16 +60,13 @@ String normaliseRuleText(String raw) {
       .replaceAll(_nbHyphen, '-')
       // Small caps and bold both mark a keyword; the app has one emphasis
       // level, so they become the same thing rather than two.
-      .replaceAllMapped(_boldSmallCaps, (m) => '**${(m[1] ?? m[2]!).trim()}**')
-      .replaceAllMapped(_smallCaps, (m) => '**${m[1]!.trim()}**')
+      .replaceAll(_smallCaps, '**')
+      .replaceAll(_markerRun, '**')
       .replaceAll(_emptyEmphasis, '')
       // **Whatever caret is left was never part of a pair.** Custodes'
-      // `Revered Companions` arrives with `**^Anathema Psykana**` at one end
-      // and `Psykana^^**` at the other — an upstream transcription that
-      // opened a small-caps run and closed it in the wrong place. The folds
-      // above only match balanced runs, so the odd marker survived them and
-      // reached the screen as a literal `^`. A caret carries no meaning in
-      // rules text, so anything still holding one is a leftover.
+      // `Revered Companions` writes `**^Anathema Psykana^^**` — one caret
+      // where two belong. A caret carries no meaning in rules text, so
+      // anything still holding one after the fold is a leftover.
       .replaceAll(_strayCaret, '');
 
   // A bullet is a new clause, and inline it reads as part of the previous
