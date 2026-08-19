@@ -58,7 +58,8 @@ class BsEntry {
   List<Object?> get entryLinks => asList(json['entryLinks']);
   List<Object?> get infoLinks => asList(json['infoLinks']);
   List<Object?> get selectionEntries => asList(json['selectionEntries']);
-  List<Object?> get selectionEntryGroups => asList(json['selectionEntryGroups']);
+  List<Object?> get selectionEntryGroups =>
+      asList(json['selectionEntryGroups']);
 
   /// The `pts` cost, or null when this entry carries none.
   ///
@@ -125,6 +126,20 @@ class BsIndex {
   /// than inside any datasheet, so anything walking only [roots] misses them.
   final List<BsEntry> sharedGroups = [];
 
+  /// The faction's own `sharedRules`, which is where a detachment rule's
+  /// printed wording lives.
+  ///
+  /// Root catalogues only. The game system's shared rules are the core rules
+  /// and a sibling faction's are not this one's, and harvesting either would
+  /// file them as abilities of an army that does not have them.
+  final List<BsEntry> ownRules = [];
+
+  /// The faction's own `sharedSelectionEntries`, which is where the container
+  /// holding its detachments sits. Same list that seeds [roots], kept
+  /// separately because `resolveRootLinks` later adds borrowed datasheets to
+  /// that one.
+  final List<BsEntry> ownEntries = [];
+
   BsIndex();
 
   /// Reads one BattleScribe JSON file — game system or catalogue — into the
@@ -188,8 +203,13 @@ class BsIndex {
     }
 
     if (asRoot) {
+      for (final raw in asList(body['sharedRules'])) {
+        ownRules.add(BsEntry(asMap(raw), id));
+      }
       for (final raw in asList(body['sharedSelectionEntries'])) {
-        roots.add(BsEntry(asMap(raw), id));
+        final entry = BsEntry(asMap(raw), id);
+        ownEntries.add(entry);
+        roots.add(entry);
       }
       _rootLinks.addAll(asList(body['entryLinks']));
     }

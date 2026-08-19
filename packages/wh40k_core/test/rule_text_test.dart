@@ -72,7 +72,8 @@ void main() {
     // The point of doing this at ingest: every consumer sees it cleaned, and
     // a marker reaching a screen is a bug nobody notices until a game.
     final loader = DatasetLoader('../../data/merged',
-        corrections: DatasetLoader.correctionsAt('../../data-corrections.yaml'));
+        corrections:
+            DatasetLoader.correctionsAt('../../data-corrections.yaml'));
     if (!loader.root.existsSync()) return;
 
     final offenders = <String>[];
@@ -89,5 +90,41 @@ void main() {
       }
     }
     expect(offenders, isEmpty, reason: offenders.take(5).join(', '));
+  });
+  test('an unpaired small-caps marker is dropped, not printed', () {
+    // Custodes' Revered Companions opens a small-caps run and closes it in
+    // the wrong place: `**^Anathema Psykana**` at one end, `Psykana^^**` at
+    // the other. The folds only match balanced runs, so the odd marker
+    // survived them and reached the screen as a literal caret.
+    expect(normaliseRuleText('a **^Foo** and that Bar^^** unit'),
+        isNot(contains('^')));
+    // The balanced case still folds to emphasis rather than being stripped.
+    expect(normaliseRuleText('the ^^Foo^^ unit'), 'the **Foo** unit');
+  });
+  test('a detachment rule carries its printed wording', () {
+    // What a player looks up mid-game, and for 127 of 239 rules the app had
+    // only a community paraphrase of the structured effect to show — every
+    // Adepta Sororitas detachment among them. The wording was in BSData the
+    // whole time: a detachment rule is a `sharedRule`, or a `rules` entry on
+    // the non-datasheet container the detachments hang off, and the harvest
+    // walked neither.
+    final loader = DatasetLoader('../../data/merged',
+        corrections:
+            DatasetLoader.correctionsAt('../../data-corrections.yaml'));
+    if (!loader.root.existsSync()) return;
+
+    var total = 0, described = 0;
+    for (final factionId in loader.availableFactions()) {
+      for (final ability in loader.loadFaction(factionId).abilities) {
+        if (ability.abilityType != 'detachment') continue;
+        total++;
+        if ((ability.description ?? '').trim().isNotEmpty) described++;
+      }
+    }
+    expect(total, greaterThan(200));
+    // 234 of 263 as counted here, which walks chapters as well as parents.
+    // It was under half before the harvest reached shared rules.
+    expect(described / total, greaterThan(0.85),
+        reason: '$described of $total detachment rules are printed');
   });
 }

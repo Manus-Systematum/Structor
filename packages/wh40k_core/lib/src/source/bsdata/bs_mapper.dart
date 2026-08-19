@@ -215,6 +215,27 @@ class BsMapper {
     for (final group in index.sharedGroups) {
       _harvestText(group, abilities, 0);
     }
+    // **A detachment rule is a `sharedRule`, not a shared group.** Harvesting
+    // only the groups reached the enhancements and missed the rules entirely:
+    // `Fervent Purgation` sits at `catalogue/sharedRules`, linked from a
+    // detachment entry, so 127 of 239 detachment rules across the game had no
+    // printed wording and fell back to a community paraphrase of their
+    // structured effect.
+    for (final rule in index.ownRules) {
+      _harvestText(rule, abilities, 0);
+    }
+    // And the container the detachments hang off. `Angelic Judgement`,
+    // `Holy Quest` and `Hymns of Battle` are `rules` on entries inside one
+    // non-datasheet shared entry, which the unit walk skips by definition and
+    // the group walk never reaches.
+    //
+    // Datasheets are excluded rather than harvested: their rules are already
+    // collected by the walk above, and recursing one here would file every
+    // weapon rule it passes as a faction ability.
+    for (final entry in index.ownEntries) {
+      if (_isDatasheet(entry)) continue;
+      _harvestText(entry, abilities, 0);
+    }
 
     return BsFaction(
       factionId: factionId,
@@ -416,6 +437,9 @@ class BsMapper {
       );
     }
 
+    // A shared rule carries its text on the record itself; a nested one
+    // carries it under `rules`. Both shapes appear and both are rules.
+    take(strOr(entry.json['name'], ''), str(entry.json['description']));
     for (final raw in asList(entry.json['rules'])) {
       final rule = asMap(raw);
       take(strOr(rule['name'], ''), str(rule['description']));

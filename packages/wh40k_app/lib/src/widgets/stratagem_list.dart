@@ -106,7 +106,12 @@ class _StratagemRowState extends State<_StratagemRow> {
         : scheme.onSurfaceVariant.withValues(alpha: 0.55);
     final body = entry.text ?? entry.effect?.text;
 
-    return InkWell(
+    // **No ripple.** An `InkWell` splashed across the whole row — a card's
+    // worth of height once one is open — for a tap whose only job is to show
+    // or hide text. The expansion is its own feedback, and a better one: it
+    // says which row and what happened, where the splash only said "tapped".
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: body == null ? null : () => setState(() => _open = !_open),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),

@@ -27,6 +27,7 @@ library;
 
 final _nbsp = RegExp('[  ]');
 final _nbHyphen = RegExp('[‐‑]');
+
 /// Both markers on the same words, in either order — `**^^X^^**` and
 /// `^^**X**^^`, and the data uses both. Handled before the bare form: folding
 /// small caps into bold otherwise doubles the markers, and cleaning up after
@@ -42,16 +43,26 @@ final _spaceRun = RegExp('[ \t]{2,}');
 final _emptyEmphasis = RegExp(r'\*\*\s*\*\*');
 
 /// BattleScribe's markup, reduced to what the app renders.
+/// Caret markers that outlived the small-caps folds above.
+final _strayCaret = RegExp(r'\^+');
+
 String normaliseRuleText(String raw) {
   var text = raw
       .replaceAll(_nbsp, ' ')
       .replaceAll(_nbHyphen, '-')
       // Small caps and bold both mark a keyword; the app has one emphasis
       // level, so they become the same thing rather than two.
-      .replaceAllMapped(
-          _boldSmallCaps, (m) => '**${(m[1] ?? m[2]!).trim()}**')
+      .replaceAllMapped(_boldSmallCaps, (m) => '**${(m[1] ?? m[2]!).trim()}**')
       .replaceAllMapped(_smallCaps, (m) => '**${m[1]!.trim()}**')
-      .replaceAll(_emptyEmphasis, '');
+      .replaceAll(_emptyEmphasis, '')
+      // **Whatever caret is left was never part of a pair.** Custodes'
+      // `Revered Companions` arrives with `**^Anathema Psykana**` at one end
+      // and `Psykana^^**` at the other — an upstream transcription that
+      // opened a small-caps run and closed it in the wrong place. The folds
+      // above only match balanced runs, so the odd marker survived them and
+      // reached the screen as a literal `^`. A caret carries no meaning in
+      // rules text, so anything still holding one is a leftover.
+      .replaceAll(_strayCaret, '');
 
   // A bullet is a new clause, and inline it reads as part of the previous
   // sentence: "…use this ability. If you do: ▫ Place this unit in…".
@@ -74,8 +85,7 @@ class RuleSpan {
   const RuleSpan(this.text, {this.bold = false, this.italic = false});
 
   @override
-  String toString() =>
-      '${bold ? 'b' : ''}${italic ? 'i' : ''}:$text';
+  String toString() => '${bold ? 'b' : ''}${italic ? 'i' : ''}:$text';
 }
 
 final _emphasis = RegExp(r'\*\*(.+?)\*\*|\*(.+?)\*', dotAll: true);
@@ -100,5 +110,8 @@ List<RuleSpan> ruleSpans(String text) {
     at = match.end;
   }
   if (at < text.length) spans.add(RuleSpan(text.substring(at)));
-  return [for (final s in spans) if (s.text.isNotEmpty) s];
+  return [
+    for (final s in spans)
+      if (s.text.isNotEmpty) s
+  ];
 }

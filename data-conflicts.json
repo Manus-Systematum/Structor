@@ -575,6 +575,15 @@
       "resolution": "bsdata"
     },
     {
+      "faction": "adeptus-custodes",
+      "kind": "abilities",
+      "id": "skin-crawling-disorientation",
+      "field": "name",
+      "bsdata": "Skin-crawling Disorientation",
+      "40kdc": "Skin-Crawling Disorientation",
+      "resolution": "bsdata"
+    },
+    {
       "faction": "adeptus-mechanicus",
       "kind": "units",
       "id": "ironstrider-ballistarii",
@@ -713,6 +722,15 @@
       "field": "name",
       "bsdata": "Cyber Psalm-Programming",
       "40kdc": "Cyber-psalm Programming",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "abilities",
+      "id": "servitor-bodyguard",
+      "field": "name",
+      "bsdata": "Servitor Bodyguard",
+      "40kdc": "SERVITOR BODYGUARD",
       "resolution": "bsdata"
     },
     {
@@ -1236,6 +1254,15 @@
       "resolution": "bsdata"
     },
     {
+      "faction": "agents-of-the-imperium",
+      "kind": "abilities",
+      "id": "root-out-heresy",
+      "field": "name",
+      "bsdata": "Root Out Heresy",
+      "40kdc": "Root out Heresy",
+      "resolution": "bsdata"
+    },
+    {
       "faction": "astra-militarum",
       "kind": "units",
       "id": "cadian-shock-troops",
@@ -1563,6 +1590,15 @@
       "resolution": "bsdata"
     },
     {
+      "faction": "chaos-daemons",
+      "kind": "abilities",
+      "id": "fates-in-flux",
+      "field": "name",
+      "bsdata": "Fates in Flux",
+      "40kdc": "Fates In Flux",
+      "resolution": "bsdata"
+    },
+    {
       "faction": "chaos-knights",
       "kind": "units",
       "id": "war-dog-moirax",
@@ -1866,6 +1902,15 @@
       "field": "name",
       "bsdata": "Voice eater",
       "40kdc": "Voice Eater",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "abilities",
+      "id": "super-heavy-walker",
+      "field": "name",
+      "bsdata": "Super-Heavy Walker",
+      "40kdc": "Super-heavy Walker",
       "resolution": "bsdata"
     },
     {
@@ -3085,6 +3130,15 @@
       "field": "name",
       "bsdata": "Damaged: 1-6 wounds remaining",
       "40kdc": "Damaged: 1-6 Wounds Remaining",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "thousand-sons",
+      "kind": "abilities",
+      "id": "all-seeing-mutant-hordes",
+      "field": "name",
+      "bsdata": "All-seeing Mutant Hordes",
+      "40kdc": "All-Seeing Mutant Hordes",
       "resolution": "bsdata"
     },
     {
