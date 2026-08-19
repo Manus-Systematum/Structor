@@ -25,6 +25,9 @@ const _dcRoot = '$_root/data/40kdc';
 const _outRoot = '$_root/data/merged';
 const _conflictsPath = '$_root/data-conflicts.json';
 
+/// Mission card text, fetched by `tools/fetch-gdm.py` (DESIGN.md §3.11).
+const _gdmPath = '$_root/data/gdm/cards.json';
+
 /// Enhancements whose printed wording could not be found by name, with
 /// suggestions — and the hand-made matches for them.
 ///
@@ -211,6 +214,8 @@ void main(List<String> args) {
     _copyRemaining(factions);
     stdout.writeln('\n${_linkEnhancementText(factions, harvested)} '
         'enhancements linked to their printed text');
+    stdout.writeln('${_applyMissionText()} mission cards given their '
+        'printed text');
     File(_conflictsPath).writeAsStringSync(
         '${const JsonEncoder.withIndent('  ').convert({
               'note': 'BSData over 40kdc; BSData wins every row here. '
@@ -501,6 +506,129 @@ String? _parentOf(String factionId) {
     if (str(record['id']) == factionId) return str(record['parent_faction_id']);
   }
   return null;
+}
+
+/// Writes the printed wording onto the mission cards.
+///
+/// 40kdc publishes each card's *structure* — trigger, VP, condition — and a
+/// hand-written paraphrase beside it. The paraphrase reads as a summary
+/// because it is one: "central-objective control pays at the end of every one
+/// of your turns" against "3 VP: You control one or more central objectives."
+/// A player checking whether they scored wants the second (§3.11).
+///
+/// The structure is untouched. Everything that *does* something — the scoring
+/// controls, the round caps, the award triggers — still runs off 40kdc's
+/// awards, which agree with this source card for card on every one checked.
+/// Only the sentence changes.
+int _applyMissionText() {
+  final file = File(_gdmPath);
+  if (!file.existsSync()) return 0;
+  final source = asMap(jsonDecode(file.readAsStringSync()));
+
+  // Primary cards are keyed `deck/card`; the card half is the mission id.
+  final byId = <String, Map<String, dynamic>>{};
+  for (final entry in asMap(source['primary']).entries) {
+    byId[entry.key.split('/').last] = asMap(entry.value);
+  }
+  for (final entry in asMap(source['secondary']).entries) {
+    // `secure-no-man-s-land-defender` -> `secure-no-mans-land`.
+    final id = entry.key
+        .replaceAll(RegExp(r'-(?:defender|attacker)$'), '')
+        .replaceAll('-man-s-', '-mans-');
+    byId[id] = asMap(entry.value);
+  }
+
+  const path = '$_outRoot/core/secondary-cards.json';
+  final records = _readArray(path);
+  if (records.isEmpty) return 0;
+
+  var written = 0;
+  final updated = [
+    for (final raw in records)
+      if (asMap(raw) case final record)
+        if (byId[strOr(record['id'], '')] case final card?)
+          () {
+            final text = _cardText(card);
+            if (text.isEmpty) return record;
+            written++;
+            return {...record, 'text': text};
+          }()
+        else
+          record,
+  ];
+  if (written > 0) _write(path, updated);
+  return written;
+}
+
+/// One card's sections, rendered as the lines a player reads.
+///
+/// The VP label follows the source's own rule: a leading `+` when the tier is
+/// cumulative with the one above, `each` when it pays per object, and the cap
+/// where there is one. Getting that wrong turns "+2 VP each" into "2 VP",
+/// which is a different card.
+String _cardText(Map<String, dynamic> card) {
+  final lines = <String>[];
+
+  final drawn = _plain(str(card['whenDrawn']));
+  if (drawn != null) lines.add(drawn);
+
+  for (final rawSection in asList(card['sections'])) {
+    final section = asMap(rawSection);
+    final when = _plain(str(section['when']));
+    final trigger = _plain(str(section['trigger']));
+    final header = [
+      if (when != null) when,
+      if (trigger != null) trigger,
+    ].join(' · ');
+    if (header.isNotEmpty) lines.add(header);
+
+    // `tiers` on a primary card, `rows` on a secondary; same shape.
+    for (final rawRow in [
+      ...asList(section['tiers']),
+      ...asList(section['rows']),
+    ]) {
+      final row = asMap(rawRow);
+      final text = _plain(str(row['text']));
+      if (text == null) continue;
+      final label = _vpLabel(row, asMap(section));
+      lines.add(label.isEmpty ? text : '$label: $text');
+    }
+  }
+  return lines.join('\n');
+}
+
+String _vpLabel(Map<String, dynamic> row, Map<String, dynamic> section) {
+  final dual = asMap(row['dual']);
+  if (dual.isNotEmpty) {
+    return 'Fixed ${strOr(dual['fixed'], '?')} VP / '
+        'Tactical ${strOr(dual['tactical'], '?')} VP';
+  }
+  final vp = str(row['vp']);
+  if (vp == null || vp.isEmpty) return '';
+  final buffer = StringBuffer()
+    ..write(row['cumulative'] == true ? '+' : '')
+    ..write(vp)
+    ..write(' VP')
+    ..write(row['perUnit'] == true || section['perEvent'] == true ? ' each' : '');
+  if (str(row['cap']) case final cap? when cap.isNotEmpty) {
+    buffer.write(', max $cap VP');
+  }
+  return buffer.toString();
+}
+
+/// Source text, with its markup brought to the one convention the app renders.
+///
+/// The primary cards mark keywords `**like this**` — already what
+/// `normaliseRuleText` expects — and the secondary cards use `<b>` tags for
+/// the same job. `\$undefined` is the payload's way of writing "no value" and
+/// is not text at all.
+String? _plain(String? value) {
+  if (value == null || value.isEmpty || value == r'$undefined') return null;
+  final text = value
+      .replaceAll(RegExp(r'</?b>', caseSensitive: false), '**')
+      .replaceAll(RegExp(r'</?[a-zA-Z][^>]*>'), '')
+      .trim();
+  return text.isEmpty ? null : text;
 }
 
 /// Copies every 40kdc file the merge did not rewrite.

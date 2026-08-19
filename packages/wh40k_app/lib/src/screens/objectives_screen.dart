@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import '../widgets/rule_text.dart';
+
 import '../theme.dart';
 import '../widgets/collapsible.dart';
 
@@ -373,7 +375,7 @@ class _MissionBlock extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 6),
-            Text(card.text,
+            RuleText(card.text,
                 style: TextStyle(
                     fontSize: 11.5,
                     height: 1.4,
@@ -441,7 +443,7 @@ class _Hand extends StatelessWidget {
                       Text(card.name,
                           style: const TextStyle(
                               fontSize: 12.5, fontWeight: FontWeight.w700)),
-                      Text(card.text,
+                      RuleText(card.text,
                           style: TextStyle(
                               fontSize: 11,
                               height: 1.35,

@@ -107,7 +107,7 @@ void main() {
     expect(find.text('Choose a secondary'), findsOneWidget);
     // And the full description travels with it, not a three-line clamp.
     expect(
-      find.textContaining('the printed card text', findRichText: true),
+      find.textContaining('settles a rules dispute', findRichText: true),
       findsOneWidget,
     );
   });

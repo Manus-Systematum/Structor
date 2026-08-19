@@ -284,4 +284,43 @@ void main() {
       expect(good.color, 0xFF3B82F6);
     });
   });
+
+  group('mission cards carry their printed text', () {
+    test('every card has it, and it names the VP', () {
+      // 40kdc publishes the structure and a paraphrase beside it. The
+      // paraphrase reads as a summary because it is one; a player checking
+      // whether they scored wants the sentence off the card (§3.11).
+      if (!available) return;
+
+      final cards = pack.cards.values.toList();
+      expect(cards.length, greaterThan(40));
+
+      final vp = RegExp(r'\d+ VP');
+      final untexted = <String>[];
+      final unpriced = <String>[];
+      for (final card in cards) {
+        if (card.text.trim().isEmpty) {
+          untexted.add(card.id);
+        } else if (!vp.hasMatch(card.text)) {
+          unpriced.add(card.id);
+        }
+      }
+      expect(untexted, isEmpty, reason: 'cards with no text');
+      expect(unpriced, isEmpty, reason: 'cards whose text names no VP');
+    });
+
+    test('the markup is the one the app renders', () {
+      // The source marks keywords two ways — `**bold**` on the primaries and
+      // `<b>` on the secondaries — and only the first is what `ruleSpans`
+      // reads. A tag reaching a screen shows as literal `<b>`.
+      if (!available) return;
+
+      for (final card in pack.cards.values) {
+        expect(card.text, isNot(contains('<b>')), reason: card.id);
+        expect(card.text, isNot(contains(r'$undefined')), reason: card.id);
+        expect('**'.allMatches(card.text).length.isEven, isTrue,
+            reason: '${card.id}: unbalanced emphasis');
+      }
+    });
+  });
 }

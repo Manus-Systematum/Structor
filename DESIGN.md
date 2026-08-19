@@ -1746,6 +1746,53 @@ but not `rules`, which is where a detachment keeps its. Both exclusions are
 right for datasheets and wrong here, and loosening them would have quietly
 put every faction's enhancement list back onto every Character.
 
+### 3.11 Mission card text — gdmissions.app
+
+40kdc publishes each mission card's **structure** — trigger, VP, condition —
+and a hand-written paraphrase beside it. The structure is what the scoring
+controls run on and it is right; the paraphrase is a summary, and a summary is
+the wrong thing to read when you are checking whether you scored:
+
+> *"Central-objective control pays at the end of every one of your turns."*
+> vs **"3 VP: You control one or more central objectives."**
+
+`gdmissions.app` publishes the sentences. The user asked for them; the
+decision and its costs are recorded here rather than only in a conversation.
+
+**The data checks out.** Three cards were compared field by field against what
+the app already shipped, chosen for different shapes — Immovable Object
+(central objectives), Purge and Secure (an `or` pair), Death Trap (per-terrain
+scoring plus an objective action). **All three agree exactly**, triggers, VP
+values, conditions and the action. That is a useful independent confirmation
+that 40kdc's mission data is correct, in the same role the Munitorum plays for
+points (§3.5).
+
+**What is taken, and what is not.** Only the sentence. Every award, trigger,
+round cap and scoring control still runs on 40kdc's structure — nothing that
+*does* anything changed. `tools/fetch-gdm.py` reads the structured card object
+out of each page's server payload rather than scraping rendered HTML, and the
+merge composes the lines from it, following the source's own rule for the VP
+label: a leading `+` when a tier is cumulative, `each` when it pays per
+object, and the cap where there is one. Getting that wrong turns "+2 VP each"
+into "2 VP", which is a different card.
+
+The two markup conventions are normalised on the way in — primaries mark
+keywords `**like this**`, secondaries use `<b>` — so both arrive in the one
+form `ruleSpans` renders (§3.10).
+
+#### The costs, stated
+
+The site publishes **no licence, no terms, no copyright notice and no
+attribution**; `/about`, `/terms`, `/privacy` and `/legal` are all 404. It
+offers no API, no JSON and no repository, so this is a fetch of an
+application's own payload rather than a data source consumed as intended —
+weaker footing than BSData, which at least publishes files meant for reuse.
+The wording is GW's card text, which §3.10 already decided to ship.
+
+43 cards: 25 primary and 18 secondary, complete. The end-phase note no longer
+claims the descriptions are community summaries, because they are not any
+more.
+
 #### The printed rule is the one on screen
 
 The renderer (§7.3.6) exists because 40kdc publishes structure and no wording:
@@ -1777,6 +1824,53 @@ by design (§2.2), so an army saved before this shows the old derived
 sentences until its units are re-added. That is the same property that let a
 roster built against 40kdc survive the source swap at all.
 
+
+### 3.11 Mission card text — gdmissions.app
+
+40kdc publishes each mission card's **structure** — trigger, VP, condition —
+and a hand-written paraphrase beside it. The structure is what the scoring
+controls run on and it is right; the paraphrase is a summary, and a summary is
+the wrong thing to read when you are checking whether you scored:
+
+> *"Central-objective control pays at the end of every one of your turns."*
+> vs **"3 VP: You control one or more central objectives."**
+
+`gdmissions.app` publishes the sentences. The user asked for them; the
+decision and its costs are recorded here rather than only in a conversation.
+
+**The data checks out.** Three cards were compared field by field against what
+the app already shipped, chosen for different shapes — Immovable Object
+(central objectives), Purge and Secure (an `or` pair), Death Trap (per-terrain
+scoring plus an objective action). **All three agree exactly**, triggers, VP
+values, conditions and the action. That is a useful independent confirmation
+that 40kdc's mission data is correct, in the same role the Munitorum plays for
+points (§3.5).
+
+**What is taken, and what is not.** Only the sentence. Every award, trigger,
+round cap and scoring control still runs on 40kdc's structure — nothing that
+*does* anything changed. `tools/fetch-gdm.py` reads the structured card object
+out of each page's server payload rather than scraping rendered HTML, and the
+merge composes the lines from it, following the source's own rule for the VP
+label: a leading `+` when a tier is cumulative, `each` when it pays per
+object, and the cap where there is one. Getting that wrong turns "+2 VP each"
+into "2 VP", which is a different card.
+
+The two markup conventions are normalised on the way in — primaries mark
+keywords `**like this**`, secondaries use `<b>` — so both arrive in the one
+form `ruleSpans` renders (§3.10).
+
+#### The costs, stated
+
+The site publishes **no licence, no terms, no copyright notice and no
+attribution**; `/about`, `/terms`, `/privacy` and `/legal` are all 404. It
+offers no API, no JSON and no repository, so this is a fetch of an
+application's own payload rather than a data source consumed as intended —
+weaker footing than BSData, which at least publishes files meant for reuse.
+The wording is GW's card text, which §3.10 already decided to ship.
+
+43 cards: 25 primary and 18 secondary, complete. The end-phase note no longer
+claims the descriptions are community summaries, because they are not any
+more.
 
 #### The printed rule is the one on screen
 

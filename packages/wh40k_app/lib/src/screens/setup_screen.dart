@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import '../widgets/rule_text.dart';
+
 import '../data/army.dart';
 import '../widgets/deployment_diagram.dart';
 
@@ -499,7 +501,7 @@ class _DispositionOption extends StatelessWidget {
               ),
               if (outcome.card != null) ...[
                 const SizedBox(height: 4),
-                Text(outcome.card!.text,
+                RuleText(outcome.card!.text,
                     style: TextStyle(
                         fontSize: 11.5,
                         height: 1.35,
@@ -553,7 +555,7 @@ class _TheirMission extends StatelessWidget {
                   const TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
           if (outcome.card != null) ...[
             const SizedBox(height: 4),
-            Text(outcome.card!.text,
+            RuleText(outcome.card!.text,
                 style: TextStyle(
                     fontSize: 11.5,
                     height: 1.35,

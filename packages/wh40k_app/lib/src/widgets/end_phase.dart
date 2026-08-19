@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import 'rule_text.dart';
+
 import '../theme.dart';
 import 'sheet_header.dart';
 
@@ -528,7 +530,7 @@ class _PickSheet extends StatelessWidget {
                     // that decides whether the card is worth taking.
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
-                      child: Text(card.text,
+                      child: RuleText(card.text,
                           style: TextStyle(
                               fontSize: 11.5,
                               height: 1.35,
@@ -562,9 +564,8 @@ class _CardTextProvenance extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 10, 16, 4),
       child: Text(
-        'Descriptions are summaries written by the 40kdc community, not the '
-        'printed card text. They are enough to play from; for a rules dispute '
-        'the card itself is authoritative.',
+        'Card text is transcribed, not summarised, but the printed card is '
+        'what settles a rules dispute.',
         style: TextStyle(fontSize: 10.5, height: 1.35, color: scheme.outline),
       ),
     );
@@ -614,7 +615,7 @@ class _CardTile extends StatelessWidget {
             ),
           Padding(
             padding: const EdgeInsets.only(top: 2),
-            child: Text(card.text,
+            child: RuleText(card.text,
                 style:
                     TextStyle(fontSize: 11.5, color: scheme.onSurfaceVariant)),
           ),
