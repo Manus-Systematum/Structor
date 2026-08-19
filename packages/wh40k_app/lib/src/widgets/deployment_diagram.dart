@@ -197,18 +197,24 @@ class _DeploymentDiagramState extends State<DeploymentDiagram> {
 
 /// Board inches to canvas pixels.
 ///
-/// Board coordinates run from the bottom-left and canvas coordinates from the
-/// top-left, so y is flipped once here rather than at every call site.
+/// **Board `y` runs down the screen, not up** (DESIGN.md §7.3.1). This was
+/// the other way round until it was checked against Battlemaster's published
+/// picture of a table, and the whole map — terrain, deployment zones and
+/// territories alike — came out mirrored. Three sources (`battlemaster-11e`,
+/// `gw-11e`, `leviathan`) reflected the same way at once, which points at the
+/// one thing they share rather than at any of them.
 ///
-/// **Turned, the board is rotated a quarter clockwise** — its bottom edge
-/// becomes the screen's left edge, its left edge becomes the top.
+/// A mirrored map is the worst kind of wrong: it is a perfectly plausible
+/// picture of a table that is not the one published, and the only way to find
+/// out is to set the terrain out and lose the game.
 ///
-/// The upright projection already flips y once, so the turned one must flip
-/// exactly once too or the map comes out mirrored, and a player copying a
-/// mirrored map sets out a mirrored table with nothing on screen to say so.
-/// The test for this is the sign of the Jacobian determinant, not the corners:
-/// both `(y, x)` and `(w - y, x)` put the board in the right box and only one
-/// of them is a rotation.
+/// **Turned, the board is rotated a quarter clockwise** — its `y = 0` edge
+/// becomes the screen's right edge, its `x = 0` edge becomes the top.
+///
+/// The two projections must have the *same* handedness or one of them is a
+/// mirror of the other. The test for that is the sign of the Jacobian
+/// determinant, not where the corners land: several arrangements put the
+/// board neatly in its box and only half of them are rotations.
 @visibleForTesting
 Offset projectOnto(
   BoardPoint p, {
@@ -218,8 +224,8 @@ Offset projectOnto(
 }) {
   final scale = canvas.width / (turned ? board.y : board.x);
   return turned
-      ? Offset(p.y * scale, p.x * scale)
-      : Offset(p.x * scale, canvas.height - p.y * scale);
+      ? Offset(canvas.width - p.y * scale, p.x * scale)
+      : Offset(p.x * scale, p.y * scale);
 }
 
 /// Where a piece's marking goes inside its own outline, or null for nowhere.
@@ -484,35 +490,33 @@ class _BoardPainter extends CustomPainter {
       // Drawn end to end in **board** coordinates, so one expression serves
       // both orientations: a line of constant x is vertical upright and
       // horizontal turned, and `project` already knows which.
+      // A ruler belongs to the canvas edge, not to a board edge — which one
+      // of those is at the bottom depends on the orientation, and anchoring
+      // on the board put the numbers off-screen when the projection flipped.
+      void ruler(Offset a, Offset b, String text) {
+        final vertical = (a.dx - b.dx).abs() < 0.5;
+        _tick(
+          canvas,
+          vertical
+              ? Offset(a.dx + _px(2), size.height - _px(11))
+              : Offset(_px(3), a.dy - _px(11)),
+          text,
+        );
+      }
+
       for (var x = step; x < board.x; x += step) {
+        final a = project(BoardPoint(x, 0));
+        final b = project(BoardPoint(x, board.y));
         final labelled = x % 6 == 0;
-        canvas.drawLine(project(BoardPoint(x, 0)),
-            project(BoardPoint(x, board.y)), labelled ? major : minor);
-        if (labelled) {
-          final at = project(BoardPoint(x, 0));
-          _tick(
-            canvas,
-            turned
-                ? Offset(at.dx + _px(3), at.dy + _px(2))
-                : Offset(at.dx + _px(2), at.dy - _px(11)),
-            '${x.toInt()}',
-          );
-        }
+        canvas.drawLine(a, b, labelled ? major : minor);
+        if (labelled) ruler(a, b, '${x.toInt()}');
       }
       for (var y = step; y < board.y; y += step) {
+        final a = project(BoardPoint(0, y));
+        final b = project(BoardPoint(board.x, y));
         final labelled = y % 6 == 0;
-        canvas.drawLine(project(BoardPoint(0, y)),
-            project(BoardPoint(board.x, y)), labelled ? major : minor);
-        if (labelled) {
-          final at = project(BoardPoint(0, y));
-          _tick(
-            canvas,
-            turned
-                ? Offset(at.dx + _px(3), at.dy + _px(2))
-                : Offset(at.dx + _px(3), at.dy - _px(11)),
-            '${y.toInt()}',
-          );
-        }
+        canvas.drawLine(a, b, labelled ? major : minor);
+        if (labelled) ruler(a, b, '${y.toInt()}');
       }
 
       if (table != null) {

@@ -24,23 +24,39 @@ void main() {
     return (b.dx - a.dx) * (c.dy - a.dy) - (b.dy - a.dy) * (c.dx - a.dx);
   }
 
-  test('the upright board puts the origin at the bottom left', () {
-    // Board coordinates count up from the bottom; screens count down.
+  test('the upright board puts board y down the screen', () {
+    // Not up. Checked against Battlemaster's published picture of a table:
+    // with y counting upward the entire map came out mirrored — terrain,
+    // deployment zones and territories together (DESIGN.md §7.3.1).
     expect(
         projectOnto(const BoardPoint(0, 0),
             canvas: upright, board: board, turned: false),
-        const Offset(0, 440));
+        const Offset(0, 0));
     expect(
         projectOnto(const BoardPoint(60, 44),
             canvas: upright, board: board, turned: false),
-        const Offset(600, 0));
+        const Offset(600, 440));
   });
 
   test('turning fills the turned box exactly', () {
     final far = projectOnto(const BoardPoint(60, 44),
         canvas: turned, board: board, turned: true);
-    expect(far.dx, closeTo(440, 0.001));
+    expect(far.dx, closeTo(0, 0.001));
     expect(far.dy, closeTo(600, 0.001));
+  });
+
+  test('the attacker sets up on the left of the turned table', () {
+    // The one absolute check in this file. Sweeping Engagement puts the
+    // attacker at high board y, and Battlemaster's published picture of
+    // take-and-hold-vs-purge-the-foe-1 draws that zone down the LEFT side.
+    // Every other test here is about internal consistency and would pass just
+    // as happily on a mirrored map; this one would not.
+    final attacker = projectOnto(const BoardPoint(30, 40),
+        canvas: turned, board: board, turned: true);
+    final defender = projectOnto(const BoardPoint(30, 4),
+        canvas: turned, board: board, turned: true);
+    expect(attacker.dx, lessThan(turned.width / 2));
+    expect(defender.dx, greaterThan(turned.width / 2));
   });
 
   test('turning rotates the table and does not mirror it', () {
@@ -61,12 +77,12 @@ void main() {
     expect(
       projectOnto(const BoardPoint(36, 0),
           canvas: box, board: square, turned: true),
-      const Offset(0, 360),
+      const Offset(360, 360),
     );
     expect(
       projectOnto(const BoardPoint(36, 0),
           canvas: box, board: square, turned: false),
-      const Offset(360, 360),
+      const Offset(360, 0),
     );
   });
 
