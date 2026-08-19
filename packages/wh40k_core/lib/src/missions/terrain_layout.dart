@@ -105,6 +105,35 @@ class TerrainTemplate {
   /// in the corrections file properly.
   static const _mislabelled = {'CO': 'CD'};
 
+  /// Which corner of a part's own box its L-shaped walls stand in.
+  ///
+  /// **Read off a published picture, because the geometry is not in the
+  /// data.** Every lettered part ships as a `width`/`height` rectangle, so
+  /// the real L cannot be recovered from the footprint — but the walls are
+  /// drawn in Battlemaster's own layout diagrams, and one diagram is enough
+  /// to pin a part for good, since the physical piece never changes. The
+  /// entries below were matched against the published
+  /// `take-and-hold-vs-purge-the-foe-1` table, whose six objective pieces
+  /// carry `EF`+`GH`, `AB`+`Corner` and `Small L`+`CD` between them, each at
+  /// two rotations 180° apart so the two placements cross-check each other.
+  ///
+  /// The value indexes the centred rectangle footprint, whose vertices run
+  /// `0:(-w,-h) 1:(+w,-h) 2:(+w,+h) 3:(-w,+h)`.
+  ///
+  /// **Only the parts actually confirmed are listed.** Everything absent
+  /// falls back to the measured heuristic in [_cornerMark], because a wrong
+  /// corner here is worse than no corner: it states a wall position with the
+  /// same confidence as a right one, and the player sets their table out
+  /// from it.
+  static const _wallCorner = <String, int>{
+    'bm-bm-terrain-11e-1-part-ef': 2,
+    'bm-bm-terrain-11e-1-part-gh': 2,
+  };
+
+  /// The corner this part's walls occupy, or null when it has not been
+  /// confirmed against a published diagram.
+  int? get wallCorner => _wallCorner[id];
+
   /// The marking on the physical piece — `AB`, `CD`, `EF`, `GH`, `Tower`.
   ///
   /// Battlemaster's parts are lettered, and the whole point of a table
@@ -177,8 +206,16 @@ class PlacedBuilding {
 List<BoardPoint> _cornerMark(
   List<BoardPoint> outline, {
   List<BoardPoint> base = const [],
+  int? corner,
 }) {
   if (outline.length < 3) return const [];
+
+  // A confirmed corner is a fact and outranks the heuristic. `_place` keeps
+  // vertex order through rotation and translation, so the index recorded in
+  // the part's own frame still names the same corner of the placed outline.
+  if (corner != null && corner >= 0 && corner < outline.length) {
+    return _tickAt(outline, corner);
+  }
 
   var chosen = 0;
   if (base.length >= 3) {
@@ -200,6 +237,17 @@ List<BoardPoint> _cornerMark(
     }
   }
 
+  return _tickAt(outline, chosen);
+}
+
+/// The tick itself: a polyline hugging [chosen], reaching partway down each
+/// edge that meets there.
+///
+/// **A fraction of each edge, not a fixed length**, so the arms come out at
+/// the proportions of the piece — the long wall reads long and the short one
+/// short. That is the whole of "which way is this piece turned" once the
+/// corner is known.
+List<BoardPoint> _tickAt(List<BoardPoint> outline, int chosen) {
   const reach = 0.45;
   BoardPoint towards(BoardPoint from, BoardPoint to) => BoardPoint(
         from.x + (to.x - from.x) * reach,
@@ -367,8 +415,7 @@ class TerrainPiece {
       templateId: strOr(j['template'], ''),
       // A piece's own inline footprint is an area, never a building part, so
       // it is recentred like any other.
-      footprint:
-          _centreOnOrigin(_footprintOf(j['footprint'], centred: false)),
+      footprint: _centreOnOrigin(_footprintOf(j['footprint'], centred: false)),
       position: BoardPoint.fromJson(j['position']),
       // Absent on a quarter of the pieces, which simply means unrotated.
       rotationDegrees: dblOr(j['rotation_degrees'], 0),
@@ -419,7 +466,7 @@ class TerrainPiece {
       out.add(PlacedBuilding(
         label: part.label,
         outline: placed,
-        cornerMark: _cornerMark(placed, base: base),
+        cornerMark: _cornerMark(placed, base: base, corner: part.wallCorner),
       ));
     }
     return out;

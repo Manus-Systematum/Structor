@@ -130,7 +130,8 @@ void main() {
       });
       expect(outline, hasLength(4));
       double span(Iterable<double> vs) =>
-          vs.reduce((a, b) => a > b ? a : b) - vs.reduce((a, b) => a < b ? a : b);
+          vs.reduce((a, b) => a > b ? a : b) -
+          vs.reduce((a, b) => a < b ? a : b);
       expect(span(outline.map((p) => p.x)), 3.75);
       expect(span(outline.map((p) => p.y)), 4.5);
     });
@@ -483,8 +484,8 @@ void main() {
         ];
         for (var i = 0; i < areas.length; i++) {
           for (var j = i + 1; j < areas.length; j++) {
-            final d = math.max(depth(areas[i], areas[j]),
-                depth(areas[j], areas[i]));
+            final d =
+                math.max(depth(areas[i], areas[j]), depth(areas[j], areas[i]));
             if (d > worst) worst = d;
             if (d > 1.0) deep++;
           }
@@ -507,8 +508,7 @@ void main() {
   });
 
   group('the markings on the pieces', () {
-    test('a building carries the letter its physical piece is marked with',
-        () {
+    test('a building carries the letter its physical piece is marked with', () {
       final labels = {
         for (final layout in pack.terrainLayouts)
           for (final piece in layout.pieces)
@@ -538,8 +538,7 @@ void main() {
       expect(labelOf('Catwalk'), 'Catwalk');
     });
 
-    test('rotation is real information, so the tick has something to show',
-        () {
+    test('rotation is real information, so the tick has something to show', () {
       // A bounding box is symmetric: 0° and 180° draw the same picture. That
       // upstream distinguishes them anyway is the evidence the underlying
       // shape is not symmetric — these are L-shaped ruins and the rotation
@@ -649,8 +648,8 @@ void main() {
 
       for (final mine in dispositions) {
         for (final theirs in dispositions) {
-          final layouts = pack.layoutsFor(
-              disposition: mine, opponentDisposition: theirs);
+          final layouts =
+              pack.layoutsFor(disposition: mine, opponentDisposition: theirs);
           expect(layouts, hasLength(3), reason: '$mine vs $theirs');
           expect(layouts.map((l) => l.variant), [1, 2, 3]);
         }
@@ -689,5 +688,48 @@ void main() {
       'opponentMissionId': 'n',
     });
     expect(old.terrainLayoutId, isNull);
+  });
+  group('walls read off a published diagram', () {
+    // Battlemaster's own layout picture for take-and-hold-vs-purge-the-foe-1
+    // shows where each ruin's walls stand. The picture was tied to this data
+    // by fitting one affine map against all six objective positions *and*
+    // both halves of the staggered deployment zones, so the correspondence is
+    // not a guess about which piece is which.
+    test('EF stands in the same corner of its box at both placements', () {
+      final layout = pack.terrainLayouts
+          .firstWhere((l) => l.id == 'take-and-hold-vs-purge-the-foe-1');
+      final templates = pack.terrainTemplates;
+
+      BoardPoint tickOf(String pieceId) {
+        final piece = layout.pieces.firstWhere((p) => p.id == pieceId);
+        final ef =
+            piece.buildings(templates).firstWhere((b) => b.label == 'EF');
+        // The middle point of the three is the corner itself.
+        return ef.cornerMark[1];
+      }
+
+      // Read from the picture: the walls hug the corner of EF's box that the
+      // part's own frame calls (+w, +h). The two placements are 180 degrees
+      // apart, so confirming both is the cross-check — a misread would put
+      // them in corners that are not opposite.
+      final a = tickOf('area-04');
+      final b = tickOf('area-12');
+      expect(a.x, closeTo(5.5, 0.15));
+      expect(a.y, closeTo(16.55, 0.15));
+      expect(b.x, closeTo(54.5, 0.15));
+      expect(b.y, closeTo(27.45, 0.15));
+    }, skip: skip);
+
+    test('a part with no confirmed corner still gets the heuristic', () {
+      // Only EF and GH have been matched so far. Everything else must keep
+      // the measured fallback rather than silently losing its tick.
+      final layout = pack.terrainLayouts
+          .firstWhere((l) => l.id == 'take-and-hold-vs-purge-the-foe-1');
+      final templates = pack.terrainTemplates;
+      final piece = layout.pieces.firstWhere((p) => p.id == 'area-02');
+      for (final b in piece.buildings(templates)) {
+        expect(b.cornerMark, hasLength(3), reason: b.label);
+      }
+    }, skip: skip);
   });
 }
