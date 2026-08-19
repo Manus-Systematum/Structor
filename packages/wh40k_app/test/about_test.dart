@@ -38,6 +38,9 @@ void main() {
     // phrase and a link. If this test fails, the app is out of compliance —
     // fix the screen, not the test.
     expect(find.text('Powered by 40kdc-data'), findsOneWidget);
+    // Wahapedia's export asks for this phrase in return for the stratagem
+    // text; it is the only thing the source asks for (§3.12).
+    expect(find.text('Powered by Wahapedia'), findsOneWidget);
     expect(find.text('https://40kdc.alpacasoft.dev'), findsOneWidget);
     expect(find.textContaining('CC BY 4.0'), findsOneWidget);
     expect(find.textContaining('Alpaca Software'), findsOneWidget);

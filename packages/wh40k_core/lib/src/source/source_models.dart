@@ -735,6 +735,14 @@ class SourceStratagem {
   final String? playerTurn;
   final String? timing;
   final String? abilityId;
+
+  /// The stratagem as printed: when it may be used, what it targets, what it
+  /// does, and what restricts it.
+  ///
+  /// 40kdc publishes none — §3.0's position, and the reason this was the last
+  /// surface in the app showing a name and a cost and nothing else (§3.12).
+  final String? text;
+
   final int cpCost;
   final List<String> phases;
 
@@ -758,6 +766,7 @@ class SourceStratagem {
     required this.cpCost,
     required this.phases,
     required this.gameVersion,
+    this.text,
     this.requiredKeywords = const [],
     this.requiredKeywordsAny = const [],
   });
@@ -774,6 +783,7 @@ class SourceStratagem {
       playerTurn: str(j['player_turn']),
       timing: str(j['timing']),
       abilityId: str(j['ability_id']),
+      text: str(j['text']),
       cpCost: intOr(j['cp_cost'], 0),
       phases: strList(j['phases']),
       requiredKeywords: strList(restrictions['required_keywords']),

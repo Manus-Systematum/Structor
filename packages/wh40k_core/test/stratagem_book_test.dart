@@ -41,7 +41,7 @@ void main() {
       expect(rows.map((r) => r.id), isNot(contains('elsewhere')));
       // 'dear' costs 3 against 2 CP, 'theirs' is out of turn; both sort down.
       expect(rows.take(2).map((r) => r.id), containsAll(['cheap', 'yours']));
-      expect(rows.every((r) => r.playable) , isFalse);
+      expect(rows.every((r) => r.playable), isFalse);
       expect(rows.last.playable, isFalse);
     });
 
@@ -84,8 +84,7 @@ void main() {
     final book = StratagemBook(stratagems: [
       _stratagem(id: 'phasely', phases: bothPhases),
       _stratagem(id: 'turnly', timing: 'once-per-turn', phases: bothPhases),
-      _stratagem(id: 'battlely', timing: 'once-per-battle',
-          phases: bothPhases),
+      _stratagem(id: 'battlely', timing: 'once-per-battle', phases: bothPhases),
     ]);
 
     const play = UseStratagem(
@@ -216,7 +215,9 @@ void main() {
         );
       }
       expect(
-        targets.firstWhere((t) => t.label.startsWith('Broadside')).blockedReason,
+        targets
+            .firstWhere((t) => t.label.startsWith('Broadside'))
+            .blockedReason,
         'not Character',
       );
     }, skip: available ? null : 'no snapshot');
@@ -237,10 +238,7 @@ void main() {
 
       String? reasonFor(String phase) => book
           .targetsFor(anyUnit,
-              roster: roster,
-              catalogue: dataset,
-              phase: phase,
-              state: state)
+              roster: roster, catalogue: dataset, phase: phase, state: state)
           .firstWhere((t) => t.instanceId == 'u01')
           .blockedReason;
 
@@ -273,18 +271,101 @@ void main() {
       });
 
       // Every phase of the turn page has something to offer.
-      for (final phase in ['command', 'movement', 'shooting', 'charge',
-          'fight']) {
-        expect(book.forPhase(phase, state: const BattleState(cp: 3)),
-            isNotEmpty, reason: phase);
+      for (final phase in [
+        'command',
+        'movement',
+        'shooting',
+        'charge',
+        'fight'
+      ]) {
+        expect(
+            book.forPhase(phase, state: const BattleState(cp: 3)), isNotEmpty,
+            reason: phase);
       }
 
       // And the source is named, because at two detachments half the list is
       // not the half you are reading.
-      final shooting = book.forPhase('shooting',
-          state: const BattleState(cp: 3));
+      final shooting =
+          book.forPhase('shooting', state: const BattleState(cp: 3));
       expect(shooting.map((s) => s.source),
           contains('Experimental Prototype Cadre'));
     }, skip: available ? null : 'no snapshot');
+  });
+
+  group('stratagems carry their printed text', () {
+    test('nearly all of them do, and it reads as a card', () {
+      // This was the last surface showing a name and a cost and nothing about
+      // what the thing does: 2,236 stratagems, none with text (§3.12).
+      final root = Directory('../../data/merged');
+      if (!root.existsSync()) return;
+      final loader = DatasetLoader('../../data/merged',
+          corrections:
+              DatasetLoader.correctionsAt('../../data-corrections.yaml'));
+
+      var total = 0, withText = 0;
+      for (final factionId in loader.availableFactions()) {
+        for (final s in loader.loadFaction(factionId).stratagems) {
+          total++;
+          if ((s.text ?? '').trim().isNotEmpty) withText++;
+        }
+      }
+      expect(total, greaterThan(2000));
+      expect(withText / total, greaterThan(0.85),
+          reason: '$withText of $total carry text');
+    });
+
+    test('the markup is the one the app renders', () {
+      // Wahapedia marks keywords with `<b>`; the app reads `**`. A tag
+      // reaching a screen shows as a literal `<b>` mid-sentence (§3.10).
+      final root = Directory('../../data/merged');
+      if (!root.existsSync()) return;
+      final loader = DatasetLoader('../../data/merged',
+          corrections:
+              DatasetLoader.correctionsAt('../../data-corrections.yaml'));
+
+      for (final factionId in loader.availableFactions()) {
+        for (final s in loader.loadFaction(factionId).stratagems) {
+          final text = s.text;
+          if (text == null) continue;
+          expect(text, isNot(contains('<b>')), reason: s.id);
+          expect(text, isNot(contains('<br')), reason: s.id);
+          expect('**'.allMatches(text).length.isEven, isTrue,
+              reason: '${s.id}: unbalanced emphasis');
+        }
+      }
+    });
+
+    test('a list of conditions stays a list', () {
+      // COMMAND RE-ROLL names eight kinds of roll, and Wahapedia writes them
+      // as `<ul><li>`. Stripping the tags ran them together into
+      // `**Advance roll****Charge roll****Damage roll**` — every word still
+      // there, the shape of the rule gone. A bullet belongs at the start of
+      // its own line or it is not doing its job.
+      final root = Directory('../../data/merged');
+      if (!root.existsSync()) return;
+      final loader = DatasetLoader('../../data/merged',
+          corrections:
+              DatasetLoader.correctionsAt('../../data-corrections.yaml'));
+
+      var withBullets = 0;
+      for (final factionId in loader.availableFactions()) {
+        for (final s in loader.loadFaction(factionId).stratagems) {
+          final text = s.text;
+          if (text == null) continue;
+          expect(text, isNot(contains('****')),
+              reason: '${s.id}: run-together emphasis, usually a lost list');
+          if (!text.contains('\u2022 ')) continue;
+          withBullets++;
+          for (final line in text.split('\n')) {
+            expect('\u2022 '.allMatches(line), hasLength(lessThan(2)),
+                reason: '${s.id}: two bullets on one line');
+          }
+        }
+      }
+      // 47 of them at the time of writing; the check is that lists survive
+      // the pipeline at all, so the bound is loose.
+      expect(withBullets, greaterThan(30),
+          reason: 'bulleted stratagems exist; $withBullets found');
+    });
   });
 }

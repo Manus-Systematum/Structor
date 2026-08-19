@@ -39,8 +39,14 @@ class AvailableStratagem {
   final String source;
 
   /// The rendered effect, when the data carries one. Most stratagems have no
-  /// `ability_id` at all, and §7.6 forbids inventing the text.
+  /// `ability_id` at all.
   final RenderedRule? effect;
+
+  /// The stratagem as printed — when, target, effect, restrictions.
+  ///
+  /// What a player reads. [effect] is a sentence derived from structure and
+  /// exists for the handful that carry one; this is the card (§3.12).
+  String? get text => stratagem.text;
 
   /// Empty when playable.
   final Set<StratagemBlock> blocks;

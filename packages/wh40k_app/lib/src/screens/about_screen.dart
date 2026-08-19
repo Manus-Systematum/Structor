@@ -80,6 +80,36 @@ class _AboutScreenState extends State<AboutScreen> {
             'were made: the data is repackaged into compressed bundles and '
             'rendered by this app.',
           ),
+
+          const SizedBox(height: 14),
+          // Wahapedia's data export asks for exactly this phrase: "When
+          // publishing your work, mentioning Wahapedia is highly recommended.
+          // For example, with the inscription 'powered by Wahapedia'."
+          const Text('Powered by Wahapedia',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 2),
+          const SelectableText('https://wahapedia.ru/wh40k11ed/',
+              style: TextStyle(fontSize: 13)),
+          const SizedBox(height: 10),
+          const _Body(
+            'Stratagem rules text comes from the Wahapedia 11th edition data '
+            'export. The eleven Core Stratagems are transcribed from the free '
+            'Warhammer 40,000 Core Rules published by Games Workshop, by way '
+            'of the stratagem card generator by pguetschow.',
+          ),
+          const SizedBox(height: 2),
+          const SelectableText(
+            'https://github.com/pguetschow/warhammer-40k-stratagem-card-generator',
+            style: TextStyle(fontSize: 12),
+          ),
+
+          const SizedBox(height: 14),
+          // The trademark disclaimer is stated once, further down; repeating
+          // it here would be two answers to the same question.
+          const _Body(
+            'Datasheet and ability text are drawn from BSData, and mission '
+            'card text from gdmissions.app.',
+          ),
           if (manifest != null) ...[
             const SizedBox(height: 10),
             _Row(label: 'Dataset', value: manifest.generated),

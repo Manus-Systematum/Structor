@@ -3360,7 +3360,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** Any phase, just after you make one of the following rolls for a friendly unit or model:\n\n• **Advance roll**\n• **Charge roll**\n• **Damage roll**\n• **Hazard roll**\n• **Hit roll**\n• **Save roll**\n• **Wound roll**\n• A roll to determine the number of attacks generated with a weapon.\n\n**TARGET:** That unit or model.\n\n**EFFECT:** You re-roll that roll. If you are rolling more than one dice together, select one of those dice to re-roll (excluding **charge rolls**, which you must re-roll in full)."
     },
     "counter-offensive": {
       "id": "counter-offensive",
@@ -3379,7 +3380,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** Fight phase, just after an enemy unit has fought.\n\n**TARGET:** One unit from your army that is within Engagement Range of one or more enemy units and that has not already been selected to fight this phase.\n\n**EFFECT:** Your unit fights next."
     },
     "epic-challenge": {
       "id": "epic-challenge",
@@ -3402,7 +3404,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** Fight phase, just after a friendly **CHARACTER** unit is **selected to fight**.\n\n**TARGET:** That **CHARACTER** unit.\n\n**EFFECT:** Select one **CHARACTER** model in your unit. Until the end of the phase, that model’s melee weapons have the [PRECISION] ability."
     },
     "insane-bravery": {
       "id": "insane-bravery",
@@ -3421,7 +3424,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** Battle-shock step of your Command phase, just before you make a **battle-shock roll** for a friendly unit.\n\n**TARGET:** That unit.\n\n**EFFECT:** That **battle-shock roll** is automatically successful.\n\n**RESTRICTIONS:** You cannot use this **stratagem** more than once per battle."
     },
     "explosives": {
       "id": "explosives",
@@ -3445,7 +3449,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One friendly **unengaged** **EXPLOSIVES/GRENADES** unit that is **eligible to shoot** and did not make an **advance move** this turn.\n\n**EFFECT:** Resolve the following sequence:\n1. Select one **EXPLOSIVES/GRENADES** model in your unit.\n2. Select one **unengaged** enemy unit within 8\" of and **visible** to that model.\n3. Roll six D6: for each 4+, that enemy unit suffers 1 **mortal wound** (06.02)."
     },
     "crushing-impact": {
       "id": "crushing-impact",
@@ -3469,7 +3474,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** Your Charge phase, just after a friendly **MONSTER/VEHICLE** unit ends a **charge move**.\n\n**TARGET:** That **MONSTER/VEHICLE** unit.\n\n**EFFECT:** Resolve the following sequence:\n1. Select one enemy unit **engaged** with your unit.\n2. Select one model in your unit **engaged** with that enemy unit.\n3. Roll a number of D6 equal to the T characteristic of that model: for each 1, your unit suffers 1 **mortal wound**; for each 5+, that enemy unit suffers 1 **mortal wound** (to a maximum of 6 **mortal wounds** per unit)."
     },
     "rapid-ingress": {
       "id": "rapid-ingress",
@@ -3488,7 +3494,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** End of your opponent’s Movement phase.\n\n**TARGET:** One friendly unit that is in **strategic reserves** (excluding AIRCRAFT).\n\n**EFFECT:** Your unit makes an **ingress move** (20.04).\n\n**RESTRICTIONS:** You cannot use this **stratagem** during the first battle round."
     },
     "fire-overwatch": {
       "id": "fire-overwatch",
@@ -3508,7 +3515,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** End of your opponent’s Movement phase.\n\n**TARGET:** One friendly **unengaged** unit (excluding **TITANIC** units).\n\n**EFFECT:** Your unit shoots using **snap shooting** (see below)."
     },
     "smokescreen": {
       "id": "smokescreen",
@@ -3531,7 +3539,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** Start of your opponent’s Shooting phase.\n\n**TARGET:** One friendly **SMOKE** unit.\n\n**EFFECT:** Until the end of the phase, each time an attack targets either your **SMOKE** unit, or a unit that is not **fully visible** to the attacking model because of one or more models in your **SMOKE** unit, the target has the **benefit of cover** against that attack (13.08)."
     },
     "heroic-intervention": {
       "id": "heroic-intervention",
@@ -3550,7 +3559,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** End of your opponent’s Charge phase.\n\n**TARGET:** One friendly **unengaged** unit within 12\" of one or more enemy units. You can only select a VEHICLE unit if it is a CHARACTER/WALKER unit.\n\n**EFFECT:** **Resolve a charge** with your unit (11.02). While doing so, before making the **charge roll**, you must select one of the following modes:\n\n• Leap to Defend: When selecting **charge targets**, you can only select enemy units that made a **charge move** this phase and are within the **maximum distance**.\n+1CP\n• Into the Fray:\n\n• When making the **charge roll**, if the result is greater than 6 (after modifiers), change it to 6.\n• When selecting **charge targets**, you can select any enemy units that are within 6\" of your unit and within the **maximum distance**."
     },
     "automated-repair-drones-experimental-prototype-cadre": {
       "id": "automated-repair-drones-experimental-prototype-cadre",
@@ -3587,7 +3597,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly PATHFINDER TEAM/ STEALTH BATTLESUITS unit, if that friendly unit is hidden.\n\n**TARGET:** That PATHFINDER TEAM/STEALTH BATTLESUITS unit.\n\n**EFFECT:** Your unit has +1 **Sv**."
     },
     "experimental-ammunition-experimental-prototype-cadre": {
       "id": "experimental-ammunition-experimental-prototype-cadre",
@@ -3606,7 +3617,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** Your Shooting phase, when a friendly BATTLESUIT CHARACTER unit is selected to shoot.\n\n**TARGET:** That BATTLESUIT CHARACTER unit.\n\n**EFFECT:** Your unit’s ranged attacks have:\n\n• +1 **S**.\n• **OR:** +1 **S**, **AP** and [HAZARDOUS]."
     },
     "experimental-weaponry-experimental-prototype-cadre": {
       "id": "experimental-weaponry-experimental-prototype-cadre",
@@ -3643,7 +3655,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** End of your Movement phase.\n\n**TARGET:** One friendly PATHFINDER TEAM/STEALTH BATTLESUITS unit.\n\n**EFFECT:** Select one objective your unit is controlling. That **objective** is secured."
     },
     "microdrone-support-advanced-acquisition-cadre": {
       "id": "microdrone-support-advanced-acquisition-cadre",
@@ -3661,7 +3674,8 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "text": "**WHEN:** Your Shooting phase, when a friendly PATHFINDER TEAM/ STEALTH BATTLESUITS unit starts an action.\n\n**TARGET:** That PATHFINDER TEAM/STEALTH BATTLESUITS unit.\n\n**EFFECT:** That **action** does not prevent your unit from being eligible to shoot."
     },
     "neuroweb-system-jammer-experimental-prototype-cadre": {
       "id": "neuroweb-system-jammer-experimental-prototype-cadre",

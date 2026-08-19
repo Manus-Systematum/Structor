@@ -98,8 +98,13 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
 
-    for (final phase in ['command', 'movement', 'shooting', 'charge',
-        'fight']) {
+    for (final phase in [
+      'command',
+      'movement',
+      'shooting',
+      'charge',
+      'fight'
+    ]) {
       await tester.pumpWidget(list(
         phase: phase,
         state: const BattleState(cp: 1),
@@ -137,5 +142,33 @@ void main() {
       find.text('already used a Stratagem this phase'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('the printed text keeps its list of conditions', (tester) async {
+    // COMMAND RE-ROLL names the rolls it applies to as a bulleted list. The
+    // first version of the merge stripped `<ul><li>` and left
+    // `**Advance roll****Charge roll****Damage roll**` — one long line that
+    // reads as nothing, in a card you consult mid-turn (§3.12).
+    tester.view.physicalSize = const Size(1200, 4000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(list(
+      state: const BattleState(cp: 3),
+      onEvent: (_) {},
+    ));
+
+    final rendered = tester
+        .widgetList<RichText>(find.byType(RichText))
+        .map((w) => w.text.toPlainText())
+        .firstWhere((t) => t.contains('Advance roll'));
+
+    expect(rendered, contains('\u2022 Advance roll'));
+    expect(rendered, isNot(contains('**')),
+        reason: 'markup is applied, not shown');
+    for (final line in rendered.split('\n')) {
+      expect('\u2022 '.allMatches(line), hasLength(lessThan(2)),
+          reason: 'two bullets on one line: $line');
+    }
   });
 }

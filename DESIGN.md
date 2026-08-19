@@ -1268,8 +1268,8 @@ This is §6.4's format design cashing out. It works with no network, which a sha
 
 ### 7.7 Open questions
 
-- [ ] Who authors the initial stratagem pack, and how is it distributed given §0's copyright posture? Community-contributed is the intended answer; it needs a real plan.
-- [ ] Is there an existing community stratagem dataset with usable licensing? (Wahapedia has the data but its terms forbid scraping.)
+- [x] Who authors the initial stratagem pack, and how is it distributed given §0's copyright posture? **Answered by §3.12** — nobody authors it; two existing sources carry it.
+- [x] Is there an existing community stratagem dataset with usable licensing? **Yes, two** (§3.12). The parenthetical here previously said Wahapedia's terms forbid scraping; that was written from memory and is wrong. Its `robots.txt` disallows two admin paths and nothing else, and it publishes a bulk CSV export intended for reuse.
 - [ ] Does the terrain-based objective change (§4.4) justify a deployment/terrain layout view?
 
 ---
@@ -1803,85 +1803,6 @@ player's codex, and no paraphrase of ours improves on it:
 | Rendered from structure | As printed |
 | --- | --- |
 | `+1 Wound.` | Add 1 to the bearer's Wounds characteristic. |
-| `Shooting phase: grants a shoot while hidden.` | In your Shooting phase, when a friendly **PATHFINDER TEAM** unit… |
-| `Gain 1 Miracle dice.` | Once per battle, after this unit has performed an Act of Faith, you gain 1 Miracle dice. |
-
-**The structure does not go away, it stops being the display.**
-`RenderedRule.derived` still carries the sentence built from the effect, and
-everything that reads an effect rather than a sentence is untouched: phase
-tags, the invulnerable save on the statline, scout distance, and §3.6's
-corrections. A correction fixes what the app **does**; the printed text fixes
-what it **says**, and the two are now tested separately — the display through
-`text`, the derivation through `derived`.
-
-One consequence worth stating: a rule BSData printed is never a bare keyword
-(§7.3.11), whatever its structure says. Deep Strike used to compress to a chip
-because 40kdc encodes it as a grant of itself and there was nothing to render.
-There is now.
-
-**Saved rosters keep the wording they were built with.** A snapshot is frozen
-by design (§2.2), so an army saved before this shows the old derived
-sentences until its units are re-added. That is the same property that let a
-roster built against 40kdc survive the source swap at all.
-
-
-### 3.11 Mission card text — gdmissions.app
-
-40kdc publishes each mission card's **structure** — trigger, VP, condition —
-and a hand-written paraphrase beside it. The structure is what the scoring
-controls run on and it is right; the paraphrase is a summary, and a summary is
-the wrong thing to read when you are checking whether you scored:
-
-> *"Central-objective control pays at the end of every one of your turns."*
-> vs **"3 VP: You control one or more central objectives."**
-
-`gdmissions.app` publishes the sentences. The user asked for them; the
-decision and its costs are recorded here rather than only in a conversation.
-
-**The data checks out.** Three cards were compared field by field against what
-the app already shipped, chosen for different shapes — Immovable Object
-(central objectives), Purge and Secure (an `or` pair), Death Trap (per-terrain
-scoring plus an objective action). **All three agree exactly**, triggers, VP
-values, conditions and the action. That is a useful independent confirmation
-that 40kdc's mission data is correct, in the same role the Munitorum plays for
-points (§3.5).
-
-**What is taken, and what is not.** Only the sentence. Every award, trigger,
-round cap and scoring control still runs on 40kdc's structure — nothing that
-*does* anything changed. `tools/fetch-gdm.py` reads the structured card object
-out of each page's server payload rather than scraping rendered HTML, and the
-merge composes the lines from it, following the source's own rule for the VP
-label: a leading `+` when a tier is cumulative, `each` when it pays per
-object, and the cap where there is one. Getting that wrong turns "+2 VP each"
-into "2 VP", which is a different card.
-
-The two markup conventions are normalised on the way in — primaries mark
-keywords `**like this**`, secondaries use `<b>` — so both arrive in the one
-form `ruleSpans` renders (§3.10).
-
-#### The costs, stated
-
-The site publishes **no licence, no terms, no copyright notice and no
-attribution**; `/about`, `/terms`, `/privacy` and `/legal` are all 404. It
-offers no API, no JSON and no repository, so this is a fetch of an
-application's own payload rather than a data source consumed as intended —
-weaker footing than BSData, which at least publishes files meant for reuse.
-The wording is GW's card text, which §3.10 already decided to ship.
-
-43 cards: 25 primary and 18 secondary, complete. The end-phase note no longer
-claims the descriptions are community summaries, because they are not any
-more.
-
-#### The printed rule is the one on screen
-
-The renderer (§7.3.6) exists because 40kdc publishes structure and no wording:
-it says what an effect *means* in English so a screen has something to show.
-Where BSData supplies the rule as printed, that sentence is the one in the
-player's codex, and no paraphrase of ours improves on it:
-
-| Rendered from structure | As printed |
-| --- | --- |
-| `+1 Wound.` | Add 1 to the bearer's Wounds characteristic. |
 | `Shooting phase: grants a shoot while hidden.` | In your Shooting phase, when a friendly PATHFINDER TEAM unit… |
 | `Gain 1 Miracle dice.` | Once per battle, after this unit has performed an Act of Faith, you gain 1 Miracle dice. |
 
@@ -1910,3 +1831,51 @@ leftover half that reached the screen.
 by design (§2.2), so an army saved before this shows the old derived sentences
 until its units are re-added. That is the same property that let a roster
 built against 40kdc survive the source swap at all.
+
+
+### 3.12 Stratagem text — Wahapedia and the card-generator repo
+
+A stratagem was a name, a cost and a phase. That is enough to *find* one and
+not enough to *use* one: the entire content of the decision — when it can be
+used, what it targets, what it does — was the part not shipped. 2,246 of them,
+none with text.
+
+**Two sources, and the fuller one wins per stratagem.**
+
+| Source | What it has | Licence posture |
+| --- | --- | --- |
+| Wahapedia `Stratagems.csv` | all 2,246 rows, faction and core | published bulk export; asks for "Powered by Wahapedia" |
+| [warhammer-40k-stratagem-card-generator](https://github.com/pguetschow/warhammer-40k-stratagem-card-generator) | the core stratagems, transcribed | MIT |
+
+Neither is a paraphrase; both are the printed card. Where both have a
+stratagem the longer text is kept, which in practice means Wahapedia except
+where its row is a truncated stub. **2,055 of 2,246 (91%) carry text**; the
+191 without are stratagems absent from both exports, and they still render as
+name, cost and phase rather than disappearing.
+
+The earlier note that Wahapedia's terms forbid scraping was **wrong, and was
+mine** — I had not checked. `robots.txt` disallows `/wh40k10ed/admin` and
+`/login` and nothing else, and the CSV export exists precisely to be consumed.
+The attribution it asks for is on the About screen and tested, alongside
+40kdc's, and the repo is credited there too.
+
+#### Lists are structure, and stripping tags loses the sentence
+
+Wahapedia marks up its text as HTML. The first merge turned `<b>` into `**`,
+`<br>` into a newline, and deleted every other tag — which quietly destroyed
+the one thing a bulleted rule is made of. COMMAND RE-ROLL came out as:
+
+> `**WHEN:** …one of the following rolls…:` \
+> `**Advance roll****Charge roll****Damage roll****Hazard roll**…`
+
+Every word present, the shape gone, in a card read mid-turn under time
+pressure. `<ul><li>` now becomes a bullet on its own line, and the `▪` the
+repo's transcription uses becomes the same bullet, so the two sources produce
+one format. 47 stratagems carry lists; both the merged data and the rendered
+widget are tested for it, because "no `<b>` survived" was true of the broken
+version too.
+
+**The text is the display, the structure is not gone.** Same split as §3.10:
+`SourceStratagem.text` is what the player reads, and every control — phase
+filter, CP cost, once-per-turn, the target picker — still runs on the
+structured fields. Nothing that *does* anything reads the sentence.

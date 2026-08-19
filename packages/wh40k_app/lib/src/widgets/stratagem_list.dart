@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import 'rule_text.dart';
+
 import '../data/army.dart';
 
 /// Stratagems for one phase section of the turn page (DESIGN.md §7.3).
@@ -131,16 +133,17 @@ class _StratagemRow extends StatelessWidget {
                           .withValues(alpha: playable ? 1 : 0.6),
                     ),
                   ),
-                  // Rendered from the structured effect where the data has
-                  // one. Most stratagems carry no ability at all, and §7.6
-                  // forbids inventing the text — so the row says what it
-                  // knows and stops.
-                  if (entry.effect case final effect?)
+                  // The stratagem as printed. Where there is none, the
+                  // sentence derived from a structured effect stands in —
+                  // most stratagems have neither, and the row then says what
+                  // it knows and stops (§3.12).
+                  if (entry.text ?? entry.effect?.text case final body?)
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
-                      child: Text(
-                        effect.text,
-                        style: TextStyle(fontSize: 11.5, color: foreground),
+                      child: RuleText(
+                        body,
+                        style: TextStyle(
+                            fontSize: 11.5, height: 1.35, color: foreground),
                       ),
                     ),
                   if (entry.blockedReason case final reason?)

@@ -28,6 +28,10 @@ const _conflictsPath = '$_root/data-conflicts.json';
 /// Mission card text, fetched by `tools/fetch-gdm.py` (DESIGN.md §3.11).
 const _gdmPath = '$_root/data/gdm/cards.json';
 
+/// Stratagem text, fetched by `tools/fetch-stratagem-text.py` (§3.12).
+const _wahapediaPath = '$_root/data/stratagem-text/wahapedia-stratagems.csv';
+const _coreStratagemPath = '$_root/data/stratagem-text/core-stratagems.json';
+
 /// Enhancements whose printed wording could not be found by name, with
 /// suggestions — and the hand-made matches for them.
 ///
@@ -216,12 +220,14 @@ void main(List<String> args) {
         'enhancements linked to their printed text');
     stdout.writeln('${_applyMissionText()} mission cards given their '
         'printed text');
-    File(_conflictsPath).writeAsStringSync(
-        '${const JsonEncoder.withIndent('  ').convert({
-              'note': 'BSData over 40kdc; BSData wins every row here. '
-                  'DESIGN.md §3.10.',
-              'conflicts': allConflicts,
-            })}\n');
+    stdout.writeln('${_applyStratagemText(factions)} stratagems given their '
+        'printed text');
+    File(_conflictsPath)
+        .writeAsStringSync('${const JsonEncoder.withIndent('  ').convert({
+          'note': 'BSData over 40kdc; BSData wins every row here. '
+              'DESIGN.md §3.10.',
+          'conflicts': allConflicts,
+        })}\n');
   }
 
   stdout.writeln('\n$totalUnits datasheets, $totalAdded added by BSData');
@@ -325,7 +331,8 @@ Map<String, Object?> _worklistEntry(
   final name = strOr(record['name'], '');
   final candidates = <({String id, String name, String text})>[];
   for (final source in [factionId, if (parentId != null) parentId]) {
-    for (final raw in _readArray('$_outRoot/enrichment/$source/abilities.json')) {
+    for (final raw
+        in _readArray('$_outRoot/enrichment/$source/abilities.json')) {
       final ability = asMap(raw);
       final text = str(ability['description']);
       final id = str(ability['ability_id']);
@@ -403,15 +410,15 @@ void _writeWorklist(
   // it — regenerating over someone's work is how a file like this stops being
   // trusted.
   final existing = File(_manualPath).existsSync()
-      ? asList(asMap(jsonDecode(File(_manualPath).readAsStringSync()))['unmatched'])
+      ? asList(
+          asMap(jsonDecode(File(_manualPath).readAsStringSync()))['unmatched'])
       : const <Object?>[];
   final kept = [
     for (final raw in existing)
       if (str(asMap(raw)['ability_id'])?.isNotEmpty ?? false) asMap(raw),
   ];
 
-  final rows = [...kept, ...unmatched]
-    ..sort((a, b) {
+  final rows = [...kept, ...unmatched]..sort((a, b) {
       final byFaction =
           strOr(a['faction'], '').compareTo(strOr(b['faction'], ''));
       return byFaction != 0
@@ -419,17 +426,17 @@ void _writeWorklist(
           : strOr(a['name'], '').compareTo(strOr(b['name'], ''));
     });
 
-  File(_manualPath).writeAsStringSync(
-      '${const JsonEncoder.withIndent('  ').convert({
-            'note': 'Enhancements whose printed wording could not be found by '
-                'name. Fill in `ability_id` from `suggestions` — or with any '
-                'other id from the faction\'s abilities — and the next merge '
-                'applies it and keeps the entry as written. Leave it null and '
-                'the entry is regenerated. DESIGN.md §3.10.',
-            'matched_by_hand': kept.length,
-            'still_unmatched': unmatched.length,
-            'unmatched': rows,
-          })}\n');
+  File(_manualPath)
+      .writeAsStringSync('${const JsonEncoder.withIndent('  ').convert({
+        'note': 'Enhancements whose printed wording could not be found by '
+            'name. Fill in `ability_id` from `suggestions` — or with any '
+            'other id from the faction\'s abilities — and the next merge '
+            'applies it and keeps the entry as written. Leave it null and '
+            'the entry is regenerated. DESIGN.md §3.10.',
+        'matched_by_hand': kept.length,
+        'still_unmatched': unmatched.length,
+        'unmatched': rows,
+      })}\n');
 }
 
 /// `Hagiomnifex (Upgrade)` and `Fear Made Manifest (Aura)`.
@@ -609,7 +616,8 @@ String _vpLabel(Map<String, dynamic> row, Map<String, dynamic> section) {
     ..write(row['cumulative'] == true ? '+' : '')
     ..write(vp)
     ..write(' VP')
-    ..write(row['perUnit'] == true || section['perEvent'] == true ? ' each' : '');
+    ..write(
+        row['perUnit'] == true || section['perEvent'] == true ? ' each' : '');
   if (str(row['cap']) case final cap? when cap.isNotEmpty) {
     buffer.write(', max $cap VP');
   }
@@ -666,3 +674,177 @@ void _write(String path, List<Object?> records) {
   file.writeAsStringSync(
       '${const JsonEncoder.withIndent('  ').convert(records)}\n');
 }
+
+/// Writes the printed wording onto the stratagems.
+///
+/// This was the last surface showing a name and a cost and nothing about what
+/// the thing does: 2,236 stratagems, none with text, and only 263 rendering
+/// even a derived sentence from a linked ability (§3.12).
+///
+/// Two sources, and the fuller one wins per stratagem. Wahapedia has all of
+/// them; Games Workshop's own free Core Rules PDF — by way of
+/// `pguetschow/warhammer-40k-stratagem-card-generator` — has the eleven core
+/// ones, and where its transcription says more it is preferred.
+int _applyStratagemText(List<String> factions) {
+  final wahapedia = _readWahapedia();
+  final core = _readCoreStratagems();
+  if (wahapedia.isEmpty && core.isEmpty) return 0;
+
+  var written = 0;
+  for (final factionId in [...factions, null]) {
+    final path = factionId == null
+        ? '$_outRoot/core/stratagems.json'
+        : '$_outRoot/core/$factionId/stratagems.json';
+    final records = _readArray(path);
+    if (records.isEmpty) continue;
+
+    var touched = 0;
+    final updated = [
+      for (final raw in records)
+        if (asMap(raw) case final record)
+          () {
+            final name = _stratagemKey(strOr(record['name'], ''));
+            if (name.isEmpty) return record;
+
+            // The detachment disambiguates a name reused across armies —
+            // several factions have a stratagem called BLOOD TITHE.
+            final detachment = _stratagemKey(
+                strOr(record['detachment_id'], '').replaceAll('-', ' '));
+            final candidates = wahapedia[name] ?? const [];
+            final fromWahapedia = _bestMatch(candidates, detachment);
+
+            final text = _fullest([fromWahapedia, core[name]]);
+            if (text == null) return record;
+            touched++;
+            return {...record, 'text': text};
+          }()
+    ];
+    if (touched > 0) {
+      _write(path, updated);
+      written += touched;
+    }
+  }
+  return written;
+}
+
+/// The longest of the candidate texts, or null when there are none.
+///
+/// "Fullest" rather than "first": the two sources word the same stratagem
+/// differently, and the one that says more is the one worth reading. On the
+/// core eleven that is usually the Core Rules PDF, which spells the roll types
+/// out as a list where Wahapedia runs them into a sentence.
+String? _fullest(List<String?> options) {
+  String? best;
+  for (final option in options) {
+    if (option == null || option.trim().isEmpty) continue;
+    if (best == null || option.length > best.length) best = option;
+  }
+  return best;
+}
+
+/// The Wahapedia row for this detachment, or the most complete row otherwise.
+///
+/// Wahapedia carries several rows under one core name — a Boarding Actions
+/// variant, a legacy 10th edition one, and the current `Core Stratagem`.
+/// Taking the first gives the stale one, which is what made the export look
+/// out of date on first reading.
+String? _bestMatch(List<({String detachment, String type, String text})> rows,
+    String detachment) {
+  if (rows.isEmpty) return null;
+  if (detachment.isNotEmpty) {
+    for (final row in rows) {
+      if (row.detachment == detachment) return row.text;
+    }
+  }
+  for (final row in rows) {
+    if (row.type.toLowerCase() == 'core stratagem') return row.text;
+  }
+  return _fullest([for (final row in rows) row.text]);
+}
+
+/// `A TEMPTING TRAP` and `a-tempting-trap` are the same stratagem.
+String _stratagemKey(String value) => value
+    .toLowerCase()
+    .replaceAll(RegExp(r'[’‘ʼ]'), "'")
+    .replaceAll(RegExp(r"[^a-z0-9']+"), ' ')
+    .trim();
+
+Map<String, List<({String detachment, String type, String text})>>
+    _readWahapedia() {
+  final file = File(_wahapediaPath);
+  if (!file.existsSync()) return {};
+  final lines = const LineSplitter().convert(file.readAsStringSync());
+  if (lines.isEmpty) return {};
+
+  final header = lines.first.replaceFirst('﻿', '').split('|');
+  final index = {for (final (i, h) in header.indexed) h.trim(): i};
+  String field(List<String> row, String name) {
+    final at = index[name];
+    return at != null && at < row.length ? row[at] : '';
+  }
+
+  final out = <String, List<({String detachment, String type, String text})>>{};
+  // A description contains newlines only as `<br>`, so a row is a line.
+  for (final line in lines.skip(1)) {
+    if (line.trim().isEmpty) continue;
+    final row = line.split('|');
+    final name = _stratagemKey(field(row, 'name'));
+    if (name.isEmpty) continue;
+    final text = _markup(field(row, 'description'));
+    if (text.isEmpty) continue;
+    (out[name] ??= []).add((
+      detachment: _stratagemKey(field(row, 'detachment')),
+      type: field(row, 'type').trim(),
+      text: text,
+    ));
+  }
+  return out;
+}
+
+Map<String, String> _readCoreStratagems() {
+  final file = File(_coreStratagemPath);
+  if (!file.existsSync()) return {};
+  final parsed = asMap(jsonDecode(file.readAsStringSync()));
+  final out = <String, String>{};
+  for (final rawFaction in asMap(parsed['factions']).values) {
+    for (final rawList in asMap(asMap(rawFaction)['detachments']).values) {
+      for (final rawCard in asList(rawList)) {
+        final card = asMap(rawCard);
+        final name = _stratagemKey(strOr(card['name'], ''));
+        if (name.isEmpty) continue;
+        // Assembled into the same shape Wahapedia publishes, so the two are
+        // comparable and a reader cannot tell which source a card came from.
+        final parts = <String>[
+          for (final key in const ['when', 'target', 'effect', 'restrictions'])
+            if (_markup(strOr(card[key], '')) case final value
+                when value.isNotEmpty)
+              '**${key.toUpperCase()}:** $value',
+        ];
+        if (parts.isNotEmpty) out[name] = parts.join('\n\n');
+      }
+    }
+  }
+  return out;
+}
+
+/// Source HTML, reduced to the markup the app renders (§3.10).
+///
+/// **Lists are structure, and stripping them loses the sentence.** Wahapedia
+/// writes the roll types of COMMAND RE-ROLL as `<ul><li>`, and a generic
+/// tag-strip ran them together into
+/// `**Advance roll****Charge roll****Damage roll**` — one unreadable line
+/// where the card has eight bullets. The Core Rules transcription uses `▪`
+/// for the same job, so both become the same bullet.
+String _markup(String value) => value
+    .replaceAll(RegExp(r'</li>\s*<li>', caseSensitive: false), '\n• ')
+    .replaceAll(RegExp(r'<ul>\s*<li>', caseSensitive: false), '\n• ')
+    .replaceAll(RegExp(r'</li>\s*</ul>', caseSensitive: false), '\n')
+    .replaceAll(RegExp(r'</?(?:ul|ol|li)>', caseSensitive: false), '\n')
+    .replaceAll(RegExp(r'<br\s*/?>', caseSensitive: false), '\n')
+    .replaceAll(RegExp(r'</?(?:b|strong)>', caseSensitive: false), '**')
+    .replaceAll(RegExp(r'<[^>]+>'), '')
+    .replaceAll(RegExp('[▪■]\\s*'), '• ')
+    .replaceAll('\u00a0', ' ')
+    .replaceAll(RegExp(r'[ \t]+\n'), '\n')
+    .replaceAll(RegExp(r'\n{3,}'), '\n\n')
+    .trim();
