@@ -67,8 +67,7 @@ void main() {
     await settle(tester);
   }
 
-  testWidgets('a new army starts empty and says what it needs',
-      (tester) async {
+  testWidgets('a new army starts empty and says what it needs', (tester) async {
     await open(tester);
 
     expect(find.text('New army'), findsWidgets);
@@ -368,5 +367,36 @@ void main() {
     await settle(tester);
     expect(find.widgetWithText(SheetHeader, 'Crisis Fireknife Battlesuits'),
         findsOneWidget);
+  });
+
+  testWidgets('a detachment brings its rules and stratagems into the builder',
+      (tester) async {
+    // Picking a detachment was a decision made from a name and a points cost,
+    // with the two things it actually buys a screen away — in a tab that only
+    // opens once a battle is set up.
+    late Roster roster;
+    await tester.runAsync(() async {
+      final dataset = await datasets.faction('tau-empire');
+      roster = RosterEditor(dataset).addDetachment(tau(), 'retaliation-cadre');
+    });
+    await open(tester, initial: roster);
+
+    expect(find.text('DETACHMENT RULES'), findsOneWidget);
+    expect(find.text('DETACHMENT STRATAGEMS'), findsOneWidget);
+
+    // Folded, so the bodies are not built. An army builder that opens on two
+    // walls of rules text has buried the units.
+    expect(find.textContaining('CP'), findsNothing);
+
+    await tester.tap(find.text('DETACHMENT STRATAGEMS'));
+    await settle(tester);
+    expect(find.textContaining('CP'), findsWidgets);
+  });
+
+  testWidgets('with no detachment chosen there is nothing to preview',
+      (tester) async {
+    await open(tester, initial: tau());
+    expect(find.text('DETACHMENT RULES'), findsNothing);
+    expect(find.text('DETACHMENT STRATAGEMS'), findsNothing);
   });
 }

@@ -110,8 +110,10 @@ class UnitLoadout {
 
   /// True when nothing is published for this datasheet, so the editor should
   /// stay entirely permissive rather than imply a rule it has not got.
-  bool get isUnpublished => groups.isEmpty && counters.every((c) =>
-      c.statedMax == null && c.perModels == null && c.replaces.isEmpty);
+  bool get isUnpublished =>
+      groups.isEmpty &&
+      counters.every((c) =>
+          c.statedMax == null && c.perModels == null && c.replaces.isEmpty);
 
   /// Reads the published options for one datasheet.
   factory UnitLoadout.forDatasheet(
@@ -133,14 +135,27 @@ class UnitLoadout {
     final defaults = composition?.defaultWargear() ?? const <String, int>{};
 
     // Anything any published option can take away is, by definition, not
-    // fixed. A datasheet with no options published has no evidence either
-    // way, so nothing is locked — locking on absence of data is exactly the
-    // failure §2.3 warns about.
+    // fixed.
+    //
+    // **A datasheet with no options published is all fixed** (§4.5, revised).
+    // This used to leave everything open on the reasoning that absence of
+    // data is not evidence of a restriction — true, but it produced a worse
+    // wrong at the other end: Morvenn Vahl publishes no options and carries
+    // three weapons she always has, and the editor offered a `+` on each of
+    // them. Nothing in the game lets a named character take a second Lance
+    // of Illumination, and a control that offers it is not being permissive,
+    // it is inventing a rule the data never had either.
+    //
+    // The cost is stated rather than hidden: 1,310 of 1,863 datasheets (70%)
+    // publish no options, and 1,048 of them carry more than one weapon, so
+    // this fixes the loadout on over half the roster. What is lost is the
+    // ability to work around a *gap* in the option data by hand. What is
+    // gained is that the editor stops asserting choices nobody has.
     final replaceable = <String>{
       for (final option in options) ...option.replaces,
     };
     final fixed = options.isEmpty
-        ? const <String, int>{}
+        ? defaults
         : {
             for (final entry in defaults.entries)
               if (!replaceable.contains(entry.key)) entry.key: entry.value,

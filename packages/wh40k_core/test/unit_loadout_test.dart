@@ -53,15 +53,39 @@ void main() {
       expect(loadout.fixed.keys, isNot(contains('missile-pod')));
     }, skip: available ? null : 'no snapshot');
 
-    test('a datasheet publishing no options locks nothing', () {
-      // Absence of data is not evidence of a restriction. Locking on silence
-      // is exactly the failure §2.3 warns about.
+    test('a datasheet publishing no options is fixed, not open', () {
+      // **Reversed** (§4.5). The old rule left everything open, reasoning
+      // that absence of data is not evidence of a restriction. That is true
+      // and it still produced the worse wrong: the editor put a `+` beside
+      // every weapon of a character who has no choices at all, which asserts
+      // a rule the data never had just as much as locking does — and asserts
+      // one that does not exist in the game either.
       final loadout =
           loadoutFor(load('adeptus-astartes'), 'ballistus-dreadnought');
       expect(load('adeptus-astartes').wargearOptions('ballistus-dreadnought'),
           isEmpty);
-      expect(loadout.fixed, isEmpty);
-      expect(loadout.isUnpublished, isTrue);
+      expect(loadout.fixed, isNotEmpty);
+      for (final weapon in const [
+        'ballistus-lascannon',
+        'ballistus-missile-launcher',
+        'twin-storm-bolter',
+      ]) {
+        expect(loadout.fixed.keys, contains(weapon));
+        expect(loadout.counters.map((c) => c.itemId), isNot(contains(weapon)),
+            reason: 'no + beside a weapon nothing offers to change');
+      }
+      expect(loadout.isUnpublished, isTrue,
+          reason: 'the screen still says why the numbers do not move');
+    }, skip: available ? null : 'no snapshot');
+
+    test('a character with no options cannot be given a second relic', () {
+      // The bug this fixes: Morvenn Vahl publishes no wargear options and
+      // carries three weapons she always has. Every one had a `+`.
+      final sisters = load('adepta-sororitas');
+      final loadout = loadoutFor(sisters, 'morvenn-vahl');
+      expect(sisters.wargearOptions('morvenn-vahl'), isEmpty);
+      expect(loadout.counters, isEmpty);
+      expect(loadout.fixed.keys, contains('lance-of-illumination'));
     }, skip: available ? null : 'no snapshot');
   });
 

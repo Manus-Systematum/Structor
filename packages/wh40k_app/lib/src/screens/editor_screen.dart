@@ -8,6 +8,7 @@ import '../data/dataset_repository.dart';
 import '../data/roster_store.dart';
 import '../theme.dart';
 import '../widgets/collapsible.dart';
+import '../widgets/rule_text.dart';
 import '../widgets/sheet_header.dart';
 import '../widgets/unit_editor.dart';
 
@@ -45,8 +46,8 @@ class EditorScreen extends StatefulWidget {
 class _EditorScreenState extends State<EditorScreen> {
   Dataset? _dataset;
   List<BundleEntry> _factions = const [];
-  late Roster _roster = widget.initial ??
-      RosterEditor.blank(name: 'New army', factionId: '');
+  late Roster _roster =
+      widget.initial ?? RosterEditor.blank(name: 'New army', factionId: '');
   String? _error;
   bool _saving = false;
   bool _dirty = false;
@@ -94,8 +95,8 @@ class _EditorScreenState extends State<EditorScreen> {
     if (_dataset == null || !_worthSaving) return;
     try {
       final builder = await widget.datasets.snapshotBuilder(_roster.factionId);
-      final id = _id ??=
-          'r${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}';
+      final id =
+          _id ??= 'r${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}';
       await widget.store
           .save(Army.fromSnapshot(_roster, builder.build(_roster), id: id));
       if (mounted) setState(() => _dirty = false);
@@ -172,12 +173,11 @@ class _EditorScreenState extends State<EditorScreen> {
     _autosave?.cancel();
     setState(() => _saving = true);
     try {
-      final builder =
-          await widget.datasets.snapshotBuilder(_roster.factionId);
+      final builder = await widget.datasets.snapshotBuilder(_roster.factionId);
       // The same id the autosave used, or this becomes a second copy of the
       // army beside the one already written.
-      final id = _id ??=
-          'r${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}';
+      final id =
+          _id ??= 'r${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}';
       final army = Army.fromSnapshot(_roster, builder.build(_roster), id: id);
       await widget.store.save(army);
       if (mounted) Navigator.of(context).pop(true);
@@ -260,6 +260,10 @@ class _EditorScreenState extends State<EditorScreen> {
           onAdd: (id) => _edit((e) => e.addDetachment(_roster, id)),
           onRemove: (id) => _edit((e) => e.removeDetachment(_roster, id)),
         ),
+        // What the detachment actually buys, readable without leaving the
+        // builder. Folded, because it is reference rather than a decision —
+        // the decision is the picker directly above.
+        _DetachmentBrief(roster: _roster, dataset: dataset),
         const _SectionHeader('UNITS'),
         if (_roster.units.isEmpty)
           const _Note(text: 'No units yet. Add one to get started.')
@@ -380,7 +384,6 @@ class _EditorScreenState extends State<EditorScreen> {
       ),
     );
   }
-
 }
 
 class _Header extends StatelessWidget {
@@ -417,10 +420,9 @@ class _Header extends StatelessWidget {
           // the roster is empty — silently rewriting a built list would be
           // worse than refusing.
           DropdownButtonFormField<String>(
-            initialValue:
-                factions.any((f) => f.id == roster.factionId)
-                    ? roster.factionId
-                    : null,
+            initialValue: factions.any((f) => f.id == roster.factionId)
+                ? roster.factionId
+                : null,
             isDense: true,
             isExpanded: true,
             decoration: InputDecoration(
@@ -556,6 +558,140 @@ class _Findings extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+/// The rules and stratagems the chosen detachments bring, folded away.
+///
+/// Choosing a detachment is the second-biggest decision in the list after the
+/// faction, and until now it was made from a name and a points cost. The two
+/// things it actually buys were a screen away, in a tab that only opens once
+/// a battle is set up.
+///
+/// **Reference, not a control.** Nothing here is editable and nothing here is
+/// validated; it exists so the choice above can be made with its consequences
+/// in view. Both groups start folded — a builder that opens on two walls of
+/// rules text has buried the units.
+class _DetachmentBrief extends StatelessWidget {
+  final Roster roster;
+  final Dataset dataset;
+
+  const _DetachmentBrief({required this.roster, required this.dataset});
+
+  @override
+  Widget build(BuildContext context) {
+    if (roster.detachments.isEmpty) return const SizedBox.shrink();
+    final scheme = Theme.of(context).colorScheme;
+    const renderer = RulesRenderer();
+
+    final rules = <(String, String, String)>[];
+    for (final taken in roster.detachments) {
+      final detachment = dataset.detachment(taken.detachmentId);
+      if (detachment == null) continue;
+      final ruleId = detachment.detachmentRuleId;
+      final ability = ruleId == null ? null : dataset.ability(ruleId);
+      if (ability == null) continue;
+      rules.add((ability.name, detachment.name, renderer.render(ability).text));
+    }
+
+    // The detachment's own, not the core ones: those are always available and
+    // say nothing about this choice.
+    final book = StratagemBook.forRoster(
+      roster,
+      all: dataset.faction.stratagems,
+      catalogue: dataset,
+    );
+    final stratagems = [
+      for (final s in book.stratagems)
+        if (s.detachmentId != null) s,
+    ]..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (rules.isNotEmpty)
+          CollapsibleGroup(
+            title: 'DETACHMENT RULES',
+            trailing: '${rules.length}',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final (name, source, body) in rules)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 4, 20, 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Flexible(
+                              child: Text(name,
+                                  style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700)),
+                            ),
+                            const SizedBox(width: 8),
+                            Text(source,
+                                style: TextStyle(
+                                    fontSize: 11,
+                                    color: scheme.onSurfaceVariant)),
+                          ],
+                        ),
+                        if (body.trim().isNotEmpty) ...[
+                          const SizedBox(height: 2),
+                          RuleText(body, style: const TextStyle(fontSize: 12)),
+                        ],
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        if (stratagems.isNotEmpty)
+          CollapsibleGroup(
+            title: 'DETACHMENT STRATAGEMS',
+            trailing: '${stratagems.length}',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final stratagem in stratagems)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 4, 20, 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Flexible(
+                              child: Text(stratagem.displayName,
+                                  style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700)),
+                            ),
+                            const SizedBox(width: 8),
+                            Text('${stratagem.cpCost} CP',
+                                style: TextStyle(
+                                    fontSize: 11,
+                                    color: scheme.onSurfaceVariant)),
+                          ],
+                        ),
+                        if (stratagem.text case final text?
+                            when text.trim().isNotEmpty) ...[
+                          const SizedBox(height: 2),
+                          RuleText(text, style: const TextStyle(fontSize: 12)),
+                        ],
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
+      ],
     );
   }
 }
@@ -805,8 +941,7 @@ class _DatasheetTile extends StatelessWidget {
       dense: true,
       onTap: onTap,
       title: Text(unit.name,
-          style:
-              const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
       subtitle: Text(
         [
           if (unit.isLeader) 'Leader',
@@ -815,8 +950,7 @@ class _DatasheetTile extends StatelessWidget {
         style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant),
       ),
       trailing: Text(cheapest == null ? '—' : 'from $cheapest',
-          style:
-              TextStyle(fontSize: 11.5, color: scheme.onSurfaceVariant)),
+          style: TextStyle(fontSize: 11.5, color: scheme.onSurfaceVariant)),
     );
   }
 }
@@ -855,8 +989,8 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
 
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -909,8 +1043,7 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
                       padding: const EdgeInsets.all(24),
                       child: Text('Nothing matches “$_query”.',
                           style: TextStyle(
-                              fontSize: 12.5,
-                              color: scheme.onSurfaceVariant)),
+                              fontSize: 12.5, color: scheme.onSurfaceVariant)),
                     ),
                 ],
               ),

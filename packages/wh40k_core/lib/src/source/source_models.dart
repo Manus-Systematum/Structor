@@ -199,8 +199,7 @@ class UnitComposition {
   }
 
   /// The smallest legal unit, which is what "add this datasheet" should give.
-  int get defaultModels =>
-      models.fold(0, (sum, m) => sum + m.min);
+  int get defaultModels => models.fold(0, (sum, m) => sum + m.min);
 
   /// The largest legal unit, or null when the record does not say.
   ///
@@ -305,7 +304,8 @@ class SourceWargearOption {
         replaces: [for (final r in replaces) rename(r)],
         replacement: [for (final r in replacement) rename(r)],
         choices: [
-          for (final bundle in choices) [for (final item in bundle) rename(item)],
+          for (final bundle in choices)
+            [for (final item in bundle) rename(item)],
         ],
         modelName: modelName,
         maxCount: maxCount,
@@ -392,10 +392,15 @@ class SourceUnit {
       id: strOr(j['id'], ''),
       name: strOr(j['name'], '(unnamed)'),
       factionId: strOr(j['faction_id'], ''),
-      profiles: asList(j['profiles']).map(ModelProfile.fromJson).toList(growable: false),
-      points: asList(j['points']).map(PointsBracket.fromJson).toList(growable: false),
-      wargearCosts:
-          asList(j['wargear_costs']).map(WargearCost.fromJson).toList(growable: false),
+      profiles: asList(j['profiles'])
+          .map(ModelProfile.fromJson)
+          .toList(growable: false),
+      points: asList(j['points'])
+          .map(PointsBracket.fromJson)
+          .toList(growable: false),
+      wargearCosts: asList(j['wargear_costs'])
+          .map(WargearCost.fromJson)
+          .toList(growable: false),
       wargearBudgets: asList(j['wargear_budgets'])
           .map(WargearBudget.fromJson)
           .toList(growable: false),
@@ -642,8 +647,7 @@ class WeaponProfile {
   });
 
   /// Bare keyword ids, for callers that only ask whether a keyword is present.
-  List<String> get keywordIds =>
-      [for (final k in keywords) k.id];
+  List<String> get keywordIds => [for (final k in keywords) k.id];
 
   bool hasKeyword(String id) => keywords.any((k) => k.id == id);
 
@@ -718,7 +722,9 @@ class SourceWeapon {
       id: strOr(j['id'], ''),
       name: strOr(j['name'], '(unnamed)'),
       type: strOr(j['type'], 'unknown'),
-      profiles: asList(j['profiles']).map(WeaponProfile.fromJson).toList(growable: false),
+      profiles: asList(j['profiles'])
+          .map(WeaponProfile.fromJson)
+          .toList(growable: false),
       gameVersion: GameVersion.fromJson(j['game_version']),
     );
   }
@@ -735,6 +741,23 @@ class SourceStratagem {
   final String? playerTurn;
   final String? timing;
   final String? abilityId;
+
+  /// `AUTOREACTIVE CAMOUFLAGE` in the data, `Autoreactive Camouflage` on a
+  /// screen.
+  ///
+  /// Upstream shouts inconsistently — some names are upper case and some are
+  /// not — and a list that shouts at random reads as a bug. Lives here rather
+  /// than in one widget because two surfaces now show these names, and the
+  /// second one shouted while the first did not.
+  String get displayName {
+    if (name != name.toUpperCase()) return name;
+    return name
+        .split(' ')
+        .map((w) => w.isEmpty
+            ? w
+            : '${w[0].toUpperCase()}${w.substring(1).toLowerCase()}')
+        .join(' ');
+  }
 
   /// The stratagem as printed: when it may be used, what it targets, what it
   /// does, and what restricts it.
@@ -907,8 +930,12 @@ class SourceEnhancement {
     return true;
   }
 
-  static String _fold(String value) =>
-      value.toLowerCase().replaceAll('’', "'").split(RegExp(r'\s+')).join(' ').trim();
+  static String _fold(String value) => value
+      .toLowerCase()
+      .replaceAll('’', "'")
+      .split(RegExp(r'\s+'))
+      .join(' ')
+      .trim();
 
   /// Exact, or a compound whose parts are each satisfied.
   static bool _satisfies(String restriction, Set<String> vocabulary) {

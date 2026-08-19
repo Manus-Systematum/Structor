@@ -127,7 +127,7 @@ class CarriedWeaponProfiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final profiles = <(String, WeaponProfile)>[];
+    final profiles = <(String, WeaponProfile, bool)>[];
     for (final entry in carried.entries) {
       if (entry.value <= 0) continue;
       final weapon = dataset.weaponFor(datasheet, entry.key) ??
@@ -137,7 +137,13 @@ class CarriedWeaponProfiles extends StatelessWidget {
           _granted(entry.key);
       if (weapon == null) continue;
       for (final profile in weapon.profiles) {
-        profiles.add(('${entry.value}×', profile));
+        profiles.add((
+          '${entry.value}×',
+          profile,
+          // Per profile, not per weapon: a Fusion eliminator is typed ranged
+          // and carries a melee profile too.
+          profile.isMelee(weaponIsMelee: weapon.type == 'melee'),
+        ));
       }
     }
     if (profiles.isEmpty) return const SizedBox.shrink();
@@ -151,7 +157,11 @@ class CarriedWeaponProfiles extends StatelessWidget {
           child: Row(
             children: [
               const Expanded(flex: 5, child: SizedBox()),
-              for (final label in ['RNG', 'A', 'BS', 'S', 'AP', 'D'])
+              // **SKILL, not BS.** The column read `BS` and printed whatever
+              // the profile had, so every melee weapon showed its Weapon
+              // Skill under a Ballistic Skill heading — a wrong label on a
+              // right number, which is worse than either.
+              for (final label in ['RNG', 'A', 'SKILL', 'S', 'AP', 'D'])
                 Expanded(
                   flex: 2,
                   child: Text(label,
@@ -164,8 +174,11 @@ class CarriedWeaponProfiles extends StatelessWidget {
             ],
           ),
         ),
-        for (final (count, profile) in profiles)
-          Padding(
+        for (final (count, profile, melee) in profiles)
+          Container(
+            // The heading cannot say which skill a row is using once it says
+            // both, so the row does: melee sits on its own ground.
+            color: melee ? scheme.surfaceContainerHighest : null,
             padding: const EdgeInsets.fromLTRB(20, 2, 12, 2),
             child: Row(
               children: [
@@ -176,13 +189,17 @@ class CarriedWeaponProfiles extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontSize: 12)),
                 ),
-                for (final key in ['range', 'A', 'BS', 'S', 'AP', 'D'])
+                for (final key in ['range', 'A', 'skill', 'S', 'AP', 'D'])
                   Expanded(
                     flex: 2,
                     child: Text(
-                      key == 'range'
-                          ? (profile.range ?? '–')
-                          : (profile.stats[key] ?? '–'),
+                      switch (key) {
+                        'range' => profile.range ?? '–',
+                        // Null for Torrent-style weapons, which hit without
+                        // rolling and have no skill to print.
+                        'skill' => profile.skill ?? '–',
+                        _ => profile.stats[key] ?? '–',
+                      },
                       textAlign: TextAlign.center,
                       style: AppTheme.numeric(context, size: 12),
                     ),
@@ -200,7 +217,6 @@ class CarriedWeaponProfiles extends StatelessWidget {
     return dataset.weaponFor(datasheet, grantedId) ?? dataset.weapon(grantedId);
   }
 }
-
 
 class _ProfilesHeading extends StatelessWidget {
   final String label;

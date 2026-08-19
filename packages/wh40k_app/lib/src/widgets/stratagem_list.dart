@@ -100,8 +100,9 @@ class _StratagemRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final playable = entry.playable;
-    final foreground =
-        playable ? scheme.onSurface : scheme.onSurfaceVariant.withValues(alpha: 0.55);
+    final foreground = playable
+        ? scheme.onSurface
+        : scheme.onSurfaceVariant.withValues(alpha: 0.55);
 
     return InkWell(
       onTap: playable ? () => _play(context) : null,
@@ -117,7 +118,7 @@ class _StratagemRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _titleCase(entry.name),
+                    entry.stratagem.displayName,
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
@@ -167,19 +168,6 @@ class _StratagemRow extends StatelessWidget {
     );
   }
 
-  /// `AUTOREACTIVE CAMOUFLAGE` in the data, `Autoreactive Camouflage` here.
-  /// Upstream shouts inconsistently — some names are upper case and some are
-  /// not — and a list that shouts at random reads as a bug.
-  static String _titleCase(String name) {
-    if (name != name.toUpperCase()) return name;
-    return name
-        .split(' ')
-        .map((w) => w.isEmpty
-            ? w
-            : '${w[0].toUpperCase()}${w.substring(1).toLowerCase()}')
-        .join(' ');
-  }
-
   String _subtitle() {
     final parts = <String>[
       entry.source,
@@ -206,12 +194,13 @@ class _StratagemRow extends StatelessWidget {
       context: context,
       showDragHandle: true,
       builder: (context) => _TargetSheet(
-        title: _titleCase(entry.name),
+        title: entry.stratagem.displayName,
         cost: entry.cpCost,
         targets: targets,
       ),
     );
-    if (chosen != null) _commit(chosen == _TargetSheet.noTarget ? null : chosen);
+    if (chosen != null)
+      _commit(chosen == _TargetSheet.noTarget ? null : chosen);
   }
 
   void _commit(String? instanceId) => onEvent(UseStratagem(
@@ -246,14 +235,13 @@ class _TargetSheet extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 4),
             child: Text(title,
-                style: const TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.w800)),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
             child: Text('Spend $cost CP on which unit?',
-                style: TextStyle(
-                    fontSize: 12, color: scheme.onSurfaceVariant)),
+                style: TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
           ),
           for (final target in targets)
             ListTile(
@@ -276,8 +264,8 @@ class _TargetSheet extends StatelessWidget {
           ListTile(
             dense: true,
             leading: const Icon(Icons.remove_circle_outline, size: 18),
-            title: const Text('No specific unit',
-                style: TextStyle(fontSize: 13)),
+            title:
+                const Text('No specific unit', style: TextStyle(fontSize: 13)),
             subtitle: Text('Spend the CP without marking a unit',
                 style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant)),
             onTap: () => Navigator.of(context).pop(noTarget),
@@ -303,9 +291,8 @@ class _CpChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 3),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: enabled
-            ? scheme.primaryContainer
-            : scheme.surfaceContainerHighest,
+        color:
+            enabled ? scheme.primaryContainer : scheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
