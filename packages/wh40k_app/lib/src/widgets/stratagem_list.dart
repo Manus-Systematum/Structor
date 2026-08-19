@@ -35,6 +35,10 @@ class StratagemList extends StatelessWidget {
     final available = army.stratagems.forPhase(phase, state: state);
     if (available.isEmpty) return const SizedBox.shrink();
 
+    // **No heading of its own.** The turn page wraps this in a collapsible
+    // group already titled STRATAGEMS, and the two stacked — one heading
+    // directly under an identical one, the second able to say a different
+    // count from the first.
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
       child: Card(
@@ -42,29 +46,7 @@ class StratagemList extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 10, 12, 2),
-              child: Row(
-                children: [
-                  Icon(Icons.local_fire_department,
-                      size: 15, color: scheme.primary),
-                  const SizedBox(width: 6),
-                  Text('STRATAGEMS',
-                      style: TextStyle(
-                        fontSize: 10,
-                        letterSpacing: 1.2,
-                        fontWeight: FontWeight.w800,
-                        color: scheme.primary,
-                      )),
-                  const Spacer(),
-                  Text('${state.cp} CP',
-                      style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w700,
-                          color: scheme.onSurfaceVariant)),
-                ],
-              ),
-            ),
+            const SizedBox(height: 4),
             for (final entry in available)
               _StratagemRow(
                 entry: entry,
@@ -81,7 +63,17 @@ class StratagemList extends StatelessWidget {
   }
 }
 
-class _StratagemRow extends StatelessWidget {
+/// One stratagem: what it costs, what it is, and — when you ask — what it says.
+///
+/// **Tapping reads it; a button plays it.** The whole row used to be the play
+/// action, so opening a card you were only considering spent the CP. Reading
+/// one mid-turn is the common act and playing it the rare one, and the rare
+/// one is the one that changes state and cannot be undone by tapping again.
+///
+/// The text is folded because these are full cards now, not one-liners:
+/// COMMAND RE-ROLL alone runs to eight bulleted rolls, and five of those open
+/// at once buries the phase under them.
+class _StratagemRow extends StatefulWidget {
   final AvailableStratagem entry;
   final Army army;
   final String phase;
@@ -97,71 +89,100 @@ class _StratagemRow extends StatelessWidget {
   });
 
   @override
+  State<_StratagemRow> createState() => _StratagemRowState();
+}
+
+class _StratagemRowState extends State<_StratagemRow> {
+  bool _open = false;
+
+  AvailableStratagem get entry => widget.entry;
+
+  @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final playable = entry.playable;
     final foreground = playable
         ? scheme.onSurface
         : scheme.onSurfaceVariant.withValues(alpha: 0.55);
+    final body = entry.text ?? entry.effect?.text;
 
     return InkWell(
-      onTap: playable ? () => _play(context) : null,
+      onTap: body == null ? null : () => setState(() => _open = !_open),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-        child: Row(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _CpChip(cost: entry.cpCost, enabled: playable),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    entry.stratagem.displayName,
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: foreground,
-                    ),
-                  ),
-                  const SizedBox(height: 1),
-                  Text(
-                    _subtitle(),
-                    style: TextStyle(
-                      fontSize: 10.5,
-                      color: scheme.onSurfaceVariant
-                          .withValues(alpha: playable ? 1 : 0.6),
-                    ),
-                  ),
-                  // The stratagem as printed. Where there is none, the
-                  // sentence derived from a structured effect stands in —
-                  // most stratagems have neither, and the row then says what
-                  // it knows and stops (§3.12).
-                  if (entry.text ?? entry.effect?.text case final body?)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: RuleText(
-                        body,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _CpChip(cost: entry.cpCost, enabled: playable),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        entry.stratagem.displayName,
                         style: TextStyle(
-                            fontSize: 11.5, height: 1.35, color: foreground),
-                      ),
-                    ),
-                  if (entry.blockedReason case final reason?)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: Text(
-                        reason,
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontStyle: FontStyle.italic,
-                          color: scheme.error.withValues(alpha: 0.85),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: foreground,
                         ),
                       ),
-                    ),
-                ],
-              ),
+                      const SizedBox(height: 1),
+                      Text(
+                        _subtitle(),
+                        style: TextStyle(
+                          fontSize: 10.5,
+                          color: scheme.onSurfaceVariant
+                              .withValues(alpha: playable ? 1 : 0.6),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (body != null)
+                  Icon(_open ? Icons.expand_less : Icons.expand_more,
+                      size: 18, color: scheme.onSurfaceVariant),
+                const SizedBox(width: 4),
+                // Disabled rather than absent: "why can't I use that?" is the
+                // question a player asks, and the reason is printed below.
+                FilledButton.tonal(
+                  onPressed: playable ? () => _play(context) : null,
+                  style: FilledButton.styleFrom(
+                    visualDensity: VisualDensity.compact,
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    minimumSize: const Size(0, 32),
+                  ),
+                  child: const Text('Use', style: TextStyle(fontSize: 12.5)),
+                ),
+              ],
             ),
+            if (entry.blockedReason case final reason?)
+              Padding(
+                padding: const EdgeInsets.only(top: 2, left: 38),
+                child: Text(
+                  reason,
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontStyle: FontStyle.italic,
+                    color: scheme.error.withValues(alpha: 0.85),
+                  ),
+                ),
+              ),
+            // The stratagem as printed. Where there is none, the sentence
+            // derived from a structured effect stands in — 116 of 2,246 have
+            // neither, and the row then says what it knows and stops (§3.12).
+            if (_open && body != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(38, 4, 0, 2),
+                child: RuleText(
+                  body,
+                  style: TextStyle(
+                      fontSize: 11.5, height: 1.35, color: foreground),
+                ),
+              ),
           ],
         ),
       ),
@@ -177,10 +198,10 @@ class _StratagemRow extends StatelessWidget {
   }
 
   Future<void> _play(BuildContext context) async {
-    final targets = army.targetsFor(
+    final targets = widget.army.targetsFor(
       entry.stratagem,
-      phase: phase,
-      state: state,
+      phase: widget.phase,
+      state: widget.state,
     );
 
     // A stratagem with no unit to nominate commits straight away — Command
@@ -204,11 +225,11 @@ class _StratagemRow extends StatelessWidget {
     }
   }
 
-  void _commit(String? instanceId) => onEvent(UseStratagem(
+  void _commit(String? instanceId) => widget.onEvent(UseStratagem(
         stratagemId: entry.id,
         targetInstanceId: instanceId,
-        round: state.round,
-        phase: phase,
+        round: widget.state.round,
+        phase: widget.phase,
         cp: entry.cpCost,
       ));
 }

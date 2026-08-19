@@ -690,8 +690,22 @@ int _applyStratagemText(List<String> factions) {
   final core = _readCoreStratagems();
   if (wahapedia.isEmpty && core.isEmpty) return 0;
 
+  // **Every faction in the output, not just the ones BSData ships.** The
+  // faction list is built from `data/bsdata`, and a chapter with no
+  // catalogue of its own — Crimson Fists — is written by `_copyRemaining`
+  // and was never visited here. 66 of its stratagems kept a name and a cost
+  // and nothing else, the largest single block of missing text.
+  final present = <String>{
+    ...factions,
+    ...Directory('$_outRoot/core')
+        .listSync()
+        .whereType<Directory>()
+        .map((d) => d.path.split(Platform.pathSeparator).last),
+  }.toList()
+    ..sort();
+
   var written = 0;
-  for (final factionId in [...factions, null]) {
+  for (final factionId in [...present, null]) {
     final path = factionId == null
         ? '$_outRoot/core/stratagems.json'
         : '$_outRoot/core/$factionId/stratagems.json';
@@ -763,11 +777,18 @@ String? _bestMatch(List<({String detachment, String type, String text})> rows,
 }
 
 /// `A TEMPTING TRAP` and `a-tempting-trap` are the same stratagem.
-String _stratagemKey(String value) => value
-    .toLowerCase()
-    .replaceAll(RegExp(r'[’‘ʼ]'), "'")
-    .replaceAll(RegExp(r"[^a-z0-9']+"), ' ')
-    .trim();
+///
+/// **Letters and digits only**, because everything else is where the two
+/// sources disagree and none of it is meaning. Keeping apostrophes and spaces
+/// cost 79 matches: `FOOL’S FLIGHT` against Wahapedia's `FOOLS’ FLIGHT`,
+/// `ARMED TO DA TEEF` against their `ARMED TO DATEEF`, `CUT’ EM DOWN` against
+/// `CUT’EM DOWN`, and `THREAT-COGITATION` against a non-breaking hyphen.
+///
+/// Checked for collisions before loosening: across the whole export exactly
+/// one pair of distinct keys collapses together, `COUNTER-OFFENSIVE` and
+/// `COUNTEROFFENSIVE`, which is the same stratagem spelled two ways.
+String _stratagemKey(String value) =>
+    value.toLowerCase().replaceAll(RegExp('[^a-z0-9]+'), '');
 
 Map<String, List<({String detachment, String type, String text})>>
     _readWahapedia() {

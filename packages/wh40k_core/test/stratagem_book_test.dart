@@ -310,7 +310,12 @@ void main() {
         }
       }
       expect(total, greaterThan(2000));
-      expect(withText / total, greaterThan(0.85),
+      // 2,130 of 2,246 (95%). It was 85% until the name key stopped keeping
+      // punctuation — `FOOL’S FLIGHT` never met Wahapedia's `FOOLS’ FLIGHT` —
+      // and until the pass visited factions BSData does not ship, which is
+      // where Crimson Fists' 66 were hiding. The 116 left are absent upstream:
+      // 112 have no row at all and 4 have one Wahapedia left blank.
+      expect(withText / total, greaterThan(0.92),
           reason: '$withText of $total carry text');
     });
 

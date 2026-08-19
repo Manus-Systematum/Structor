@@ -3324,7 +3324,7 @@
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
-      "text": "**WHEN:** Fight phase, just after an enemy unit has fought.\n\n**TARGET:** One unit from your army that is within Engagement Range of one or more enemy units and that has not already been selected to fight this phase.\n\n**EFFECT:** Your unit fights next."
+      "text": "**WHEN:** Fight step of your opponent’s Fight phase, just after an enemy unit has resolved its attacks.\n\n**TARGET:** One friendly unit that is **eligible to fight**.\n\n**EFFECT:** Until the end of the phase, your unit has the **Fights First** ability and it must be the next unit you **select to fight** (12.04)."
     },
     "epic-challenge": {
       "id": "epic-challenge",

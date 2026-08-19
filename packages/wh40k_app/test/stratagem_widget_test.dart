@@ -37,8 +37,9 @@ void main() {
       onEvent: (_) {},
     ));
 
-    expect(find.text('STRATAGEMS'), findsOneWidget);
-    expect(find.text('3 CP'), findsOneWidget);
+    // No heading of its own: the turn page wraps this in a collapsible group
+    // already titled STRATAGEMS, and carrying the CP.
+    expect(find.text('STRATAGEMS'), findsNothing);
     // Shouted upstream, title-cased here.
     expect(find.text('Command Re-roll'), findsOneWidget);
     // At two detachments, which one brings it is the thing you need to know.
@@ -71,7 +72,7 @@ void main() {
       onEvent: events.add,
     ));
 
-    await tester.tap(find.text('Command Re-roll'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Use').first);
     await tester.pumpAndSettle();
 
     // The picker lists every combat unit, plus an escape hatch for the
@@ -134,7 +135,7 @@ void main() {
 
     await tester.pumpWidget(list(state: state, onEvent: (_) {}));
 
-    await tester.tap(find.text('Command Re-roll'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Use').first);
     await tester.pumpAndSettle();
 
     // Listed, not dropped: a unit missing from the picker reads as a bug.
@@ -157,6 +158,10 @@ void main() {
       state: const BattleState(cp: 3),
       onEvent: (_) {},
     ));
+    // Folded until asked for.
+    expect(find.textContaining('Advance roll'), findsNothing);
+    await tester.tap(find.text('Command Re-roll'));
+    await tester.pumpAndSettle();
 
     final rendered = tester
         .widgetList<RichText>(find.byType(RichText))
@@ -170,5 +175,49 @@ void main() {
       expect('\u2022 '.allMatches(line), hasLength(lessThan(2)),
           reason: 'two bullets on one line: $line');
     }
+  });
+  testWidgets('reading a stratagem does not spend it', (tester) async {
+    // The whole row used to be the play action, so opening a card you were
+    // only considering spent the CP. Reading one mid-turn is the common act
+    // and playing it the rare one — and the rare one is what cannot be undone
+    // by tapping again.
+    tester.view.physicalSize = const Size(1200, 4000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    final events = <BattleEvent>[];
+    await tester.pumpWidget(list(
+      state: const BattleState(cp: 3),
+      onEvent: events.add,
+    ));
+
+    await tester.tap(find.text('Command Re-roll'));
+    await tester.pumpAndSettle();
+
+    expect(events, isEmpty, reason: 'no CP spent by reading');
+    expect(find.text('Spend 1 CP on which unit?'), findsNothing);
+    expect(find.textContaining('Advance roll'), findsWidgets,
+        reason: 'the tap opened the card instead');
+  });
+
+  testWidgets('an unaffordable stratagem can still be read', (tester) async {
+    // Blocked is not hidden (§7.3): the reason is on screen, and the card it
+    // refers to has to be readable or the reason is unarguable.
+    tester.view.physicalSize = const Size(1200, 4000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(list(
+      state: const BattleState(cp: 0),
+      onEvent: (_) {},
+    ));
+
+    final use = tester
+        .widget<FilledButton>(find.widgetWithText(FilledButton, 'Use').first);
+    expect(use.onPressed, isNull, reason: 'cannot be played at 0 CP');
+
+    await tester.tap(find.text('Command Re-roll'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Advance roll'), findsWidgets);
   });
 }

@@ -303,8 +303,7 @@ class _PhaseSection extends StatelessWidget {
     if (setup == null) return false;
     for (final id in [setup.myMissionId, setup.opponentMissionId]) {
       final card = pack.card(id);
-      if (card != null &&
-          card.scoresIn(phase: 'command', round: state.round)) {
+      if (card != null && card.scoresIn(phase: 'command', round: state.round)) {
         return true;
       }
     }
@@ -322,8 +321,8 @@ class _PhaseSection extends StatelessWidget {
       _ => null,
     };
 
-    final hasStratagems =
-        army != null && army.stratagems.forPhase(phase, state: state).isNotEmpty;
+    final hasStratagems = army != null &&
+        army.stratagems.forPhase(phase, state: state).isNotEmpty;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -352,8 +351,12 @@ class _PhaseSection extends StatelessWidget {
             CollapsibleGroup(
               title: 'STRATAGEMS',
               icon: Icons.bolt,
+              // The count and what you can afford. This is the only
+              // STRATAGEMS heading now — the list used to draw a second one
+              // directly beneath it, carrying the CP.
               trailing:
-                  '${army.stratagems.forPhase(phase, state: state).length}',
+                  '${army.stratagems.forPhase(phase, state: state).length}'
+                  ' · ${state.cp} CP',
               // Open where the decision is made, folded where it is reference.
               initiallyOpen: true,
               child: StratagemList(
@@ -459,8 +462,7 @@ class _PhaseSection extends StatelessWidget {
         : [
             for (final unit in army.combatUnits)
               for (final rule in unit.rules)
-                if (rule.phases.contains(phase))
-                  (unit: unit.label, rule: rule),
+                if (rule.phases.contains(phase)) (unit: unit.label, rule: rule),
           ];
 
     // Stratagems alone make a section worth reading, so the empty note is
@@ -508,8 +510,7 @@ class _UnitBlock extends StatelessWidget {
 
     // Rules tagged with this phase surface next to the weapons they modify,
     // rather than waiting in a reference screen (§7.3.6).
-    final rules =
-        unit.rules.where((r) => r.phases.contains(phase)).toList();
+    final rules = unit.rules.where((r) => r.phases.contains(phase)).toList();
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
@@ -542,8 +543,7 @@ class _UnitBlock extends StatelessWidget {
             // read off a statline.
             UnitStatline(profiles: unit.profiles),
             WeaponTable(result: table),
-            for (final rule in rules)
-              _RuleTile(rule: rule, compact: true),
+            for (final rule in rules) _RuleTile(rule: rule, compact: true),
             const SizedBox(height: 6),
           ],
         ),

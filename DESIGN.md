@@ -1960,6 +1960,29 @@ mine** — I had not checked. `robots.txt` disallows `/wh40k10ed/admin` and
 The attribution it asks for is on the About screen and tested, alongside
 40kdc's, and the repo is credited there too.
 
+#### Coverage, and what it cost to get there
+
+**2,130 of 2,246 (95%)**, up from 2,055. Two faults kept the last 191 out, and
+neither was a missing source:
+
+- **The name key kept its punctuation.** `_stratagemKey` folded curly
+  apostrophes and collapsed other punctuation to spaces, which is not enough
+  when the two sources disagree about *where* the apostrophe goes: our
+  `FOOL’S FLIGHT` against Wahapedia's `FOOLS’ FLIGHT`, `CUT’ EM DOWN` against
+  `CUT’EM DOWN`, `ARMED TO DA TEEF` against their `ARMED TO DATEEF`, and a
+  non-breaking hyphen in `THREAT‑COGITATION`. The key is now letters and
+  digits only. Checked before loosening it: across the whole export exactly
+  one pair of distinct keys collapses together, `COUNTER-OFFENSIVE` and
+  `COUNTEROFFENSIVE`, which is one stratagem spelled two ways.
+- **The pass never visited half the factions.** The faction list is built from
+  `data/bsdata`, and a chapter with no catalogue of its own is written by
+  `_copyRemaining` instead. Crimson Fists' **66** stratagems — the largest
+  single block — were never looked at. It now iterates the output tree.
+
+The remaining 116 are absent upstream, not unmatched: 112 have no Wahapedia
+row at all and 4 have a row Wahapedia left blank. The floor in
+`stratagem_book_test` moved from 85% to 92% so the gain cannot quietly rot.
+
 #### Lists are structure, and stripping tags loses the sentence
 
 Wahapedia marks up its text as HTML. The first merge turned `<b>` into `**`,
@@ -1975,6 +1998,25 @@ repo's transcription uses becomes the same bullet, so the two sources produce
 one format. 47 stratagems carry lists; both the merged data and the rendered
 widget are tested for it, because "no `<b>` survived" was true of the broken
 version too.
+
+#### Reading a stratagem is not playing it
+
+The turn page drew **two STRATAGEMS headings**, one from the collapsible group
+and one from the list inside it — able to disagree about the count, since each
+computed its own. The list's own heading is gone and the CP it carried moved
+into the group's trailing, where it sits beside the count.
+
+**A button plays it; the row reads it.** The whole row used to be the play
+action, so opening a card you were only considering spent the CP. Reading one
+mid-turn is the common act and playing it the rare one, and the rare one is
+the one that changes state and cannot be undone by tapping again. An
+unplayable stratagem keeps a disabled `Use` and stays readable — the reason it
+is blocked is printed under it, and a reason you cannot check against the card
+is not much of a reason.
+
+The text is folded because these are whole cards now rather than one-liners:
+COMMAND RE-ROLL alone runs to eight bulleted rolls, and five of those open at
+once buries the phase they sit in.
 
 **The text is the display, the structure is not gone.** Same split as §3.10:
 `SourceStratagem.text` is what the player reads, and every control — phase
