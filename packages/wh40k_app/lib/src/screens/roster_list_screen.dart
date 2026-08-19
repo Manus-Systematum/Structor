@@ -123,64 +123,119 @@ class RosterListView extends StatelessWidget {
     if (rows == null) {
       return const Center(child: CircularProgressIndicator());
     }
-      if (rows.isEmpty) {
-        return Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Text(
-              'No armies yet.\n\n'
-              'Build one from the datasheets, or import a text export '
-              'from the list you already have.',
-              textAlign: TextAlign.left,
-              style: TextStyle(color: scheme.onSurfaceVariant),
+    if (rows.isEmpty) {
+      return Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Text(
+            'No armies yet.\n\n'
+            'Build one from the datasheets, or import a text export '
+            'from the list you already have.',
+            textAlign: TextAlign.left,
+            style: TextStyle(color: scheme.onSurfaceVariant),
+          ),
+        ),
+      );
+    }
+    return ListView.separated(
+      padding: const EdgeInsets.only(bottom: 96),
+      itemCount: rows.length,
+      separatorBuilder: (_, __) => const Divider(height: 1),
+      itemBuilder: (context, index) {
+        final row = rows[index];
+        return Dismissible(
+          key: ValueKey(row.id),
+          direction: DismissDirection.endToStart,
+          background: Container(
+            color: scheme.errorContainer,
+            alignment: Alignment.centerRight,
+            padding: const EdgeInsets.only(right: 20),
+            child: Icon(Icons.delete, color: scheme.onErrorContainer),
+          ),
+          // An army is hours of work and a swipe is easy to make by
+          // accident while scrolling. There is no undo behind this.
+          confirmDismiss: (_) => confirmDelete(context, row.name),
+          onDismissed: (_) => store.delete(row.id),
+          child: ListTile(
+            title: Text(row.name,
+                style: const TextStyle(fontWeight: FontWeight.w700)),
+            subtitle: Text(
+              '${row.factionId.replaceAll('-', ' ')} · '
+              '${row.points} pts · ${row.unitCount} units',
+              style: TextStyle(fontSize: 12, color: scheme.onSurfaceVariant),
             ),
+            // The swipe is a shortcut, not the only way in: it is
+            // undiscoverable, and it is the only route to duplicating.
+            trailing: _RowMenu(
+              onDuplicate: () => _duplicate(context, row, rows),
+              onRefresh: datasets == null ? null : () => _refresh(context, row),
+              onDelete: () async {
+                if (await confirmDelete(context, row.name) ?? false) {
+                  await store.delete(row.id);
+                }
+              },
+            ),
+            onTap: () => onOpen(row.id),
           ),
         );
-      }
-      return ListView.separated(
-        padding: const EdgeInsets.only(bottom: 96),
-        itemCount: rows.length,
-        separatorBuilder: (_, __) => const Divider(height: 1),
-        itemBuilder: (context, index) {
-          final row = rows[index];
-          return Dismissible(
-            key: ValueKey(row.id),
-            direction: DismissDirection.endToStart,
-            background: Container(
-              color: scheme.errorContainer,
-              alignment: Alignment.centerRight,
-              padding: const EdgeInsets.only(right: 20),
-              child: Icon(Icons.delete, color: scheme.onErrorContainer),
-            ),
-            // An army is hours of work and a swipe is easy to make by
-            // accident while scrolling. There is no undo behind this.
-            confirmDismiss: (_) => confirmDelete(context, row.name),
-            onDismissed: (_) => store.delete(row.id),
-            child: ListTile(
-              title: Text(row.name,
-                  style: const TextStyle(fontWeight: FontWeight.w700)),
-              subtitle: Text(
-                '${row.factionId.replaceAll('-', ' ')} · '
-                '${row.points} pts · ${row.unitCount} units',
-                style: TextStyle(
-                    fontSize: 12, color: scheme.onSurfaceVariant),
-              ),
-              // The swipe is a shortcut, not the only way in: it is
-              // undiscoverable, and it is the only route to duplicating.
-              trailing: _RowMenu(
-                onDuplicate: () => _duplicate(context, row, rows),
-                onDelete: () async {
-                  if (await confirmDelete(context, row.name) ?? false) {
-                    await store.delete(row.id);
-                  }
-                },
-              ),
-              onTap: () => onOpen(row.id),
-            ),
-          );
-        },
-      );
+      },
+    );
+  }
+
+  /// Rebuilds one army's stored copy of the dataset.
+  ///
+  /// Asked for, never automatic. §2.2 freezes a saved list on purpose, and
+  /// the price is that an army saved before a data change never gains it —
+  /// stratagem text being the case that surfaced it. Doing it on launch would
+  /// re-cost somebody's army the night before a game, which is the failure
+  /// §2.2 exists to prevent.
+  Future<void> _refresh(BuildContext context, RosterRow row) async {
+    final datasets = this.datasets;
+    if (datasets == null) return;
+    final go = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Update ${row.name}?'),
+        content: const Text(
+          'A saved army keeps a copy of the data it was built from, so it '
+          'stays as you left it. Updating replaces that copy with the '
+          'current one.\n\n'
+          'The units, loadouts and detachments do not change. Points, rules '
+          'and stratagem text may.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Update'),
+          ),
+        ],
+      ),
+    );
+    if (go != true) return;
+
+    final before = row.points;
+    try {
+      final builder = await datasets.snapshotBuilder(row.factionId);
+      final army = await store.refreshSnapshot(row.id, builder: builder);
+      if (army == null || !context.mounted) return;
+      final after = army.points;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(after == before
+            // Says so explicitly. Silence after an action the reader asked
+            // for reads as nothing having happened.
+            ? 'Updated. Still $after pts.'
+            : 'Updated. $before → $after pts.'),
+      ));
+    } catch (error) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Could not update: $error')));
+    }
   }
 
   Future<void> _duplicate(
@@ -289,7 +344,8 @@ class _NameDialogState extends State<_NameDialog> {
 }
 
 /// Asks before an army is destroyed. True only on an explicit Delete.
-Future<bool?> confirmDelete(BuildContext context, String name) => showDialog<bool>(
+Future<bool?> confirmDelete(BuildContext context, String name) =>
+    showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Delete $name?'),
@@ -310,9 +366,14 @@ Future<bool?> confirmDelete(BuildContext context, String name) => showDialog<boo
 
 class _RowMenu extends StatelessWidget {
   final VoidCallback onDuplicate;
+  final VoidCallback? onRefresh;
   final VoidCallback onDelete;
 
-  const _RowMenu({required this.onDuplicate, required this.onDelete});
+  const _RowMenu({
+    required this.onDuplicate,
+    required this.onDelete,
+    this.onRefresh,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -329,6 +390,16 @@ class _RowMenu extends StatelessWidget {
             title: Text('Duplicate'),
           ),
         ),
+        if (onRefresh case final refresh?)
+          PopupMenuItem(
+            onTap: refresh,
+            child: const ListTile(
+              dense: true,
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(Icons.sync, size: 20),
+              title: Text('Update to current data'),
+            ),
+          ),
         PopupMenuItem(
           onTap: onDelete,
           child: const ListTile(

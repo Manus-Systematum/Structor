@@ -76,6 +76,37 @@ class RosterStore {
 
   Future<void> delete(String id) => db.deleteRoster(id);
 
+  /// Rebuilds a saved army's snapshot from today's dataset, keeping the list
+  /// itself exactly as it is.
+  ///
+  /// **The one deliberate way past §2.2.** A saved roster carries a copy of
+  /// the data it was built from so that it stops moving, which is what makes
+  /// a list you wrote in March still readable in September. The cost is that
+  /// it also stops gaining: an army saved before stratagem text existed shows
+  /// no stratagems in play mode however many times the app is updated, and
+  /// nothing on screen explains why.
+  ///
+  /// So this exists, and it is a menu item rather than something that happens
+  /// on launch. Rebuilding silently is precisely the failure §2.2 was written
+  /// against — it would re-cost an army the night before a game.
+  ///
+  /// The [Roster] is untouched: same units, same loadouts, same detachments.
+  /// Only the denormalised copy beside it is replaced, so what changes is
+  /// what the *data* says about those choices — points, rules, wording.
+  /// Returns the army as it now stands, or null when there is no such row.
+  /// The [builder] must be for this army's own faction; the row carries it.
+  Future<Army?> refreshSnapshot(
+    String id, {
+    required core.SnapshotBuilder builder,
+  }) async {
+    final row = await db.rosterById(id);
+    if (row == null) return null;
+    final roster = core.Roster.fromJson(jsonDecode(row.rosterJson));
+    final army = Army.fromSnapshot(roster, builder.build(roster), id: row.id);
+    await save(army);
+    return army;
+  }
+
   /// Copies a saved roster under a new name.
   ///
   /// **The snapshot is copied verbatim rather than rebuilt.** A copy is made

@@ -630,6 +630,12 @@ from the report:
 
 ### 4.6 Managing a saved army
 
+**Updating a saved army to current data.** §2.2 freezes a list on purpose, and that is what lets one written in March still open in September. The price is that it never *gains* either: an army saved before stratagem text existed shows none in play mode however often the app updates, and nothing on screen says why. The menu beside each army now carries `Update to current data`, which rebuilds the stored copy from today's dataset and leaves the `Roster` — units, loadouts, detachments — untouched. Only what the *data* says about those choices changes: points, rules, wording.
+
+Asked for, never automatic, and the reason is the whole of §2.2: doing it on launch would re-cost somebody's army the night before a game. The dialog says what does not change before it says what might, and the result is reported either way — `Updated. 2000 → 1985 pts.` or `Updated. Still 2000 pts.` — because silence after an action the reader asked for reads as nothing having happened.
+
+
+
 Three things happen to a list that exists: it gets opened, it gets copied to
 try a variant, and it gets thrown away.
 

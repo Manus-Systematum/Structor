@@ -43,16 +43,21 @@ void main() {
     addTearDown(tester.view.reset);
 
     late List<RosterRow> rows;
+    final datasets = DatasetRepository();
     await tester.runAsync(() async {
       await store.save(reference);
       rows = await store.list();
+      // Warmed here, as the editor tests do. Reading and inflating a bundle
+      // is real I/O and `pump` only advances fake time, so an action that
+      // loads one has not finished by the time the test looks at the screen.
+      await datasets.snapshotBuilder(reference.roster.factionId);
     });
 
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
         body: RosterListView(
           store: store,
-          datasets: DatasetRepository(),
+          datasets: datasets,
           rows: rows,
           onOpen: (_) {},
         ),
@@ -153,7 +158,8 @@ void main() {
       await tester.tap(find.text('Duplicate'));
       await tester.pumpAndSettle();
 
-      expect(find.widgetWithText(AlertDialog, 'Duplicate army'), findsOneWidget);
+      expect(
+          find.widgetWithText(AlertDialog, 'Duplicate army'), findsOneWidget);
       expect(find.text('2k ret Copy'), findsOneWidget);
     });
 
@@ -197,5 +203,81 @@ void main() {
 
     expect(find.byType(EditorScreen), findsOneWidget);
     expect(find.text('Melee variant'), findsWidgets);
+  });
+  group('updating an army to current data', () {
+    testWidgets('asks first, and says what does not change', (tester) async {
+      // §2.2 freezes a saved list on purpose. Undoing that quietly would
+      // re-cost somebody's army the night before a game, so it is asked for
+      // and the question says what is at stake.
+      await openWithDatasets(tester);
+      await openMenu(tester);
+      await tester.tap(find.text('Update to current data'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Update 2k ret?'), findsOneWidget);
+      expect(find.textContaining('units, loadouts and detachments do not'),
+          findsOneWidget);
+    });
+
+    testWidgets('cancelling leaves the stored copy alone', (tester) async {
+      await openWithDatasets(tester);
+      await openMenu(tester);
+      await tester.tap(find.text('Update to current data'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Cancel'));
+      await flush(tester);
+
+      expect(await names(tester), ['2k ret']);
+    });
+
+    testWidgets('confirming reports what it did', (tester) async {
+      // Silence after an action the reader asked for reads as nothing having
+      // happened, so the result is stated either way.
+      await openWithDatasets(tester);
+      await openMenu(tester);
+      await tester.tap(find.text('Update to current data'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(FilledButton, 'Update'));
+
+      // Pumped deliberately rather than settled: `pumpAndSettle` runs past
+      // the snack bar's four-second life and dismisses the thing being
+      // asserted, which passes or fails on timing.
+      await tester.pump();
+      await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 60)));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(find.textContaining('Updated.'), findsOneWidget);
+      expect(await names(tester), ['2k ret'],
+          reason: 'the same army, not a copy');
+
+      // Let it go before teardown, or the pending timer fails the test on an
+      // invariant rather than on what it was checking.
+      await tester.pump(const Duration(seconds: 5));
+    });
+
+    testWidgets('the refreshed army carries stratagems', (tester) async {
+      // The reason this exists: an army saved before stratagem text existed
+      // shows none in play mode however often the app is updated.
+      await openWithDatasets(tester);
+      await openMenu(tester);
+      await tester.tap(find.text('Update to current data'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(FilledButton, 'Update'));
+      await flush(tester);
+
+      late Army? reloaded;
+      await tester.runAsync(() async {
+        final rows = await store.list();
+        reloaded = await store.load(rows.single.id);
+      });
+      expect(reloaded!.snapshot.stratagems, isNotEmpty);
+      expect(
+        reloaded!.stratagems.stratagems.any((s) => (s.text ?? '').isNotEmpty),
+        isTrue,
+        reason: 'and the stratagems it carries have their printed text',
+      );
+    });
   });
 }
