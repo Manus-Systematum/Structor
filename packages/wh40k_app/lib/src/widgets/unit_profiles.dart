@@ -195,9 +195,11 @@ class CarriedWeaponProfiles extends StatelessWidget {
                     child: Text(
                       switch (key) {
                         'range' => profile.range ?? '–',
-                        // Null for Torrent-style weapons, which hit without
-                        // rolling and have no skill to print.
-                        'skill' => profile.skill ?? '–',
+                        // Through the same formatter the weapon tables use:
+                        // a skill is read as `4+`, and the raw characteristic
+                        // is a bare `4`. Null for Torrent-style weapons,
+                        // which hit without rolling and have no skill.
+                        'skill' => formatSkill(profile.skill) ?? '–',
                         _ => profile.stats[key] ?? '–',
                       },
                       textAlign: TextAlign.center,

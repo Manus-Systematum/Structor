@@ -45,28 +45,27 @@ void main() {
       }
     });
 
-    test('a Commander is offered drones, not a Shield Generator', () {
-      // The Shield Generator is a Riptide and Stormsurge support system.
-      // Upstream lists it in the Enforcer Commander's wargear budget, where
-      // it sits beside the drones and reads as the shield you meant — and
-      // taking it spends points on a rule the model does not have.
-      final enforcer = tau.unit('commander-in-enforcer-battlesuit')!;
-      expect(enforcer.ruleVocabulary, contains('shield-drone'));
-      expect(enforcer.ruleVocabulary, isNot(contains('shield-generator')));
-
-      // The Coldstar **may buy** one and does not start with it. A
-      // correction written against 40kdc — which listed the generator as
-      // both a standard ability and an option — made it standard, so the
-      // unit card printed "the bearer has a 4+ invulnerable save" and the
-      // statline showed INV 4+ on a Commander that had bought nothing.
-      // BSData lists it as an option on this datasheet and on the Enforcer,
-      // and standard on neither.
-      final coldstar = tau.unit('commander-in-coldstar-battlesuit')!;
-      expect(coldstar.abilityIds, isNot(contains('shield-generator')),
-          reason: 'an option, so not a rule the model already has');
-      expect(coldstar.wargearVocabulary, contains('shield-generator'),
-          reason: 'still offered — the Commander may buy one');
-      expect(coldstar.ruleVocabulary, contains('shield-drone'));
+    test('a Commander may buy a Shield Generator and does not start with one',
+        () {
+      // Both entries here were corrections written against 40kdc, which
+      // listed the Shield Generator as a standard ability on the Coldstar and
+      // as a budget line on the Enforcer. One correction made it standard so
+      // the statline and the rules would agree; the other removed it because
+      // it read as the Shield Drone you meant. BSData says the same thing
+      // about both datasheets — an option, standard on neither — so both
+      // corrections are retired and this is what is left.
+      for (final id in const [
+        'commander-in-enforcer-battlesuit',
+        'commander-in-coldstar-battlesuit',
+      ]) {
+        final commander = tau.unit(id)!;
+        expect(commander.abilityIds, isNot(contains('shield-generator')),
+            reason: '$id: an option is not a rule the model already has');
+        expect(commander.wargearVocabulary, contains('shield-generator'),
+            reason: '$id: still offered');
+        expect(commander.ruleVocabulary, contains('shield-drone'),
+            reason: '$id: and the drone is a different thing entirely');
+      }
     });
 
     test('a drone fires its own gun, at BS5+', () {

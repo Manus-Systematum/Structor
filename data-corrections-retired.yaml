@@ -15,6 +15,22 @@ retired:
       BSData carries the support system on the datasheet.
 
   - faction: tau-empire
+    id: commander-in-enforcer-battlesuit
+    was: "remove_wargear: [shield-generator]"
+    outcome: retired
+    reason: >
+      Written when 40kdc listed the Shield Generator in this Commander's
+      wargear budget and the reasoning was that it is a Riptide and
+      Stormsurge support system rather than a Commander option — reported by
+      the app's user, who fields the army, and taken on that authority.
+
+      BSData lists it as an option on both Commanders, and the same user has
+      since said they may have been wrong. Removed rather than kept: the
+      correction was overriding §3.10's "BSData wins" on evidence that has
+      been withdrawn, and an option nobody has to take costs nothing to
+      offer.
+
+  - faction: tau-empire
     id: commander-in-coldstar-battlesuit
     was: "standard_wargear: [shield-generator]"
     outcome: retired

@@ -1,4 +1,5 @@
 import 'package:test/test.dart';
+import 'package:wh40k_core/src/source/bsdata/bs_slug.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 void main() {
@@ -211,5 +212,65 @@ void main() {
       }
     }
     expect(offenders, isEmpty, reason: offenders.take(5).join(', '));
+  });
+  test('Combat Patrol content is not offered in a matched-play list', () {
+    // The 40kdc snapshot was first ingested with Combat Patrol units in it,
+    // and the mode scope is carried per record. Datasheets were already
+    // filtered; detachments were not, so every faction offered its Combat
+    // Patrol formation beside the real ones at 1 DP — `Sudden Dawn Cadre`
+    // for T'au, `’Ardmob` for Orks, 24 of them in all.
+    final loader = DatasetLoader('../../data/merged',
+        corrections:
+            DatasetLoader.correctionsAt('../../data-corrections.yaml'));
+    if (!loader.root.existsSync()) return;
+
+    var patrolDetachments = 0, patrolUnits = 0;
+    for (final factionId in loader.availableFactions()) {
+      final dataset = Dataset.of(loader.loadFaction(factionId), revision: 't');
+      for (final d in dataset.buildableDetachments) {
+        if (!d.isMatchedPlay) patrolDetachments++;
+      }
+      for (final u in dataset.buildableUnits) {
+        if (!u.isMatchedPlay) patrolUnits++;
+      }
+      // Still resolvable by id, so a roster naming one still opens (§2.2).
+      expect(dataset.allDetachments.length,
+          greaterThanOrEqualTo(dataset.buildableDetachments.length));
+    }
+    expect(patrolDetachments, 0);
+    expect(patrolUnits, 0);
+
+    // The T'au one by name, so this fails loudly rather than by a count.
+    final tau = Dataset.of(loader.loadFaction('tau-empire'), revision: 't');
+    expect(tau.buildableDetachments.map((d) => d.name),
+        isNot(contains('Sudden Dawn Cadre')));
+    expect(tau.detachment('sudden-dawn-cadre'), isNotNull,
+        reason: 'narrowed what is offered, not what can be read');
+  });
+
+  test('an accented name is one datasheet, not two', () {
+    // `Brôkhyr Iron-master` slugs to `brokhyr-iron-master` in 40kdc, which
+    // transliterates, and would slug to `br-khyr-iron-master` here, where `ô`
+    // is not `[a-z0-9]` and becomes a separator. The two never met, so the
+    // merge added a second copy instead of filling in the first.
+    expect(bsSlug('Brôkhyr Iron-master'), 'brokhyr-iron-master');
+    expect(bsSlug('Khârn the Betrayer'), 'kharn-the-betrayer');
+    expect(bsSlug('Ûthar the Destined'), 'uthar-the-destined');
+    expect(bsSlug('Kâhl'), 'kahl');
+
+    final loader = DatasetLoader('../../data/merged',
+        corrections:
+            DatasetLoader.correctionsAt('../../data-corrections.yaml'));
+    if (!loader.root.existsSync()) return;
+    for (final factionId in loader.availableFactions()) {
+      final seen = <String, String>{};
+      for (final unit in loader.loadFaction(factionId).units) {
+        final name = unit.name.trim().toLowerCase();
+        final first = seen[name];
+        expect(first, isNull,
+            reason: '$factionId: ${unit.name} is both $first and ${unit.id}');
+        seen[name] = unit.id;
+      }
+    }
   });
 }

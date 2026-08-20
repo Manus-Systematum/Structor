@@ -713,7 +713,7 @@ class _DetachmentPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final taken = {for (final d in roster.detachments) d.detachmentId};
-    final all = dataset.allDetachments.toList()
+    final all = dataset.buildableDetachments.toList()
       ..sort((a, b) => a.name.compareTo(b.name));
 
     return Column(

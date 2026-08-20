@@ -987,6 +987,10 @@ class SourceDetachment {
   final List<String> uniqueTags;
   final List<String> stratagemIds;
   final List<String> enhancementIds;
+
+  /// The modes this detachment belongs to; empty means matched play.
+  final List<String> gameModes;
+
   final GameVersion gameVersion;
 
   const SourceDetachment({
@@ -1000,6 +1004,7 @@ class SourceDetachment {
     required this.stratagemIds,
     required this.enhancementIds,
     required this.gameVersion,
+    this.gameModes = const [],
   });
 
   factory SourceDetachment.fromJson(Object? v) {
@@ -1014,9 +1019,20 @@ class SourceDetachment {
       uniqueTags: strList(pick(j, ['unique_tags', 'tags'])),
       stratagemIds: strList(j['stratagem_ids']),
       enhancementIds: strList(j['enhancement_ids']),
+      gameModes: strList(j['game_modes']),
       gameVersion: GameVersion.fromJson(j['game_version']),
     );
   }
+
+  /// Offerable in a matched-play list.
+  ///
+  /// The same rule [SourceUnit.isMatchedPlay] applies: an empty list means
+  /// matched play, and only the Combat Patrol records name a mode. 24 of them
+  /// exist, one per faction — `Sudden Dawn Cadre`, `’Ardmob`, `Maggot Lords`
+  /// — and the picker was offering every one of them beside the real
+  /// detachments, priced at 1 DP, in a Strike Force.
+  bool get isMatchedPlay =>
+      gameModes.isEmpty || gameModes.contains('matched-play');
 }
 
 class SourceAbility {

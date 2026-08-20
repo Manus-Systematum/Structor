@@ -2548,6 +2548,15 @@
       "resolution": "bsdata"
     },
     {
+      "faction": "leagues-of-votann",
+      "kind": "abilities",
+      "id": "fury-from-the-delve",
+      "field": "name",
+      "bsdata": "Fury from the Dêlve",
+      "40kdc": "Fury From The Dêlve",
+      "resolution": "bsdata"
+    },
+    {
       "faction": "necrons",
       "kind": "units",
       "id": "lokhust-heavy-destroyers",

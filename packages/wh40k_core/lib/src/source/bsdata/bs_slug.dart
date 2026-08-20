@@ -22,16 +22,67 @@ final _bracketed = RegExp(r'\s*\[[^\]]*\]\s*');
 final _apostrophes = RegExp(r"[’‘ʼ']");
 final _separators = RegExp(r'[^a-z0-9]+');
 
+/// Accented letters, folded to the plain one 40kdc's ids already use.
+///
+/// **Without this a name splits into two datasheets.** `Brôkhyr Iron-master`
+/// slugs to `brokhyr-iron-master` in 40kdc, which transliterates, and to
+/// `br-khyr-iron-master` here, where `ô` is not `[a-z0-9]` and becomes a
+/// separator. The two never met, so the merge added a second copy of the
+/// datasheet instead of filling in the first: five Leagues of Votann units
+/// and Khârn the Betrayer were each offered twice in the picker, one of them
+/// unpriced.
+const _accents = {
+  'à': 'a',
+  'á': 'a',
+  'â': 'a',
+  'ã': 'a',
+  'ä': 'a',
+  'å': 'a',
+  'è': 'e',
+  'é': 'e',
+  'ê': 'e',
+  'ë': 'e',
+  'ì': 'i',
+  'í': 'i',
+  'î': 'i',
+  'ï': 'i',
+  'ò': 'o',
+  'ó': 'o',
+  'ô': 'o',
+  'õ': 'o',
+  'ö': 'o',
+  'ø': 'o',
+  'ù': 'u',
+  'ú': 'u',
+  'û': 'u',
+  'ü': 'u',
+  'ý': 'y',
+  'ÿ': 'y',
+  'ñ': 'n',
+  'ç': 'c',
+  'ß': 'ss',
+  'æ': 'ae',
+};
+
+String _fold(String value) {
+  final out = StringBuffer();
+  for (final rune in value.runes) {
+    final ch = String.fromCharCode(rune);
+    out.write(_accents[ch] ?? ch);
+  }
+  return out.toString();
+}
+
 /// `Commander in Coldstar Battlesuit` -> `commander-in-coldstar-battlesuit`.
 ///
 /// Apostrophes are deleted rather than turned into separators, so `T'au` folds
 /// to `tau` and `Shas'vre` to `shasvre` — the same rule `normalise` uses for
 /// import matching, and the one 40kdc's own ids follow.
 String bsSlug(String name) {
-  final bare = name
+  final bare = _fold(name
       .replaceAll(_bracketed, ' ')
       .replaceAll(_apostrophes, '')
-      .toLowerCase();
+      .toLowerCase());
   return bare.replaceAll(_separators, '-').replaceAll(RegExp(r'^-|-$'), '');
 }
 

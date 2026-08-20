@@ -1580,16 +1580,16 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "br-khyr-guild-support",
+          "ability_id": "brokhyr-guild-support",
           "name": "Brôkhyr Guild Support",
           "score": 0.57,
           "text": "While this unit is within 3\" of one or more friendly **Leagues of Votann Vehicle** or **Ironkin Steeljacks** units, if this unit is not an attached unit, it …"
         },
         {
-          "ability_id": "exceptional-mentors",
-          "name": "Exceptional Mentors",
+          "ability_id": "hatreds-disciples",
+          "name": "Hatred's Disciples",
           "score": 0.0,
-          "text": "At the end of the battle, if this unit is not destroyed and it contains one or more Neophyte models and one or more other models (excluding **Characters**), …"
+          "text": "Each time this unit ends a Charge move, select one enemy unit within Engagement Range of it, then roll one D6 for each model in this unit that is within Enga…"
         },
         {
           "ability_id": "predictive-guidance",
@@ -1608,22 +1608,22 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "d-lvwerke-navigator",
+          "ability_id": "delvwerke-navigator",
           "name": "Dêlvwerke Navigator",
           "score": 0.67,
           "text": "In the Reinforcements step of your Movement phase, the bearer can use this Enhancement. If it does, select one friendly **Cthonian Beserks** unit visible to …"
         },
         {
-          "ability_id": "fury-from-the-d-lve",
+          "ability_id": "fury-from-the-delve",
           "name": "Fury from the Dêlve",
           "score": 0.29,
           "text": "**Cthonian Beserks** units from your army have the Deep Strike ability."
         },
         {
-          "ability_id": "exceptional-mentors",
-          "name": "Exceptional Mentors",
+          "ability_id": "hatreds-disciples",
+          "name": "Hatred's Disciples",
           "score": 0.0,
-          "text": "At the end of the battle, if this unit is not destroyed and it contains one or more Neophyte models and one or more other models (excluding **Characters**), …"
+          "text": "Each time this unit ends a Charge move, select one enemy unit within Engagement Range of it, then roll one D6 for each model in this unit that is within Enga…"
         }
       ]
     },

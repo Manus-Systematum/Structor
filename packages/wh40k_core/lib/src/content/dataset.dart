@@ -125,11 +125,20 @@ class Dataset implements Catalogue {
   @override
   Iterable<SourceDetachment> get allDetachments => _detachments.values;
 
+  /// The detachments a matched-play army may be built from.
+  ///
+  /// Separate from [allDetachments] for the same reason [buildableUnits] is
+  /// separate from [allUnits]: a roster that already names a Combat Patrol
+  /// detachment must still resolve it. This narrows what is *offered*.
+  Iterable<SourceDetachment> get buildableDetachments =>
+      _detachments.values.where((d) => d.isMatchedPlay);
+
   @override
   SourceWeapon? weapon(String weaponId) => _weapons[weaponId];
 
   @override
-  SourceDetachment? detachment(String detachmentId) => _detachments[detachmentId];
+  SourceDetachment? detachment(String detachmentId) =>
+      _detachments[detachmentId];
 
   @override
   List<String> eligibleBodyguards(String leaderDatasheetId) =>
@@ -184,8 +193,7 @@ class Dataset implements Catalogue {
     final datasheet = unit(datasheetId);
     if (datasheet == null) return battleSize.maxCopies;
     if (datasheet.isEpicHero) return 1;
-    return battleSize.capFor(
-        isBattlelineOrTransport: datasheet.hasDoubledCap);
+    return battleSize.capFor(isBattlelineOrTransport: datasheet.hasDoubledCap);
   }
 
   /// True when any content in this dataset is still on a provisional

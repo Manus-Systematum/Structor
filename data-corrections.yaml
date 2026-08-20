@@ -227,19 +227,11 @@ units:
   - faction: tau-empire
     id: commander-in-enforcer-battlesuit
     reason: >
-      The Shield Generator is a Riptide and Stormsurge support system, not a
-      Commander option, and 40kdc lists it in the Enforcer's wargear budget.
-      Offered beside the drones it reads as the shield you wanted, and taking
-      it spends points on a rule the model does not have. Reported by the
-      app's user, who fields the army. BSData does not list it either way, so
-      this is still ours to state (§3.10).
-
-      It does take a Gun Drone, which BSData does not list: the reference
-      export — a validated 2,000 point list that prices to its printed total —
-      has "1x Gun drone with twin pulse carbine" on every Commander in it.
+      BSData has no Gun Drone on this datasheet, and the reference export — a
+      validated 2,000 point list that prices to its printed total — has
+      "1x Gun drone with twin pulse carbine" on every Commander in it.
     upstream: not yet reported
     add_wargear: [gun-drone]
-    remove_wargear: [shield-generator]
 
   - faction: adepta-sororitas
     id: dominion-squad
