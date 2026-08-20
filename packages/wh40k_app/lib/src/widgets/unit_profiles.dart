@@ -107,6 +107,25 @@ class UnitStatline extends StatelessWidget {
   }
 }
 
+/// What a profile is, for the one thing the table cannot say in words.
+///
+/// The `SKILL` column takes `BS` or `WS` per profile, so the heading can no
+/// longer name which. The row carries that instead — and a pistol is worth a
+/// third state rather than being lumped in with the rest of the shooting: it
+/// is the weapon you are looking for when the enemy is already in engagement
+/// range, which is exactly when nobody wants to read a table.
+enum _Kind {
+  ranged,
+  melee,
+  pistol;
+
+  Color? tint(ColorScheme scheme) => switch (this) {
+        _Kind.ranged => null,
+        _Kind.melee => scheme.surfaceContainerHighest,
+        _Kind.pistol => scheme.tertiaryContainer.withValues(alpha: 0.45),
+      };
+}
+
 /// Profiles for the weapons this unit is actually carrying.
 ///
 /// Only what is on the unit, because the point of showing them here is
@@ -127,7 +146,7 @@ class CarriedWeaponProfiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final profiles = <(String, WeaponProfile, bool)>[];
+    final profiles = <(String, WeaponProfile, _Kind)>[];
     for (final entry in carried.entries) {
       if (entry.value <= 0) continue;
       final weapon = dataset.weaponFor(datasheet, entry.key) ??
@@ -142,7 +161,11 @@ class CarriedWeaponProfiles extends StatelessWidget {
           profile,
           // Per profile, not per weapon: a Fusion eliminator is typed ranged
           // and carries a melee profile too.
-          profile.isMelee(weaponIsMelee: weapon.type == 'melee'),
+          profile.isMelee(weaponIsMelee: weapon.type == 'melee')
+              ? _Kind.melee
+              : profile.hasKeyword('pistol')
+                  ? _Kind.pistol
+                  : _Kind.ranged,
         ));
       }
     }
@@ -174,11 +197,14 @@ class CarriedWeaponProfiles extends StatelessWidget {
             ],
           ),
         ),
-        for (final (count, profile, melee) in profiles)
+        for (final (count, profile, kind) in profiles)
           Container(
             // The heading cannot say which skill a row is using once it says
-            // both, so the row does: melee sits on its own ground.
-            color: melee ? scheme.surfaceContainerHighest : null,
+            // both, so the row does: melee sits on its own ground, and a
+            // pistol on its own again — it is a ranged weapon that can be
+            // fired inside engagement range, which is the one thing you are
+            // checking the list for when the enemy is already on you.
+            color: kind.tint(scheme),
             padding: const EdgeInsets.fromLTRB(20, 2, 12, 2),
             child: Row(
               children: [
@@ -206,6 +232,31 @@ class CarriedWeaponProfiles extends StatelessWidget {
                       style: AppTheme.numeric(context, size: 12),
                     ),
                   ),
+              ],
+            ),
+          ),
+        // **Only the pistol is explained.** A melee row already says so in
+        // its own RNG cell, and a key repeating the word beside a swatch is
+        // furniture. A pistol's range is a number like any other gun's, so
+        // nothing on the row says what the tint means.
+        if (profiles.any((p) => p.$3 == _Kind.pistol))
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 4, 12, 0),
+            child: Row(
+              children: [
+                Container(
+                  width: 9,
+                  height: 9,
+                  decoration: BoxDecoration(
+                    color: _Kind.pistol.tint(scheme),
+                    border: Border.all(color: scheme.outlineVariant),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(width: 5),
+                Text('Pistol',
+                    style: TextStyle(
+                        fontSize: 9.5, color: scheme.onSurfaceVariant)),
               ],
             ),
           ),
