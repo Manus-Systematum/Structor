@@ -14,6 +14,25 @@ retired:
     reason: >
       BSData carries the support system on the datasheet.
 
+  - faction: tau-empire
+    id: commander-in-coldstar-battlesuit
+    was: "standard_wargear: [shield-generator]"
+    outcome: retired
+    reason: >
+      Written against 40kdc, which listed the Shield Generator BOTH as a
+      standard ability and as a wargear option — so the app could not tell
+      whether a list that never bought one had a 4+ invulnerable save, and
+      the entry picked "standard" to make the statline and the rules agree.
+      Its own note said this was the line to change if a Coldstar has to pay
+      for it.
+
+      BSData settles it: the Shield Generator is a wargear option on this
+      datasheet and on the Enforcer, and on neither is it standard. The
+      correction was making an option always-on, so the unit card listed
+      "Shield Generator: the bearer has a 4+ invulnerable save" and the
+      statline showed INV 4+ on a Commander that had not bought one.
+      Reported by the app's user, who fields the army.
+
 
 # Narrowed rather than retired: BSData covers part of what the correction
 # added, and the reference export — a validated 2,000 point list that prices

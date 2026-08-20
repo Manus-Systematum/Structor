@@ -33,6 +33,17 @@ class ModelProfile {
   final String name;
   final String? m, t, w, sv, invulnSv, ld, oc;
 
+  /// A distance with its unit, or the value untouched when it is not one.
+  ///
+  /// `-` means the model does not move and stays as it is. A trailing `+` is
+  /// a minimum rather than a fixed distance — a Heldrake reads `12+"` — so
+  /// the mark goes after it, not before.
+  static String? _inches(String? raw) {
+    final value = raw?.trim();
+    if (value == null || value.isEmpty) return raw;
+    return RegExp(r'^\d+(\.\d+)?\+?$').hasMatch(value) ? '$value"' : value;
+  }
+
   const ModelProfile({
     required this.name,
     this.m,
@@ -48,7 +59,11 @@ class ModelProfile {
     final j = asMap(v);
     return ModelProfile(
       name: strOr(j['name'], '(unnamed)'),
-      m: str(j['M']),
+      // **Movement always carries its inch mark.** Upstream writes it both
+      // ways — `'7"'` on most datasheets and a bare `10` on a handful — so
+      // the same screen showed `5"` on a statline and `10` in the move list,
+      // which reads as two different kinds of number.
+      m: _inches(str(j['M'])),
       t: str(j['T']),
       w: str(j['W']),
       sv: str(j['Sv']),

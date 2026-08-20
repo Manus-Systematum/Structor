@@ -320,7 +320,6 @@
         "coldstar-commander",
         "deep-strike",
         "for-the-greater-good",
-        "shield-generator",
         "gun-drone"
       ],
       "game_version": {
@@ -331,6 +330,13 @@
       "points_provisional": false,
       "attachment_role": "leader",
       "wargear_budgets": [
+        {
+          "items": [
+            "shield-generator"
+          ],
+          "count": 1,
+          "per_models": 0
+        },
         {
           "items": [
             "cyclic-ion-blaster-commander-in-coldstar-battlesuit"
@@ -391,7 +397,7 @@
         "40kdc"
       ],
       "corrected": {
-        "reason": "40kdc lists the Shield Generator BOTH as a standard ability and as a wargear option, so the app could not tell whether a list that never mentions buying one has a 4+ invulnerable save. Treated as standard, which is what the ability list implies and what makes the statline agree with the rules. If a Coldstar has to pay for its Shield Generator, this entry is the thing to change.",
+        "reason": "BSData has no Gun Drone on this datasheet, and the reference export — a validated 2,000 point list that prices to its printed total — has \"1x Gun drone with twin pulse carbine\" on every Commander in it.",
         "upstream": "not yet reported"
       }
     },
@@ -572,7 +578,7 @@
         "exemplars-of-montka",
         "retro-thrusters",
         "for-the-greater-good",
-        "scouts",
+        "scouts-8",
         "deep-strike"
       ],
       "game_version": {
@@ -797,7 +803,7 @@
       ],
       "ability_ids": [
         "stealth-drones",
-        "deadly-demise",
+        "deadly-demise-d3",
         "infiltrators",
         "lone-operative",
         "stealth",
@@ -888,7 +894,7 @@
       ],
       "ability_ids": [
         "nova-charge",
-        "deadly-demise",
+        "deadly-demise-d6",
         "for-the-greater-good",
         "missile-drone"
       ],
@@ -2861,15 +2867,37 @@
         "40kdc"
       ]
     },
-    "scouts": {
-      "ability_id": "scouts",
-      "name": "Scouts",
-      "description": "This ability always takes the form **Scouts X\"**. In the Resolve Pre-battle Abilities step, if every model in a unit has this ability, you can do one of the following:\n- If that unit is in **strategic reserves**, you can set up that unit anywhere that is wholly within your deployment zone.\n- If that unit is wholly within your deployment zone, it can make a **scout move**.\n- If that unit is embarked within a **DEDICATED TRANSPORT** that is wholly within your deployment zone, and if every model embarked within that **DEDICATED TRANSPORT** has the Scouts ability, that **DEDICATED TRANSPORT** can make a **scout move**.",
-      "ability_type": "core",
+    "scouts-8": {
+      "ability_id": "scouts-8",
+      "name": "Scouts 8\"",
+      "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
         "dataslate": "bsdata"
-      }
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "movement-modifier",
+        "target": "unit",
+        "modifier": {
+          "move_type": "scout",
+          "distance": 8
+        }
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "the-twin-lance"
+      ],
+      "ability_type": "core",
+      "behavior": "activated",
+      "description": "This ability always takes the form **Scouts X\"**. In the Resolve Pre-battle Abilities step, if every model in a unit has this ability, you can do one of the following:\n- If that unit is in **strategic reserves**, you can set up that unit anywhere that is wholly within your deployment zone.\n- If that unit is wholly within your deployment zone, it can make a **scout move**.\n- If that unit is embarked within a **DEDICATED TRANSPORT** that is wholly within your deployment zone, and if every model embarked within that **DEDICATED TRANSPORT** has the Scouts ability, that **DEDICATED TRANSPORT** can make a **scout move**.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "mv15-gun-drone": {
       "ability_id": "mv15-gun-drone",
@@ -3029,15 +3057,54 @@
         "40kdc"
       ]
     },
-    "deadly-demise": {
-      "ability_id": "deadly-demise",
-      "name": "Deadly Demise",
-      "description": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have made their **emergency disembark moves**, roll one D6. On a 6, that model suffers a **deadly demise**; each unit within 6\" of that model suffers a number of **mortal wounds** denoted by **X** (if this is a random number, roll separately for each unit within 6\").\n**Example:** An Impulsor with a unit of Intercessors embarked within it is **destroyed** by ranged attacks. First, any unresolved attacks made by the attacking unit are resolved. Then the Intercessors make an **emergency disembark move**. Then the roll is made for the **Deadly Demise** ability, and on a 6, that ability is resolved. Finally, the Impulsor is removed from the battlefield.*",
-      "ability_type": "core",
+    "deadly-demise-d3": {
+      "ability_id": "deadly-demise-d3",
+      "name": "Deadly Demise D3",
+      "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
         "dataslate": "bsdata"
-      }
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "timing-is",
+          "parameters": {
+            "timing": "before-bearer-removed"
+          }
+        },
+        "effect": {
+          "type": "dice-gated",
+          "dice": "D6",
+          "threshold": 6,
+          "comparison": "gte",
+          "on_success": {
+            "type": "mortal-wounds",
+            "target": "enemy-within-aura",
+            "modifier": {
+              "count": "D3",
+              "range": 6
+            }
+          },
+          "on_fail": null
+        }
+      },
+      "scope": {
+        "range": "aura-6",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "sun-shark-bomber",
+        "tidewall-shieldline"
+      ],
+      "ability_type": "core",
+      "behavior": "reactive",
+      "description": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have made their **emergency disembark moves**, roll one D6. On a 6, that model suffers a **deadly demise**; each unit within 6\" of that model suffers a number of **mortal wounds** denoted by **X** (if this is a random number, roll separately for each unit within 6\").\n**Example:** An Impulsor with a unit of Intercessors embarked within it is **destroyed** by ranged attacks. First, any unresolved attacks made by the attacking unit are resolved. Then the Intercessors make an **emergency disembark move**. Then the roll is made for the **Deadly Demise** ability, and on a 6, that ability is resolved. Finally, the Impulsor is removed from the battlefield.*",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
     },
     "infiltrators": {
       "ability_id": "infiltrators",
@@ -3172,6 +3239,54 @@
       "ability_type": "unit",
       "behavior": "activated",
       "description": "Once per battle, when this unit is selected to shoot in your Shooting phase, select one ranged weapon equipped by this model. Until the end of the phase, that weapon has the **[DEVASTATING WOUNDS]** ability.",
+      "sources": [
+        "bsdata",
+        "40kdc"
+      ]
+    },
+    "deadly-demise-d6": {
+      "ability_id": "deadly-demise-d6",
+      "name": "Deadly Demise D6",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "bsdata"
+      },
+      "version": "2025-q3",
+      "effect": {
+        "type": "conditional",
+        "condition": {
+          "type": "timing-is",
+          "parameters": {
+            "timing": "before-bearer-removed"
+          }
+        },
+        "effect": {
+          "type": "dice-gated",
+          "dice": "D6",
+          "threshold": 6,
+          "comparison": "gte",
+          "on_success": {
+            "type": "mortal-wounds",
+            "target": "enemy-within-aura",
+            "modifier": {
+              "count": "D6",
+              "range": 6
+            }
+          },
+          "on_fail": null
+        }
+      },
+      "scope": {
+        "range": "aura-6",
+        "duration": "permanent"
+      },
+      "unit_ids": [
+        "riptide-battlesuit"
+      ],
+      "ability_type": "core",
+      "behavior": "reactive",
+      "description": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have made their **emergency disembark moves**, roll one D6. On a 6, that model suffers a **deadly demise**; each unit within 6\" of that model suffers a number of **mortal wounds** denoted by **X** (if this is a random number, roll separately for each unit within 6\").\n**Example:** An Impulsor with a unit of Intercessors embarked within it is **destroyed** by ranged attacks. First, any unresolved attacks made by the attacking unit are resolved. Then the Intercessors make an **emergency disembark move**. Then the roll is made for the **Deadly Demise** ability, and on a 6, that ability is resolved. Finally, the Impulsor is removed from the battlefield.*",
       "sources": [
         "bsdata",
         "40kdc"
@@ -3791,8 +3906,7 @@
   },
   "factionRuleId": "for-the-greater-good",
   "sharedAbilities": [
-    "scouts",
-    "deadly-demise",
+    "scouts-7",
     "hover",
     "for-the-greater-good",
     "weapon-support-system",
@@ -3801,13 +3915,18 @@
     "shield-drone",
     "marker-drone",
     "guardian-drone",
+    "deadly-demise-1",
+    "scouts-9",
     "infiltrators",
     "stealth",
+    "deadly-demise-d3",
     "ds8-support-turret",
     "battlesuit-support-system",
-    "firing-deck",
+    "deadly-demise-d6-2",
+    "firing-deck-11",
     "leader",
     "feel-no-pain",
+    "deadly-demise-d6",
     "missile-drone",
     "lone-operative",
     "shield-generator",

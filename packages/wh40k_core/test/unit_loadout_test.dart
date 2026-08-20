@@ -206,4 +206,32 @@ void main() {
       expect(offered, isNot(contains('precise')));
     }, skip: available ? null : 'no snapshot');
   });
+  group('an option is not a thing the unit has', () {
+    test('a Coldstar does not start with a Shield Generator', () {
+      // A correction written against 40kdc forced this on: that source listed
+      // the Shield Generator both as a standard ability and as a wargear
+      // option, so the app could not tell whether a list that never bought
+      // one had a 4+ invulnerable save, and the entry picked "standard".
+      // BSData settles it — an option on this datasheet and on the Enforcer,
+      // standard on neither — so the correction was making the unit card
+      // print a rule the model does not have.
+      final loadout =
+          loadoutFor(load('tau-empire'), 'commander-in-coldstar-battlesuit');
+      expect(loadout.fixed.keys, isNot(contains('shield-generator')));
+      expect(
+          loadout.counters.map((c) => c.itemId), contains('shield-generator'),
+          reason: 'still offered — the Commander may buy one');
+    });
+
+    test('the invulnerable save follows the purchase', () {
+      // The statline and the rules list read the same ability, so if one says
+      // a Shield Generator was bought the other has to agree.
+      final dataset = load('tau-empire');
+      final sheet = dataset.unit('commander-in-coldstar-battlesuit')!;
+      expect(sheet.abilityIds, isNot(contains('shield-generator')));
+      final granted = dataset.ability('shield-generator');
+      expect(granted?.unconditionalInvulnerableSave, 4,
+          reason: 'the ability still grants it once taken');
+    });
+  }, skip: available ? null : 'no snapshot');
 }

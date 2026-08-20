@@ -54,13 +54,18 @@ void main() {
       expect(enforcer.ruleVocabulary, contains('shield-drone'));
       expect(enforcer.ruleVocabulary, isNot(contains('shield-generator')));
 
-      // The Coldstar keeps its generator, because there it is standard kit
-      // and the 4+ invulnerable save comes from it (§3.8). Standard means it
-      // is a rule the model has, never an option to buy.
+      // The Coldstar **may buy** one and does not start with it. A
+      // correction written against 40kdc — which listed the generator as
+      // both a standard ability and an option — made it standard, so the
+      // unit card printed "the bearer has a 4+ invulnerable save" and the
+      // statline showed INV 4+ on a Commander that had bought nothing.
+      // BSData lists it as an option on this datasheet and on the Enforcer,
+      // and standard on neither.
       final coldstar = tau.unit('commander-in-coldstar-battlesuit')!;
-      expect(coldstar.abilityIds, contains('shield-generator'),
-          reason: 'standard kit, so a rule the model has and not an option');
-      expect(coldstar.wargearVocabulary, isNot(contains('shield-generator')));
+      expect(coldstar.abilityIds, isNot(contains('shield-generator')),
+          reason: 'an option, so not a rule the model already has');
+      expect(coldstar.wargearVocabulary, contains('shield-generator'),
+          reason: 'still offered — the Commander may buy one');
       expect(coldstar.ruleVocabulary, contains('shield-drone'));
     });
 
@@ -93,8 +98,8 @@ void main() {
 
     for (final entry in fixtures.entries) {
       test('${entry.key.split('/').last} imports with no issues at all', () {
-        final parsed = const TextListParser()
-            .parse(File(entry.key).readAsStringSync());
+        final parsed =
+            const TextListParser().parse(File(entry.key).readAsStringSync());
         final result = RosterResolver(
           tau,
           abilityLookup: tau.ability,
@@ -104,8 +109,7 @@ void main() {
         // Not merely "no errors": an info line about a drone the datasheet
         // does not list is the symptom of a bundle built before the
         // corrections, which is the thing this file exists to catch.
-        expect(result.issues, isEmpty,
-            reason: result.issues.join('\n'));
+        expect(result.issues, isEmpty, reason: result.issues.join('\n'));
         expect(PointsCalculator(tau).price(result.roster).total, entry.value);
         expect(result.printedPoints, entry.value);
       });
@@ -158,8 +162,8 @@ void main() {
       // downloaded. What changed is that the chapter now publishes some of
       // its own too, so this is no longer an equality (§3.10).
       expect(bloodAngels.allUnits, isNotEmpty);
-      expect(bloodAngels.allUnits.length,
-          greaterThan(astartes.allUnits.length));
+      expect(
+          bloodAngels.allUnits.length, greaterThan(astartes.allUnits.length));
 
       final ids = {for (final u in bloodAngels.allUnits) u.id};
       expect(ids, contains('intercessor-squad'), reason: 'inherited');

@@ -777,7 +777,9 @@ class _Walk {
       final type = str(link['type']);
       if (type != 'rule' && type != 'profile') continue;
       final target = index.resolve(link);
-      if (target != null) _readRule(target, linked: true);
+      if (target != null) {
+        _readRule(target, linked: true, name: _linkName(link, target.name));
+      }
     }
 
     if (depth == 0) _rootName = entry.name;
@@ -942,7 +944,40 @@ class _Walk {
   /// wargear, and it links the rule `Lethal Hits`, which is what the mutt
   /// *does* — not a second thing to buy. Filing both as budget lines put
   /// "Lethal Hits" in the builder with a `+` beside it.
-  void _readRule(BsEntry rule, {bool linked = false}) {
+  /// The name a link gives its target, which is not always the target's own.
+  ///
+  /// **This is how BSData writes a rule with a number in it.** `Scouts X"` is
+  /// one shared rule, and a datasheet that has `Scouts 6"` links it with
+  /// `{type: append, field: name, value: 6"}`. Reading the target's bare name
+  /// filed every such datasheet under `scouts` — the rulebook explanation of
+  /// the ability, which carries no distance — so a Dominion Squad showed
+  /// "Scouts" with no number and never appeared in the Scout moves list.
+  ///
+  /// A separator is inserted where neither side has one: appending `6"` to
+  /// `Scouts` has to give `Scouts 6"`, or the slug is `scouts6` and matches
+  /// nothing.
+  static String _linkName(Map<String, dynamic> link, String targetName) {
+    var name = targetName;
+    for (final raw in asList(link['modifiers'])) {
+      final modifier = asMap(raw);
+      if (str(modifier['field']) != 'name') continue;
+      final value = strOr(modifier['value'], '');
+      if (value.isEmpty) continue;
+      switch (str(modifier['type'])) {
+        case 'append':
+          final gap = name.endsWith(' ') || value.startsWith(' ') ? '' : ' ';
+          name = '$name$gap$value';
+        case 'prepend':
+          final gap = value.endsWith(' ') || name.startsWith(' ') ? '' : ' ';
+          name = '$value$gap$name';
+        case 'set':
+          name = value;
+      }
+    }
+    return name.trim();
+  }
+
+  void _readRule(BsEntry rule, {bool linked = false, String? name}) {
     // A shared rule carries its text on the record itself; a profile carries
     // it in a characteristic. Both shapes appear, and both are rules.
     final description = str(rule.json['description']);
@@ -950,7 +985,8 @@ class _Walk {
       _readProfiles(rule);
       return;
     }
-    final id = bsSlug(rule.name);
+    final displayName = name ?? rule.name;
+    final id = bsSlug(displayName);
     if (id.isEmpty) return;
     // The record is still kept below — the text is worth having where a
     // player looks a weapon rule up. It is only kept off the unit's own
@@ -962,7 +998,7 @@ class _Walk {
       id,
       () => {
         'ability_id': id,
-        'name': rule.name,
+        'name': displayName,
         'description': normaliseRuleText(description),
         'ability_type': 'core',
         'game_version': bsGameVersion,

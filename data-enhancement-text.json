@@ -46,16 +46,16 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "front-line-crusader",
-          "name": "Front-line Crusader",
+          "ability_id": "epitome-of-piety",
+          "name": "Epitome of Piety",
           "score": 0.0,
-          "text": "This model has the Scouts 6\" ability, and you can re-roll Charge rolls made for this model's unit."
+          "text": "This model has the Feel No Pain 6+ (this is improved to Feel No Pain 4+ against Psychic Attacks and mortal wounds)."
         },
         {
-          "ability_id": "anchorite-sarcophagus",
-          "name": "Anchorite Sarcophagus",
+          "ability_id": "feel-no-pain-5",
+          "name": "Feel No Pain 5+",
           "score": 0.0,
-          "text": "The bearer has a Move characteristic of 7\" and a Save Characteristic of 3+."
+          "text": "This ability always takes the form **Feel No Pain X+**. Each time a model with this ability would lose a wound, roll one D6: on an **X+**, that wound is not …"
         }
       ]
     },
@@ -80,10 +80,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "front-line-crusader",
-          "name": "Front-line Crusader",
+          "ability_id": "epitome-of-piety",
+          "name": "Epitome of Piety",
           "score": 0.0,
-          "text": "This model has the Scouts 6\" ability, and you can re-roll Charge rolls made for this model's unit."
+          "text": "This model has the Feel No Pain 6+ (this is improved to Feel No Pain 4+ against Psychic Attacks and mortal wounds)."
         }
       ]
     },
@@ -270,16 +270,16 @@
           "text": "Ranged weapons equipped by models in the bearer’s unit have the [IGNORES COVER] ability."
         },
         {
-          "ability_id": "reliquary-weapon",
-          "name": "Reliquary Weapon",
+          "ability_id": "relentless-crusaders",
+          "name": "Relentless Crusaders",
           "score": 0.0,
-          "text": "Select one weapon equipped by the bearer (excluding a weapon that has been replaced by an Enhancement or Crusade Relic, or upgraded with any Battle Traits). …"
+          "text": "Each time a model in this unit makes a melee attack that targets a unit that is Below Half-strength, you can re-roll the Wound roll."
         },
         {
-          "ability_id": "command-uplink",
-          "name": "Command Uplink",
+          "ability_id": "strafing-run",
+          "name": "Strafing Run",
           "score": 0.0,
-          "text": "Each time you select the bearer’s unit as the target of a Stratagem, roll one D6: on a 5+, you gain 1CP."
+          "text": "Each time this model makes a ranged attack that targets an enemy unit (excluding units that can Fly), add 1 to the Hit roll."
         }
       ]
     },
@@ -332,10 +332,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "reliquary-weapon",
-          "name": "Reliquary Weapon",
+          "ability_id": "relentless-crusaders",
+          "name": "Relentless Crusaders",
           "score": 0.0,
-          "text": "Select one weapon equipped by the bearer (excluding a weapon that has been replaced by an Enhancement or Crusade Relic, or upgraded with any Battle Traits). …"
+          "text": "Each time a model in this unit makes a melee attack that targets a unit that is Below Half-strength, you can re-roll the Wound roll."
         }
       ]
     },
@@ -348,22 +348,22 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "damaged-1-4-wounds-remaining",
-          "name": "Damaged: 1-4 wounds remaining",
+          "ability_id": "scouts-9",
+          "name": "Scouts 9\"",
+          "score": 0.4,
+          "text": "This ability always takes the form **Scouts X\"**. In the Resolve Pre-battle Abilities step, if every model in a unit has this ability, you can do one of the …"
+        },
+        {
+          "ability_id": "feel-no-pain-5-4",
+          "name": "Feel No Pain 5+ 4+",
           "score": 0.25,
-          "text": "While this mdel has 1-4 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+          "text": "This ability always takes the form **Feel No Pain X+**. Each time a model with this ability would lose a wound, roll one D6: on an **X+**, that wound is not …"
         },
         {
-          "ability_id": "reliquary-weapon",
-          "name": "Reliquary Weapon",
-          "score": 0.0,
-          "text": "Select one weapon equipped by the bearer (excluding a weapon that has been replaced by an Enhancement or Crusade Relic, or upgraded with any Battle Traits). …"
-        },
-        {
-          "ability_id": "command-uplink",
-          "name": "Command Uplink",
-          "score": 0.0,
-          "text": "Each time you select the bearer’s unit as the target of a Stratagem, roll one D6: on a 5+, you gain 1CP."
+          "ability_id": "feel-no-pain-4-5",
+          "name": "Feel No Pain 4+ 5+",
+          "score": 0.25,
+          "text": "This ability always takes the form **Feel No Pain X+**. Each time a model with this ability would lose a wound, roll one D6: on an **X+**, that wound is not …"
         }
       ]
     },
@@ -444,10 +444,10 @@
           "text": "Ranged weapons equipped by models in this unit have the **[ASSAULT]** ability."
         },
         {
-          "ability_id": "benediction-of-fury",
-          "name": "Benediction of Fury",
+          "ability_id": "vengeful-onslaught",
+          "name": "Vengeful Onslaught",
           "score": 0.0,
-          "text": "Chaplain model only. The bearer’s melee weapons have the [DEVASTATING WOUNDS] ability."
+          "text": "Death Company model only. If the bearer is destroyed, until the end of your next turn, each time a friendly Death Company model make an attack, add 1 to the …"
         }
       ]
     },
@@ -612,10 +612,10 @@
           "text": "While a unit in your Crusade army is under the effects of the First Rank Fire! Second Rank Fire! Order, if that unit Remains Stationary, its Rapid Fire weapo…"
         },
         {
-          "ability_id": "battlefield-chirurgy",
-          "name": "Battlefield Chirurgy",
+          "ability_id": "master-of-the-ravenwing",
+          "name": "Master of the Ravenwing",
           "score": 0.0,
-          "text": "At the end of the battle, if your Crusade army included this model and it was not destroyed during the battle, you can ignore up to two failed Out of Action …"
+          "text": "**Ravenwing** model only. This model's unit can declare a charge in a turn in which it Advanced, and you can re-roll Charge rolls made for that unit."
         }
       ]
     },
@@ -830,16 +830,16 @@
           "text": "While a friendly **War Dog** model is within 9” of this model, after that **War Dog** model has shot, you can select one enemy unit hit by one or more of tho…"
         },
         {
-          "ability_id": "inured-to-agony",
-          "name": "Inured To Agony",
+          "ability_id": "aurillian-shroud",
+          "name": "Aurillian Shroud",
           "score": 0.0,
-          "text": "- **Death Company** models in this unit have the Feel No Pain 5+ ability."
+          "text": "Models in the bearer's unit have the Stealth ability."
         },
         {
-          "ability_id": "executioner",
-          "name": "Executioner",
+          "ability_id": "brigand",
+          "name": "Brigand",
           "score": 0.0,
-          "text": "Each time this model makes an attack that targets a unit Below Half-strength, add 1 to the Hit roll. Each time an enemy unit is destroyed as the result of th…"
+          "text": "Ranged weapons equipped by this model have the [Ignores Cover] ability while targeting enemy units in range of one or more objective markers."
         }
       ]
     },
@@ -858,16 +858,16 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "inured-to-agony",
-          "name": "Inured To Agony",
+          "ability_id": "aurillian-shroud",
+          "name": "Aurillian Shroud",
           "score": 0.0,
-          "text": "- **Death Company** models in this unit have the Feel No Pain 5+ ability."
+          "text": "Models in the bearer's unit have the Stealth ability."
         },
         {
-          "ability_id": "executioner",
-          "name": "Executioner",
+          "ability_id": "brigand",
+          "name": "Brigand",
           "score": 0.0,
-          "text": "Each time this model makes an attack that targets a unit Below Half-strength, add 1 to the Hit roll. Each time an enemy unit is destroyed as the result of th…"
+          "text": "Ranged weapons equipped by this model have the [Ignores Cover] ability while targeting enemy units in range of one or more objective markers."
         }
       ]
     },
@@ -948,10 +948,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "quantum-abacus",
-          "name": "Quantum Abacus",
+          "ability_id": "murdermind",
+          "name": "Murdermind",
           "score": 0.0,
-          "text": "Each time you select the bearer’s unit as the target of a Stratagem, roll one D6, adding 1 if it is within range of one or more objectives: on a 4+, you gain…"
+          "text": "The bearer has the **DESTROYER CULT** keyword. Add 3\" to the Move characteristic of the bearer."
         }
       ]
     },
@@ -976,10 +976,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "quantum-abacus",
-          "name": "Quantum Abacus",
+          "ability_id": "murdermind",
+          "name": "Murdermind",
           "score": 0.0,
-          "text": "Each time you select the bearer’s unit as the target of a Stratagem, roll one D6, adding 1 if it is within range of one or more objectives: on a 4+, you gain…"
+          "text": "The bearer has the **DESTROYER CULT** keyword. Add 3\" to the Move characteristic of the bearer."
         }
       ]
     },
@@ -1054,10 +1054,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "bonds-of-duty",
-          "name": "Bonds of Duty",
+          "ability_id": "relentless-crusaders",
+          "name": "Relentless Crusaders",
           "score": 0.0,
-          "text": "Select one melee weapon equipped by the bearer (excluding a weapon that has been replaced by an Enhancement or Crusade Relic, or upgraded with any Battle Tra…"
+          "text": "Each time a model in this unit makes a melee attack that targets a unit that is Below Half-strength, you can re-roll the Wound roll."
         },
         {
           "ability_id": "shroud-of-disease",
@@ -1110,10 +1110,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "bonds-of-duty",
-          "name": "Bonds of Duty",
+          "ability_id": "relentless-crusaders",
+          "name": "Relentless Crusaders",
           "score": 0.0,
-          "text": "Select one melee weapon equipped by the bearer (excluding a weapon that has been replaced by an Enhancement or Crusade Relic, or upgraded with any Battle Tra…"
+          "text": "Each time a model in this unit makes a melee attack that targets a unit that is Below Half-strength, you can re-roll the Wound roll."
         },
         {
           "ability_id": "shroud-of-disease",
@@ -1194,16 +1194,16 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "amplification-psychic",
-          "name": "Amplification (Psychic)",
+          "ability_id": "acquirers-of-knowledge",
+          "name": "Acquirers of Knowledge",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly **Adeptus Astartes** unit within 18\" of this **Psyker** and roll one D6: on a 1, this **Psyker**'s unit su…"
+          "text": "Each time a model in this unit makes an attack, if this unit is within range of an objective marker, re-roll a Hit roll of 1."
         },
         {
-          "ability_id": "lethal-obsession",
-          "name": "Lethal Obsession",
+          "ability_id": "deep-strike",
+          "name": "Deep Strike",
           "score": 0.0,
-          "text": "In your Shooting phase, after this unit has shot, you can use this ability. If you do, select one enemy unit hit by those ranged attacks. Until the end of th…"
+          "text": "Each time this unit makes an **ingress move** (20.04), if every model in this unit has this ability, it can be set up anywhere on the battlefield that is mor…"
         }
       ]
     },
@@ -1278,16 +1278,16 @@
           "text": "In your Shooting phase, after this model has shot, select one INFANTRY unit hit by one or more of those attacks made with its Agonising Energies. Until the s…"
         },
         {
-          "ability_id": "amplification-psychic",
-          "name": "Amplification (Psychic)",
+          "ability_id": "acquirers-of-knowledge",
+          "name": "Acquirers of Knowledge",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly **Adeptus Astartes** unit within 18\" of this **Psyker** and roll one D6: on a 1, this **Psyker**'s unit su…"
+          "text": "Each time a model in this unit makes an attack, if this unit is within range of an objective marker, re-roll a Hit roll of 1."
         },
         {
-          "ability_id": "lethal-obsession",
-          "name": "Lethal Obsession",
+          "ability_id": "deep-strike",
+          "name": "Deep Strike",
           "score": 0.0,
-          "text": "In your Shooting phase, after this unit has shot, you can use this ability. If you do, select one enemy unit hit by those ranged attacks. Until the end of th…"
+          "text": "Each time this unit makes an **ingress move** (20.04), if every model in this unit has this ability, it can be set up anywhere on the battlefield that is mor…"
         }
       ]
     },
@@ -1508,10 +1508,10 @@
           "text": "Each time this unit Advances, do not make an Advance roll. Instead, until the end of the phase, add 6\" to the Move characteristic of models in this unit."
         },
         {
-          "ability_id": "in-preparation-victory",
-          "name": "In Preparation, Victory",
+          "ability_id": "istrouman-cognisance",
+          "name": "Istrouman Cognisance",
           "score": 0.0,
-          "text": "You can target this unit with the Heroic Intervention Stratagem for 0CP, and you can do so even if you have already used that Stratagem on a different unit t…"
+          "text": "- Each time you lose a battle while this model is part of your Crusade Army, make a note of your opponent's Faction keyword on this model's Crusade Card. Tha…"
         }
       ]
     },
@@ -1586,10 +1586,10 @@
           "text": "While this unit is within 3\" of one or more friendly **Leagues of Votann Vehicle** or **Ironkin Steeljacks** units, if this unit is not an attached unit, it …"
         },
         {
-          "ability_id": "litany-of-divine-protection",
-          "name": "Litany of Divine Protection",
+          "ability_id": "exceptional-mentors",
+          "name": "Exceptional Mentors",
           "score": 0.0,
-          "text": "While this model is leading a unit, each time a ranged attack targets that unit, that unit has the Benefit of Cover against that attack."
+          "text": "At the end of the battle, if this unit is not destroyed and it contains one or more Neophyte models and one or more other models (excluding **Characters**), …"
         },
         {
           "ability_id": "predictive-guidance",
@@ -1620,10 +1620,10 @@
           "text": "**Cthonian Beserks** units from your army have the Deep Strike ability."
         },
         {
-          "ability_id": "litany-of-divine-protection",
-          "name": "Litany of Divine Protection",
+          "ability_id": "exceptional-mentors",
+          "name": "Exceptional Mentors",
           "score": 0.0,
-          "text": "While this model is leading a unit, each time a ranged attack targets that unit, that unit has the Benefit of Cover against that attack."
+          "text": "At the end of the battle, if this unit is not destroyed and it contains one or more Neophyte models and one or more other models (excluding **Characters**), …"
         }
       ]
     },
@@ -1900,10 +1900,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "belt-of-russ",
-          "name": "Belt of Russ",
+          "ability_id": "deadly-predators",
+          "name": "Deadly Predators",
           "score": 0.0,
-          "text": "The bearer has a 4+ invulnerable save. Once per battle, at the start of any phase, the bearer can use this Crusade Relic: if it does, until the end of the ph…"
+          "text": "Add 2 to the Strength characteristic of melee weapons equipped by models in this unit."
         }
       ]
     },
@@ -1950,16 +1950,16 @@
           "text": "**Infantry Warboss** model only. At the start of the Fight phase, select one enemy unit within Engagement range of the bearer. That unit must take a Battle-s…"
         },
         {
-          "ability_id": "death-companion-with-jump-pack",
-          "name": "Death Companion with Jump Pack",
+          "ability_id": "heavy-jump-pack-and-mk-x-gravis-armour",
+          "name": "Heavy Jump Pack and Mk X Gravis Armour",
           "score": 0.0,
-          "text": "**Infantry** only. Change this model's Move characteristic to 12\", it gains the Deep Strike and Feel No Pain 6+ abilities, and unless it's unit is within 12\"…"
+          "text": "**Infantry** only. Change this model's Move characteristic to 10\", its Toughness characteristic to 6 and its Wounds characteristic to 5. Remove the **Tacticu…"
         },
         {
-          "ability_id": "da-jump-psychic",
-          "name": "Da Jump (Psychic)",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy",
           "score": 0.0,
-          "text": "Once per turn, at the end of your Movement phase, one WEIRDBOY from your army can use this ability. If it does, roll one D6: on a 1, that WEIRDBOY’s unit suf…"
+          "text": "While this model is leading a unit, add 1 to the Strength and Damage characteristics of this model’s ’Eadbanger weapon for every 5 models in that unit (round…"
         }
       ]
     },
@@ -1984,10 +1984,10 @@
           "text": "**Warboss** model only. Once per battle round, at the start of any phase, you can select one friendly **Orks** unit that is Battle-shocked and within 12\" of …"
         },
         {
-          "ability_id": "death-companion-with-jump-pack",
-          "name": "Death Companion with Jump Pack",
+          "ability_id": "heavy-jump-pack-and-mk-x-gravis-armour",
+          "name": "Heavy Jump Pack and Mk X Gravis Armour",
           "score": 0.0,
-          "text": "**Infantry** only. Change this model's Move characteristic to 12\", it gains the Deep Strike and Feel No Pain 6+ abilities, and unless it's unit is within 12\"…"
+          "text": "**Infantry** only. Change this model's Move characteristic to 10\", its Toughness characteristic to 6 and its Wounds characteristic to 5. Remove the **Tacticu…"
         }
       ]
     },
@@ -2292,10 +2292,10 @@
           "text": "Each time you target this model with a Stratagem, you must spend three times that Stratagem’s stated CP cost to do so."
         },
         {
-          "ability_id": "beastpyre",
-          "name": "Beastpyre",
+          "ability_id": "sword-of-the-lost-crusader",
+          "name": "Sword of the Lost Crusader",
           "score": 0.0,
-          "text": "Select one Torrent weapon equipped by the bearer (excluding a weapon that has been upgraded with a Weapon Modification - if you cannot do so, you cannot sele…"
+          "text": "Select one power weapon or master-crafted power weapon equipped by the bearer (excluding a weapon that has been upgraded with a Weapon Modification - if you …"
         }
       ]
     },
@@ -2308,22 +2308,22 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "beastpyre",
-          "name": "Beastpyre",
+          "ability_id": "sword-of-the-lost-crusader",
+          "name": "Sword of the Lost Crusader",
           "score": 0.0,
-          "text": "Select one Torrent weapon equipped by the bearer (excluding a weapon that has been upgraded with a Weapon Modification - if you cannot do so, you cannot sele…"
+          "text": "Select one power weapon or master-crafted power weapon equipped by the bearer (excluding a weapon that has been upgraded with a Weapon Modification - if you …"
         },
         {
-          "ability_id": "hover",
-          "name": "Hover",
+          "ability_id": "kroot-linebreakers",
+          "name": "Kroot Linebreakers",
           "score": 0.0,
-          "text": "Each time this unit **takes to the skies** (21.03), do not subtract 2\" from the **maximum distance**."
+          "text": "Each time this unit ends a Charge move, select one enemy unit within Engagement Range of it, then roll one D6 for each model in this unit that is within Enga…"
         },
         {
-          "ability_id": "aggressive-deployment",
-          "name": "Aggressive Deployment",
+          "ability_id": "deadly-demise-3d6",
+          "name": "Deadly Demise 3D6",
           "score": 0.0,
-          "text": "In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks. Until the end of the phase, each time a friendl…"
+          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
         }
       ]
     },
@@ -2364,22 +2364,22 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "beastpyre",
-          "name": "Beastpyre",
+          "ability_id": "sword-of-the-lost-crusader",
+          "name": "Sword of the Lost Crusader",
           "score": 0.0,
-          "text": "Select one Torrent weapon equipped by the bearer (excluding a weapon that has been upgraded with a Weapon Modification - if you cannot do so, you cannot sele…"
+          "text": "Select one power weapon or master-crafted power weapon equipped by the bearer (excluding a weapon that has been upgraded with a Weapon Modification - if you …"
         },
         {
-          "ability_id": "hover",
-          "name": "Hover",
+          "ability_id": "kroot-linebreakers",
+          "name": "Kroot Linebreakers",
           "score": 0.0,
-          "text": "Each time this unit **takes to the skies** (21.03), do not subtract 2\" from the **maximum distance**."
+          "text": "Each time this unit ends a Charge move, select one enemy unit within Engagement Range of it, then roll one D6 for each model in this unit that is within Enga…"
         },
         {
-          "ability_id": "aggressive-deployment",
-          "name": "Aggressive Deployment",
+          "ability_id": "deadly-demise-3d6",
+          "name": "Deadly Demise 3D6",
           "score": 0.0,
-          "text": "In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks. Until the end of the phase, each time a friendl…"
+          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
         }
       ]
     },
@@ -2398,16 +2398,16 @@
           "text": "During the Declare Battle Formations step, if this model is attached a unit, until the end of the battle, that unit has the Deep Strike ability."
         },
         {
-          "ability_id": "beastpyre",
-          "name": "Beastpyre",
+          "ability_id": "sword-of-the-lost-crusader",
+          "name": "Sword of the Lost Crusader",
           "score": 0.0,
-          "text": "Select one Torrent weapon equipped by the bearer (excluding a weapon that has been upgraded with a Weapon Modification - if you cannot do so, you cannot sele…"
+          "text": "Select one power weapon or master-crafted power weapon equipped by the bearer (excluding a weapon that has been upgraded with a Weapon Modification - if you …"
         },
         {
-          "ability_id": "aggressive-deployment",
-          "name": "Aggressive Deployment",
+          "ability_id": "deadly-demise-3d6",
+          "name": "Deadly Demise 3D6",
           "score": 0.0,
-          "text": "In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks. Until the end of the phase, each time a friendl…"
+          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
         }
       ]
     },
@@ -2476,22 +2476,22 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "fervent-acclamation",
-          "name": "Fervent Acclamation",
+          "ability_id": "psalm-of-remorseless-persecution",
+          "name": "Psalm of Remorseless Persecution",
           "score": 0.0,
-          "text": "Once per battle, in your Command phase, you can select one Vow that is not active for your army. Until the start of your next Command phase, that Vow applies…"
+          "text": "While this model is leading a unit, each time a model in that unit makes a melee attack, if that unit made a Charge move this turn, you can re-roll the Hit r…"
+        },
+        {
+          "ability_id": "devoted-to-destruction",
+          "name": "Devoted to Destruction",
+          "score": 0.0,
+          "text": "If this model is equipped with 2 melee weapons in addition to its close combat weapon, add 2 to the Attacks characteristic of those two weapons."
         },
         {
           "ability_id": "terrifying-assault",
           "name": "Terrifying Assault",
           "score": 0.0,
           "text": "In your Shooting phase and the Fight phase, after this model has shot, select one enemy unit hit by one or more of those attacks. That unit must take a Battl…"
-        },
-        {
-          "ability_id": "mutating-vortex-aura",
-          "name": "Mutating Vortex (Aura)",
-          "score": 0.0,
-          "text": "At the end of your Movement phase, roll one D6 for each enemy unit within 6\" of this model: on a 2-3, that unit suffers 1 mortal wound; on a 4-5, that unit s…"
         }
       ]
     },
@@ -2616,10 +2616,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "staunch-hunters",
-          "name": "Staunch Hunters",
+          "ability_id": "pack-of-one",
+          "name": "Pack of One",
           "score": 0.0,
-          "text": "At the start of each player's turn, one model in this unit regains 1 lost wound."
+          "text": "- This model has the Infiltrators and Scouts 6\" abilities."
         },
         {
           "ability_id": "subterranean-tunnels",
@@ -2672,10 +2672,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "staunch-hunters",
-          "name": "Staunch Hunters",
+          "ability_id": "pack-of-one",
+          "name": "Pack of One",
           "score": 0.0,
-          "text": "At the start of each player's turn, one model in this unit regains 1 lost wound."
+          "text": "- This model has the Infiltrators and Scouts 6\" abilities."
         },
         {
           "ability_id": "subterranean-tunnels",

@@ -162,4 +162,54 @@ void main() {
     }
     expect(offenders, isEmpty, reason: offenders.take(5).join(', '));
   });
+  test('a rule with a number in its name keeps the number', () {
+    // BSData writes `Scouts X"` as one shared rule, and a datasheet that has
+    // `Scouts 6"` links it with a name modifier. Reading the target's bare
+    // name filed every such datasheet under `scouts` — the rulebook
+    // explanation, which carries no distance — so a Dominion Squad showed
+    // "Scouts" with no number and never reached the Scout moves list.
+    final loader = DatasetLoader('../../data/merged',
+        corrections:
+            DatasetLoader.correctionsAt('../../data-corrections.yaml'));
+    if (!loader.root.existsSync()) return;
+
+    final sisters = loader.loadFaction('adepta-sororitas');
+    final dominions = sisters.units.firstWhere((u) => u.id == 'dominion-squad');
+    expect(dominions.abilityIds, contains('scouts-6'));
+    expect(dominions.abilityIds, isNot(contains('scouts')));
+
+    // Not one datasheet: the same shape carries Deadly Demise, Feel No Pain
+    // and Firing Deck, and the numbers are the whole content of those rules.
+    var numbered = 0;
+    for (final factionId in loader.availableFactions()) {
+      for (final unit in loader.loadFaction(factionId).units) {
+        for (final id in unit.abilityIds) {
+          if (RegExp(r'^scouts-\d').hasMatch(id)) numbered++;
+        }
+      }
+    }
+    expect(numbered, greaterThan(50));
+  });
+
+  test('every movement characteristic carries its inch mark', () {
+    // Upstream writes it both ways — `7"` on most datasheets and a bare `10`
+    // on a handful — so one screen showed `5"` on a statline and `10` in the
+    // move list, which reads as two different kinds of number.
+    final loader = DatasetLoader('../../data/merged',
+        corrections:
+            DatasetLoader.correctionsAt('../../data-corrections.yaml'));
+    if (!loader.root.existsSync()) return;
+
+    final offenders = <String>[];
+    for (final factionId in loader.availableFactions()) {
+      for (final unit in loader.loadFaction(factionId).units) {
+        for (final profile in unit.profiles) {
+          final m = profile.m;
+          if (m == null || m.isEmpty || m == '-') continue;
+          if (!m.endsWith('"')) offenders.add('$factionId/${unit.id}: $m');
+        }
+      }
+    }
+    expect(offenders, isEmpty, reason: offenders.take(5).join(', '));
+  });
 }

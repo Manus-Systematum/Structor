@@ -35,19 +35,48 @@ void main() {
     CombatUnit unitWith(String instanceId) => army.combatUnits
         .firstWhere((u) => u.group.any((g) => g.instanceId == instanceId));
 
-    test('an invulnerable save granted by an ability reaches the statline',
-        () {
-      // The Coldstar's 4+ lives in its shield-generator ability, not in
-      // invuln_sv. Reading the profile alone left the INV column empty.
+    test('an ability-granted invulnerable save follows the purchase', () {
+      // The Coldstar's 4+ lives in its shield-generator ability rather than
+      // in `invuln_sv`, so the statline has to read the abilities — but only
+      // the ones the unit *has*. A correction written against 40kdc made the
+      // Shield Generator standard, and the card then printed a 4+ and the
+      // rule on a Commander that never bought one.
       final coldstar = unitWith('u03');
-      final commander = coldstar.profiles
-          .firstWhere((p) => p.name.contains('Coldstar'));
-      expect(commander.profile.invulnSv, '4');
+      final commander =
+          coldstar.profiles.firstWhere((p) => p.name.contains('Coldstar'));
+      expect(commander.profile.invulnSv, isNull,
+          reason: 'the reference list buys no Shield Generator');
 
-      // …and it does not leak onto the suits it leads.
-      final suits = coldstar.profiles
-          .firstWhere((p) => p.name.contains('Starscythe'));
-      expect(suits.profile.invulnSv, isNull);
+      // The other direction: buying one brings both back.
+      final bought = army.roster.copyWith(units: [
+        for (final unit in army.roster.units)
+          if (unit.instanceId == 'u03')
+            unit.copyWith(wargear: [
+              ...unit.wargear,
+              const WargearSelection(itemId: 'shield-generator', count: 1),
+            ])
+          else
+            unit,
+      ]);
+      final withShield = Army.fromSnapshot(bought, army.snapshot, id: 't');
+      final armed = withShield.combatUnits
+          .firstWhere((u) => u.group.any((g) => g.instanceId == 'u03'));
+      expect(
+        armed.profiles
+            .firstWhere((p) => p.name.contains('Coldstar'))
+            .profile
+            .invulnSv,
+        '4',
+      );
+
+      // …and it does not leak onto the suits it leads, either way.
+      expect(
+        armed.profiles
+            .firstWhere((p) => p.name.contains('Starscythe'))
+            .profile
+            .invulnSv,
+        isNull,
+      );
     });
 
     test("an attached unit's abilities say which half owns them", () {
@@ -57,8 +86,10 @@ void main() {
         for (final r in coldstar.attributedRules) r.rule.abilityId: r.source,
       };
       // The Commander's, not the Crisis suits'.
-      expect(rules['shield-generator'], 'Commander in Coldstar Battlesuit');
+      expect(rules['coldstar-commander'], 'Commander in Coldstar Battlesuit');
       expect(rules['starscythe'], 'Crisis Starscythe Battlesuits');
+      // An option nobody bought is not one of the unit's rules.
+      expect(rules.containsKey('shield-generator'), isFalse);
       // Both halves Deep Strike, and both bought drones, so naming a half
       // would be wrong as well as noisy.
       expect(rules['deep-strike'], isEmpty);
@@ -228,20 +259,16 @@ void main() {
       // A Scout move not taken before the first turn cannot be taken later,
       // so from round 2 the section describes a moment that has passed.
       useTallSurface(tester);
-      await tester.pumpWidget(
-          host(TurnScreen(army: army, log: gameAt(1))));
+      await tester.pumpWidget(host(TurnScreen(army: army, log: gameAt(1))));
       expect(find.text('SCOUTING'), findsOneWidget);
 
-      await tester.pumpWidget(
-          host(TurnScreen(army: army, log: gameAt(2))));
+      await tester.pumpWidget(host(TurnScreen(army: army, log: gameAt(2))));
       expect(find.text('SCOUTING'), findsNothing);
     });
 
-    testWidgets('Movement shows the number the phase turns on',
-        (tester) async {
+    testWidgets('Movement shows the number the phase turns on', (tester) async {
       useTallSurface(tester);
-      await tester.pumpWidget(
-          host(TurnScreen(army: army, log: gameAt(1))));
+      await tester.pumpWidget(host(TurnScreen(army: army, log: gameAt(1))));
 
       expect(find.text('MOVE'), findsOneWidget);
       // The reference army's Coldstar Commander moves 12 and the Crisis suits

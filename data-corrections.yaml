@@ -256,15 +256,11 @@ units:
   - faction: tau-empire
     id: commander-in-coldstar-battlesuit
     reason: >
-      40kdc lists the Shield Generator BOTH as a standard ability and as a
-      wargear option, so the app could not tell whether a list that never
-      mentions buying one has a 4+ invulnerable save. Treated as standard,
-      which is what the ability list implies and what makes the statline agree
-      with the rules. If a Coldstar has to pay for its Shield Generator, this
-      entry is the thing to change.
+      BSData has no Gun Drone on this datasheet, and the reference export — a
+      validated 2,000 point list that prices to its printed total — has
+      "1x Gun drone with twin pulse carbine" on every Commander in it.
     upstream: not yet reported
     add_wargear: [gun-drone]
-    standard_wargear: [shield-generator]
 
 # Two ids for one rule. Upstream transcribes an ability once per datasheet, and
 # the datasheets disagree about the plural — the effect records are identical.
