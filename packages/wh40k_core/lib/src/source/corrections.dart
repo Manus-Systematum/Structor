@@ -184,6 +184,37 @@ class WeaponCorrection implements Correction {
 ///
 /// The alias is deliberately not a rename: [canonicalId] must already exist,
 /// so this can only ever merge a duplicate into a record upstream also has.
+/// A Unit Upgrade limited to named datasheets.
+///
+/// The restriction is real and upstream does not carry it: both of T'au's
+/// upgrades publish `keyword_restrictions: ["T’au Empire"]` and nothing more,
+/// so every Character in the army was offered them. Reported by the app's
+/// user, who fields the army.
+class EnhancementCorrection implements Correction {
+  @override
+  final String faction;
+  final String enhancementId;
+  @override
+  final String reason;
+  final String? upstream;
+
+  /// Datasheet ids it may go on. `Unmasking Suite` takes two, which is why
+  /// this is a list and not a keyword: restrictions are all required at once
+  /// and Pathfinders are not Stealth Battlesuits.
+  final List<String> restrictTo;
+
+  const EnhancementCorrection({
+    required this.faction,
+    required this.enhancementId,
+    required this.reason,
+    required this.restrictTo,
+    this.upstream,
+  });
+
+  @override
+  String get subject => enhancementId;
+}
+
 class AliasCorrection implements Correction {
   @override
   final String faction;
@@ -231,12 +262,14 @@ class DataCorrections {
   final List<AbilityCorrection> abilities;
   final List<UnitCorrection> units;
   final List<WeaponCorrection> weapons;
+  final List<EnhancementCorrection> enhancements;
   final List<AliasCorrection> aliases;
 
   const DataCorrections({
     this.abilities = const [],
     this.units = const [],
     this.weapons = const [],
+    this.enhancements = const [],
     this.aliases = const [],
   });
 
@@ -246,6 +279,7 @@ class DataCorrections {
       abilities.isEmpty &&
       units.isEmpty &&
       weapons.isEmpty &&
+      enhancements.isEmpty &&
       aliases.isEmpty;
 
   static const _anyFaction = '*';
@@ -439,10 +473,13 @@ class DataCorrections {
       for (final item in correction.addWargear) {
         if (!abilityIds.contains(item)) abilityIds.add(item);
         final alreadyBudgeted = budgets.any((b) =>
-            b is Map &&
-            asList(b['items']).map((i) => '$i').contains(item));
+            b is Map && asList(b['items']).map((i) => '$i').contains(item));
         if (!alreadyBudgeted) {
-          budgets.add({'items': [item], 'count': 1, 'per_models': 0});
+          budgets.add({
+            'items': [item],
+            'count': 1,
+            'per_models': 0
+          });
         }
       }
 
@@ -489,6 +526,51 @@ class DataCorrections {
   ///
   /// Returns fresh records; the input is not mutated, so a caller may bundle
   /// corrected data while a cross-check still reads the original.
+  /// Stamps `unit_ids` onto the enhancements a correction restricts.
+  CorrectionResult applyToEnhancements(
+      String factionId, List<Object?> records) {
+    final byId = {
+      for (final c in enhancements)
+        if (c.faction == factionId) c.enhancementId: c,
+    };
+    if (byId.isEmpty) {
+      return CorrectionResult(
+          records: records, applied: const [], unmatched: const []);
+    }
+
+    final applied = <Correction>[];
+    final out = <Object?>[];
+    for (final record in records) {
+      if (record is! Map) {
+        out.add(record);
+        continue;
+      }
+      final correction = byId[record['id']?.toString()];
+      if (correction == null) {
+        out.add(record);
+        continue;
+      }
+      applied.add(correction);
+      out.add({
+        for (final e in record.entries) e.key.toString(): e.value,
+        'unit_ids': correction.restrictTo,
+        'corrected': {
+          'reason': correction.reason,
+          if (correction.upstream != null) 'upstream': correction.upstream,
+        },
+      });
+    }
+    return CorrectionResult(
+      records: out,
+      applied: applied,
+      // Reported, so an entry upstream has since adopted gets noticed.
+      unmatched: [
+        for (final c in byId.values)
+          if (!applied.contains(c)) c,
+      ],
+    );
+  }
+
   CorrectionResult applyToAbilities(
     String factionId,
     List<Object?> records,
@@ -591,7 +673,9 @@ class DataCorrections {
         final effect = _plain(node['effect']);
         // A correction with no reason is indistinguishable from a private
         // edit, and one with no effect has nothing to say.
-        if (reason.isEmpty || effect is! Map<String, Object?> || effect.isEmpty) {
+        if (reason.isEmpty ||
+            effect is! Map<String, Object?> ||
+            effect.isEmpty) {
           continue;
         }
         abilities.add(AbilityCorrection(
@@ -655,6 +739,26 @@ class DataCorrections {
       }
     }
 
+    final enhancements = <EnhancementCorrection>[];
+    final rawEnhancements = root['enhancements'];
+    if (rawEnhancements is List) {
+      for (final node in rawEnhancements) {
+        if (node is! Map) continue;
+        final reason = node['reason']?.toString().trim() ?? '';
+        final restrict = [
+          for (final item in asList(_plain(node['restrict_to']))) '$item',
+        ];
+        if (reason.isEmpty || restrict.isEmpty) continue;
+        enhancements.add(EnhancementCorrection(
+          faction: node['faction']?.toString() ?? '',
+          enhancementId: node['id']?.toString() ?? '',
+          reason: reason,
+          upstream: node['upstream']?.toString(),
+          restrictTo: restrict,
+        ));
+      }
+    }
+
     final aliases = <AliasCorrection>[];
     final rawAliases = root['aliases'];
     if (rawAliases is List) {
@@ -679,6 +783,7 @@ class DataCorrections {
       abilities: abilities,
       units: units,
       weapons: weapons,
+      enhancements: enhancements,
       aliases: aliases,
     );
   }

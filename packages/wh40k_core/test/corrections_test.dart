@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:test/test.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import 'support.dart';
+
 const _yaml = '''
 abilities:
   - faction: tau-empire
@@ -86,14 +88,20 @@ aliases:
 ''';
 
     List<Object?> abilities() => [
-          {'ability_id': 'weapon-support-system', 'name': 'Weapon Support System'},
-          {'ability_id': 'weapon-support-systems', 'name': 'Weapon Support Systems'},
+          {
+            'ability_id': 'weapon-support-system',
+            'name': 'Weapon Support System'
+          },
+          {
+            'ability_id': 'weapon-support-systems',
+            'name': 'Weapon Support Systems'
+          },
           {'ability_id': 'nova-charge', 'name': 'Nova Charge'},
         ];
 
     test('the duplicate record is dropped', () {
-      final result =
-          DataCorrections.parse(yaml).applyToAbilities('tau-empire', abilities());
+      final result = DataCorrections.parse(yaml)
+          .applyToAbilities('tau-empire', abilities());
 
       expect(
         result.records.map((r) => (r! as Map)['ability_id']),
@@ -109,7 +117,10 @@ aliases:
           'id': 'crisis-fireknife-battlesuits',
           'ability_ids': ['weapon-support-systems', 'fireknife'],
           'wargear_budgets': [
-            {'items': ['weapon-support-systems'], 'count': 1},
+            {
+              'items': ['weapon-support-systems'],
+              'count': 1
+            },
           ],
         },
       ]);
@@ -137,7 +148,10 @@ aliases:
       final result = DataCorrections.parse(yaml).applyToAbilities(
         'tau-empire',
         [
-          {'ability_id': 'weapon-support-systems', 'name': 'Weapon Support Systems'},
+          {
+            'ability_id': 'weapon-support-systems',
+            'name': 'Weapon Support Systems'
+          },
         ],
       );
       expect(result.records, hasLength(1));
@@ -171,8 +185,8 @@ aliases:
 
   group('application', () {
     test('the named ability is replaced and the rest left alone', () {
-      final result = DataCorrections.parse(_yaml)
-          .applyToAbilities('tau-empire', _records);
+      final result =
+          DataCorrections.parse(_yaml).applyToAbilities('tau-empire', _records);
 
       expect(result.applied, hasLength(1));
       expect(result.unmatched, isEmpty);
@@ -291,7 +305,8 @@ abilities:
       for (final factionId in loader.availableFactions()) {
         final seen = <String, String>{};
         for (final ability in loader.loadFaction(factionId).abilities) {
-          final key = '${ability.name.toLowerCase().replaceAll(RegExp(r's$'), '')}'
+          final key =
+              '${ability.name.toLowerCase().replaceAll(RegExp(r's$'), '')}'
               '|${ability.effectFingerprint}';
           final previous = seen[key];
           expect(
@@ -365,8 +380,12 @@ abilities:
         'Shooting phase, except vs VEHICLE or MONSTER: -1 AP.',
       );
 
-      for (final id in ['advanced-armour', 'coldstar-commander', 'starscythe',
-          'stealth']) {
+      for (final id in [
+        'advanced-armour',
+        'coldstar-commander',
+        'starscythe',
+        'stealth'
+      ]) {
         expect(rendered[id]?.isComplete, isTrue,
             reason: '$id renders a placeholder');
       }
@@ -383,9 +402,8 @@ abilities:
       if (!loader.root.existsSync()) return;
 
       final faction = loader.loadFaction('tau-empire');
-      final pod = faction.weapons
-          .where((w) => w.id == 'drone-missile-pod')
-          .toList();
+      final pod =
+          faction.weapons.where((w) => w.id == 'drone-missile-pod').toList();
       expect(pod, hasLength(1), reason: 'added, not duplicated');
 
       final profile = pod.single.profiles.single;
@@ -398,8 +416,7 @@ abilities:
 
       // Derived, not copied: everything but the skill matches the namesake,
       // so an upstream revision to the missile pod carries over.
-      final namesake =
-          faction.weapons.firstWhere((w) => w.id == 'missile-pod');
+      final namesake = faction.weapons.firstWhere((w) => w.id == 'missile-pod');
       final original = namesake.profiles.single;
       expect(original.skill, '4', reason: 'the battlesuit fires it better');
       for (final stat in ['A', 'S', 'AP', 'D']) {
@@ -505,5 +522,45 @@ abilities:
         'Against mortal wounds: Feel No Pain 4+.',
       );
     });
+  });
+  group('a Unit Upgrade is limited to its datasheets', () {
+    test('the two T\'au upgrades reach only the units they are for', () {
+      // Both publish `keyword_restrictions: ["T’au Empire"]` and nothing
+      // else, so the builder offered them on every Character in the list. A
+      // keyword cannot express it either: the Unmasking Suite goes on
+      // Pathfinders *or* Stealth Battlesuits, and restrictions are all
+      // required at once — so the correction names the datasheets.
+      final loader = correctedLoader();
+      if (!loader.root.existsSync()) return;
+      final tau = Dataset.of(loader.loadFaction('tau-empire'), revision: 't');
+
+      List<String> upgradesFor(String id) {
+        final sheet = tau.unit(id)!;
+        return [
+          for (final e in tau.enhancements)
+            if (e.isUpgrade &&
+                e.canBeTakenBy(sheet, factionName: tau.faction.factionName))
+              e.name,
+        ];
+      }
+
+      expect(upgradesFor('commander-in-enforcer-battlesuit'), isEmpty,
+          reason: 'a Commander is neither of the two datasheets');
+      expect(
+          upgradesFor('stealth-battlesuits'),
+          containsAll(
+              ['Negation Emitters (Upgrade)', 'Unmasking Suite (Upgrade)']));
+      expect(upgradesFor('pathfinder-team'), ['Unmasking Suite (Upgrade)'],
+          reason: 'Negation Emitters is Stealth only');
+    }, skip: snapshotAvailable ? null : 'no snapshot');
+
+    test('an unrestricted enhancement is left alone', () {
+      final loader = correctedLoader();
+      if (!loader.root.existsSync()) return;
+      final tau = Dataset.of(loader.loadFaction('tau-empire'), revision: 't');
+      final plain = tau.enhancements
+          .firstWhere((e) => e.name == 'Puretide Engram Neurochip');
+      expect(plain.unitIds, isEmpty);
+    }, skip: snapshotAvailable ? null : 'no snapshot');
   });
 }

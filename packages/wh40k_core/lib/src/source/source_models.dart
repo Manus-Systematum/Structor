@@ -884,6 +884,18 @@ class SourceEnhancement {
   final List<String> keywordRestrictions;
   final List<String> exclusionKeywords;
 
+  /// Datasheets this may go on, when it is limited to named ones.
+  ///
+  /// **A Unit Upgrade usually names its datasheet and the data usually does
+  /// not.** `Negation Emitters (Upgrade)` and `Unmasking Suite (Upgrade)`
+  /// both publish `keyword_restrictions: ["T’au Empire"]` and nothing else,
+  /// so every Character in the army was offered them. A keyword restriction
+  /// cannot express it either: `Unmasking Suite` goes on Pathfinders **or**
+  /// Stealth Battlesuits, and restrictions are all required at once.
+  ///
+  /// Empty means unrestricted, which is the common case.
+  final List<String> unitIds;
+
   final GameVersion gameVersion;
 
   const SourceEnhancement({
@@ -897,6 +909,7 @@ class SourceEnhancement {
     required this.maxTargets,
     required this.keywordRestrictions,
     required this.exclusionKeywords,
+    this.unitIds = const [],
     required this.gameVersion,
   });
 
@@ -913,6 +926,7 @@ class SourceEnhancement {
       maxTargets: asInt(j['max_targets']),
       keywordRestrictions: strList(j['keyword_restrictions']),
       exclusionKeywords: strList(j['exclusion_keywords']),
+      unitIds: strList(j['unit_ids']),
       gameVersion: GameVersion.fromJson(j['game_version']),
     );
   }
@@ -942,6 +956,7 @@ class SourceEnhancement {
   bool canBeTakenBy(SourceUnit unit, {String? factionName}) {
     if (unit.isEpicHero) return false;
     if (!isUpgrade && !unit.isCharacter) return false;
+    if (unitIds.isNotEmpty && !unitIds.contains(unit.id)) return false;
 
     final vocabulary = <String>{
       for (final k in unit.keywords) _fold(k),

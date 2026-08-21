@@ -212,7 +212,12 @@ class DatasetLoader {
       return data;
     }
 
-    final enhancementRecords = read('core/$factionId/enhancements.json');
+    // Corrected on the way in, like units and abilities: a Unit Upgrade
+    // usually names its datasheet and the data usually does not.
+    final enhancementRecords = corrections
+        .applyToEnhancements(
+            factionId, read('core/$factionId/enhancements.json'))
+        .records;
     final enhancementIds = <String>{};
     for (final raw in enhancementRecords) {
       final id = str(asMap(raw)['id']);
@@ -388,8 +393,7 @@ class DatasetLoader {
       );
 
   /// Raw unit records with [corrections] applied.
-  CorrectionResult correctedUnits(String factionId) =>
-      corrections.applyToUnits(
+  CorrectionResult correctedUnits(String factionId) => corrections.applyToUnits(
         factionId,
         _readArray('core/$factionId/units.json') ?? const [],
       );

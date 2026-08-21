@@ -313,6 +313,32 @@ units:
     upstream: not yet reported
     add_wargear: [missile-drone]
 
+# Unit Upgrades restricted to the datasheets they are actually for.
+#
+# Both of T'au's publish `keyword_restrictions: ["T’au Empire"]` and nothing
+# else, so every Character in the army was offered them. A keyword restriction
+# cannot express it either — the Unmasking Suite goes on Pathfinders *or*
+# Stealth Battlesuits, and restrictions are all required at once — so these
+# name the datasheets.
+enhancements:
+  - faction: tau-empire
+    id: negation-emitters-upgrade-advanced-acquisition-cadre
+    reason: >
+      A Unit Upgrade for Stealth Battlesuits. Upstream carries only the
+      faction keyword, so the builder offered it on every Character in the
+      list. Reported by the app's user, who fields the army.
+    upstream: not yet reported
+    restrict_to: [stealth-battlesuits]
+
+  - faction: tau-empire
+    id: unmasking-suite-upgrade-advanced-acquisition-cadre
+    reason: >
+      A Unit Upgrade for Pathfinders or Stealth Battlesuits — two datasheets,
+      which is why this is a list rather than a keyword. Reported by the app's
+      user, who fields the army.
+    upstream: not yet reported
+    restrict_to: [pathfinder-team, stealth-battlesuits]
+
 aliases:
   - faction: "*"
     id: battlesuit-support-systems

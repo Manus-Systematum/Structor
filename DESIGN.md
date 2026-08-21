@@ -618,6 +618,10 @@ Attachment is also one decision seen from two sides. The character's sheet asks 
 
 ---
 
+**A Unit Upgrade is limited to its datasheets, and upstream does not say so.** Both of T'au's publish `keyword_restrictions: ["T’au Empire"]` and nothing else, so the builder offered `Negation Emitters (Upgrade)` and `Unmasking Suite (Upgrade)` on every Character in the list. The rest of the eligibility filter was already right — Epic Heroes take none, an Enhancement wants a Character, a detachment scopes what it brings — and this was the hole in it: an upgrade skips the Character test by design, and then nothing else applied.
+
+A keyword restriction could not express it either. The Unmasking Suite goes on Pathfinders **or** Stealth Battlesuits, and `keyword_restrictions` are all required at once. So `SourceEnhancement.unitIds` names the datasheets, empty meaning unrestricted, and `data-corrections.yaml` gained an `enhancements:` section to supply it — the restriction is real and the source has not got it, which is exactly what §3.6 is for. Reported by the app's user, who fields the army.
+
 ### 4.5.1 The one place the builder does refuse
 
 §2.3 settled that the builder is permissive and the validator honest, and that
