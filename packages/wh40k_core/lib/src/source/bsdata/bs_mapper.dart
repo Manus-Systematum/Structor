@@ -155,10 +155,22 @@ class BsMapper {
           if (!weaponKeywords.contains(id) && !walk.abilityIds.contains(id))
             {
               'items': [id],
-              'count': 1,
+              // What the entry states, not a flat 1. The cap is per item and
+              // BSData publishes it per item.
+              'count': walk.wargearMax[id] ?? 1,
             },
       ];
       if (budgets.isNotEmpty) unit['wargear_budgets'] = budgets;
+
+      // **Per item, for weapons as well as wargear.** The budget lines only
+      // ever cover the ability-shaped kit — drones, support systems — and a
+      // hardpoint cap applies just as much to the gun in it. Written as its
+      // own field so neither source has to be bent into the other's shape.
+      final caps = {
+        for (final entry in walk.wargearMax.entries)
+          if (entry.value > 0) entry.key: entry.value,
+      };
+      if (caps.isNotEmpty) unit['wargear_caps'] = caps;
     }
 
     // The anchor variant of each slug — the one 40kdc published under the
@@ -648,6 +660,17 @@ class _Walk {
   /// screen that is not on the table. They become budget lines instead, which
   /// is where 40kdc puts them and what the app's existing filter reads.
   final wargearAbilityIds = <String>{};
+
+  /// The `max` a wargear entry states for itself, keyed by slug.
+  ///
+  /// **This is where a hardpoint limit actually lives.** A Commander in
+  /// Enforcer Battlesuit carries a `Support Systems (1-4)` group whose
+  /// entries each state their own cap — four T'au flamers, four missile pods,
+  /// one shield generator, one cyclic ion blaster. 40kdc flattens all of that
+  /// to a single `max_count: 3` over the whole choice, which is wrong in both
+  /// directions: it forbids the fourth flamer a validated 2,000 point list
+  /// actually fields, and permits three shield generators.
+  final wargearMax = <String, int>{};
   final weapons = <String, Map<String, Object?>>{};
   final abilities = <String, Map<String, Object?>>{};
   final wargearCosts = <String, Map<String, Object?>>{};
@@ -760,6 +783,18 @@ class _Walk {
     // Read first: whether this entry is a weapon is decided by the profiles
     // hanging on it, and its own linked rules are read straight afterwards.
     _inWeapon = outerWeapon | _readProfiles(entry);
+
+    // Recorded for anything reached inside a wargear choice, weapon or not:
+    // support systems, drones and guns share one group and one kind of cap.
+    if (depth > 0 && _inWargear) {
+      final slug = bsSlug(entry.name);
+      if (slug.isNotEmpty) {
+        if (_constraint(entry, 'max') case final max? when max > 0) {
+          final known = wargearMax[slug];
+          if (known == null || max > known) wargearMax[slug] = max;
+        }
+      }
+    }
 
     final cost = entry.costFor(pts);
     if (depth > 0 && cost != null && cost != 0) {

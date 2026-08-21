@@ -113,13 +113,13 @@
           "items": [
             "marker-drone"
           ],
-          "count": 1
+          "count": 2
         },
         {
           "items": [
             "shield-drone"
           ],
-          "count": 1
+          "count": 2
         },
         {
           "items": [
@@ -136,6 +136,26 @@
         }
       ],
       "battlefield_role": "Character",
+      "wargear_caps": {
+        "battlesuit-fists": 1,
+        "drones-0-2": 2,
+        "gun-drone": 2,
+        "twin-pulse-carbine": 1,
+        "marker-drone": 2,
+        "shield-drone": 2,
+        "guardian-drone": 1,
+        "missile-drone": 2,
+        "missile-pod": 4,
+        "battlesuit-support-system": 1,
+        "shield-generator": 1,
+        "weapon-support-system": 1,
+        "burst-cannon": 4,
+        "airbursting-fragmentation-projector": 1,
+        "cyclic-ion-blaster": 1,
+        "tau-flamer": 4,
+        "fusion-blaster": 4,
+        "plasma-rifle": 4
+      },
       "sources": [
         "bsdata",
         "40kdc"
@@ -258,6 +278,18 @@
         }
       ],
       "battlefield_role": "Vehicle",
+      "wargear_caps": {
+        "drones-0-2": 2,
+        "gun-drone": 2,
+        "twin-pulse-carbine": 1,
+        "missile-drone": 2,
+        "missile-pod": 2,
+        "marker-drone": 2,
+        "shield-drone": 2,
+        "battlesuit-fists": 1,
+        "plasma-rifle": 2,
+        "guardian-drone": 1
+      },
       "sources": [
         "bsdata",
         "40kdc"
@@ -376,13 +408,13 @@
           "items": [
             "marker-drone"
           ],
-          "count": 1
+          "count": 2
         },
         {
           "items": [
             "shield-drone"
           ],
-          "count": 1
+          "count": 2
         },
         {
           "items": [
@@ -399,6 +431,27 @@
         }
       ],
       "battlefield_role": "Character",
+      "wargear_caps": {
+        "battlesuit-fists": 1,
+        "drones-0-2": 2,
+        "gun-drone": 2,
+        "twin-pulse-carbine": 1,
+        "marker-drone": 2,
+        "shield-drone": 2,
+        "guardian-drone": 1,
+        "missile-drone": 2,
+        "missile-pod": 4,
+        "high-output-burst-cannon": 1,
+        "battlesuit-support-system": 1,
+        "shield-generator": 1,
+        "weapon-support-system": 1,
+        "burst-cannon": 4,
+        "airbursting-fragmentation-projector": 1,
+        "cyclic-ion-blaster": 1,
+        "tau-flamer": 4,
+        "fusion-blaster": 4,
+        "plasma-rifle": 4
+      },
       "sources": [
         "bsdata",
         "40kdc"
@@ -521,6 +574,19 @@
         }
       ],
       "battlefield_role": "Vehicle",
+      "wargear_caps": {
+        "drones-0-2": 2,
+        "gun-drone": 2,
+        "twin-pulse-carbine": 1,
+        "missile-drone": 2,
+        "missile-pod": 1,
+        "marker-drone": 2,
+        "shield-drone": 2,
+        "battlesuit-fists": 1,
+        "burst-cannon": 2,
+        "tau-flamer": 2,
+        "guardian-drone": 1
+      },
       "sources": [
         "bsdata",
         "40kdc"
@@ -603,6 +669,14 @@
           "count": 1
         }
       ],
+      "wargear_caps": {
+        "fusion-eliminator": 1,
+        "shardstorm-burst-system": 1,
+        "mv15-gun-drone": 1,
+        "twin-pulse-blaster": 1,
+        "xv-pulse-pistol": 1,
+        "ion-scattercannon": 1
+      },
       "sources": [
         "bsdata",
         "40kdc"
@@ -719,13 +793,13 @@
           "items": [
             "marker-drone"
           ],
-          "count": 1
+          "count": 2
         },
         {
           "items": [
             "shield-drone"
           ],
-          "count": 1
+          "count": 2
         },
         {
           "items": [
@@ -741,6 +815,19 @@
           "per_models": 0
         }
       ],
+      "wargear_caps": {
+        "weapon-support-system": 1,
+        "seeker-missile": 1,
+        "gun-drone": 2,
+        "twin-pulse-carbine": 1,
+        "missile-drone": 2,
+        "missile-pod": 1,
+        "marker-drone": 2,
+        "shield-drone": 2,
+        "crushing-bulk": 1,
+        "drones-0-2": 2,
+        "guardian-drone": 1
+      },
       "sources": [
         "bsdata",
         "40kdc"
@@ -837,6 +924,10 @@
           "count": 1
         }
       ],
+      "wargear_caps": {
+        "ghostkeel-fists": 1,
+        "battlesuit-support-system": 1
+      },
       "sources": [
         "bsdata",
         "40kdc"
@@ -918,6 +1009,11 @@
         }
       ],
       "battlefield_role": "Vehicle",
+      "wargear_caps": {
+        "riptide-fists": 1,
+        "missile-drone": 2,
+        "missile-pod": 1
+      },
       "sources": [
         "bsdata",
         "40kdc"
@@ -1032,13 +1128,13 @@
           "items": [
             "marker-drone"
           ],
-          "count": 1
+          "count": 2
         },
         {
           "items": [
             "shield-drone"
           ],
-          "count": 1
+          "count": 2
         },
         {
           "items": [
@@ -1055,6 +1151,20 @@
         }
       ],
       "battlefield_role": "Infantry",
+      "wargear_caps": {
+        "battlesuit-fists": 1,
+        "burst-cannon": 1,
+        "fusion-blaster": 1,
+        "drones-0-2": 2,
+        "gun-drone": 2,
+        "twin-pulse-carbine": 1,
+        "marker-drone": 2,
+        "shield-drone": 2,
+        "guardian-drone": 1,
+        "missile-drone": 2,
+        "missile-pod": 1,
+        "pulse-pistol": 1
+      },
       "sources": [
         "bsdata",
         "40kdc"

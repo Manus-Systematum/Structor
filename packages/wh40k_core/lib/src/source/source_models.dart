@@ -396,6 +396,7 @@ class SourceUnit {
     required this.factionKeywords,
     required this.abilityIds,
     required this.weaponIds,
+    this.wargearCaps = const {},
     required this.attachmentRole,
     this.gameModes = const [],
     required this.gameVersion,
@@ -423,6 +424,10 @@ class SourceUnit {
       factionKeywords: strList(j['faction_keywords']),
       abilityIds: strList(j['ability_ids']),
       weaponIds: strList(j['weapon_ids']),
+      wargearCaps: {
+        for (final e in asMap(j['wargear_caps']).entries)
+          if (asInt(e.value) case final v? when v > 0) e.key: v,
+      },
       attachmentRole: str(j['attachment_role']),
       gameModes: strList(j['game_modes']),
       gameVersion: GameVersion.fromJson(j['game_version']),
@@ -461,6 +466,15 @@ class SourceUnit {
           for (final item in budget.items)
             if (!abilityIds.contains(item)) item,
       ];
+
+  /// The most of each item this datasheet may take, as BSData states it.
+  ///
+  /// **Per item, and authoritative where it exists.** 40kdc publishes a
+  /// single `max_count` over a whole choice list — 3 across ten different
+  /// weapons on a Commander — which is a different quantity from "at most
+  /// four T'au flamers" and wrong in both directions: it forbids the fourth
+  /// flamer a validated list fields and permits three shield generators.
+  final Map<String, int> wargearCaps;
 
   Set<String> get wargearVocabulary => {
         for (final weaponId in weaponIds) unscope(weaponId),

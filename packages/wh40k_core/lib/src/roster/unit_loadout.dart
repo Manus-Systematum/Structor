@@ -216,13 +216,28 @@ class UnitLoadout {
       }
     }
 
+    // One model, so an entry's own cap is the whole unit's.
+    final singleModel = (composition?.maxModels ?? 1) <= 1;
+
     final grouped = {for (final group in groups) ...group.items};
     final counters = <LoadoutCounter>[
       for (final itemId in vocabulary)
         if (!fixed.containsKey(itemId) && !grouped.contains(itemId))
           LoadoutCounter(
             itemId: itemId,
-            statedMax:
+            // **On a single-model datasheet, BSData's per-item cap is the
+            // unit's cap.** A Commander is one suit with four hardpoints, and
+            // BSData states them per weapon — four T'au flamers, one shield
+            // generator. 40kdc flattens that to `max_count: 3` across ten
+            // different guns, a count of *selections*, which forbids the
+            // fourth flamer a validated 2,000 point list actually fields and
+            // permits three shield generators.
+            //
+            // On a squad the same entry means one *per model* — a Stealth
+            // team's `max 1` fusion blaster is one each, and the unit takes
+            // two — so it cannot be read as a unit total and the per-unit
+            // statements are used instead.
+            statedMax: (singleModel ? datasheet.wargearCaps[itemId] : null) ??
                 _tighter(constrained[itemId]?.maxCount, budgeted[itemId]),
             perModels: constrained[itemId]?.perModels,
             replaces: constrained[itemId]?.replaces ?? const [],

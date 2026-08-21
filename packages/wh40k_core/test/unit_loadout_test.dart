@@ -234,7 +234,7 @@ void main() {
           reason: 'the ability still grants it once taken');
     });
   }, skip: available ? null : 'no snapshot');
-  group('two sources state a cap and the tighter one wins', () {
+  group('the cap is the one stated per item', () {
     test('a Novitiate Squad takes one banner, not four', () {
       // 40kdc writes the option as `max_count: 4` over a choice of
       // `[flamer] | [banner] | [simulacrum]` — the number of *models* that
@@ -248,15 +248,28 @@ void main() {
 
       expect(capOf('sacred-banner'), 1);
       expect(capOf('simulacrum-imperialis'), 1);
-      expect(capOf('ministorum-flamer'), 2);
     }, skip: available ? null : 'no snapshot');
 
-    test('an item only one source caps keeps that cap', () {
-      // Nothing is invented where only one statement exists.
-      final loadout = loadoutFor(load('tau-empire'), 'stealth-battlesuits');
-      final fusion =
-          loadout.counters.singleWhere((c) => c.itemId == 'fusion-blaster');
-      expect(fusion.statedMax, 2);
+    test('a hardpoint cap comes from the hardpoint, not an aggregate', () {
+      // 40kdc gives a Commander one `max_count: 3` across ten different
+      // weapons — a count of *selections*, not of any one gun — and it is
+      // wrong in both directions. BSData carries the real thing: a
+      // `Support Systems (1-4)` group whose entries each state their own,
+      // four T'au flamers and one shield generator.
+      //
+      // The reference export is the evidence: a validated 2,000 point list
+      // that prices to its printed total fields four flamers on a Commander
+      // that 40kdc caps at three.
+      final loadout =
+          loadoutFor(load('tau-empire'), 'commander-in-enforcer-battlesuit');
+      int? capOf(String item) =>
+          loadout.counters.firstWhere((c) => c.itemId == item).statedMax;
+
+      expect(capOf('tau-flamer'), 4);
+      expect(capOf('missile-pod'), 4);
+      // …and the same aggregate would have permitted three of these.
+      expect(capOf('shield-generator'), 1);
+      expect(capOf('cyclic-ion-blaster'), 1);
     }, skip: available ? null : 'no snapshot');
   });
 }
