@@ -1293,6 +1293,32 @@ So rules are filed by how far they reach:
 
 Two data consequences fell out of building this, both now fixed. `factions.json` has always carried `faction_rule_id`, but nothing read the file, so For the Greater Good and Oath of Moment were the one rule true of the whole army and the one rule the app never showed. And upstream transcribes an ability once per datasheet without agreeing on the plural — `battlesuit-support-system` and `battlesuit-support-systems` are the same effect — which splits one shared rule into two nobody shares. §3.6 gains an `aliases` correction that folds a duplicate into the id it repeats, and a test fails if a new one appears.
 
+#### A rule the effect does not place, `phase-mappings.json` does
+
+The turn page files a rule by `phases.contains(phase)`, and those phases came
+from **walking the structured effect** — `_phase()` adds one while rendering
+`Shooting phase: …`. That works only when the effect is about a phase.
+`Righteous Repugnance` is a bare `stat-modifier`, add 3 Attacks, so walking it
+yields nothing and the rule appeared in no phase section of any list with
+Morvenn Vahl in it.
+
+`phase-mappings.json` had said `command, movement, shooting, charge, fight`
+for it the whole time. The file was loaded into `FactionData.phaseMappings`
+and then read by nothing: **5,222 of the 8,533 published mappings** were for
+abilities whose effect names no phase, which is to say the mapping existed
+precisely where it was needed and was ignored precisely there.
+
+`Catalogue.phasesFor` now exposes it and `RulesRenderer.render` takes it as
+`published`, **unioned** with the derived phases rather than replacing them —
+where the effect does name a phase that is the more specific statement.
+
+**The snapshot carries them too**, and has to: play mode reads only the
+snapshot (§2.2), so a mapping that lived on the faction dataset would have
+fixed the reference screen and left the turn page exactly as broken. An older
+snapshot without the field opens with its rules unfiled rather than failing,
+the same way one written before stratagems does, and `Update to current data`
+refills it (§4.6).
+
 ### 7.3.10 The Scouting step
 
 Scout moves happen after deployment and before the first turn, and a Scout move not taken then cannot be taken later. Nothing in the app asked the question, so the turn page gains a **SCOUTING** section ahead of COMMAND — a pre-game list, not a phase of the turn, carrying none of the per-phase machinery.

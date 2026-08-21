@@ -43,6 +43,12 @@ abstract interface class Catalogue {
   /// a leader, or when no attachment rule is published for it.
   List<String> eligibleBodyguards(String leaderDatasheetId);
 
+  /// The phases `phase-mappings.json` files [abilityId] under.
+  ///
+  /// Empty when nothing is published, which is not the same as "no phase":
+  /// the renderer derives one from the effect where the effect names one.
+  List<String> phasesFor(String abilityId) => const [];
+
   /// Whether any leader in this catalogue may attach to [datasheetId].
   ///
   /// The reverse of [eligibleBodyguards], and the question the *unit's* side
@@ -76,6 +82,7 @@ class MapCatalogue implements Catalogue {
   final Map<String, SourceEnhancement> _enhancements;
   final Map<String, UnitComposition> _compositions;
   final Map<String, List<SourceWargearOption>> _wargearOptions;
+  final Map<String, List<String>> _phases;
 
   MapCatalogue(
     Iterable<SourceUnit> units, {
@@ -86,6 +93,7 @@ class MapCatalogue implements Catalogue {
     Iterable<SourceEnhancement> enhancements = const [],
     Iterable<UnitComposition> compositions = const [],
     Iterable<SourceWargearOption> wargearOptions = const [],
+    Iterable<PhaseMapping> phaseMappings = const [],
   })  : _units = {for (final u in units) u.id: u},
         _detachments = {for (final d in detachments) d.id: d},
         _weapons = {for (final w in weapons) w.id: w},
@@ -97,6 +105,10 @@ class MapCatalogue implements Catalogue {
           (map, option) =>
               map..putIfAbsent(option.unitId, () => []).add(option),
         ),
+        _phases = {
+          for (final m in phaseMappings)
+            if (m.phases.isNotEmpty) m.sourceId: m.phases,
+        },
         _attachments = {
           for (final a in leaderAttachments) a.leaderId: a.eligibleBodyguardIds,
         };
@@ -107,6 +119,7 @@ class MapCatalogue implements Catalogue {
         detachments: faction.detachments,
         weapons: faction.weapons,
         leaderAttachments: faction.leaderAttachments,
+        phaseMappings: faction.phaseMappings,
         abilities: faction.abilities,
         enhancements: faction.enhancements,
         compositions: faction.compositions,
@@ -153,6 +166,9 @@ class MapCatalogue implements Catalogue {
 
   @override
   bool canBeLed(String datasheetId) => _leadable.contains(datasheetId);
+
+  @override
+  List<String> phasesFor(String abilityId) => _phases[abilityId] ?? const [];
 
   @override
   SourceWeapon? weaponFor(SourceUnit unit, String itemId) {

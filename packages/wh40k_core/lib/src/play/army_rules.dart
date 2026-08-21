@@ -117,8 +117,7 @@ class ArmyRules {
     required this.units,
   });
 
-  bool get isEmpty =>
-      armyWide.isEmpty && columns.isEmpty && units.isEmpty;
+  bool get isEmpty => armyWide.isEmpty && columns.isEmpty && units.isEmpty;
 
   /// Ability ids more than one datasheet in [units] can take.
   ///
@@ -153,7 +152,8 @@ class ArmyRules {
     final shared = sharedAbilityIds ?? sharedAcross(catalogue.allUnits);
 
     final armyWide = <ReferenceEntry>[];
-    final rule = factionRuleId == null ? null : catalogue.ability(factionRuleId);
+    final rule =
+        factionRuleId == null ? null : catalogue.ability(factionRuleId);
     if (rule != null) {
       armyWide.add(ReferenceEntry(
         kind: ReferenceKind.detachmentRule,
@@ -237,7 +237,8 @@ class ArmyRules {
             return <String>{};
           }).add(datasheetId);
         } else {
-          only.putIfAbsent(datasheetId, () => []).add(renderer.render(ability));
+          only.putIfAbsent(datasheetId, () => []).add(renderer.render(ability,
+              published: catalogue.phasesFor(abilityId)));
         }
       }
     }
@@ -250,14 +251,17 @@ class ArmyRules {
     };
     columnOrder.sort((a, b) {
       final byOwners = owners[b]!.length.compareTo(owners[a]!.length);
-      return byOwners != 0 ? byOwners : introduced[a]!.compareTo(introduced[b]!);
+      return byOwners != 0
+          ? byOwners
+          : introduced[a]!.compareTo(introduced[b]!);
     });
 
     final columns = [
       for (final abilityId in columnOrder)
         if (catalogue.ability(abilityId) case final ability?)
           () {
-            final rendered = renderer.render(ability);
+            final rendered = renderer.render(ability,
+                published: catalogue.phasesFor(abilityId));
             return RuleColumn(
               abilityId: abilityId,
               name: ability.name,

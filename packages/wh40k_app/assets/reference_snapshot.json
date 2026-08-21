@@ -3911,6 +3911,93 @@
       "max_targets": 1
     }
   },
+  "phaseMappings": {
+    "superior-craftsmanship": [
+      "shooting"
+    ],
+    "supernova-launcher": [
+      "shooting"
+    ],
+    "thermoneutronic-projector": [
+      "shooting"
+    ],
+    "plasma-accelerator-rifle": [
+      "shooting"
+    ],
+    "enforcer-commander": [
+      "shooting"
+    ],
+    "deep-strike": [
+      "movement"
+    ],
+    "gun-drone": [
+      "shooting"
+    ],
+    "weapon-support-system": [
+      "shooting"
+    ],
+    "battlesuit-support-system": [
+      "shooting"
+    ],
+    "marker-drone": [
+      "shooting"
+    ],
+    "guardian-drone": [
+      "shooting"
+    ],
+    "fireknife": [
+      "shooting"
+    ],
+    "coldstar-commander": [
+      "movement",
+      "shooting"
+    ],
+    "starscythe": [
+      "shooting"
+    ],
+    "exemplars-of-montka": [
+      "shooting",
+      "fight"
+    ],
+    "retro-thrusters": [
+      "movement",
+      "fight"
+    ],
+    "scouts-8": [
+      "command"
+    ],
+    "missile-drone": [
+      "shooting"
+    ],
+    "stealth-drones": [
+      "shooting",
+      "fight"
+    ],
+    "deadly-demise-d3": [
+      "shooting",
+      "fight"
+    ],
+    "lone-operative": [
+      "shooting"
+    ],
+    "stealth": [
+      "shooting"
+    ],
+    "nova-charge": [
+      "shooting",
+      "fight"
+    ],
+    "deadly-demise-d6": [
+      "shooting",
+      "fight"
+    ],
+    "forward-observers": [
+      "shooting"
+    ],
+    "homing-beacon": [
+      "command"
+    ]
+  },
   "factionRuleId": "for-the-greater-good",
   "sharedAbilities": [
     "scouts-7",

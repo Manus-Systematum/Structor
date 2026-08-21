@@ -47,8 +47,7 @@ class ReferenceEntry {
     this.inPlay = true,
   });
 
-  String get _haystack =>
-      '$title\n$source\n$body\n$detail'.toLowerCase();
+  String get _haystack => '$title\n$source\n$body\n$detail'.toLowerCase();
 
   bool matches(String query) {
     final needle = query.trim().toLowerCase();
@@ -143,7 +142,8 @@ class ReferenceIndex {
     for (final abilityId in abilityOrder) {
       final ability = catalogue.ability(abilityId);
       if (ability == null) continue;
-      final rendered = renderer.render(ability);
+      final rendered =
+          renderer.render(ability, published: catalogue.phasesFor(abilityId));
       final owners = abilityOwners[abilityId]!;
       entries.add(ReferenceEntry(
         kind: ReferenceKind.unitAbility,
@@ -180,13 +180,17 @@ class ReferenceIndex {
     return ReferenceIndex(entries);
   }
 
-  List<ReferenceEntry> of(ReferenceKind kind) =>
-      [for (final e in entries) if (e.kind == kind) e];
+  List<ReferenceEntry> of(ReferenceKind kind) => [
+        for (final e in entries)
+          if (e.kind == kind) e
+      ];
 
   /// Every entry matching [query], in the index's own order so sections stay
   /// coherent while the list narrows.
-  List<ReferenceEntry> search(String query) =>
-      [for (final e in entries) if (e.matches(query)) e];
+  List<ReferenceEntry> search(String query) => [
+        for (final e in entries)
+          if (e.matches(query)) e
+      ];
 
   bool get isEmpty => entries.isEmpty;
 }

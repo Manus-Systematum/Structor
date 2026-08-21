@@ -151,6 +151,14 @@ class Dataset implements Catalogue {
   @override
   bool canBeLed(String datasheetId) => _leadable.contains(datasheetId);
 
+  late final Map<String, List<String>> _phases = {
+    for (final m in faction.phaseMappings)
+      if (m.phases.isNotEmpty) m.sourceId: m.phases,
+  };
+
+  @override
+  List<String> phasesFor(String abilityId) => _phases[abilityId] ?? const [];
+
   @override
   SourceWeapon? weaponFor(SourceUnit unit, String itemId) {
     final scoped = '$itemId-${unit.id}';

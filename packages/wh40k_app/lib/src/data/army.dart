@@ -38,6 +38,19 @@ class Army {
       abilities: snapshot.abilities.values.map(SourceAbility.fromJson),
       enhancements:
           snapshot.enhancements.values.map(SourceEnhancement.fromJson),
+      // Play mode reads only the snapshot, and a rule the effect does not
+      // place is filed by this or by nothing (§7.3.9).
+      phaseMappings: [
+        for (final entry in snapshot.phaseMappings.entries)
+          PhaseMapping(
+            sourceId: entry.key,
+            sourceType: 'ability',
+            phases: [
+              if (entry.value case final List<Object?> list)
+                for (final p in list) '$p',
+            ],
+          ),
+      ],
     );
     return Army._(
       id: id,
@@ -86,7 +99,8 @@ class Army {
     for (final abilityId in _activeAbilityIds(unit)) {
       final raw = snapshot.abilities[abilityId];
       if (raw == null) continue;
-      rules.add(renderer.render(SourceAbility.fromJson(raw)));
+      rules.add(renderer.render(SourceAbility.fromJson(raw),
+          published: catalogue.phasesFor(abilityId)));
     }
     return rules;
   }

@@ -273,4 +273,38 @@ void main() {
       }
     }
   });
+  test('a rule the effect does not place is filed by its mapping', () {
+    // The turn page files a rule by `phases.contains(phase)`, and the phases
+    // came only from walking the structured effect. `Righteous Repugnance` is
+    // a bare `add 3 Attacks` — nothing in its structure says Shooting or
+    // Fight — so it appeared in no phase section of any list with Morvenn
+    // Vahl in it. `phase-mappings.json` said all five the whole time and was
+    // read into FactionData and then read by nothing: **5,222 of the 8,533
+    // published mappings** were in that position.
+    const renderer = RulesRenderer();
+    final loader = DatasetLoader('../../data/merged',
+        corrections:
+            DatasetLoader.correctionsAt('../../data-corrections.yaml'));
+    if (!loader.root.existsSync()) return;
+
+    final sisters =
+        Dataset.of(loader.loadFaction('adepta-sororitas'), revision: 't');
+    final ability = sisters.ability('righteous-repugnance')!;
+    expect(renderer.render(ability).phases, isEmpty,
+        reason: 'the effect names no phase, which is why this was missed');
+    expect(
+      renderer
+          .render(ability, published: sisters.phasesFor(ability.abilityId))
+          .phases,
+      containsAll(['shooting', 'fight']),
+    );
+
+    // Union, not replacement: where the effect *does* name a phase, that
+    // still holds.
+    var derivedSomewhere = 0;
+    for (final a in sisters.faction.abilities) {
+      if (renderer.render(a).phases.isNotEmpty) derivedSomewhere++;
+    }
+    expect(derivedSomewhere, greaterThan(0));
+  });
 }

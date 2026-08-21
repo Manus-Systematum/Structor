@@ -41,6 +41,16 @@ class RosterSnapshot {
   /// "what did I take".
   final Map<String, Object?> enhancements;
 
+  /// Which phases each ability is filed under.
+  ///
+  /// **Carried, because play mode reads only this.** The turn page files a
+  /// rule by `phases.contains(phase)`, and for 5,222 of the 8,533 published
+  /// mappings the phase is not derivable from the effect — `Righteous
+  /// Repugnance` is a bare `add 3 Attacks`, so nothing about its structure
+  /// says Shooting or Fight. Without the mapping in the snapshot those rules
+  /// appear in no phase section at all.
+  final Map<String, Object?> phaseMappings;
+
   /// The faction's own army rule — For the Greater Good, Oath of Moment. Its
   /// record is in [abilities]; this names which one it is (§7.3.9).
   final String? factionRuleId;
@@ -61,6 +71,7 @@ class RosterSnapshot {
     required this.abilities,
     this.stratagems = const {},
     this.enhancements = const {},
+    this.phaseMappings = const {},
     this.factionRuleId,
     this.sharedAbilities = const {},
   });
@@ -81,6 +92,7 @@ class RosterSnapshot {
         'abilities': abilities,
         'stratagems': stratagems,
         'enhancements': enhancements,
+        'phaseMappings': phaseMappings,
         if (factionRuleId != null) 'factionRuleId': factionRuleId,
         'sharedAbilities': sharedAbilities.toList(growable: false),
       };
@@ -97,6 +109,10 @@ class RosterSnapshot {
       // list opens with an empty stratagem section rather than failing.
       stratagems: asMap(j['stratagems']),
       enhancements: asMap(j['enhancements']),
+      // Absent in snapshots written before this was captured, exactly as
+      // stratagems were. Such a list opens with its rules unfiled by phase
+      // rather than failing — `Update to current data` refills it (§4.6).
+      phaseMappings: asMap(j['phaseMappings']),
       factionRuleId: str(j['factionRuleId']),
       // Absent in snapshots written before rules were tiered. An older list
       // falls back to its own datasheets, which files a few more rules under
@@ -224,8 +240,7 @@ class SnapshotBuilder {
         // table short a weapon on any list rebuilt from the snapshot alone,
         // which is the case the snapshot exists for.
         if (weapon == null) {
-          final grantedId =
-              dataset.ability(selection.itemId)?.grantedWeaponId;
+          final grantedId = dataset.ability(selection.itemId)?.grantedWeaponId;
           if (grantedId == null) continue;
           weapon = dataset.weaponFor(datasheet, grantedId) ??
               dataset.weapon(grantedId);
@@ -242,6 +257,13 @@ class SnapshotBuilder {
     final factionRuleId = dataset.faction.factionRuleId;
     if (factionRuleId != null) takeAbility(factionRuleId);
 
+    // Only for the abilities this roster actually captured — the mapping file
+    // covers the whole faction and a snapshot is meant to be small.
+    final phases = <String, Object?>{
+      for (final id in abilities.keys)
+        if (dataset.phasesFor(id) case final p when p.isNotEmpty) id: p,
+    };
+
     return RosterSnapshot(
       version: dataset.version,
       units: units,
@@ -250,6 +272,7 @@ class SnapshotBuilder {
       abilities: abilities,
       stratagems: stratagems,
       enhancements: enhancements,
+      phaseMappings: phases,
       factionRuleId: factionRuleId,
       // Computed here, over the whole faction, because this is the last point
       // at which the whole faction is in hand.

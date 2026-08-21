@@ -110,7 +110,18 @@ class RulesRenderer {
     'post-attack-debuff',
   };
 
-  RenderedRule render(SourceAbility ability) {
+  /// [published] are the phases `phase-mappings.json` files this ability
+  /// under, which are **not** derivable from the effect.
+  ///
+  /// **The structure only names a phase when the effect is about one.**
+  /// `Righteous Repugnance` is a bare `stat-modifier` — add 3 Attacks — so
+  /// walking it yields no phase at all, and the turn page files rules by
+  /// `phases.contains(phase)`. The rule never appeared in the Shooting or
+  /// Fight section of a list that has Morvenn Vahl in it, and 5,222 of the
+  /// 8,533 published mappings were in the same position: read into
+  /// `FactionData.phaseMappings` and then read by nothing.
+  RenderedRule render(SourceAbility ability,
+      {Iterable<String> published = const []}) {
     final ctx = _Ctx();
     var text = _effect(ability.effect, ctx);
 
@@ -139,7 +150,10 @@ class RulesRenderer {
       text: printed != null && printed.isNotEmpty ? printed : derived,
       derived: derived,
       isPrinted: printed != null && printed.isNotEmpty,
-      phases: ctx.phases.toList(),
+      // Union, not replacement. The derived phase is the more specific
+      // statement where the effect has one — `Shooting phase: …` — and the
+      // published mapping covers the rules whose effect names none.
+      phases: {...ctx.phases, ...published}.toList(),
       unrendered: ctx.unrendered.toList(),
     );
   }
