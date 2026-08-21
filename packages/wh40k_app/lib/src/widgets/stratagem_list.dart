@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import 'rule_text.dart';
+import 'source_pill.dart';
 
 import '../data/army.dart';
 
@@ -135,14 +136,23 @@ class _StratagemRowState extends State<_StratagemRow> {
                           color: foreground,
                         ),
                       ),
-                      const SizedBox(height: 1),
-                      Text(
-                        _subtitle(),
-                        style: TextStyle(
-                          fontSize: 10.5,
-                          color: scheme.onSurfaceVariant
-                              .withValues(alpha: playable ? 1 : 0.6),
-                        ),
+                      const SizedBox(height: 2),
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 3,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          SourcePill(entry.source),
+                          if (entry.stratagem.type case final type?)
+                            Text(
+                              type.replaceAll('-', ' '),
+                              style: TextStyle(
+                                fontSize: 10.5,
+                                color: scheme.onSurfaceVariant
+                                    .withValues(alpha: playable ? 1 : 0.6),
+                              ),
+                            ),
+                        ],
                       ),
                     ],
                   ),
@@ -192,14 +202,6 @@ class _StratagemRowState extends State<_StratagemRow> {
         ),
       ),
     );
-  }
-
-  String _subtitle() {
-    final parts = <String>[
-      entry.source,
-      if (entry.stratagem.type case final type?) type.replaceAll('-', ' '),
-    ];
-    return parts.join(' · ');
   }
 
   Future<void> _play(BuildContext context) async {

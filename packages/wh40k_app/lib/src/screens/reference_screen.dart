@@ -5,6 +5,7 @@ import '../widgets/rule_text.dart';
 
 import '../data/army.dart';
 import '../widgets/collapsible.dart';
+import '../widgets/source_pill.dart';
 import '../widgets/unit_profiles.dart';
 
 /// The reference page (DESIGN.md §7.3, §7.3.8, §7.3.9).
@@ -106,8 +107,7 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
             child: Text('${matches.length} matching',
-                style:
-                    TextStyle(fontSize: 11, color: scheme.onSurfaceVariant)),
+                style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant)),
           ),
       ],
     );
@@ -151,8 +151,7 @@ class _Tiers extends StatelessWidget {
             child: Text(
               'Every unit: ${rules.universalKeywords.join(', ')}',
               style: TextStyle(
-                  fontSize: 11,
-                  color: Theme.of(context).colorScheme.outline),
+                  fontSize: 11, color: Theme.of(context).colorScheme.outline),
             ),
           ),
         if (rules.columns.isNotEmpty) ...[
@@ -176,8 +175,7 @@ class _Tiers extends StatelessWidget {
           ),
         ],
         if (rules.keywordColumns.isNotEmpty) ...[
-          _SectionHeader(
-              label: 'KEYWORDS', count: rules.keywordColumns.length),
+          _SectionHeader(label: 'KEYWORDS', count: rules.keywordColumns.length),
           _FlagGrid(
             units: rules.units,
             columns: [
@@ -456,9 +454,7 @@ class _PinnedDetail extends StatelessWidget {
 
     final column = pinnedRule == null
         ? null
-        : rules.columns
-            .where((c) => c.abilityId == pinnedRule)
-            .firstOrNull;
+        : rules.columns.where((c) => c.abilityId == pinnedRule).firstOrNull;
 
     if (column == null && pinnedUnit == null) {
       return Padding(
@@ -729,20 +725,38 @@ class _EntryTile extends StatelessWidget {
             ),
           ),
           // Source and detail share a wrapping line. An ability shared by five
-          // datasheets names all five, which is a paragraph, not a suffix.
+          // datasheets names all five, which is a paragraph, not a suffix —
+          // so only a stratagem's source becomes a pill, where it is one
+          // detachment and decides whether the row is playable at all.
           if (entry.source.isNotEmpty || entry.detail.isNotEmpty)
             Padding(
-              padding: const EdgeInsets.only(top: 1),
-              child: Text(
-                [
-                  if (entry.source.isNotEmpty) entry.source,
-                  if (entry.detail.isNotEmpty) entry.detail,
-                ].join('  ·  '),
-                style: TextStyle(
-                    fontSize: 10.5,
-                    height: 1.3,
-                    color: scheme.onSurfaceVariant),
-              ),
+              padding: const EdgeInsets.only(top: 2),
+              child: entry.kind == ReferenceKind.stratagem &&
+                      entry.source.isNotEmpty
+                  ? Wrap(
+                      spacing: 6,
+                      runSpacing: 3,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        SourcePill(entry.source),
+                        if (entry.detail.isNotEmpty)
+                          Text(entry.detail,
+                              style: TextStyle(
+                                  fontSize: 10.5,
+                                  height: 1.3,
+                                  color: scheme.onSurfaceVariant)),
+                      ],
+                    )
+                  : Text(
+                      [
+                        if (entry.source.isNotEmpty) entry.source,
+                        if (entry.detail.isNotEmpty) entry.detail,
+                      ].join('  ·  '),
+                      style: TextStyle(
+                          fontSize: 10.5,
+                          height: 1.3,
+                          color: scheme.onSurfaceVariant),
+                    ),
             ),
           if (entry.body.isNotEmpty)
             Padding(

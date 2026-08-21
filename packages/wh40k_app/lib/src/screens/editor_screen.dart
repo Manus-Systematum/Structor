@@ -9,6 +9,7 @@ import '../data/roster_store.dart';
 import '../theme.dart';
 import '../widgets/collapsible.dart';
 import '../widgets/rule_text.dart';
+import '../widgets/source_pill.dart';
 import '../widgets/sheet_header.dart';
 import '../widgets/unit_editor.dart';
 
@@ -680,6 +681,18 @@ class _DetachmentBrief extends StatelessWidget {
                                     color: scheme.onSurfaceVariant)),
                           ],
                         ),
+                        // Which detachment brings it. Both are listed here at
+                        // once, and nine stratagems in one fold read as one
+                        // pool unless each says where it came from.
+                        if (stratagem.detachmentId case final id?)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 3),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: SourcePill(
+                                  dataset.detachment(id)?.name ?? id),
+                            ),
+                          ),
                         if (stratagem.text case final text?
                             when text.trim().isNotEmpty) ...[
                           const SizedBox(height: 2),
