@@ -622,6 +622,12 @@ Attachment is also one decision seen from two sides. The character's sheet asks 
 
 A keyword restriction could not express it either. The Unmasking Suite goes on Pathfinders **or** Stealth Battlesuits, and `keyword_restrictions` are all required at once. So `SourceEnhancement.unitIds` names the datasheets, empty meaning unrestricted, and `data-corrections.yaml` gained an `enhancements:` section to supply it — the restriction is real and the source has not got it, which is exactly what §3.6 is for. Reported by the app's user, who fields the army.
 
+**Legends are hidden, not dropped, and it is a preference.** 485 of the 1,857 datasheets are shelved out of the tournament pool — Crusaders, Death Cult Assassins, Celestian Sacresant Aveline — and offering them beside the rest makes the unit picker a third longer with entries most events will not take. The switch is on the About screen, off by default, and its subtitle says what it costs rather than what it is for: *"Adds 485 shelved datasheets to the unit picker."* Hidden rather than filtered out of the data, because a Legends game is a real game and the datasheets are real; `is_legend` was already carried and had no reader.
+
+Stored in a `Settings` table in the app database — a table rather than a new file, since the database is already here and already migrated, and there is one setting with no reason to add a second mechanism for it.
+
+**A detachment says which force dispositions it brings**, in the picker and on the army page. The disposition decides which mission is played (§7.3.1), so it is half of what choosing a detachment buys, and it lived only in the pre-game wizard — two screens and a decision too late.
+
 ### 4.5.1 The one place the builder does refuse
 
 §2.3 settled that the builder is permissive and the validator honest, and that

@@ -53,6 +53,11 @@ class _EditorScreenState extends State<EditorScreen> {
   bool _saving = false;
   bool _dirty = false;
 
+  /// Whether the Add unit sheet offers Legends datasheets. Read once on open;
+  /// the toggle lives on the About screen and is rare enough not to warrant
+  /// a stream here.
+  bool _showLegends = false;
+
   /// The id this army is being written under. Fixed on the first autosave of
   /// a new army so every later one overwrites rather than piling up copies.
   late String? _id = widget.rosterId;
@@ -66,6 +71,9 @@ class _EditorScreenState extends State<EditorScreen> {
   void initState() {
     super.initState();
     _load();
+    widget.store.showLegends().then((on) {
+      if (mounted) setState(() => _showLegends = on);
+    });
   }
 
   @override
@@ -325,7 +333,10 @@ class _EditorScreenState extends State<EditorScreen> {
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
-      builder: (_) => AddUnitSheet(dataset: dataset),
+      builder: (_) => AddUnitSheet(
+        dataset: dataset,
+        showLegends: _showLegends,
+      ),
     );
     if (chosen != null) _edit((e) => e.addUnit(_roster, chosen));
   }
@@ -563,6 +574,14 @@ class _Findings extends StatelessWidget {
   }
 }
 
+/// `take-and-hold` as it is printed.
+String _dispositionName(String id) => id
+    .split('-')
+    .map((w) => w.isEmpty ? w : '${w[0].toUpperCase()}${w.substring(1)}')
+    .join(' ')
+    .replaceAll(' And ', ' and ')
+    .replaceAll(' The ', ' the ');
+
 /// The rules and stratagems the chosen detachments bring, folded away.
 ///
 /// Choosing a detachment is the second-biggest decision in the list after the
@@ -743,9 +762,29 @@ class _DetachmentPicker extends StatelessWidget {
                 FilterChip(
                   visualDensity: VisualDensity.compact,
                   selected: taken.contains(detachment.id),
-                  label: Text(
-                    '${detachment.name} · ${detachment.detachmentPoints} DP',
-                    style: const TextStyle(fontSize: 11.5),
+                  label: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${detachment.name} · '
+                        '${detachment.detachmentPoints} DP',
+                        style: const TextStyle(fontSize: 11.5),
+                      ),
+                      // **What it lets you declare.** A detachment brings a
+                      // force disposition, and the disposition decides which
+                      // mission you play (§7.3.1) — so it is half of what
+                      // choosing one buys, and it lived only in the pre-game
+                      // wizard, two screens and a decision too late.
+                      if (detachment.forceDispositions.isNotEmpty)
+                        Text(
+                          detachment.forceDispositions
+                              .map(_dispositionName)
+                              .join(' · '),
+                          style: TextStyle(
+                              fontSize: 9.5, color: scheme.onSurfaceVariant),
+                        ),
+                    ],
                   ),
                   onSelected: (on) =>
                       on ? onAdd(detachment.id) : onRemove(detachment.id),
@@ -973,7 +1012,14 @@ class _DatasheetTile extends StatelessWidget {
 class AddUnitSheet extends StatefulWidget {
   final Dataset dataset;
 
-  const AddUnitSheet({super.key, required this.dataset});
+  /// Whether Legends datasheets are offered. Off by default (§4.6).
+  final bool showLegends;
+
+  const AddUnitSheet({
+    super.key,
+    required this.dataset,
+    this.showLegends = false,
+  });
 
   @override
   State<AddUnitSheet> createState() => _AddUnitSheetState();
@@ -988,7 +1034,13 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
     final needle = _query.trim().toLowerCase();
     // Buildable, not all: Combat Patrol datasheets cost nothing and shadow
     // the real ones by name (§4.6).
+    // Buildable, not all: Combat Patrol datasheets cost nothing and shadow
+    // the real ones by name (§4.6). Legends are hidden by the same reasoning
+    // and a different rule — 485 of 1,857 datasheets are shelved out of the
+    // tournament pool, and a list built from them is not one most events
+    // will take. Hidden rather than dropped: a Legends game is a real game.
     final units = widget.dataset.buildableUnits
+        .where((u) => widget.showLegends || !u.isLegend)
         .where((u) => needle.isEmpty || u.name.toLowerCase().contains(needle))
         .toList()
       ..sort((a, b) => a.name.compareTo(b.name));

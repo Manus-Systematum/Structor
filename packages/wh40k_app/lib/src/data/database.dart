@@ -70,7 +70,20 @@ class Battles extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [Rosters, Battles])
+/// App-wide preferences, one row per key.
+///
+/// A table rather than a file because the database is already here and
+/// already migrated; there is one setting today and no reason to add a second
+/// storage mechanism for it.
+class Settings extends Table {
+  TextColumn get key => text()();
+  TextColumn get value => text()();
+
+  @override
+  Set<Column> get primaryKey => {key};
+}
+
+@DriftDatabase(tables: [Rosters, Battles, Settings])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
@@ -78,15 +91,31 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.memory() : super(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onUpgrade: (m, from, to) async {
           if (from < 2) await m.addColumn(rosters, rosters.battleLogJson);
           if (from < 3) await m.createTable(battles);
+          if (from < 4) await m.createTable(settings);
         },
       );
+
+  /// One preference, or null when it has never been set.
+  Future<String?> setting(String key) async {
+    final row = await (select(settings)..where((s) => s.key.equals(key)))
+        .getSingleOrNull();
+    return row?.value;
+  }
+
+  Stream<String?> watchSetting(String key) =>
+      (select(settings)..where((s) => s.key.equals(key)))
+          .watchSingleOrNull()
+          .map((row) => row?.value);
+
+  Future<void> setSetting(String key, String value) => into(settings)
+      .insertOnConflictUpdate(SettingsCompanion.insert(key: key, value: value));
 
   /// Finished battles, newest first — every roster's, or one roster's.
   ///

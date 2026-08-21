@@ -160,6 +160,10 @@ class Dataset implements Catalogue {
   List<String> phasesFor(String abilityId) => _phases[abilityId] ?? const [];
 
   @override
+  List<String> dispositionsOf(String detachmentId) =>
+      detachment(detachmentId)?.forceDispositions ?? const [];
+
+  @override
   SourceWeapon? weaponFor(SourceUnit unit, String itemId) {
     final scoped = '$itemId-${unit.id}';
     if (unit.weaponIds.contains(scoped)) return weapon(scoped);

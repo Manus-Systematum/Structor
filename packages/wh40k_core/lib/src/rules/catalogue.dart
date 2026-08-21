@@ -43,6 +43,14 @@ abstract interface class Catalogue {
   /// a leader, or when no attachment rule is published for it.
   List<String> eligibleBodyguards(String leaderDatasheetId);
 
+  /// The force disposition ids [detachmentId] lets an army declare.
+  ///
+  /// A detachment brings its own, and which mission you play is decided from
+  /// them (§7.3.1) — so it is part of what choosing a detachment buys and
+  /// belongs beside the DP cost rather than only in the pre-game wizard.
+  List<String> dispositionsOf(String detachmentId) =>
+      detachment(detachmentId)?.forceDispositions ?? const [];
+
   /// The phases `phase-mappings.json` files [abilityId] under.
   ///
   /// Empty when nothing is published, which is not the same as "no phase":
@@ -169,6 +177,10 @@ class MapCatalogue implements Catalogue {
 
   @override
   List<String> phasesFor(String abilityId) => _phases[abilityId] ?? const [];
+
+  @override
+  List<String> dispositionsOf(String detachmentId) =>
+      detachment(detachmentId)?.forceDispositions ?? const [];
 
   @override
   SourceWeapon? weaponFor(SourceUnit unit, String itemId) {

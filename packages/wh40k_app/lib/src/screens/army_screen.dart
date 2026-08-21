@@ -95,8 +95,31 @@ class ArmyScreen extends StatelessWidget {
                 children: [
                   for (final detachment in roster.detachments)
                     Chip(
-                      label: Text(army.detachmentName(detachment.detachmentId)),
                       visualDensity: VisualDensity.compact,
+                      label: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(army.detachmentName(detachment.detachmentId)),
+                          // The disposition it lets the army declare, which
+                          // is what decides the mission (§7.3.1).
+                          if (army.catalogue
+                                  .dispositionsOf(detachment.detachmentId)
+                              case final dispositions
+                              when dispositions.isNotEmpty)
+                            Text(
+                              dispositions
+                                  .map((d) => d.replaceAll('-', ' '))
+                                  .join(' · '),
+                              style: TextStyle(
+                                fontSize: 9.5,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurfaceVariant,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                 ],
               ),

@@ -32,7 +32,7 @@ class RosterListScreen extends StatelessWidget {
             tooltip: 'About',
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => AboutScreen(datasets: datasets),
+                builder: (_) => AboutScreen(datasets: datasets, store: store),
               ),
             ),
           ),

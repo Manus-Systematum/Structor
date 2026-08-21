@@ -399,4 +399,48 @@ void main() {
     expect(find.text('DETACHMENT RULES'), findsNothing);
     expect(find.text('DETACHMENT STRATAGEMS'), findsNothing);
   });
+  group('Legends datasheets', () {
+    Future<List<String>> namesIn(WidgetTester tester, Dataset dataset,
+        {required bool showLegends}) async {
+      tester.view.physicalSize = const Size(500, 4000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: AddUnitSheet(dataset: dataset, showLegends: showLegends),
+        ),
+      ));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byType(TextField), 'crusaders');
+      await tester.pumpAndSettle();
+      return tester
+          .widgetList<Text>(find.byType(Text))
+          .map((t) => t.data ?? '')
+          .toList();
+    }
+
+    testWidgets('are hidden by default', (tester) async {
+      // 485 of 1,857 datasheets are shelved out of the tournament pool, and
+      // offering them beside the rest makes the picker a third longer with
+      // entries most events will not take.
+      late Dataset sisters;
+      await tester.runAsync(() async {
+        sisters = await datasets.faction('adepta-sororitas');
+      });
+      expect(sisters.unit('crusaders')?.isLegend, isTrue);
+
+      final without = await namesIn(tester, sisters, showLegends: false);
+      expect(without.any((n) => n.contains('Crusaders')), isFalse);
+    });
+
+    testWidgets('are shown when the setting is on', (tester) async {
+      // Hidden, not removed: a Legends game is a real game.
+      late Dataset sisters;
+      await tester.runAsync(() async {
+        sisters = await datasets.faction('adepta-sororitas');
+      });
+      final with_ = await namesIn(tester, sisters, showLegends: true);
+      expect(with_.any((n) => n.contains('Crusaders')), isTrue);
+    });
+  });
 }

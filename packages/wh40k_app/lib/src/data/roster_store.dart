@@ -32,8 +32,7 @@ class RosterStore {
   Future<void> saveBattle(String rosterId, core.BattleLog log) =>
       db.saveBattleLog(rosterId, jsonEncode(log.toJson()));
 
-  Future<void> clearBattle(String rosterId) =>
-      db.saveBattleLog(rosterId, null);
+  Future<void> clearBattle(String rosterId) => db.saveBattleLog(rosterId, null);
 
   /// Finished battles, newest first. Scoped to one roster when [rosterId] is
   /// given, which is how the Play tab shows an army its own history and not
@@ -73,6 +72,23 @@ class RosterStore {
     ));
     await clearBattle(army.id);
   }
+
+  /// Whether Legends datasheets are offered in the builder.
+  ///
+  /// **Off by default.** 485 of 1,857 datasheets are shelved out of the
+  /// tournament pool, and offering them beside the rest makes the picker a
+  /// third longer with entries most events will not take. Hidden rather than
+  /// removed: a Legends game is a real game and the datasheets are real, so
+  /// this is a preference and not a filter baked into the data.
+  static const _legendsKey = 'show-legends';
+
+  Future<bool> showLegends() async => await db.setting(_legendsKey) == 'true';
+
+  Stream<bool> watchShowLegends() =>
+      db.watchSetting(_legendsKey).map((v) => v == 'true');
+
+  Future<void> setShowLegends(bool on) =>
+      db.setSetting(_legendsKey, on ? 'true' : 'false');
 
   Future<void> delete(String id) => db.deleteRoster(id);
 

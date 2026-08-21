@@ -397,6 +397,7 @@ class SourceUnit {
     required this.abilityIds,
     required this.weaponIds,
     this.wargearCaps = const {},
+    this.isLegend = false,
     required this.attachmentRole,
     this.gameModes = const [],
     required this.gameVersion,
@@ -424,6 +425,7 @@ class SourceUnit {
       factionKeywords: strList(j['faction_keywords']),
       abilityIds: strList(j['ability_ids']),
       weaponIds: strList(j['weapon_ids']),
+      isLegend: j['is_legend'] == true,
       wargearCaps: {
         for (final e in asMap(j['wargear_caps']).entries)
           if (asInt(e.value) case final v? when v > 0) e.key: v,
@@ -481,6 +483,13 @@ class SourceUnit {
         for (final budget in wargearBudgets)
           for (final item in budget.items) unscope(item),
       };
+
+  /// Shelved out of the tournament pool.
+  ///
+  /// 485 of 1,857 datasheets — Crusaders, Death Cult Assassins, Celestian
+  /// Sacresant Aveline. They are still real datasheets and a Legends game is
+  /// a real game, so they are kept and hidden rather than dropped (§3.10).
+  final bool isLegend;
 
   /// Attaches as a **Leader**. 250 datasheets.
   bool get isLeader => attachmentRole == 'leader';

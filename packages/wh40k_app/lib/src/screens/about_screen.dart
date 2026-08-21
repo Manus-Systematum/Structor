@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
+import '../data/roster_store.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../data/dataset_repository.dart';
@@ -17,7 +19,11 @@ import '../data/dataset_repository.dart';
 class AboutScreen extends StatefulWidget {
   final DatasetRepository datasets;
 
-  const AboutScreen({super.key, required this.datasets});
+  /// Null in tests that only read the page. The Legends switch is hidden
+  /// without it rather than shown doing nothing.
+  final RosterStore? store;
+
+  const AboutScreen({super.key, required this.datasets, this.store});
 
   @override
   State<AboutScreen> createState() => _AboutScreenState();
@@ -27,10 +33,14 @@ class _AboutScreenState extends State<AboutScreen> {
   PackageInfo? _package;
   DatasetManifest? _manifest;
   bool? _provisional;
+  bool _showLegends = false;
 
   @override
   void initState() {
     super.initState();
+    widget.store?.showLegends().then((on) {
+      if (mounted) setState(() => _showLegends = on);
+    });
     PackageInfo.fromPlatform().then((info) {
       if (mounted) setState(() => _package = info);
     });
@@ -55,6 +65,28 @@ class _AboutScreenState extends State<AboutScreen> {
         children: [
           const Text('Structor',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800)),
+          if (widget.store case final store?) ...[
+            const SizedBox(height: 4),
+            SwitchListTile(
+              dense: true,
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Show Legends datasheets',
+                  style: TextStyle(fontSize: 14)),
+              // What it costs, not what it is for. 485 of 1,857 datasheets
+              // are Legends, so the picker is a third longer with them in.
+              subtitle: Text(
+                'Adds 485 shelved datasheets to the unit picker.',
+                style:
+                    TextStyle(fontSize: 11.5, color: scheme.onSurfaceVariant),
+              ),
+              value: _showLegends,
+              onChanged: (on) {
+                setState(() => _showLegends = on);
+                store.setShowLegends(on);
+              },
+            ),
+            const Divider(height: 16),
+          ],
           Text(
             package == null
                 ? 'version …'
@@ -224,12 +256,11 @@ class _Row extends StatelessWidget {
         children: [
           Expanded(
             child: Text(label,
-                style:
-                    TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
+                style: TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
           ),
           Text(value,
-              style: const TextStyle(
-                  fontSize: 12, fontWeight: FontWeight.w600)),
+              style:
+                  const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
         ],
       ),
     );
