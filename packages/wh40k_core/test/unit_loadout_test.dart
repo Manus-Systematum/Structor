@@ -234,4 +234,29 @@ void main() {
           reason: 'the ability still grants it once taken');
     });
   }, skip: available ? null : 'no snapshot');
+  group('two sources state a cap and the tighter one wins', () {
+    test('a Novitiate Squad takes one banner, not four', () {
+      // 40kdc writes the option as `max_count: 4` over a choice of
+      // `[flamer] | [banner] | [simulacrum]` — the number of *models* that
+      // may swap, with which item each limit belongs to thrown away. Read per
+      // item that is 0-4 of each, and the editor offered four Sacred Banners
+      // on a squad allowed one. The budget lines carry what was lost.
+      final loadout =
+          loadoutFor(load('adepta-sororitas'), 'sisters-novitiate-squad');
+      int? capOf(String item) =>
+          loadout.counters.firstWhere((c) => c.itemId == item).statedMax;
+
+      expect(capOf('sacred-banner'), 1);
+      expect(capOf('simulacrum-imperialis'), 1);
+      expect(capOf('ministorum-flamer'), 2);
+    }, skip: available ? null : 'no snapshot');
+
+    test('an item only one source caps keeps that cap', () {
+      // Nothing is invented where only one statement exists.
+      final loadout = loadoutFor(load('tau-empire'), 'stealth-battlesuits');
+      final fusion =
+          loadout.counters.singleWhere((c) => c.itemId == 'fusion-blaster');
+      expect(fusion.statedMax, 2);
+    }, skip: available ? null : 'no snapshot');
+  });
 }

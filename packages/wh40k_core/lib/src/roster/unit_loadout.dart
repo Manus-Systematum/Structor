@@ -93,6 +93,13 @@ class LoadoutCounter {
   });
 }
 
+/// The stricter of two stated caps, or whichever one exists.
+int? _tighter(int? a, int? b) {
+  if (a == null) return b;
+  if (b == null) return a;
+  return a < b ? a : b;
+}
+
 class UnitLoadout {
   /// Items the unit always has, in default-loadout quantity. Not removable.
   final Map<String, int> fixed;
@@ -186,13 +193,37 @@ class UnitLoadout {
       }
     }
 
+    // **Two sources state a cap, and the tighter one is the real one.**
+    //
+    // A Novitiate Squad's option reads `max_count: 4` over a choice of
+    // `[flamer] | [banner] | [simulacrum]` — 40kdc collapsing three separate
+    // limits into the number of *models* that may swap, and losing which
+    // item each applies to. Read per item that becomes 0-4 of each, so the
+    // editor offered four Sacred Banners on a squad allowed one.
+    //
+    // The budget lines carry what was lost: one banner, one simulacrum, two
+    // flamers, which is exactly BSData's `max 1`/`max 1`/`max 2` constraints
+    // come through the merge. Neither source is wrong — 4 is the aggregate
+    // and 1/1/2 are the parts — so the counter takes the smaller, and the
+    // aggregate is left to the validator, which can see the whole unit.
+    final budgeted = <String, int>{};
+    for (final budget in datasheet.wargearBudgets) {
+      if (budget.count <= 0) continue;
+      for (final item in budget.items) {
+        final id = datasheet.unscope(item);
+        final known = budgeted[id];
+        if (known == null || budget.count > known) budgeted[id] = budget.count;
+      }
+    }
+
     final grouped = {for (final group in groups) ...group.items};
     final counters = <LoadoutCounter>[
       for (final itemId in vocabulary)
         if (!fixed.containsKey(itemId) && !grouped.contains(itemId))
           LoadoutCounter(
             itemId: itemId,
-            statedMax: constrained[itemId]?.maxCount,
+            statedMax:
+                _tighter(constrained[itemId]?.maxCount, budgeted[itemId]),
             perModels: constrained[itemId]?.perModels,
             replaces: constrained[itemId]?.replaces ?? const [],
           ),
