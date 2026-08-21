@@ -14,6 +14,7 @@ import '../roster/points.dart';
 import '../roster/roster.dart';
 import 'battle_size.dart';
 import 'catalogue.dart';
+import '../roster/unit_loadout.dart';
 
 enum Severity { error, warning, info }
 
@@ -81,9 +82,54 @@ class RosterValidator {
     _checkWarlord(roster, findings);
     _checkSlots(roster, battleSize, findings);
     _checkAttachments(roster, findings);
+    _checkWargearLimits(roster, findings);
 
     findings.sort((a, b) => a.severity.index.compareTo(b.severity.index));
     return ValidationResult(findings: findings, cost: cost);
+  }
+
+  /// Wargear taken past what the datasheet allows.
+  ///
+  /// **Only where the cap is a whole-unit number** — see
+  /// [UnitLoadout.capsAreExact]. On a single-model datasheet BSData states
+  /// each hardpoint's limit and there is nothing to interpret: a Commander in
+  /// Enforcer Battlesuit takes four T'au flamers and one shield generator,
+  /// and the reference export fields exactly that. On a squad the sources do
+  /// not say which caps are per model and which per unit, and an error there
+  /// would have called a validated 2,000 point list illegal in four places —
+  /// which is how this check failed the first time it was written.
+  ///
+  /// Reported, never refused. §4.5's posture on the control is unchanged: the
+  /// `+` still works, and the finding says what the datasheet allows.
+  void _checkWargearLimits(Roster roster, List<ValidationFinding> findings) {
+    for (final unit in roster.units) {
+      final datasheet = catalogue.unit(unit.datasheetId);
+      if (datasheet == null) continue;
+
+      final loadout = UnitLoadout.forDatasheet(
+        datasheet,
+        catalogue: catalogue,
+        vocabulary: datasheet.wargearVocabulary,
+      );
+      if (!loadout.capsAreExact) continue;
+
+      final caps = <String, int>{
+        for (final counter in loadout.counters)
+          if (counter.statedMax case final max?) counter.itemId: max,
+      };
+
+      for (final item in unit.wargear) {
+        final id = datasheet.unscope(item.itemId);
+        final cap = caps[id];
+        if (cap == null || item.count <= cap) continue;
+        findings.add(ValidationFinding(
+          code: 'wargear.over-limit',
+          message: '${datasheet.name} has ${item.count} × '
+              '${id.replaceAll('-', ' ')}; the datasheet allows $cap.',
+          severity: Severity.error,
+        ));
+      }
+    }
   }
 
   void _checkPoints(

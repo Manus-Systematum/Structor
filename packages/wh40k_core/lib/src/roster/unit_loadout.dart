@@ -101,6 +101,18 @@ int? _tighter(int? a, int? b) {
 }
 
 class UnitLoadout {
+  /// Whether every counter's [LoadoutCounter.statedMax] is a whole-unit
+  /// number rather than a per-model one.
+  ///
+  /// True only for a single-model datasheet, where BSData's per-entry cap is
+  /// the unit's — a Commander is one suit with four hardpoints. On a squad
+  /// the same entry means one *per model*, and the sources do not say which
+  /// of a squad's caps are per model and which per unit: a Stealth team takes
+  /// two fusion blasters across five suits, and a Broadside team two missile
+  /// drones across two. Both read `1` somewhere. Only where the question
+  /// cannot arise is the cap firm enough to call a list illegal (§4.5).
+  final bool capsAreExact;
+
   /// Items the unit always has, in default-loadout quantity. Not removable.
   final Map<String, int> fixed;
 
@@ -111,6 +123,7 @@ class UnitLoadout {
     required this.fixed,
     required this.groups,
     required this.counters,
+    this.capsAreExact = false,
   });
 
   bool isFixed(String itemId) => fixed.containsKey(itemId);
@@ -217,7 +230,14 @@ class UnitLoadout {
     }
 
     // One model, so an entry's own cap is the whole unit's.
-    final singleModel = (composition?.maxModels ?? 1) <= 1;
+    //
+    // **A missing composition is not a single-model unit.** The snapshot
+    // carries no compositions — only the builder needs them — so defaulting
+    // to 1 made every cap in play mode look exact, and a Crisis team of three
+    // was reported for having three sets of battlesuit fists. Absence of data
+    // does not license an error (§2.3).
+    final singleModel =
+        composition != null && (composition.maxModels ?? 2) <= 1;
 
     final grouped = {for (final group in groups) ...group.items};
     final counters = <LoadoutCounter>[
@@ -244,6 +264,11 @@ class UnitLoadout {
           ),
     ];
 
-    return UnitLoadout(fixed: fixed, groups: groups, counters: counters);
+    return UnitLoadout(
+      fixed: fixed,
+      groups: groups,
+      counters: counters,
+      capsAreExact: singleModel,
+    );
   }
 }

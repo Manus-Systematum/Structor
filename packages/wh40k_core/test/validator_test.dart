@@ -21,7 +21,8 @@ SourceUnit _unit(
       ],
     });
 
-SourceDetachment _detachment(String id, {int dp = 1, List<String> tags = const []}) =>
+SourceDetachment _detachment(String id,
+        {int dp = 1, List<String> tags = const []}) =>
     SourceDetachment.fromJson({
       'id': id,
       'name': id,
@@ -257,7 +258,12 @@ void main() {
 
     test('an upgrade with four targets is an error', () {
       final result = validator.validate(_roster(
-        units: [_r('a', 'tank'), _r('b', 'tank'), _r('c', 'tank'), _r('d', 'tank')],
+        units: [
+          _r('a', 'tank'),
+          _r('b', 'tank'),
+          _r('c', 'tank'),
+          _r('d', 'tank')
+        ],
         upgrades: const [
           UpgradeSelection(
               upgradeId: 'up', targetInstanceIds: ['a', 'b', 'c', 'd']),
@@ -334,5 +340,57 @@ void main() {
       expect(result.has('slots.unused'), isTrue);
       expect(result.has('points.under'), isFalse, reason: 'exactly 2000');
     }, skip: available ? null : 'no snapshot; run tools/fetch-40kdc.sh');
+  });
+  group('wargear past what the datasheet allows', () {
+    test('the reference army is not one of them', () {
+      // This check was written once before and withdrawn: it called a
+      // validated 2,000 point list illegal in four places, because the cap it
+      // read was 40kdc's `max_count: 3` spread across ten different guns
+      // rather than the hardpoint's own limit. With the per-item cap in hand
+      // — four T'au flamers, one shield generator — the same list is clean.
+      final loader = correctedLoader();
+      if (!loader.root.existsSync()) return;
+      final dataset =
+          Dataset.of(loader.loadFaction('tau-empire'), revision: 't');
+      final roster = Roster.fromJson(jsonDecode(
+          File('test/fixtures/tau_strike_force_2000.json').readAsStringSync()));
+      final result = RosterValidator(dataset).validate(roster);
+      expect(
+        result.findings.where((f) => f.code == 'wargear.over-limit'),
+        isEmpty,
+        reason: result.findings.map((f) => f.message).join('\n'),
+      );
+    }, skip: snapshotAvailable ? null : 'no snapshot');
+
+    test('a fifth flamer on a four-hardpoint suit is reported', () {
+      final loader = correctedLoader();
+      if (!loader.root.existsSync()) return;
+      final dataset =
+          Dataset.of(loader.loadFaction('tau-empire'), revision: 't');
+      final roster = Roster.fromJson(jsonDecode(
+          File('test/fixtures/tau_strike_force_2000.json').readAsStringSync()));
+      final over = roster.copyWith(units: [
+        for (final unit in roster.units)
+          if (dataset.unit(unit.datasheetId)?.id ==
+              'commander-in-coldstar-battlesuit')
+            unit.copyWith(wargear: [
+              for (final w in unit.wargear)
+                if (w.itemId == 'tau-flamer')
+                  WargearSelection(itemId: w.itemId, count: 5)
+                else
+                  w,
+            ])
+          else
+            unit,
+      ]);
+
+      final findings = RosterValidator(dataset)
+          .validate(over)
+          .findings
+          .where((f) => f.code == 'wargear.over-limit');
+      expect(findings, isNotEmpty);
+      expect(findings.first.message, contains('allows 4'));
+      expect(findings.first.severity, Severity.error);
+    }, skip: snapshotAvailable ? null : 'no snapshot');
   });
 }

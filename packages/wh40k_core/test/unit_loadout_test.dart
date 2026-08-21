@@ -272,4 +272,20 @@ void main() {
       expect(capOf('cyclic-ion-blaster'), 1);
     }, skip: available ? null : 'no snapshot');
   });
+  test('a missing composition is not read as a single-model unit', () {
+    // The snapshot carries no compositions — only the builder needs them — so
+    // defaulting to one model made every cap in play mode look exact, and a
+    // Crisis team of three was reported for having three sets of battlesuit
+    // fists. Absence of data does not license an error (§2.3).
+    final dataset = load('tau-empire');
+    final sheet = dataset.unit('crisis-fireknife-battlesuits')!;
+    final bare = MapCatalogue([sheet], weapons: dataset.faction.weapons);
+    final loadout = UnitLoadout.forDatasheet(
+      sheet,
+      catalogue: bare,
+      vocabulary: sheet.wargearVocabulary,
+    );
+    expect(bare.composition(sheet.id), isNull);
+    expect(loadout.capsAreExact, isFalse);
+  }, skip: available ? null : 'no snapshot');
 }
