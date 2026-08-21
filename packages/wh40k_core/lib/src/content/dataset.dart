@@ -144,6 +144,13 @@ class Dataset implements Catalogue {
   List<String> eligibleBodyguards(String leaderDatasheetId) =>
       _attachments[leaderDatasheetId] ?? const [];
 
+  late final Set<String> _leadable = {
+    for (final bodyguards in _attachments.values) ...bodyguards,
+  };
+
+  @override
+  bool canBeLed(String datasheetId) => _leadable.contains(datasheetId);
+
   @override
   SourceWeapon? weaponFor(SourceUnit unit, String itemId) {
     final scoped = '$itemId-${unit.id}';

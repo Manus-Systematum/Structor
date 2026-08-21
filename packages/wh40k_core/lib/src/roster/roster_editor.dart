@@ -350,9 +350,9 @@ class RosterEditor {
   /// validator would then have to complain about.
   /// The attachment role of whichever character holds [instanceId]'s link, or
   /// null when nothing is attached in that role.
-  String? _roleOf(Roster roster, String instanceId) =>
-      catalogue.unit(_unit(roster, instanceId)?.datasheetId ?? '')
-          ?.attachmentRole;
+  String? _roleOf(Roster roster, String instanceId) => catalogue
+      .unit(_unit(roster, instanceId)?.datasheetId ?? '')
+      ?.attachmentRole;
 
   Roster attach(Roster roster, String leaderId, String bodyguardId) {
     if (leaderId == bodyguardId) return roster;
@@ -425,8 +425,7 @@ class RosterEditor {
     if (bodyguard == null) return const [];
     final leadingNow = {
       for (final link in roster.links)
-        if (link.type == LinkType.leads)
-          link.fromInstanceId: link.toInstanceId,
+        if (link.type == LinkType.leads) link.fromInstanceId: link.toInstanceId,
     };
     return [
       for (final unit in roster.units)
@@ -440,10 +439,26 @@ class RosterEditor {
 
   // ------------------------------------------------------------ army-level
 
-  Roster setWarlord(Roster roster, String? instanceId) => roster.copyWith(
-        warlordInstanceId: instanceId,
-        clearWarlordIf: instanceId == null,
-      );
+  /// Nominates the Warlord, or clears it.
+  ///
+  /// **Refused for anything that is not a Character** (§4.5.1). The switch in
+  /// the editor was already disabled on a Paragon Warsuit, but the rule lived
+  /// only in the widget: an imported list, or a scanned one, could name a
+  /// Vehicle as its Warlord and nothing on this side would notice. This is
+  /// the second place the builder refuses rather than flags, and it qualifies
+  /// for the same reason as the first — the keyword is on every datasheet
+  /// that has it, so there is no missing data to be permissive about.
+  Roster setWarlord(Roster roster, String? instanceId) {
+    if (instanceId != null) {
+      final unit = roster.unitByInstance(instanceId);
+      final datasheet = unit == null ? null : catalogue.unit(unit.datasheetId);
+      if (datasheet == null || !datasheet.isCharacter) return roster;
+    }
+    return roster.copyWith(
+      warlordInstanceId: instanceId,
+      clearWarlordIf: instanceId == null,
+    );
+  }
 
   Roster setName(Roster roster, String name) =>
       roster.copyWith(name: name.trim().isEmpty ? roster.name : name.trim());

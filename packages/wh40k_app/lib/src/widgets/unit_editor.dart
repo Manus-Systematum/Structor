@@ -79,197 +79,214 @@ class UnitEditorSheet extends StatelessWidget {
     final maxModels = RosterEditor(dataset).maxModels(datasheet.id);
 
     return SafeArea(
-      child: ListView(
-        shrinkWrap: true,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
+          // **Pinned.** The name and the running cost are what you are
+          // watching while you spend points, and they were the first thing to
+          // scroll away — by the time the wargear is on screen the number it
+          // is changing is not.
           SheetHeader(
             title: datasheet.name,
             trailing: Text('$points pts',
                 style: AppTheme.numeric(context, size: 15)
                     .copyWith(fontWeight: FontWeight.w700)),
           ),
-
-          if (groupInstanceIds.length > 1 && onSelect != null)
-            _GroupSwitcher(
-              dataset: dataset,
-              roster: roster,
-              instanceIds: groupInstanceIds,
-              current: instanceId,
-              onSelect: onSelect!,
-            ),
-
-          // The statline sits under the name rather than behind a tap: it is
-          // the thing you check while deciding what to buy (§4.5).
-          UnitStatline.of(datasheet),
-
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 6, 20, 8),
-            child: Text(datasheet.keywords.join(' · '),
-                style:
-                    TextStyle(fontSize: 11, color: scheme.onSurfaceVariant)),
-          ),
-
-          _Row(
-            label: 'Models',
-            // The one counter that *is* capped. A unit grown past every
-            // published bracket priced at zero — there was no bracket to
-            // price it — so the builder let you make a unit that silently
-            // cost nothing. Unlike wargear, the size is stated twice over
-            // (composition and points table) and the looser of the two is
-            // taken, so the cap only ever refuses what neither supports.
-            detail: maxModels == null || maxModels == unit.models
-                ? null
-                : 'max $maxModels',
-            child: _Counter(
-              value: unit.models,
-              max: maxModels,
-              onChange: (n) =>
-                  onEdit((e) => e.setModels(roster, instanceId, n)),
-            ),
-          ),
-
-          _Heading('WARGEAR',
-              trailing: loadout.isUnpublished ? 'no options published' : null),
-
-          for (final entry in loadout.fixed.entries)
-            _FixedRow(
-              label: _nameOf(entry.key, datasheet),
-              // What the unit carries, not what the datasheet's smallest legal
-              // form carries. Resizing scales the default kit now, so a
-              // four-model unit showed "×3" beside a weapon table listing four.
-              count: carried[entry.key] ?? entry.value,
-            ),
-
-          for (final group in loadout.groups)
-            _GroupRow(
-              group: group,
-              carried: carried,
-              nameOf: (id) => _nameOf(id, datasheet),
-              onSelect: (bundle) => onEdit((e) =>
-                  e.selectLoadoutBundle(roster, instanceId, group, bundle)),
-            ),
-
-          for (final counter in loadout.counters)
-            _Row(
-              label: _nameOf(counter.itemId, datasheet),
-              detail: _counterDetail(counter, datasheet),
-              child: _Counter(
-                value: carried[counter.itemId] ?? 0,
-                min: 0,
-                // A stated cap colours the control without disabling it: the
-                // reference list itself exceeds one, so this is information,
-                // not a gate.
-                overLimit: counter.statedMax != null &&
-                    (carried[counter.itemId] ?? 0) > counter.statedMax!,
-                onChange: (n) => onEdit((e) => e.swapWargear(
-                      roster,
-                      instanceId,
-                      counter.itemId,
-                      n,
-                      replaces: counter.replaces,
-                    )),
-              ),
-            ),
-
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-            child: Row(
+          Flexible(
+            child: ListView(
+              shrinkWrap: true,
               children: [
-                TextButton.icon(
-                  onPressed: () =>
-                      onEdit((e) => e.resetWargear(roster, instanceId)),
-                  icon: const Icon(Icons.restart_alt, size: 17),
-                  label: const Text('Default loadout'),
+                if (groupInstanceIds.length > 1 && onSelect != null)
+                  _GroupSwitcher(
+                    dataset: dataset,
+                    roster: roster,
+                    instanceIds: groupInstanceIds,
+                    current: instanceId,
+                    onSelect: onSelect!,
+                  ),
+
+                // The statline sits under the name rather than behind a tap: it is
+                // the thing you check while deciding what to buy (§4.5).
+                UnitStatline.of(datasheet),
+
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 6, 20, 8),
+                  child: Text(datasheet.keywords.join(' · '),
+                      style: TextStyle(
+                          fontSize: 11, color: scheme.onSurfaceVariant)),
                 ),
+
+                _Row(
+                  label: 'Models',
+                  // The one counter that *is* capped. A unit grown past every
+                  // published bracket priced at zero — there was no bracket to
+                  // price it — so the builder let you make a unit that silently
+                  // cost nothing. Unlike wargear, the size is stated twice over
+                  // (composition and points table) and the looser of the two is
+                  // taken, so the cap only ever refuses what neither supports.
+                  detail: maxModels == null || maxModels == unit.models
+                      ? null
+                      : 'max $maxModels',
+                  child: _Counter(
+                    value: unit.models,
+                    max: maxModels,
+                    onChange: (n) =>
+                        onEdit((e) => e.setModels(roster, instanceId, n)),
+                  ),
+                ),
+
+                _Heading('WARGEAR',
+                    trailing:
+                        loadout.isUnpublished ? 'no options published' : null),
+
+                for (final entry in loadout.fixed.entries)
+                  _FixedRow(
+                    label: _nameOf(entry.key, datasheet),
+                    // What the unit carries, not what the datasheet's smallest legal
+                    // form carries. Resizing scales the default kit now, so a
+                    // four-model unit showed "×3" beside a weapon table listing four.
+                    count: carried[entry.key] ?? entry.value,
+                  ),
+
+                for (final group in loadout.groups)
+                  _GroupRow(
+                    group: group,
+                    carried: carried,
+                    nameOf: (id) => _nameOf(id, datasheet),
+                    onSelect: (bundle) => onEdit((e) => e.selectLoadoutBundle(
+                        roster, instanceId, group, bundle)),
+                  ),
+
+                for (final counter in loadout.counters)
+                  _Row(
+                    label: _nameOf(counter.itemId, datasheet),
+                    detail: _counterDetail(counter, datasheet),
+                    child: _Counter(
+                      value: carried[counter.itemId] ?? 0,
+                      min: 0,
+                      // A stated cap colours the control without disabling it: the
+                      // reference list itself exceeds one, so this is information,
+                      // not a gate.
+                      overLimit: counter.statedMax != null &&
+                          (carried[counter.itemId] ?? 0) > counter.statedMax!,
+                      onChange: (n) => onEdit((e) => e.swapWargear(
+                            roster,
+                            instanceId,
+                            counter.itemId,
+                            n,
+                            replaces: counter.replaces,
+                          )),
+                    ),
+                  ),
+
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                  child: Row(
+                    children: [
+                      TextButton.icon(
+                        onPressed: () =>
+                            onEdit((e) => e.resetWargear(roster, instanceId)),
+                        icon: const Icon(Icons.restart_alt, size: 17),
+                        label: const Text('Default loadout'),
+                      ),
+                    ],
+                  ),
+                ),
+
+                CarriedWeaponProfiles(
+                  dataset: dataset,
+                  datasheet: datasheet,
+                  carried: carried,
+                ),
+
+                if (datasheet.attachesToUnit) ...[
+                  const _Heading('LEADS'),
+                  _AttachPicker(
+                    dataset: dataset,
+                    roster: roster,
+                    instanceId: instanceId,
+                    onEdit: onEdit,
+                  ),
+                ]
+                // Only where a leader could ever attach. Shown on everything that
+                // is not itself a character, the heading appeared on Paragon
+                // Warsuits and Rhinos to announce that no character may lead them —
+                // a section whose whole content was its own emptiness.
+                else if (dataset.canBeLed(datasheet.id)) ...[
+                  const _Heading('LED BY'),
+                  _LeaderPicker(
+                    dataset: dataset,
+                    roster: roster,
+                    instanceId: instanceId,
+                    onEdit: onEdit,
+                  ),
+                ],
+
+                if (datasheet.isCharacter) ...[
+                  const _Heading('ENHANCEMENT'),
+                  _EnhancementPicker(
+                    dataset: dataset,
+                    roster: roster,
+                    instanceId: instanceId,
+                    onEdit: onEdit,
+                  ),
+                ],
+
+                const _Heading('ARMY'),
+                SwitchListTile(
+                  dense: true,
+                  title: const Text('Warlord', style: TextStyle(fontSize: 13)),
+                  subtitle: Text(
+                    datasheet.isCharacter
+                        ? 'One per army'
+                        : 'The Warlord must be a Character',
+                    style:
+                        TextStyle(fontSize: 11, color: scheme.onSurfaceVariant),
+                  ),
+                  value: roster.warlordInstanceId == instanceId,
+                  // Refused rather than merely flagged. §2.3's permissiveness is
+                  // about data the source states badly — wargear options are
+                  // incomplete, so enforcing them would reject legal armies. This is
+                  // not that: "the Warlord must be a Character" is a rule with no
+                  // missing data behind it, and the keyword is on every datasheet
+                  // that has it. Paragon Warsuits are a Vehicle, and offering the
+                  // switch only to fail validation afterwards wastes the tap.
+                  onChanged: datasheet.isCharacter
+                      ? (on) => onEdit(
+                          (e) => e.setWarlord(roster, on ? instanceId : null))
+                      : null,
+                ),
+                // Duplicate and remove share a row: two rare actions were taking two
+                // full-width tiles at the end of every unit.
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () => onEdit(
+                              (e) => e.duplicateUnit(roster, instanceId)),
+                          icon: const Icon(Icons.copy_all_outlined, size: 17),
+                          label: const Text('Duplicate'),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: onRemove,
+                          style: OutlinedButton.styleFrom(
+                              foregroundColor: scheme.error),
+                          icon: const Icon(Icons.delete_outline, size: 17),
+                          label: const Text('Remove'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
               ],
             ),
           ),
-
-          CarriedWeaponProfiles(
-            dataset: dataset,
-            datasheet: datasheet,
-            carried: carried,
-          ),
-
-          if (datasheet.attachesToUnit) ...[
-            const _Heading('LEADS'),
-            _AttachPicker(
-              dataset: dataset,
-              roster: roster,
-              instanceId: instanceId,
-              onEdit: onEdit,
-            ),
-          ] else ...[
-            const _Heading('LED BY'),
-            _LeaderPicker(
-              dataset: dataset,
-              roster: roster,
-              instanceId: instanceId,
-              onEdit: onEdit,
-            ),
-          ],
-
-          if (datasheet.isCharacter) ...[
-            const _Heading('ENHANCEMENT'),
-            _EnhancementPicker(
-              dataset: dataset,
-              roster: roster,
-              instanceId: instanceId,
-              onEdit: onEdit,
-            ),
-          ],
-
-          const _Heading('ARMY'),
-          SwitchListTile(
-            dense: true,
-            title: const Text('Warlord', style: TextStyle(fontSize: 13)),
-            subtitle: Text(
-              datasheet.isCharacter
-                  ? 'One per army'
-                  : 'The Warlord must be a Character',
-              style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant),
-            ),
-            value: roster.warlordInstanceId == instanceId,
-            // Refused rather than merely flagged. §2.3's permissiveness is
-            // about data the source states badly — wargear options are
-            // incomplete, so enforcing them would reject legal armies. This is
-            // not that: "the Warlord must be a Character" is a rule with no
-            // missing data behind it, and the keyword is on every datasheet
-            // that has it. Paragon Warsuits are a Vehicle, and offering the
-            // switch only to fail validation afterwards wastes the tap.
-            onChanged: datasheet.isCharacter
-                ? (on) => onEdit(
-                    (e) => e.setWarlord(roster, on ? instanceId : null))
-                : null,
-          ),
-          // Duplicate and remove share a row: two rare actions were taking two
-          // full-width tiles at the end of every unit.
-          Padding(
-            padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () =>
-                        onEdit((e) => e.duplicateUnit(roster, instanceId)),
-                    icon: const Icon(Icons.copy_all_outlined, size: 17),
-                    label: const Text('Duplicate'),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: onRemove,
-                    style: OutlinedButton.styleFrom(
-                        foregroundColor: scheme.error),
-                    icon: const Icon(Icons.delete_outline, size: 17),
-                    label: const Text('Remove'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 12),
         ],
       ),
     );
@@ -331,8 +348,8 @@ class _GroupRow extends StatelessWidget {
         children: [
           if (group.modelName != null)
             Text(group.modelName!,
-                style: TextStyle(
-                    fontSize: 10.5, color: scheme.onSurfaceVariant)),
+                style:
+                    TextStyle(fontSize: 10.5, color: scheme.onSurfaceVariant)),
           Wrap(
             spacing: 6,
             runSpacing: 4,
@@ -353,8 +370,7 @@ class _GroupRow extends StatelessWidget {
           ),
           // An imported list can carry a combination the datasheet does not
           // offer. Saying so beats silently rewriting somebody's army.
-          if (selected == null &&
-              group.items.any((i) => (carried[i] ?? 0) > 0))
+          if (selected == null && group.items.any((i) => (carried[i] ?? 0) > 0))
             Padding(
               padding: const EdgeInsets.only(top: 3),
               child: Text(
@@ -414,8 +430,8 @@ class _AttachPicker extends StatelessWidget {
     final editor = RosterEditor(dataset);
     final options = editor.eligibleBodyguards(roster, instanceId);
     final current = roster.links
-        .where((l) =>
-            l.type == LinkType.leads && l.fromInstanceId == instanceId)
+        .where(
+            (l) => l.type == LinkType.leads && l.fromInstanceId == instanceId)
         .map((l) => l.toInstanceId)
         .firstOrNull;
 
@@ -483,7 +499,8 @@ class _LeaderPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final candidates = RosterEditor(dataset).eligibleLeaders(roster, instanceId);
+    final candidates =
+        RosterEditor(dataset).eligibleLeaders(roster, instanceId);
     final current = roster.links
         .where((l) => l.type == LinkType.leads && l.toInstanceId == instanceId)
         .map((l) => l.fromInstanceId)
@@ -524,8 +541,7 @@ class _LeaderPicker extends StatelessWidget {
           ? (current == null ? roster : e.detach(roster, current))
           : e.attach(roster, id, instanceId)),
       footnote: candidates.any((c) =>
-              c.leadingInstanceId != null &&
-              c.leadingInstanceId != instanceId)
+              c.leadingInstanceId != null && c.leadingInstanceId != instanceId)
           ? 'Choosing a character that already leads something moves it here.'
           : null,
     );
@@ -589,8 +605,8 @@ class _ChipPicker<T> extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 4),
               child: Text(footnote!,
-                  style:
-                      TextStyle(fontSize: 10.5, color: scheme.onSurfaceVariant)),
+                  style: TextStyle(
+                      fontSize: 10.5, color: scheme.onSurfaceVariant)),
             ),
         ],
       ),
@@ -615,8 +631,8 @@ class _EnhancementPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final taken = {for (final d in roster.detachments) d.detachmentId};
-    final datasheet = dataset.unit(
-        roster.unitByInstance(instanceId)?.datasheetId ?? '');
+    final datasheet =
+        dataset.unit(roster.unitByInstance(instanceId)?.datasheetId ?? '');
 
     // Filtered to what this bearer may actually carry (§4.7). Offering the
     // rest and letting validation object afterwards was producing illegal

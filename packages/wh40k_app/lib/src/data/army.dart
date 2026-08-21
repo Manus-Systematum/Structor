@@ -51,7 +51,8 @@ class Army {
   /// The reference army, from the bundled assets. **A test fixture only** —
   /// nothing pre-installs it, so a fresh install starts with no armies.
   static Future<Army> loadReference() async {
-    final rosterJson = await rootBundle.loadString('assets/reference_roster.json');
+    final rosterJson =
+        await rootBundle.loadString('assets/reference_roster.json');
     final snapshotJson =
         await rootBundle.loadString('assets/reference_snapshot.json');
     return Army.fromSnapshot(
@@ -135,6 +136,27 @@ class Army {
 
   String detachmentName(String id) => catalogue.detachment(id)?.name ?? id;
 
+  /// Detachment Points the taken detachments cost between them.
+  int get detachmentPointsSpent => roster.detachments.fold(
+        0,
+        (sum, taken) =>
+            sum +
+            (catalogue.detachment(taken.detachmentId)?.detachmentPoints ?? 0),
+      );
+
+  /// What the battle size allows.
+  ///
+  /// At Incursion the budget rises from 2 to 3 when a 3 DP detachment is
+  /// taken, so a single large detachment is always legal (§4.4) — the same
+  /// rule the validator applies, read from the same place.
+  int get detachmentPointsBudget {
+    final size = BattleSize.byId(roster.battleSizeId);
+    if (size == null) return 0;
+    final hasThreeDp = roster.detachments.any((t) =>
+        (catalogue.detachment(t.detachmentId)?.detachmentPoints ?? 0) >= 3);
+    return size.budgetFor(includesThreeDpDetachment: hasThreeDp);
+  }
+
   /// The stratagems this army can play, already scoped to its detachments
   /// (§7.3). Built from the snapshot, so a scanned list brings its own.
   late final StratagemBook stratagems = StratagemBook.forRoster(
@@ -211,8 +233,7 @@ class Army {
       // none — it is the kind of thing a player acts on and cannot undo.
       final distances = [for (final unit in combat.group) scoutOf(unit)];
       if (distances.isEmpty || distances.any((d) => d == null)) continue;
-      final shortest =
-          distances.cast<int>().reduce((a, b) => a < b ? a : b);
+      final shortest = distances.cast<int>().reduce((a, b) => a < b ? a : b);
       if (shortest > 0) out.add((unit: combat, distance: shortest));
     }
     return out;
@@ -334,9 +355,8 @@ class CombatUnit {
     return [
       for (final id in order)
         (
-          source: owners[id]!.length == group.length
-              ? ''
-              : owners[id]!.join(', '),
+          source:
+              owners[id]!.length == group.length ? '' : owners[id]!.join(', '),
           rule: rules[id]!,
         ),
     ];

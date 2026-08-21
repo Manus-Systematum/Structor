@@ -75,12 +75,17 @@ class ArmyScreen extends StatelessWidget {
                       label: 'UNITS',
                       value: '${army.combatUnits.length}',
                       sub: '${roster.units.length} entries'),
+                  // **Points, not a count, and never `undeclared`.** This
+                  // read `DETACH 2 / undeclared`, where the 2 was a number of
+                  // detachments and the word underneath was the *force
+                  // disposition* — a different question entirely, whose empty
+                  // state looked like an error report. Detachments are bought
+                  // from a Detachment Points budget (§4.4), so the budget is
+                  // what belongs beside the number.
                   _Metric(
                       label: 'DETACH',
-                      value: '${roster.detachments.length}',
-                      sub: roster.declaredDisposition
-                              ?.replaceAll('-', ' ') ??
-                          'undeclared'),
+                      value: '${army.detachmentPointsSpent}',
+                      sub: 'of ${army.detachmentPointsBudget} DP'),
                 ],
               ),
               const SizedBox(height: 10),
@@ -90,8 +95,7 @@ class ArmyScreen extends StatelessWidget {
                 children: [
                   for (final detachment in roster.detachments)
                     Chip(
-                      label:
-                          Text(army.detachmentName(detachment.detachmentId)),
+                      label: Text(army.detachmentName(detachment.detachmentId)),
                       visualDensity: VisualDensity.compact,
                     ),
                 ],
@@ -146,8 +150,8 @@ class _Metric extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: scheme.onSurfaceVariant)),
           Text(value,
-              style: const TextStyle(
-                  fontSize: 20, fontWeight: FontWeight.w800)),
+              style:
+                  const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
           Text(sub,
               style: TextStyle(fontSize: 10, color: scheme.onSurfaceVariant)),
         ],
@@ -200,14 +204,13 @@ class _UnitCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(8, 6, 8, 0),
       child: Card(
         child: Theme(
-          data: Theme.of(context)
-              .copyWith(dividerColor: Colors.transparent),
+          data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
           child: ExpansionTile(
             tilePadding: const EdgeInsets.symmetric(horizontal: 12),
             childrenPadding: const EdgeInsets.only(bottom: 8),
             title: Text(unit.label,
-                style: const TextStyle(
-                    fontSize: 14, fontWeight: FontWeight.w700)),
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
             subtitle: Text(
               '${unit.models} model${unit.models == 1 ? '' : 's'} · '
               '${unit.points} pts',
@@ -246,47 +249,46 @@ class _UnitCard extends StatelessWidget {
                 const _Subheader('Abilities'),
               for (final entry in unit.attributedRules)
                 if (!entry.rule.isBareKeyword)
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(12, 3, 12, 3),
-                  child: RichText(
-                    text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
-                      children: [
-                        TextSpan(
-                          text: '${entry.rule.name}: ',
-                          style: const TextStyle(
-                              fontSize: 11.5, fontWeight: FontWeight.w700),
-                        ),
-                        // Emphasis rendered rather than printed: the rule
-                        // arrives with its keywords marked (§3.10).
-                        for (final span in ruleSpans(entry.rule.text))
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 3, 12, 3),
+                    child: RichText(
+                      text: TextSpan(
+                        style: DefaultTextStyle.of(context).style,
+                        children: [
                           TextSpan(
-                            text: span.text,
-                            style: TextStyle(
-                              fontSize: 11.5,
-                              color: scheme.onSurfaceVariant,
-                              fontWeight:
-                                  span.bold ? FontWeight.w700 : null,
-                              fontStyle:
-                                  span.italic ? FontStyle.italic : null,
-                            ),
+                            text: '${entry.rule.name}: ',
+                            style: const TextStyle(
+                                fontSize: 11.5, fontWeight: FontWeight.w700),
                           ),
-                        // Only when it could be either half: a Shield
-                        // Generator on the Commander is not one on the suits
-                        // it leads. Empty when both halves have the rule.
-                        if (entry.source.isNotEmpty)
-                          TextSpan(
-                            text: '  (${entry.source})',
-                            style: TextStyle(
-                              fontSize: 10.5,
-                              fontStyle: FontStyle.italic,
-                              color: scheme.outline,
+                          // Emphasis rendered rather than printed: the rule
+                          // arrives with its keywords marked (§3.10).
+                          for (final span in ruleSpans(entry.rule.text))
+                            TextSpan(
+                              text: span.text,
+                              style: TextStyle(
+                                fontSize: 11.5,
+                                color: scheme.onSurfaceVariant,
+                                fontWeight: span.bold ? FontWeight.w700 : null,
+                                fontStyle:
+                                    span.italic ? FontStyle.italic : null,
+                              ),
                             ),
-                          ),
-                      ],
+                          // Only when it could be either half: a Shield
+                          // Generator on the Commander is not one on the suits
+                          // it leads. Empty when both halves have the rule.
+                          if (entry.source.isNotEmpty)
+                            TextSpan(
+                              text: '  (${entry.source})',
+                              style: TextStyle(
+                                fontSize: 10.5,
+                                fontStyle: FontStyle.italic,
+                                color: scheme.outline,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
             ],
           ),
         ),
@@ -314,7 +316,9 @@ class _KeywordChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
-        source.isEmpty ? label.toUpperCase() : '${label.toUpperCase()} ($source)',
+        source.isEmpty
+            ? label.toUpperCase()
+            : '${label.toUpperCase()} ($source)',
         style: TextStyle(
           fontSize: 9.5,
           letterSpacing: 0.5,

@@ -146,7 +146,7 @@ class CarriedWeaponProfiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final profiles = <(String, WeaponProfile, _Kind)>[];
+    final profiles = <(String, String, WeaponProfile, _Kind)>[];
     for (final entry in carried.entries) {
       if (entry.value <= 0) continue;
       final weapon = dataset.weaponFor(datasheet, entry.key) ??
@@ -158,6 +158,14 @@ class CarriedWeaponProfiles extends StatelessWidget {
       for (final profile in weapon.profiles) {
         profiles.add((
           '${entry.value}×',
+          // **A profile name alone is not a weapon.** A Plasma pistol
+          // publishes `Standard` and `Supercharge`, so the table listed
+          // `Supercharge` with no way to tell which gun it belonged to — and
+          // two plasma weapons on one unit gave two rows called the same
+          // thing. Single-profile weapons already name themselves.
+          weapon.profiles.length > 1
+              ? '${weapon.name}: ${profile.name.toLowerCase()}'
+              : profile.name,
           profile,
           // Per profile, not per weapon: a Fusion eliminator is typed ranged
           // and carries a melee profile too.
@@ -197,7 +205,7 @@ class CarriedWeaponProfiles extends StatelessWidget {
             ],
           ),
         ),
-        for (final (count, profile, kind) in profiles)
+        for (final (count, name, profile, kind) in profiles)
           Container(
             // The heading cannot say which skill a row is using once it says
             // both, so the row does: melee sits on its own ground, and a
@@ -210,10 +218,29 @@ class CarriedWeaponProfiles extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 5,
-                  child: Text('$count ${profile.name}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 12)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('$count $name',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 12)),
+                      // The keywords, named and not explained. Half of what a
+                      // weapon does is here — TORRENT, DEVASTATING WOUNDS,
+                      // HAZARDOUS — and the table was six numbers with none
+                      // of it, so two guns with identical statlines read as
+                      // interchangeable when one of them auto-hits.
+                      if (profile.keywords.isNotEmpty)
+                        Text(
+                          profile.keywords.map((k) => k.label).join(' · '),
+                          style: TextStyle(
+                            fontSize: 9,
+                            height: 1.3,
+                            color: scheme.onSurfaceVariant,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
                 for (final key in ['range', 'A', 'skill', 'S', 'AP', 'D'])
                   Expanded(
@@ -239,7 +266,7 @@ class CarriedWeaponProfiles extends StatelessWidget {
         // its own RNG cell, and a key repeating the word beside a swatch is
         // furniture. A pistol's range is a number like any other gun's, so
         // nothing on the row says what the tint means.
-        if (profiles.any((p) => p.$3 == _Kind.pistol))
+        if (profiles.any((p) => p.$4 == _Kind.pistol))
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 4, 12, 0),
             child: Row(

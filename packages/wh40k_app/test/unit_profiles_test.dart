@@ -71,4 +71,29 @@ void main() {
     expect(find.text('Pistol'), findsNothing,
         reason: 'battlesuits carry no pistols');
   });
+  testWidgets('a weapon with two profiles says which weapon', (tester) async {
+    // An Ion accelerator publishes `Standard` and `Overcharge`, and the table
+    // listed `Overcharge` on its own — no way to tell which gun it belonged
+    // to, and two such weapons on one unit gave two rows reading the same.
+    await pump(tester, 'riptide-battlesuit');
+    expect(find.textContaining('Ion accelerator: overcharge'), findsOneWidget);
+    expect(find.textContaining('Ion accelerator: standard'), findsOneWidget);
+    // Bare `Overcharge` no longer stands alone.
+    expect(find.text('1× Overcharge'), findsNothing);
+  });
+
+  testWidgets('the keywords are on the row, not only the numbers',
+      (tester) async {
+    // Half of what a weapon does is its keywords. Six numbers without them
+    // make two guns with identical statlines read as interchangeable when one
+    // of them auto-hits.
+    await pump(tester, 'riptide-battlesuit');
+    expect(find.textContaining('HAZARDOUS'), findsWidgets);
+  });
+
+  testWidgets('a pistol profile is tinted and keyed', (tester) async {
+    // The XV pulse pistol is one of the few in a T'au list.
+    await pump(tester, 'the-twin-lance');
+    expect(find.text('Pistol'), findsOneWidget, reason: 'the key');
+  });
 }

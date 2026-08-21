@@ -43,6 +43,15 @@ abstract interface class Catalogue {
   /// a leader, or when no attachment rule is published for it.
   List<String> eligibleBodyguards(String leaderDatasheetId);
 
+  /// Whether any leader in this catalogue may attach to [datasheetId].
+  ///
+  /// The reverse of [eligibleBodyguards], and the question the *unit's* side
+  /// of the screen asks. Without it the editor offered a `LED BY` heading on
+  /// every unit that is not itself a character — Paragon Warsuits, a Rhino —
+  /// and then said no character may lead it, which is a section that exists
+  /// to report its own emptiness.
+  bool canBeLed(String datasheetId);
+
   /// Resolves a roster wargear item to the weapon record **that unit** uses.
   ///
   /// Weapons are per-carrier: `missile-pod` is BS4+ on a Crisis suit while
@@ -137,6 +146,13 @@ class MapCatalogue implements Catalogue {
   @override
   List<String> eligibleBodyguards(String leaderDatasheetId) =>
       _attachments[leaderDatasheetId] ?? const [];
+
+  late final Set<String> _leadable = {
+    for (final bodyguards in _attachments.values) ...bodyguards,
+  };
+
+  @override
+  bool canBeLed(String datasheetId) => _leadable.contains(datasheetId);
 
   @override
   SourceWeapon? weaponFor(SourceUnit unit, String itemId) {
