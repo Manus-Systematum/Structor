@@ -628,6 +628,10 @@ Stored in a `Settings` table in the app database — a table rather than a new f
 
 **A detachment says which force dispositions it brings**, in the picker and on the army page. The disposition decides which mission is played (§7.3.1), so it is half of what choosing a detachment buys, and it lived only in the pre-game wizard — two screens and a decision too late.
 
+**Back saves; the button beside it undoes everything.** Edits are written as they are made, so leaving already kept them — which made `Save` a button that did what had happened anyway, and the undo arrow beside it read as a second back button. What was missing was the opposite: putting the army back as it was, which is what a person wants after an experiment. `Revert changes` does that, disabled until something has changed, and it asks first — it throws away every edit since the screen opened, including ones already written, and nothing else brings them back.
+
+The same question is now asked before **removing a unit**. A unit is a loadout, an attachment and an enhancement chosen one at a time, and the button sits beside `Duplicate` where a mis-tap costs all of it. Deleting an army already asked; this was the other end of the same action and did not.
+
 ### 4.5.1 The one place the builder does refuse
 
 §2.3 settled that the builder is permissive and the validator honest, and that

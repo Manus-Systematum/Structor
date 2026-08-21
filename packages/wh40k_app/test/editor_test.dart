@@ -112,8 +112,18 @@ void main() {
     expect(find.text('No units yet. Add one to get started.'), findsOneWidget);
   });
 
-  testWidgets('undo puts the army back', (tester) async {
+  testWidgets('reverting puts the army back, and asks first', (tester) async {
+    // Edits are written as they are made, so leaving the screen already keeps
+    // them and `Save` did what had happened anyway — while the undo arrow
+    // beside it read as a second back button. What was missing is the
+    // opposite: putting the army back as it was, which is what you want after
+    // an experiment. It throws away work nothing else can recover, so it asks.
     await open(tester, initial: tau());
+
+    // Nothing to revert to yet.
+    final before = tester
+        .widget<TextButton>(find.widgetWithText(TextButton, 'Revert changes'));
+    expect(before.onPressed, isNull);
 
     await tester.tap(find.text('Add unit'));
     await settle(tester);
@@ -123,7 +133,18 @@ void main() {
     await settle(tester);
     expect(find.text('Ghostkeel Battlesuit'), findsOneWidget);
 
-    await tester.tap(find.byIcon(Icons.undo));
+    await tester.tap(find.text('Revert changes'));
+    await settle(tester);
+    expect(find.text('Revert changes?'), findsOneWidget);
+
+    // Cancelling keeps the work.
+    await tester.tap(find.text('Keep editing'));
+    await settle(tester);
+    expect(find.text('Ghostkeel Battlesuit'), findsOneWidget);
+
+    await tester.tap(find.text('Revert changes'));
+    await settle(tester);
+    await tester.tap(find.widgetWithText(FilledButton, 'Revert'));
     await settle(tester);
     expect(find.text('No units yet. Add one to get started.'), findsOneWidget);
   });
@@ -154,7 +175,10 @@ void main() {
     await tester.tap(find.text('Riptide Battlesuit').last);
     await settle(tester);
 
-    await tester.tap(find.text('Save'));
+    // No Save button: the edit is already written. Leaving is what commits,
+    // so the test waits for the autosave rather than pressing anything.
+    expect(find.text('Save'), findsNothing);
+    await tester.pump(const Duration(seconds: 1));
     await settle(tester);
 
     final rows = await store.list();
@@ -236,7 +260,7 @@ void main() {
     expect(rows.single.unitCount, 1);
   });
 
-  testWidgets('autosave then Save leaves one army, not two', (tester) async {
+  testWidgets('autosave twice leaves one army, not two', (tester) async {
     // The trap in writing as you go: the explicit Save minted a fresh id and
     // the roster appeared twice. Opened with no `initial`, so there is no id
     // to start from and the autosave has to mint one — passing a rosterId
@@ -255,7 +279,8 @@ void main() {
     await settle(tester);
     expect(await store.list(), hasLength(1));
 
-    await tester.tap(find.text('Save'));
+    // Leaving writes once more; the pending autosave must not add a second.
+    await tester.pump(const Duration(seconds: 1));
     await settle(tester);
     expect(await store.list(), hasLength(1));
   });
@@ -273,10 +298,23 @@ void main() {
     await open(tester, initial: tau(name: 'Second company'));
 
     expect(find.text('Edit army'), findsWidgets);
-    await tester.tap(find.text('Save'));
+    // No Save button: the edit is already written, and leaving commits. An
+    // untouched draft is still not written at all, so this makes a real edit
+    // — the point is that the write reuses the id rather than adding a second
+    // copy of the army beside it.
+    expect(find.text('Save'), findsNothing);
+
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+    await tester.enterText(find.byType(SearchBar), 'ghostkeel');
+    await settle(tester);
+    await tester.tap(find.text('Ghostkeel Battlesuit').last);
+    await settle(tester);
+    await tester.pump(const Duration(seconds: 1));
     await settle(tester);
 
     final rows = await store.list();
+    expect(rows, hasLength(1));
     expect(rows.single.id, 'existing');
     expect(rows.single.name, 'Second company');
   });
@@ -298,7 +336,10 @@ void main() {
     await settle(tester);
 
     expect(find.text('Ghostkeel Battlesuit'), findsNWidgets(2));
-    expect(find.byIcon(Icons.undo), findsOneWidget);
+    // The duplicate is a change like any other, so it is revertible.
+    final revert = tester
+        .widget<TextButton>(find.widgetWithText(TextButton, 'Revert changes'));
+    expect(revert.onPressed, isNotNull);
   });
 
   testWidgets('the duplicate carries the loadout it was copied from',
@@ -442,5 +483,27 @@ void main() {
       final with_ = await namesIn(tester, sisters, showLegends: true);
       expect(with_.any((n) => n.contains('Crusaders')), isTrue);
     });
+  });
+  testWidgets('removing a unit asks first', (tester) async {
+    // A unit is a loadout, an attachment and an enhancement chosen one at a
+    // time, and Remove sits beside Duplicate where a mis-tap costs all of it.
+    await open(tester, initial: tau());
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+    await tester.enterText(find.byType(SearchBar), 'ghostkeel');
+    await settle(tester);
+    await tester.tap(find.text('Ghostkeel Battlesuit').last);
+    await settle(tester);
+
+    await tester.tap(find.text('Ghostkeel Battlesuit'));
+    await settle(tester);
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Remove'));
+    await settle(tester);
+
+    expect(find.text('Remove this unit?'), findsOneWidget);
+    await tester.tap(find.text('Cancel'));
+    await settle(tester);
+    expect(find.text('Ghostkeel Battlesuit'), findsWidgets,
+        reason: 'nothing removed before the answer');
   });
 }

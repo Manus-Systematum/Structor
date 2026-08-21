@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
@@ -50,7 +51,10 @@ class _EditorScreenState extends State<EditorScreen> {
   late Roster _roster =
       widget.initial ?? RosterEditor.blank(name: 'New army', factionId: '');
   String? _error;
-  bool _saving = false;
+
+  /// Set while an explicit write is in flight. Autosave does not touch it —
+  /// a background write must not grey out the screen.
+  final bool _saving = false;
   bool _dirty = false;
 
   /// Whether the Add unit sheet offers Legends datasheets. Read once on open;
@@ -165,39 +169,45 @@ class _EditorScreenState extends State<EditorScreen> {
     _scheduleAutosave();
   }
 
-  void _undo() {
-    if (_history.isEmpty) return;
-    setState(() {
-      _roster = _history.removeLast();
-      _dirty = true;
-    });
-    _scheduleAutosave();
+  /// The army as it was when this screen opened, or null for a new one.
+  late final Roster? _opened = widget.initial;
+
+  bool get _changedSinceOpen {
+    final opened = _opened;
+    if (opened == null) return false;
+    return jsonEncode(opened.toJson()) != jsonEncode(_roster.toJson());
   }
 
-  Future<void> _save() async {
-    final dataset = _dataset;
-    if (dataset == null) return;
-    // A pending autosave would otherwise land after this one and re-save a
-    // roster the screen has already finished with.
-    _autosave?.cancel();
-    setState(() => _saving = true);
-    try {
-      final builder = await widget.datasets.snapshotBuilder(_roster.factionId);
-      // The same id the autosave used, or this becomes a second copy of the
-      // army beside the one already written.
-      final id =
-          _id ??= 'r${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}';
-      final army = Army.fromSnapshot(_roster, builder.build(_roster), id: id);
-      await widget.store.save(army);
-      if (mounted) Navigator.of(context).pop(true);
-    } catch (error) {
-      if (mounted) {
-        setState(() {
-          _saving = false;
-          _error = 'Could not save: $error';
-        });
-      }
-    }
+  Future<void> _revert() async {
+    final opened = _opened;
+    if (opened == null) return;
+    final go = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Revert changes?'),
+        content: const Text(
+          'Puts the army back as it was when you opened it. Every change '
+          'since then is lost, including ones already saved.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Keep editing'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Revert'),
+          ),
+        ],
+      ),
+    );
+    if (go != true || !mounted) return;
+    setState(() {
+      _roster = opened;
+      _history.clear();
+      _dirty = true;
+    });
+    await _persist();
   }
 
   @override
@@ -205,25 +215,26 @@ class _EditorScreenState extends State<EditorScreen> {
     final dataset = _dataset;
     final error = _error;
 
-    // No discard prompt any more: edits are written as they are made, so
-    // leaving keeps them. Asking "discard changes?" about work that is
-    // already saved would be a lie, and the answer people give under time
-    // pressure is the one that loses the army.
+    // **Back saves, and the only other action is to undo everything.**
+    //
+    // Edits are written as they are made, so leaving already kept them and
+    // `Save` was a button that did what had happened anyway — while the undo
+    // arrow beside it looked like a second back button. What was missing is
+    // the opposite: a way to put the army back as it was, which is what a
+    // person wants after an experiment. It asks first, because it throws away
+    // every edit since the screen opened and nothing else brings them back.
     return PopScope(
       canPop: true,
-      onPopInvokedWithResult: (_, __) {},
+      onPopInvokedWithResult: (_, __) => unawaited(_persist()),
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.initial == null ? 'New army' : 'Edit army'),
           actions: [
-            IconButton(
-              tooltip: 'Undo',
-              onPressed: _history.isEmpty ? null : _undo,
-              icon: const Icon(Icons.undo),
-            ),
             TextButton(
-              onPressed: dataset == null || _saving ? null : _save,
-              child: Text(_saving ? 'Saving…' : 'Save'),
+              onPressed: dataset == null || _saving || !_changedSinceOpen
+                  ? null
+                  : _revert,
+              child: const Text('Revert changes'),
             ),
           ],
         ),
@@ -387,9 +398,32 @@ class _EditorScreenState extends State<EditorScreen> {
               // sheet is enough to bring the new counts across.
               redrawSheet(() {});
             },
-            onRemove: () {
+            onRemove: () async {
+              // Asked, like deleting an army is. A unit is a loadout, an
+              // attachment and an enhancement chosen one at a time, and the
+              // button sits beside Duplicate where a mis-tap costs all of it.
+              final go = await showDialog<bool>(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Remove this unit?'),
+                  content: const Text(
+                    'Its loadout, enhancement and attachment go with it.',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: const Text('Cancel'),
+                    ),
+                    FilledButton(
+                      onPressed: () => Navigator.of(context).pop(true),
+                      child: const Text('Remove'),
+                    ),
+                  ],
+                ),
+              );
+              if (go != true || !mounted) return;
               _edit((e) => e.removeUnit(_roster, editing));
-              Navigator.of(context).pop();
+              if (context.mounted) Navigator.of(context).pop();
             },
           );
         },
