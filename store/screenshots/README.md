@@ -58,11 +58,26 @@ xcrun simctl status_bar <udid> override --time "9:41" --dataNetwork wifi \
 No text overlays, no device frames, no marketing furniture — the same reason
 the rest of the copy is plain.
 
+## Taking the rest
+
+[capture.sh](capture.sh) does the whole ritual — status bar, native
+resolution, no scaling — and names the file by the size it actually got, so a
+wrong-sized image cannot reach App Store Connect by accident:
+
+```bash
+store/screenshots/capture.sh 02-editor
+```
+
+Navigate the simulator to the screen, run it, repeat. `DEVICE="iPad Pro
+13-inch (M5)"` switches devices for the iPad set. With no argument it prints
+the five shots and what each should show.
+
 ## Status
 
-`01-armies-6.9.png` is captured. It is also the weakest of the five: one row on
-an otherwise empty screen. **Lead with `02-editor` instead** when both exist.
+`01-armies-6.9.png` is captured, at 1320 x 2868 with the imported list. It is
+also the weakest of the five — one row on an otherwise empty screen. **Lead
+with `02-editor`** once it exists.
 
-The rest need taps on the 6.9-inch simulator, which needs its device-access
-grant in the simulator panel ("Let Claude use it"). The army is already in place
-on that device, so it is five screens of navigation once granted.
+The other four need the simulator driven by hand or by an agent with device
+access. The 995-point list is already on the iPhone 17 Pro Max, so it is five
+screens of navigation, not another import.
