@@ -1,0 +1,50 @@
+Structor is an offline companion app for a tabletop miniatures wargame. It
+does two things: it builds army lists and checks them against the game's
+list-building rules, and it acts as a reference during a game, showing the
+mission, the abilities available in each phase, victory points and unit
+statlines.
+
+NO SIGN-IN IS NEEDED. The app opens on an empty army list. Tapping "Build"
+starts a list; "Import" accepts a plain-text army list pasted into a field.
+There is no account, no server and no paid content.
+
+NO DATA IS COLLECTED. The app has no analytics, no advertising and no crash
+reporting, and it makes no network requests at all — its rules data is
+compiled into the binary. Everything a user enters is stored in a local
+database on the device. The privacy policy is at
+https://structor.systematum.net/privacy.html
+
+THIRD-PARTY CONTENT AND ATTRIBUTION
+
+The rules data comes from community-maintained open data projects, and the app
+credits each of them on its About screen, reachable from the (i) button on the
+first screen:
+
+- 40kdc-data (https://40kdc.alpacasoft.dev), licensed CC BY 4.0 (c) Alpaca
+  Software and the 40kdc community contributors, schemas CC0. The licence
+  requires the credit "Powered by 40kdc-data", a link, and a statement that
+  changes were made; all three are on the About screen, and an automated test
+  in the project asserts the phrase verbatim so it cannot be removed by
+  accident.
+- Wahapedia (https://wahapedia.ru/wh40k11ed/), whose published data export
+  supplies the text of the game's command abilities. Its export asks to be
+  credited as "Powered by Wahapedia", and that credit is on the same screen.
+- BSData (https://github.com/BSData/wh40k-11e) for datasheet and ability text,
+  and gdmissions.app for mission card text, both credited there as well.
+- The stratagem card generator by pguetschow, MIT licensed, for the eleven
+  core command abilities transcribed from the game publisher's own freely
+  published core rules.
+
+The app's own source code is MIT licensed and public at
+https://github.com/Manus-Systematum/Structor
+
+UNOFFICIAL AND UNAFFILIATED
+
+Warhammer 40,000 and all associated names, marks and imagery are (c) Games
+Workshop Limited. Structor is unofficial and is neither endorsed by nor
+affiliated with Games Workshop. The app does not use their logos, artwork or
+branding, does not claim any association, and carries this statement on its
+About screen. The app name and subtitle contain no third-party trademark; the
+game is named in the description only to say factually what the app is for.
+
+The app is free, contains no in-app purchases and carries no advertising.
