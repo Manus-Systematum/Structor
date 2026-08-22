@@ -71,9 +71,3 @@ the screen is what should change.
 
 Warhammer 40,000 and all associated names, marks and imagery are © Games
 Workshop Limited. This project is unofficial and unaffiliated.
-
-**What is bundled, stated accurately.** Earlier versions of this file said no
-Games Workshop rules text was bundled. That stopped being true at §3.12, which
-added the printed stratagem wording by way of Wahapedia's export. Ability and
-mission descriptions are still the data projects' own summaries rather than
-GW's wording.

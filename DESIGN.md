@@ -27,11 +27,12 @@ under CC BY 4.0, Wahapedia's export, BSData under no licence at all — and none
 of them are ours to relicense. README's licence table states each one; the
 About screen names them in the app.
 
-Two stale compliance statements were corrected at the same time, both saying
-"no Games Workshop rules text is distributed with it": one in README, one in
-the About screen. Both were true when written and both stopped being true at
-§3.12, which bundled the printed stratagem wording. A compliance statement
-that has quietly gone false is worse than none.
+Two stale compliance statements were removed at the same time, one in README
+and one on the About screen. Both asserted something that had stopped being
+true, and a compliance statement that has quietly gone false is worse than
+none. Neither was replaced with a corrected version: what the app ships is
+described where it belongs, in §3.12 and in the source credits, not as a claim
+on the front page.
 
 ### Constraint: rules data and copyright
 
