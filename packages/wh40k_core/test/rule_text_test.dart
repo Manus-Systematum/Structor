@@ -2,6 +2,8 @@ import 'package:test/test.dart';
 import 'package:wh40k_core/src/source/bsdata/bs_slug.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import 'support.dart';
+
 void main() {
   group('normalising BattleScribe markup', () {
     test('small caps and bold both mean keyword, so they become one thing', () {
@@ -306,5 +308,33 @@ void main() {
       if (renderer.render(a).phases.isNotEmpty) derivedSomewhere++;
     }
     expect(derivedSomewhere, greaterThan(0));
+  });
+  test('a rule is not filed under every phase just because it is unknown', () {
+    // `phase-mappings.json` is community-authored and lists all five phases
+    // where it has no answer, which the turn page honours literally — so
+    // `Righteous Repugnance` appeared in the Charge section of a list with
+    // Morvenn Vahl in it. Reported by the app's user.
+    //
+    // **All five is sometimes a real claim**, which is why the pattern is
+    // corrected case by case rather than ignored: 183 mappings do it and 37
+    // of them are right.
+    final loader = correctedLoader();
+    if (!loader.root.existsSync()) return;
+
+    List<String> phasesOf(String faction, String id) => loader
+        .loadFaction(faction)
+        .phaseMappings
+        .firstWhere((m) => m.sourceId == id)
+        .phases;
+
+    // Its own text: "selected to shoot or fight".
+    expect(phasesOf('adepta-sororitas', 'righteous-repugnance'),
+        unorderedEquals(['shooting', 'fight']));
+    expect(phasesOf('drukhari', 'crucible-of-malediction'), ['shooting']);
+    expect(phasesOf('world-eaters', 'idols-of-khorne'), ['command']);
+
+    // …and one that really does apply in every phase is untouched:
+    // "Once per battle, at the start of any phase".
+    expect(phasesOf('chaos-daemons', 'unholy-vigour'), hasLength(5));
   });
 }

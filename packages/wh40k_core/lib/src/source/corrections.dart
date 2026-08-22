@@ -215,6 +215,35 @@ class EnhancementCorrection implements Correction {
   String get subject => enhancementId;
 }
 
+/// The phases a rule is actually used in.
+///
+/// `phase-mappings.json` is community-authored, and where it does not know it
+/// files a rule under **all five phases** — which the turn page then honours,
+/// putting `Righteous Repugnance` in the Charge section of a list that has
+/// Morvenn Vahl in it. All five is sometimes a real claim (`Unholy Vigour` is
+/// "at the start of any phase"), so the mapping cannot be blanket-ignored;
+/// these are the ones whose printed text names the phases outright.
+class PhaseMappingCorrection implements Correction {
+  @override
+  final String faction;
+  final String abilityId;
+  @override
+  final String reason;
+  final String? upstream;
+  final List<String> phases;
+
+  const PhaseMappingCorrection({
+    required this.faction,
+    required this.abilityId,
+    required this.reason,
+    required this.phases,
+    this.upstream,
+  });
+
+  @override
+  String get subject => abilityId;
+}
+
 class AliasCorrection implements Correction {
   @override
   final String faction;
@@ -263,6 +292,7 @@ class DataCorrections {
   final List<UnitCorrection> units;
   final List<WeaponCorrection> weapons;
   final List<EnhancementCorrection> enhancements;
+  final List<PhaseMappingCorrection> phaseMappings;
   final List<AliasCorrection> aliases;
 
   const DataCorrections({
@@ -270,6 +300,7 @@ class DataCorrections {
     this.units = const [],
     this.weapons = const [],
     this.enhancements = const [],
+    this.phaseMappings = const [],
     this.aliases = const [],
   });
 
@@ -280,6 +311,7 @@ class DataCorrections {
       units.isEmpty &&
       weapons.isEmpty &&
       enhancements.isEmpty &&
+      phaseMappings.isEmpty &&
       aliases.isEmpty;
 
   static const _anyFaction = '*';
@@ -571,6 +603,50 @@ class DataCorrections {
     );
   }
 
+  /// Replaces the phases a mapping files an ability under.
+  CorrectionResult applyToPhaseMappings(
+      String factionId, List<Object?> records) {
+    final byId = {
+      for (final c in phaseMappings)
+        if (c.faction == factionId) c.abilityId: c,
+    };
+    if (byId.isEmpty) {
+      return CorrectionResult(
+          records: records, applied: const [], unmatched: const []);
+    }
+
+    final applied = <Correction>[];
+    final out = <Object?>[];
+    for (final record in records) {
+      if (record is! Map) {
+        out.add(record);
+        continue;
+      }
+      final correction = byId[record['source_id']?.toString()];
+      if (correction == null) {
+        out.add(record);
+        continue;
+      }
+      applied.add(correction);
+      out.add({
+        for (final e in record.entries) e.key.toString(): e.value,
+        'phases': correction.phases,
+        'corrected': {
+          'reason': correction.reason,
+          if (correction.upstream != null) 'upstream': correction.upstream,
+        },
+      });
+    }
+    return CorrectionResult(
+      records: out,
+      applied: applied,
+      unmatched: [
+        for (final c in byId.values)
+          if (!applied.contains(c)) c,
+      ],
+    );
+  }
+
   CorrectionResult applyToAbilities(
     String factionId,
     List<Object?> records,
@@ -759,6 +835,26 @@ class DataCorrections {
       }
     }
 
+    final phaseMappings = <PhaseMappingCorrection>[];
+    final rawPhases = root['phase_mappings'];
+    if (rawPhases is List) {
+      for (final node in rawPhases) {
+        if (node is! Map) continue;
+        final reason = node['reason']?.toString().trim() ?? '';
+        final phases = [
+          for (final item in asList(_plain(node['phases']))) '$item',
+        ];
+        if (reason.isEmpty || phases.isEmpty) continue;
+        phaseMappings.add(PhaseMappingCorrection(
+          faction: node['faction']?.toString() ?? '',
+          abilityId: node['id']?.toString() ?? '',
+          reason: reason,
+          upstream: node['upstream']?.toString(),
+          phases: phases,
+        ));
+      }
+    }
+
     final aliases = <AliasCorrection>[];
     final rawAliases = root['aliases'];
     if (rawAliases is List) {
@@ -784,6 +880,7 @@ class DataCorrections {
       units: units,
       weapons: weapons,
       enhancements: enhancements,
+      phaseMappings: phaseMappings,
       aliases: aliases,
     );
   }

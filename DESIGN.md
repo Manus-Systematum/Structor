@@ -1334,6 +1334,21 @@ precisely where it was needed and was ignored precisely there.
 `published`, **unioned** with the derived phases rather than replacing them —
 where the effect does name a phase that is the more specific statement.
 
+**And the mapping is sometimes wrong in the other direction.** Honouring it
+put `Righteous Repugnance` in the Charge section, because the file lists it
+under all five phases while its printed rule says "selected to shoot or
+fight". 183 of the 3,745 mappings name all five, and the shape of the
+distribution says why: 174 mappings name three phases, 27 name four, and then
+183 name five. That spike after the trough is a placeholder, not a claim.
+
+It cannot be ignored wholesale, though — **37 of the 183 are right**.
+`Unholy Vigour` really is "at the start of any phase" and `Grotesque
+Regeneration` "at the end of each phase". So `data-corrections.yaml` gained a
+`phase_mappings:` section and 22 entries, each quoting the printed text that
+settles it. Two more were left alone: `legacy-of-the-angel` and
+`murderous-agenda` both read "at the start of the first battle round", which
+is not a phase claim their text can answer.
+
 **The snapshot carries them too**, and has to: play mode reads only the
 snapshot (§2.2), so a mapping that lived on the faction dataset would have
 fixed the reference screen and left the turn page exactly as broken. An older

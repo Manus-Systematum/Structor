@@ -320,6 +320,175 @@ units:
 # cannot express it either — the Unmasking Suite goes on Pathfinders *or*
 # Stealth Battlesuits, and restrictions are all required at once — so these
 # name the datasheets.
+# Rules filed under every phase because the mapping did not know.
+#
+# `phase-mappings.json` is community-authored, and where it has no answer it
+# lists all five phases — which the turn page honours literally, so a rule
+# appears in every section instead of the one or two it belongs to. 183 of the
+# 3,745 mappings do this, and it is **not** always wrong: `Unholy Vigour` is
+# genuinely "at the start of any phase" and `Grotesque Regeneration` "at the
+# end of each phase". So the pattern cannot be ignored wholesale; these are
+# the ones whose own printed text names the phases outright.
+#
+# Two more were left alone deliberately. `legacy-of-the-angel` and
+# `murderous-agenda` both read "at the start of the first battle round", which
+# is not a phase claim their text can settle.
+phase_mappings:
+  - faction: adepta-sororitas
+    id: righteous-repugnance
+    reason: >
+      "Each time this model’s unit is selected to shoot or fight." Reported by the app’s user, who saw it in the Charge section.
+    upstream: not yet reported
+    phases: [shooting, fight]
+
+  - faction: adepta-sororitas
+    id: rapturous-blows
+    reason: >
+      "selected to fight".
+    upstream: not yet reported
+    phases: [fight]
+
+  - faction: adepta-sororitas
+    id: righteous-rage
+    reason: >
+      "Each time the bearer is selected to fight".
+    upstream: not yet reported
+    phases: [fight]
+
+  - faction: adepta-sororitas
+    id: simulacrum-imperialis
+    reason: >
+      "At the end of your Command phase".
+    upstream: not yet reported
+    phases: [command]
+
+  - faction: adepta-sororitas
+    id: sacred-healing
+    reason: >
+      "in your Command phase".
+    upstream: not yet reported
+    phases: [command]
+
+  - faction: adepta-sororitas
+    id: fiery-conviction
+    reason: >
+      "at the start of your Command phase".
+    upstream: not yet reported
+    phases: [command]
+
+  - faction: adepta-sororitas
+    id: chaplet-of-sacrifice
+    reason: >
+      "At the end of your Command phase".
+    upstream: not yet reported
+    phases: [command]
+
+  - faction: adepta-sororitas
+    id: manual-of-saint-griselda
+    reason: >
+      "At the start of your Command phase".
+    upstream: not yet reported
+    phases: [command]
+
+  - faction: adepta-sororitas
+    id: litanies-of-faith
+    reason: >
+      "At the start of your Command phase".
+    upstream: not yet reported
+    phases: [command]
+
+  - faction: adepta-sororitas
+    id: divine-aspect
+    reason: >
+      "In your Movement phase".
+    upstream: not yet reported
+    phases: [movement]
+
+  - faction: chaos-space-marines
+    id: dark-ritual
+    reason: >
+      "Once per battle, in your Command phase".
+    upstream: not yet reported
+    phases: [command]
+
+  - faction: drukhari
+    id: rapid-deployment
+    reason: >
+      Disembarking after an Advance, which is a Movement phase act; the charge it forbids is a restriction rather than a second phase.
+    upstream: not yet reported
+    phases: [movement]
+
+  - faction: drukhari
+    id: pain-adept
+    reason: >
+      "In your Command phase".
+    upstream: not yet reported
+    phases: [command]
+
+  - faction: drukhari
+    id: sadistic-fulcrum
+    reason: >
+      "to Empower the bearer’s unit in the Shooting phase".
+    upstream: not yet reported
+    phases: [shooting]
+
+  - faction: drukhari
+    id: labyrinthine-cunning
+    reason: >
+      "At the start of your Command phase".
+    upstream: not yet reported
+    phases: [command]
+
+  - faction: drukhari
+    id: spiteful-raider
+    reason: >
+      "destroys an enemy unit in the Fight phase".
+    upstream: not yet reported
+    phases: [fight]
+
+  - faction: drukhari
+    id: eye-of-spite
+    reason: >
+      "Each time the bearer’s unit is selected to fight".
+    upstream: not yet reported
+    phases: [fight]
+
+  - faction: drukhari
+    id: crucible-of-malediction
+    reason: >
+      "Once per battle, in your Shooting phase".
+    upstream: not yet reported
+    phases: [shooting]
+
+  - faction: drukhari
+    id: conductor-of-torment
+    reason: >
+      "In your Command phase".
+    upstream: not yet reported
+    phases: [command]
+
+  - faction: drukhari
+    id: leechbite-plate
+    reason: >
+      "At the start of either player’s Command phase".
+    upstream: not yet reported
+    phases: [command]
+
+  - faction: thousand-sons
+    id: aetherstride-psychic
+    reason: >
+      "In your Movement phase".
+    upstream: not yet reported
+    phases: [movement]
+
+  - faction: world-eaters
+    id: idols-of-khorne
+    reason: >
+      "At the start of your Command phase".
+    upstream: not yet reported
+    phases: [command]
+
+
 enhancements:
   - faction: tau-empire
     id: negation-emitters-upgrade-advanced-acquisition-cadre

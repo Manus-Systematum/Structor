@@ -307,7 +307,15 @@ class DatasetLoader {
           .records
           .map(SourceAbility.fromJson)
           .toList(growable: false),
-      phaseMappings: sheets('enrichment', 'phase-mappings.json')
+      // Corrected on the way in. The file is community-authored and files a
+      // rule under all five phases where it does not know, which the turn
+      // page then honours literally (§7.3.9).
+      phaseMappings: corrections
+          .applyToPhaseMappings(
+            sheetOwner,
+            sheets('enrichment', 'phase-mappings.json'),
+          )
+          .records
           .map(PhaseMapping.fromJson)
           .toList(growable: false),
       leaderAttachments: sheets('core', 'leader-attachments.json')
