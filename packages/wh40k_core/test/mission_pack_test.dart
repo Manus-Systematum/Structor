@@ -62,7 +62,8 @@ void main() {
         expect(mirror, isNotNull, reason: disposition.id);
       }
       expect(
-        pack.missionFor(
+        pack
+            .missionFor(
                 disposition: 'reconnaissance',
                 opponentDisposition: 'reconnaissance')
             ?.name,
@@ -197,8 +198,7 @@ void main() {
       // What the scoring panel shows beside the stepper. A mission whose card
       // is missing would leave the player entering VP for a rule the app
       // declined to state.
-      final primaries =
-          pack.cards.values.where((c) => c.isPrimary).toList();
+      final primaries = pack.cards.values.where((c) => c.isPrimary).toList();
       expect(primaries, hasLength(25));
       expect(primaries.every((c) => c.text.isNotEmpty), isTrue);
     }, skip: available ? null : 'no snapshot');
@@ -322,5 +322,77 @@ void main() {
             reason: '${card.id}: unbalanced emphasis');
       }
     });
+  });
+  group('the action section', () {
+    // The front of a card names the action and stops: Secure Asset reads
+    // "A friendly unit **secured the asset** this turn (see reverse)". The
+    // reverse was nowhere in the app, and no source publishes its printed
+    // wording — gdmissions' payload does not carry it either. So the section
+    // is composed from 40kdc's structure at merge time (§3.13).
+    MissionCard card(String id) => pack.cards[id]!;
+
+    String actionPart(MissionCard c) {
+      final at = c.text.indexOf('ACTION ·');
+      return at < 0 ? '' : c.text.substring(at);
+    }
+
+    test('names the action and what it is performed on', () {
+      final text = actionPart(card('secure-asset'));
+      expect(text, contains('ACTION · Secure Asset: Objective Action'));
+      expect(text, contains('When: your Shooting phase, once per turn.'));
+      expect(
+        text,
+        contains('excluding your **home objective**'),
+        reason: 'the target filter is the difference between a legal '
+            'action and an illegal one',
+      );
+    }, skip: available ? null : 'no snapshot');
+
+    test('every card that has an action shows one', () {
+      final withActions =
+          pack.cards.values.where((c) => c.requiresAction).toList();
+      expect(withActions, hasLength(15));
+      for (final c in withActions) {
+        expect(actionPart(c), isNotEmpty, reason: '${c.id} has no section');
+      }
+    }, skip: available ? null : 'no snapshot');
+
+    test('a card without actions gains nothing', () {
+      expect(card('immovable-object').text, isNot(contains('ACTION ·')));
+    }, skip: available ? null : 'no snapshot');
+
+    // The composer maps a closed vocabulary and renders nothing for a value
+    // it does not know, which is the failure mode that produced this bug in
+    // the first place. If upstream adds a value, this fails rather than
+    // dropping it silently.
+    test('the structure uses no vocabulary the composer cannot render', () {
+      final starts = <String>{};
+      final timings = <String>{};
+      final targets = <String>{};
+      final effects = <String>{};
+      final restrictions = <String>{};
+      for (final c in pack.cards.values) {
+        for (final raw in c.actions) {
+          final action = raw as Map<String, dynamic>;
+          if (action['starts'] case final String v) starts.add(v);
+          if (action['timing'] case final String v) timings.add(v);
+          if (action['effect'] case final Map<String, dynamic> e) {
+            effects.add(e['type'] as String);
+          }
+          if (action['restrictions'] case final Map<String, dynamic> r) {
+            restrictions.add(r['type'] as String);
+          }
+          if (action['completes'] case final Map<String, dynamic> done) {
+            final params = done['parameters'] as Map<String, dynamic>;
+            if (params['target_kind'] case final String v) targets.add(v);
+          }
+        }
+      }
+      expect(starts, {'shooting'});
+      expect(timings, {'start-of-turn', 'end-of-turn', 'start-of-battle'});
+      expect(targets, {'objective', 'terrain', 'enemy-unit'});
+      expect(effects, {'unit-tag', 'objective-tag', 'terrain-area-tag'});
+      expect(restrictions, {'operation-markers'});
+    }, skip: available ? null : 'no snapshot');
   });
 }

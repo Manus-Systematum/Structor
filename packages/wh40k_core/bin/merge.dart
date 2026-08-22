@@ -553,19 +553,158 @@ int _applyMissionText() {
   final updated = [
     for (final raw in records)
       if (asMap(raw) case final record)
-        if (byId[strOr(record['id'], '')] case final card?)
-          () {
-            final text = _cardText(card);
-            if (text.isEmpty) return record;
-            written++;
-            return {...record, 'text': text};
-          }()
-        else
-          record,
+        () {
+          final card = byId[strOr(record['id'], '')];
+          final front = card == null ? '' : _cardText(card);
+          final action = _actionText(record);
+          final text = [
+            if (front.isNotEmpty) front else strOr(record['text'], ''),
+            if (action.isNotEmpty) action,
+          ].where((part) => part.isNotEmpty).join('\n');
+          if (text.isEmpty || text == strOr(record['text'], '')) return record;
+          written++;
+          return {...record, 'text': text};
+        }(),
   ];
   if (written > 0) _write(path, updated);
   return written;
 }
+
+/// The card's actions, rendered as the section the printed card puts on its
+/// reverse.
+///
+/// **The front of the card does not contain them.** Secure Asset's own line is
+/// "A friendly unit **secured the asset** this turn (see reverse)", and until
+/// this existed the reverse was nowhere in the app — neither gdmissions nor
+/// 40kdc publishes the printed wording, and gdmissions' payload does not carry
+/// it at all (checked, not assumed).
+///
+/// So the section is **composed from 40kdc's structure**, which is complete
+/// enough to say what the action is, when it can be started, how often, and
+/// what it is performed on. It is deliberately thinner than the printed card:
+/// 40kdc's own prose knows two things its structure does not — that most of
+/// these complete only if the unit still controls the objective, and that Booby
+/// Trap completes immediately — and neither is derivable here. §3.13.
+String _actionText(Map<String, dynamic> record) {
+  final lines = <String>[];
+  for (final raw in asList(record['actions'])) {
+    final action = asMap(raw);
+    final name = _titleCase(strOr(action['action_id'], ''));
+    if (name.isEmpty) continue;
+
+    final completes = asMap(asMap(action['completes'])['parameters']);
+    final kind = str(completes['target_kind']);
+    // Only the objective form is confirmed against a printed card — the user
+    // reported this feature as "Secure Asset: Objective Action". The others
+    // are left unqualified rather than given a label by analogy.
+    final label = kind == 'objective' ? '$name: Objective Action' : name;
+    lines.add('ACTION · $label');
+
+    // Labelled lines, because the rest of the card reads that way — "4 VP:
+    // You control three or more objectives" — and an action is the same kind
+    // of thing: a condition with a payout attached elsewhere.
+    final when = <String>[];
+    if (str(action['starts']) case final phase? when phase.isNotEmpty) {
+      when.add('your ${_titleCase(phase)} phase');
+    } else if (str(action['timing']) case final timing?
+        when timing.isNotEmpty) {
+      when.add(_timing(timing));
+    }
+    final round = asInt(asMap(action['battle_round'])['min']);
+    if (round != null) when.add('from battle round $round');
+    final limit = _limit(action);
+    if (limit.isNotEmpty) when.add(limit);
+    if (when.isNotEmpty) lines.add('When: ${when.join(', ')}.');
+
+    final who = _performer(asMap(action['units']));
+    if (who.isNotEmpty) lines.add('Who: $who.');
+
+    if (kind != null) {
+      lines.add('Completes: on '
+          '${_target(kind, asMap(completes['target_filter']))}, this turn.');
+    }
+
+    // Both occurrences are Sensor Sweep, and 40kdc's own prose for those two
+    // cards says what the shape means: "cannot start while only one operation
+    // marker remains on the battlefield". Any other shape is left unrendered
+    // rather than guessed at; a test asserts none exists.
+    final restrictions = asMap(action['restrictions']);
+    if (strOr(restrictions['type'], '') == 'operation-markers') {
+      lines.add('Limit: cannot be started while only one of your '
+          '**operation markers** remains on the battlefield.');
+    }
+
+    final effect = _effect(asMap(action['effect']));
+    if (effect.isNotEmpty) lines.add(effect);
+  }
+  return lines.join('\n');
+}
+
+String _limit(Map<String, dynamic> action) {
+  final limit = asInt(action['use_limit']);
+  if (limit == null) return '';
+  final perGame = strOr(action['use_limit_scope'], '') == 'per-game';
+  final scope = perGame ? 'per battle' : 'per turn';
+  return limit == 1 ? 'once $scope' : 'up to $limit times $scope';
+}
+
+String _timing(String timing) => switch (timing) {
+      'start-of-turn' => 'the start of your turn',
+      'end-of-turn' => 'the end of your turn',
+      'start-of-battle' => 'the start of the battle',
+      _ => timing.replaceAll('-', ' '),
+    };
+
+String _performer(Map<String, dynamic> units) {
+  if (strOr(units['type'], '') != 'within-range-of-objective') return '';
+  final role = str(asMap(units['parameters'])['objective_role']);
+  return role == null
+      ? 'a unit within range of an **objective**'
+      : 'a unit within range of a **$role objective**';
+}
+
+String _target(String kind, Map<String, dynamic> filter) {
+  final noun = switch (kind) {
+    'objective' => 'one or more **objectives**',
+    'terrain' => 'one or more **terrain areas**',
+    'enemy-unit' => 'one or more enemy units',
+    _ => kind.replaceAll('-', ' '),
+  };
+  final role = str(filter['objective_role']);
+  final qualifier = strOr(filter['exclude'], '') == 'home'
+      ? ', excluding your **home objective**'
+      : role != null
+          ? ' (**$role** only)'
+          : filter['in_enemy_territory'] == true
+              ? " in your opponent's territory"
+              : '';
+  return '$noun$qualifier';
+}
+
+String _effect(Map<String, dynamic> effect) {
+  final subject = switch (strOr(effect['type'], '')) {
+    'unit-tag' => 'the unit',
+    'objective-tag' => 'that **objective**',
+    'terrain-area-tag' => 'that **terrain area**',
+    _ => '',
+  };
+  if (subject.isEmpty) return '';
+  final modifier = asMap(effect['modifier']);
+  final tag = strOr(modifier['tag'], '');
+  if (tag.isEmpty) return '';
+  final until = switch (strOr(modifier['clears_on'], '')) {
+    'never' => ' for the rest of the battle',
+    'turn-rollover' => ' until the start of your next turn',
+    _ => '',
+  };
+  return 'Effect: marks $subject as **$tag**$until.';
+}
+
+String _titleCase(String slug) => slug
+    .split(RegExp(r'[-_\s]+'))
+    .where((word) => word.isNotEmpty)
+    .map((word) => word[0].toUpperCase() + word.substring(1))
+    .join(' ');
 
 /// One card's sections, rendered as the lines a player reads.
 ///

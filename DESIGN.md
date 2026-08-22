@@ -2036,6 +2036,55 @@ until its units are re-added. That is the same property that let a roster
 built against 40kdc survive the source swap at all.
 
 
+### 3.13 The action section — the reverse of the card
+
+Secure Asset's front reads *"4 VP: A friendly unit **secured the asset** this
+turn (see reverse)"*, and the reverse was nowhere in the app. Thirteen of the
+25 primaries and two secondaries have an action, and every one of them had the
+same hole: the card names an action, awards VP for completing it, and never
+says what it is.
+
+**No source publishes the printed wording.** 40kdc carries the action as
+structure only; gdmissions' card object stops at "(see reverse)", and its page
+payload does not contain the text either — checked directly rather than
+assumed, by fetching the Secure Asset page and searching the flight stream for
+`ACTION`, `Objective Action` and `action`. All absent.
+
+So the section is **composed from 40kdc's structure** at merge time, in the
+labelled style the rest of the card already uses:
+
+```
+ACTION · Secure Asset: Objective Action
+When: your Shooting phase, once per turn.
+Completes: on one or more **objectives**, excluding your **home objective**, this turn.
+```
+
+**"Objective Action" is applied only where it is confirmed.** The user reported
+the gap in exactly those words, and the label is attached when the action's
+target is an objective. Booby Trap targets terrain and Condemn targets an enemy
+unit; both are left as plain `ACTION · Name` rather than given a label by
+analogy, since no source says what a terrain action is called.
+
+**It is deliberately thinner than the printed card, and here is what is
+missing.** 40kdc's own prose paraphrase — which §3.11 replaced wholesale, and
+which is where this gap came from — knows two things its structure does not:
+that most of these complete only *if the unit still controls the objective*,
+and that Booby Trap *completes immediately* rather than at end of turn. Neither
+is derivable from the structured data, so neither is stated. The composer says
+what the data says.
+
+Two readings are borrowed from that prose rather than invented: the
+`operation-markers` restriction renders as "cannot be started while only one of
+your operation markers remains", which is how 40kdc describes the same shape on
+the same two cards, and `clears_on: turn-rollover` renders as "until the start
+of your next turn", which is its wording for Punishment's mark.
+
+**The vocabulary is closed and a test pins it.** `starts`, `timing`,
+`target_kind`, `effect.type` and `restrictions.type` each have a known set of
+values, and `mission_pack_test` asserts those sets exactly. Rendering nothing
+for an unrecognised value is what produced this bug in the first place; if
+upstream adds one, the test fails rather than the app quietly dropping it.
+
 ### 3.12 Stratagem text — Wahapedia and the card-generator repo
 
 A stratagem was a name, a cost and a phase. That is enough to *find* one and
