@@ -188,12 +188,22 @@ class _AboutScreenState extends State<AboutScreen> {
             'rules dispute, use the card or the book.',
           ),
 
+          const _Heading('Licence'),
+          const _Body(
+            'Structor’s own code is MIT licensed. The data it shows is not: '
+            'each source above keeps the terms named with it.',
+          ),
+
           const _Heading('Trademarks'),
+          // This paragraph used to end "No Games Workshop rules text is
+          // distributed with it." That was true when it was written and
+          // stopped being true at DESIGN.md §3.12, which bundled the printed
+          // stratagem wording by way of Wahapedia's export. A compliance
+          // statement that has quietly gone false is worse than none.
           const _Body(
             'Warhammer 40,000 and all associated names, marks and imagery are '
             '© Games Workshop Limited. This app is unofficial and is neither '
-            'endorsed by nor affiliated with Games Workshop. No Games '
-            'Workshop rules text is distributed with it.',
+            'endorsed by nor affiliated with Games Workshop.',
           ),
 
           const _Heading('Privacy'),

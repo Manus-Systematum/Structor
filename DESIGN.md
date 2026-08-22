@@ -15,6 +15,24 @@ A cross-platform (iOS/Android) companion app for Warhammer 40,000 11th edition, 
 2. **Play mode** — swappable screens: a mission/setup screen (customisable for new missions and house rules), plus in-game reference screens for unit and weapon stats, army rules, and stratagems.
 3. **Sharing server** — a backend with its own web interface for sharing armies. Deliberately deferred.
 
+### Licence: MIT for the code, their own terms for the data
+
+Added 2026-08-23, at the user's decision. `LICENSE` is MIT, matching the other
+manus systematum repositories; the copyright line names *manus systematum*,
+a distribution name rather than a legal person.
+
+**MIT covers this repository's code and nothing else.** Every rules fact the
+app shows arrives from a community project that keeps its own terms — 40kdc
+under CC BY 4.0, Wahapedia's export, BSData under no licence at all — and none
+of them are ours to relicense. README's licence table states each one; the
+About screen names them in the app.
+
+Two stale compliance statements were corrected at the same time, both saying
+"no Games Workshop rules text is distributed with it": one in README, one in
+the About screen. Both were true when written and both stopped being true at
+§3.12, which bundled the printed stratagem wording. A compliance statement
+that has quietly gone false is worse than none.
+
 ### Constraint: rules data and copyright
 
 Games Workshop's rules text is copyrighted. The app therefore ships with **no bundled rules data** and fetches community-maintained catalogues at runtime — the same path BattleScribe and New Recruit took. A downloadable, versioned, replaceable content bundle is a day-one architectural requirement, not a later feature.

@@ -48,12 +48,32 @@ accepted, even when the version before it is unchanged.
 The app's About screen carries the attribution the data licence requires, and
 a test asserts it verbatim. Do not remove it.
 
-## Data and attribution
+## Licence
 
-Rules data comes from [40kdc-data](https://github.com/wn-mitch/40kdc-data),
-CC BY 4.0 © Alpaca Software and the 40kdc community contributors. Schemas are
-CC0. Any public deployment must display "Powered by 40kdc-data" with a link to
-<https://40kdc.alpacasoft.dev> — see DESIGN.md §3.0.
+The code in this repository is **MIT** — see [LICENSE](LICENSE).
 
-No Games Workshop rules text is bundled. Warhammer 40,000 is © Games Workshop
-Limited; this project is unofficial and unaffiliated.
+**The data is not, and MIT does not relicense it.** Everything the app knows
+about the game comes from community projects that keep their own terms:
+
+| Source | What it supplies | Terms |
+| --- | --- | --- |
+| [40kdc-data](https://github.com/wn-mitch/40kdc-data) | datasheets, weapons, abilities, missions, stratagem costs and phases | **CC BY 4.0** © Alpaca Software and the 40kdc community contributors; schemas CC0 |
+| [Wahapedia](https://wahapedia.ru/wh40k11ed/) | the printed rules text of the stratagems | published data export; asks for "Powered by Wahapedia" |
+| [stratagem-card-generator](https://github.com/pguetschow/warhammer-40k-stratagem-card-generator) | the eleven Core Stratagems, transcribed | MIT |
+| [BSData/wh40k-11e](https://github.com/BSData/wh40k-11e) | datasheet and ability text | **no licence file**; maintainers gave permission in [issue 918](https://github.com/BSData/wh40k-11e/issues/918), which is not the same as a licence |
+| [BSData/wh40k-11e-mfm](https://github.com/BSData/wh40k-11e-mfm) | Munitorum points, as a cross-check | MIT |
+| [gdmissions.app](https://gdmissions.app) | the sentence printed on each mission card | publishes no licence, terms or notice |
+
+CC BY 4.0 obliges attribution, a link, and a statement that changes were made;
+the About screen carries all three, and **a test asserts the phrase "Powered by
+40kdc-data" verbatim**. If that test fails the app is out of compliance, and
+the screen is what should change.
+
+Warhammer 40,000 and all associated names, marks and imagery are © Games
+Workshop Limited. This project is unofficial and unaffiliated.
+
+**What is bundled, stated accurately.** Earlier versions of this file said no
+Games Workshop rules text was bundled. That stopped being true at §3.12, which
+added the printed stratagem wording by way of Wahapedia's export. Ability and
+mission descriptions are still the data projects' own summaries rather than
+GW's wording.
