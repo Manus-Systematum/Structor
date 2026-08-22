@@ -113,9 +113,19 @@ class _EditorScreenState extends State<EditorScreen> {
       await widget.store
           .save(Army.fromSnapshot(_roster, builder.build(_roster), id: id));
       if (mounted) setState(() => _dirty = false);
-    } catch (_) {
-      // Left dirty on purpose: a failed background write must not report
-      // success, and the explicit Save surfaces the error properly.
+    } catch (error) {
+      // **Shown, because nothing else will show it now.** This used to be
+      // swallowed on the reasoning that the explicit Save would surface the
+      // error properly — and then the Save button went, leaving the only
+      // write in the screen able to fail in complete silence. A save that
+      // does not happen has to say so; the army is still on screen and still
+      // editable, so the message is a banner rather than a dialog.
+      if (mounted) {
+        setState(() {
+          _dirty = true;
+          _error = 'Not saved: $error';
+        });
+      }
     }
   }
 
@@ -224,8 +234,24 @@ class _EditorScreenState extends State<EditorScreen> {
     // person wants after an experiment. It asks first, because it throws away
     // every edit since the screen opened and nothing else brings them back.
     return PopScope(
-      canPop: true,
-      onPopInvokedWithResult: (_, __) => unawaited(_persist()),
+      // **The write finishes before the screen goes.** `dispose` fires the
+      // pending autosave, but firing is not finishing: the caller rebuilt
+      // from the database while the write was still in flight and showed the
+      // army as it had been. Leaving is the commit, so leaving waits for it.
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) async {
+        if (didPop) return;
+        // Captured before the await, so the pop does not reach for a context
+        // that the write outlived.
+        final navigator = Navigator.of(context);
+        _autosave?.cancel();
+        await _persist();
+        // `true` regardless: the caller reloads on it, and an edit made two
+        // seconds before backing out is exactly the one that must not be
+        // read back stale.
+        if (!mounted) return;
+        navigator.pop(true);
+      },
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.initial == null ? 'New army' : 'Edit army'),

@@ -106,7 +106,7 @@ class _ArmyPageState extends State<ArmyPage> {
   /// dataset and re-snapshots on save, so the list stops moving under the
   /// player at the next dataset update (§2.2).
   Future<void> _editArmy(Army army) async {
-    final saved = await Navigator.of(context).push<bool>(
+    await Navigator.of(context).push<bool>(
       MaterialPageRoute(
         builder: (_) => EditorScreen(
           store: widget.store,
@@ -116,7 +116,11 @@ class _ArmyPageState extends State<ArmyPage> {
         ),
       ),
     );
-    if (saved == true && mounted) {
+    // Reloaded whatever comes back. The old builder returned `true` only
+    // from its Save button; with the button gone every exit is a save, and
+    // keying the reload on `true` meant an edit made and backed out of was
+    // written to the database and never read again on this screen.
+    if (mounted) {
       setState(() => _army = widget.store.load(widget.rosterId));
     }
   }
@@ -271,4 +275,3 @@ class _Message extends StatelessWidget {
         ),
       );
 }
-

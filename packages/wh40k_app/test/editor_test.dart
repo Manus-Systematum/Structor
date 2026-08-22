@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wh40k_app/src/data/database.dart';
+import 'package:wh40k_app/src/data/army.dart';
 import 'package:wh40k_app/src/data/dataset_repository.dart';
 import 'package:wh40k_app/src/data/roster_store.dart';
 import 'package:wh40k_app/src/screens/editor_screen.dart';
@@ -505,5 +507,58 @@ void main() {
     await settle(tester);
     expect(find.text('Ghostkeel Battlesuit'), findsWidgets,
         reason: 'nothing removed before the answer');
+  });
+  testWidgets('an edit survives backing out of the builder', (tester) async {
+    // Reported from the app: open an army, edit it, press back, and the
+    // change was gone. Two faults in one path. `dispose` fired the pending
+    // write but did not wait for it, and the caller reloaded from the
+    // database while it was still in flight; and the caller only reloaded at
+    // all when the builder popped `true`, which used to come from the Save
+    // button and stopped coming when that button was removed.
+    await open(tester, initial: tau());
+
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+    await tester.enterText(find.byType(SearchBar), 'ghostkeel');
+    await settle(tester);
+    await tester.tap(find.text('Ghostkeel Battlesuit').last);
+    await settle(tester);
+
+    // Straight back, with no pause for the debounce — the case that broke.
+    await tester.binding.defaultBinaryMessenger.handlePlatformMessage(
+      'flutter/navigation',
+      const JSONMethodCodec().encodeMethodCall(const MethodCall('popRoute')),
+      (_) {},
+    );
+    await settle(tester);
+
+    late List<RosterRow> rows;
+    await tester.runAsync(() async => rows = await store.list());
+    expect(rows, hasLength(1), reason: 'the edit reached the database');
+    expect(rows.single.unitCount, 1);
+  });
+  testWidgets('adding a detachment survives backing out', (tester) async {
+    // Reported from the app: the unit stuck but the detachment did not.
+    await open(tester, initial: tau());
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+    await tester.enterText(find.byType(SearchBar), 'ghostkeel');
+    await settle(tester);
+    await tester.tap(find.text('Ghostkeel Battlesuit').last);
+    await settle(tester);
+    await tester.pump(const Duration(seconds: 1));
+    await settle(tester);
+
+    await tester.tap(find.textContaining('Retaliation Cadre'));
+    await settle(tester);
+    await tester.pump(const Duration(seconds: 1));
+    await settle(tester);
+
+    late Army? army;
+    await tester.runAsync(() async {
+      final rows = await store.list();
+      army = await store.load(rows.single.id);
+    });
+    expect(army!.roster.detachments, hasLength(1));
   });
 }
