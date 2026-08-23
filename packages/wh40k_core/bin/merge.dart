@@ -25,6 +25,17 @@ const _dcRoot = '$_root/data/40kdc';
 const _outRoot = '$_root/data/merged';
 const _conflictsPath = '$_root/data-conflicts.json';
 
+/// Which factions the merged tree already holds merged output for.
+///
+/// Without this a partial run is destructive: [_copyRemaining] copies raw
+/// 40kdc over everything it did not rewrite *this run*, so
+/// `merge.dart tau-empire` silently reverted every other faction's abilities
+/// to the un-enriched source — 2,723 Space Marine rules lost their printed
+/// text because somebody merged a different faction. The tree is derived and
+/// gitignored, so nothing caught it; the app only stayed correct because
+/// `tools/rebuild-assets.sh` always merges everything.
+const _manifestPath = '$_outRoot/.merged.json';
+
 /// Mission card text, fetched by `tools/fetch-gdm.py` (DESIGN.md §3.11).
 const _gdmPath = '$_root/data/gdm/cards.json';
 
@@ -215,7 +226,8 @@ void main(List<String> args) {
   }
 
   if (!reportOnly) {
-    _copyRemaining(factions);
+    _copyRemaining(factions, _mergedBefore());
+    _writeManifest(factions);
     stdout.writeln('\n${_linkEnhancementText(factions, harvested)} '
         'enhancements linked to their printed text');
     stdout.writeln('${_applyMissionText()} mission cards given their '
@@ -783,17 +795,69 @@ String? _plain(String? value) {
 /// Missions, terrain, stratagems, detachments, dispositions, phase mappings,
 /// leader attachments, wargear options — BSData has none of them, and the
 /// merged tree has to be complete or nothing downstream can read it.
-void _copyRemaining(List<String> factions) {
+/// Every faction BSData publishes a directory for.
+List<String> _factionDirs() {
+  final root = Directory(_bsRoot);
+  if (!root.existsSync()) return const [];
+  return root
+      .listSync()
+      .whereType<Directory>()
+      .map((d) => d.path.split('/').last)
+      .where((n) => n != 'shared')
+      .toList();
+}
+
+/// Factions a previous run already merged, from the manifest.
+Set<String> _mergedBefore() {
+  final file = File(_manifestPath);
+  if (!file.existsSync()) return const {};
+  try {
+    final j = jsonDecode(file.readAsStringSync());
+    if (j is! Map) return const {};
+    return {for (final f in (j['factions'] as List? ?? const [])) '$f'};
+  } on FormatException {
+    return const {};
+  }
+}
+
+void _writeManifest(List<String> factions) {
+  final all = {..._mergedBefore(), ...factions}.toList()..sort();
+  File(_manifestPath)
+    ..parent.createSync(recursive: true)
+    ..writeAsStringSync('${const JsonEncoder.withIndent('  ').convert({
+      'note': 'Factions this tree holds merged output for. A partial merge '
+          'must not copy raw 40kdc over these. Delete to force a full '
+          'rebuild.',
+      'factions': all,
+    })}\n');
+}
+
+/// Fills the tree with the 40kdc files this run did not produce.
+///
+/// [alreadyMerged] is left alone: those files are a previous run's output and
+/// copying the raw source over them is what made partial merges destructive.
+void _copyRemaining(List<String> factions, Set<String> alreadyMerged) {
   final source = Directory(_dcRoot);
-  final rewritten = <String>{
-    for (final faction in factions)
+  // Every path the merge is capable of producing, for any faction. A file
+  // at one of these paths that already exists is a previous run's output and
+  // is left alone; the manifest records who they belong to but the guard does
+  // not depend on it, so a tree merged before the manifest existed is still
+  // protected.
+  final mergeable = <String>{
+    for (final faction in {...factions, ...alreadyMerged, ..._factionDirs()})
       for (final spec in _files.values) spec.path.replaceFirst('%s', faction),
   };
 
   for (final entity in source.listSync(recursive: true)) {
     if (entity is! File || !entity.path.endsWith('.json')) continue;
     final relative = entity.path.substring(source.path.length + 1);
-    if (rewritten.contains(relative)) continue;
+    // Merged output, either from this run or a previous one, is never
+    // overwritten by the raw source. A manifest entry with no file behind it
+    // falls through and is copied, so a half-deleted tree still fills in.
+    if (mergeable.contains(relative) &&
+        File('$_outRoot/$relative').existsSync()) {
+      continue;
+    }
     final target = File('$_outRoot/$relative');
     target.parent.createSync(recursive: true);
     entity.copySync(target.path);
