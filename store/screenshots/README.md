@@ -45,8 +45,8 @@ xcrun simctl status_bar <udid> override --time "9:41" --dataNetwork wifi \
   --batteryState charged --batteryLevel 100
 ```
 
-**The set, as shot.** Six, against a limit of ten, in the order that explains
-the app:
+**The set, as shot.** Seven for iPhone and four for iPad, against a limit of
+ten each, in the order that explains the app:
 
 | File | Screen | Why it is in the set |
 | --- | --- | --- |
@@ -54,8 +54,13 @@ the app:
 | `02-army` | the army page | 995 of 1000, six units, two detachments, the validation notes |
 | `03-mission` | setup, step 2 | the mission each detachment would give you, with its scoring and its action — the decision the app exists to inform |
 | `04-setup` | setup, the table | the deployment map drawn to scale, with its honest caption about bounding boxes |
-| `05-turn` | the turn page | round, CP, the stratagems usable now, one expanded to its full printed text |
-| `06-objectives` | objectives | both primaries, the score by round, and the disclaimer that these are community summaries |
+| `05-turn` | the turn page | round 3, five CP, the stratagems usable now, one expanded to its printed text, and the VP steppers |
+| `06-objectives` | objectives | 21–16 with the score by round, both primaries, and the disclaimer that these are community summaries |
+| `07-rules` | the reference page | search, the army-wide rules, and the shared-rules matrix — the screen that most rewards a tablet |
+
+The iPad set is `02`, `05`, `06` and `07`. `03` and `04` are not in it because
+they belong to the setup wizard, which a battle in progress has already passed;
+finishing the battle and setting up again would get them.
 
 No text overlays, no device frames, no marketing furniture — the same reason
 the rest of the copy is plain.
@@ -74,13 +79,19 @@ Navigate the simulator to the screen, run it, repeat. `DEVICE="iPad Pro
 13-inch (M5)"` switches devices for the iPad set. With no argument it prints
 the five shots and what each should show.
 
+## The scored battle
+
+`05-turn` and `06-objectives` show a game in its third round at 21–16, which no
+amount of tapping would have produced quickly. The scores were written straight
+into `rosters.battle_log_json` as `score` events in the app's own vocabulary —
+`{"type":"score","side":"me","kind":"primary","round":1,"vp":6}` — so the app
+reads them exactly as if they had been entered by hand. `battle_event.dart` is
+the schema.
+
 ## Status
 
-**All six captured**, every one at 1320 x 2868 with the 9:41 status bar and a
-real 995-point list.
+**All eleven files captured**, every one at its device's native size, from the
+imported 995-point list.
 
-Two things a second pass could improve, neither blocking: `06-objectives` shows
-0–0 because the battle had just started, and `01-armies` is thin enough that
-the set reads better without it. The iPad set is untouched — required only
-while the app ships for iPad, which `TARGETED_DEVICE_FAMILY = "1,2"` says it
-does.
+Remaining, neither blocking: `01-armies` is thin enough that the iPhone set
+reads better without it, and the iPad set has no setup-wizard shots.

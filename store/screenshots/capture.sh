@@ -50,18 +50,24 @@ xcrun simctl status_bar "$UDID" override \
   --time "9:41" --dataNetwork wifi --wifiMode active --wifiBars 3 \
   --cellularMode active --batteryState charged --batteryLevel 100 2>/dev/null
 
-# The 6.9-inch set is the required one; anything else gets its size in the
-# filename so a wrong-sized file cannot be uploaded by accident.
-OUT="$DIR/$NAME-6.9.png"
-xcrun simctl io "$UDID" screenshot "$OUT" >/dev/null 2>&1
+# Capture to a scratch name first. Writing straight to "<name>-6.9.png" and
+# renaming afterwards destroyed three iPhone files when the iPad set was shot:
+# the iPad run truncated the iPhone file before it knew the size was different.
+TMP="$DIR/.capture-$$.png"
+trap 'rm -f "$TMP"' EXIT
+xcrun simctl io "$UDID" screenshot "$TMP" >/dev/null 2>&1
 
-SIZE=$(python3 -c "from PIL import Image;im=Image.open('$OUT');print('%dx%d'%im.size)" 2>/dev/null || echo unknown)
+SIZE=$(python3 -c "from PIL import Image;im=Image.open('$TMP');print('%dx%d'%im.size)" 2>/dev/null || echo unknown)
+
+# The size decides the suffix, so a file can only ever overwrite one taken on
+# the same kind of device.
 case "$SIZE" in
-  1320x2868|1290x2796) NOTE="6.9-inch, the required iPhone size" ;;
-  2064x2752)           mv "$OUT" "$DIR/$NAME-ipad13.png"; OUT="$DIR/$NAME-ipad13.png"
-                       NOTE="13-inch iPad, required while the app ships for iPad" ;;
-  *)                   mv "$OUT" "$DIR/$NAME-$SIZE.png"; OUT="$DIR/$NAME-$SIZE.png"
-                       NOTE="NOT an App Store size — shoot on iPhone 17 Pro Max instead" ;;
+  1320x2868|1290x2796) SUFFIX="6.9";      NOTE="6.9-inch, the required iPhone size" ;;
+  2064x2752)           SUFFIX="ipad13";   NOTE="13-inch iPad, required while the app ships for iPad" ;;
+  *)                   SUFFIX="$SIZE";    NOTE="NOT an App Store size — shoot on iPhone 17 Pro Max or iPad Pro 13-inch" ;;
 esac
+
+OUT="$DIR/$NAME-$SUFFIX.png"
+mv "$TMP" "$OUT"
 
 echo "$(basename "$OUT")  $SIZE  — $NOTE"
