@@ -40,7 +40,9 @@ https://github.com/Manus-Systematum/Structor
 
 UNOFFICIAL AND UNAFFILIATED
 
-Warhammer 40,000 and all associated names, marks and imagery are (c) Games
+Everything the app shows was collected from the openly published sources
+named above. Warhammer 40,000, all associated names, marks and imagery, and
+any wording that matches Games Workshop's printed rules, remain (c) Games
 Workshop Limited. Structor is unofficial and is neither endorsed by nor
 affiliated with Games Workshop. The app does not use their logos, artwork or
 branding, does not claim any association, and carries this statement on its

@@ -200,10 +200,17 @@ class _AboutScreenState extends State<AboutScreen> {
           // stopped being true at DESIGN.md §3.12, which bundled the printed
           // stratagem wording by way of Wahapedia's export. A compliance
           // statement that has quietly gone false is worse than none.
+          //
+          // What replaced it says how far their rights reach rather than what
+          // this app does or does not carry: naming the marks while staying
+          // quiet about the text is the narrower claim, and the narrower claim
+          // reads as avoidance. Same wording as the site.
           const _Body(
-            'Warhammer 40,000 and all associated names, marks and imagery are '
-            '© Games Workshop Limited. This app is unofficial and is neither '
-            'endorsed by nor affiliated with Games Workshop.',
+            'Everything above was collected from openly published sources. '
+            'Warhammer 40,000, all associated names, marks and imagery, and '
+            'any wording here that matches Games Workshop’s printed rules, '
+            'remain © Games Workshop Limited. This app is unofficial and is '
+            'neither endorsed by nor affiliated with Games Workshop.',
           ),
 
           const _Heading('Privacy'),

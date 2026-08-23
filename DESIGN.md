@@ -27,6 +27,14 @@ under CC BY 4.0, Wahapedia's export, BSData under no licence at all — and none
 of them are ours to relicense. README's licence table states each one; the
 About screen names them in the app.
 
+**The notice says how far their rights reach, not what the app carries.**
+Added 2026-08-23, in the same words on the site, the About screen, the store
+description and the review notes: everything was collected from openly
+published sources, and Games Workshop's rights cover the names, marks and
+imagery *and any wording that matches their printed rules*. Naming the marks
+while staying quiet about the text is the narrower claim, and the narrower
+claim is the one that reads as avoidance.
+
 Two stale compliance statements were removed at the same time, one in README
 and one on the About screen. Both asserted something that had stopped being
 true, and a compliance statement that has quietly gone false is worse than

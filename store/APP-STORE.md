@@ -131,10 +131,10 @@ Datasheet and ability text from BSData; mission card text from gdmissions.app; t
 
 Structor is free and open source. Its code is MIT licensed and lives at https://github.com/Manus-Systematum/Structor — the rules data keeps the terms named above.
 
-Warhammer 40,000 and all associated names, marks and imagery are © Games Workshop Limited. This app is unofficial and is neither endorsed by nor affiliated with Games Workshop.
+Everything the app knows about the game was collected from the openly published sources named above. Warhammer 40,000, all associated names, marks and imagery, and any wording that matches Games Workshop's printed rules, remain © Games Workshop Limited. This app is unofficial and is neither endorsed by nor affiliated with Games Workshop.
 ```
 
-(3,000 characters exactly, against a 4,000 limit.)
+(3,163 characters, against a 4,000 limit.)
 
 ### Keywords — 100 characters, comma-separated, no spaces after commas
 
