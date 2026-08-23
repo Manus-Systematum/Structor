@@ -45,15 +45,17 @@ xcrun simctl status_bar <udid> override --time "9:41" --dataNetwork wifi \
   --batteryState charged --batteryLevel 100
 ```
 
-**What to shoot,** in the order that explains the app:
+**The set, as shot.** Six, against a limit of ten, in the order that explains
+the app:
 
-| File | Screen | State it needs |
+| File | Screen | Why it is in the set |
 | --- | --- | --- |
-| `01-armies` | the army list | the imported list, and nothing else in the list |
-| `02-editor` | Edit army | scrolled to show 995/1000, the detachments and the first units |
-| `03-turn` | the turn page | a phase with its stratagems, one expanded, CP visible |
-| `04-setup` | setup | the mission with the deployment map drawn |
-| `05-objectives` | objectives | primary and secondary scoring with a running total |
+| `01-armies` | the army list | the weakest — one row on an empty screen. Keep it last or drop it. |
+| `02-army` | the army page | 995 of 1000, six units, two detachments, the validation notes |
+| `03-mission` | setup, step 2 | the mission each detachment would give you, with its scoring and its action — the decision the app exists to inform |
+| `04-setup` | setup, the table | the deployment map drawn to scale, with its honest caption about bounding boxes |
+| `05-turn` | the turn page | round, CP, the stratagems usable now, one expanded to its full printed text |
+| `06-objectives` | objectives | both primaries, the score by round, and the disclaimer that these are community summaries |
 
 No text overlays, no device frames, no marketing furniture — the same reason
 the rest of the copy is plain.
@@ -74,10 +76,11 @@ the five shots and what each should show.
 
 ## Status
 
-`01-armies-6.9.png` is captured, at 1320 x 2868 with the imported list. It is
-also the weakest of the five — one row on an otherwise empty screen. **Lead
-with `02-editor`** once it exists.
+**All six captured**, every one at 1320 x 2868 with the 9:41 status bar and a
+real 995-point list.
 
-The other four need the simulator driven by hand or by an agent with device
-access. The 995-point list is already on the iPhone 17 Pro Max, so it is five
-screens of navigation, not another import.
+Two things a second pass could improve, neither blocking: `06-objectives` shows
+0–0 because the battle had just started, and `01-armies` is thin enough that
+the set reads better without it. The iPad set is untouched — required only
+while the app ships for iPad, which `TARGETED_DEVICE_FAMILY = "1,2"` says it
+does.
