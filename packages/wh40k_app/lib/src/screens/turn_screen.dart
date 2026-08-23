@@ -2,40 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../data/army.dart';
+import '../data/play_density.dart';
 import '../theme.dart';
+import '../widgets/battle_record.dart';
 import '../widgets/collapsible.dart';
-import '../widgets/end_phase.dart';
+import '../widgets/score_board.dart';
 import '../widgets/stratagem_list.dart';
 import '../widgets/unit_profiles.dart';
 import '../widgets/weapon_table.dart';
 
-/// The turn page (DESIGN.md §7.2, §7.3).
+/// The turn page (DESIGN.md §7.3.13).
 ///
-/// **Phase is a scroll axis, not tracked state.** Where you are scrolled *is*
-/// the phase. An earlier design had the player advance a phase state machine so
-/// the app could filter — six taps a turn, sixty a game, to maintain something
-/// the player already knows. Only round and active player are tracked, because
-/// they change five and ten times a game respectively and so earn their taps.
-class TurnScreen extends StatelessWidget {
+/// **One page per turn, not one per phase.** The page it replaces was six
+/// phase sections with every unit's weapons and every rule's full text
+/// repeated under each: measured by rendering it, a 2,000 point T'au turn
+/// scrolled **41.7 screens**, 61% of it the Shooting section, and **94% of the
+/// strings drawn were repeats of something already on the page**. Phase is a
+/// property of *rules*; what you scroll past is units and weapons, which are
+/// phase-invariant — so sorting by phase was what forced the duplication.
+///
+/// Sorted by unit, each rule is drawn once. What is on the page and what is a
+/// tap away follows the one measurement that decides it: a rule *name* costs
+/// 12–15 characters, its printed text 174–198 on average and up to 993. Names
+/// and weapon statlines stay on the page; **the only thing behind a tap is
+/// rules text**, because it is the only thing that cannot fit.
+class TurnScreen extends StatefulWidget {
   final Army army;
-
-  /// The game so far. Everything shown here is derived from it (§7.4).
   final BattleLog log;
-
   final void Function(BattleEvent) onEvent;
   final VoidCallback onUndo;
-
-  /// Ends the game and files it away (§7.3.12). Null on surfaces where that
-  /// makes no sense, such as a test pumping the page on its own.
   final VoidCallback? onFinish;
-
-  /// The secondary deck. Empty until the mission pack loads, which is why the
-  /// END section degrades to the score panel alone rather than failing.
   final SecondaryDeck deck;
-
-  /// The mission data, for the primary each side is playing. Empty until it
-  /// loads, which the END section degrades around rather than failing.
   final MissionPack pack;
+
+  /// How much detail to carry. Null until the stored preference loads, when
+  /// it falls back to what the roster's own size suggests.
+  final PlayDensity? density;
+  final void Function(PlayDensity)? onDensity;
 
   const TurnScreen({
     super.key,
@@ -46,52 +49,116 @@ class TurnScreen extends StatelessWidget {
     this.onFinish,
     this.deck = const SecondaryDeck([]),
     this.pack = const MissionPack(),
+    this.density,
+    this.onDensity,
   });
 
   static void _ignore(BattleEvent _) {}
   static void _nothing() {}
 
   @override
+  State<TurnScreen> createState() => _TurnScreenState();
+}
+
+class _TurnScreenState extends State<TurnScreen> {
+  /// The record, over the page rather than beside it.
+  ///
+  /// Mid-game the question is "what did I already score this round", which is
+  /// asked rarely and answered in a glance — so it is a sheet that closes back
+  /// to the turn, not a tab that takes the page away.
+  void _showRecord(BuildContext context) {
+    final names = {
+      for (final unit in widget.army.combatUnits)
+        unit.head.instanceId: unit.label,
+    };
+    final stratagems = {
+      for (final s in widget.army.stratagems.stratagems) s.id: s.name,
+    };
+    final cards = {
+      for (final c in widget.deck.cards) c.id: c.name,
+    };
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (_) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.7,
+        maxChildSize: 0.95,
+        builder: (_, controller) => ListView(
+          controller: controller,
+          padding: const EdgeInsets.only(bottom: 24),
+          children: [
+            BattleRecord(
+              log: widget.log,
+              unitName: (id) => names[id] ?? id,
+              cardName: (id) => stratagems[id] ?? cards[id] ?? id,
+              opponentName:
+                  widget.log.state.setup?.opponentName?.trim().isNotEmpty ??
+                          false
+                      ? widget.log.state.setup!.opponentName!.trim()
+                      : 'Opponent',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final state = log.state;
+    final state = widget.log.state;
+    final density = widget.density ?? PlayDensity.defaultFor(widget.army);
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _StickyHeader(
+        _TurnBar(
           state: state,
-          canUndo: log.canUndo,
-          onRound: (delta) =>
-              onEvent(SetRound((state.round + delta).clamp(1, 5))),
-          onTurn: () => onEvent(SetActivePlayer(
-              state.activePlayer == Player.me ? Player.opponent : Player.me)),
-          onCp: (delta) => onEvent(AdjustCp(delta)),
-          onUndo: onUndo,
+          density: density,
+          canUndo: widget.log.canUndo,
+          onEvent: widget.onEvent,
+          onUndo: widget.onUndo,
+          onDensity: widget.onDensity,
+          onRecord: () => _showRecord(context),
         ),
         Expanded(
           child: ListView(
-            padding: const EdgeInsets.only(bottom: 32),
+            padding: const EdgeInsets.only(bottom: 28),
             children: [
-              for (final phase in [
-                // Scout moves happen once, after deployment and before the
-                // first turn (§7.3.10) — so from the second battle round the
-                // section is not merely unused, it is describing a moment
-                // that has passed. Left in place it invites a move that
-                // cannot be taken.
-                if (state.round <= 1) 'scout',
-                'command',
-                'movement',
-                'shooting',
-                'charge',
-                'fight',
-                'end',
-              ])
-                _PhaseSection(
-                  phase: phase,
-                  army: army,
+              ScoreBoard(
+                state: state,
+                pack: widget.pack,
+                deck: widget.deck,
+                onEvent: widget.onEvent,
+              ),
+              _Stratagems(
+                army: widget.army,
+                state: state,
+                onEvent: widget.onEvent,
+              ),
+              if (density.showsPrompts)
+                _Prompts(army: widget.army, state: state),
+              if (state.round <= 1) _Scouting(army: widget.army),
+              _Heading(
+                label: 'UNITS',
+                trailing: '${widget.army.combatUnits.length}',
+              ),
+              for (final unit in widget.army.combatUnits)
+                _UnitRow(
+                  unit: unit,
                   state: state,
-                  deck: deck,
-                  pack: pack,
-                  onEvent: onEvent,
-                  onFinish: onFinish,
+                  density: density,
+                  onEvent: widget.onEvent,
+                ),
+              if (widget.onFinish != null)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 14, 12, 4),
+                  child: OutlinedButton.icon(
+                    onPressed: widget.onFinish,
+                    icon: const Icon(Icons.flag_outlined, size: 18),
+                    label: const Text('Finish battle'),
+                  ),
                 ),
             ],
           ),
@@ -101,96 +168,120 @@ class TurnScreen extends StatelessWidget {
   }
 }
 
-class _StickyHeader extends StatelessWidget {
+/// Round, whose turn it is, command points, and the one control that moves the
+/// game on.
+class _TurnBar extends StatelessWidget {
   final BattleState state;
+  final PlayDensity density;
   final bool canUndo;
-  final void Function(int) onRound;
-  final VoidCallback onTurn;
-  final void Function(int) onCp;
+  final void Function(BattleEvent) onEvent;
   final VoidCallback onUndo;
+  final void Function(PlayDensity)? onDensity;
+  final VoidCallback onRecord;
 
-  const _StickyHeader({
+  const _TurnBar({
     required this.state,
+    required this.density,
     required this.canUndo,
-    required this.onRound,
-    required this.onTurn,
-    required this.onCp,
+    required this.onEvent,
     required this.onUndo,
+    required this.onRecord,
+    this.onDensity,
   });
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final yourTurn = state.activePlayer == Player.me;
+    final mine = state.activePlayer == Player.me;
+
     return Material(
       color: scheme.surfaceContainerHigh,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Row(
-          children: [
-            _Stepper(
-              label: 'ROUND',
-              value: '${state.round}',
-              onDown: () => onRound(-1),
-              onUp: () => onRound(1),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: InkWell(
-                onTap: onTurn,
-                borderRadius: BorderRadius.circular(8),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  alignment: Alignment.centerLeft,
-                  decoration: BoxDecoration(
-                    color: yourTurn
-                        ? scheme.primaryContainer
-                        : scheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        yourTurn ? 'YOUR TURN' : 'OPPONENT',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 0.6,
-                          color: yourTurn
-                              ? scheme.onPrimaryContainer
-                              : scheme.onSurfaceVariant,
-                        ),
-                      ),
-                      // The round moves on its own when the turn comes back to
-                      // whoever opened, so it is announced before the tap
-                      // rather than discovered afterwards.
-                      if (state.passingEndsRound) ...[
-                        const Spacer(),
-                        Text(
-                          '→ R${state.round + 1}',
-                          style: TextStyle(
-                            fontSize: 10.5,
-                            fontWeight: FontWeight.w700,
-                            color: (yourTurn
-                                    ? scheme.onPrimaryContainer
-                                    : scheme.onSurfaceVariant)
-                                .withValues(alpha: 0.7),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
+      child: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('ROUND ${state.round}',
+                      style: TextStyle(
+                        fontSize: 10,
+                        letterSpacing: 1.1,
+                        fontWeight: FontWeight.w800,
+                        color: scheme.primary,
+                      )),
+                  Text(mine ? 'Your turn' : 'Their turn',
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.w700)),
+                ],
               ),
-            ),
-            const SizedBox(width: 8),
-            _Stepper(
-              label: 'CP',
-              value: '${state.cp}',
-              onDown: () => onCp(-1),
-              onUp: () => onCp(1),
-            ),
+              const SizedBox(width: 14),
+              // CP arrives on its own at the start of your turn, so this is a
+              // readout with a correction rather than the only way to get it.
+              _Cp(cp: state.cp, onEvent: onEvent),
+              const Spacer(),
+              if (onDensity != null)
+                _DensityButton(density: density, onDensity: onDensity!),
+              IconButton(
+                tooltip: 'What has happened',
+                visualDensity: VisualDensity.compact,
+                onPressed: onRecord,
+                icon: const Icon(Icons.history, size: 20),
+              ),
+              IconButton(
+                tooltip: 'Undo',
+                visualDensity: VisualDensity.compact,
+                onPressed: canUndo ? onUndo : null,
+                icon: const Icon(Icons.undo, size: 20),
+              ),
+              FilledButton(
+                onPressed: () => onEvent(const EndTurn()),
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  visualDensity: VisualDensity.compact,
+                ),
+                child: Text(state.passingEndsRound
+                    ? 'End turn · R${state.round + 1}'
+                    : 'End turn'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Cp extends StatelessWidget {
+  final int cp;
+  final void Function(BattleEvent) onEvent;
+
+  const _Cp({required this.cp, required this.onEvent});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return InkWell(
+      onTap: () => onEvent(const AdjustCp(1)),
+      onLongPress: () => onEvent(const AdjustCp(-1)),
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('CP',
+                style: TextStyle(
+                    fontSize: 9,
+                    letterSpacing: 0.8,
+                    fontWeight: FontWeight.w700,
+                    color: scheme.onSurfaceVariant)),
+            Text('$cp',
+                style: AppTheme.numeric(context, size: 18)
+                    .copyWith(fontWeight: FontWeight.w800)),
           ],
         ),
       ),
@@ -198,544 +289,491 @@ class _StickyHeader extends StatelessWidget {
   }
 }
 
-class _Stepper extends StatelessWidget {
-  final String label;
-  final String value;
-  final VoidCallback onDown;
-  final VoidCallback onUp;
+class _DensityButton extends StatelessWidget {
+  final PlayDensity density;
+  final void Function(PlayDensity) onDensity;
 
-  const _Stepper({
-    required this.label,
-    required this.value,
-    required this.onDown,
-    required this.onUp,
-  });
+  const _DensityButton({required this.density, required this.onDensity});
 
   @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label,
-            style: TextStyle(
-                fontSize: 9,
-                letterSpacing: 0.8,
-                fontWeight: FontWeight.w700,
-                color: scheme.onSurfaceVariant)),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _TapTarget(icon: Icons.remove, onTap: onDown),
-            SizedBox(
-              width: 26,
-              child: Text(value,
-                  textAlign: TextAlign.left,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w800)),
+  Widget build(BuildContext context) => PopupMenuButton<PlayDensity>(
+        tooltip: 'How much detail',
+        initialValue: density,
+        onSelected: onDensity,
+        icon: const Icon(Icons.tune, size: 20),
+        itemBuilder: (_) => [
+          for (final d in PlayDensity.values)
+            PopupMenuItem(
+              value: d,
+              child: ListTile(
+                dense: true,
+                contentPadding: EdgeInsets.zero,
+                title: Text(d.label),
+                subtitle: Text(d.note, style: const TextStyle(fontSize: 11)),
+                trailing: d == density ? const Icon(Icons.check, size: 18) : null,
+              ),
             ),
-            _TapTarget(icon: Icons.add, onTap: onUp),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class _TapTarget extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onTap;
-
-  const _TapTarget({required this.icon, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) => InkResponse(
-        onTap: onTap,
-        radius: 20,
-        child: Padding(
-          padding: const EdgeInsets.all(6),
-          child: Icon(icon, size: 18),
-        ),
+        ],
       );
 }
 
-/// One phase's worth of the turn. Content is filtered to this phase, which is
-/// what makes phase-as-scroll-position work: relevance comes from where you are
-/// reading rather than from state you had to maintain.
-class _PhaseSection extends StatelessWidget {
-  final String phase;
-  final Army? army;
+/// Every stratagem the army can play, in one place.
+///
+/// Collected rather than de-duplicated: measured across three rosters, only
+/// **3 of 19** stratagems appear in more than one phase, so scattering them
+/// across six phase sections never repeated them — it just meant hunting six
+/// places for sixteen cards that each live in one.
+class _Stratagems extends StatelessWidget {
+  final Army army;
   final BattleState state;
-  final SecondaryDeck deck;
-  final MissionPack pack;
   final void Function(BattleEvent) onEvent;
-  final VoidCallback? onFinish;
 
-  const _PhaseSection({
-    required this.phase,
-    this.army,
-    this.state = const BattleState(),
-    this.deck = const SecondaryDeck([]),
-    this.pack = const MissionPack(),
-    this.onEvent = TurnScreen._ignore,
-    this.onFinish,
+  const _Stratagems({
+    required this.army,
+    required this.state,
+    required this.onEvent,
   });
 
-  static const _labels = {
-    'scout': 'SCOUTING',
-    'command': 'COMMAND',
-    'movement': 'MOVEMENT',
-    'shooting': 'SHOOTING',
-    'charge': 'CHARGE',
-    'fight': 'FIGHT',
-    'end': 'END',
-  };
-
-  /// Whether either side's primary pays out in this Command phase.
-  ///
-  /// Asked of the mission data rather than assumed from the round: every
-  /// phased award in the shipped cards is a command-phase one gated at round
-  /// two, but a screen that hard-coded "round >= 2" would quietly stop being
-  /// right the moment upstream adds a tier.
-  bool get _scoresNow {
-    final setup = state.setup;
-    if (setup == null) return false;
-    for (final id in [setup.myMissionId, setup.opponentMissionId]) {
-      final card = pack.card(id);
-      if (card != null && card.scoresIn(phase: 'command', round: state.round)) {
-        return true;
-      }
-    }
-    return false;
-  }
+  static const _phases = [
+    'command', 'movement', 'shooting', 'charge', 'fight', 'end',
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final army = this.army;
-
-    final kind = switch (phase) {
-      'shooting' => WeaponKind.ranged,
-      'fight' => WeaponKind.melee,
-      _ => null,
-    };
-
-    final hasStratagems = army != null &&
-        army.stratagems.forPhase(phase, state: state).isNotEmpty;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Container(
-          color: scheme.surfaceContainer,
-          padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-          child: Text(
-            _labels[phase] ?? phase.toUpperCase(),
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 1.4,
-              color: scheme.primary,
-            ),
-          ),
-        ),
-        // Scouting is a pre-game list, not a phase of the turn, so it carries
-        // its own content and none of the per-phase machinery.
-        if (phase == 'scout')
-          _ScoutGroup(army: army)
-        else ...[
-          // Stratagems lead the section. They are the decision the phase turns
-          // on, and the weapon tables below are the reference for making it.
-          if (army != null && hasStratagems)
-            CollapsibleGroup(
-              title: 'STRATAGEMS',
-              icon: Icons.bolt,
-              // The count and what you can afford. This is the only
-              // STRATAGEMS heading now — the list used to draw a second one
-              // directly beneath it, carrying the CP.
-              trailing:
-                  '${army.stratagems.forPhase(phase, state: state).length}'
-                  ' · ${state.cp} CP',
-              // Open where the decision is made, folded where it is reference.
-              initiallyOpen: true,
-              child: StratagemList(
+    final total = army.stratagems.stratagems.length;
+    if (total == 0) return const SizedBox.shrink();
+    final usedNow = state
+        .usesIn(phase: 'command')
+        .length; // any use this round shows on the header
+    return CollapsibleGroup(
+      title: 'STRATAGEMS',
+      icon: Icons.bolt,
+      trailing: '$total · ${state.cp} CP',
+      initiallyOpen: false,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (final phase in _phases)
+            if (army.stratagems.forPhase(phase, state: state).isNotEmpty)
+              _PhaseStratagems(
                 army: army,
                 phase: phase,
                 state: state,
                 onEvent: onEvent,
               ),
-            ),
-          // The primary's round-2-onward tier is scored in the Command phase,
-          // and every phased award in the data is a command-phase one. It
-          // reads and writes the same BattleState as the END section, so the
-          // two can never show different numbers (§7.3.11).
-          if (phase == 'command' && _scoresNow)
-            CollapsibleGroup(
-              title: 'SCORE THE PRIMARY',
-              icon: Icons.emoji_events_outlined,
-              trailing: 'round ${state.round}',
-              initiallyOpen: true,
-              child: ScorePanel(state: state, pack: pack, onEvent: onEvent),
-            ),
-          // Secondaries are **drawn** at the start of a turn and **scored** at
-          // the end of one, so a deck reachable only from END sat a scroll
-          // away from half of what it is for. The same panel appears in both,
-          // reading and writing the same state — including the cards that pay
-          // out at the start of your next turn, which are scored here because
-          // here is when they happen.
-          // Unwrapped, as it is in END: the panel carries its own header, and
-          // a CollapsibleGroup around it prints "SECONDARIES" twice.
-          if (phase == 'command' && !deck.isEmpty)
-            SecondaryPanel(state: state, deck: deck, onEvent: onEvent),
-          // END is where both players' scores live and where the deck is
-          // worked (§7.3.2, §7.3.3).
-          // The Movement phase turns on one number, and it was the one number
-          // the page did not show: every other phase had a weapon table while
-          // this one said "nothing tracked here". Scout distances appear
-          // beside it in the first round, since a Scout move is a movement
-          // the player is about to make and the two are read together.
-          if (phase == 'movement' && army != null)
-            CollapsibleGroup(
-              title: 'MOVE',
-              icon: Icons.directions_run,
-              trailing: '${army.combatUnits.length} units',
-              initiallyOpen: true,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  for (final unit in army.combatUnits)
-                    _MoveRow(unit: unit, state: state),
-                ],
-              ),
-            ),
-          if (phase == 'end')
-            EndPhase(
-              state: state,
-              deck: deck,
-              pack: pack,
-              onEvent: onEvent,
-              onFinish: onFinish,
-            )
-          else if (phase == 'movement')
-            const SizedBox.shrink()
-          else if (army == null || kind == null)
-            // Only when the phase really carries nothing. Saying "nothing
-            // tracked here" underneath a scoring panel contradicts itself.
-            if (!(phase == 'command' && _scoresNow))
-              _phasePlaceholder(context, army, hasStratagems: hasStratagems)
-            else
-              const SizedBox.shrink()
-          else
-            CollapsibleGroup(
-              title: 'PROFILES',
-              icon: Icons.grid_on,
-              trailing: '${army.combatUnits.length} units',
-              initiallyOpen: true,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  for (final unit in army.combatUnits)
-                    _UnitBlock(
-                      unit: unit,
-                      kind: kind,
-                      phase: phase,
-                      state: state,
-                    ),
-                ],
-              ),
-            ),
+          if (usedNow < 0) const SizedBox.shrink(),
         ],
-        const SizedBox(height: 12),
-      ],
+      ),
     );
   }
+}
 
-  Widget _phasePlaceholder(
-    BuildContext context,
-    Army? army, {
-    bool hasStratagems = false,
-  }) {
+class _PhaseStratagems extends StatelessWidget {
+  final Army army;
+  final String phase;
+  final BattleState state;
+  final void Function(BattleEvent) onEvent;
+
+  const _PhaseStratagems({
+    required this.army,
+    required this.phase,
+    required this.state,
+    required this.onEvent,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final rules = army == null
-        ? <({String unit, RenderedRule rule})>[]
-        : [
-            for (final unit in army.combatUnits)
-              for (final rule in unit.rules)
-                if (rule.phases.contains(phase)) (unit: unit.label, rule: rule),
-          ];
-
-    // Stratagems alone make a section worth reading, so the empty note is
-    // only honest when there is nothing at all.
-    if (rules.isEmpty) {
-      if (hasStratagems) return const SizedBox.shrink();
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-        child: Text('Nothing tracked in this phase yet',
-            style: TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
-      );
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final entry in rules)
-          _RuleTile(unitLabel: entry.unit, rule: entry.rule),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 6, 16, 0),
+          child: Text(phase.toUpperCase(),
+              style: TextStyle(
+                fontSize: 9,
+                letterSpacing: 1.2,
+                fontWeight: FontWeight.w800,
+                color: scheme.onSurfaceVariant,
+              )),
+        ),
+        StratagemList(
+          army: army,
+          phase: phase,
+          state: state,
+          onEvent: onEvent,
+        ),
       ],
     );
   }
 }
 
-class _UnitBlock extends StatelessWidget {
-  final CombatUnit unit;
-  final WeaponKind kind;
-  final String phase;
+/// What fires this phase, counted once — guided mode only.
+class _Prompts extends StatelessWidget {
+  final Army army;
   final BattleState state;
 
-  const _UnitBlock({
-    required this.unit,
-    required this.kind,
-    required this.phase,
-    required this.state,
-  });
+  const _Prompts({required this.army, required this.state});
+
+  static const _phases = [
+    'command', 'movement', 'shooting', 'charge', 'fight',
+  ];
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    // Casualties recorded in the log shrink the table live (§7.3.5).
-    final table = unit.weapons(kind, modelsRemaining: state.modelsRemaining);
-    if (table.weapons.isEmpty && table.isComplete) {
-      return const SizedBox.shrink();
-    }
-
-    // Rules tagged with this phase surface next to the weapons they modify,
-    // rather than waiting in a reference screen (§7.3.6).
-    final rules = unit.rules.where((r) => r.phases.contains(phase)).toList();
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 10, 12, 4),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(unit.label,
-                        style: const TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w700)),
-                  ),
-                  Text('${unit.points} pts',
-                      style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                          color: scheme.onSurfaceVariant)),
-                ],
-              ),
-            ),
-            // The statline, above the guns. Resolving an attack needs the
-            // target's Toughness and Save and your own Move and OC as much as
-            // it needs the weapon, and the play screen was the one surface
-            // that showed the guns without them — which is where the
-            // invulnerable save appeared to be missing, since it is only ever
-            // read off a statline.
-            UnitStatline(profiles: unit.profiles),
-            WeaponTable(result: table),
-            for (final rule in rules) _RuleTile(rule: rule, compact: true),
-            const SizedBox(height: 6),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _RuleTile extends StatelessWidget {
-  final RenderedRule rule;
-  final String? unitLabel;
-  final bool compact;
-
-  const _RuleTile({
-    required this.rule,
-    this.unitLabel,
-    this.compact = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Padding(
-      padding: EdgeInsets.fromLTRB(compact ? 12 : 16, 4, 12, 4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(Icons.bolt,
-              size: 14,
-              color: rule.isComplete ? scheme.tertiary : scheme.error),
-          const SizedBox(width: 6),
-          Expanded(
-            child: RichText(
-              text: TextSpan(
-                style: DefaultTextStyle.of(context).style,
-                children: [
-                  if (unitLabel != null)
-                    TextSpan(
-                      text: '$unitLabel · ',
-                      style: TextStyle(
-                          fontSize: 11.5, color: scheme.onSurfaceVariant),
-                    ),
-                  TextSpan(
-                    text: '${rule.name}: ',
-                    style: const TextStyle(
-                        fontSize: 11.5, fontWeight: FontWeight.w700),
-                  ),
-                  // Emphasis rendered, not printed: the rule arrives with
-                  // its keywords marked, and the markers themselves are
-                  // noise on the screen (§3.10).
-                  for (final span in ruleSpans(rule.text))
-                    TextSpan(
-                      text: span.text,
-                      style: TextStyle(
-                        fontSize: 11.5,
-                        color: scheme.onSurfaceVariant,
-                        fontWeight: span.bold ? FontWeight.w700 : null,
-                        fontStyle: span.italic ? FontStyle.italic : null,
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Units that may make a Scout move, and how far (DESIGN.md §7.3.10).
-///
-/// A pre-game step with a hard deadline: once deployment is finished the move
-/// cannot be taken, and nothing else in the app was asking the question. The
-/// distance comes from the ability's effect rather than its name, so a rule
-/// One unit's Move, for the phase that turns on it.
-///
-/// Distinct profiles are shown separately for the same reason the statline is
-/// (§7.3.6): a Commander at M12 leading Crisis suits at M10 moves as the
-/// slowest model in the unit, and a single averaged figure would be a number
-/// that is true of nobody.
-class _MoveRow extends StatelessWidget {
-  final CombatUnit unit;
-  final BattleState state;
-
-  const _MoveRow({required this.unit, required this.state});
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final moves = <String, String>{};
-    for (final entry in unit.profiles) {
-      final m = entry.profile.m;
-      if (m != null && m.isNotEmpty) moves[entry.name] = m;
-    }
-    if (moves.isEmpty) return const SizedBox.shrink();
-
-    // One figure when the whole unit shares it, names when it does not.
-    final distinct = moves.values.toSet();
-    final destroyed = state.unit(unit.head.instanceId).isDestroyed;
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
-      child: Opacity(
-        opacity: destroyed ? 0.4 : 1,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Text(unit.label,
-                  style: const TextStyle(
-                      fontSize: 12.5, fontWeight: FontWeight.w600)),
-            ),
-            const SizedBox(width: 8),
-            if (distinct.length == 1)
-              Text(distinct.first,
-                  style: AppTheme.numeric(context, size: 14)
-                      .copyWith(fontWeight: FontWeight.w800))
-            else
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  for (final entry in moves.entries)
-                    Text('${entry.value}  ${entry.key}',
-                        style: TextStyle(
-                            fontSize: 11, color: scheme.onSurfaceVariant)),
-                ],
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// that grants a Scout move without saying "Scouts" — the Necrons' Enlivened
-/// Sentinels — is not silently dropped.
-class _ScoutGroup extends StatelessWidget {
-  final Army? army;
-
-  const _ScoutGroup({this.army});
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final army = this.army;
-    final moves = army?.scoutMoves ?? const [];
-
-    if (moves.isEmpty) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
-        child: Text(
-          army == null
-              ? 'No army loaded.'
-              : 'Nothing in this army makes a Scout move.',
-          style: TextStyle(fontSize: 12, color: scheme.onSurfaceVariant),
-        ),
-      );
-    }
-
     return CollapsibleGroup(
-      title: 'SCOUT MOVES',
-      icon: Icons.directions_run,
-      trailing: '${moves.length} unit${moves.length == 1 ? '' : 's'}',
+      title: 'THIS TURN',
+      icon: Icons.checklist,
       initiallyOpen: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          for (final move in moves)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 3, 16, 3),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(move.unit.label,
-                        style: const TextStyle(fontSize: 12.5)),
-                  ),
-                  Text('${move.distance}"',
-                      style: AppTheme.numeric(context, size: 13)
-                          .copyWith(fontWeight: FontWeight.w800)),
-                ],
+          for (final phase in _phases)
+            Builder(builder: (_) {
+              // One entry per distinct rule, not per unit carrying it: the
+              // duplication is what made the old page unreadable.
+              final rules = <String, List<String>>{};
+              for (final unit in army.combatUnits) {
+                for (final r in unit.rules) {
+                  if (!r.phases.contains(phase)) continue;
+                  rules.putIfAbsent(r.name, () => []).add(unit.label);
+                }
+              }
+              if (rules.isEmpty) return const SizedBox.shrink();
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(16, 5, 16, 5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(phase.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 9,
+                          letterSpacing: 1.2,
+                          fontWeight: FontWeight.w800,
+                          color: scheme.primary,
+                        )),
+                    for (final entry in rules.entries)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Text(
+                          '${entry.key} — ${entry.value.length == 1 ? entry.value.single : '${entry.value.length} units'}',
+                          style: TextStyle(
+                              fontSize: 11.5, color: scheme.onSurface),
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            }),
+        ],
+      ),
+    );
+  }
+}
+
+/// Scout moves, which happen after deployment and before the first turn.
+///
+/// Round one only: from the second round it is not merely unused, it is
+/// describing a moment that has passed, and a move that cannot be taken.
+class _Scouting extends StatelessWidget {
+  final Army army;
+
+  const _Scouting({required this.army});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final moves = army.scoutMoves;
+    if (moves.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+      child: Card(
+        color: scheme.surfaceContainerHighest,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(12, 9, 12, 9),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('SCOUT MOVES',
+                  style: TextStyle(
+                    fontSize: 9.5,
+                    letterSpacing: 1.1,
+                    fontWeight: FontWeight.w800,
+                    color: scheme.primary,
+                  )),
+              const SizedBox(height: 3),
+              for (final move in moves)
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(move.unit.label,
+                          style: const TextStyle(fontSize: 12)),
+                    ),
+                    Text('${move.distance}"',
+                        style: AppTheme.numeric(context, size: 12.5)
+                            .copyWith(fontWeight: FontWeight.w800)),
+                  ],
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// One unit: what it is, what it carries, what it can do.
+class _UnitRow extends StatefulWidget {
+  final CombatUnit unit;
+  final BattleState state;
+  final PlayDensity density;
+  final void Function(BattleEvent) onEvent;
+
+  const _UnitRow({
+    required this.unit,
+    required this.state,
+    required this.density,
+    required this.onEvent,
+  });
+
+  @override
+  State<_UnitRow> createState() => _UnitRowState();
+}
+
+/// The unit's Move, or null when its models disagree — in which case the
+/// statline below says so properly rather than the row picking one.
+String? _move(CombatUnit unit) {
+  final values = <String>{
+    for (final entry in unit.profiles)
+      if (entry.profile.m case final m?)
+        if (m.isNotEmpty) m,
+  };
+  return values.length == 1 ? values.single : null;
+}
+
+class _UnitRowState extends State<_UnitRow> {
+  late bool _open = widget.density.showsWeapons;
+
+  @override
+  void didUpdateWidget(_UnitRow old) {
+    super.didUpdateWidget(old);
+    if (old.density != widget.density) _open = widget.density.showsWeapons;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final unit = widget.unit;
+    final unitState = widget.state.unit(unit.head.instanceId);
+    final ranged = unit.weapons(WeaponKind.ranged,
+        modelsRemaining: widget.state.modelsRemaining);
+    final melee = unit.weapons(WeaponKind.melee,
+        modelsRemaining: widget.state.modelsRemaining);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 6, 8, 0),
+      child: Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            InkWell(
+              onTap: () => setState(() => _open = !_open),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 9, 10, 7),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        unit.label,
+                        style: TextStyle(
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w700,
+                          decoration: unitState.isDestroyed
+                              ? TextDecoration.lineThrough
+                              : null,
+                          color: unitState.isDestroyed
+                              ? scheme.onSurfaceVariant
+                              : scheme.onSurface,
+                        ),
+                      ),
+                    ),
+                    if (unitState.isInReserves)
+                      _Tag(label: 'RESERVE', colour: scheme.onSurfaceVariant),
+                    // Move rides on the row that already carries the name.
+                    // The page it replaces had a MOVE section listing every
+                    // unit again just to put a number beside it, which is the
+                    // duplication this design exists to remove.
+                    if (_move(unit) case final m?) ...[
+                      Text(m,
+                          style: AppTheme.numeric(context, size: 13)
+                              .copyWith(fontWeight: FontWeight.w700)),
+                      Text('  ${unit.models}',
+                          style: TextStyle(
+                              fontSize: 11, color: scheme.onSurfaceVariant)),
+                    ] else
+                      Text('${unit.models}',
+                          style: AppTheme.numeric(context, size: 13)),
+                    Icon(_open ? Icons.expand_less : Icons.expand_more,
+                        size: 18, color: scheme.onSurfaceVariant),
+                  ],
+                ),
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 6, 16, 8),
-            child: Text(
-              'Before the first turn, after both armies are deployed. A unit '
-              'led by a character without a Scout move does not get one.',
-              style: TextStyle(
-                  fontSize: 10.5, height: 1.35, color: scheme.outline),
+            // Rule *names* always, whatever the density. 12–15 characters
+            // each against 174–198 for the printed text, so the names cost
+            // 15–30 lines for a whole army and the text costs 330–686.
+            _RuleChips(unit: unit),
+            if (_open) ...[
+              UnitStatline(profiles: unit.profiles),
+              if (ranged.weapons.isNotEmpty) WeaponTable(result: ranged),
+              if (melee.weapons.isNotEmpty) WeaponTable(result: melee),
+              const SizedBox(height: 6),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The unit's rules, as names. Tapping one opens its text — the only thing on
+/// this page that is behind a tap.
+class _RuleChips extends StatelessWidget {
+  final CombatUnit unit;
+
+  const _RuleChips({required this.unit});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final rules = unit.rules;
+    if (rules.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+      child: Wrap(
+        spacing: 5,
+        runSpacing: 4,
+        children: [
+          for (final rule in rules)
+            InkWell(
+              onTap: () => showModalBottomSheet<void>(
+                context: context,
+                showDragHandle: true,
+                isScrollControlled: true,
+                builder: (_) => _RuleSheet(rule: rule, unitLabel: unit.label),
+              ),
+              borderRadius: BorderRadius.circular(999),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  border: Border.all(color: scheme.outlineVariant),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(rule.name,
+                    style: TextStyle(
+                        fontSize: 11, color: scheme.onSurfaceVariant)),
+              ),
             ),
-          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RuleSheet extends StatelessWidget {
+  final RenderedRule rule;
+  final String unitLabel;
+
+  const _RuleSheet({required this.rule, required this.unitLabel});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(rule.name,
+                style: const TextStyle(
+                    fontSize: 17, fontWeight: FontWeight.w700)),
+            Text(unitLabel,
+                style:
+                    TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
+            const SizedBox(height: 10),
+            Flexible(
+              child: SingleChildScrollView(
+                child: Text(rule.text,
+                    style: const TextStyle(fontSize: 13.5, height: 1.45)),
+              ),
+            ),
+            if (!rule.isPrinted)
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  'Written from the structured data, not the printed rule.',
+                  style: TextStyle(fontSize: 11, color: scheme.outline),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Tag extends StatelessWidget {
+  final String label;
+  final Color colour;
+
+  const _Tag({required this.label, required this.colour});
+
+  @override
+  Widget build(BuildContext context) => Container(
+        margin: const EdgeInsets.only(right: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+        decoration: BoxDecoration(
+          border: Border.all(color: colour),
+          borderRadius: BorderRadius.circular(3),
+        ),
+        child: Text(label,
+            style: TextStyle(
+                fontSize: 8.5,
+                letterSpacing: 0.6,
+                fontWeight: FontWeight.w800,
+                color: colour)),
+      );
+}
+
+class _Heading extends StatelessWidget {
+  final String label;
+  final String? trailing;
+
+  const _Heading({required this.label, this.trailing});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 2),
+      child: Row(
+        children: [
+          Text(label,
+              style: TextStyle(
+                fontSize: 10,
+                letterSpacing: 1.2,
+                fontWeight: FontWeight.w800,
+                color: scheme.primary,
+              )),
+          if (trailing != null) ...[
+            const SizedBox(width: 8),
+            Text(trailing!,
+                style: TextStyle(fontSize: 10, color: scheme.onSurfaceVariant)),
+          ],
         ],
       ),
     );

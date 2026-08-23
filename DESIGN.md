@@ -347,6 +347,22 @@ Three ways to fix that, and only one is honest:
 
 `data-corrections.yaml` at the repo root lists ability effects to replace, each with a mandatory `reason` and an `upstream` field recording where the problem has been reported. `DatasetLoader` applies them as it reads, so the bundler, the snapshot writer and the coverage report all see the same corrected data — while the cross-check deliberately constructs its loader **without** them, so it keeps comparing upstream against upstream.
 
+**A partial merge must not damage what it was not asked about.** `merge.dart`
+filled the tree from raw 40kdc for every path the *current run* had not
+rewritten, so `merge.dart tau-empire` copied the un-enriched Space Marine
+abilities over output a previous run had merged: **2,723 rules silently lost
+their printed text**, and whichever factions were merged last were the only
+ones that had any. The tree is derived and gitignored, so no diff and no test
+saw it, and the shipped bundles only stayed correct because
+`tools/rebuild-assets.sh` always merges everything. Existing merged output is
+now never overwritten by the raw source, a manifest records what the tree
+holds, and a test fails if any faction's ability text falls away.
+
+The same hazard applies to `data-conflicts.json` and `data-enhancement-text.json`,
+which are written wholesale from the current run and are **committed**: a
+partial merge leaves them describing only the factions it touched. Regenerate
+both with a full merge before committing.
+
 Two rules stop this becoming a private fork:
 
 - **No reason, no correction** — the same bar as an accepted divergence. Unexplained is indistinguishable from unexamined.
@@ -1447,6 +1463,109 @@ there: a record holds the name it was **played under**, so a list renamed since
 shows what it used to be called on the games played before the rename. A copy,
 having a new roster id, starts with no history — correctly, since the games
 belong to the list it was copied from.
+
+### 7.3.13 The turn page, sorted by unit
+
+The page this replaces was six phase sections, each carrying every unit's
+weapons and every rule's text again. Rendered and measured rather than
+estimated — `TurnScreen` at 390x844, scrolled to the end so every child laid
+out:
+
+| | T'au 2k | Marines 2k | Incursion 1k |
+| --- | --- | --- | --- |
+| scroll per turn | **32,732px — 41.7 screens** | 5,020px — 6.4 | 10,712px — 13.6 |
+| SHOOTING | 61% | 45% | 44% |
+| strings drawn | 890 | 311 | 531 |
+| distinct strings | 169 | 109 | 147 |
+| **repeats** | **838 of 890 (94%)** | 82% | 88% |
+
+Two facts settle the shape. **94% of what is drawn is a repeat**, and **phase
+is a property of rules while what you scroll past is units and weapons**, which
+are phase-invariant. Sorting by phase is what forced the duplication; sorting
+by unit removes it arithmetically rather than by trimming.
+
+A first pass counted "rows" from the data model and put T'au at 1.94x the
+Marines. Rendering says **6.5x**: rows are not equal height, and a weapon row
+draws a full stat block. The formula was measuring the wrong thing and every
+ratio derived from it was wrong — which is why load-bearing numbers are now
+checked a second way before they decide anything.
+
+**What is on the page and what is behind a tap** follows one measurement. A
+rule *name* is 12-15 characters; its printed text is 174-198 on average and up
+to 993. Names cost 15-30 lines for a whole army, printed text 330-686 —
+uniformly, in every faction. So names and weapon statlines stay on the page and
+**rules text is the only thing behind a tap**. Opening a card per unit to read
+a gun would reintroduce the travel this design exists to remove.
+
+**Stratagems are collected, not de-duplicated.** Only **3 of 19** appear in
+more than one phase, so scattering them across six sections never repeated
+them — it meant hunting six places for sixteen cards that each live in one.
+
+**Density is per roster, not per player** (§7.3.14), because how much you need
+in front of you depends on how well you know *that army*.
+
+**One control moves the game on.** `EndTurn` passes the turn, advances the
+round when it returns to whoever opened, and grants the Command phase's
+command point — all derived, so an older log replays the same and none of it
+can be forgotten by a player who was looking at the table. CP was previously a
+stepper nobody remembered to press.
+
+**Scoring is one tap wherever the card names a figure.** The primary — the
+largest source of victory points in a game — was a `+1` stepper: across the
+shipped cards there are **96 flat awards at a mean of 4.4 taps each**. 81% of
+cards name at least one flat figure and become buttons; the 19% that pay *per
+objective* keep a stepper, because the app cannot see the table. Both sides
+score the same way, since knowing you are on 42 is useless without knowing they
+are on 47.
+
+### 7.3.14 Guided and compact are one page at two densities
+
+An army you have never played wants what an army you know does not. The first
+design for this was a stage-by-stage walkthrough; that was wrong, because
+phase-per-page breaks the rule that everything is present at once — and it
+turned out to be unnecessary. Counting a prompt as one *distinct* thing to
+remember, a whole turn is **53 / 48 / 41** prompts, against the 169 rows the
+old page spent on the same content. Deduplication is what makes the guided
+reading affordable, so it is a prerequisite for both readings rather than a
+trade between them.
+
+Three positions on one axis, defaulting from the roster's own size:
+
+- **Names** — unit rows and rule names; weapons fold away.
+- **Full** — adds the weapon statlines. The default under 40 weapon rows.
+- **Guided** — adds the per-phase prompts, each rule listed once with a count
+  of the units that carry it.
+
+### 7.3.15 The record
+
+The log has always been the state (§7.4); what was missing was a way to read
+it. Mid-game the question is *what did I already score this round*, which was
+answerable only by unpicking the scoreboard. Afterwards, the finished battle
+showed a verdict and a per-round score table but nothing about what happened
+in it.
+
+One widget, both places. It is **derived from the log rather than summarised at
+the end**, because a summary written once cannot answer a question nobody
+thought to ask while writing it — and the whole log is already stored, so
+there is nothing to gain by condensing it.
+
+**Placing an event in its round is a replay.** Most events carry no round of
+their own: drawing a card or losing a model is recorded as it happens and takes
+its place from the events before it. `BattleLog.timeline` walks the log by the
+same round and turn rules `state` does, and a test asserts the two agree —
+which is what catches one being changed without the other. Stamping a round
+onto each event at creation was the alternative, and it would put a derived
+value in the log where an undo could leave it wrong.
+
+**Bookkeeping is left out.** A command point corrected by hand, a round set
+straight because the app and the table disagreed: those are how the log stays
+honest, not what happened in the game. Six of the fourteen event types are
+narrative; printing the rest turns a record into an audit.
+
+**Ids that no longer resolve are shown as the log holds them.** A finished
+battle outlives the roster it was played with, so a unit deleted since reads as
+its id rather than as a blank — losing the line would lose the only record that
+the casualty happened at all.
 
 ### 7.4 Battle state
 

@@ -6,6 +6,7 @@ import 'package:wh40k_core/wh40k_core.dart' as core;
 
 import 'army.dart';
 import 'database.dart';
+import 'play_density.dart';
 
 /// Persistence for saved rosters.
 ///
@@ -83,6 +84,19 @@ class RosterStore {
   static const _legendsKey = 'show-legends';
 
   Future<bool> showLegends() async => await db.setting(_legendsKey) == 'true';
+
+  /// How much detail the turn page shows for one roster.
+  ///
+  /// Per roster, not per player: you know one army and not the next, and a
+  /// global preference is wrong every time a new list is started (§7.3.13).
+  Future<PlayDensity?> density(String rosterId) async =>
+      switch (await db.setting('density:$rosterId')) {
+        final String raw => PlayDensity.parse(raw),
+        null => null,
+      };
+
+  Future<void> setDensity(String rosterId, PlayDensity density) =>
+      db.setSetting('density:$rosterId', density.name);
 
   Stream<bool> watchShowLegends() =>
       db.watchSetting(_legendsKey).map((v) => v == 'true');

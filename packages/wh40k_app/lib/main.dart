@@ -3,6 +3,7 @@ import 'package:wh40k_core/wh40k_core.dart';
 
 import 'src/data/army.dart';
 import 'src/data/database.dart';
+import 'src/data/play_density.dart';
 import 'src/data/roster_store.dart';
 import 'src/screens/army_screen.dart';
 import 'src/screens/battles_screen.dart';
@@ -77,6 +78,9 @@ class ArmyPage extends StatefulWidget {
 class _ArmyPageState extends State<ArmyPage> {
   late Future<Army?> _army = widget.store.load(widget.rosterId);
   int _tab = 0;
+
+  /// How much detail the turn page carries, for *this* army (§7.3.13).
+  PlayDensity? _density;
   BattleLog _log = const BattleLog();
   MissionPack _pack = const MissionPack();
 
@@ -85,6 +89,11 @@ class _ArmyPageState extends State<ArmyPage> {
     super.initState();
     widget.store.loadBattle(widget.rosterId).then((log) {
       if (mounted) setState(() => _log = log);
+    });
+    // Null until it loads, and null again if never chosen — the turn page
+    // then falls back to what this roster's own size suggests.
+    widget.store.density(widget.rosterId).then((d) {
+      if (mounted && d != null) setState(() => _density = d);
     });
     widget.datasets.missions().then((pack) {
       if (mounted) setState(() => _pack = pack);
@@ -211,6 +220,11 @@ class _ArmyPageState extends State<ArmyPage> {
                     onEvent: (event) => _apply(_log.add(event)),
                     onUndo: () => _apply(_log.undo()),
                     onFinish: () => _finishBattle(army),
+                    density: _density,
+                    onDensity: (d) {
+                      setState(() => _density = d);
+                      widget.store.setDensity(army.id, d);
+                    },
                   ),
                 ObjectivesScreen(
                   state: _log.state,

@@ -6,6 +6,7 @@ import 'package:wh40k_core/wh40k_core.dart';
 import '../data/database.dart';
 import '../data/roster_store.dart';
 import '../theme.dart';
+import '../widgets/battle_record.dart';
 import '../widgets/collapsible.dart';
 import '../widgets/deployment_diagram.dart';
 
@@ -252,6 +253,27 @@ class _BattleCard extends StatelessWidget {
               if (setup != null) ...[
                 _Declarations(setup: setup, pack: pack, opponent: opponent),
                 _ScoreTable(state: state, opponent: opponent),
+                // The record the result was read from. A finished battle
+                // outlives the roster it was played with, so ids that no
+                // longer resolve are shown as the log holds them rather than
+                // blanked (§7.3.15).
+                ExpansionTile(
+                  tilePadding: const EdgeInsets.symmetric(horizontal: 12),
+                  title: Text('What happened',
+                      style: TextStyle(
+                        fontSize: 10,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w800,
+                        color: scheme.primary,
+                      )),
+                  children: [
+                    BattleRecord(
+                      log: log,
+                      cardName: (id) => pack.card(id)?.name ?? id,
+                      opponentName: opponent,
+                    ),
+                  ],
+                ),
                 if (pack.deployment(setup.deploymentId ?? '')
                     case final pattern?)
                   Padding(

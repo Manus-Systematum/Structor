@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wh40k_app/src/data/army.dart';
 import 'package:wh40k_app/src/data/dataset_repository.dart';
 import 'package:wh40k_app/src/screens/army_screen.dart';
+import 'package:wh40k_app/src/data/play_density.dart';
 import 'package:wh40k_app/src/screens/turn_screen.dart';
 import 'package:wh40k_app/src/widgets/end_phase.dart';
 import 'package:wh40k_core/wh40k_core.dart';
@@ -203,47 +204,7 @@ void main() {
     expect(find.textContaining('slots unused'), findsOneWidget);
   });
 
-  testWidgets('the turn page renders phase sections in order', (tester) async {
-    useTallSurface(tester);
-    await tester.pumpWidget(host(TurnScreen(army: army)));
-
-    for (final phase in ['COMMAND', 'MOVEMENT', 'SHOOTING']) {
-      expect(find.text(phase), findsOneWidget);
-    }
-    expect(find.text('YOUR TURN'), findsOneWidget);
-  });
-
-  testWidgets('the shooting section shows the split attack totals',
-      (tester) async {
-    useTallSurface(tester);
-    await tester.pumpWidget(host(TurnScreen(army: army)));
-
-    // The number the table exists for: four Commander pods at BS3+ give 8
-    // attacks, six Crisis pods at BS4+ give 12 (§7.3.5).
-    expect(find.text('8 atk'), findsWidgets);
-    expect(find.text('12 atk'), findsWidgets);
-    expect(find.text('3+'), findsWidgets);
-    expect(find.text('4+'), findsWidgets);
-
-    // Torrent weapons merge into one auto-hitting pool instead of splitting.
-    expect(find.text('10D6 atk'), findsWidgets);
-    expect(find.text('auto hit'), findsWidgets);
-  });
-
-  testWidgets('rendered rules appear next to the weapons they modify',
-      (tester) async {
-    useTallSurface(tester);
-    await tester.pumpWidget(host(TurnScreen(army: army)));
-
-    expect(find.textContaining('Fireknife:', findRichText: true), findsWidgets);
-    expect(
-      find.textContaining('re-roll a Hit roll of 1', findRichText: true),
-      findsWidgets,
-      reason: 'the rule as printed, beside the weapons it modifies',
-    );
-  });
-
-  group('the turn page corrections', () {
+  group('the turn page', () {
     BattleLog gameAt(int round) => BattleLog(events: [
           const ConfigureBattle(MissionSetup(
             myDisposition: 'reconnaissance',
@@ -254,28 +215,108 @@ void main() {
           SetRound(round),
         ]);
 
-    testWidgets('Scouting shows in round 1 and is gone from round 2',
+    testWidgets('it opens on the turn, the score and the units',
         (tester) async {
-      // A Scout move not taken before the first turn cannot be taken later,
-      // so from round 2 the section describes a moment that has passed.
+      // Sorted by unit, not by phase. The page this replaced repeated every
+      // unit under six phase headings and scrolled 41.7 screens a turn.
       useTallSurface(tester);
       await tester.pumpWidget(host(TurnScreen(army: army, log: gameAt(1))));
-      expect(find.text('SCOUTING'), findsOneWidget);
 
-      await tester.pumpWidget(host(TurnScreen(army: army, log: gameAt(2))));
-      expect(find.text('SCOUTING'), findsNothing);
+      expect(find.text('ROUND 1'), findsOneWidget);
+      expect(find.text('Your turn'), findsOneWidget);
+      expect(find.text('End turn'), findsOneWidget);
+      expect(find.text('UNITS'), findsOneWidget);
+      // Phase headings are gone from the page's spine.
+      expect(find.text('SHOOTING'), findsNothing);
+      expect(find.text('MOVEMENT'), findsNothing);
     });
 
-    testWidgets('Movement shows the number the phase turns on', (tester) async {
+    testWidgets('each rule is named once per unit, not once per phase',
+        (tester) async {
       useTallSurface(tester);
       await tester.pumpWidget(host(TurnScreen(army: army, log: gameAt(1))));
 
-      expect(find.text('MOVE'), findsOneWidget);
-      // The reference army's Coldstar Commander moves 12 and the Crisis suits
-      // it leads move 10, so the unit shows both rather than one averaged
-      // figure that is true of neither model.
-      expect(find.textContaining('12'), findsWidgets);
-      expect(find.textContaining('10'), findsWidgets);
+      // The reference army fields two Fireknife units, so the name appears
+      // twice — once for each unit that has it. What is gone is the third
+      // axis: the old page drew every rule again under every phase it
+      // touched, which is how 21 distinct rules became 66 renderings.
+      expect(find.text('Fireknife'), findsNWidgets(2));
+      // And it is the *name*: the printed text is 174-198 characters on
+      // average and belongs on the card behind it.
+      expect(find.textContaining('re-roll a Hit roll of 1', findRichText: true),
+          findsNothing);
+    });
+
+    testWidgets('tapping a rule name opens its printed text', (tester) async {
+      useTallSurface(tester);
+      await tester.pumpWidget(host(TurnScreen(army: army, log: gameAt(1))));
+
+      await tester.tap(find.text('Fireknife').first);
+      await tester.pumpAndSettle();
+      expect(find.textContaining('re-roll a Hit roll of 1', findRichText: true),
+          findsOneWidget,
+          reason: 'the only thing on this page behind a tap');
+    });
+
+    testWidgets('weapon statlines stay on the page', (tester) async {
+      // Not behind a tap: clicking into a unit and back out again for every
+      // gun is what the design is against.
+      useTallSurface(tester);
+      await tester.pumpWidget(host(TurnScreen(
+          army: army, log: gameAt(1), density: PlayDensity.full)));
+
+      expect(find.text('8 atk'), findsWidgets);
+      expect(find.text('12 atk'), findsWidgets);
+      expect(find.text('10D6 atk'), findsWidgets);
+      expect(find.text('auto hit'), findsWidgets);
+    });
+
+    testWidgets('the names density folds the weapons away', (tester) async {
+      useTallSurface(tester);
+      await tester.pumpWidget(host(TurnScreen(
+          army: army, log: gameAt(1), density: PlayDensity.names)));
+
+      expect(find.text('Fireknife'), findsNWidgets(2),
+          reason: 'rule names stay whatever the density');
+      expect(find.text('8 atk'), findsNothing);
+    });
+
+    testWidgets('guided adds the phase prompts, each rule once',
+        (tester) async {
+      useTallSurface(tester);
+      await tester.pumpWidget(host(TurnScreen(
+          army: army, log: gameAt(1), density: PlayDensity.guided)));
+
+      expect(find.text('THIS TURN'), findsOneWidget);
+      // Four units carry Deep Strike; the prompt says so once rather than
+      // printing the rule four times.
+      expect(find.textContaining('Deep Strike \u2014', findRichText: true),
+          findsOneWidget);
+    });
+
+    testWidgets('scouting shows in round 1 and is gone from round 2',
+        (tester) async {
+      // A Scout move not taken before the first turn cannot be taken later.
+      useTallSurface(tester);
+      await tester.pumpWidget(host(TurnScreen(army: army, log: gameAt(1))));
+      expect(find.text('SCOUT MOVES'), findsOneWidget);
+
+      await tester.pumpWidget(host(TurnScreen(army: army, log: gameAt(2))));
+      expect(find.text('SCOUT MOVES'), findsNothing);
+    });
+
+    testWidgets('ending a turn is one tap', (tester) async {
+      useTallSurface(tester);
+      final events = <BattleEvent>[];
+      await tester.pumpWidget(host(TurnScreen(
+        army: army,
+        log: gameAt(1),
+        onEvent: events.add,
+      )));
+
+      await tester.tap(find.text('End turn'));
+      await tester.pump();
+      expect(events.single, isA<EndTurn>());
     });
   });
 
