@@ -3,8 +3,10 @@
 Everything App Store Connect asks for, written out so it can be pasted rather
 than composed at the keyboard. Prepared 2026-08-23 against `0.2.0+3`.
 
-**Read §1 before anything else.** It is the part that decides whether this
-submission is worth making in its current form, and it is not a formality.
+**§1 is decided: option 1, submit as built** (2026-08-24). The stratagem text
+stays. Everything in this pack is written for that, so nothing below needs
+changing before a submission — §11 remains as the recipe if the decision is
+ever revisited.
 
 The copy here is in the same plain register as the app and the site, decided in
 `DESIGN.md` and the group's `CLAUDE.md`. The `product-voice` skill exempts
@@ -53,9 +55,10 @@ Three ways forward, in descending order of risk:
 3. **Ask Games Workshop.** Slow, probably unanswered, and not a blocker to
    either of the above.
 
-**This is a judgement about your own legal exposure and nobody else can make
-it.** Everything below is written for option 1; §4's review notes are the text
-to change if you pick option 2, and §11 lists what a switch to option 2 costs.
+**Decided 2026-08-24: option 1.** The app ships as built, with the stratagem
+text. The review notes in §4 and the content-rights answer in §7 are written
+for that and need no edit. §11 stays in the pack because the decision is
+reversible and the recipe is worth keeping, not because it is pending.
 
 ---
 
@@ -360,7 +363,7 @@ Budget an hour, plus a rebuild of the bundles and both suites.
 
 ## 12. Before submitting
 
-- [ ] §1 read and a decision made, with the review notes matching it
+- [x] §1 decided — option 1, submit as built (2026-08-24); review notes match
 - [ ] Build number incremented past `+3`
 - [ ] Screenshots captured from a real list, 6.9-inch and iPad-13 if iPad stays
 - [ ] Both suites green and `tools/rebuild-assets.sh` run since the last data change
