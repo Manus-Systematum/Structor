@@ -1799,6 +1799,16 @@ The remote source is written but **inert** — nothing is hosted, so `baseUrl` i
 - The same screen surfaces the dataset revision, bundle sizes, the Games Workshop disclaimer, a plain statement that nothing is collected, and the **provisional dataslate warning** §3.0 requires be visible rather than presented as current.
 - Build number scheme: `version: <semver>+<build>`, currently `0.2.0+3`. App Store Connect refuses a build number it has already accepted, so the build number increments on every upload regardless of the version. `0.2.0` marks the release that added stratagems, secondaries and VP, the reference page and the army builder — everything since the first TestFlight upload at `0.1.0+2`.
 - iOS deployment target raised 13.0 → 15.0, ahead of Apple's Spring 2027 cutoff.
+- **The icons are in the catalog, and an archive can still ship without them.**
+  An upload on 2026-08-23 failed with four "Missing required icon file" errors
+  for 120, 152, 167 and the 1024 marketing icon. All four are in
+  `AppIcon.appiconset`, all are opaque RGB with no alpha, all three Runner
+  build configurations set `ASSETCATALOG_COMPILER_APPICON_NAME`, and a release
+  build made from the same tree compiles every one of them into `Assets.car` —
+  verified with `assetutil`, not assumed. So the failure was in the archive
+  rather than the source, which a stale `DerivedData` will do.
+  `store/verify-icons.sh` reads the built bundle before an upload, because the
+  catalog being right is not the question Apple asks.
 - `ITSAppUsesNonExemptEncryption = false` in `Info.plist`. Without it App Store Connect holds every build for a manual answer to the same question. The declaration is accurate: downloads use the OS's own TLS, the database is plain SQLite with no SQLCipher, and the only cryptographic primitive in the code is a SHA-256 bundle digest, which is a hash rather than encryption.
 - Bundle identifier settled as `dev.structor.app` on both platforms — permanent once App Store Connect has used it, and no longer carrying a Warhammer reference.
 - 35 app tests.

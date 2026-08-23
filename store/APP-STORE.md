@@ -290,6 +290,28 @@ rest of the copy is plain.
 
 ## 9. Build and upload
 
+**Check the icons first.** An upload on 2026-08-23 was rejected with four
+"Missing required icon file" errors — 120, 152, 167 and the 1024 marketing
+icon — for a project whose asset catalog contains all four and whose icons are
+opaque RGB with no alpha. The catalog was not the problem; the archive was.
+A stale `DerivedData` is the usual cause, and the only place it shows is the
+upload.
+
+```bash
+store/verify-icons.sh                      # the last release build
+store/verify-icons.sh path/to/Structor.ipa # or the archive you are about to send
+```
+
+It reads the built bundle rather than the catalog — `CFBundleIconName` in
+`Info.plist` and the compiled `Assets.car` — because that is what App Store
+Connect reads. If it fails, clear the cache and rebuild:
+
+```bash
+rm -rf ~/Library/Developer/Xcode/DerivedData/*
+cd packages/wh40k_app && flutter clean && flutter build ipa
+```
+
+
 ```bash
 cd packages/wh40k_app && flutter build ipa
 ```
