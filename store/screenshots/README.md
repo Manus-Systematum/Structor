@@ -54,7 +54,7 @@ ten each, in the order that explains the app:
 | `02-army` | the army page | 995 of 1000, six units, two detachments, the validation notes |
 | `03-mission` | setup, step 2 | the mission each detachment would give you, with its scoring and its action — the decision the app exists to inform |
 | `04-setup` | setup, the table | the deployment map drawn to scale, with its honest caption about bounding boxes |
-| `05-turn` | the turn page | round 3, five CP, the stratagems usable now, one expanded to its printed text, and the VP steppers |
+| `05-turn` | the turn page | round 3, six CP, one-tap scoring for both sides, and a unit card with its keywords, statlines and weapons |
 | `06-objectives` | objectives | 21–16 with the score by round, both primaries, and the disclaimer that these are community summaries |
 | `07-rules` | the reference page | search, the army-wide rules, and the shared-rules matrix — the screen that most rewards a tablet |
 
@@ -88,10 +88,35 @@ into `rosters.battle_log_json` as `score` events in the app's own vocabulary —
 reads them exactly as if they had been entered by hand. `battle_event.dart` is
 the schema.
 
+## Keeping them current
+
+**A screenshot is a claim about the app as it is now.** The turn page was
+rebuilt on 2026-08-24 — unit-sorted, one-tap scoring, End turn, derived CP —
+and both `05-turn` files became pictures of a screen that no longer existed.
+They were re-shot against the new build.
+
+So before uploading, check that the app has not moved under them. What was
+verified after that rebuild, rather than assumed:
+
+- `06-objectives` — unchanged, compared on device.
+- `02-army` and `07-rules` — unchanged; the iPad army page re-shot after the
+  rebuild is identical to the one taken before it.
+- `03-mission` and `04-setup` belong to the setup wizard, which that work did
+  not touch.
+
+Re-shooting needs the app reinstalled first, or the simulator keeps running the
+old binary:
+
+```bash
+cd packages/wh40k_app && flutter build ios --simulator --debug
+xcrun simctl install <udid> build/ios/iphonesimulator/Runner.app
+```
+
 ## Status
 
-**All eleven files captured**, every one at its device's native size, from the
-imported 995-point list.
+**All eleven captured**, every one at its device's native size from the
+imported 995-point list, and every one against the current build.
 
 Remaining, neither blocking: `01-armies` is thin enough that the iPhone set
-reads better without it, and the iPad set has no setup-wizard shots.
+reads better without it, and the iPad set has no setup-wizard shots because a
+battle in progress has already passed that step.
