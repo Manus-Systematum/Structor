@@ -27,6 +27,11 @@ sealed class BattleEvent {
 
   Map<String, Object?> toJson();
 
+  /// `me` unless the field says otherwise, including when it is absent —
+  /// which is what a log written before sides existed means.
+  static Player _side(Object? value) =>
+      strOr(value, 'me') == 'opponent' ? Player.opponent : Player.me;
+
   static BattleEvent? fromJson(Object? value) {
     final j = asMap(value);
     return switch (strOr(j['type'], '')) {
@@ -35,9 +40,7 @@ sealed class BattleEvent {
           strOr(j['player'], 'me') == 'opponent' ? Player.opponent : Player.me),
       'cp' => AdjustCp(intOr(j['delta'], 0)),
       'score' => ScoreVp(
-          side: strOr(j['side'], 'me') == 'opponent'
-              ? Player.opponent
-              : Player.me,
+          side: _side(j['side']),
           kind: strOr(j['kind'], 'primary') == 'secondary'
               ? ScoreKind.secondary
               : ScoreKind.primary,
@@ -76,12 +79,15 @@ sealed class BattleEvent {
         ),
       'endTurn' => const EndTurn(),
       'setup' => ConfigureBattle(MissionSetup.fromJson(j['setup'])),
-      'drawSecondary' => DrawSecondary(strOr(j['card'], '')),
-      'discardSecondary' => DiscardSecondary(strOr(j['card'], '')),
+      'drawSecondary' =>
+        DrawSecondary(strOr(j['card'], ''), side: _side(j['side'])),
+      'discardSecondary' =>
+        DiscardSecondary(strOr(j['card'], ''), side: _side(j['side'])),
       'scoreSecondary' => ScoreSecondaryCard(
           cardId: strOr(j['card'], ''),
           round: intOr(j['round'], 1),
           vp: intOr(j['vp'], 0),
+          side: _side(j['side']),
         ),
       _ => null,
     };
@@ -260,47 +266,64 @@ class UseOncePerBattle extends BattleEvent {
       {'type': type, 'unit': instanceId, 'ability': abilityId};
 }
 
+/// Card events carry the side that holds the card.
+///
+/// They did not until 2026-08-24, when the opponent gained a hand of their own
+/// (§7.3.16). `side` defaults to [Player.me] so a log written before that
+/// replays to the same state it always did — the absent field reads as "mine",
+/// which is what it meant.
 class DrawSecondary extends BattleEvent {
   final String cardId;
+  final Player side;
 
-  const DrawSecondary(this.cardId);
+  const DrawSecondary(this.cardId, {this.side = Player.me});
 
   @override
   String get type => 'drawSecondary';
 
   @override
-  Map<String, Object?> toJson() => {'type': type, 'card': cardId};
+  Map<String, Object?> toJson() =>
+      {'type': type, 'card': cardId, 'side': side.name};
 }
 
 class DiscardSecondary extends BattleEvent {
   final String cardId;
+  final Player side;
 
-  const DiscardSecondary(this.cardId);
+  const DiscardSecondary(this.cardId, {this.side = Player.me});
 
   @override
   String get type => 'discardSecondary';
 
   @override
-  Map<String, Object?> toJson() => {'type': type, 'card': cardId};
+  Map<String, Object?> toJson() =>
+      {'type': type, 'card': cardId, 'side': side.name};
 }
 
 class ScoreSecondaryCard extends BattleEvent {
   final String cardId;
   final int round;
   final int vp;
+  final Player side;
 
   const ScoreSecondaryCard({
     required this.cardId,
     required this.round,
     required this.vp,
+    this.side = Player.me,
   });
 
   @override
   String get type => 'scoreSecondary';
 
   @override
-  Map<String, Object?> toJson() =>
-      {'type': type, 'card': cardId, 'round': round, 'vp': vp};
+  Map<String, Object?> toJson() => {
+        'type': type,
+        'card': cardId,
+        'round': round,
+        'vp': vp,
+        'side': side.name,
+      };
 }
 
 /// The completed setup wizard, recorded as a single event so it persists,

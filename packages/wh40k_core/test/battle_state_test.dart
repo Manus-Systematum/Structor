@@ -56,7 +56,8 @@ void main() {
       expect(state.hasUsedStratagem('u01', phase: 'shooting'), isTrue);
       expect(state.hasUsedStratagem('u01', phase: 'fight'), isFalse,
           reason: 'a different phase in the same round is free');
-      expect(state.hasUsedStratagem('u01', phase: 'shooting', round: 3), isFalse,
+      expect(
+          state.hasUsedStratagem('u01', phase: 'shooting', round: 3), isFalse,
           reason: 'a later round is free');
       expect(state.hasUsedStratagem('u02', phase: 'shooting'), isFalse,
           reason: 'the rule is per unit');
@@ -72,11 +73,12 @@ void main() {
     });
 
     test('spending a stratagem deducts its CP', () {
-      expect(logOf(const [
-        AdjustCp(5),
-        UseStratagem(
-            stratagemId: 's', round: 1, phase: 'command', cp: 2),
-      ]).state.cp, 3);
+      expect(
+          logOf(const [
+            AdjustCp(5),
+            UseStratagem(stratagemId: 's', round: 1, phase: 'command', cp: 2),
+          ]).state.cp,
+          3);
     });
   });
 
@@ -143,10 +145,7 @@ void main() {
       final state = logOf([
         for (var round = 1; round <= 5; round++)
           ScoreVp(
-              side: Player.me,
-              kind: ScoreKind.secondary,
-              round: round,
-              vp: 15),
+              side: Player.me, kind: ScoreKind.secondary, round: round, vp: 15),
       ]).state;
       expect(state.me.secondaryTotal, 45);
       expect(state.me.secondary[1], 15, reason: 'early rounds keep theirs');
@@ -221,6 +220,64 @@ void main() {
       expect(state.secondaries.hand, isEmpty);
       expect(state.secondaries.scored['beacon'], 5);
       expect(state.me.secondaryTotal, 5);
+    });
+  });
+
+  group('the opponent has a deck of their own', () {
+    // The decks are copies of the same 18 cards, so the same objective can sit
+    // in both hands at once. Treating one draw as spending the other player's
+    // card is a different game (§7.3.16).
+    test('both sides can hold the same card', () {
+      final state = logOf(const [
+        DrawSecondary('outflank'),
+        DrawSecondary('outflank', side: Player.opponent),
+      ]).state;
+      expect(state.secondariesOf(Player.me).hand, ['outflank']);
+      expect(state.secondariesOf(Player.opponent).hand, ['outflank']);
+    });
+
+    test('one side drawing does not spend the other side of the deck', () {
+      final state = logOf(const [
+        DrawSecondary('cleanse', side: Player.opponent),
+        DiscardSecondary('cleanse', side: Player.opponent),
+      ]).state;
+      expect(state.secondariesOf(Player.opponent).used, {'cleanse'});
+      expect(state.secondaries.used, isEmpty,
+          reason: 'their discard must not take the card out of my deck');
+    });
+
+    test('a scored card credits the side that held it', () {
+      final state = logOf(const [
+        DrawSecondary('beacon', side: Player.opponent),
+        ScoreSecondaryCard(
+            cardId: 'beacon', round: 2, vp: 5, side: Player.opponent),
+      ]).state;
+      expect(state.opponent.secondaryTotal, 5);
+      expect(state.me.secondaryTotal, 0);
+      expect(state.secondariesOf(Player.opponent).scored['beacon'], 5);
+    });
+
+    // Logs written before sides existed carry no `side` field at all, and a
+    // saved battle in progress is exactly that.
+    test('a card event with no side replays as mine', () {
+      final drawn =
+          BattleEvent.fromJson({'type': 'drawSecondary', 'card': 'outflank'})
+              as DrawSecondary;
+      final scored = BattleEvent.fromJson({
+        'type': 'scoreSecondary',
+        'card': 'outflank',
+        'round': 1,
+        'vp': 4,
+      }) as ScoreSecondaryCard;
+      expect(drawn.side, Player.me);
+      expect(scored.side, Player.me);
+    });
+
+    test('a side survives the round trip through JSON', () {
+      const event = DrawSecondary('outflank', side: Player.opponent);
+      final back = BattleEvent.fromJson(event.toJson()) as DrawSecondary;
+      expect(back.side, Player.opponent);
+      expect(back.cardId, 'outflank');
     });
   });
 
@@ -306,8 +363,7 @@ void main() {
 
     test('and it survives a round trip', () {
       final log = logOf([ConfigureBattle(setup(iGoFirst: false))]);
-      final restored =
-          BattleLog.fromJson(jsonDecode(jsonEncode(log.toJson())));
+      final restored = BattleLog.fromJson(jsonDecode(jsonEncode(log.toJson())));
       expect(restored.state.activePlayer, Player.opponent);
       expect(restored.state.setup?.iGoFirst, isFalse);
     });
@@ -347,7 +403,8 @@ void main() {
       expect(after(const [EndTurn()]).round, 1);
       expect(after(const [EndTurn(), EndTurn()]).round, 2);
       expect(after(const [EndTurn(), EndTurn(), EndTurn()]).round, 2);
-      expect(after(const [EndTurn(), EndTurn(), EndTurn(), EndTurn()]).round, 3);
+      expect(
+          after(const [EndTurn(), EndTurn(), EndTurn(), EndTurn()]).round, 3);
     });
 
     test('the round stops at five', () {
@@ -378,8 +435,10 @@ void main() {
     test('undo takes back the point and the round with it', () {
       final log = BattleLog(events: const [
         ConfigureBattle(MissionSetup(
-          myDisposition: 'a', opponentDisposition: 'b',
-          myMissionId: 'm', opponentMissionId: 'n')),
+            myDisposition: 'a',
+            opponentDisposition: 'b',
+            myMissionId: 'm',
+            opponentMissionId: 'n')),
         EndTurn(),
         EndTurn(),
       ]);
@@ -395,8 +454,11 @@ void main() {
     BattleLog gameOf(List<BattleEvent> events, {bool iGoFirst = true}) =>
         BattleLog(events: [
           ConfigureBattle(MissionSetup(
-            myDisposition: 'a', opponentDisposition: 'b',
-            myMissionId: 'm', opponentMissionId: 'n', iGoFirst: iGoFirst)),
+              myDisposition: 'a',
+              opponentDisposition: 'b',
+              myMissionId: 'm',
+              opponentMissionId: 'n',
+              iGoFirst: iGoFirst)),
           ...events,
         ]);
 
@@ -410,9 +472,8 @@ void main() {
         EndTurn(),
         DrawSecondary('b'),
       ]);
-      final draws = log.timeline
-          .where((e) => e.event is DrawSecondary)
-          .toList();
+      final draws =
+          log.timeline.where((e) => e.event is DrawSecondary).toList();
       expect(draws.map((e) => e.round), [1, 2]);
     });
 
@@ -506,9 +567,7 @@ void main() {
       var log = gameWhere(iGoFirst: true);
       for (var i = 0; i < 12; i++) {
         log = log.add(SetActivePlayer(
-            log.state.activePlayer == Player.me
-                ? Player.opponent
-                : Player.me));
+            log.state.activePlayer == Player.me ? Player.opponent : Player.me));
       }
       expect(log.state.round, 5);
     });

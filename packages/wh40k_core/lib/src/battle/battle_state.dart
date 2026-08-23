@@ -129,7 +129,16 @@ class BattleState {
   final SideScore opponent;
   final Map<String, UnitState> units;
   final List<StratagemUse> stratagemsUsed;
-  final SecondaryState secondaries;
+
+  /// One hand per side. The opponent got one on 2026-08-24 (§7.3.16); before
+  /// that only [Player.me] had cards and the field was a single state.
+  final Map<Player, SecondaryState> hands;
+
+  /// This player's hand — what almost every caller wants.
+  SecondaryState get secondaries => hands[Player.me] ?? const SecondaryState();
+
+  SecondaryState secondariesOf(Player side) =>
+      hands[side] ?? const SecondaryState();
 
   const BattleState({
     this.setup,
@@ -140,11 +149,10 @@ class BattleState {
     this.opponent = const SideScore(),
     this.units = const {},
     this.stratagemsUsed = const [],
-    this.secondaries = const SecondaryState(),
+    this.hands = const {},
   });
 
-  UnitState unit(String instanceId) =>
-      units[instanceId] ?? const UnitState();
+  UnitState unit(String instanceId) => units[instanceId] ?? const UnitState();
 
   /// Whoever takes the first turn of each battle round.
   Player get opener => (setup?.iGoFirst ?? true) ? Player.me : Player.opponent;
@@ -158,7 +166,8 @@ class BattleState {
   bool get passingEndsRound => nextPlayer == opener && round < 5;
 
   /// The one-per-phase rule as a **query**, not a lifecycle (§4.4).
-  bool hasUsedStratagem(String instanceId, {required String phase, int? round}) {
+  bool hasUsedStratagem(String instanceId,
+      {required String phase, int? round}) {
     final r = round ?? this.round;
     return stratagemsUsed.any((u) =>
         u.targetInstanceId == instanceId && u.round == r && u.phase == phase);
@@ -262,8 +271,7 @@ class BattleLog {
         case EndTurn():
           final opener =
               (setup?.iGoFirst ?? true) ? Player.me : Player.opponent;
-          final next =
-              activePlayer == Player.me ? Player.opponent : Player.me;
+          final next = activePlayer == Player.me ? Player.opponent : Player.me;
           if (next == opener && round < 5) round++;
           activePlayer = next;
         case final SetRound e:
@@ -298,10 +306,12 @@ class BattleLog {
     final units = <String, UnitState>{};
     final uses = <StratagemUse>[];
 
-    final secondaryUsed = <String>{};
-    final hand = <String>[];
-    final scoredCards = <String, int>{};
-    final discarded = <String>[];
+    // A pair of everything: the decks are copies, so both sides can hold the
+    // same card and each side's "already seen" is its own.
+    final secondaryUsed = {for (final p in Player.values) p: <String>{}};
+    final hand = {for (final p in Player.values) p: <String>[]};
+    final scoredCards = {for (final p in Player.values) p: <String, int>{}};
+    final discarded = {for (final p in Player.values) p: <String>[]};
 
     UnitState of(String id) => units[id] ?? const UnitState();
 
@@ -326,8 +336,7 @@ class BattleLog {
           // forgotten by a player who was concentrating on the table.
           final opener =
               (setup?.iGoFirst ?? true) ? Player.me : Player.opponent;
-          final next =
-              activePlayer == Player.me ? Player.opponent : Player.me;
+          final next = activePlayer == Player.me ? Player.opponent : Player.me;
           if (next == opener && round < 5) round++;
           activePlayer = next;
           if (next == Player.me) cp += 1;
@@ -386,15 +395,15 @@ class BattleLog {
             oncePerBattleUsed: {...current.oncePerBattleUsed, e.abilityId},
           );
         case final DrawSecondary e:
-          secondaryUsed.add(e.cardId);
-          if (!hand.contains(e.cardId)) hand.add(e.cardId);
+          secondaryUsed[e.side]!.add(e.cardId);
+          if (!hand[e.side]!.contains(e.cardId)) hand[e.side]!.add(e.cardId);
         case final DiscardSecondary e:
-          hand.remove(e.cardId);
-          discarded.add(e.cardId);
+          hand[e.side]!.remove(e.cardId);
+          discarded[e.side]!.add(e.cardId);
         case final ScoreSecondaryCard e:
-          hand.remove(e.cardId);
-          scoredCards[e.cardId] = e.vp;
-          final table = secondary[Player.me]!;
+          hand[e.side]!.remove(e.cardId);
+          scoredCards[e.side]![e.cardId] = e.vp;
+          final table = secondary[e.side]!;
           table[e.round] = (table[e.round] ?? 0) + e.vp;
       }
     }
@@ -414,12 +423,15 @@ class BattleLog {
       ),
       units: Map.unmodifiable(units),
       stratagemsUsed: List.unmodifiable(uses),
-      secondaries: SecondaryState(
-        used: Set.unmodifiable(secondaryUsed),
-        hand: List.unmodifiable(hand),
-        scored: Map.unmodifiable(scoredCards),
-        discarded: List.unmodifiable(discarded),
-      ),
+      hands: {
+        for (final p in Player.values)
+          p: SecondaryState(
+            used: Set.unmodifiable(secondaryUsed[p]!),
+            hand: List.unmodifiable(hand[p]!),
+            scored: Map.unmodifiable(scoredCards[p]!),
+            discarded: List.unmodifiable(discarded[p]!),
+          ),
+      },
     );
   }
 

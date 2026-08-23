@@ -1,9 +1,14 @@
 /// The secondary mission deck (DESIGN.md §7.3.2).
 ///
-/// **The cards in each deck are identical, so there are only 18 choices.**
-/// That is why there is no deck to shuffle here and no per-player copy: a draw
-/// is a pick from the cards this player has not yet seen, and the pick is
-/// recorded as an event so a replay of the log deals the same hand.
+/// **Each player has their own copy of the same 18 cards**, so both sides can
+/// hold the same objective at once — which is how the game is played, and what
+/// the user asked for on 2026-08-24 (§7.3.16). A draw is a pick from the cards
+/// *that side* has not yet seen, so every method here takes one player's
+/// [SecondaryState] and knows nothing about the other's.
+///
+/// Superseded, 2026-08-24: this said there was no per-player copy, on the
+/// grounds that the decks are identical. Identical is not shared — treating
+/// one player's draw as spending the other's card is a different game.
 ///
 /// Randomness lives at the call site and never in the state. Anything else
 /// would make undo redeal.
