@@ -181,6 +181,29 @@ class BattleState {
       };
 }
 
+/// One event, placed in the game it happened in (DESIGN.md §7.3.15).
+///
+/// Most events do not carry a round: drawing a card or losing a model is
+/// recorded as it happens and takes its place from the events before it. So
+/// the timeline is a replay, exactly as [BattleState] is — the alternative,
+/// stamping every event with a round at the point it is created, puts a
+/// derived value in the log and makes an undo able to leave it wrong.
+class LogEntry {
+  final int round;
+  final Player activePlayer;
+  final BattleEvent event;
+
+  /// Position in the log, so a reader can be pointed at one entry.
+  final int index;
+
+  const LogEntry({
+    required this.round,
+    required this.activePlayer,
+    required this.event,
+    required this.index,
+  });
+}
+
 /// Applies an event log to produce state. Pure, so undo is a shorter log.
 class BattleLog {
   final List<BattleEvent> events;
@@ -221,6 +244,50 @@ class BattleLog {
     );
   }
 
+  /// Every event with the round and turn it belongs to.
+  ///
+  /// The round and turn rules here must agree with [state]; the two walk the
+  /// same events and a test asserts the last entry's round matches.
+  List<LogEntry> get timeline {
+    MissionSetup? setup;
+    var round = 1;
+    var activePlayer = Player.me;
+    final out = <LogEntry>[];
+
+    for (final (index, event) in events.indexed) {
+      switch (event) {
+        case final ConfigureBattle e:
+          setup = e.setup;
+          activePlayer = e.setup.iGoFirst ? Player.me : Player.opponent;
+        case EndTurn():
+          final opener =
+              (setup?.iGoFirst ?? true) ? Player.me : Player.opponent;
+          final next =
+              activePlayer == Player.me ? Player.opponent : Player.me;
+          if (next == opener && round < 5) round++;
+          activePlayer = next;
+        case final SetRound e:
+          round = e.round;
+        case final SetActivePlayer e:
+          final opener =
+              (setup?.iGoFirst ?? true) ? Player.me : Player.opponent;
+          if (e.player != activePlayer && e.player == opener && round < 5) {
+            round++;
+          }
+          activePlayer = e.player;
+        default:
+          break;
+      }
+      out.add(LogEntry(
+        round: round,
+        activePlayer: activePlayer,
+        event: event,
+        index: index,
+      ));
+    }
+    return out;
+  }
+
   BattleState get state {
     MissionSetup? setup;
     var round = 1;
@@ -246,8 +313,24 @@ class BattleLog {
           // phone. Before this, a game the opponent started ran a whole round
           // labelled with the wrong active player.
           activePlayer = e.setup.iGoFirst ? Player.me : Player.opponent;
+          // Going first means the first Command phase is yours, and it grants
+          // a command point like any other.
+          if (activePlayer == Player.me) cp += 1;
         case final SetRound e:
           round = e.round;
+        case EndTurn():
+          // Handing over is the only turn control. The round advances when
+          // the turn returns to whoever opened, and the incoming player gains
+          // the command point their Command phase grants — both derived, so
+          // an older log replays with the same result and neither can be
+          // forgotten by a player who was concentrating on the table.
+          final opener =
+              (setup?.iGoFirst ?? true) ? Player.me : Player.opponent;
+          final next =
+              activePlayer == Player.me ? Player.opponent : Player.me;
+          if (next == opener && round < 5) round++;
+          activePlayer = next;
+          if (next == Player.me) cp += 1;
         case final SetActivePlayer e:
           // A battle round is both players having taken a turn, so the round
           // advances when the turn comes back round to whoever opened —

@@ -313,6 +313,146 @@ void main() {
     });
   });
 
+  group('ending a turn', () {
+    BattleState after(List<BattleEvent> events, {bool iGoFirst = true}) =>
+        BattleLog(events: [
+          ConfigureBattle(MissionSetup(
+            myDisposition: 'a',
+            opponentDisposition: 'b',
+            myMissionId: 'm',
+            opponentMissionId: 'n',
+            iGoFirst: iGoFirst,
+          )),
+          ...events,
+        ]).state;
+
+    test('going first grants the first command point', () {
+      // The command point comes from your Command phase, and going first
+      // means the first one is yours.
+      expect(after(const []).cp, 1);
+      expect(after(const [], iGoFirst: false).cp, 0);
+    });
+
+    test('handing over passes the turn and grants their point on return', () {
+      var s = after(const [EndTurn()]);
+      expect(s.activePlayer, Player.opponent);
+      expect(s.cp, 1, reason: 'their turn does not add to your pool');
+
+      s = after(const [EndTurn(), EndTurn()]);
+      expect(s.activePlayer, Player.me);
+      expect(s.cp, 2, reason: 'your next Command phase grants one');
+    });
+
+    test('the round advances when the turn returns to the opener', () {
+      expect(after(const [EndTurn()]).round, 1);
+      expect(after(const [EndTurn(), EndTurn()]).round, 2);
+      expect(after(const [EndTurn(), EndTurn(), EndTurn()]).round, 2);
+      expect(after(const [EndTurn(), EndTurn(), EndTurn(), EndTurn()]).round, 3);
+    });
+
+    test('the round stops at five', () {
+      final s = after(List.filled(20, const EndTurn()));
+      expect(s.round, 5);
+    });
+
+    test('going second, the round turns when it returns to them', () {
+      // The opponent opens, so the first handover is theirs and the round
+      // cannot turn on it. It turns on yours, which passes back to the opener.
+      expect(after(const [], iGoFirst: false).activePlayer, Player.opponent);
+      final theirs = after(const [EndTurn()], iGoFirst: false);
+      expect(theirs.activePlayer, Player.me);
+      expect(theirs.round, 1, reason: 'their turn ended, yours begins');
+      expect(theirs.cp, 1, reason: 'your first Command phase grants one');
+
+      final mine = after(const [EndTurn(), EndTurn()], iGoFirst: false);
+      expect(mine.activePlayer, Player.opponent);
+      expect(mine.round, 2);
+    });
+
+    test('it round-trips through the log', () {
+      final log = BattleLog(events: const [EndTurn()]);
+      final back = BattleLog.fromJson(log.toJson());
+      expect(back.events.single, isA<EndTurn>());
+    });
+
+    test('undo takes back the point and the round with it', () {
+      final log = BattleLog(events: const [
+        ConfigureBattle(MissionSetup(
+          myDisposition: 'a', opponentDisposition: 'b',
+          myMissionId: 'm', opponentMissionId: 'n')),
+        EndTurn(),
+        EndTurn(),
+      ]);
+      expect(log.state.round, 2);
+      expect(log.state.cp, 2);
+      final undone = log.undo();
+      expect(undone.state.round, 1);
+      expect(undone.state.cp, 1);
+    });
+  });
+
+  group('the timeline places every event in its round', () {
+    BattleLog gameOf(List<BattleEvent> events, {bool iGoFirst = true}) =>
+        BattleLog(events: [
+          ConfigureBattle(MissionSetup(
+            myDisposition: 'a', opponentDisposition: 'b',
+            myMissionId: 'm', opponentMissionId: 'n', iGoFirst: iGoFirst)),
+          ...events,
+        ]);
+
+    test('an event with no round of its own takes it from the events before',
+        () {
+      // DrawSecondary carries no round: stamping one at creation would put a
+      // derived value in the log and let an undo leave it wrong.
+      final log = gameOf(const [
+        DrawSecondary('a'),
+        EndTurn(),
+        EndTurn(),
+        DrawSecondary('b'),
+      ]);
+      final draws = log.timeline
+          .where((e) => e.event is DrawSecondary)
+          .toList();
+      expect(draws.map((e) => e.round), [1, 2]);
+    });
+
+    test('it agrees with the state it is derived alongside', () {
+      // The two walk the same events by the same rules; this is what catches
+      // one being changed without the other.
+      for (final events in [
+        const <BattleEvent>[],
+        const [EndTurn()],
+        const [EndTurn(), EndTurn(), EndTurn()],
+        const [EndTurn(), SetRound(4), EndTurn()],
+        const [SetActivePlayer(Player.opponent), EndTurn()],
+        List<BattleEvent>.filled(14, const EndTurn()),
+      ]) {
+        for (final first in [true, false]) {
+          final log = gameOf(events, iGoFirst: first);
+          expect(log.timeline.last.round, log.state.round,
+              reason: 'round disagrees');
+          expect(log.timeline.last.activePlayer, log.state.activePlayer,
+              reason: 'turn disagrees');
+        }
+      }
+    });
+
+    test('every event is present, in order', () {
+      final log = gameOf(const [
+        AdjustCp(1),
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 1, vp: 4),
+        EndTurn(),
+      ]);
+      expect(log.timeline, hasLength(log.events.length));
+      expect(log.timeline.map((e) => e.index), [0, 1, 2, 3]);
+      expect(log.timeline.last.event, isA<EndTurn>());
+    });
+
+    test('an empty log has an empty timeline', () {
+      expect(const BattleLog().timeline, isEmpty);
+    });
+  });
+
   group('the round advances on its own', () {
     BattleLog gameWhere({required bool iGoFirst}) => logOf([
           ConfigureBattle(MissionSetup(

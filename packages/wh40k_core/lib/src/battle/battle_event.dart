@@ -74,6 +74,7 @@ sealed class BattleEvent {
           instanceId: strOr(j['unit'], ''),
           abilityId: strOr(j['ability'], ''),
         ),
+      'endTurn' => const EndTurn(),
       'setup' => ConfigureBattle(MissionSetup.fromJson(j['setup'])),
       'drawSecondary' => DrawSecondary(strOr(j['card'], '')),
       'discardSecondary' => DiscardSecondary(strOr(j['card'], '')),
@@ -109,6 +110,23 @@ class SetActivePlayer extends BattleEvent {
 
   @override
   Map<String, Object?> toJson() => {'type': type, 'player': player.name};
+}
+
+/// The active player hands over (DESIGN.md §7.3.13).
+///
+/// One event rather than three, because ending a turn is one act at the table
+/// and was three taps in the app: switch the player, remember the round moved
+/// when it came back round, and remember the command point. All of that is
+/// derived from this now, so the log reads as a game rather than as
+/// bookkeeping, and nothing is forgotten because it was a separate control.
+class EndTurn extends BattleEvent {
+  const EndTurn();
+
+  @override
+  String get type => 'endTurn';
+
+  @override
+  Map<String, Object?> toJson() => {'type': type};
 }
 
 class AdjustCp extends BattleEvent {
