@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wh40k_app/src/widgets/end_phase.dart';
+import 'package:wh40k_app/src/widgets/secondary_cards.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 MissionCard _card(String id, String name,
@@ -33,7 +33,8 @@ void main() {
       MaterialApp(
         home: Scaffold(
           body: SingleChildScrollView(
-            child: EndPhase(state: state, deck: deck, onEvent: onEvent),
+            child: SecondaryPanel(
+                state: state, deck: deck, onEvent: onEvent),
           ),
         ),
       );
@@ -43,38 +44,6 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
   }
-
-  testWidgets('both sides are shown, and who is ahead', (tester) async {
-    tall(tester);
-    final state = const BattleLog(events: [
-      ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 1, vp: 10),
-      ScoreVp(side: Player.opponent, kind: ScoreKind.primary, round: 1, vp: 4),
-    ]).state;
-
-    await tester.pumpWidget(host(state, (_) {}));
-
-    expect(find.text('You'), findsOneWidget);
-    expect(find.text('Opponent'), findsOneWidget);
-    expect(find.text('10'), findsWidgets);
-    expect(find.text('4'), findsWidgets);
-    // The margin is the number that decides the game.
-    expect(find.byIcon(Icons.arrow_upward), findsOneWidget);
-  });
-
-  testWidgets('a VP tap scores this round for the side tapped',
-      (tester) async {
-    tall(tester);
-    final events = <BattleEvent>[];
-    await tester.pumpWidget(host(const BattleState(round: 3), events.add));
-
-    // Two PRIMARY steppers, mine first.
-    await tester.tap(find.byIcon(Icons.add).first);
-    final scored = events.single as ScoreVp;
-    expect(scored.side, Player.me);
-    expect(scored.kind, ScoreKind.primary);
-    expect(scored.round, 3);
-    expect(scored.vp, 1);
-  });
 
   testWidgets('drawing puts a card in hand and takes it out of the deck',
       (tester) async {

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../theme.dart';
+import 'rule_text.dart';
+import 'secondary_cards.dart';
+import 'sheet_header.dart';
 
 /// Both sides' score, entered in one tap wherever the card names a figure
 /// (DESIGN.md §7.3.13).
@@ -49,7 +52,8 @@ class ScoreBoard extends StatelessWidget {
               score: state.me,
               state: state,
               card: pack.card(setup?.myMissionId ?? ''),
-              held: deck.hand(state.secondaries),
+              held: deck.hand(state.secondariesOf(Player.me)),
+              deck: deck,
               ahead: state.me.total >= state.opponent.total,
               onEvent: onEvent,
             ),
@@ -63,10 +67,13 @@ class ScoreBoard extends StatelessWidget {
               // asymmetric — and how they score is how you decide what to
               // contest.
               card: pack.card(setup?.opponentMissionId ?? ''),
-              // Their hand is theirs; the app never sees it, so their
-              // secondaries are a figure you are told rather than a card you
-              // can tap.
-              held: const [],
+              // Their hand is tracked too, from their own copy of the deck
+              // (§7.3.16). What they hold is often visible at the table —
+              // fixed secondaries are declared, and tactical ones get revealed
+              // as they are scored — and knowing which card they are chasing
+              // is most of what decides where you stand.
+              held: deck.hand(state.secondariesOf(Player.opponent)),
+              deck: deck,
               ahead: state.opponent.total > state.me.total,
               onEvent: onEvent,
             ),
@@ -84,6 +91,7 @@ class _Side extends StatelessWidget {
   final BattleState state;
   final MissionCard? card;
   final List<MissionCard> held;
+  final SecondaryDeck deck;
   final bool ahead;
   final void Function(BattleEvent) onEvent;
 
@@ -94,9 +102,50 @@ class _Side extends StatelessWidget {
     required this.state,
     required this.card,
     required this.held,
+    required this.deck,
     required this.ahead,
     required this.onEvent,
   });
+
+  /// The primary in full, from the row that scores it.
+  ///
+  /// The figures on the buttons are what the card pays; this is what the card
+  /// *asks for*, which is the part you check before tapping. Both missions are
+  /// readable — the matchup is asymmetric, and how they score decides what you
+  /// contest (§7.3.17).
+  void _showMission(BuildContext context) {
+    final mission = card;
+    if (mission == null) return;
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (_) => _MissionSheet(card: mission, owner: label),
+    );
+  }
+
+  void _showCards(BuildContext context) => showModalBottomSheet<void>(
+        context: context,
+        showDragHandle: true,
+        isScrollControlled: true,
+        builder: (_) => SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SheetHeader(title: '$label · secondaries'),
+                SecondaryPanel(
+                  state: state,
+                  deck: deck,
+                  onEvent: onEvent,
+                  side: side,
+                ),
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
+        ),
+      );
 
   void _score(ScoreKind kind, int vp) => onEvent(ScoreVp(
         side: side,
@@ -133,8 +182,8 @@ class _Side extends StatelessWidget {
                         fontSize: 13, fontWeight: FontWeight.w700)),
               ),
               Text('${score.primaryTotal}+${score.secondaryTotal}',
-                  style: TextStyle(
-                      fontSize: 11, color: scheme.onSurfaceVariant)),
+                  style:
+                      TextStyle(fontSize: 11, color: scheme.onSurfaceVariant)),
               const SizedBox(width: 8),
               Text('${score.total}',
                   style: AppTheme.numeric(context, size: 21).copyWith(
@@ -143,7 +192,28 @@ class _Side extends StatelessWidget {
                   )),
             ],
           ),
-          const SizedBox(height: 4),
+          if (card case final mission?)
+            InkWell(
+              onTap: () => _showMission(context),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(mission.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 11.5, color: scheme.onSurfaceVariant)),
+                    ),
+                    const SizedBox(width: 3),
+                    Icon(Icons.expand_more,
+                        size: 14, color: scheme.onSurfaceVariant),
+                  ],
+                ),
+              ),
+            ),
+          const SizedBox(height: 2),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -159,6 +229,10 @@ class _Side extends StatelessWidget {
               Expanded(
                 child: _Line(
                   label: 'SECONDARY',
+                  trailing: _CardsButton(
+                    count: held.length,
+                    onTap: () => _showCards(context),
+                  ),
                   thisRound: score.secondary[state.round] ?? 0,
                   payouts: {
                     for (final c in held)
@@ -184,11 +258,15 @@ class _Line extends StatelessWidget {
   final List<int> payouts;
   final void Function(int) onScore;
 
+  /// Sits on the label row, where it does not compete with the score chips.
+  final Widget? trailing;
+
   const _Line({
     required this.label,
     required this.thisRound,
     required this.payouts,
     required this.onScore,
+    this.trailing,
   });
 
   @override
@@ -213,6 +291,10 @@ class _Line extends StatelessWidget {
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
                       color: scheme.primary)),
+            ],
+            if (trailing case final trailing?) ...[
+              const Spacer(),
+              trailing,
             ],
           ],
         ),
@@ -261,8 +343,88 @@ class _Chip extends StatelessWidget {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w700,
-              color: quiet ? scheme.onSurfaceVariant : scheme.onPrimaryContainer,
+              color:
+                  quiet ? scheme.onSurfaceVariant : scheme.onPrimaryContainer,
             )),
+      ),
+    );
+  }
+}
+
+/// The way into one side's hand: how many cards, and a tap to work with them.
+///
+/// A count rather than the names, because the names are long and the row is
+/// half a phone wide. Zero is still a button — an empty hand is the state you
+/// most need to leave.
+class _CardsButton extends StatelessWidget {
+  final int count;
+  final VoidCallback onTap;
+
+  const _CardsButton({required this.count, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(6),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.style_outlined, size: 12, color: scheme.primary),
+            const SizedBox(width: 3),
+            Text(count == 0 ? 'Cards' : 'Cards $count',
+                style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: scheme.primary)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// One primary mission in full, opened from the row that scores it.
+class _MissionSheet extends StatelessWidget {
+  final MissionCard card;
+  final String owner;
+
+  const _MissionSheet({required this.card, required this.owner});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SheetHeader(
+              title: card.name,
+              trailing: Text(owner,
+                  style:
+                      TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+              child: RuleText(card.text,
+                  style: const TextStyle(fontSize: 13, height: 1.4)),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: Text(
+                'Card text is transcribed, not summarised, but the printed '
+                'card is what settles a rules dispute.',
+                style: TextStyle(
+                    fontSize: 10.5, height: 1.35, color: scheme.outline),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

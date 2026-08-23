@@ -5,7 +5,7 @@ import 'package:wh40k_app/src/data/dataset_repository.dart';
 import 'package:wh40k_app/src/screens/army_screen.dart';
 import 'package:wh40k_app/src/data/play_density.dart';
 import 'package:wh40k_app/src/screens/turn_screen.dart';
-import 'package:wh40k_app/src/widgets/end_phase.dart';
+import 'package:wh40k_app/src/widgets/score_board.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 /// Wraps a screen so it can be pumped without the app's FutureBuilder, whose
@@ -351,7 +351,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.reset);
       await tester.pumpWidget(host(SingleChildScrollView(
-        child: EndPhase(
+        child: ScoreBoard(
           state: state,
           deck: const SecondaryDeck([]),
           pack: pack ?? const MissionPack(),
