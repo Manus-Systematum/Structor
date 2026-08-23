@@ -364,9 +364,14 @@ Budget an hour, plus a rebuild of the bundles and both suites.
 ## 12. Before submitting
 
 - [x] §1 decided — option 1, submit as built (2026-08-24); review notes match
-- [ ] Build number incremented past `+3`
-- [ ] Screenshots captured from a real list, 6.9-inch and iPad-13 if iPad stays
-- [ ] Both suites green and `tools/rebuild-assets.sh` run since the last data change
-- [ ] The three URLs still resolve
-- [ ] About screen still shows "Powered by 40kdc-data" — `about_test` asserts it,
-      and a failure there means the app is out of licence compliance
+- [ ] **Build number** — `pubspec.yaml` still reads `0.2.0+3`, which is the
+      number the earlier TestFlight build used. App Store Connect refuses a
+      build number it has already accepted, so an upload either passed
+      `--build-number` on the command line or was rejected as a duplicate. If
+      it was passed on the command line, bump `pubspec.yaml` to match, or the
+      repository and the store disagree about what `+3` means.
+- [x] Screenshots — eleven, 6.9-inch and iPad-13, against the current build
+- [x] Both suites green (482 core, 189 app) and the shipped-bundle guard passes
+- [x] The three URLs resolve — checked 2026-08-24
+- [x] About screen shows "Powered by 40kdc-data" — `about_test` asserts it, and
+      a failure there means the app is out of licence compliance
