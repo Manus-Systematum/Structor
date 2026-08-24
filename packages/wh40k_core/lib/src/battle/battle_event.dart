@@ -38,7 +38,7 @@ sealed class BattleEvent {
       'round' => SetRound(intOr(j['round'], 1)),
       'turn' => SetActivePlayer(
           strOr(j['player'], 'me') == 'opponent' ? Player.opponent : Player.me),
-      'cp' => AdjustCp(intOr(j['delta'], 0)),
+      'cp' => AdjustCp(intOr(j['delta'], 0), side: _side(j['side'])),
       'score' => ScoreVp(
           side: _side(j['side']),
           kind: strOr(j['kind'], 'primary') == 'secondary'
@@ -138,16 +138,23 @@ class EndTurn extends BattleEvent {
   Map<String, Object?> toJson() => {'type': type};
 }
 
+/// A command point gained or spent.
+///
+/// Carries a side since 2026-08-24: the opponent's points are tracked too, and
+/// a log written before that means mine, which is what the absent field reads
+/// as (§7.3.21).
 class AdjustCp extends BattleEvent {
   final int delta;
+  final Player side;
 
-  const AdjustCp(this.delta);
+  const AdjustCp(this.delta, {this.side = Player.me});
 
   @override
   String get type => 'cp';
 
   @override
-  Map<String, Object?> toJson() => {'type': type, 'delta': delta};
+  Map<String, Object?> toJson() =>
+      {'type': type, 'delta': delta, 'side': side.name};
 }
 
 class ScoreVp extends BattleEvent {

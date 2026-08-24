@@ -172,6 +172,14 @@ class _SideState extends State<_Side> {
                     style: const TextStyle(
                         fontSize: 13, fontWeight: FontWeight.w700)),
               ),
+              _CpCounter(
+                cp: widget.side == Player.me
+                    ? widget.state.cp
+                    : widget.state.opponentCp,
+                onChange: (delta) =>
+                    widget.onEvent(AdjustCp(delta, side: widget.side)),
+              ),
+              const SizedBox(width: 8),
               Text(
                   '${widget.score.primaryTotal}+${widget.score.secondaryTotal}',
                   style:
@@ -427,6 +435,68 @@ class _MissionSheet extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// One side's command points, on the row that scores for that side.
+///
+/// The opponent's are here rather than in the bar because the bar is this
+/// player's: round, their own points, the control that ends their turn. Theirs
+/// belong beside their score, which is the other thing about them worth
+/// knowing and the thing it is compared against (§7.3.21).
+///
+/// Entered, not derived — the app cannot see their table. The Command phase
+/// grant is derived for both sides, because that one follows from the turn
+/// passing and nothing else.
+class _CpCounter extends StatelessWidget {
+  final int cp;
+  final void Function(int delta) onChange;
+
+  const _CpCounter({required this.cp, required this.onChange});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (cp > 0) _CpStep(icon: Icons.remove, onTap: () => onChange(-1)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 3),
+          child: Text('$cp CP',
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w800,
+                color: scheme.onSurfaceVariant,
+              )),
+        ),
+        _CpStep(icon: Icons.add, onTap: () => onChange(1)),
+      ],
+    );
+  }
+}
+
+class _CpStep extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _CpStep({required this.icon, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return InkResponse(
+      onTap: onTap,
+      radius: 16,
+      child: Container(
+        padding: const EdgeInsets.all(2),
+        decoration: BoxDecoration(
+          color: scheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Icon(icon, size: 13, color: scheme.onSurface),
       ),
     );
   }

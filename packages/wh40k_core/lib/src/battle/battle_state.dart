@@ -125,6 +125,12 @@ class BattleState {
   final int round;
   final Player activePlayer;
   final int cp;
+
+  /// Their command points, tracked the same way and by the same rules — a
+  /// Command phase grants one, spending takes one (§7.3.21). Entered rather
+  /// than known: the app cannot see their hand any more than their table.
+  final int opponentCp;
+
   final SideScore me;
   final SideScore opponent;
   final Map<String, UnitState> units;
@@ -151,6 +157,7 @@ class BattleState {
     this.round = 1,
     this.activePlayer = Player.me,
     this.cp = 0,
+    this.opponentCp = 0,
     this.me = const SideScore(),
     this.opponent = const SideScore(),
     this.units = const {},
@@ -308,6 +315,7 @@ class BattleLog {
     var round = 1;
     var activePlayer = Player.me;
     var cp = 0;
+    var opponentCp = 0;
     final primary = {Player.me: <int, int>{}, Player.opponent: <int, int>{}};
     final secondary = {Player.me: <int, int>{}, Player.opponent: <int, int>{}};
     final units = <String, UnitState>{};
@@ -333,7 +341,11 @@ class BattleLog {
           activePlayer = e.setup.iGoFirst ? Player.me : Player.opponent;
           // Going first means the first Command phase is yours, and it grants
           // a command point like any other.
-          if (activePlayer == Player.me) cp += 1;
+          if (activePlayer == Player.me) {
+            cp += 1;
+          } else {
+            opponentCp += 1;
+          }
         case final SetRound e:
           round = e.round;
         case EndTurn():
@@ -347,7 +359,11 @@ class BattleLog {
           final next = activePlayer == Player.me ? Player.opponent : Player.me;
           if (next == opener && round < 5) round++;
           activePlayer = next;
-          if (next == Player.me) cp += 1;
+          if (next == Player.me) {
+            cp += 1;
+          } else {
+            opponentCp += 1;
+          }
         case final SetActivePlayer e:
           // A battle round is both players having taken a turn, so the round
           // advances when the turn comes back round to whoever opened —
@@ -361,7 +377,11 @@ class BattleLog {
           }
           activePlayer = e.player;
         case final AdjustCp e:
-          cp = (cp + e.delta).clamp(0, 1 << 30);
+          if (e.side == Player.me) {
+            cp = (cp + e.delta).clamp(0, 1 << 30);
+          } else {
+            opponentCp = (opponentCp + e.delta).clamp(0, 1 << 30);
+          }
         case final ScoreVp e:
           final table = e.kind == ScoreKind.primary
               ? primary[e.side]!
@@ -410,9 +430,13 @@ class BattleLog {
           discarded[e.side]!.add(e.cardId);
           if (e.forCp) {
             cpTraded.add(round);
-            // Only this player's command points are tracked, so only this
-            // player's trade can add one (§7.3.18).
-            if (e.side == Player.me) cp++;
+            // Both sides now have points, so both sides' trades pay
+            // (§7.3.21). The allowance is still one per battle round.
+            if (e.side == Player.me) {
+              cp++;
+            } else {
+              opponentCp++;
+            }
           }
         case final ScoreSecondaryCard e:
           hand[e.side]!.remove(e.cardId);
@@ -427,6 +451,7 @@ class BattleLog {
       round: round,
       activePlayer: activePlayer,
       cp: cp,
+      opponentCp: opponentCp,
       me: SideScore(
         primary: Map.unmodifiable(primary[Player.me]!),
         secondary: Map.unmodifiable(_capped(secondary[Player.me]!)),

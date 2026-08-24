@@ -97,6 +97,53 @@ void main() {
     });
   });
 
+  group('command points, per side', () {
+    // The bar carries mine because the bar is mine — round, my points, the
+    // control that ends my turn. Theirs belong beside their score, which is
+    // the other thing about them worth knowing (§7.3.21).
+    testWidgets('each row carries its own', (tester) async {
+      tall(tester);
+      await tester.pumpWidget(host(
+        stateWith(const [AdjustCp(2), AdjustCp(5, side: Player.opponent)]),
+        (_) {},
+      ));
+
+      // Mine is 3: the setup gives me the first turn, and an opening Command
+      // phase grants one before anything is entered by hand.
+      expect(find.text('3 CP'), findsOneWidget);
+      expect(find.text('5 CP'), findsOneWidget);
+    });
+
+    testWidgets('adding on their row adds to theirs', (tester) async {
+      tall(tester);
+      final events = <BattleEvent>[];
+      await tester.pumpWidget(host(stateWith(const []), events.add));
+
+      // Two rows, two plus buttons; the opponent's is the second.
+      await tester.tap(find.byIcon(Icons.add).last);
+      await tester.pump();
+
+      final adjusted = events.single as AdjustCp;
+      expect(adjusted.side, Player.opponent);
+      expect(adjusted.delta, 1);
+    });
+
+    testWidgets('nothing to spend, nothing to press', (tester) async {
+      tall(tester);
+      // They have not taken a turn, so they have no points and no way to
+      // spend them; mine opened with one, so mine does.
+      await tester.pumpWidget(host(stateWith(const []), (_) {}));
+      expect(find.byIcon(Icons.remove), findsOneWidget);
+
+      await tester.pumpWidget(host(
+        stateWith(const [AdjustCp(1, side: Player.opponent)]),
+        (_) {},
+      ));
+      await tester.pumpAndSettle();
+      expect(find.byIcon(Icons.remove), findsNWidgets(2));
+    });
+  });
+
   group('secondary cards, per side', () {
     testWidgets('each row counts the hand it can reach', (tester) async {
       tall(tester);

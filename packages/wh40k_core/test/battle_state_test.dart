@@ -223,6 +223,73 @@ void main() {
     });
   });
 
+  group('the opponent has command points too', () {
+    const setup = MissionSetup(
+      myDisposition: 'a',
+      opponentDisposition: 'b',
+      myMissionId: 'm',
+      opponentMissionId: 'n',
+    );
+
+    test('each Command phase grants one, to whoever is taking it', () {
+      // I open, so the first Command phase is mine.
+      final log = BattleLog(events: const [
+        ConfigureBattle(setup),
+        EndTurn(),
+      ]);
+      expect(log.state.cp, 1, reason: 'my opening Command phase');
+      expect(log.state.opponentCp, 1, reason: 'theirs, once the turn passes');
+    });
+
+    test('the opener gets the first one even when it is them', () {
+      final log = BattleLog(events: const [
+        ConfigureBattle(MissionSetup(
+          myDisposition: 'a',
+          opponentDisposition: 'b',
+          myMissionId: 'm',
+          opponentMissionId: 'n',
+          iGoFirst: false,
+        )),
+      ]);
+      expect(log.state.opponentCp, 1);
+      expect(log.state.cp, 0);
+    });
+
+    test('spending one side does not touch the other', () {
+      final log = BattleLog(events: const [
+        ConfigureBattle(setup),
+        EndTurn(),
+        AdjustCp(-1, side: Player.opponent),
+      ]);
+      expect(log.state.cp, 1);
+      expect(log.state.opponentCp, 0);
+    });
+
+    test('neither side goes below zero', () {
+      final log = BattleLog(events: const [
+        AdjustCp(-5, side: Player.opponent),
+        AdjustCp(-5),
+      ]);
+      expect(log.state.opponentCp, 0);
+      expect(log.state.cp, 0);
+    });
+
+    test('their trade pays them', () {
+      final log = BattleLog(events: const [
+        DrawSecondary('outflank', side: Player.opponent),
+        DiscardSecondary('outflank', side: Player.opponent, forCp: true),
+      ]);
+      expect(log.state.opponentCp, 1);
+      expect(log.state.cp, 0);
+    });
+
+    test('a CP event with no side is mine, as it always was', () {
+      final back = BattleEvent.fromJson({'type': 'cp', 'delta': 2});
+      expect((back as AdjustCp).side, Player.me);
+      expect(back.delta, 2);
+    });
+  });
+
   group('a card can be traded for a command point', () {
     // One per battle round, and the round is the unit rather than the turn:
     // passing the turn back must not refresh it (§7.3.18).

@@ -1643,9 +1643,9 @@ type: the discard is the same discard, and the record reads "discarded for CP"
 where it applies, because a command point that appeared with no reason attached
 is the kind of thing an opponent asks about.
 
-**Only this player's points are tracked**, so only this player's trade adds
-one. The opponent's panel offers a plain discard. Giving them a CP pool is a
-feature nobody asked for; pretending their trade did something would be worse.
+Superseded, 2026-08-24: this said only this player's points were tracked, so
+only this player's trade could pay — the opponent's panel offered a plain
+discard. §7.3.21 gave them a pool, and both sides' trades pay now.
 
 ### 7.3.19 The objectives page is one fold per side
 
@@ -1679,6 +1679,30 @@ Next turn only exists once there is a turn to come back to, and a banner says
 which turn it is and that nothing there can change. A tap that scored into
 round two from a page that looked like round two would be a different feature,
 and a surprising one.
+
+### 7.3.21 The opponent's command points, beside their score
+
+Asked for the same day the trade landed, and it reverses §7.3.18's "only this
+player's points are tracked".
+
+**Not in the bar.** The bar is this player's — the round, their own points, the
+control that ends their turn. Theirs go on the row that scores for them, next
+to the total they are compared against, which is the other thing about the
+opponent worth knowing mid-game.
+
+**Both rows carry one**, so the two read the same way and a glance answers
+"who can afford what". Mine is in both places; the bar and the row are the same
+state, in the way End turn is in two places for the same reason.
+
+**Derived where it follows from the turn, entered everywhere else.** A Command
+phase grants a point to whoever is taking it, for both sides, because that
+follows from the turn passing and nothing else — the same derivation that
+already gave this player theirs. Everything else is entered, because the app
+cannot see their table any more than it can see their hand. The minus appears
+only when there is something to spend.
+
+`AdjustCp` takes a side, defaulting to `me`, so a battle saved before today
+replays unchanged.
 
 ### 7.4 Battle state
 
