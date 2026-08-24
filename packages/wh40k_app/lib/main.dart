@@ -3,6 +3,7 @@ import 'package:wh40k_core/wh40k_core.dart';
 
 import 'src/data/army.dart';
 import 'src/data/database.dart';
+import 'src/data/keyword_scope.dart';
 import 'src/data/play_density.dart';
 import 'src/data/roster_store.dart';
 import 'src/screens/army_screen.dart';
@@ -83,6 +84,7 @@ class _ArmyPageState extends State<ArmyPage> {
   PlayDensity? _density;
   BattleLog _log = const BattleLog();
   MissionPack _pack = const MissionPack();
+  Map<String, WeaponKeywordText> _keywords = const {};
 
   @override
   void initState() {
@@ -97,6 +99,9 @@ class _ArmyPageState extends State<ArmyPage> {
     });
     widget.datasets.missions().then((pack) {
       if (mounted) setState(() => _pack = pack);
+    });
+    widget.datasets.weaponKeywords().then((keywords) {
+      if (mounted) setState(() => _keywords = keywords);
     });
   }
 
@@ -196,48 +201,52 @@ class _ArmyPageState extends State<ArmyPage> {
             if (army == null) {
               return const _Message(text: 'This roster is no longer saved.');
             }
-            return IndexedStack(
-              index: _tab,
-              children: [
-                ArmyScreen(army: army, onEdit: () => _editArmy(army)),
-                // With no game in progress the tab rests on the record of
-                // past ones rather than a screen that exists to hold a
-                // button (§7.3.12).
-                if (_log.state.setup == null)
-                  BattlesScreen(
-                    store: widget.store,
+            // Everything that draws a weapon keyword sits under here.
+            return WeaponKeywordScope(
+              keywords: _keywords,
+              child: IndexedStack(
+                index: _tab,
+                children: [
+                  ArmyScreen(army: army, onEdit: () => _editArmy(army)),
+                  // With no game in progress the tab rests on the record of
+                  // past ones rather than a screen that exists to hold a
+                  // button (§7.3.12).
+                  if (_log.state.setup == null)
+                    BattlesScreen(
+                      store: widget.store,
+                      pack: _pack,
+                      rosterId: army.id,
+                      armyName: army.roster.name,
+                      onStart: _pack.isEmpty ? null : () => _runSetup(army),
+                    )
+                  else
+                    TurnScreen(
+                      army: army,
+                      log: _log,
+                      deck: SecondaryDeck.of(_pack),
+                      pack: _pack,
+                      onEvent: (event) => _apply(_log.add(event)),
+                      onUndo: () => _apply(_log.undo()),
+                      onFinish: () => _finishBattle(army),
+                      density: _density,
+                      onDensity: (d) {
+                        setState(() => _density = d);
+                        widget.store.setDensity(army.id, d);
+                      },
+                    ),
+                  ObjectivesScreen(
+                    state: _log.state,
                     pack: _pack,
-                    rosterId: army.id,
-                    armyName: army.roster.name,
-                    onStart: _pack.isEmpty ? null : () => _runSetup(army),
-                  )
-                else
-                  TurnScreen(
-                    army: army,
-                    log: _log,
                     deck: SecondaryDeck.of(_pack),
-                    pack: _pack,
-                    onEvent: (event) => _apply(_log.add(event)),
-                    onUndo: () => _apply(_log.undo()),
-                    onFinish: () => _finishBattle(army),
-                    density: _density,
-                    onDensity: (d) {
-                      setState(() => _density = d);
-                      widget.store.setDensity(army.id, d);
-                    },
+                    // Only once there is a game to finish; the page shows a
+                    // prompt to set one up otherwise.
+                    onFinish: _log.state.setup == null
+                        ? null
+                        : () => _finishBattle(army),
                   ),
-                ObjectivesScreen(
-                  state: _log.state,
-                  pack: _pack,
-                  deck: SecondaryDeck.of(_pack),
-                  // Only once there is a game to finish; the page shows a
-                  // prompt to set one up otherwise.
-                  onFinish: _log.state.setup == null
-                      ? null
-                      : () => _finishBattle(army),
-                ),
-                ReferenceScreen(army: army),
-              ],
+                  ReferenceScreen(army: army),
+                ],
+              ),
             );
           },
         ),

@@ -2147,6 +2147,47 @@ but not `rules`, which is where a detachment keeps its. Both exclusions are
 right for datasheets and wrong here, and loosening them would have quietly
 put every faction's enhancement list back onto every Character.
 
+### 3.14 When a source has no data for something — the order to try
+
+**Default behaviour, decided 2026-08-24.** When the primary source ships a
+field empty, the app does not invent one and does not leave the gap:
+
+1. **40kdc-data** — the primary. Structured, licensed, and the thing the app
+   runs on.
+2. **BSData** — the same catalogues the datasheet and ability text already
+   come from (§3.10). Its rules carry descriptions in the `**bold**`
+   convention `ruleSpans` renders, so what arrives needs no rewriting.
+3. **Wahapedia's published export** — where BSData has nothing, on the terms
+   §3.12 already established.
+4. **Nothing.** If none of the three publishes it, the app says so or shows no
+   affordance at all. It never writes the rule itself: text composed from
+   memory is a rule reproduced from memory, which is the line §0 draws, and it
+   is also the failure mode that put a wrong `Fervent Purgation` in front of a
+   player.
+
+**The gap this was decided on.** All 34 weapon keywords ship from 40kdc with
+`effect: null` — `[TORRENT]` had a name, its parameters, and nothing that said
+what it does, so the chips on the weapon table were unreadable labels. BSData
+has the wording for **33 of the 34**, already marked up. The one it misses,
+`Impaled`, is carried by **no weapon in any faction**, so nothing visible
+depends on it and Wahapedia was not needed.
+
+`_applyKeywordText` in `merge.dart` scans BSData for named rules with a
+description and matches on the keyword's name. Longest wins where two files
+differ, on §3.12's reasoning: a truncated stub is the failure mode, not a
+competing wording.
+
+**In the app, a keyword with text is tappable and looks it; one without stays
+an outline and takes no tap.** A chip that opens an empty sheet is worse than a
+chip that never invited the tap — the affordance is the honest signal of
+whether anything is known.
+
+Superseded, 2026-08-24: `reference_index.dart` said the app deliberately
+carries no core-rules crib, because `weapon-keywords.json` gives names only and
+writing the summaries would mean reproducing rules from memory. The premise
+was right and the conclusion no longer follows — the text is published by a
+source already shipped from, so nothing is written from memory.
+
 ### 3.11 Mission card text — gdmissions.app
 
 40kdc publishes each mission card's **structure** — trigger, VP, condition —

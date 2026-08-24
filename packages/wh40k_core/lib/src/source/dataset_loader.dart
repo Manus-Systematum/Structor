@@ -24,6 +24,14 @@ class CoreData {
   final Map<String, String> missions; // id -> name
   final List<MissionMatchup> missionMatchups;
   final Set<String> weaponKeywordIds;
+
+  /// What each weapon keyword does, by id, where a source publishes it.
+  ///
+  /// 40kdc ships names and parameters with `effect: null`; the text comes from
+  /// BSData at merge time (§3.14). A keyword with no entry here has no
+  /// published wording — 33 of the 34 have one, and the exception is used by
+  /// no weapon.
+  final Map<String, WeaponKeywordText> weaponKeywords;
   final List<SourceStratagem> coreStratagems;
   final List<String> missingFiles;
 
@@ -33,6 +41,7 @@ class CoreData {
     required this.missions,
     required this.missionMatchups,
     required this.weaponKeywordIds,
+    this.weaponKeywords = const {},
     required this.coreStratagems,
     required this.missingFiles,
   });
@@ -178,9 +187,20 @@ class DatasetLoader {
     }
 
     final keywordIds = <String>{};
+    final keywords = <String, WeaponKeywordText>{};
     for (final raw in read('core/weapon-keywords.json')) {
-      final id = str(asMap(raw)['id']);
-      if (id != null) keywordIds.add(id);
+      final j = asMap(raw);
+      final id = str(j['id']);
+      if (id == null) continue;
+      keywordIds.add(id);
+      final text = str(j['text']);
+      if (text != null && text.isNotEmpty) {
+        keywords[id] = WeaponKeywordText(
+          id: id,
+          name: strOr(j['name'], id),
+          text: text,
+        );
+      }
     }
 
     return CoreData(
@@ -193,6 +213,7 @@ class DatasetLoader {
           .map(MissionMatchup.fromJson)
           .toList(growable: false),
       weaponKeywordIds: keywordIds,
+      weaponKeywords: keywords,
       coreStratagems: read('core/stratagems.json')
           .map(SourceStratagem.fromJson)
           .toList(growable: false),

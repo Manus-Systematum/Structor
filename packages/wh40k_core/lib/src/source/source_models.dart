@@ -616,6 +616,23 @@ class SourceUnit {
 /// instances in the snapshot carry one**, and dropping them turns a specific
 /// rule into a vague one at exactly the moment a player is reading it to
 /// decide whether to shoot.
+/// A weapon keyword's printed rule.
+///
+/// Distinct from [WeaponKeyword], which is one weapon's *use* of a keyword and
+/// carries the parameters — `[SUSTAINED HITS 1]`. This is the definition, and
+/// there is one of it per keyword rather than one per weapon.
+class WeaponKeywordText {
+  final String id;
+  final String name;
+  final String text;
+
+  const WeaponKeywordText({
+    required this.id,
+    required this.name,
+    required this.text,
+  });
+}
+
 class WeaponKeyword {
   final String id;
 

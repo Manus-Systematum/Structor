@@ -303,6 +303,33 @@ class DatasetRepository {
     );
   }
 
+  Map<String, WeaponKeywordText>? _keywords;
+
+  /// What each weapon keyword does, by id.
+  ///
+  /// From the core bundle rather than the faction's: the keywords are the
+  /// game's, not an army's. 40kdc ships them with no text and BSData supplies
+  /// it at merge time (§3.14), so a keyword with no entry here is one nothing
+  /// published — not an oversight in the app.
+  Future<Map<String, WeaponKeywordText>> weaponKeywords() async {
+    final cached = _keywords;
+    if (cached != null) return cached;
+
+    final data = await bundle('core');
+    return _keywords = {
+      for (final raw in data.file('weapon-keywords'))
+        if (raw is Map)
+          if (raw['id']?.toString() case final id?)
+            if (raw['text']?.toString() case final text?
+                when text.isNotEmpty)
+              id: WeaponKeywordText(
+                id: id,
+                name: raw['name']?.toString() ?? id,
+                text: text,
+              ),
+    };
+  }
+
   Future<MissionPack> missions() async {
     final cached = _missions;
     if (cached != null) return cached;

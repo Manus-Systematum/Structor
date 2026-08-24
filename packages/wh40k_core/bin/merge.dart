@@ -234,6 +234,8 @@ void main(List<String> args) {
         'printed text');
     stdout.writeln('${_applyStratagemText(factions)} stratagems given their '
         'printed text');
+    stdout.writeln('${_applyKeywordText()} weapon keywords given their '
+        'printed text');
     File(_conflictsPath)
         .writeAsStringSync('${const JsonEncoder.withIndent('  ').convert({
           'note': 'BSData over 40kdc; BSData wins every row here. '
@@ -825,11 +827,11 @@ void _writeManifest(List<String> factions) {
   File(_manifestPath)
     ..parent.createSync(recursive: true)
     ..writeAsStringSync('${const JsonEncoder.withIndent('  ').convert({
-      'note': 'Factions this tree holds merged output for. A partial merge '
-          'must not copy raw 40kdc over these. Delete to force a full '
-          'rebuild.',
-      'factions': all,
-    })}\n');
+          'note': 'Factions this tree holds merged output for. A partial merge '
+              'must not copy raw 40kdc over these. Delete to force a full '
+              'rebuild.',
+          'factions': all,
+        })}\n');
 }
 
 /// Fills the tree with the 40kdc files this run did not produce.
@@ -888,6 +890,89 @@ void _write(String path, List<Object?> records) {
 /// them; Games Workshop's own free Core Rules PDF — by way of
 /// `pguetschow/warhammer-40k-stratagem-card-generator` — has the eleven core
 /// ones, and where its transcription says more it is preferred.
+/// Weapon keyword rules text, from BSData.
+///
+/// 40kdc ships all 34 keywords with `effect: null` — the name, the parameters
+/// it takes, and nothing that says what `[TORRENT]` does. BSData carries the
+/// wording, in the same `**bold**` convention the rest of the app renders, as
+/// a shared rule with a description.
+///
+/// This is the fallback in §3.14 doing its job: 40kdc first, then BSData, then
+/// Wahapedia. Nothing here is written from memory (§0).
+int _applyKeywordText() {
+  const path = '$_outRoot/core/weapon-keywords.json';
+  final records = _readArray(path);
+  if (records.isEmpty) return 0;
+
+  final text = _bsRuleText();
+  if (text.isEmpty) return 0;
+
+  var written = 0;
+  final updated = [
+    for (final raw in records)
+      if (asMap(raw) case final record)
+        () {
+          final name = strOr(record['name'], '').trim();
+          // `[ANTI-X Y+]` ships as `Anti`, and BSData calls the rule `Anti`
+          // too; a keyword whose name carries its parameter would not match
+          // on the full string, so the first word is the fallback key.
+          final found = text[name.toLowerCase()] ??
+              text[name.toLowerCase().split(' ').first];
+          if (found == null || found.isEmpty) return record;
+          written++;
+          return {...record, 'text': found};
+        }()
+  ];
+  if (written > 0) _write(path, updated);
+  return written;
+}
+
+/// Every named rule in BSData that carries a description, by lower-case name.
+///
+/// The keywords are core rules and appear in every faction's library, so the
+/// first file that has one is as good as any other. Longest wins where they
+/// differ, on the same reasoning as the stratagem merge: a truncated stub is
+/// the failure mode, not a competing wording.
+Map<String, String> _bsRuleText() {
+  final out = <String, String>{};
+
+  void walk(Object? node) {
+    if (node is Map<String, Object?>) {
+      final name = str(node['name'])?.trim();
+      final description = str(node['description'])?.trim();
+      if (name != null &&
+          name.isNotEmpty &&
+          description != null &&
+          description.length > 20) {
+        final key = name.toLowerCase();
+        final existing = out[key];
+        if (existing == null || description.length > existing.length) {
+          out[key] = _markup(description);
+        }
+      }
+      for (final value in node.values) {
+        walk(value);
+      }
+    } else if (node is List) {
+      for (final value in node) {
+        walk(value);
+      }
+    }
+  }
+
+  final root = Directory(_bsRoot);
+  if (!root.existsSync()) return out;
+  for (final file in root.listSync(recursive: true).whereType<File>()) {
+    if (!file.path.endsWith('.json')) continue;
+    try {
+      walk(jsonDecode(file.readAsStringSync()));
+    } on FormatException {
+      continue;
+    }
+  }
+  return out;
+}
+
 int _applyStratagemText(List<String> factions) {
   final wahapedia = _readWahapedia();
   final core = _readCoreStratagems();

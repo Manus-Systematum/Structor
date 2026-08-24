@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import '../data/keyword_scope.dart';
 import '../theme.dart';
+import 'rule_text.dart';
+import 'sheet_header.dart';
 
 /// The aggregated weapon table (DESIGN.md §7.3.5).
 ///
@@ -117,7 +120,7 @@ class _WeaponRow extends StatelessWidget {
                 _stat(context, 'AP', stats['AP']),
                 _stat(context, 'D', stats['D']),
                 for (final keyword in weapon.keywords)
-                  _KeywordChip(label: keyword.label),
+                  _KeywordChip(keyword: keyword),
               ],
             ),
           ),
@@ -145,7 +148,8 @@ class _WeaponRow extends StatelessWidget {
             color: scheme.onSurfaceVariant,
           ),
         ),
-        TextSpan(text: value ?? '—', style: AppTheme.numeric(context, size: 12)),
+        TextSpan(
+            text: value ?? '—', style: AppTheme.numeric(context, size: 12)),
       ]),
     );
   }
@@ -183,27 +187,84 @@ class _Pill extends StatelessWidget {
       );
 }
 
+/// `[TORRENT]`, and what it does when a source publishes it.
+///
+/// A chip with text behind it is tappable and says so with a filled ground;
+/// one without stays an outline and takes no tap. Nothing published wording
+/// for it, and a tap that opens an empty sheet is worse than a chip that never
+/// invited it (§3.14).
 class _KeywordChip extends StatelessWidget {
-  final String label;
+  final WeaponKeyword keyword;
 
-  const _KeywordChip({required this.label});
+  const _KeywordChip({required this.keyword});
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Container(
+    final rule = WeaponKeywordScope.of(context)[keyword.id];
+
+    final chip = Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
       decoration: BoxDecoration(
-        border: Border.all(color: scheme.outlineVariant),
+        color: rule == null ? null : scheme.surfaceContainerHighest,
+        border: Border.all(
+            color: rule == null ? scheme.outlineVariant : Colors.transparent),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
-        label.replaceAll('-', ' ').toUpperCase(),
+        keyword.label.replaceAll('-', ' ').toUpperCase(),
         style: TextStyle(
           fontSize: 9,
           letterSpacing: 0.5,
           fontWeight: FontWeight.w700,
-          color: scheme.onSurfaceVariant,
+          color: rule == null ? scheme.onSurfaceVariant : scheme.onSurface,
+        ),
+      ),
+    );
+
+    if (rule == null) return chip;
+    return InkWell(
+      onTap: () => showModalBottomSheet<void>(
+        context: context,
+        showDragHandle: true,
+        isScrollControlled: true,
+        builder: (_) => _KeywordSheet(label: keyword.label, rule: rule),
+      ),
+      borderRadius: BorderRadius.circular(4),
+      child: chip,
+    );
+  }
+}
+
+class _KeywordSheet extends StatelessWidget {
+  final String label;
+  final WeaponKeywordText rule;
+
+  const _KeywordSheet({required this.label, required this.rule});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // The printed form, parameters and all: SUSTAINED HITS 1 rather
+            // than the bare keyword, because the number is half the rule.
+            SheetHeader(title: label.replaceAll('-', ' ').toUpperCase()),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 14),
+              child: RuleText(rule.text,
+                  style: const TextStyle(fontSize: 13.5, height: 1.45)),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 18),
+              child: Text('Core rule, from BSData.',
+                  style: TextStyle(fontSize: 10.5, color: scheme.outline)),
+            ),
+          ],
         ),
       ),
     );

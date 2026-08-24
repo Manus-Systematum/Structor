@@ -5,11 +5,16 @@
 /// abilities, enhancements and stratagems, because mid-game you remember a
 /// word and not which of those four it lives in.
 ///
-/// The one thing it deliberately does **not** carry is a core-rules crib. The
-/// rules text is Games Workshop's (§0) and the data does not include it —
-/// `weapon-keywords.json` gives names and nothing else. Writing the summaries
-/// myself would be reproducing rules from memory into a shipped binary, which
-/// is exactly the line §0 draws.
+/// It does not carry a core-rules crib of its own. Weapon keywords are read
+/// where they are used — on the weapon table, by tapping the chip — rather
+/// than in a glossary here, and their text comes from BSData (§3.14) rather
+/// than from anything written for this app.
+///
+/// Superseded, 2026-08-24: this said the app carried no keyword text at all,
+/// because `weapon-keywords.json` gives names and nothing else and writing the
+/// summaries would mean reproducing rules from memory. The second half is
+/// still true and is why nothing here is written; what changed is that a
+/// source already shipped from turned out to publish them.
 library;
 
 import '../roster/roster.dart';
