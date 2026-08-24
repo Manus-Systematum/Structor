@@ -54,6 +54,28 @@ class TerrainFeature {
 }
 
 /// A reusable piece shape, in inches, in its own local coordinates.
+/// The three kinds of terrain the printed layouts distinguish by colour.
+///
+/// Chapter Approved draws its maps in three inks, and the distinction is a
+/// rules one rather than decoration: a lettered ruin blocks line of sight and
+/// is climbed, the smaller blocks and the barricades are neither of those in
+/// the same way (§7.3.23).
+enum TerrainGroup {
+  /// Large Area and Trapezoid Area — the pieces whose wall corners carry the
+  /// AB / CD / EF / GH letters.
+  ruin,
+
+  /// Medium Area — the smaller blocks.
+  block,
+
+  /// Long Line and Short Line Area — barricades, rails and gantries.
+  line,
+
+  /// A shape no published template matches. Drawn in the neutral colour
+  /// rather than guessed into a group.
+  unknown,
+}
+
 class TerrainTemplate {
   final String id;
   final String name;
@@ -428,6 +450,40 @@ class TerrainPiece {
       rotationDegrees: dblOr(j['rotation_degrees'], 0),
       isObjective: j['is_objective'] == true,
     );
+  }
+
+  /// Which of Chapter Approved's terrain pieces this is (§7.3.23).
+  ///
+  /// Keyed on the published footprint rather than on the template id: the
+  /// Battlemaster layouts name their pieces `composite-27-m0-p0` and nothing
+  /// else, but all 41 of them are one of the five shapes Chapter Approved
+  /// prints, and the shape is what the printed map colours.
+  TerrainGroup group(Map<String, TerrainTemplate> templates) {
+    final local =
+        footprint.isNotEmpty ? footprint : templates[templateId]?.footprint;
+    if (local == null || local.length < 3) return TerrainGroup.unknown;
+
+    var minX = local.first.x, maxX = local.first.x;
+    var minY = local.first.y, maxY = local.first.y;
+    for (final point in local) {
+      if (point.x < minX) minX = point.x;
+      if (point.x > maxX) maxX = point.x;
+      if (point.y < minY) minY = point.y;
+      if (point.y > maxY) maxY = point.y;
+    }
+    // Longest side first, since a piece is placed either way round.
+    final a = maxX - minX, b = maxY - minY;
+    final long = a > b ? a : b, short = a > b ? b : a;
+
+    bool near(double l, double s) =>
+        (long - l).abs() < 0.75 && (short - s).abs() < 0.75;
+
+    // Large and Trapezoid are the pieces Chapter Approved letters — AB, CD,
+    // EF, GH mark their wall corners, and a lettered piece is a ruin.
+    if (near(11.5, 7.5) || near(11.5, 8)) return TerrainGroup.ruin;
+    if (near(6.5, 4.3)) return TerrainGroup.block;
+    if (near(10, 3.7) || near(6, 2.7)) return TerrainGroup.line;
+    return TerrainGroup.unknown;
   }
 
   /// This piece's outline in board coordinates, given the template library.

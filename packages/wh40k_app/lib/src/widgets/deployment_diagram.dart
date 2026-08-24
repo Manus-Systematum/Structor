@@ -294,6 +294,20 @@ class _BoardPainter extends CustomPainter {
 
   /// The measuring colour, used for nothing else on the board.
   ///
+  /// The printed layout's three inks (§7.3.23).
+  ///
+  /// Chapter Approved letters its ruins and draws them apart from the blocks
+  /// and the barricades, and which is which changes how a piece plays. The
+  /// map said none of that: every piece was one grey.
+  Color _groupInk(TerrainGroup group) => switch (group) {
+        TerrainGroup.ruin => const Color(0xFF7B4A24),
+        TerrainGroup.block => const Color(0xFF2A6B3F),
+        TerrainGroup.line => const Color(0xFF9A7B15),
+        // Only the KOTC table, whose templates publish no point footprint.
+        // Neutral rather than guessed into a group.
+        TerrainGroup.unknown => terrain,
+      };
+
   /// A distance drawn in the terrain's own colour reads as part of the
   /// terrain. These lines are the one thing on the diagram that is not a
   /// physical object, so they say so.
@@ -388,16 +402,20 @@ class _BoardPainter extends CustomPainter {
       // you are *within* — faint, because it is a zone rather than an object.
       // The buildings standing in it are solid, because they are what blocks
       // line of sight and what the models climb.
+      //
+      // Each in its group's colour, matching the printed layout (§7.3.23):
+      // the lettered ruins brown, the blocks green, the barricades yellow.
       for (final piece in table.pieces) {
+        final ink = _groupInk(piece.group(templates));
         if (pathOfPoints(piece.outline(templates)) case final area?) {
           canvas.drawPath(
             area,
-            Paint()..color = terrain.withValues(alpha: 0.10),
+            Paint()..color = ink.withValues(alpha: 0.12),
           );
           canvas.drawPath(
             area,
             Paint()
-              ..color = terrain.withValues(alpha: 0.30)
+              ..color = ink.withValues(alpha: 0.35)
               ..style = PaintingStyle.stroke
               ..strokeWidth = _px(0.6),
           );
@@ -405,16 +423,17 @@ class _BoardPainter extends CustomPainter {
       }
 
       for (final piece in table.pieces) {
+        final ink = _groupInk(piece.group(templates));
         for (final building in piece.buildings(templates)) {
           if (pathOfPoints(building.outline) case final path?) {
             canvas.drawPath(
               path,
-              Paint()..color = terrain.withValues(alpha: 0.55),
+              Paint()..color = ink.withValues(alpha: 0.55),
             );
             canvas.drawPath(
               path,
               Paint()
-                ..color = terrain.withValues(alpha: 0.9)
+                ..color = ink.withValues(alpha: 0.95)
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = _px(0.8),
             );
