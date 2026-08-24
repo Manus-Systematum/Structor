@@ -231,17 +231,18 @@ void main() {
       opponentMissionId: 'n',
     );
 
-    test('each Command phase grants one, to whoever is taking it', () {
-      // I open, so the first Command phase is mine.
+    // Each turn grants a point to *both* players, not only the one taking it.
+    test('a turn beginning grants one to each', () {
       final log = BattleLog(events: const [
         ConfigureBattle(setup),
         EndTurn(),
       ]);
-      expect(log.state.cp, 1, reason: 'my opening Command phase');
-      expect(log.state.opponentCp, 1, reason: 'theirs, once the turn passes');
+      // Two turns have begun: mine at setup, theirs on the handover.
+      expect(log.state.cp, 2);
+      expect(log.state.opponentCp, 2);
     });
 
-    test('the opener gets the first one even when it is them', () {
+    test('whoever opens does not open a point ahead', () {
       final log = BattleLog(events: const [
         ConfigureBattle(MissionSetup(
           myDisposition: 'a',
@@ -252,7 +253,7 @@ void main() {
         )),
       ]);
       expect(log.state.opponentCp, 1);
-      expect(log.state.cp, 0);
+      expect(log.state.cp, 1);
     });
 
     test('spending one side does not touch the other', () {
@@ -261,8 +262,8 @@ void main() {
         EndTurn(),
         AdjustCp(-1, side: Player.opponent),
       ]);
-      expect(log.state.cp, 1);
-      expect(log.state.opponentCp, 0);
+      expect(log.state.cp, 2);
+      expect(log.state.opponentCp, 1);
     });
 
     test('neither side goes below zero', () {
@@ -508,21 +509,23 @@ void main() {
           ...events,
         ]).state;
 
-    test('going first grants the first command point', () {
-      // The command point comes from your Command phase, and going first
-      // means the first one is yours.
+    test('the first turn grants a point to each side', () {
+      // Every turn grants one to both players, so who opens does not decide
+      // who is a point up.
       expect(after(const []).cp, 1);
-      expect(after(const [], iGoFirst: false).cp, 0);
+      expect(after(const [], iGoFirst: false).cp, 1);
     });
 
-    test('handing over passes the turn and grants their point on return', () {
+    test('every handover grants another to each', () {
       var s = after(const [EndTurn()]);
       expect(s.activePlayer, Player.opponent);
-      expect(s.cp, 1, reason: 'their turn does not add to your pool');
+      expect(s.cp, 2, reason: 'their turn grants you one too');
+      expect(s.opponentCp, 2);
 
       s = after(const [EndTurn(), EndTurn()]);
       expect(s.activePlayer, Player.me);
-      expect(s.cp, 2, reason: 'your next Command phase grants one');
+      expect(s.cp, 3);
+      expect(s.opponentCp, 3);
     });
 
     test('the round advances when the turn returns to the opener', () {
@@ -545,7 +548,7 @@ void main() {
       final theirs = after(const [EndTurn()], iGoFirst: false);
       expect(theirs.activePlayer, Player.me);
       expect(theirs.round, 1, reason: 'their turn ended, yours begins');
-      expect(theirs.cp, 1, reason: 'your first Command phase grants one');
+      expect(theirs.cp, 2, reason: 'two turns have begun, each granting one');
 
       final mine = after(const [EndTurn(), EndTurn()], iGoFirst: false);
       expect(mine.activePlayer, Player.opponent);
@@ -569,10 +572,10 @@ void main() {
         EndTurn(),
       ]);
       expect(log.state.round, 2);
-      expect(log.state.cp, 2);
+      expect(log.state.cp, 3, reason: 'three turns have begun');
       final undone = log.undo();
       expect(undone.state.round, 1);
-      expect(undone.state.cp, 1);
+      expect(undone.state.cp, 2);
     });
   });
 

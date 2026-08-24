@@ -1694,12 +1694,17 @@ opponent worth knowing mid-game.
 "who can afford what". Mine is in both places; the bar and the row are the same
 state, in the way End turn is in two places for the same reason.
 
-**Derived where it follows from the turn, entered everywhere else.** A Command
-phase grants a point to whoever is taking it, for both sides, because that
-follows from the turn passing and nothing else — the same derivation that
-already gave this player theirs. Everything else is entered, because the app
-cannot see their table any more than it can see their hand. The minus appears
-only when there is something to spend.
+**Derived where it follows from the turn, entered everywhere else.** A turn
+beginning grants a command point to **both** players — corrected 2026-08-24,
+having first been written as a grant to whoever was taking the turn. Whoever
+opens is therefore not a point ahead, and a full battle round is worth two to
+each side. Everything else is entered, because the app cannot see their table
+any more than it can see their hand. The minus appears only when there is
+something to spend.
+
+Superseded, 2026-08-24: the grant went to the active player only, which is
+where §7.4's earlier derivation started and where this player's own points came
+from. Both sides gain one now, on the same event.
 
 `AdjustCp` takes a side, defaulting to `me`, so a battle saved before today
 replays unchanged.

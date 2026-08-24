@@ -339,31 +339,26 @@ class BattleLog {
           // phone. Before this, a game the opponent started ran a whole round
           // labelled with the wrong active player.
           activePlayer = e.setup.iGoFirst ? Player.me : Player.opponent;
-          // Going first means the first Command phase is yours, and it grants
-          // a command point like any other.
-          if (activePlayer == Player.me) {
-            cp += 1;
-          } else {
-            opponentCp += 1;
-          }
+          // A turn beginning grants a command point to **both** players, not
+          // only the one taking it (§7.3.21). Whoever opens does not open a
+          // point ahead.
+          cp += 1;
+          opponentCp += 1;
         case final SetRound e:
           round = e.round;
         case EndTurn():
           // Handing over is the only turn control. The round advances when
-          // the turn returns to whoever opened, and the incoming player gains
-          // the command point their Command phase grants — both derived, so
-          // an older log replays with the same result and neither can be
-          // forgotten by a player who was concentrating on the table.
+          // the turn returns to whoever opened, and both players gain a
+          // command point — both derived, so an older log replays the same
+          // and neither can be forgotten by a player who was concentrating on
+          // the table.
           final opener =
               (setup?.iGoFirst ?? true) ? Player.me : Player.opponent;
           final next = activePlayer == Player.me ? Player.opponent : Player.me;
           if (next == opener && round < 5) round++;
           activePlayer = next;
-          if (next == Player.me) {
-            cp += 1;
-          } else {
-            opponentCp += 1;
-          }
+          cp += 1;
+          opponentCp += 1;
         case final SetActivePlayer e:
           // A battle round is both players having taken a turn, so the round
           // advances when the turn comes back round to whoever opened —

@@ -108,10 +108,10 @@ void main() {
         (_) {},
       ));
 
-      // Mine is 3: the setup gives me the first turn, and an opening Command
-      // phase grants one before anything is entered by hand.
+      // Each side starts on 1: the first turn grants a point to both, before
+      // anything is entered by hand. So 1+2 and 1+5.
       expect(find.text('3 CP'), findsOneWidget);
-      expect(find.text('5 CP'), findsOneWidget);
+      expect(find.text('6 CP'), findsOneWidget);
     });
 
     testWidgets('adding on their row adds to theirs', (tester) async {
@@ -130,17 +130,17 @@ void main() {
 
     testWidgets('nothing to spend, nothing to press', (tester) async {
       tall(tester);
-      // They have not taken a turn, so they have no points and no way to
-      // spend them; mine opened with one, so mine does.
+      // Both open on one, so both can spend. Take one side to zero and its
+      // minus goes with it.
       await tester.pumpWidget(host(stateWith(const []), (_) {}));
-      expect(find.byIcon(Icons.remove), findsOneWidget);
+      expect(find.byIcon(Icons.remove), findsNWidgets(2));
 
       await tester.pumpWidget(host(
-        stateWith(const [AdjustCp(1, side: Player.opponent)]),
+        stateWith(const [AdjustCp(-1, side: Player.opponent)]),
         (_) {},
       ));
       await tester.pumpAndSettle();
-      expect(find.byIcon(Icons.remove), findsNWidgets(2));
+      expect(find.byIcon(Icons.remove), findsOneWidget);
     });
   });
 
