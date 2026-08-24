@@ -1567,6 +1567,67 @@ battle outlives the roster it was played with, so a unit deleted since reads as
 its id rather than as a blank — losing the line would lose the only record that
 the casualty happened at all.
 
+### 7.3.16 Both players hold cards, from copies of the same deck
+
+Asked for on 2026-08-24. Three separate things were wrong.
+
+**Nothing could draw a card.** `SecondaryPanel` — draw, choose, discard, score
+— lived in `end_phase.dart`, and nothing had imported it since the turn page
+was rebuilt (§7.3.13). The running app had the anonymous `+1` secondary chip
+and no way to say which card it was for. The panel moved to
+`secondary_cards.dart`; `end_phase.dart` and the `ScorePanel` that `ScoreBoard`
+replaced are deleted.
+
+**The opponent had no cards at all.** `SecondaryState` had no player dimension,
+`ScoreSecondaryCard` had no side, and the reducer credited `Player.me`
+unconditionally. All three now carry a side, and the state keeps one hand per
+player.
+
+**The decks are copies, not one deck.** Superseded, 2026-08-24:
+`secondary_deck.dart` said there was no per-player copy because the decks are
+identical. Identical is not shared — treating my draw as spending their card is
+a different game. Each side draws from the cards *that side* has not seen, so
+the same objective can sit in both hands, which is the user's own framing:
+"the deck is a copy, so our objectives can intersect".
+
+`side` defaults to `me` on every event, so a battle saved before this replays
+to the state it always had: the absent field reads as mine, which is what it
+meant.
+
+**The cards open in place, not in a sheet.** The first build put each side's
+panel in a modal sheet, and drawing into it did nothing visible — a sheet is a
+route built once from the state it captured, so the row behind updated and the
+sheet did not. Inline, the board rebuilds on every event. Two panels can be
+open at once, which is also how you compare what each side is chasing.
+
+### 7.3.17 What the card asks for, next to what it pays
+
+The scoring row's buttons are the figures a card names. Which figure to tap
+depends on what the card *asks for*, and that was on another tab.
+
+**The mission is named on the row that scores it, and opens in full on a tap** —
+both missions. Theirs is a different card, the matchup is asymmetric, and how
+they score is what decides where you contest.
+
+**A unit's rules are one tap, and the whole set is one more.** Chips were
+already tappable, but a chip per rule is a good index and a bad reading order:
+checking an interaction meant opening four sheets and holding them in your
+head. `All N` opens every rule the unit has, in full, in one scroll —
+attributed where the group is more than one datasheet, since a Commander
+leading a squad brings rules the squad does not have (§3.8). `attributedRules`
+had carried that attribution since the leader work and nothing had used it.
+
+Also fixed here: the single-rule sheet used `Text` rather than `RuleText`, so
+`**KEYWORD**` printed its asterisks — the exact failure `rule_text.dart`
+exists to prevent, on the one surface that had it.
+
+**Weapon keywords are still not tappable, and that is a data gap rather than a
+decision.** `TORRENT`, `DEVASTATING WOUNDS` and the other 32 ship with
+`effect: null` — 40kdc publishes the keyword's name and parameters but no
+rules text for any of them. A tappable chip would open an empty sheet, which is
+worse than a chip that does not invite the tap. It needs a source, not a
+widget.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.

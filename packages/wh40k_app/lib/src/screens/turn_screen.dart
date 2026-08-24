@@ -6,7 +6,9 @@ import '../data/play_density.dart';
 import '../theme.dart';
 import '../widgets/battle_record.dart';
 import '../widgets/collapsible.dart';
+import '../widgets/rule_text.dart';
 import '../widgets/score_board.dart';
+import '../widgets/sheet_header.dart';
 import '../widgets/stratagem_list.dart';
 import '../widgets/unit_profiles.dart';
 import '../widgets/weapon_table.dart';
@@ -310,7 +312,8 @@ class _DensityButton extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 title: Text(d.label),
                 subtitle: Text(d.note, style: const TextStyle(fontSize: 11)),
-                trailing: d == density ? const Icon(Icons.check, size: 18) : null,
+                trailing:
+                    d == density ? const Icon(Icons.check, size: 18) : null,
               ),
             ),
         ],
@@ -335,7 +338,12 @@ class _Stratagems extends StatelessWidget {
   });
 
   static const _phases = [
-    'command', 'movement', 'shooting', 'charge', 'fight', 'end',
+    'command',
+    'movement',
+    'shooting',
+    'charge',
+    'fight',
+    'end',
   ];
 
   @override
@@ -416,7 +424,11 @@ class _Prompts extends StatelessWidget {
   const _Prompts({required this.army, required this.state});
 
   static const _phases = [
-    'command', 'movement', 'shooting', 'charge', 'fight',
+    'command',
+    'movement',
+    'shooting',
+    'charge',
+    'fight',
   ];
 
   @override
@@ -665,8 +677,7 @@ class _RuleChips extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(999),
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
                   border: Border.all(color: scheme.outlineVariant),
                   borderRadius: BorderRadius.circular(999),
@@ -676,7 +687,130 @@ class _RuleChips extends StatelessWidget {
                         fontSize: 11, color: scheme.onSurfaceVariant)),
               ),
             ),
+          // A chip per rule is a good index and a bad reading order: checking
+          // an interaction means opening four sheets and holding them in your
+          // head. This is the same rules, in one scroll, in the order they are
+          // listed above.
+          if (rules.length > 1)
+            InkWell(
+              onTap: () => showModalBottomSheet<void>(
+                context: context,
+                showDragHandle: true,
+                isScrollControlled: true,
+                builder: (_) => _AllRulesSheet(unit: unit),
+              ),
+              borderRadius: BorderRadius.circular(999),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: scheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.menu_book_outlined,
+                        size: 12, color: scheme.onPrimaryContainer),
+                    const SizedBox(width: 4),
+                    Text('All ${rules.length}',
+                        style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            color: scheme.onPrimaryContainer)),
+                  ],
+                ),
+              ),
+            ),
         ],
+      ),
+    );
+  }
+}
+
+/// Every rule this unit has, in full, in one scroll.
+///
+/// Attributed where the group is more than one datasheet: a Commander leading
+/// a squad brings rules the squad does not have, and a flat list of the union
+/// says the squad has them (§3.8). `attributedRules` has carried that since
+/// the leader/bodyguard work and nothing had used it.
+class _AllRulesSheet extends StatelessWidget {
+  final CombatUnit unit;
+
+  const _AllRulesSheet({required this.unit});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final entries = unit.attributedRules;
+
+    return SafeArea(
+      child: DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.75,
+        maxChildSize: 0.95,
+        builder: (context, controller) => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SheetHeader(
+              title: unit.label,
+              trailing: Text('${entries.length} rules',
+                  style:
+                      TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
+            ),
+            Expanded(
+              child: ListView.separated(
+                controller: controller,
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+                itemCount: entries.length,
+                separatorBuilder: (_, __) => const Divider(height: 22),
+                itemBuilder: (context, i) {
+                  final entry = entries[i];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          Flexible(
+                            child: Text(entry.rule.name,
+                                style: const TextStyle(
+                                    fontSize: 14.5,
+                                    fontWeight: FontWeight.w700)),
+                          ),
+                          // Only when it is not the whole group's — an empty
+                          // source means every model has it.
+                          if (entry.source.isNotEmpty) ...[
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Text(entry.source,
+                                  style: TextStyle(
+                                      fontSize: 11,
+                                      color: scheme.onSurfaceVariant)),
+                            ),
+                          ],
+                        ],
+                      ),
+                      const SizedBox(height: 3),
+                      RuleText(entry.rule.text,
+                          style: const TextStyle(fontSize: 13, height: 1.4)),
+                      if (!entry.rule.isPrinted)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            'Written from the structured data, not the '
+                            'printed rule.',
+                            style: TextStyle(
+                                fontSize: 10.5, color: scheme.outline),
+                          ),
+                        ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -699,15 +833,14 @@ class _RuleSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(rule.name,
-                style: const TextStyle(
-                    fontSize: 17, fontWeight: FontWeight.w700)),
-            Text(unitLabel,
                 style:
-                    TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
+            Text(unitLabel,
+                style: TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
             const SizedBox(height: 10),
             Flexible(
               child: SingleChildScrollView(
-                child: Text(rule.text,
+                child: RuleText(rule.text,
                     style: const TextStyle(fontSize: 13.5, height: 1.45)),
               ),
             ),

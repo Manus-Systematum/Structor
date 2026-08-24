@@ -84,7 +84,14 @@ class ScoreBoard extends StatelessWidget {
   }
 }
 
-class _Side extends StatelessWidget {
+/// One side's score, mission and cards.
+///
+/// Stateful only to remember whether its cards are showing. They open *in
+/// place* rather than in a sheet: a sheet is a route built once from the state
+/// it captured, so a card drawn inside one never appeared — the row behind
+/// updated and the sheet did not. Inline, the board rebuilds on every event,
+/// which is what was wanted.
+class _Side extends StatefulWidget {
   final String label;
   final Player side;
   final SideScore score;
@@ -107,6 +114,13 @@ class _Side extends StatelessWidget {
     required this.onEvent,
   });
 
+  @override
+  State<_Side> createState() => _SideState();
+}
+
+class _SideState extends State<_Side> {
+  bool _cardsOpen = false;
+
   /// The primary in full, from the row that scores it.
   ///
   /// The figures on the buttons are what the card pays; this is what the card
@@ -114,43 +128,20 @@ class _Side extends StatelessWidget {
   /// readable — the matchup is asymmetric, and how they score decides what you
   /// contest (§7.3.17).
   void _showMission(BuildContext context) {
-    final mission = card;
+    final mission = widget.card;
     if (mission == null) return;
     showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
-      builder: (_) => _MissionSheet(card: mission, owner: label),
+      builder: (_) => _MissionSheet(card: mission, owner: widget.label),
     );
   }
 
-  void _showCards(BuildContext context) => showModalBottomSheet<void>(
-        context: context,
-        showDragHandle: true,
-        isScrollControlled: true,
-        builder: (_) => SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SheetHeader(title: '$label · secondaries'),
-                SecondaryPanel(
-                  state: state,
-                  deck: deck,
-                  onEvent: onEvent,
-                  side: side,
-                ),
-                const SizedBox(height: 8),
-              ],
-            ),
-          ),
-        ),
-      );
-
-  void _score(ScoreKind kind, int vp) => onEvent(ScoreVp(
-        side: side,
+  void _score(ScoreKind kind, int vp) => widget.onEvent(ScoreVp(
+        side: widget.side,
         kind: kind,
-        round: state.round,
+        round: widget.state.round,
         vp: vp,
       ));
 
@@ -162,8 +153,8 @@ class _Side extends StatelessWidget {
     // battle round two, so offering all of them would offer points that
     // cannot be taken.
     final payouts = <int>{
-      ...?card?.payoutsIn(phase: 'command', round: state.round),
-      ...?card?.payoutsIn(phase: 'end', round: state.round),
+      ...?widget.card?.payoutsIn(phase: 'command', round: widget.state.round),
+      ...?widget.card?.payoutsIn(phase: 'end', round: widget.state.round),
     }.toList()
       ..sort();
 
@@ -175,24 +166,25 @@ class _Side extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(label,
+                child: Text(widget.label,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                         fontSize: 13, fontWeight: FontWeight.w700)),
               ),
-              Text('${score.primaryTotal}+${score.secondaryTotal}',
+              Text(
+                  '${widget.score.primaryTotal}+${widget.score.secondaryTotal}',
                   style:
                       TextStyle(fontSize: 11, color: scheme.onSurfaceVariant)),
               const SizedBox(width: 8),
-              Text('${score.total}',
+              Text('${widget.score.total}',
                   style: AppTheme.numeric(context, size: 21).copyWith(
                     fontWeight: FontWeight.w800,
-                    color: ahead ? scheme.primary : scheme.onSurface,
+                    color: widget.ahead ? scheme.primary : scheme.onSurface,
                   )),
             ],
           ),
-          if (card case final mission?)
+          if (widget.card case final mission?)
             InkWell(
               onTap: () => _showMission(context),
               child: Padding(
@@ -220,7 +212,7 @@ class _Side extends StatelessWidget {
               Expanded(
                 child: _Line(
                   label: 'PRIMARY',
-                  thisRound: score.primary[state.round] ?? 0,
+                  thisRound: widget.score.primary[widget.state.round] ?? 0,
                   payouts: payouts,
                   onScore: (vp) => _score(ScoreKind.primary, vp),
                 ),
@@ -230,13 +222,13 @@ class _Side extends StatelessWidget {
                 child: _Line(
                   label: 'SECONDARY',
                   trailing: _CardsButton(
-                    count: held.length,
-                    onTap: () => _showCards(context),
+                    count: widget.held.length,
+                    onTap: () => setState(() => _cardsOpen = !_cardsOpen),
                   ),
-                  thisRound: score.secondary[state.round] ?? 0,
+                  thisRound: widget.score.secondary[widget.state.round] ?? 0,
                   payouts: {
-                    for (final c in held)
-                      ...c.payoutsIn(phase: 'end', round: state.round),
+                    for (final c in widget.held)
+                      ...c.payoutsIn(phase: 'end', round: widget.state.round),
                   }.toList()
                     ..sort(),
                   onScore: (vp) => _score(ScoreKind.secondary, vp),
@@ -244,6 +236,16 @@ class _Side extends StatelessWidget {
               ),
             ],
           ),
+          if (_cardsOpen)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: SecondaryPanel(
+                state: widget.state,
+                deck: widget.deck,
+                onEvent: widget.onEvent,
+                side: widget.side,
+              ),
+            ),
         ],
       ),
     );
