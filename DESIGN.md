@@ -1709,6 +1709,37 @@ from. Both sides gain one now, on the same event.
 `AdjustCp` takes a side, defaulting to `me`, so a battle saved before today
 replays unchanged.
 
+### 7.3.22 The button belongs to the sentence
+
+A row of `+2 +4 +1` above a block of card text asks the player to read the
+conditions, work out which one they met, remember which figure went with it,
+and then find that figure in a row of chips. Four steps for one decision, and
+the third is done from memory.
+
+**Each payout's button is on the line that earns it.**
+
+```
+4 VP: You control one or more objectives (excluding your home objective).  [Score 4]
+4 VP: You control three or more objectives.                                [Score 4]
+```
+
+Reading the line and tapping it are one motion. Nothing scores from a figure
+floating free of its condition — which was the state of both the turn page and
+the objectives page before this.
+
+**Parsed from the card's own text, not re-derived.** `ScoringText` reads the
+composed lines (§3.11) and treats one opening `4 VP:`, `+2 VP each:` or
+`5 VP, max 15 VP:` as a payout. Measured across all 43 shipped cards: **130
+payout lines, and every card has at least one.** Where the structure disagrees
+it is because the card pays *per objective* and names a figure the structure
+records as `vp_per` — the line is what the player reads, so the line is what
+carries the button.
+
+**The mission opens in place.** It was a modal sheet on the turn page while
+the cards beside it expanded inline — two interaction models on one row. What
+is left of the old scoring row is the `+1` for cards that pay per something the
+app cannot see, and the `−1` for a mis-tap.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.
@@ -2493,3 +2524,36 @@ once buries the phase they sit in.
 `SourceStratagem.text` is what the player reads, and every control — phase
 filter, CP cost, once-per-turn, the target picker — still runs on the
 structured fields. Nothing that *does* anything reads the sentence.
+
+---
+
+## 7.7 Nothing changes unless the player changed it
+
+**The rule.** The app never alters something the player set, or moves them
+somewhere they did not ask to go. Concretely:
+
+- **Every tab stays where it was scrolled.** Switching away and back is not a
+  reason to return to the top. The four play tabs are an `IndexedStack` for
+  this reason: it keeps each one in the tree rather than rebuilding it.
+- **No control changes its own state.** A fold the player opened stays open, a
+  fold they closed stays closed, and neither is decided again by anything
+  except them.
+- **No field is cleared or rewritten** unless an action asks for it. Saving,
+  cancelling and deleting are actions; scrolling, switching tabs, a rebuild
+  and an incoming event are not.
+
+**The failure that produced it.** A `ListView` builds what is near the screen
+and disposes the rest, taking any `State` with it — so a block opened at the
+top of the turn page had folded itself shut by the time the player scrolled
+back. The app undoing a choice nobody undid, silently, in the middle of a game.
+
+`RemembersToggle` puts the flag in the route's `PageStorageBucket`, which
+outlives the element, under an explicit identifier so it survives reordering
+too. `state_persistence_test` pins it — including the two directions that
+matter equally: an opened block stays open, and a closed one stays closed,
+because "remembers" must not quietly mean "opens".
+
+**The one exception, and it proves the rule.** Choosing a play density resets
+every unit row, because that is precisely what choosing a density means. It is
+an explicit action with that effect.
+

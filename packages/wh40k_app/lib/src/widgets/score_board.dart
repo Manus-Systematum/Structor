@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../theme.dart';
-import 'rule_text.dart';
+import 'remembered_toggle.dart';
+import 'scoring_text.dart';
 import 'secondary_cards.dart';
-import 'sheet_header.dart';
 
 /// Both sides' score, entered in one tap wherever the card names a figure
 /// (DESIGN.md §7.3.13).
@@ -118,26 +118,18 @@ class _Side extends StatefulWidget {
   State<_Side> createState() => _SideState();
 }
 
-class _SideState extends State<_Side> {
-  bool _cardsOpen = false;
+class _SideState extends State<_Side> with RemembersToggle<_Side> {
+  @override
+  Object get toggleId => 'cards:${widget.side.name}';
 
-  /// The primary in full, from the row that scores it.
-  ///
-  /// The figures on the buttons are what the card pays; this is what the card
-  /// *asks for*, which is the part you check before tapping. Both missions are
-  /// readable — the matchup is asymmetric, and how they score decides what you
-  /// contest (§7.3.17).
-  void _showMission(BuildContext context) {
-    final mission = widget.card;
-    if (mission == null) return;
-    showModalBottomSheet<void>(
-      context: context,
-      showDragHandle: true,
-      isScrollControlled: true,
-      builder: (_) => _MissionSheet(card: mission, owner: widget.label),
-    );
-  }
+  @override
+  bool get initiallyOpen => false;
 
+  /// The card's own text, open in place. Not remembered across disposal the
+  /// way the cards are — it is opened to read one thing and closed again.
+  bool _missionOpen = false;
+
+  /// Scoring a figure the card names, for this side.
   void _score(ScoreKind kind, int vp) => widget.onEvent(ScoreVp(
         side: widget.side,
         kind: kind,
@@ -148,15 +140,6 @@ class _SideState extends State<_Side> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-
-    // Only the figures this round can actually pay. A card's tiers change at
-    // battle round two, so offering all of them would offer points that
-    // cannot be taken.
-    final payouts = <int>{
-      ...?widget.card?.payoutsIn(phase: 'command', round: widget.state.round),
-      ...?widget.card?.payoutsIn(phase: 'end', round: widget.state.round),
-    }.toList()
-      ..sort();
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
@@ -194,7 +177,7 @@ class _SideState extends State<_Side> {
           ),
           if (widget.card case final mission?)
             InkWell(
-              onTap: () => _showMission(context),
+              onTap: () => setState(() => _missionOpen = !_missionOpen),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: Row(
@@ -213,6 +196,21 @@ class _SideState extends State<_Side> {
                 ),
               ),
             ),
+          // The card, with each payout's button on the line that earns it.
+          // Nothing here scores from a figure floating free of its condition
+          // (§7.3.22).
+          if (_missionOpen && widget.card != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 4, bottom: 6),
+              child: ScoringText(
+                text: widget.card!.text,
+                onScore: (vp) => _score(ScoreKind.primary, vp),
+                style: TextStyle(
+                    fontSize: 11.5,
+                    height: 1.35,
+                    color: scheme.onSurfaceVariant),
+              ),
+            ),
           const SizedBox(height: 2),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,7 +219,6 @@ class _SideState extends State<_Side> {
                 child: _Line(
                   label: 'PRIMARY',
                   thisRound: widget.score.primary[widget.state.round] ?? 0,
-                  payouts: payouts,
                   onScore: (vp) => _score(ScoreKind.primary, vp),
                 ),
               ),
@@ -231,20 +228,15 @@ class _SideState extends State<_Side> {
                   label: 'SECONDARY',
                   trailing: _CardsButton(
                     count: widget.held.length,
-                    onTap: () => setState(() => _cardsOpen = !_cardsOpen),
+                    onTap: toggleOpen,
                   ),
                   thisRound: widget.score.secondary[widget.state.round] ?? 0,
-                  payouts: {
-                    for (final c in widget.held)
-                      ...c.payoutsIn(phase: 'end', round: widget.state.round),
-                  }.toList()
-                    ..sort(),
                   onScore: (vp) => _score(ScoreKind.secondary, vp),
                 ),
               ),
             ],
           ),
-          if (_cardsOpen)
+          if (open)
             Padding(
               padding: const EdgeInsets.only(top: 6),
               child: SecondaryPanel(
@@ -260,12 +252,14 @@ class _SideState extends State<_Side> {
   }
 }
 
-/// One scoring line: the figures the card names as buttons, and a stepper for
-/// everything it does not.
+/// One scoring line: what this side has taken this round, and a correction.
+///
+/// The card's own figures used to be chips here. They are on the card's lines
+/// now (§7.3.22); what is left is the running figure, the plus for cards that
+/// pay per something the app cannot see, and the minus for a mis-tap.
 class _Line extends StatelessWidget {
   final String label;
   final int thisRound;
-  final List<int> payouts;
   final void Function(int) onScore;
 
   /// Sits on the label row, where it does not compete with the score chips.
@@ -274,7 +268,6 @@ class _Line extends StatelessWidget {
   const _Line({
     required this.label,
     required this.thisRound,
-    required this.payouts,
     required this.onScore,
     this.trailing,
   });
@@ -313,11 +306,10 @@ class _Line extends StatelessWidget {
           spacing: 4,
           runSpacing: 4,
           children: [
-            for (final vp in payouts)
-              _Chip(label: '+$vp', onTap: () => onScore(vp)),
-            // The stepper stays for the cards that pay per objective, and for
-            // correcting a tap. Both directions, because a correction is as
-            // common as a score.
+            // For the cards that pay per objective or per unit destroyed,
+            // where only the player can see the board — and for correcting a
+            // tap. Both directions, because a correction is as common as a
+            // score.
             _Chip(label: '+1', onTap: () => onScore(1), quiet: true),
             if (thisRound > 0)
               _Chip(label: '−1', onTap: () => onScore(-1), quiet: true),
@@ -390,49 +382,6 @@ class _CardsButton extends StatelessWidget {
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
                     color: scheme.primary)),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// One primary mission in full, opened from the row that scores it.
-class _MissionSheet extends StatelessWidget {
-  final MissionCard card;
-  final String owner;
-
-  const _MissionSheet({required this.card, required this.owner});
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SheetHeader(
-              title: card.name,
-              trailing: Text(owner,
-                  style:
-                      TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-              child: RuleText(card.text,
-                  style: const TextStyle(fontSize: 13, height: 1.4)),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              child: Text(
-                'Card text is transcribed, not summarised, but the printed '
-                'card is what settles a rules dispute.',
-                style: TextStyle(
-                    fontSize: 10.5, height: 1.35, color: scheme.outline),
-              ),
-            ),
           ],
         ),
       ),

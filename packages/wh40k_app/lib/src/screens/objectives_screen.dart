@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
-import '../widgets/rule_text.dart';
+import '../widgets/scoring_text.dart';
 import '../widgets/secondary_cards.dart';
 
 import '../theme.dart';
@@ -415,21 +415,25 @@ class _SideBlock extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 6),
-              RuleText(mission.text,
-                  style: TextStyle(
-                      fontSize: 11.5,
-                      height: 1.4,
-                      color: scheme.onSurfaceVariant)),
+              // Each payout's button on the line that earns it (§7.3.22).
+              ScoringText(
+                text: mission.text,
+                onScore: (vp) => onEvent(ScoreVp(
+                  side: side,
+                  kind: ScoreKind.primary,
+                  round: state.round,
+                  vp: vp,
+                )),
+                style: TextStyle(
+                    fontSize: 11.5,
+                    height: 1.4,
+                    color: scheme.onSurfaceVariant),
+              ),
               const SizedBox(height: 10),
             ],
             _ScoreRow(
               label: 'PRIMARY',
               thisRound: score.primary[state.round] ?? 0,
-              payouts: <int>{
-                ...?mission?.payoutsIn(phase: 'command', round: state.round),
-                ...?mission?.payoutsIn(phase: 'end', round: state.round),
-              }.toList()
-                ..sort(),
               onScore: (vp) => onEvent(ScoreVp(
                 side: side,
                 kind: ScoreKind.primary,
@@ -441,11 +445,6 @@ class _SideBlock extends StatelessWidget {
             _ScoreRow(
               label: 'SECONDARY',
               thisRound: score.secondary[state.round] ?? 0,
-              payouts: {
-                for (final c in deck.hand(state.secondariesOf(side)))
-                  ...c.payoutsIn(phase: 'end', round: state.round),
-              }.toList()
-                ..sort(),
               onScore: (vp) => onEvent(ScoreVp(
                 side: side,
                 kind: ScoreKind.secondary,
@@ -471,17 +470,19 @@ class _SideBlock extends StatelessWidget {
   }
 }
 
-/// The figures this side's cards name, as buttons, plus a correction.
+/// What this side has taken this round, and a correction.
+///
+/// The card's own figures are on the card's lines (§7.3.22). What is left is
+/// the plus for cards that pay per something the app cannot see, and the minus
+/// for a mis-tap.
 class _ScoreRow extends StatelessWidget {
   final String label;
   final int thisRound;
-  final List<int> payouts;
   final void Function(int) onScore;
 
   const _ScoreRow({
     required this.label,
     required this.thisRound,
-    required this.payouts,
     required this.onScore,
   });
 
@@ -518,8 +519,6 @@ class _ScoreRow extends StatelessWidget {
           spacing: 4,
           runSpacing: 4,
           children: [
-            for (final vp in payouts)
-              _ScoreChip(label: '+$vp', onTap: () => onScore(vp)),
             _ScoreChip(label: '+1', onTap: () => onScore(1), quiet: true),
             if (thisRound > 0)
               _ScoreChip(label: '−1', onTap: () => onScore(-1), quiet: true),

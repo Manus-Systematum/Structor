@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'remembered_toggle.dart';
+
 /// A titled block the player can fold away (DESIGN.md §7.3.11).
 ///
 /// The turn page works by scroll position: the phase you are in is the thing
@@ -23,6 +25,11 @@ class CollapsibleGroup extends StatefulWidget {
   final bool initiallyOpen;
   final Widget child;
 
+  /// What this group is called in the route's storage, so it stays open when
+  /// the list disposes and rebuilds it (§7.7). Defaults to the title, which is
+  /// unique on every page that uses one today.
+  final String? rememberAs;
+
   const CollapsibleGroup({
     super.key,
     required this.title,
@@ -30,14 +37,20 @@ class CollapsibleGroup extends StatefulWidget {
     this.trailing,
     this.icon,
     this.initiallyOpen = false,
+    this.rememberAs,
   });
 
   @override
   State<CollapsibleGroup> createState() => _CollapsibleGroupState();
 }
 
-class _CollapsibleGroupState extends State<CollapsibleGroup> {
-  late bool _open = widget.initiallyOpen;
+class _CollapsibleGroupState extends State<CollapsibleGroup>
+    with RemembersToggle<CollapsibleGroup> {
+  @override
+  Object get toggleId => 'collapsible:${widget.rememberAs ?? widget.title}';
+
+  @override
+  bool get initiallyOpen => widget.initiallyOpen;
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +59,12 @@ class _CollapsibleGroupState extends State<CollapsibleGroup> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         InkWell(
-          onTap: () => setState(() => _open = !_open),
+          onTap: toggleOpen,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(12, 7, 12, 7),
             child: Row(
               children: [
-                Icon(_open ? Icons.expand_more : Icons.chevron_right,
+                Icon(open ? Icons.expand_more : Icons.chevron_right,
                     size: 18, color: scheme.onSurfaceVariant),
                 const SizedBox(width: 4),
                 if (widget.icon != null) ...[
@@ -86,7 +99,7 @@ class _CollapsibleGroupState extends State<CollapsibleGroup> {
             ),
           ),
         ),
-        if (_open) widget.child,
+        if (open) widget.child,
       ],
     );
   }

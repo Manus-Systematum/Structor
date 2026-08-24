@@ -380,18 +380,23 @@ void main() {
       expect(find.text('Purge and Secure'), findsOneWidget);
     });
 
-    testWidgets('and expands to the scoring rule behind the number',
+    testWidgets('and expands to the card, with a button on each payout',
         (tester) async {
       await pumpPanel(tester, state: stateOf(iGoFirst: true), pack: pack);
 
-      final text =
-          pack.card('reconnaissance-sweep')!.text.split('.').first.trim();
-      expect(find.textContaining(text), findsNothing,
-          reason: 'collapsed by default — the numbers come first');
+      // One line of the card, rather than the whole blob: the text renders a
+      // widget per line now, so each payout can carry its own button
+      // (§7.3.22).
+      const line = 'Three or more friendly units are wholly within';
+      expect(find.textContaining(line, findRichText: true), findsNothing,
+          reason: 'closed by default — the row is a summary');
 
       await tester.tap(find.text('Reconnaissance Sweep'));
       await tester.pumpAndSettle();
-      expect(find.textContaining(text), findsOneWidget);
+      expect(find.textContaining(line, findRichText: true), findsOneWidget);
+
+      // And the button that scores it sits on that line, not above the text.
+      expect(find.textContaining(RegExp(r'^Score \d+$')), findsWidgets);
     });
 
     testWidgets('opening one side does not open the other', (tester) async {

@@ -6,6 +6,7 @@ import '../data/play_density.dart';
 import '../theme.dart';
 import '../widgets/battle_record.dart';
 import '../widgets/collapsible.dart';
+import '../widgets/remembered_toggle.dart';
 import '../widgets/rule_text.dart';
 import '../widgets/score_board.dart';
 import '../widgets/sheet_header.dart';
@@ -755,13 +756,19 @@ String? _move(CombatUnit unit) {
   return values.length == 1 ? values.single : null;
 }
 
-class _UnitRowState extends State<_UnitRow> {
-  late bool _open = widget.density.showsWeapons;
+class _UnitRowState extends State<_UnitRow> with RemembersToggle<_UnitRow> {
+  @override
+  Object get toggleId => 'unit:${widget.unit.head.instanceId}';
+
+  @override
+  bool get initiallyOpen => widget.density.showsWeapons;
 
   @override
   void didUpdateWidget(_UnitRow old) {
     super.didUpdateWidget(old);
-    if (old.density != widget.density) _open = widget.density.showsWeapons;
+    // Changing the density is an explicit action, and it is the one thing
+    // that may reset every row: that is what choosing a density means (§7.7).
+    if (old.density != widget.density) setOpen(widget.density.showsWeapons);
   }
 
   @override
@@ -781,7 +788,7 @@ class _UnitRowState extends State<_UnitRow> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             InkWell(
-              onTap: () => setState(() => _open = !_open),
+              onTap: toggleOpen,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(12, 9, 10, 7),
                 child: Row(
@@ -817,7 +824,7 @@ class _UnitRowState extends State<_UnitRow> {
                     ] else
                       Text('${unit.models}',
                           style: AppTheme.numeric(context, size: 13)),
-                    Icon(_open ? Icons.expand_less : Icons.expand_more,
+                    Icon(open ? Icons.expand_less : Icons.expand_more,
                         size: 18, color: scheme.onSurfaceVariant),
                   ],
                 ),
@@ -827,7 +834,7 @@ class _UnitRowState extends State<_UnitRow> {
             // each against 174–198 for the printed text, so the names cost
             // 15–30 lines for a whole army and the text costs 330–686.
             _RuleChips(unit: unit),
-            if (_open) ...[
+            if (open) ...[
               UnitStatline(profiles: unit.profiles),
               if (ranged.weapons.isNotEmpty) WeaponTable(result: ranged),
               if (melee.weapons.isNotEmpty) WeaponTable(result: melee),
