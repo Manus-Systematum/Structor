@@ -223,6 +223,65 @@ void main() {
     });
   });
 
+  group('a card can be traded for a command point', () {
+    // One per battle round, and the round is the unit rather than the turn:
+    // passing the turn back must not refresh it (§7.3.18).
+    test('trading adds a command point and spends the round', () {
+      final log = BattleLog(events: const [
+        DrawSecondary('outflank'),
+        DiscardSecondary('outflank', forCp: true),
+      ]);
+      expect(log.state.cp, 1);
+      expect(log.state.cpTradedRounds, {1});
+      expect(log.state.secondaries.hand, isEmpty);
+      expect(log.state.secondaries.discarded, ['outflank']);
+    });
+
+    test('a plain discard is not a trade', () {
+      final log = BattleLog(events: const [
+        DrawSecondary('outflank'),
+        DiscardSecondary('outflank'),
+      ]);
+      expect(log.state.cp, 0);
+      expect(log.state.cpTradedRounds, isEmpty);
+    });
+
+    test('the allowance is per round, not per turn', () {
+      final log = BattleLog(events: const [
+        ConfigureBattle(MissionSetup(
+          myDisposition: 'a',
+          opponentDisposition: 'b',
+          myMissionId: 'm',
+          opponentMissionId: 'n',
+        )),
+        DrawSecondary('outflank'),
+        DiscardSecondary('outflank', forCp: true),
+        EndTurn(),
+      ]);
+      // Their turn now, still battle round one.
+      expect(log.state.round, 1);
+      expect(log.state.cpTradedRounds, contains(1),
+          reason: 'the allowance stays spent while the round does');
+    });
+
+    test('their trade does not spend my command points', () {
+      final log = BattleLog(events: const [
+        DrawSecondary('outflank', side: Player.opponent),
+        DiscardSecondary('outflank', side: Player.opponent, forCp: true),
+      ]);
+      expect(log.state.cp, 0, reason: 'only my CP is tracked');
+      expect(log.state.secondariesOf(Player.opponent).discarded, ['outflank']);
+    });
+
+    test('the flag survives the round trip', () {
+      const event = DiscardSecondary('outflank', forCp: true);
+      final back = BattleEvent.fromJson(event.toJson()) as DiscardSecondary;
+      expect(back.forCp, isTrue);
+      expect(BattleEvent.fromJson({'type': 'discardSecondary', 'card': 'x'}),
+          isA<DiscardSecondary>().having((e) => e.forCp, 'forCp', isFalse));
+    });
+  });
+
   group('the opponent has a deck of their own', () {
     // The decks are copies of the same 18 cards, so the same objective can sit
     // in both hands at once. Treating one draw as spending the other player's

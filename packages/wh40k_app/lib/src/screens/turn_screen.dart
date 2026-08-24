@@ -63,6 +63,55 @@ class TurnScreen extends StatefulWidget {
 }
 
 class _TurnScreenState extends State<TurnScreen> {
+  /// Which past turn is being read, as an index into [_turnEnds]. Null is the
+  /// live turn, which is where the page always starts.
+  int? _reviewing;
+
+  /// The index of the last event of each turn, in order.
+  ///
+  /// A turn is a run of events sharing a round and an active player, which is
+  /// what `timeline` already works out — so the boundaries come from the same
+  /// replay the state does rather than from a second reading of the log.
+  List<int> get _turnEnds {
+    final ends = <int>[];
+    ({int round, Player player})? current;
+    for (final entry in widget.log.timeline) {
+      final key = (round: entry.round, player: entry.activePlayer);
+      if (current != null && key != current) ends.add(entry.index - 1);
+      current = key;
+    }
+    return ends;
+  }
+
+  /// The state as it stood at the end of the reviewed turn, or the live state.
+  BattleLog get _shown {
+    final at = _reviewing;
+    if (at == null) return widget.log;
+    final ends = _turnEnds;
+    if (at < 0 || at >= ends.length) return widget.log;
+    return BattleLog(
+      events: widget.log.events.sublist(0, ends[at] + 1),
+      secondaryCaps: widget.log.secondaryCaps,
+    );
+  }
+
+  void _stepBack() {
+    final ends = _turnEnds;
+    if (ends.isEmpty) return;
+    setState(() {
+      final at = _reviewing;
+      _reviewing =
+          at == null ? ends.length - 1 : (at - 1).clamp(0, ends.length);
+    });
+  }
+
+  void _stepForward() => setState(() {
+        final at = _reviewing;
+        if (at == null) return;
+        // Past the last boundary is the live turn, which is not a boundary.
+        _reviewing = at + 1 >= _turnEnds.length ? null : at + 1;
+      });
+
   /// The record, over the page rather than beside it.
   ///
   /// Mid-game the question is "what did I already score this round", which is
@@ -109,8 +158,17 @@ class _TurnScreenState extends State<TurnScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = widget.log.state;
+    final shown = _shown;
+    final state = shown.state;
+    final reviewing = _reviewing != null;
     final density = widget.density ?? PlayDensity.defaultFor(widget.army);
+
+    // Reviewing is reading. A tap that scored a past round from a page that
+    // says it is showing a past round would be a different feature, and a
+    // surprising one, so the controls are inert until it is dismissed.
+    void emit(BattleEvent event) {
+      if (!reviewing) widget.onEvent(event);
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -118,8 +176,8 @@ class _TurnScreenState extends State<TurnScreen> {
         _TurnBar(
           state: state,
           density: density,
-          canUndo: widget.log.canUndo,
-          onEvent: widget.onEvent,
+          canUndo: widget.log.canUndo && !reviewing,
+          onEvent: emit,
           onUndo: widget.onUndo,
           onDensity: widget.onDensity,
           onRecord: () => _showRecord(context),
@@ -128,16 +186,21 @@ class _TurnScreenState extends State<TurnScreen> {
           child: ListView(
             padding: const EdgeInsets.only(bottom: 28),
             children: [
+              if (reviewing)
+                _ReviewBanner(
+                  state: state,
+                  onExit: () => setState(() => _reviewing = null),
+                ),
               ScoreBoard(
                 state: state,
                 pack: widget.pack,
                 deck: widget.deck,
-                onEvent: widget.onEvent,
+                onEvent: emit,
               ),
               _Stratagems(
                 army: widget.army,
                 state: state,
-                onEvent: widget.onEvent,
+                onEvent: emit,
               ),
               if (density.showsPrompts)
                 _Prompts(army: widget.army, state: state),
@@ -151,7 +214,45 @@ class _TurnScreenState extends State<TurnScreen> {
                   unit: unit,
                   state: state,
                   density: density,
-                  onEvent: widget.onEvent,
+                  onEvent: emit,
+                ),
+              // The foot of the page is where a turn actually ends — you have
+              // just read down it — so the controls that move between turns
+              // are here as well as in the bar (§7.3.20).
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 16, 12, 0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: _turnEnds.isEmpty ? null : _stepBack,
+                        icon: const Icon(Icons.chevron_left, size: 18),
+                        label: const Text('Previous turn'),
+                      ),
+                    ),
+                    // Only when there is a turn to come back to. At the live
+                    // turn there is nothing forward of here.
+                    if (reviewing) ...[
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: _stepForward,
+                          icon: const Icon(Icons.chevron_right, size: 18),
+                          label: const Text('Next turn'),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              if (!reviewing)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+                  child: FilledButton.icon(
+                    onPressed: () => widget.onEvent(const EndTurn()),
+                    icon: const Icon(Icons.done_all, size: 18),
+                    label: const Text('End turn'),
+                  ),
                 ),
               if (widget.onFinish != null)
                 Padding(
@@ -166,6 +267,47 @@ class _TurnScreenState extends State<TurnScreen> {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Says the page is showing a turn that has already been played.
+///
+/// Without it the only difference between reviewing round two and being in
+/// round two is a number in the bar, and a player who scrolled back would
+/// score into the past believing it was now.
+class _ReviewBanner extends StatelessWidget {
+  final BattleState state;
+  final VoidCallback onExit;
+
+  const _ReviewBanner({required this.state, required this.onExit});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final whose = state.activePlayer == Player.me ? 'your turn' : 'their turn';
+    return Container(
+      margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+      padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
+      decoration: BoxDecoration(
+        color: scheme.tertiaryContainer,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.history, size: 16, color: scheme.onTertiaryContainer),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              'Round ${state.round}, $whose — already played. '
+              'Nothing here can be changed.',
+              style: TextStyle(
+                  fontSize: 12, color: scheme.onTertiaryContainer, height: 1.3),
+            ),
+          ),
+          TextButton(onPressed: onExit, child: const Text('Back to now')),
+        ],
+      ),
     );
   }
 }
@@ -257,6 +399,12 @@ class _TurnBar extends StatelessWidget {
   }
 }
 
+/// Command points, and the two controls that change them.
+///
+/// It was a tap on the number to add and a long press to subtract, which is
+/// two invisible gestures on the figure a player adjusts most. The plus is a
+/// button now; the minus appears beside it once there is something to take
+/// away (§7.3.18).
 class _Cp extends StatelessWidget {
   final int cp;
   final void Function(BattleEvent) onEvent;
@@ -266,25 +414,68 @@ class _Cp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return InkWell(
-      onTap: () => onEvent(const AdjustCp(1)),
-      onLongPress: () => onEvent(const AdjustCp(-1)),
-      borderRadius: BorderRadius.circular(8),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('CP',
-                style: TextStyle(
-                    fontSize: 9,
-                    letterSpacing: 0.8,
-                    fontWeight: FontWeight.w700,
-                    color: scheme.onSurfaceVariant)),
-            Text('$cp',
-                style: AppTheme.numeric(context, size: 18)
-                    .copyWith(fontWeight: FontWeight.w800)),
-          ],
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (cp > 0)
+          _CpButton(
+            icon: Icons.remove,
+            tooltip: 'Spend a command point',
+            onTap: () => onEvent(const AdjustCp(-1)),
+          ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('CP',
+                  style: TextStyle(
+                      fontSize: 9,
+                      letterSpacing: 0.8,
+                      fontWeight: FontWeight.w700,
+                      color: scheme.onSurfaceVariant)),
+              Text('$cp',
+                  style: AppTheme.numeric(context, size: 18)
+                      .copyWith(fontWeight: FontWeight.w800)),
+            ],
+          ),
+        ),
+        _CpButton(
+          icon: Icons.add,
+          tooltip: 'Gain a command point',
+          onTap: () => onEvent(const AdjustCp(1)),
+        ),
+      ],
+    );
+  }
+}
+
+class _CpButton extends StatelessWidget {
+  final IconData icon;
+  final String tooltip;
+  final VoidCallback onTap;
+
+  const _CpButton({
+    required this.icon,
+    required this.tooltip,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Tooltip(
+      message: tooltip,
+      child: InkResponse(
+        onTap: onTap,
+        radius: 20,
+        child: Container(
+          padding: const EdgeInsets.all(3),
+          decoration: BoxDecoration(
+            color: scheme.surfaceContainerHighest,
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: Icon(icon, size: 15, color: scheme.onSurface),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../widgets/rule_text.dart';
+import '../widgets/secondary_cards.dart';
 
 import '../theme.dart';
 import '../widgets/collapsible.dart';
@@ -28,13 +29,21 @@ class ObjectivesScreen extends StatelessWidget {
   /// finish, or on a surface where finishing makes no sense.
   final VoidCallback? onFinish;
 
+  /// Scoring happens here too, not only on the turn page. This is the page a
+  /// player has open while working out what they scored, and reading it
+  /// somewhere you cannot act on it is a trip back (§7.3.19).
+  final void Function(BattleEvent) onEvent;
+
   const ObjectivesScreen({
     super.key,
     required this.state,
     required this.pack,
     this.deck = const SecondaryDeck([]),
     this.onFinish,
+    this.onEvent = _ignore,
   });
+
+  static void _ignore(BattleEvent _) {}
 
   @override
   Widget build(BuildContext context) {
@@ -65,23 +74,32 @@ class ObjectivesScreen extends StatelessWidget {
       children: [
         _Standings(state: state, opponentName: opponentName),
         _History(state: state, opponentName: opponentName),
-        if (mine != null)
-          _MissionBlock(
-            title: 'YOUR PRIMARY',
-            card: mine,
-            round: state.round,
-            initiallyOpen: true,
-          ),
-        if (theirs != null)
+        // One block per side, and everything that side has is inside it: the
+        // mission, what it pays this round, the buttons that score it, and
+        // their cards. Nothing folds inside a fold and nothing opens a sheet
+        // (§7.3.19).
+        _SideBlock(
+          title: 'YOU',
+          side: Player.me,
+          card: mine,
+          state: state,
+          deck: deck,
+          score: state.me,
+          initiallyOpen: true,
+          onEvent: onEvent,
+        ),
+        _SideBlock(
           // Their mission is a different one — the matchup table is asymmetric
           // (§7.3.1) — and how they score is how you decide what to contest.
-          _MissionBlock(
-            title: '${opponentName.toUpperCase()} PRIMARY',
-            card: theirs,
-            round: state.round,
-            initiallyOpen: false,
-          ),
-        if (!deck.isEmpty) _Hand(state: state, deck: deck),
+          title: opponentName.toUpperCase(),
+          side: Player.opponent,
+          card: theirs,
+          state: state,
+          deck: deck,
+          score: state.opponent,
+          initiallyOpen: false,
+          onEvent: onEvent,
+        ),
         // The other place a game ends. This page is where you read where the
         // game stands, so it is where you conclude it has finished — and the
         // END section is a long scroll away on the turn page (§7.2).
@@ -187,7 +205,8 @@ class _Total extends StatelessWidget {
               style: AppTheme.numeric(context, size: 26).copyWith(
                   fontWeight: FontWeight.w800,
                   color: ahead ? scheme.primary : scheme.onSurface)),
-          Text('${score.primaryTotal} primary · ${score.secondaryTotal} secondary',
+          Text(
+              '${score.primaryTotal} primary · ${score.secondaryTotal} secondary',
               style: TextStyle(fontSize: 10, color: scheme.onSurfaceVariant)),
         ],
       ),
@@ -327,61 +346,221 @@ class _History extends StatelessWidget {
 }
 
 /// One side's primary, with what it pays and when.
-class _MissionBlock extends StatelessWidget {
+/// Everything one side is playing for, in one fold.
+///
+/// It replaces three separate groups — your primary, their primary, and the
+/// hand — and the sheets those opened. The page is read while deciding what
+/// you scored, so what you read and what you tap have to be the same place
+/// (§7.3.19).
+class _SideBlock extends StatelessWidget {
   final String title;
-  final MissionCard card;
-  final int round;
+  final Player side;
+  final MissionCard? card;
+  final BattleState state;
+  final SecondaryDeck deck;
+  final SideScore score;
   final bool initiallyOpen;
+  final void Function(BattleEvent) onEvent;
 
-  const _MissionBlock({
+  const _SideBlock({
     required this.title,
+    required this.side,
     required this.card,
-    required this.round,
+    required this.state,
+    required this.deck,
+    required this.score,
     required this.initiallyOpen,
+    required this.onEvent,
   });
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final nowCommand = card.scoresIn(phase: 'command', round: round);
-    final nowEnd = card.scoresIn(phase: 'end', round: round);
+    final mission = card;
+    final nowCommand = mission?.scoresIn(phase: 'command', round: state.round);
+    final nowEnd = mission?.scoresIn(phase: 'end', round: state.round);
 
     return CollapsibleGroup(
       title: title,
       icon: Icons.flag_outlined,
-      trailing: card.name,
+      trailing: '${score.total} VP',
       initiallyOpen: initiallyOpen,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Where this round's points are available, since the card's tiers
-            // change with the round and the player is deciding now.
-            Wrap(
-              spacing: 6,
-              runSpacing: 4,
-              children: [
-                if (nowCommand)
-                  _When(
-                      label: 'Scores in your Command phase',
-                      colour: scheme.primary),
-                if (nowEnd)
-                  _When(label: 'Scores at end of turn', colour: scheme.primary),
-                if (!nowCommand && !nowEnd)
-                  _When(
-                      label: 'Nothing scores this round',
-                      colour: scheme.outline),
-              ],
+            if (mission != null) ...[
+              Text(mission.name,
+                  style: const TextStyle(
+                      fontSize: 13, fontWeight: FontWeight.w700)),
+              const SizedBox(height: 4),
+              // Where this round's points are available, since a card's tiers
+              // change with the round and the player is deciding now.
+              Wrap(
+                spacing: 6,
+                runSpacing: 4,
+                children: [
+                  if (nowCommand == true)
+                    _When(
+                        label: 'Scores in your Command phase',
+                        colour: scheme.primary),
+                  if (nowEnd == true)
+                    _When(
+                        label: 'Scores at end of turn', colour: scheme.primary),
+                  if (nowCommand == false && nowEnd == false)
+                    _When(
+                        label: 'Nothing scores this round',
+                        colour: scheme.outline),
+                ],
+              ),
+              const SizedBox(height: 6),
+              RuleText(mission.text,
+                  style: TextStyle(
+                      fontSize: 11.5,
+                      height: 1.4,
+                      color: scheme.onSurfaceVariant)),
+              const SizedBox(height: 10),
+            ],
+            _ScoreRow(
+              label: 'PRIMARY',
+              thisRound: score.primary[state.round] ?? 0,
+              payouts: <int>{
+                ...?mission?.payoutsIn(phase: 'command', round: state.round),
+                ...?mission?.payoutsIn(phase: 'end', round: state.round),
+              }.toList()
+                ..sort(),
+              onScore: (vp) => onEvent(ScoreVp(
+                side: side,
+                kind: ScoreKind.primary,
+                round: state.round,
+                vp: vp,
+              )),
             ),
-            const SizedBox(height: 6),
-            RuleText(card.text,
-                style: TextStyle(
-                    fontSize: 11.5,
-                    height: 1.4,
-                    color: scheme.onSurfaceVariant)),
+            const SizedBox(height: 8),
+            _ScoreRow(
+              label: 'SECONDARY',
+              thisRound: score.secondary[state.round] ?? 0,
+              payouts: {
+                for (final c in deck.hand(state.secondariesOf(side)))
+                  ...c.payoutsIn(phase: 'end', round: state.round),
+              }.toList()
+                ..sort(),
+              onScore: (vp) => onEvent(ScoreVp(
+                side: side,
+                kind: ScoreKind.secondary,
+                round: state.round,
+                vp: vp,
+              )),
+            ),
+            if (!deck.isEmpty) ...[
+              const SizedBox(height: 4),
+              // Inline, and the same panel the turn page uses, so the two
+              // cannot drift apart.
+              SecondaryPanel(
+                state: state,
+                deck: deck,
+                onEvent: onEvent,
+                side: side,
+              ),
+            ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// The figures this side's cards name, as buttons, plus a correction.
+class _ScoreRow extends StatelessWidget {
+  final String label;
+  final int thisRound;
+  final List<int> payouts;
+  final void Function(int) onScore;
+
+  const _ScoreRow({
+    required this.label,
+    required this.thisRound,
+    required this.payouts,
+    required this.onScore,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    // Label above rather than beside: "SECONDARY +4" does not fit a fixed
+    // column at phone width, and a fixed column that fits the longest label
+    // wastes the width the chips need.
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(label,
+                style: TextStyle(
+                  fontSize: 8.5,
+                  letterSpacing: 0.9,
+                  fontWeight: FontWeight.w800,
+                  color: scheme.onSurfaceVariant,
+                )),
+            if (thisRound > 0) ...[
+              const SizedBox(width: 5),
+              Text('+$thisRound',
+                  style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: scheme.primary)),
+            ],
+          ],
+        ),
+        const SizedBox(height: 4),
+        Wrap(
+          spacing: 4,
+          runSpacing: 4,
+          children: [
+            for (final vp in payouts)
+              _ScoreChip(label: '+$vp', onTap: () => onScore(vp)),
+            _ScoreChip(label: '+1', onTap: () => onScore(1), quiet: true),
+            if (thisRound > 0)
+              _ScoreChip(label: '−1', onTap: () => onScore(-1), quiet: true),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _ScoreChip extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+  final bool quiet;
+
+  const _ScoreChip({
+    required this.label,
+    required this.onTap,
+    this.quiet = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(7),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+          color: quiet ? null : scheme.primaryContainer,
+          border: quiet ? Border.all(color: scheme.outlineVariant) : null,
+          borderRadius: BorderRadius.circular(7),
+        ),
+        child: Text(label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color:
+                  quiet ? scheme.onSurfaceVariant : scheme.onPrimaryContainer,
+            )),
       ),
     );
   }
@@ -407,57 +586,6 @@ class _When extends StatelessWidget {
 }
 
 /// The secondaries currently held, in full.
-class _Hand extends StatelessWidget {
-  final BattleState state;
-  final SecondaryDeck deck;
-
-  const _Hand({required this.state, required this.deck});
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final hand = deck.hand(state.secondaries);
-    final remaining = deck.remaining(state.secondaries).length;
-
-    return CollapsibleGroup(
-      title: 'SECONDARIES IN HAND',
-      icon: Icons.style_outlined,
-      trailing: hand.isEmpty ? 'none · $remaining left' : '${hand.length} held',
-      initiallyOpen: hand.isNotEmpty,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (hand.isEmpty)
-              Text('No cards in hand.',
-                  style:
-                      TextStyle(fontSize: 11, color: scheme.onSurfaceVariant))
-            else
-              for (final card in hand)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(card.name,
-                          style: const TextStyle(
-                              fontSize: 12.5, fontWeight: FontWeight.w700)),
-                      RuleText(card.text,
-                          style: TextStyle(
-                              fontSize: 11,
-                              height: 1.35,
-                              color: scheme.onSurfaceVariant)),
-                    ],
-                  ),
-                ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 /// Whose words the descriptions are (§7.3.4, §7.6).
 class _Provenance extends StatelessWidget {
   const _Provenance();

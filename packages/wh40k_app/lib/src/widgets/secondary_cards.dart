@@ -89,6 +89,14 @@ class SecondaryPanel extends StatelessWidget {
             for (final card in hand)
               _CardTile(
                 card: card,
+                // One card per battle round buys a command point, and only
+                // this player's points are tracked (§7.3.18). Their panel
+                // offers a plain discard.
+                onTradeForCp: side == Player.me &&
+                        !state.cpTradedRounds.contains(state.round)
+                    ? () => onEvent(
+                        DiscardSecondary(card.id, side: side, forCp: true))
+                    : null,
                 note: deck.drawNote(
                   card,
                   round: state.round,
@@ -246,11 +254,16 @@ class _CardTile extends StatelessWidget {
   final void Function(int) onScore;
   final VoidCallback onDiscard;
 
+  /// Null when the allowance is already spent this round, or when the cards
+  /// are the opponent's — their command points are not tracked.
+  final VoidCallback? onTradeForCp;
+
   const _CardTile({
     required this.card,
     required this.note,
     required this.onScore,
     required this.onDiscard,
+    this.onTradeForCp,
   });
 
   @override
@@ -308,6 +321,13 @@ class _CardTile extends StatelessWidget {
                 label: const Text('Discard'),
                 onPressed: onDiscard,
               ),
+              if (onTradeForCp case final trade?)
+                ActionChip(
+                  visualDensity: VisualDensity.compact,
+                  avatar: const Icon(Icons.bolt, size: 15),
+                  label: const Text('Discard for 1 CP'),
+                  onPressed: trade,
+                ),
             ],
           ),
         ],

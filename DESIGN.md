@@ -1628,6 +1628,58 @@ rules text for any of them. A tappable chip would open an empty sheet, which is
 worse than a chip that does not invite the tap. It needs a source, not a
 widget.
 
+### 7.3.18 Command points: two buttons, and a card that buys one
+
+**The plus is a button now.** Command points were a tap on the figure to add
+and a long press to subtract — two invisible gestures on the number a player
+adjusts more than any other. The plus is always there; the minus appears beside
+it once there is something to spend.
+
+**A card can be traded for a command point, once per battle round.** The
+allowance is keyed to the battle round rather than the turn, so passing the
+turn back does not refresh it, and `cpTradedRounds` records which rounds are
+spent. `DiscardSecondary` carries a `forCp` flag rather than a second event
+type: the discard is the same discard, and the record reads "discarded for CP"
+where it applies, because a command point that appeared with no reason attached
+is the kind of thing an opponent asks about.
+
+**Only this player's points are tracked**, so only this player's trade adds
+one. The opponent's panel offers a plain discard. Giving them a CP pool is a
+feature nobody asked for; pretending their trade did something would be worse.
+
+### 7.3.19 The objectives page is one fold per side
+
+It was five groups and two sheets: the standings, the history, your primary,
+their primary, the hand — each folding separately, with card text behind a tap.
+A page read while working out what you scored should not be a set of doors.
+
+**One collapsible per side now, holding everything that side has**: the mission
+name, what it pays this round, its full text, the buttons that score it, and
+that side's cards. Nothing folds inside a fold and nothing opens a sheet.
+
+**Scoring is on this page too.** It reads the same `BattleState` and emits the
+same events as the turn page's board, so the two cannot disagree — and the page
+where a player works out what they scored is the page where they should be able
+to enter it.
+
+### 7.3.20 Reading a turn that has already been played
+
+**Previous turn and Next turn at the foot of the page**, where a turn actually
+ends, with End turn under them — you have just read down the page, and the
+control that moves the game on was back at the top.
+
+Stepping back shows the state **as it stood at the end of that turn**: the
+score, the command points, what the cards were. The boundaries come from
+`timeline`, which already places every event in its round and turn, so the
+review is the same replay the live state is rather than a second reading of the
+log.
+
+**Reviewing is reading.** Every control is inert while a past turn is shown,
+Next turn only exists once there is a turn to come back to, and a banner says
+which turn it is and that nothing there can change. A tap that scored into
+round two from a page that looked like round two would be a different feature,
+and a surprising one.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.

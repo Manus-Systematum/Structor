@@ -45,10 +45,19 @@ void main() {
     ),
   });
 
-  Widget host(BattleState state, {VoidCallback? onFinish}) => MaterialApp(
+  Widget host(
+    BattleState state, {
+    VoidCallback? onFinish,
+    void Function(BattleEvent)? onEvent,
+  }) =>
+      MaterialApp(
         home: Scaffold(
           body: ObjectivesScreen(
-              state: state, pack: pack, onFinish: onFinish),
+            state: state,
+            pack: pack,
+            onFinish: onFinish,
+            onEvent: onEvent ?? (_) {},
+          ),
         ),
       );
 
@@ -109,12 +118,31 @@ void main() {
     expect(find.text('–'), findsWidgets);
   });
 
-  testWidgets('each side gets its own mission, named', (tester) async {
+  // One block per side now, titled by the side rather than by the card, with
+  // the mission named inside it (§7.3.19).
+  testWidgets('each side gets its own block, and its own mission',
+      (tester) async {
     tall(tester);
     await tester.pumpWidget(host(stateWith(const [])));
-    expect(find.text('YOUR PRIMARY'), findsOneWidget);
-    expect(find.text('KARA PRIMARY'), findsOneWidget);
+    expect(find.text('YOU'), findsOneWidget);
+    expect(find.text('KARA'), findsOneWidget);
     expect(find.text('Battlefield Dominance'), findsWidgets);
+  });
+
+  testWidgets('scoring is on this page, not only the turn page',
+      (tester) async {
+    tall(tester);
+    final events = <BattleEvent>[];
+    await tester.pumpWidget(host(stateWith(const []), onEvent: events.add));
+
+    // The first block is mine and open; its +1 is the primary line's.
+    await tester.tap(find.text('+1').first);
+    await tester.pumpAndSettle();
+
+    final scored = events.single as ScoreVp;
+    expect(scored.side, Player.me);
+    expect(scored.kind, ScoreKind.primary);
+    expect(scored.vp, 1);
   });
 
   testWidgets('it says where this round\'s points are available',
@@ -159,8 +187,7 @@ void main() {
       expect(finished, 1);
     });
 
-    testWidgets('and withheld when there is nothing to finish',
-        (tester) async {
+    testWidgets('and withheld when there is nothing to finish', (tester) async {
       tall(tester);
       await tester.pumpWidget(
           host(const BattleLog(events: [ConfigureBattle(setup)]).state));

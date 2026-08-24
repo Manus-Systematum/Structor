@@ -134,6 +134,12 @@ class BattleState {
   /// that only [Player.me] had cards and the field was a single state.
   final Map<Player, SecondaryState> hands;
 
+  /// Battle rounds in which a card was already traded for a command point.
+  ///
+  /// The allowance is one per battle round rather than per turn, so it does
+  /// not refresh when the turn passes back (§7.3.18).
+  final Set<int> cpTradedRounds;
+
   /// This player's hand — what almost every caller wants.
   SecondaryState get secondaries => hands[Player.me] ?? const SecondaryState();
 
@@ -150,6 +156,7 @@ class BattleState {
     this.units = const {},
     this.stratagemsUsed = const [],
     this.hands = const {},
+    this.cpTradedRounds = const {},
   });
 
   UnitState unit(String instanceId) => units[instanceId] ?? const UnitState();
@@ -308,6 +315,7 @@ class BattleLog {
 
     // A pair of everything: the decks are copies, so both sides can hold the
     // same card and each side's "already seen" is its own.
+    final cpTraded = <int>{};
     final secondaryUsed = {for (final p in Player.values) p: <String>{}};
     final hand = {for (final p in Player.values) p: <String>[]};
     final scoredCards = {for (final p in Player.values) p: <String, int>{}};
@@ -400,6 +408,12 @@ class BattleLog {
         case final DiscardSecondary e:
           hand[e.side]!.remove(e.cardId);
           discarded[e.side]!.add(e.cardId);
+          if (e.forCp) {
+            cpTraded.add(round);
+            // Only this player's command points are tracked, so only this
+            // player's trade can add one (§7.3.18).
+            if (e.side == Player.me) cp++;
+          }
         case final ScoreSecondaryCard e:
           hand[e.side]!.remove(e.cardId);
           scoredCards[e.side]![e.cardId] = e.vp;
@@ -423,6 +437,7 @@ class BattleLog {
       ),
       units: Map.unmodifiable(units),
       stratagemsUsed: List.unmodifiable(uses),
+      cpTradedRounds: Set.unmodifiable(cpTraded),
       hands: {
         for (final p in Player.values)
           p: SecondaryState(

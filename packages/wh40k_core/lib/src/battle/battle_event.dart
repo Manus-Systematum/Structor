@@ -81,8 +81,11 @@ sealed class BattleEvent {
       'setup' => ConfigureBattle(MissionSetup.fromJson(j['setup'])),
       'drawSecondary' =>
         DrawSecondary(strOr(j['card'], ''), side: _side(j['side'])),
-      'discardSecondary' =>
-        DiscardSecondary(strOr(j['card'], ''), side: _side(j['side'])),
+      'discardSecondary' => DiscardSecondary(
+          strOr(j['card'], ''),
+          side: _side(j['side']),
+          forCp: j['forCp'] == true,
+        ),
       'scoreSecondary' => ScoreSecondaryCard(
           cardId: strOr(j['card'], ''),
           round: intOr(j['round'], 1),
@@ -290,14 +293,26 @@ class DiscardSecondary extends BattleEvent {
   final String cardId;
   final Player side;
 
-  const DiscardSecondary(this.cardId, {this.side = Player.me});
+  /// Traded for a command point rather than simply binned.
+  ///
+  /// One card per battle round, and the record says which it was: "discarded"
+  /// and "discarded for CP" are different decisions, and a CP that appeared
+  /// with no reason attached is the kind of thing an opponent asks about.
+  final bool forCp;
+
+  const DiscardSecondary(this.cardId,
+      {this.side = Player.me, this.forCp = false});
 
   @override
   String get type => 'discardSecondary';
 
   @override
-  Map<String, Object?> toJson() =>
-      {'type': type, 'card': cardId, 'side': side.name};
+  Map<String, Object?> toJson() => {
+        'type': type,
+        'card': cardId,
+        'side': side.name,
+        if (forCp) 'forCp': true,
+      };
 }
 
 class ScoreSecondaryCard extends BattleEvent {

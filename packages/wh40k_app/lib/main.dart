@@ -238,6 +238,7 @@ class _ArmyPageState extends State<ArmyPage> {
                     state: _log.state,
                     pack: _pack,
                     deck: SecondaryDeck.of(_pack),
+                    onEvent: (event) => _apply(_log.add(event)),
                     // Only once there is a game to finish; the page shows a
                     // prompt to set one up otherwise.
                     onFinish: _log.state.setup == null

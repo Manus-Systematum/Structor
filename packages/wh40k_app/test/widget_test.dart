@@ -224,7 +224,8 @@ void main() {
 
       expect(find.text('ROUND 1'), findsOneWidget);
       expect(find.text('Your turn'), findsOneWidget);
-      expect(find.text('End turn'), findsOneWidget);
+      // In the bar and again at the foot (§7.3.20).
+      expect(find.text('End turn'), findsNWidgets(2));
       expect(find.text('UNITS'), findsOneWidget);
       // Phase headings are gone from the page's spine.
       expect(find.text('SHOOTING'), findsNothing);
@@ -314,9 +315,18 @@ void main() {
         onEvent: events.add,
       )));
 
-      await tester.tap(find.text('End turn'));
+      // Two of them: the bar's, and the one at the foot of the page where a
+      // turn actually ends (§7.3.20). Both do the same thing.
+      expect(find.text('End turn'), findsNWidgets(2));
+
+      await tester.tap(find.text('End turn').first);
       await tester.pump();
       expect(events.single, isA<EndTurn>());
+
+      await tester.tap(find.text('End turn').last);
+      await tester.pump();
+      expect(events, hasLength(2));
+      expect(events.last, isA<EndTurn>());
     });
   });
 
