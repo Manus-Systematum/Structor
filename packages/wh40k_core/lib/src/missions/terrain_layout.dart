@@ -176,14 +176,14 @@ class TerrainTemplate {
         'bm-bm-terrain-11e-1-part-gh' =>
           TerrainGroup.ruin,
         'bm-bm-terrain-11e-1-part-generator' ||
-        'bm-bm-terrain-11e-1-part-tower' =>
+        'bm-bm-terrain-11e-1-part-tower' ||
+        'bm-bm-terrain-11e-1-part-pipes' =>
           TerrainGroup.structure,
         'bm-bm-terrain-11e-1-part-small-l' ||
         'bm-bm-terrain-11e-1-part-small-l-flip' ||
         'bm-bm-terrain-11e-1-part-corner' ||
         'bm-bm-terrain-11e-1-part-short-barrier' ||
-        'bm-bm-terrain-11e-1-part-long-barrier' ||
-        'bm-bm-terrain-11e-1-part-pipes' =>
+        'bm-bm-terrain-11e-1-part-long-barrier' =>
           TerrainGroup.barricade,
         _ => TerrainGroup.unknown,
       };

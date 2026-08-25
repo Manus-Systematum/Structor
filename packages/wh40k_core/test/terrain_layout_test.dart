@@ -822,6 +822,31 @@ void main() {
       }
     });
 
+    // Named individually because the printed picture is the only source for
+    // them: Pipes reads as a structure there rather than a barricade
+    // (corrected 2026-08-24).
+    test('each part is in the group the printed layout draws it in', () {
+      if (pack.terrainTemplates.isEmpty) return;
+      TerrainGroup groupOf(String suffix) =>
+          pack.terrainTemplates['bm-bm-terrain-11e-1-part-$suffix']!.group;
+
+      for (final part in ['ab', 'co', 'ef', 'gh']) {
+        expect(groupOf(part), TerrainGroup.ruin, reason: part);
+      }
+      for (final part in ['generator', 'tower', 'pipes']) {
+        expect(groupOf(part), TerrainGroup.structure, reason: part);
+      }
+      for (final part in [
+        'small-l',
+        'small-l-flip',
+        'corner',
+        'short-barrier',
+        'long-barrier',
+      ]) {
+        expect(groupOf(part), TerrainGroup.barricade, reason: part);
+      }
+    });
+
     test('one area can carry two different inks', () {
       if (pack.terrainLayouts.isEmpty) return;
       var mixed = 0;

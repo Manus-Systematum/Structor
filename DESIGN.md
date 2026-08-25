@@ -1758,14 +1758,22 @@ So the group lives on `TerrainTemplate`, keyed by part:
 | Part | Group | Ink |
 | --- | --- | --- |
 | `part-ab`, `part-co`, `part-ef`, `part-gh` | ruin | brown |
-| `part-generator`, `part-tower` | structure | dark green |
-| `part-small-l`, `part-small-l-flip`, `part-corner`, `part-short-barrier`, `part-long-barrier`, `part-pipes` | barricade | dark yellow |
+| `part-generator`, `part-tower`, `part-pipes` | structure | dark green |
+| `part-small-l`, `part-small-l-flip`, `part-corner`, `part-short-barrier`, `part-long-barrier` | barricade | dark yellow |
 
 **Twelve parts in the whole published set**, so this is a list rather than a
 rule inferred from geometry — and a part missing from it draws neutral rather
-than joining a group by default. Three tests hold it: every placed part has a
-group, the lettered parts are the ruins *and only those*, and at least one area
-carries two inks, which is the fact that makes an area-level colour wrong.
+than joining a group by default.
+
+**The list is read off the printed picture, so it is pinned name by name.**
+`Pipes` was first filed as a barricade on its shape and is a structure: the
+printed layout draws it green. A shape heuristic cannot know that, which is
+why the table is enumerated and every entry asserted rather than derived.
+
+Four tests hold it: each of the twelve parts is in its stated group, every
+placed part has a group at all, the lettered parts are the ruins *and only
+those*, and at least one area carries two inks — the last being the fact that
+makes an area-level colour wrong.
 
 ### 7.4 Battle state
 
