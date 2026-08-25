@@ -46,6 +46,23 @@ void main() {
     expect(find.textContaining('Experimental Prototype Cadre'), findsWidgets);
   });
 
+  testWidgets('a stratagem with no published text says so', (tester) async {
+    // 116 of 2,246 have a name, a cost and no wording — all of them on
+    // pre-launch detachments, and no source has the text (§3.14). A blank
+    // where the card goes cannot be told apart from a short stratagem.
+    tester.view.physicalSize = const Size(1200, 4000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(list(
+      state: const BattleState(cp: 3),
+      onEvent: (_) {},
+    ));
+
+    expect(find.text('Experimental Weaponry'), findsOneWidget);
+    expect(find.textContaining('No rules text published'), findsWidgets);
+  });
+
   testWidgets('an unaffordable stratagem says so instead of vanishing',
       (tester) async {
     tester.view.physicalSize = const Size(1200, 4000);

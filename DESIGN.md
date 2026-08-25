@@ -707,7 +707,7 @@ from the report:
   data said otherwise — so the validator names it. The builder stops you
   creating the state; the validator explains one that already exists.
 
-### 4.5.1 A replacement names a quantity, and several models may make it
+### 4.5.2 A replacement names a quantity, and several models may make it
 
 Two faults in one control, both reported from a Seraphim Squad.
 
@@ -766,6 +766,23 @@ duplicating had nowhere to live at all; a per-row menu holds both.
 **Duplicating a unit is inline.** It was reachable only from inside the unit
 sheet, so putting three of the same squad in a list — an ordinary thing to
 want — cost four taps each time.
+
+### 4.7 A Unit Upgrade is not an Enhancement, and the screen forgot
+
+Symphonic Payload goes on an Exorcist, which is a tank. The core already said
+so — `SourceEnhancement.canBeTakenBy` answered true — but the editor drew the
+whole section behind `if (datasheet.isCharacter)`, so the answer was never
+asked for. **428 non-character datasheets across eight factions** had an
+upgrade they may legally take and no way to take it.
+
+Enhancements and Unit Upgrades share an encoding and a slot mechanism, which is
+why they share a screen; they do not share the restriction that made the gate
+look right. The filtering moved out of the widget into
+`EnhancementOffers.of(dataset, roster, datasheet)`, so the question the screen
+asks is the one the rules ask — *does anything in the taken detachments name
+this unit?* — and the section appears when the answer is yes. The heading reads
+`ENHANCEMENT` on a Character and `UNIT UPGRADE` otherwise, because on a tank
+the first word is wrong.
 
 ## 5. Open questions
 
@@ -1830,6 +1847,35 @@ existence (the rule `CollapsibleGroup` already follows).
 The objectives page names its two blocks the same way, so the two surfaces
 agree.
 
+### 7.3.25 The card picker edits the hand, and both discards ask
+
+Two faults with one cause: the app treated a hand as a thing that only grows
+forward. `Choose` offered the cards **nobody had drawn yet**, so a card entered
+as the wrong one, a discard that did not happen at the table, or three turns
+played on paper and typed in afterwards were all unfixable — the correction the
+player needed was the one option not on the list. And a discard, the single
+action on a card that cannot be read back off the table, fired on one tap from
+a chip sitting a finger's width from `Score 5`.
+
+- **The picker is the whole deck as a checklist.** Cards in hand open selected
+  and carry an `in hand` pill; discarded ones are tinted and carry a
+  `discarded` pill, and can be selected again. Tapping toggles. Whatever is
+  selected when the sheet closes *is* the hand: additions become
+  `DrawSecondary`, removals become a plain `DiscardSecondary`. A correction is
+  never a trade, so it never pays a command point.
+- **Both pills are shown, not one.** In hand and discarded are different facts.
+  A player scanning eighteen cards for the one they misfiled needs to see which
+  ones they have already turned down.
+- **Closing by the button and swiping the sheet away both save.** The selection
+  is a set the sheet writes into, and the panel reads it after the await.
+  Losing edits on a swipe would be the app discarding something the player
+  entered (§7.7).
+- **`DrawSecondary` now removes the card from `discarded`.** A card back in
+  hand is not still discarded; leaving it in both lists showed it twice.
+- **Both discards confirm first**, naming the card, and the CP one also names
+  what it spends: one card a battle round trades this way, and the tap that
+  spends it should not be the tap that was aimed at `Score 5`.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.
@@ -2378,6 +2424,21 @@ depends on it and Wahapedia was not needed.
 description and matches on the keyword's name. Longest wins where two files
 differ, on §3.12's reasoning: a truncated stub is the failure mode, not a
 competing wording.
+
+**The second gap, and step 4 reached for real.** 116 of 2,246 stratagems ship
+with a name, a cost, a timing and no wording. All three sources were tried and
+none has them: 40kdc publishes them as structure, BSData carries the
+detachment but not its cards, and Wahapedia has no row — four names match and
+none of the four has a description. **Every one of the 116 is on a
+`pre-launch-provisional` detachment**, which is the whole explanation: they are
+new 11th-edition detachments nobody has published the cards for yet.
+
+So step 4 applies, and the app **says so on the card** — `No rules text
+published for this one yet. Read it off the printed card.` — instead of
+drawing a name over a blank, which a reader cannot tell apart from a stratagem
+that is genuinely one line long. `shipped_bundle_test` pins that the textless
+set is provisional-only, so the note can never appear on a stratagem somebody
+has published.
 
 **In the app, a keyword with text is tappable and looks it; one without stays
 an outline and takes no tap.** A chip that opens an empty sheet is worse than a

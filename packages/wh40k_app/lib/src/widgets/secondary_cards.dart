@@ -134,9 +134,7 @@ class SecondaryPanel extends StatelessWidget {
                   // the card actually in front of them stops using the app.
                   Expanded(
                     child: OutlinedButton.icon(
-                      onPressed: remaining.isEmpty
-                          ? null
-                          : () => _choose(context, remaining),
+                      onPressed: () => _choose(context),
                       icon: Icon(_isTactical ? Icons.list_alt : Icons.add,
                           size: 17),
                       label: const Text('Choose'),
@@ -162,63 +160,239 @@ class SecondaryPanel extends StatelessWidget {
     if (drawn != null) onEvent(DrawSecondary(drawn.id, side: side));
   }
 
-  Future<void> _choose(
-      BuildContext context, List<MissionCard> remaining) async {
-    final chosen = await showModalBottomSheet<String>(
+  /// The whole deck, with this side's hand already selected (§7.3.25).
+  ///
+  /// It edits the hand rather than adding one card to it, because what it is
+  /// for is **correcting the record**: a card entered as the wrong one, a
+  /// discard that did not happen, a hand typed in after three turns played on
+  /// paper. Offering only undrawn cards made every one of those unfixable.
+  ///
+  /// The selection is a set the sheet writes into, so closing it by the button
+  /// or by swiping it away both keep the edits — losing them on a swipe would
+  /// be the app changing something the player did not (§7.7).
+  Future<void> _choose(BuildContext context) async {
+    final held = _mine.hand.toSet();
+    final selection = {...held};
+    await showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
-      builder: (context) => _PickSheet(cards: remaining),
+      builder: (context) => _PickSheet(
+        cards: deck.cards,
+        inHand: held,
+        discarded: _mine.discarded.toSet(),
+        selection: selection,
+      ),
     );
-    if (chosen != null) onEvent(DrawSecondary(chosen, side: side));
+    for (final card in deck.cards) {
+      final chosen = selection.contains(card.id);
+      if (chosen && !held.contains(card.id)) {
+        onEvent(DrawSecondary(card.id, side: side));
+      } else if (!chosen && held.contains(card.id)) {
+        onEvent(DiscardSecondary(card.id, side: side));
+      }
+    }
   }
 }
 
-class _PickSheet extends StatelessWidget {
+/// The whole deck as a checklist: what is in hand, what was discarded, and
+/// everything still unseen.
+///
+/// Both facts are shown rather than only the selection, because they are not
+/// the same fact. A card in hand is one the player is holding; a discarded one
+/// is one they turned down — still available to take back, and worth marking
+/// so a player scanning the list knows why they remember seeing it.
+class _PickSheet extends StatefulWidget {
   final List<MissionCard> cards;
 
-  const _PickSheet({required this.cards});
+  /// The hand as it stood when the sheet opened, for the pills.
+  final Set<String> inHand;
+  final Set<String> discarded;
 
+  /// Written in place: what the hand should be when the sheet closes.
+  final Set<String> selection;
+
+  const _PickSheet({
+    required this.cards,
+    required this.inHand,
+    required this.discarded,
+    required this.selection,
+  });
+
+  @override
+  State<_PickSheet> createState() => _PickSheetState();
+}
+
+class _PickSheetState extends State<_PickSheet> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     return SafeArea(
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          const SheetHeader(title: 'Choose a secondary'),
-          for (final card in cards)
-            InkWell(
-              onTap: () => Navigator.of(context).pop(card.id),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(card.name,
-                        style: const TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.w600)),
-                    // In full. These run to 800 characters and describe tiers,
-                    // timings and exclusions — a three-line clamp cut the half
-                    // that decides whether the card is worth taking.
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: RuleText(card.text,
-                          style: TextStyle(
-                              fontSize: 11.5,
-                              height: 1.35,
-                              color: scheme.onSurfaceVariant)),
-                    ),
-                  ],
-                ),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.85,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SheetHeader(title: 'Choose secondaries'),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
+              child: Text(
+                'Tap to take a card or put it back. What is selected when you '
+                'close is the hand.',
+                style: TextStyle(
+                    fontSize: 11.5,
+                    height: 1.35,
+                    color: scheme.onSurfaceVariant),
               ),
             ),
-          const _CardTextProvenance(),
-          const SizedBox(height: 8),
-        ],
+            Expanded(
+              child: ListView(
+                children: [
+                  for (final card in widget.cards)
+                    _PickRow(
+                      card: card,
+                      selected: widget.selection.contains(card.id),
+                      wasInHand: widget.inHand.contains(card.id),
+                      wasDiscarded: widget.discarded.contains(card.id),
+                      onTap: () => setState(() {
+                        if (!widget.selection.remove(card.id)) {
+                          widget.selection.add(card.id);
+                        }
+                      }),
+                    ),
+                  const _CardTextProvenance(),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+              child: FilledButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('Close (${widget.selection.length} in hand)'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+}
+
+class _PickRow extends StatelessWidget {
+  final MissionCard card;
+  final bool selected;
+  final bool wasInHand;
+  final bool wasDiscarded;
+  final VoidCallback onTap;
+
+  const _PickRow({
+    required this.card,
+    required this.selected,
+    required this.wasInHand,
+    required this.wasDiscarded,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final background = selected
+        ? scheme.primaryContainer.withValues(alpha: 0.45)
+        : wasDiscarded
+            ? scheme.errorContainer.withValues(alpha: 0.3)
+            : null;
+
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        color: background,
+        padding: const EdgeInsets.fromLTRB(12, 8, 16, 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              selected ? Icons.check_box : Icons.check_box_outline_blank,
+              size: 19,
+              color: selected ? scheme.primary : scheme.outline,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(card.name,
+                            style: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w600)),
+                      ),
+                      if (wasInHand) ...[
+                        const SizedBox(width: 6),
+                        _Pill(
+                          label: 'in hand',
+                          color: scheme.primary,
+                          background: scheme.primaryContainer,
+                        ),
+                      ],
+                      if (wasDiscarded) ...[
+                        const SizedBox(width: 6),
+                        _Pill(
+                          label: 'discarded',
+                          color: scheme.onErrorContainer,
+                          background: scheme.errorContainer,
+                        ),
+                      ],
+                    ],
+                  ),
+                  // In full. These run to 800 characters and describe tiers,
+                  // timings and exclusions — a three-line clamp cut the half
+                  // that decides whether the card is worth taking.
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: RuleText(card.text,
+                        style: TextStyle(
+                            fontSize: 11.5,
+                            height: 1.35,
+                            color: scheme.onSurfaceVariant)),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Pill extends StatelessWidget {
+  final String label;
+  final Color color;
+  final Color background;
+
+  const _Pill({
+    required this.label,
+    required this.color,
+    required this.background,
+  });
+
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+        decoration: BoxDecoration(
+          color: background,
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Text(label,
+            style: TextStyle(
+              fontSize: 9.5,
+              letterSpacing: 0.4,
+              fontWeight: FontWeight.w700,
+              color: color,
+            )),
+      );
 }
 
 /// Whose words these are (§7.3.4, §7.6).
@@ -319,20 +493,57 @@ class _CardTile extends StatelessWidget {
                 visualDensity: VisualDensity.compact,
                 avatar: const Icon(Icons.close, size: 15),
                 label: const Text('Discard'),
-                onPressed: onDiscard,
+                onPressed: () => _confirmDiscard(context, forCp: false),
               ),
-              if (onTradeForCp case final trade?)
+              if (onTradeForCp != null)
                 ActionChip(
                   visualDensity: VisualDensity.compact,
                   avatar: const Icon(Icons.bolt, size: 15),
                   label: const Text('Discard for 1 CP'),
-                  onPressed: trade,
+                  onPressed: () => _confirmDiscard(context, forCp: true),
                 ),
             ],
           ),
         ],
       ),
     );
+  }
+
+  /// Both discards ask first (§7.3.25).
+  ///
+  /// A discard is a chip's width from `Score 5`, it is the one action on the
+  /// card that cannot be read back off the table, and the CP one also spends
+  /// the round's single trade. Undo exists, but it is on another screen and
+  /// several taps away from a player mid-turn.
+  Future<void> _confirmDiscard(BuildContext context,
+      {required bool forCp}) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+            forCp ? 'Discard ${card.name} for 1 CP?' : 'Discard ${card.name}?'),
+        content: Text(forCp
+            ? 'The card leaves your hand and you gain 1 command point. One '
+                'card a battle round can be traded this way.'
+            : 'The card leaves your hand. Choose takes it back.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(forCp ? 'Discard for 1 CP' : 'Discard'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    if (forCp) {
+      onTradeForCp!();
+    } else {
+      onDiscard();
+    }
   }
 
   Future<void> _scoreCustom(BuildContext context) async {

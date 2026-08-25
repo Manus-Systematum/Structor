@@ -7,6 +7,7 @@ import 'package:wh40k_app/src/data/dataset_repository.dart';
 import 'package:wh40k_app/src/data/roster_store.dart';
 import 'package:wh40k_app/src/screens/editor_screen.dart';
 import 'package:wh40k_app/src/widgets/sheet_header.dart';
+import 'package:wh40k_app/src/data/enhancement_offers.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 void main() {
@@ -560,5 +561,46 @@ void main() {
       army = await store.load(rows.single.id);
     });
     expect(army!.roster.detachments, hasLength(1));
+  });
+  group('a Unit Upgrade is not an Enhancement', () {
+    // Symphonic Payload goes on an Exorcist, which is a tank. The section was
+    // gated on isCharacter, so 428 datasheets across eight factions could not
+    // be offered an upgrade they may legally take (§4.7).
+    testWidgets('a non-character is offered the upgrade that names it',
+        (tester) async {
+      // Through `runAsync` like its neighbours: loading a bundle is real IO,
+      // and the fake clock a widget test runs on never lets it finish.
+      late Dataset sisters;
+      await tester.runAsync(() async {
+        sisters = await datasets.faction('adepta-sororitas');
+      });
+      final unit = sisters.unit('exorcist');
+      expect(unit, isNotNull);
+      expect(unit!.isCharacter, isFalse, reason: 'it is a Vehicle');
+
+      final upgrade = sisters.enhancements
+          .firstWhere((e) => e.id.startsWith('symphonic-payload-upgrade'));
+      expect(upgrade.isUpgrade, isTrue);
+      expect(
+          upgrade.canBeTakenBy(unit, factionName: sisters.faction.factionName),
+          isTrue,
+          reason: 'the keyword restriction is its own name');
+
+      // And the screen agrees: with that detachment taken, the picker offers
+      // it rather than the section being absent.
+      const roster = Roster(
+        name: 'sisters',
+        factionId: 'adepta-sororitas',
+        battleSizeId: 'strike-force',
+        detachments: [
+          RosterDetachment(detachmentId: 'chorus-of-condemnation'),
+        ],
+        units: [
+          RosterUnit(instanceId: 'u1', datasheetId: 'exorcist', models: 1),
+        ],
+      );
+      expect(EnhancementOffers.of(sisters, roster, unit).map((e) => e.name),
+          contains('Symphonic Payload (Upgrade)'));
+    });
   });
 }

@@ -9,6 +9,7 @@ import '../data/dataset_repository.dart';
 import '../data/roster_store.dart';
 import '../theme.dart';
 import '../widgets/collapsible.dart';
+import '../widgets/missing_rules_note.dart';
 import '../widgets/rule_text.dart';
 import '../widgets/source_pill.dart';
 import '../widgets/sheet_header.dart';
@@ -776,7 +777,8 @@ class _DetachmentBrief extends StatelessWidget {
                             when text.trim().isNotEmpty) ...[
                           const SizedBox(height: 2),
                           RuleText(text, style: const TextStyle(fontSize: 12)),
-                        ],
+                        ] else
+                          const MissingRulesNote(),
                       ],
                     ),
                   ),

@@ -205,4 +205,25 @@ void main() {
     ).resolve(parsed, factionId: 'tau-empire');
     expect(builder.build(result.roster).factionRuleId, 'for-the-greater-good');
   });
+
+  // §3.14's fallback ran out: 40kdc publishes these as structure with no
+  // wording, BSData has the detachment but not its cards, and Wahapedia has
+  // not written them up. The app says so on the card (§7.6) rather than
+  // filling the gap from memory — and this pins that the gap is only ever a
+  // provisional record, so the note never appears on a published stratagem.
+  test('every stratagem without text is a pre-launch one', () async {
+    final withoutText = <SourceStratagem>[];
+    for (final entry in await repo.availableFactions()) {
+      final dataset = await repo.faction(entry.id);
+      for (final stratagem in dataset.faction.stratagems) {
+        if ((stratagem.text ?? '').trim().isEmpty) withoutText.add(stratagem);
+      }
+    }
+    expect(withoutText, isNotEmpty, reason: 'otherwise the note is dead code');
+    expect(
+      withoutText
+          .where((s) => s.gameVersion.dataslate != 'pre-launch-provisional'),
+      isEmpty,
+    );
+  });
 }

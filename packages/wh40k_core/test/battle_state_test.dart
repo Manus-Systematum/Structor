@@ -305,6 +305,18 @@ void main() {
       expect(log.state.secondaries.discarded, ['outflank']);
     });
 
+    // The picker offers discarded cards so a mis-recorded discard can be
+    // taken back (§7.3.25) — and a card back in hand is not still discarded.
+    test('drawing a discarded card takes it out of the discard pile', () {
+      final log = BattleLog(events: const [
+        DrawSecondary('outflank'),
+        DiscardSecondary('outflank'),
+        DrawSecondary('outflank'),
+      ]);
+      expect(log.state.secondaries.hand, ['outflank']);
+      expect(log.state.secondaries.discarded, isEmpty);
+    });
+
     test('a plain discard is not a trade', () {
       final log = BattleLog(events: const [
         DrawSecondary('outflank'),

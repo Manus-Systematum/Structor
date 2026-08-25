@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import 'missing_rules_note.dart';
 import 'rule_text.dart';
 import 'source_pill.dart';
 
@@ -187,8 +188,14 @@ class _StratagemRowState extends State<_StratagemRow> {
                 ),
               ),
             // The stratagem as printed. Where there is none, the sentence
-            // derived from a structured effect stands in — 116 of 2,246 have
-            // neither, and the row then says what it knows and stops (§3.12).
+            // derived from a structured effect stands in — and where there is
+            // neither, the row says so rather than leaving a gap the reader
+            // has to interpret (§7.6).
+            if (body == null)
+              const Padding(
+                padding: EdgeInsets.only(left: 38),
+                child: MissingRulesNote(),
+              ),
             if (_open && body != null)
               Padding(
                 padding: const EdgeInsets.fromLTRB(38, 4, 0, 2),

@@ -80,7 +80,7 @@ void main() {
     await tester.tap(find.text('Choose'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Choose a secondary'), findsOneWidget);
+    expect(find.text('Choose secondaries'), findsOneWidget);
     // And the full description travels with it, not a three-line clamp.
     expect(
       find.textContaining('settles a rules dispute', findRichText: true),
@@ -168,6 +168,115 @@ void main() {
 
     expect(find.text('2 left'), findsOneWidget, reason: 'one is in hand');
     await tester.tap(find.text('Discard'));
+    await tester.pumpAndSettle();
+
+    // It asks first: the chip sits a finger's width from Score 5 (§7.3.25).
+    expect(events, isEmpty);
+    expect(find.text('Discard Outflank?'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FilledButton, 'Discard'));
+    await tester.pumpAndSettle();
     expect(events.single, isA<DiscardSecondary>());
+  });
+
+  testWidgets('cancelling the discard leaves the card in hand', (tester) async {
+    tall(tester);
+    final events = <BattleEvent>[];
+    final state = const BattleLog(events: [DrawSecondary('outflank')]).state;
+    await tester.pumpWidget(host(state, events.add));
+
+    await tester.tap(find.text('Discard'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+
+    expect(events, isEmpty);
+    expect(find.text('Outflank'), findsOneWidget);
+  });
+
+  testWidgets('the CP trade asks too, and says what it spends', (tester) async {
+    tall(tester);
+    final events = <BattleEvent>[];
+    final state = const BattleLog(events: [DrawSecondary('outflank')]).state;
+    await tester.pumpWidget(host(state, events.add));
+
+    await tester.tap(find.text('Discard for 1 CP'));
+    await tester.pumpAndSettle();
+    expect(events, isEmpty);
+    expect(find.textContaining('once a battle round'), findsNothing);
+    expect(find.textContaining('One card a battle round'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(FilledButton, 'Discard for 1 CP'));
+    await tester.pumpAndSettle();
+    expect((events.single as DiscardSecondary).forCp, isTrue);
+  });
+
+  group('the picker edits the hand', () {
+    testWidgets('it offers the whole deck, marking hand and discards',
+        (tester) async {
+      tall(tester);
+      final state = const BattleLog(events: [
+        DrawSecondary('outflank'),
+        DiscardSecondary('per-objective'),
+      ]).state;
+      await tester.pumpWidget(host(state, (_) {}));
+
+      await tester.tap(find.text('Choose'));
+      await tester.pumpAndSettle();
+
+      // All three, not only the one nobody has seen (§7.3.25). Outflank is
+      // twice over — the panel underneath still holds it.
+      expect(find.text('Outflank'), findsNWidgets(2));
+      expect(find.text('Area Denial'), findsOneWidget);
+      expect(find.text('Forward Position'), findsOneWidget);
+
+      expect(find.text('in hand'), findsOneWidget);
+      expect(find.text('discarded'), findsOneWidget);
+      expect(find.text('Close (1 in hand)'), findsOneWidget);
+    });
+
+    testWidgets('closing it draws what was added and discards what was not',
+        (tester) async {
+      tall(tester);
+      final events = <BattleEvent>[];
+      final state = const BattleLog(events: [
+        DrawSecondary('outflank'),
+        DiscardSecondary('per-objective'),
+      ]).state;
+      await tester.pumpWidget(host(state, events.add));
+
+      await tester.tap(find.text('Choose'));
+      await tester.pumpAndSettle();
+
+      // Put back a card discarded by mistake, and let go of the held one.
+      await tester.tap(find.text('Area Denial'));
+      await tester.tap(find.text('Outflank').last);
+      await tester.pumpAndSettle();
+      expect(find.text('Close (1 in hand)'), findsOneWidget);
+
+      await tester.tap(find.textContaining('Close ('));
+      await tester.pumpAndSettle();
+
+      expect(events.length, 2);
+      final drawn = events.whereType<DrawSecondary>().single;
+      final put = events.whereType<DiscardSecondary>().single;
+      expect(drawn.cardId, 'per-objective');
+      expect(put.cardId, 'outflank');
+      expect(put.forCp, isFalse, reason: 'a correction is not a trade');
+    });
+
+    testWidgets('a hand left alone emits nothing', (tester) async {
+      // §7.7: opening a sheet and closing it is not a change.
+      tall(tester);
+      final events = <BattleEvent>[];
+      final state = const BattleLog(events: [DrawSecondary('outflank')]).state;
+      await tester.pumpWidget(host(state, events.add));
+
+      await tester.tap(find.text('Choose'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.textContaining('Close ('));
+      await tester.pumpAndSettle();
+
+      expect(events, isEmpty);
+    });
   });
 }

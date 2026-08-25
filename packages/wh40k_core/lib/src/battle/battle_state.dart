@@ -420,6 +420,10 @@ class BattleLog {
         case final DrawSecondary e:
           secondaryUsed[e.side]!.add(e.cardId);
           if (!hand[e.side]!.contains(e.cardId)) hand[e.side]!.add(e.cardId);
+          // A card taken back into hand is no longer discarded. The picker
+          // offers discarded cards so a mis-recorded discard can be undone
+          // (§7.3.25); leaving it in both lists would show it twice.
+          discarded[e.side]!.remove(e.cardId);
         case final DiscardSecondary e:
           hand[e.side]!.remove(e.cardId);
           discarded[e.side]!.add(e.cardId);

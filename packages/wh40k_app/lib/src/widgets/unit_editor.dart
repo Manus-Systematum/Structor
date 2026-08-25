@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import '../data/enhancement_offers.dart';
 import '../theme.dart';
 import 'sheet_header.dart';
 import 'unit_profiles.dart';
@@ -229,8 +230,17 @@ class UnitEditorSheet extends StatelessWidget {
                   ),
                 ],
 
-                if (datasheet.isCharacter) ...[
-                  const _Heading('ENHANCEMENT'),
+                // **Not only Characters.** A Unit Upgrade is a separate
+                // mechanic (§2.1) and names its own targets — Symphonic
+                // Payload goes on an Exorcist, which is a tank. The section
+                // was gated on `isCharacter`, so 428 datasheets across the
+                // game could not be offered an upgrade they may legally take,
+                // even though the picker inside already sorted the two out
+                // (§4.7).
+                if (datasheet.isCharacter ||
+                    EnhancementOffers.any(dataset, roster, datasheet)) ...[
+                  _Heading(
+                      datasheet.isCharacter ? 'ENHANCEMENT' : 'UNIT UPGRADE'),
                   _EnhancementPicker(
                     dataset: dataset,
                     roster: roster,
@@ -671,23 +681,9 @@ class _EnhancementPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final taken = {for (final d in roster.detachments) d.detachmentId};
     final datasheet =
         dataset.unit(roster.unitByInstance(instanceId)?.datasheetId ?? '');
-
-    // Filtered to what this bearer may actually carry (§4.7). Offering the
-    // rest and letting validation object afterwards was producing illegal
-    // armies quietly: an Epic Hero takes none at all, an Enhancement wants a
-    // Character, and a Unit Upgrade often names one datasheet.
-    final offered = [
-      for (final enhancement in dataset.enhancements)
-        if (enhancement.detachmentId == null ||
-            taken.contains(enhancement.detachmentId))
-          if (datasheet == null ||
-              enhancement.canBeTakenBy(datasheet,
-                  factionName: dataset.faction.factionName))
-            enhancement,
-    ]..sort((a, b) => a.name.compareTo(b.name));
+    final offered = EnhancementOffers.of(dataset, roster, datasheet);
 
     if (offered.isEmpty) {
       final none = datasheet != null && datasheet.isEpicHero
