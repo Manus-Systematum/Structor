@@ -3,6 +3,7 @@ import 'package:wh40k_core/wh40k_core.dart';
 
 import '../theme.dart';
 import 'rule_text.dart';
+import 'scoring_text.dart';
 import 'sheet_header.dart';
 
 /// One side's secondary cards: what is in hand, what each pays, drawing the
@@ -269,7 +270,9 @@ class _CardTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final payouts = SecondaryDeck.payouts(card);
+    // A card that pays only per objective or per unit names no total, and the
+    // app cannot see the table — those keep the stepper.
+    final named = ScoringText.hasPayout(card.text);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
@@ -290,26 +293,23 @@ class _CardTile extends StatelessWidget {
                     color: scheme.error),
               ),
             ),
+          // Each payout's button on the line that earns it, the same as the
+          // primary (§7.3.22). A secondary is read at the moment it is scored
+          // — it was drawn a turn ago and the conditions are the whole card.
           Padding(
             padding: const EdgeInsets.only(top: 2),
-            child: RuleText(card.text,
-                style:
-                    TextStyle(fontSize: 11.5, color: scheme.onSurfaceVariant)),
+            child: ScoringText(
+              text: card.text,
+              onScore: onScore,
+              style: TextStyle(fontSize: 11.5, color: scheme.onSurfaceVariant),
+            ),
           ),
           const SizedBox(height: 4),
           Wrap(
             spacing: 6,
             runSpacing: 4,
             children: [
-              // The payouts the card itself names. A card that pays per
-              // objective names no total, so those fall to the stepper.
-              for (final vp in payouts)
-                ActionChip(
-                  visualDensity: VisualDensity.compact,
-                  label: Text('Score $vp'),
-                  onPressed: () => onScore(vp),
-                ),
-              if (payouts.isEmpty)
+              if (!named)
                 ActionChip(
                   visualDensity: VisualDensity.compact,
                   label: const Text('Score…'),

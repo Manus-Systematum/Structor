@@ -1735,10 +1735,23 @@ it is because the card pays *per objective* and names a figure the structure
 records as `vp_per` — the line is what the player reads, so the line is what
 carries the button.
 
+**Secondaries the same way.** A card's `Score 3` and `Score 5` were chips in a
+row beneath its text; they are on the lines that earn them now. A card whose
+figures are all *per something* — 2 VP per objective — still gets the `Score…`
+stepper, because the total is the player's to count, and `ScoringText.hasPayout`
+is what decides which case a card is in.
+
 **The mission opens in place.** It was a modal sheet on the turn page while
 the cards beside it expanded inline — two interaction models on one row. What
 is left of the old scoring row is the `+1` for cards that pay per something the
 app cannot see, and the `−1` for a mis-tap.
+
+**A defect the parser found before the feature shipped.** Two cards composed as
+`++1 VP each` — the source already wrote the `+` that `_vpLabel` then added, so
+`assassination` and `defend-stronghold` had a line the parser did not recognise
+and would have silently lost a button on. Fixed in the merge; the regex accepts
+a repeated `+` regardless, on the principle that a doubled sign should cost a
+button's appearance rather than its existence.
 
 ### 7.3.23 The map is drawn in the printed layout's inks
 
@@ -1774,6 +1787,21 @@ Four tests hold it: each of the twelve parts is in its stated group, every
 placed part has a group at all, the lettered parts are the ruins *and only
 those*, and at least one area carries two inks — the last being the fact that
 makes an area-level colour wrong.
+
+### 7.3.24 One fold per side, named for whose it is
+
+The score board asked the same question twice per side: a mission name that
+expanded the primary, and a `Cards` button that expanded the hand. Both answer
+*what can I score* — and the player deciding that wants both at once, since the
+primary and the secondaries compete for the same units in the same turn.
+
+**`MY OBJECTIVES` and `<their name> OBJECTIVES`**, one fold each, holding the
+primary card and that side's hand together. Folded, the header still says what
+is inside — `Secure Asset · 1 card` — so folding hides the detail and never the
+existence (the rule `CollapsibleGroup` already follows).
+
+The objectives page names its two blocks the same way, so the two surfaces
+agree.
 
 ### 7.4 Battle state
 

@@ -79,7 +79,7 @@ class ObjectivesScreen extends StatelessWidget {
         // their cards. Nothing folds inside a fold and nothing opens a sheet
         // (§7.3.19).
         _SideBlock(
-          title: 'YOU',
+          title: 'MY OBJECTIVES',
           side: Player.me,
           card: mine,
           state: state,
@@ -91,7 +91,7 @@ class ObjectivesScreen extends StatelessWidget {
         _SideBlock(
           // Their mission is a different one — the matchup table is asymmetric
           // (§7.3.1) — and how they score is how you decide what to contest.
-          title: opponentName.toUpperCase(),
+          title: '${opponentName.toUpperCase()} OBJECTIVES',
           side: Player.opponent,
           card: theirs,
           state: state,

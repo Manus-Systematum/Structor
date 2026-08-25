@@ -118,14 +118,14 @@ void main() {
     expect(find.text('–'), findsWidgets);
   });
 
-  // One block per side now, titled by the side rather than by the card, with
-  // the mission named inside it (§7.3.19).
-  testWidgets('each side gets its own block, and its own mission',
+  // One block per side, holding the primary and that side's cards, named for
+  // whose objectives they are (§7.3.19, §7.3.24).
+  testWidgets('each side gets one block, named for whose it is',
       (tester) async {
     tall(tester);
     await tester.pumpWidget(host(stateWith(const [])));
-    expect(find.text('YOU'), findsOneWidget);
-    expect(find.text('KARA'), findsOneWidget);
+    expect(find.text('MY OBJECTIVES'), findsOneWidget);
+    expect(find.text('KARA OBJECTIVES'), findsOneWidget);
     expect(find.text('Battlefield Dominance'), findsWidgets);
   });
 

@@ -4,22 +4,30 @@ import 'package:wh40k_app/src/widgets/secondary_cards.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 MissionCard _card(String id, String name,
-        {List<Object?> awards = const [], Object? drawn}) =>
+        {String text = 'Do the thing.',
+        List<Object?> awards = const [],
+        Object? drawn}) =>
     MissionCard.fromJson({
       'id': id,
       'name': name,
       'card_type': 'secondary',
-      'text': 'Do the thing.',
+      'text': text,
       'awards': awards,
       if (drawn != null) 'when_drawn': drawn,
     });
 
 void main() {
   final deck = SecondaryDeck([
-    _card('outflank', 'Outflank', awards: [
-      {'vp': 3},
-      {'vp': 5},
-    ]),
+    // The figures come off the printed lines now, not the structured
+    // awards — so the text is what a real card's text looks like (§7.3.22).
+    _card('outflank', 'Outflank',
+        text: 'ANY BATTLE ROUND · End of your turn\n'
+            '3 VP: A unit is wholly within your opponent\'s half.\n'
+            '5 VP: Two or more units are.',
+        awards: [
+          {'vp': 3},
+          {'vp': 5},
+        ]),
     _card('per-objective', 'Area Denial', awards: [
       {'vp_per': 2, 'per': 'controlled-objective'},
     ]),
@@ -33,8 +41,7 @@ void main() {
       MaterialApp(
         home: Scaffold(
           body: SingleChildScrollView(
-            child: SecondaryPanel(
-                state: state, deck: deck, onEvent: onEvent),
+            child: SecondaryPanel(state: state, deck: deck, onEvent: onEvent),
           ),
         ),
       );
@@ -89,9 +96,12 @@ void main() {
     await tester.pumpWidget(host(state, events.add));
 
     expect(find.text('Outflank'), findsOneWidget);
-    // Outflank pays 3 or 5 depending on how well it went.
+    // Outflank pays 3 or 5 depending on how well it went, and each figure is
+    // on the line that earns it rather than in a row underneath.
     expect(find.text('Score 3'), findsOneWidget);
     expect(find.text('Score 5'), findsOneWidget);
+    expect(find.textContaining('Two or more units', findRichText: true),
+        findsOneWidget);
 
     await tester.tap(find.text('Score 5'));
     final scored = events.single as ScoreSecondaryCard;
@@ -140,8 +150,8 @@ void main() {
     final state = const BattleLog(events: [
       ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 1, vp: 12),
       ScoreVp(side: Player.me, kind: ScoreKind.secondary, round: 1, vp: 8),
-      ScoreVp(side: Player.opponent, kind: ScoreKind.secondary, round: 1,
-          vp: 11),
+      ScoreVp(
+          side: Player.opponent, kind: ScoreKind.secondary, round: 1, vp: 11),
       DrawSecondary('outflank'),
     ]).state;
 

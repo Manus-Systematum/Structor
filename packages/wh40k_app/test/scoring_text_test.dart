@@ -32,6 +32,22 @@ void main() {
           isNull);
     });
 
+    // The merge briefly wrote `++1 VP each` where the source had already
+    // supplied the plus. Fixed upstream; tolerated here so a doubled plus
+    // costs a button rather than losing one silently.
+    test('a doubled plus still names its figure', () {
+      expect(ScoringText.payoutOf('++1 VP each: For each of those models.'), 1);
+    });
+
+    test('a card with no named figure says so', () {
+      expect(
+          ScoringText.hasPayout(
+              'ANY BATTLE ROUND\n2 VP each: For each objective you hold.'),
+          isTrue);
+      expect(ScoringText.hasPayout('ANY BATTLE ROUND · End of your turn'),
+          isFalse);
+    });
+
     test('a sentence that merely mentions VP is not a payout', () {
       expect(ScoringText.payoutOf('Score the VP for this card at end of turn.'),
           isNull);

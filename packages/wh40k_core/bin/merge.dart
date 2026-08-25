@@ -765,8 +765,11 @@ String _vpLabel(Map<String, dynamic> row, Map<String, dynamic> section) {
   }
   final vp = str(row['vp']);
   if (vp == null || vp.isEmpty) return '';
+  // A cumulative tier is marked with a leading `+` — unless the source has
+  // already written one. Two cards do (`assassination`, `defend-stronghold`),
+  // and they were rendering as `++1 VP each`.
   final buffer = StringBuffer()
-    ..write(row['cumulative'] == true ? '+' : '')
+    ..write(row['cumulative'] == true && !vp.startsWith('+') ? '+' : '')
     ..write(vp)
     ..write(' VP')
     ..write(

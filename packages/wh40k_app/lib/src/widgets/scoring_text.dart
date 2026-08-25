@@ -31,7 +31,12 @@ class ScoringText extends StatelessWidget {
 
   /// `4 VP:`, `+2 VP each:`, `5 VP, max 15 VP:` — the figure is the first
   /// number, and the `+` means cumulative rather than a different amount.
-  static final _payout = RegExp(r'^\+?(\d+)\s*VP\b[^:]*:\s*(.*)$');
+  ///
+  /// `\+*` rather than `\+?`: two cards briefly composed as `++1 VP each`,
+  /// the source having already written the plus the merge then added. That is
+  /// fixed upstream, and a line that still doubles it should carry its button
+  /// rather than silently lose one.
+  static final _payout = RegExp(r'^\+*(\d+)\s*VP\b[^:]*:\s*(.*)$');
 
   /// What a line pays, or null when it is not a payout line at all. Public
   /// for the test that pins the parsing against the shipped cards.
@@ -39,6 +44,11 @@ class ScoringText extends StatelessWidget {
     final match = _payout.firstMatch(line.trim());
     return match == null ? null : int.tryParse(match.group(1)!);
   }
+
+  /// Whether any line names a figure — false for a card that pays only per
+  /// objective or per unit, where the total is the player's to count.
+  static bool hasPayout(String text) =>
+      text.split('\n').any((line) => payoutOf(line) != null);
 
   @override
   Widget build(BuildContext context) {

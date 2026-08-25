@@ -23,7 +23,11 @@ void main() {
       'ANY BATTLE ROUND\n4 VP: A friendly unit **secured the asset**.');
   final theirs = _card('inescapable-dominion', 'Inescapable Dominion',
       '4 VP: You control the **central objective**.');
-  final outflank = _card('outflank', 'Outflank', 'Ends in enemy territory.',
+  final outflank = _card(
+      'outflank',
+      'Outflank',
+      'ANY BATTLE ROUND · End of your turn\n'
+          '3 VP: A unit ends in your opponent\'s deployment zone.',
       type: 'secondary');
 
   final pack = MissionPack(cards: {
@@ -64,36 +68,53 @@ void main() {
   BattleState stateWith(List<BattleEvent> events) =>
       BattleLog(events: [const ConfigureBattle(setup), ...events]).state;
 
-  group('the mission each side is playing', () {
-    // The buttons say what the card pays. Only the card says what it asks
-    // for, and that is the part checked before tapping (§7.3.17).
-    testWidgets('is named on the row that scores it', (tester) async {
+  group('one fold per side', () {
+    // The primary and the cards are the same question — what can I score —
+    // so they are one door rather than two (§7.3.24).
+    testWidgets('each side has one, named for whose it is', (tester) async {
       tall(tester);
       await tester.pumpWidget(host(stateWith(const []), (_) {}));
-      expect(find.text('Secure Asset'), findsOneWidget);
-      expect(find.text('Inescapable Dominion'), findsOneWidget);
+      expect(find.text('MY OBJECTIVES'), findsOneWidget);
+      expect(find.text('KAI OBJECTIVES'), findsOneWidget);
     });
 
-    testWidgets('opens in full when the name is tapped', (tester) async {
+    testWidgets('folded, it still says what is inside', (tester) async {
       tall(tester);
-      await tester.pumpWidget(host(stateWith(const []), (_) {}));
+      await tester.pumpWidget(
+          host(stateWith(const [DrawSecondary('outflank')]), (_) {}));
+      expect(find.text('Secure Asset · 1 card'), findsOneWidget);
+      expect(find.textContaining('secured the asset', findRichText: true),
+          findsNothing);
+    });
 
-      await tester.tap(find.text('Secure Asset'));
+    testWidgets('opening it gives the card and the hand together',
+        (tester) async {
+      tall(tester);
+      await tester.pumpWidget(
+          host(stateWith(const [DrawSecondary('outflank')]), (_) {}));
+
+      await tester.tap(find.text('MY OBJECTIVES'));
       await tester.pumpAndSettle();
-      expect(find.textContaining('secured the asset'), findsOneWidget);
+
+      expect(find.textContaining('secured the asset', findRichText: true),
+          findsOneWidget);
+      expect(find.text('Outflank'), findsOneWidget,
+          reason: 'the hand opens with the mission, not behind a second tap');
     });
 
     // Their mission is a different card, and how they score decides what you
-    // contest — so it has to be readable too, not just named.
-    testWidgets('theirs is readable as well as mine', (tester) async {
+    // contest — so it is readable too.
+    testWidgets('theirs opens on its own', (tester) async {
       tall(tester);
       await tester.pumpWidget(host(stateWith(const []), (_) {}));
 
-      await tester.tap(find.text('Inescapable Dominion'));
+      await tester.tap(find.text('KAI OBJECTIVES'));
       await tester.pumpAndSettle();
-      expect(find.textContaining('central objective'), findsOneWidget);
-      expect(find.text('Kai'), findsWidgets,
-          reason: 'the sheet says whose mission it is');
+      expect(find.textContaining('central objective', findRichText: true),
+          findsOneWidget);
+      expect(find.textContaining('secured the asset', findRichText: true),
+          findsNothing,
+          reason: 'mine stays folded');
     });
   });
 
@@ -145,7 +166,7 @@ void main() {
   });
 
   group('secondary cards, per side', () {
-    testWidgets('each row counts the hand it can reach', (tester) async {
+    testWidgets('each side counts the hand it can reach', (tester) async {
       tall(tester);
       final state = stateWith(const [
         DrawSecondary('outflank'),
@@ -153,23 +174,17 @@ void main() {
       ]);
       await tester.pumpWidget(host(state, (_) {}));
 
-      expect(find.text('Cards 1'), findsNWidgets(2),
+      expect(find.text('Secure Asset · 1 card'), findsOneWidget);
+      expect(find.text('Inescapable Dominion · 1 card'), findsOneWidget,
           reason: 'the same card can be in both hands — the decks are copies');
     });
 
-    testWidgets('an empty hand is still a way in', (tester) async {
-      tall(tester);
-      await tester.pumpWidget(host(stateWith(const []), (_) {}));
-      expect(find.text('Cards'), findsNWidgets(2));
-    });
-
-    testWidgets('drawing from their row is drawn for them', (tester) async {
+    testWidgets('drawing from their fold is drawn for them', (tester) async {
       tall(tester);
       final events = <BattleEvent>[];
       await tester.pumpWidget(host(stateWith(const []), events.add));
 
-      // The opponent's row is the second one.
-      await tester.tap(find.text('Cards').last);
+      await tester.tap(find.text('KAI OBJECTIVES'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Draw'));
       await tester.pumpAndSettle();
@@ -185,9 +200,12 @@ void main() {
           stateWith(const [DrawSecondary('outflank', side: Player.opponent)]);
       await tester.pumpWidget(host(state, events.add));
 
-      await tester.tap(find.text('Cards 1'));
+      await tester.tap(find.text('KAI OBJECTIVES'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Score 4'));
+      // Score 3 is the secondary's own line; the primary beside it pays 4.
+      // Reading the figure off the text rather than the structured awards is
+      // the point — this card's awards say 4 (§7.3.22).
+      await tester.tap(find.text('Score 3'));
       await tester.pumpAndSettle();
 
       final scored = events.single as ScoreSecondaryCard;

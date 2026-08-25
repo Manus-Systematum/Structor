@@ -8,8 +8,8 @@
       "kind": "core",
       "name": "Core rules data",
       "file": "core.json.gz",
-      "sha256": "5594bce3efbeeaaa2220ea35e8638ae86f535b747d93b7a0bd03abef4836e2ae",
-      "bytes": 32429,
+      "sha256": "f583dbef071d9d08c9c483274233b3b0cb2a4c426059f5e895bf33cc692f49de",
+      "bytes": 32426,
       "revision": "local"
     },
     {

@@ -54,6 +54,7 @@ class ScoreBoard extends StatelessWidget {
               card: pack.card(setup?.myMissionId ?? ''),
               held: deck.hand(state.secondariesOf(Player.me)),
               deck: deck,
+              objectivesLabel: 'MY OBJECTIVES',
               ahead: state.me.total >= state.opponent.total,
               onEvent: onEvent,
             ),
@@ -74,6 +75,7 @@ class ScoreBoard extends StatelessWidget {
               // is most of what decides where you stand.
               held: deck.hand(state.secondariesOf(Player.opponent)),
               deck: deck,
+              objectivesLabel: '${opponentName.toUpperCase()} OBJECTIVES',
               ahead: state.opponent.total > state.me.total,
               onEvent: onEvent,
             ),
@@ -99,6 +101,9 @@ class _Side extends StatefulWidget {
   final MissionCard? card;
   final List<MissionCard> held;
   final SecondaryDeck deck;
+
+  /// `My objectives` / `Kai's objectives` — what the one fold is called.
+  final String objectivesLabel;
   final bool ahead;
   final void Function(BattleEvent) onEvent;
 
@@ -110,6 +115,7 @@ class _Side extends StatefulWidget {
     required this.card,
     required this.held,
     required this.deck,
+    required this.objectivesLabel,
     required this.ahead,
     required this.onEvent,
   });
@@ -124,10 +130,6 @@ class _SideState extends State<_Side> with RemembersToggle<_Side> {
 
   @override
   bool get initiallyOpen => false;
-
-  /// The card's own text, open in place. Not remembered across disposal the
-  /// way the cards are — it is opened to read one thing and closed again.
-  bool _missionOpen = false;
 
   /// Scoring a figure the card names, for this side.
   void _score(ScoreKind kind, int vp) => widget.onEvent(ScoreVp(
@@ -175,33 +177,47 @@ class _SideState extends State<_Side> with RemembersToggle<_Side> {
                   )),
             ],
           ),
-          if (widget.card case final mission?)
-            InkWell(
-              onTap: () => setState(() => _missionOpen = !_missionOpen),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2),
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: Text(mission.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 11.5, color: scheme.onSurfaceVariant)),
+          // One door per side, not two. The primary and the cards are the
+          // same question — what can I score — and splitting them into a
+          // mission expander and a Cards expander made the row ask it twice
+          // (§7.3.24).
+          InkWell(
+            onTap: toggleOpen,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 3),
+              child: Row(
+                children: [
+                  Icon(open ? Icons.expand_more : Icons.chevron_right,
+                      size: 15, color: scheme.primary),
+                  const SizedBox(width: 3),
+                  Text(widget.objectivesLabel,
+                      style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                          color: scheme.primary)),
+                  const SizedBox(width: 6),
+                  // Folded away, the row still says how much is inside.
+                  Flexible(
+                    child: Text(
+                      [
+                        if (widget.card case final mission?) mission.name,
+                        if (widget.held.isNotEmpty)
+                          '${widget.held.length} card'
+                              '${widget.held.length == 1 ? '' : 's'}',
+                      ].join(' · '),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 11, color: scheme.onSurfaceVariant),
                     ),
-                    const SizedBox(width: 3),
-                    Icon(Icons.expand_more,
-                        size: 14, color: scheme.onSurfaceVariant),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          // The card, with each payout's button on the line that earns it.
-          // Nothing here scores from a figure floating free of its condition
-          // (§7.3.22).
-          if (_missionOpen && widget.card != null)
+          ),
+          if (open && widget.card != null)
             Padding(
-              padding: const EdgeInsets.only(top: 4, bottom: 6),
+              padding: const EdgeInsets.only(top: 2, bottom: 4),
               child: ScoringText(
                 text: widget.card!.text,
                 onScore: (vp) => _score(ScoreKind.primary, vp),
@@ -226,10 +242,6 @@ class _SideState extends State<_Side> with RemembersToggle<_Side> {
               Expanded(
                 child: _Line(
                   label: 'SECONDARY',
-                  trailing: _CardsButton(
-                    count: widget.held.length,
-                    onTap: toggleOpen,
-                  ),
                   thisRound: widget.score.secondary[widget.state.round] ?? 0,
                   onScore: (vp) => _score(ScoreKind.secondary, vp),
                 ),
@@ -262,14 +274,10 @@ class _Line extends StatelessWidget {
   final int thisRound;
   final void Function(int) onScore;
 
-  /// Sits on the label row, where it does not compete with the score chips.
-  final Widget? trailing;
-
   const _Line({
     required this.label,
     required this.thisRound,
     required this.onScore,
-    this.trailing,
   });
 
   @override
@@ -294,10 +302,6 @@ class _Line extends StatelessWidget {
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
                       color: scheme.primary)),
-            ],
-            if (trailing case final trailing?) ...[
-              const Spacer(),
-              trailing,
             ],
           ],
         ),
@@ -348,42 +352,6 @@ class _Chip extends StatelessWidget {
               color:
                   quiet ? scheme.onSurfaceVariant : scheme.onPrimaryContainer,
             )),
-      ),
-    );
-  }
-}
-
-/// The way into one side's hand: how many cards, and a tap to work with them.
-///
-/// A count rather than the names, because the names are long and the row is
-/// half a phone wide. Zero is still a button — an empty hand is the state you
-/// most need to leave.
-class _CardsButton extends StatelessWidget {
-  final int count;
-  final VoidCallback onTap;
-
-  const _CardsButton({required this.count, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(6),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.style_outlined, size: 12, color: scheme.primary),
-            const SizedBox(width: 3),
-            Text(count == 0 ? 'Cards' : 'Cards $count',
-                style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                    color: scheme.primary)),
-          ],
-        ),
       ),
     );
   }
