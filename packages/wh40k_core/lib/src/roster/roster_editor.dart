@@ -249,6 +249,12 @@ class RosterEditor {
   /// never drive a count negative, and it stops at zero rather than refusing
   /// the tap — the builder stays permissive and the validator reports an
   /// over-full loadout (§2.3).
+  ///
+  /// **A repeated entry means a quantity, not a second swap.** `replaces:
+  /// [storm-bolter, storm-bolter]` is *two* storm bolters given up for one of
+  /// this, and iterating the list applied the whole delta once per entry —
+  /// taking one item removed two. 44 options across the game word it that way
+  /// (§4.5).
   Roster swapWargear(
     Roster roster,
     String instanceId,
@@ -263,61 +269,104 @@ class RosterEditor {
     var next = setWargear(roster, instanceId, itemId, count);
     if (delta == 0 || replaces.isEmpty) return next;
 
-    for (final replaced in replaces) {
-      final held = _unit(next, instanceId)?.countOf(replaced) ?? 0;
-      // Giving one up frees one of the other; putting it back takes one again.
-      final adjusted = (held - delta).clamp(0, 1 << 30);
+    for (final entry in _multiplicity(replaces).entries) {
+      final held = _unit(next, instanceId)?.countOf(entry.key) ?? 0;
+      // Giving one up frees `entry.value` of the other; putting it back takes
+      // that many again.
+      final adjusted = (held - delta * entry.value).clamp(0, 1 << 30);
       if (adjusted != held) {
-        next = setWargear(next, instanceId, replaced, adjusted);
+        next = setWargear(next, instanceId, entry.key, adjusted);
       }
     }
     return next;
   }
 
-  /// Applies one bundle from a [LoadoutGroup], clearing the group's other
-  /// items so the selection stays mutually exclusive.
+  /// How many of each item a list names, since it names one per copy.
+  Map<String, int> _multiplicity(Iterable<String> items) {
+    final out = <String, int>{};
+    for (final item in items) {
+      out[item] = (out[item] ?? 0) + 1;
+    }
+    return out;
+  }
+
+  /// Applies [copies] of one bundle from a [LoadoutGroup], clearing the
+  /// group's other items so the selection stays mutually exclusive.
   ///
-  /// Passing a null [bundle] clears the group. A bundle listing an item twice
-  /// means two of it, which is why this counts rather than sets a flag.
+  /// **A bundle is what one model takes, and several models may take it.** A
+  /// Seraphim Squad swaps a model's two bolt pistols for two hand flamers, and
+  /// more than one model may do it — the group was yes-or-no, so a squad could
+  /// only ever make one swap (§4.5). `copies` is how many models took it.
+  ///
+  /// Passing a null [bundle] or zero [copies] clears the group. A bundle
+  /// listing an item twice means two of it, which is why this counts rather
+  /// than sets a flag.
   Roster selectLoadoutBundle(
     Roster roster,
     String instanceId,
     LoadoutGroup group,
-    List<String>? bundle,
-  ) {
+    List<String>? bundle, {
+    int copies = 1,
+  }) {
     var next = roster;
-    final wanted = <String, int>{};
-    for (final item in bundle ?? const <String>[]) {
-      wanted[item] = (wanted[item] ?? 0) + 1;
-    }
+    final taking = bundle == null || bundle.isEmpty ? 0 : copies.clamp(0, 99);
+    final wanted = _multiplicity(bundle ?? const <String>[]);
 
-    final before = _totalOf(roster, instanceId, group.items);
+    // How many copies the unit already carries, whichever bundle they came
+    // from. The group is mutually exclusive, so at most one bundle matches.
+    final heldCopies = _copiesHeld(roster, instanceId, group);
+
     for (final item in group.items) {
-      next = setWargear(next, instanceId, item, wanted[item] ?? 0);
+      next = setWargear(next, instanceId, item, (wanted[item] ?? 0) * taking);
     }
 
     // **Taking a bundle gives up what it replaces.** `setWargear` alone only
     // counted upwards, so choosing a Paragon's multi-melta left the heavy
-    // bolter it replaces still on the unit — a model with both guns. The
-    // group-level swap is the same rule [swapWargear] applies to a counter
-    // (§4.5), applied to the whole mutually exclusive choice.
-    final delta = _totalOf(next, instanceId, group.items) - before;
-    if (delta == 0) return next;
-    for (final replaced in group.replaces) {
-      if (group.items.contains(replaced)) continue;
-      final held = _unit(next, instanceId)?.countOf(replaced) ?? 0;
-      final adjusted = (held - delta).clamp(0, 1 << 30);
-      if (adjusted != held) {
-        next = setWargear(next, instanceId, replaced, adjusted);
+    // bolter it replaces still on the unit — a model with both guns.
+    //
+    // The give-up scales with the number of models that took it, and a
+    // repeated entry in `replaces` is a quantity: `[bolt-pistol, bolt-pistol]`
+    // is two pistols per model, not two separate swaps. Iterating the list
+    // applied the whole change once per entry — two flamers arrived and four
+    // pistols left.
+    final change = taking - heldCopies;
+    if (change == 0) return next;
+    for (final entry in _multiplicity(group.replaces).entries) {
+      if (group.items.contains(entry.key)) continue;
+      final carried = _unit(next, instanceId)?.countOf(entry.key) ?? 0;
+      final adjusted = (carried - change * entry.value).clamp(0, 1 << 30);
+      if (adjusted != carried) {
+        next = setWargear(next, instanceId, entry.key, adjusted);
       }
     }
     return next;
   }
 
-  int _totalOf(Roster roster, String instanceId, Iterable<String> items) {
+  /// How many copies of any one bundle the unit carries, or zero.
+  int _copiesHeld(Roster roster, String instanceId, LoadoutGroup group) {
     final unit = _unit(roster, instanceId);
     if (unit == null) return 0;
-    return items.fold(0, (sum, item) => sum + unit.countOf(item));
+    for (final bundle in group.bundles) {
+      final want = _multiplicity(bundle);
+      if (want.isEmpty) continue;
+      int? copies;
+      var matches = true;
+      for (final entry in want.entries) {
+        final held = unit.countOf(entry.key);
+        if (held == 0 || held % entry.value != 0) {
+          matches = false;
+          break;
+        }
+        final n = held ~/ entry.value;
+        if (copies != null && copies != n) {
+          matches = false;
+          break;
+        }
+        copies = n;
+      }
+      if (matches && copies != null && copies > 0) return copies;
+    }
+    return 0;
   }
 
   /// Restores the datasheet's default loadout, discarding what was chosen.

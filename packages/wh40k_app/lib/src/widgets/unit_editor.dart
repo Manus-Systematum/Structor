@@ -153,8 +153,15 @@ class UnitEditorSheet extends StatelessWidget {
                     group: group,
                     carried: carried,
                     nameOf: (id) => _nameOf(id, datasheet),
-                    onSelect: (bundle) => onEdit((e) => e.selectLoadoutBundle(
-                        roster, instanceId, group, bundle)),
+                    onSelect: (bundle, copies) =>
+                        onEdit((e) => e.selectLoadoutBundle(
+                              roster,
+                              instanceId,
+                              group,
+                              bundle,
+                              copies: copies,
+                            )),
+                    maxCopies: unit.models,
                   ),
 
                 for (final counter in loadout.counters)
@@ -316,19 +323,27 @@ class _GroupRow extends StatelessWidget {
   final LoadoutGroup group;
   final Map<String, int> carried;
   final String Function(String) nameOf;
-  final void Function(List<String>?) onSelect;
+  final void Function(List<String>? bundle, int copies) onSelect;
+
+  /// How many models could take the swap. The datasheet's own limit — two per
+  /// five, say — is not published, so this is the unit's size and the
+  /// validator has nothing tighter to check against (§2.3).
+  final int maxCopies;
 
   const _GroupRow({
     required this.group,
     required this.carried,
     required this.nameOf,
     required this.onSelect,
+    required this.maxCopies,
   });
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final selected = group.selectedIndex(carried);
+    final held = group.selection(carried);
+    final selected = held?.index;
+    final copies = held?.copies ?? 0;
 
     String label(List<String> bundle) {
       final tally = <String, int>{};
@@ -358,16 +373,42 @@ class _GroupRow extends StatelessWidget {
                 label: const Text('None'),
                 selected: selected == null &&
                     group.items.every((i) => (carried[i] ?? 0) == 0),
-                onSelected: (_) => onSelect(null),
+                onSelected: (_) => onSelect(null, 0),
               ),
               for (final (index, bundle) in group.bundles.indexed)
                 ChoiceChip(
                   label: Text(label(bundle)),
                   selected: selected == index,
-                  onSelected: (_) => onSelect(bundle),
+                  // Keep the count when switching between bundles: the number
+                  // of models making the swap is a separate decision from
+                  // which swap they make.
+                  onSelected: (_) => onSelect(bundle, copies == 0 ? 1 : copies),
                 ),
             ],
           ),
+          // **How many models take it.** More than one may, and the row was
+          // yes-or-no — so a Seraphim Squad could make one swap where the
+          // datasheet allows several (§4.5).
+          if (held case final held? when maxCopies > 1)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Row(
+                children: [
+                  Text('Models taking it',
+                      style: TextStyle(
+                          fontSize: 11, color: scheme.onSurfaceVariant)),
+                  const Spacer(),
+                  _Counter(
+                    value: held.copies,
+                    min: 0,
+                    max: maxCopies,
+                    onChange: (n) => n == 0
+                        ? onSelect(null, 0)
+                        : onSelect(group.bundles[held.index], n),
+                  ),
+                ],
+              ),
+            ),
           // An imported list can carry a combination the datasheet does not
           // offer. Saying so beats silently rewriting somebody's army.
           if (selected == null && group.items.any((i) => (carried[i] ?? 0) > 0))

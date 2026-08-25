@@ -54,19 +54,46 @@ class LoadoutGroup {
   /// The bundle matching what the unit currently carries, or null when the
   /// selection is off-menu — which a hand-edited or imported list may well be,
   /// and which must be shown rather than silently corrected.
-  int? selectedIndex(Map<String, int> carried) {
+  /// Which bundle is carried and how many models took it, or null when what
+  /// the unit holds is not a whole number of any one bundle.
+  ///
+  /// Several models may take the same swap, so a Seraphim Squad with four
+  /// hand flamers is two copies of a two-flamer bundle rather than a
+  /// combination the datasheet does not offer (§4.5).
+  ({int index, int copies})? selection(Map<String, int> carried) {
     for (final (index, bundle) in bundles.indexed) {
       final wanted = <String, int>{};
       for (final item in bundle) {
         wanted[item] = (wanted[item] ?? 0) + 1;
       }
-      final matches = wanted.entries
-              .every((e) => (carried[e.key] ?? 0) == e.value) &&
-          items.every((i) => wanted.containsKey(i) || (carried[i] ?? 0) == 0);
-      if (matches) return index;
+      if (wanted.isEmpty) continue;
+
+      int? copies;
+      var matches = true;
+      for (final entry in wanted.entries) {
+        final held = carried[entry.key] ?? 0;
+        if (held == 0 || held % entry.value != 0) {
+          matches = false;
+          break;
+        }
+        final n = held ~/ entry.value;
+        if (copies != null && copies != n) {
+          matches = false;
+          break;
+        }
+        copies = n;
+      }
+      // Nothing outside the bundle, or it is a different combination.
+      if (matches &&
+          items.every((i) => wanted.containsKey(i) || (carried[i] ?? 0) == 0) &&
+          copies != null) {
+        return (index: index, copies: copies);
+      }
     }
     return null;
   }
+
+  int? selectedIndex(Map<String, int> carried) => selection(carried)?.index;
 }
 
 /// A counter, with the limit the data states where it states one.

@@ -113,9 +113,8 @@ void main() {
       roster = editor.addUnit(roster, 'broadside-battlesuits');
       final leader = roster.units.first.instanceId;
 
-      final offered = editor
-          .eligibleBodyguards(roster, leader)
-          .map((u) => u.datasheetId);
+      final offered =
+          editor.eligibleBodyguards(roster, leader).map((u) => u.datasheetId);
       expect(offered, contains('crisis-fireknife-battlesuits'));
       expect(offered, isNot(contains('broadside-battlesuits')));
     }, skip: available ? null : 'no snapshot');
@@ -197,7 +196,8 @@ void main() {
 
       expect(roster.units.single.countOf(item),
           (perModel * before.models * 2).round(),
-          reason: 'the composition describes the smallest unit; this is twice it');
+          reason:
+              'the composition describes the smallest unit; this is twice it');
     }, skip: available ? null : 'no snapshot');
   });
 
@@ -334,9 +334,8 @@ void main() {
       roster = editor.attach(roster, commander, first);
       roster = editor.attach(roster, commander, second);
 
-      final leads = roster.links
-          .where((l) => l.type == LinkType.leads)
-          .toList();
+      final leads =
+          roster.links.where((l) => l.type == LinkType.leads).toList();
       expect(leads, hasLength(1), reason: 'it moved rather than multiplied');
       expect(leads.single.toInstanceId, second);
     }, skip: available ? null : 'no snapshot');
@@ -434,7 +433,8 @@ void main() {
 
       expect(after.models, before.models * 2);
       for (final w in before.wargear) {
-        expect(after.countOf(w.itemId), w.count + perModel[w.itemId]! * before.models,
+        expect(after.countOf(w.itemId),
+            w.count + perModel[w.itemId]! * before.models,
             reason: w.itemId);
       }
     });
@@ -449,7 +449,8 @@ void main() {
       roster = editor.setModels(roster, id, start.isEmpty ? 1 : 3);
 
       for (final w in start) {
-        expect(roster.units.single.countOf(w.itemId), w.count, reason: w.itemId);
+        expect(roster.units.single.countOf(w.itemId), w.count,
+            reason: w.itemId);
       }
     });
 
@@ -480,9 +481,8 @@ void main() {
     // and the roster stores `multi-melta`; unscoped, they are the same item.
     // Read raw this found nothing and the test passed by doing nothing, which
     // is how the bug survived being written about.
-    final counter = loadout.counters
-        .where((c) => c.itemId == 'multi-melta')
-        .single;
+    final counter =
+        loadout.counters.where((c) => c.itemId == 'multi-melta').single;
     expect(counter.replaces, contains('heavy-bolter'),
         reason: 'the option says what it gives up');
 
@@ -519,7 +519,8 @@ void main() {
                 reason: '${unit.id}: a cap below the smallest legal size');
           }
           for (final bracket in unit.points) {
-            expect(cap, greaterThanOrEqualTo(bracket.modelsMax ?? bracket.models),
+            expect(
+                cap, greaterThanOrEqualTo(bracket.modelsMax ?? bracket.models),
                 reason: '${unit.id}: a priced size the builder would refuse');
           }
         }
@@ -574,5 +575,111 @@ void main() {
         datasheet.wargearCosts.where((c) => c.itemId == 'multi-melta').toList();
     expect(costs, hasLength(1));
     expect(costs.single.cost, 10);
+  });
+  group('a repeated entry in replaces is a quantity', () {
+    // A Seraphim carries two pistols and swaps both for two hand flamers:
+    // one choice, two for two. Iterating `replaces` applied the whole delta
+    // once per entry, so two flamers arrived and four pistols left — and 44
+    // options across the game are worded that way (§4.5).
+    const group = LoadoutGroup(
+      optionId: 'seraphim-squad-wgo-mfm-1',
+      bundles: [
+        ['ministorum-hand-flamer', 'ministorum-hand-flamer'],
+        ['inferno-pistol', 'inferno-pistol'],
+      ],
+      replaces: ['bolt-pistol', 'bolt-pistol'],
+    );
+
+    Roster withPistols(int n) => Roster(
+          name: 'seraphim',
+          factionId: 'adepta-sororitas',
+          battleSizeId: 'strike-force',
+          units: [
+            RosterUnit(
+              instanceId: 'u1',
+              datasheetId: 'seraphim-squad',
+              models: 5,
+              wargear: [WargearSelection(itemId: 'bolt-pistol', count: n)],
+            ),
+          ],
+        );
+
+    int countOf(Roster r, String item) => r.units.single.countOf(item);
+
+    test('two for two, not two for four', () {
+      final after = editor.selectLoadoutBundle(
+        withPistols(10),
+        'u1',
+        group,
+        const ['ministorum-hand-flamer', 'ministorum-hand-flamer'],
+      );
+      expect(countOf(after, 'ministorum-hand-flamer'), 2);
+      expect(countOf(after, 'bolt-pistol'), 8);
+    });
+
+    test('clearing hands back exactly what was given up', () {
+      var r = editor.selectLoadoutBundle(withPistols(10), 'u1', group,
+          const ['ministorum-hand-flamer', 'ministorum-hand-flamer']);
+      r = editor.selectLoadoutBundle(r, 'u1', group, null);
+      expect(countOf(r, 'ministorum-hand-flamer'), 0);
+      expect(countOf(r, 'bolt-pistol'), 10, reason: 'back where it started');
+    });
+
+    test('several models can take it, and each pays for its own', () {
+      // The squad has five models; two of them swapping is two swaps, not
+      // one. The group was yes-or-no, so a squad could make one (§4.5).
+      final after = editor.selectLoadoutBundle(
+        withPistols(10),
+        'u1',
+        group,
+        const ['ministorum-hand-flamer', 'ministorum-hand-flamer'],
+        copies: 2,
+      );
+      expect(countOf(after, 'ministorum-hand-flamer'), 4);
+      expect(countOf(after, 'bolt-pistol'), 6);
+    });
+
+    test('going from two models to one hands one model back', () {
+      var r = editor.selectLoadoutBundle(withPistols(10), 'u1', group,
+          const ['ministorum-hand-flamer', 'ministorum-hand-flamer'],
+          copies: 2);
+      r = editor.selectLoadoutBundle(r, 'u1', group,
+          const ['ministorum-hand-flamer', 'ministorum-hand-flamer'],
+          copies: 1);
+      expect(countOf(r, 'ministorum-hand-flamer'), 2);
+      expect(countOf(r, 'bolt-pistol'), 8);
+    });
+
+    test('switching bundles does not give the pistols up twice', () {
+      var r = editor.selectLoadoutBundle(withPistols(10), 'u1', group,
+          const ['ministorum-hand-flamer', 'ministorum-hand-flamer']);
+      r = editor.selectLoadoutBundle(
+          r, 'u1', group, const ['inferno-pistol', 'inferno-pistol']);
+      expect(countOf(r, 'inferno-pistol'), 2);
+      expect(countOf(r, 'ministorum-hand-flamer'), 0);
+      expect(countOf(r, 'bolt-pistol'), 8,
+          reason: 'the pistols were already given up for the first bundle');
+    });
+
+    test('a counter with a repeated replacement gives up that many', () {
+      // Mortifiers: two heavy bolters for one of this.
+      final base = Roster(
+        name: 'm',
+        factionId: 'adepta-sororitas',
+        battleSizeId: 'strike-force',
+        units: const [
+          RosterUnit(
+            instanceId: 'u1',
+            datasheetId: 'mortifiers',
+            models: 2,
+            wargear: [WargearSelection(itemId: 'heavy-bolter', count: 4)],
+          ),
+        ],
+      );
+      final after = editor.swapWargear(base, 'u1', 'penitent-flamer', 1,
+          replaces: const ['heavy-bolter', 'heavy-bolter']);
+      expect(countOf(after, 'penitent-flamer'), 1);
+      expect(countOf(after, 'heavy-bolter'), 2);
+    });
   });
 }

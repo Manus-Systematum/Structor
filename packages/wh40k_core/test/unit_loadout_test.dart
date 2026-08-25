@@ -128,9 +128,16 @@ void main() {
 
       expect(group.selectedIndex({'gun-drone': 1, 'marker-drone': 1}), both);
       expect(group.selectedIndex(const {}), isNull);
-      // Two of the same is off-menu, and must read as off-menu rather than be
-      // quietly matched to something else.
-      expect(group.selectedIndex({'gun-drone': 2}), isNull);
+
+      // Two of one bundle is two models taking it, not an off-menu
+      // combination — several models may make the same swap (§4.5).
+      final single = group.bundles
+          .indexWhere((b) => b.length == 1 && b.single == 'gun-drone');
+      expect(group.selection({'gun-drone': 2}), (index: single, copies: 2));
+
+      // A combination that is not a whole number of any one bundle still
+      // reads as off-menu rather than being matched to the nearest thing.
+      expect(group.selection({'gun-drone': 2, 'marker-drone': 1}), isNull);
     }, skip: available ? null : 'no snapshot');
 
     test('a bare cap on single items is not treated as an enumeration', () {

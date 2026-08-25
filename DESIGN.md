@@ -707,6 +707,33 @@ from the report:
   data said otherwise — so the validator names it. The builder stops you
   creating the state; the validator explains one that already exists.
 
+### 4.5.1 A replacement names a quantity, and several models may make it
+
+Two faults in one control, both reported from a Seraphim Squad.
+
+**A repeated entry in `replaces` is a quantity, not a second swap.** The squad
+reads `replaces: [bolt-pistol, bolt-pistol]` against a choice of two hand
+flamers — two for two, once. The code iterated the list and applied the whole
+change per entry, so two flamers arrived and **four** pistols left. **44 of the
+1,296 published options are worded that way** — 27 plain counters and 17
+either/or choices — so this was never one datasheet's problem.
+
+**A bundle is what one model takes, and more than one model may take it.** The
+group was yes-or-no, so a squad could make exactly one swap however many models
+it had. `selectLoadoutBundle` now takes `copies`, and the editor offers a
+`Models taking it` counter beside the choice.
+
+**The ceiling is the unit's size, because nothing tighter is published.** The
+real rule is two models per five; the data records `model_constraint:
+{any_number: true}` and nothing else. Inventing the limit would assert a rule
+the data does not have (§2.3) — so the count is capped by the models present
+and the over-limit reporting has nothing tighter to check.
+
+One test changed meaning rather than being loosened: two gun drones on a
+Stealth team used to read as an off-menu combination and now reads as two
+models each taking one. A combination that is *not* a whole number of any
+bundle still reads as off-menu, which is what that test was protecting.
+
 ### 4.6 Managing a saved army
 
 **Updating a saved army to current data.** §2.2 freezes a list on purpose, and that is what lets one written in March still open in September. The price is that it never *gains* either: an army saved before stratagem text existed shows none in play mode however often the app updates, and nothing on screen says why. The menu beside each army now carries `Update to current data`, which rebuilds the stored copy from today's dataset and leaves the `Roster` — units, loadouts, detachments — untouched. Only what the *data* says about those choices changes: points, rules, wording.
