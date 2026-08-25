@@ -784,73 +784,58 @@ void main() {
       expect(templates['bm-bm-terrain-11e-1-part-small-l']!.wallCorner, isNull);
     }, skip: skip);
   });
-  group('the three kinds the printed maps colour', () {
-    // Chapter Approved draws ruins, blocks and barricades in different inks,
-    // and every Battlemaster template is one of its five shapes (§7.3.23).
-    test('every placed piece lands in a group', () {
+  group('the inks the printed maps use', () {
+    // A property of the object, not of the ground: one area routinely carries
+    // a lettered ruin and a barricade, and the printed map colours them
+    // differently while leaving the area grey (§7.3.23).
+    test('every placed part has a group', () {
       if (pack.terrainLayouts.isEmpty) return;
       final ungrouped = <String>{};
       var total = 0;
       for (final layout in pack.terrainLayouts) {
         for (final piece in layout.pieces) {
-          total++;
-          if (piece.group(pack.terrainTemplates) == TerrainGroup.unknown) {
-            ungrouped.add(piece.templateId);
+          for (final building in piece.buildings(pack.terrainTemplates)) {
+            total++;
+            if (building.group == TerrainGroup.unknown) {
+              ungrouped.add(building.label);
+            }
           }
         }
       }
       expect(total, greaterThan(700));
-      // Only the KOTC table falls outside: its three templates publish a
-      // rectangle rather than a point footprint, and its wall pieces carry no
-      // template at all. Named rather than silently tolerated — every one of
-      // the 45 Chapter Approved layouts is fully grouped.
-      expect(ungrouped, {
-        'impassable-wall',
-        'kotc-ruin-deployment',
-        'kotc-ruin-inner',
-        '',
-      });
+      // Empty: all twelve published parts are named in the table. The KOTC
+      // walls do not appear because they carry no part template at all, so
+      // `buildings` never yields them.
+      expect(ungrouped, isEmpty);
     });
 
-    // The letters are derived from the wall parts' own names, which knows
-    // nothing about footprint size — so agreeing with the size rule is a
-    // check rather than a restatement.
-    test('a lettered piece is a ruin, and only a ruin', () {
+    test('the lettered parts are the ruins, and only those', () {
       if (pack.terrainLayouts.isEmpty) return;
-      var lettered = 0;
-      var misgrouped = 0;
       for (final layout in pack.terrainLayouts) {
         for (final piece in layout.pieces) {
-          final letters = piece
-              .buildings(pack.terrainTemplates)
-              .map((b) => b.label)
-              .where((l) => RegExp(r'^(AB|CD|EF|GH)$').hasMatch(l));
-          if (letters.isEmpty) continue;
-          lettered++;
-          if (piece.group(pack.terrainTemplates) != TerrainGroup.ruin) {
-            misgrouped++;
+          for (final b in piece.buildings(pack.terrainTemplates)) {
+            final lettered = RegExp(r'^(AB|CD|EF|GH)$').hasMatch(b.label);
+            expect(b.group == TerrainGroup.ruin, lettered,
+                reason: '${b.label} in ${layout.id}');
           }
         }
       }
-      expect(lettered, greaterThan(100),
-          reason: 'the lettered ruins are most of every table');
-      expect(misgrouped, 0);
     });
 
-    test('the shapes map to the groups the printed maps use', () {
+    test('one area can carry two different inks', () {
       if (pack.terrainLayouts.isEmpty) return;
-      final counts = <TerrainGroup, int>{};
-      final layout = pack.terrainLayouts
-          .firstWhere((l) => l.id == 'take-and-hold-mirror-1');
-      for (final piece in layout.pieces) {
-        final g = piece.group(pack.terrainTemplates);
-        counts[g] = (counts[g] ?? 0) + 1;
+      var mixed = 0;
+      for (final layout in pack.terrainLayouts) {
+        for (final piece in layout.pieces) {
+          final groups = piece
+              .buildings(pack.terrainTemplates)
+              .map((b) => b.group)
+              .toSet();
+          if (groups.length > 1) mixed++;
+        }
       }
-      // Read off the printed Layout A: six lettered ruins, four blocks, six
-      // barricades and rails.
-      expect(counts[TerrainGroup.ruin], 6);
-      expect(counts[TerrainGroup.block], 4);
-      expect(counts[TerrainGroup.line], 6);
+      // The reason the group cannot live on the area: it is not one colour.
+      expect(mixed, greaterThan(0));
     });
   });
 }

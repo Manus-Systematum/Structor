@@ -1740,42 +1740,32 @@ the cards beside it expanded inline — two interaction models on one row. What
 is left of the old scoring row is the `+1` for cards that pay per something the
 app cannot see, and the `−1` for a mis-tap.
 
-### 7.3.23 The map is drawn in the printed layout's three inks
+### 7.3.23 The map is drawn in the printed layout's inks
 
 Chapter Approved colours its layouts, and the colour is a rules distinction
 rather than decoration: the lettered ruins are what blocks line of sight and
-what models climb; the smaller blocks and the barricades are neither. Our map
-drew all 745 pieces in one grey, so it said none of it.
+what models climb. Our map drew all 745 pieces in one grey, so it said none of
+that.
 
-**Ruins brown, blocks dark green, barricades dark yellow** — the printed
-scheme, matched against the published Take-and-Hold Layout A diagram.
+**The colour belongs to the object, not to the ground it stands on.** One area
+footprint routinely carries a lettered ruin *and* a barricade — 
+`take-and-hold-mirror-1` alone has 28 objects on 16 areas — and the printed map
+colours those separately while leaving the area grey. Colouring the area was
+the first attempt and it was wrong for exactly that reason.
 
-**Keyed on the published footprint, not on the id.** The Battlemaster layouts
-name every piece `composite-27-m0-p0` and nothing else, but all **41 templates
-they use are one of the five shapes Chapter Approved prints**, measured across
-all 46 layouts:
+So the group lives on `TerrainTemplate`, keyed by part:
 
-| Shape | Group |
-| --- | --- |
-| Large Area 11.5 × 7.5″, Trapezoid 8 × 11.5″ | ruin |
-| Medium Area 6.5 × 4.3″ | block |
-| Long Line 10 × 3.7″, Short Line 6 × 2.7″ | line |
+| Part | Group | Ink |
+| --- | --- | --- |
+| `part-ab`, `part-co`, `part-ef`, `part-gh` | ruin | brown |
+| `part-generator`, `part-tower` | structure | dark green |
+| `part-small-l`, `part-small-l-flip`, `part-corner`, `part-short-barrier`, `part-long-barrier`, `part-pipes` | barricade | dark yellow |
 
-**Three checks, not one.** The shape rule is a hypothesis about a picture, so
-it is corroborated rather than asserted:
-
-1. **The counts.** Layout A has 6 ruins, 4 blocks and 6 lines by this rule, and
-   the printed diagram has 6 lettered pieces, 4 green blocks and 6 yellow
-   barricades.
-2. **The letters.** `AB`/`CD`/`EF`/`GH` come from the wall parts' own names and
-   know nothing about footprint size. Across every layout, **every lettered
-   piece groups as a ruin and no unlettered piece does** — an independent
-   signal agreeing with the size rule.
-3. **Everything is grouped.** Of 745 placed pieces, the only ones falling
-   outside are the KOTC table's, whose templates publish a rectangle rather
-   than a point footprint. Those draw in the neutral colour rather than being
-   guessed into a group, and the test names them individually so a new
-   unmatched shape fails rather than silently going grey.
+**Twelve parts in the whole published set**, so this is a list rather than a
+rule inferred from geometry — and a part missing from it draws neutral rather
+than joining a group by default. Three tests hold it: every placed part has a
+group, the lettered parts are the ruins *and only those*, and at least one area
+carries two inks, which is the fact that makes an area-level colour wrong.
 
 ### 7.4 Battle state
 

@@ -301,10 +301,9 @@ class _BoardPainter extends CustomPainter {
   /// map said none of that: every piece was one grey.
   Color _groupInk(TerrainGroup group) => switch (group) {
         TerrainGroup.ruin => const Color(0xFF7B4A24),
-        TerrainGroup.block => const Color(0xFF2A6B3F),
-        TerrainGroup.line => const Color(0xFF9A7B15),
-        // Only the KOTC table, whose templates publish no point footprint.
-        // Neutral rather than guessed into a group.
+        TerrainGroup.structure => const Color(0xFF2A6B3F),
+        TerrainGroup.barricade => const Color(0xFF9A7B15),
+        // A part not in the table. Neutral rather than guessed into a group.
         TerrainGroup.unknown => terrain,
       };
 
@@ -403,19 +402,19 @@ class _BoardPainter extends CustomPainter {
       // The buildings standing in it are solid, because they are what blocks
       // line of sight and what the models climb.
       //
-      // Each in its group's colour, matching the printed layout (§7.3.23):
-      // the lettered ruins brown, the blocks green, the barricades yellow.
+      // The ground stays neutral and each *object* takes its group's colour,
+      // which is how the printed layout is drawn: one area routinely carries
+      // a lettered ruin and a barricade (§7.3.23).
       for (final piece in table.pieces) {
-        final ink = _groupInk(piece.group(templates));
         if (pathOfPoints(piece.outline(templates)) case final area?) {
           canvas.drawPath(
             area,
-            Paint()..color = ink.withValues(alpha: 0.12),
+            Paint()..color = terrain.withValues(alpha: 0.10),
           );
           canvas.drawPath(
             area,
             Paint()
-              ..color = ink.withValues(alpha: 0.35)
+              ..color = terrain.withValues(alpha: 0.30)
               ..style = PaintingStyle.stroke
               ..strokeWidth = _px(0.6),
           );
@@ -423,8 +422,8 @@ class _BoardPainter extends CustomPainter {
       }
 
       for (final piece in table.pieces) {
-        final ink = _groupInk(piece.group(templates));
         for (final building in piece.buildings(templates)) {
+          final ink = _groupInk(building.group);
           if (pathOfPoints(building.outline) case final path?) {
             canvas.drawPath(
               path,
