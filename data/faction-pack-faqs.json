@@ -1,4 +1,38 @@
 {
+ "core": [
+  {
+   "question": "The Plunder Secondary Mission references ‘One unit within a terrain area that is not within your territory.’ Is the requirement to be ‘not within your territory’ referring FAQS to the unit or the terrain area?",
+   "answer": "The terrain area."
+  },
+  {
+   "question": "If the unit I select to be my Beacon unit upon drawing the Beacon Secondary Mission is destroyed prior to achieving the mission, can I select a new Beacon unit?",
+   "answer": "No, which means you will be unable to achieve that mission. We recommend discarding it on your turn to gain 1CP!"
+  },
+  {
+   "question": "For the purposes of VP scoring limits, is the end of the battle the same timing as the end of the fifth battle round?",
+   "answer": "No, VP scored at the end of the battle are not subject to the 15VP per battle round scoring limit."
+  },
+  {
+   "question": "When a mission action places an operation marker and applies a status (e.g. 'decoyed'), does removing that operation marker also remove that status?",
+   "answer": "Yes."
+  },
+  {
+   "question": "Some Primary Mission cards let a player place MISSION operation markers on the battlefield. Can I remove these?",
+   "answer": "Your Primary Mission card will specify how and when you can remove operation markers from the battlefield. If it doesn’t, you cannot remove operation markers."
+  },
+  {
+   "question": "For the Death Trap Primary Mission, one objective reads ‘One or more enemy units that started the turn within a terrain area were destroyed, if that terrain area is trapped.’ Does that terrain area have to have been trapped at the point that enemy unit was destroyed?",
+   "answer": "No."
+  },
+  {
+   "question": "For the Surveil the Foe Primary Mission, one objective reads ‘One or more enemy units were surveilled this turn, unless each of those units is within range of one or more objectives that have one or more operation markers DECK within range of them.’ For an enemy unit within range of an objective with an operation marker, can I achieve this objective if I remove the operation marker after surveilling that unit, as long as it is within the same turn?",
+   "answer": "Yes."
+  },
+  {
+   "question": "For the Vital Link Primary Mission, if there is more than one central objective, can I score the cumulative VP for my operation markers regardless of which central objective(s) they are within?",
+   "answer": "Yes, as long as you control the objective(s) those operation markers are within. 4"
+  }
+ ],
  "adepta-sororitas": [
   {
    "question": "How do Miracle Dice work during the attack sequence?",

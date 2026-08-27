@@ -8,8 +8,8 @@
       "kind": "core",
       "name": "Core rules data",
       "file": "core.json.gz",
-      "sha256": "f583dbef071d9d08c9c483274233b3b0cb2a4c426059f5e895bf33cc692f49de",
-      "bytes": 32426,
+      "sha256": "345fbbd057f6cdbc35b624a596ddf966f8e9d2e5e79b35086932e260cbd887bc",
+      "bytes": 32431,
       "revision": "local"
     },
     {
@@ -351,8 +351,8 @@
       "id": "2026-08-26",
       "name": "August 2026 rules update",
       "file": "patch-2026-08-26.json.gz",
-      "sha256": "31af40a0f4c67bcadc3278754939e454e7837573beeacb0d4f15853a577104a8",
-      "bytes": 78776,
+      "sha256": "9922e016908d80bec28709db956f8bdf995afb472635c889580daefd1da003a2",
+      "bytes": 79651,
       "appliesTo": "pre-launch-provisional"
     }
   ],

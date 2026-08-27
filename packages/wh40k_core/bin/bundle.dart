@@ -132,7 +132,12 @@ void main(List<String> args) {
       id: 'core',
       kind: BundleKind.core,
       revision: revision,
-      files: {for (final f in _coreFiles) f: read('core/$f')},
+      files: {
+        for (final f in _coreFiles) f: read('core/$f'),
+        // The Chapter Approved Mission Deck's own questions, which belong to
+        // no faction (§3.16). Empty here; the patch supplies them.
+        'faqs': read('core/faqs'),
+      },
     ),
     'Core rules data',
   ));

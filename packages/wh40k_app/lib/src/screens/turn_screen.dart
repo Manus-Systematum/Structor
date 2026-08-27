@@ -38,6 +38,10 @@ class TurnScreen extends StatefulWidget {
   final SecondaryDeck deck;
   final MissionPack pack;
 
+  /// Published questions, so a mission card that has any can offer them
+  /// (§3.16). Empty until they load.
+  final List<FactionFaq> faqs;
+
   /// How much detail to carry. Null until the stored preference loads, when
   /// it falls back to what the roster's own size suggests.
   final PlayDensity? density;
@@ -52,6 +56,7 @@ class TurnScreen extends StatefulWidget {
     this.onFinish,
     this.deck = const SecondaryDeck([]),
     this.pack = const MissionPack(),
+    this.faqs = const [],
     this.density,
     this.onDensity,
   });
@@ -195,6 +200,7 @@ class _TurnScreenState extends State<TurnScreen> {
               ScoreBoard(
                 state: state,
                 pack: widget.pack,
+                faqs: widget.faqs,
                 deck: widget.deck,
                 onEvent: emit,
               ),

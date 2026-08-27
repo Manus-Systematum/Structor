@@ -25845,7 +25845,8 @@
    "values": {
     "question": "How do Miracle Dice work during the attack sequence?",
     "answer": "During the attack sequence, an Adepta Sororitas player’s attacking unit can use an Act of Faith when making hit rolls (where they can substitute a dice from any given group of attacks before making the roll), wound rolls (where they can substitute a dice from any given group of hits before making the roll) or damage rolls (where they can substitute a dice for a single damage roll before making the roll). An Adepta Sororitas player’s target unit can use an Act of Faith when making save rolls (where they can substitute a dice for any given group of wounding attacks before making the roll).",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "adepta-sororitas pack FAQ"
   },
@@ -25857,7 +25858,8 @@
    "values": {
     "question": "If a Character with the Saintly Example Enhancement is destroyed while within 12\" of a friendly Imagifier, can I use that Imagifier’s Litany of Deeds ability to re‑roll the results of the additional D3 Miracle dice I gain from that Enhancement, before adding them to my Miracle Dice pool?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "adepta-sororitas pack FAQ"
   },
@@ -25869,7 +25871,8 @@
    "values": {
     "question": "If a CHARACTER with the Verse of Holy Piety Enhancement uses that Enhancement to activate a Vow of Atonement at the start of a battle round, but that CHARACTER is destroyed before the end of that battle round (e.g. by an attack with the [PRECISION] ability), is that Vow of Atonement still active for the remaining models in that unit until the start of the next battle round?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "adepta-sororitas pack FAQ"
   },
@@ -25881,7 +25884,8 @@
    "values": {
     "question": "Can a Miracle dice be used as part of a re‑roll?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "adepta-sororitas pack FAQ"
   },
@@ -25893,7 +25897,8 @@
    "values": {
     "question": "If I re‑roll a roll in which I substituted a dice with a Miracle dice, do I get to use the Miracle dice in that re‑roll (e.g. when re‑rolling a Charge roll)?",
     "answer": "No, that Miracle dice is lost. Note that your unit has still performed an Act of Faith.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "adepta-sororitas pack FAQ"
   },
@@ -25905,7 +25910,8 @@
    "values": {
     "question": "Can the Triumph of Saint Katherine’s Simulacrum of the Ebon Chalice Relics of the Matriarchs ability be used to substitute two dice in a single roll?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "adepta-sororitas pack FAQ"
   },
@@ -25917,7 +25923,8 @@
    "values": {
     "question": "When an ADEPTA SORORITAS unit from my army is destroyed, if that unit was within 12\" of a friendly Imagifier when it was destroyed, does that Imagifier’s Litany of Deeds ability allow me to re‑roll the result of the Miracle dice I gain as a result of the Acts of Faith army rule?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "adepta-sororitas pack FAQ"
   },
@@ -25929,7 +25936,8 @@
    "values": {
     "question": "If I target a unit with the Auto-divinatory Targeting Stratagem while the Protector Imperative is active for my army, in what order are the Ballistic Skill modifiers applied?",
     "answer": "The Ballistic Skill characteristic of ranged weapons equipped by models in that unit is first changed to 3+ by the Stratagem, then improved by 1 by the Protector Imperative, for a final result of 2+ (assuming no other modifiers apply). That",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "adeptus-mechanicus pack FAQ"
   },
@@ -25941,7 +25949,8 @@
    "values": {
     "question": "Can the Yncarne use the Inevitable Death ability during my opponent’s first turn?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "aeldari pack FAQ"
   },
@@ -25953,7 +25962,8 @@
    "values": {
     "question": "After using the Torc of Morai-Heg Enhancement, if my opponent does not have the necessary CP available for the selected Stratagem, what happens?",
     "answer": "No CP are spent and that Stratagem’s effects are not resolved (but that Stratagem still counts as having been used this phase).",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "aeldari pack FAQ"
   },
@@ -25965,7 +25975,8 @@
    "values": {
     "question": "When using the Yncarne’s Ethereal Form ability, can I choose for it to regain fewer lost wounds than the D3 roll generated?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "aeldari pack FAQ"
   },
@@ -25977,7 +25988,8 @@
    "values": {
     "question": "After using the Torc of Morai-Heg Enhancement, must my opponent continue to use the selected Stratagem at the increased cost if they have necessary CP available?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "aeldari pack FAQ"
   },
@@ -25989,7 +26001,8 @@
    "values": {
     "question": "Can the Reinforcements! Stratagem be used on a unit that is Battle- shocked?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "astra-militarum pack FAQ"
   },
@@ -26001,7 +26014,8 @@
    "values": {
     "question": "If a unit contains two models equipped with a vox-caster, can I attempt to generate twice when the bearer’s unit is targeted with a Stratagem?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "astra-militarum pack FAQ"
   },
@@ -26013,7 +26027,8 @@
    "values": {
     "question": "Can I attempt to generate from a unit containing a vox-caster, when targeting that unit with the Reinforcements! Stratagem?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "astra-militarum pack FAQ"
   },
@@ -26025,7 +26040,8 @@
    "values": {
     "question": "When using the Creeping Barrage ability, how do you resolve the maximum number of units that can be shaken?",
     "answer": "You roll one D6 for each enemy unit that is more than 12\" from every model from your army that is on the battlefield, in an order of your choosing, one at a time. Once the maximum number of enemy units for the battle size have been shaken, stop rolling for any additional units.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "astra-militarum pack FAQ"
   },
@@ -26037,7 +26053,8 @@
    "values": {
     "question": "When an Ogryn Bodyguard joins a Militarum Tempestus Command Squad, can the unit set up using the Deep Strike ability?",
     "answer": "No, as the Ogryn Bodyguard model does not have the Deep Strike ability.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "astra-militarum pack FAQ"
   },
@@ -26049,7 +26066,8 @@
    "values": {
     "question": "If a unit becomes affected by the same Order multiple times, do those Orders affect that unit multiple times?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "astra-militarum pack FAQ"
   },
@@ -26061,7 +26079,8 @@
    "values": {
     "question": "If I use the Cults of the Dark Gods rule to add Plague Marines to my Chaos Space Marines army, does the Plague Marines’ Infused with the Blessings of Nurgle ability have any effect?",
     "answer": "No",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26073,7 +26092,8 @@
    "values": {
     "question": "When using the Soul Link Enhancement, can the bearer use a datasheet ability it gains as a result even if that ability has already been used by another CHARACTER model as many times as its restrictions allow (e.g. ‘once per battle’, ‘once per phase’)?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26085,7 +26105,8 @@
    "values": {
     "question": "When using the Soul Link Enhancement, can I select a CHARACTER model from my army that is not on the battlefield?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26097,7 +26118,8 @@
    "values": {
     "question": "Can my CHARACTER with the Soul Link Enhancement use that Enhancement while it is in Strategic Reserves?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26109,7 +26131,8 @@
    "values": {
     "question": "When replacing the datasheet abilities of the bearer of the Soul Link Enhancement with those of the selected CHARACTER model, does this include Core and Faction abilities?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26121,7 +26144,8 @@
    "values": {
     "question": "When replacing the datasheet abilities of the bearer of the Soul Link Enhancement with those of the selected CHARACTER model, does this include which units the bearer can be attached to?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26133,7 +26157,8 @@
    "values": {
     "question": "If I am using the Veterans of the Long War Detachment, can I select a unit embarked within a TRANSPORT to be my focus of hatred?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26145,7 +26170,8 @@
    "values": {
     "question": "For the Opportunistic Raiders Stratagem, is a unit that did not fight this phase an eligible target for that Stratagem, provided it was eligible to fight at one point during the phase?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26157,7 +26183,8 @@
    "values": {
     "question": "Can I use the Opportunistic Raiders Stratagem to Fall Back with a unit of Warp Talons, then use that unit’s Warp Strike ability to place it into Strategic Reserves?",
     "answer": "If that Warp Talons unit destroyed one or more units this phase, yes; otherwise, no.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26169,7 +26196,8 @@
    "values": {
     "question": "For the Warp Talons’ Warp Strike ability, is a unit that did not fight this phase eligible to use that ability, provided it was eligible to fight at one point during the phase?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26181,7 +26209,8 @@
    "values": {
     "question": "When is the model destroyed by the Traitor Enforcer’s Brutal Example ability removed?",
     "answer": "Before resolving the Fire Overwatch Stratagem with that unit.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26193,7 +26222,8 @@
    "values": {
     "question": "When I target a unit with the Fire Overwatch Stratagem, can that unit make a Dark Pact?",
     "answer": "Yes, as the unit is selected to shoot.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26205,7 +26235,8 @@
    "values": {
     "question": "Can I select a unit to shoot when there are no eligible targets so that unit can make a Dark Pact?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26217,7 +26248,8 @@
    "values": {
     "question": "Does Fabius Bile’s Enhanced Warriors ability apply if Fabius starts the battle as part of an Attached unit inside a transport?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
   },
@@ -26229,9 +26261,114 @@
    "values": {
     "question": "When I replace the datasheet abilities of the bearer of the Soul Link Enhancement, do persisting effects that were gained from the replaced abilities continue to apply to the bearer of the Soul Link Enhancement?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "chaos-space-marines pack FAQ"
+  },
+  {
+   "faction": "core",
+   "file": "faqs",
+   "op": "add",
+   "id": "2026-08-26-01",
+   "values": {
+    "question": "The Plunder Secondary Mission references ‘One unit within a terrain area that is not within your territory.’ Is the requirement to be ‘not within your territory’ referring FAQS to the unit or the terrain area?",
+    "answer": "The terrain area.",
+    "source": "Warhammer Event Companion, 26 August 2026",
+    "card_id": "plunder"
+   },
+   "note": "core pack FAQ"
+  },
+  {
+   "faction": "core",
+   "file": "faqs",
+   "op": "add",
+   "id": "2026-08-26-02",
+   "values": {
+    "question": "If the unit I select to be my Beacon unit upon drawing the Beacon Secondary Mission is destroyed prior to achieving the mission, can I select a new Beacon unit?",
+    "answer": "No, which means you will be unable to achieve that mission. We recommend discarding it on your turn to gain 1CP!",
+    "source": "Warhammer Event Companion, 26 August 2026",
+    "card_id": "beacon"
+   },
+   "note": "core pack FAQ"
+  },
+  {
+   "faction": "core",
+   "file": "faqs",
+   "op": "add",
+   "id": "2026-08-26-03",
+   "values": {
+    "question": "For the purposes of VP scoring limits, is the end of the battle the same timing as the end of the fifth battle round?",
+    "answer": "No, VP scored at the end of the battle are not subject to the 15VP per battle round scoring limit.",
+    "source": "Warhammer Event Companion, 26 August 2026",
+    "card_id": ""
+   },
+   "note": "core pack FAQ"
+  },
+  {
+   "faction": "core",
+   "file": "faqs",
+   "op": "add",
+   "id": "2026-08-26-04",
+   "values": {
+    "question": "When a mission action places an operation marker and applies a status (e.g. 'decoyed'), does removing that operation marker also remove that status?",
+    "answer": "Yes.",
+    "source": "Warhammer Event Companion, 26 August 2026",
+    "card_id": ""
+   },
+   "note": "core pack FAQ"
+  },
+  {
+   "faction": "core",
+   "file": "faqs",
+   "op": "add",
+   "id": "2026-08-26-05",
+   "values": {
+    "question": "Some Primary Mission cards let a player place MISSION operation markers on the battlefield. Can I remove these?",
+    "answer": "Your Primary Mission card will specify how and when you can remove operation markers from the battlefield. If it doesn’t, you cannot remove operation markers.",
+    "source": "Warhammer Event Companion, 26 August 2026",
+    "card_id": ""
+   },
+   "note": "core pack FAQ"
+  },
+  {
+   "faction": "core",
+   "file": "faqs",
+   "op": "add",
+   "id": "2026-08-26-06",
+   "values": {
+    "question": "For the Death Trap Primary Mission, one objective reads ‘One or more enemy units that started the turn within a terrain area were destroyed, if that terrain area is trapped.’ Does that terrain area have to have been trapped at the point that enemy unit was destroyed?",
+    "answer": "No.",
+    "source": "Warhammer Event Companion, 26 August 2026",
+    "card_id": "death-trap"
+   },
+   "note": "core pack FAQ"
+  },
+  {
+   "faction": "core",
+   "file": "faqs",
+   "op": "add",
+   "id": "2026-08-26-07",
+   "values": {
+    "question": "For the Surveil the Foe Primary Mission, one objective reads ‘One or more enemy units were surveilled this turn, unless each of those units is within range of one or more objectives that have one or more operation markers DECK within range of them.’ For an enemy unit within range of an objective with an operation marker, can I achieve this objective if I remove the operation marker after surveilling that unit, as long as it is within the same turn?",
+    "answer": "Yes.",
+    "source": "Warhammer Event Companion, 26 August 2026",
+    "card_id": "surveil-the-foe"
+   },
+   "note": "core pack FAQ"
+  },
+  {
+   "faction": "core",
+   "file": "faqs",
+   "op": "add",
+   "id": "2026-08-26-08",
+   "values": {
+    "question": "For the Vital Link Primary Mission, if there is more than one central objective, can I score the cumulative VP for my operation markers regardless of which central objective(s) they are within?",
+    "answer": "Yes, as long as you control the objective(s) those operation markers are within. 4",
+    "source": "Warhammer Event Companion, 26 August 2026",
+    "card_id": "vital-link"
+   },
+   "note": "core pack FAQ"
   },
   {
    "faction": "dark-angels",
@@ -26241,7 +26378,8 @@
    "values": {
     "question": "While using the Wrath of the Rock Detachment, can I use the Charge move from the Leonine Aggression Stratagem to move a unit out of Engagement Range with another unit?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "dark-angels pack FAQ"
   },
@@ -26253,7 +26391,8 @@
    "values": {
     "question": "Does the Plagueburst Crawler’s Spore-laced Shock Waves ability inflict mortal wounds every turn to units affected by the ability?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "death-guard pack FAQ"
   },
@@ -26265,7 +26404,8 @@
    "values": {
     "question": "Does the Venom’s Aerialists ability allow a unit to embark within a TRANSPORT even if it disembarked from a TRANSPORT this turn?",
     "answer": "Yes, because it states 'That unit can embark within this TRANSPORT in a turn it disembarked from a TRANSPORT.'",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "drukhari pack FAQ"
   },
@@ -26277,7 +26417,8 @@
    "values": {
     "question": "While using the Coterie of the Conceited Detachment, if my WARLORD is not on the battlefield, can I use the Unbound Arrogance Stratagem?",
     "answer": "Yes, your pledge to Slaanesh would increase from 0 to 1.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "emperors-children pack FAQ"
   },
@@ -26289,7 +26430,8 @@
    "values": {
     "question": "Can the same enemy unit be affected by Noise Marines’ Terrifying Crescendo ability more than once, for multiple subtractions to its Battle- shock and Leadership tests?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "emperors-children pack FAQ"
   },
@@ -26301,7 +26443,8 @@
    "values": {
     "question": "While using the Carnival of Excess Detachment, for the purposes of the Daemonic Empowerment rule, if my unit already has a weapon with [SUSTAINED HITS] (e.g. Shalaxi Helbane’s Pavane of Slaanesh, which has [SUSTAINED HITS 3]), does an unmodified Hit roll of 5+ for such a weapon score a Critical Hit?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "emperors-children pack FAQ"
   },
@@ -26313,7 +26456,8 @@
    "values": {
     "question": "Can Adeptus Mechanicus units use the Doctrina Imperatives ability when taken as part of the Questor Forgepact Detachment?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "imperial-knights pack FAQ"
   },
@@ -26325,7 +26469,8 @@
    "values": {
     "question": "Can a Cryptothrall that has used its Systematic Vigour ability to ‘fight on death’ later fight again if returned to its unit before that unit is selected to fight?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "necrons pack FAQ"
   },
@@ -26337,7 +26482,8 @@
    "values": {
     "question": "When using the Protocol of the Undying Legions Stratagem, are any other rules that are applicable to Reanimation Protocols applied (e.g. Necron Warriors’ Their Number is Legion ability)?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "necrons pack FAQ"
   },
@@ -26349,7 +26495,8 @@
    "values": {
     "question": "If I am using the Canoptek Court Detachment, if there are no objective markers within No Man’s Land or within my opponent’s deployment zone, can those areas be within my army’s Power Matrix?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "necrons pack FAQ"
   },
@@ -26361,7 +26508,8 @@
    "values": {
     "question": "Can I use the Cosmic Precision Stratagem to set up a unit anywhere on the battlefield instead of only wholly within 6\" of a battlefield edge, even if it doesn't have the Deep Strike ability?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "necrons pack FAQ"
   },
@@ -26373,7 +26521,8 @@
    "values": {
     "question": "When being set up using the Cosmic Precision Stratagem, does a model that is large (e.g. a Tesseract Vault) have to follow the rules for large models in Setting Up Large Models (Rules Appendix, 03.02.02)?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "necrons pack FAQ"
   },
@@ -26385,7 +26534,8 @@
    "values": {
     "question": "When using the Protocol of the Conquering Tyrant Stratagem or Lokhust Destroyers’ Hard-wired for Destruction ability, to be eligible to re-roll the Hit roll, does the unit also need to be eligible to re-roll a Hit roll of 1?",
     "answer": "Yes (see Rules with Multiple Conditions and Effects, Rules Appendix 02.03.01).",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "necrons pack FAQ"
   },
@@ -26397,7 +26547,8 @@
    "values": {
     "question": "When I set up a unit using the Monolith’s Eternity Gate ability, do I have to set that unit up wholly within 6\" of one battlefield edge?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "necrons pack FAQ"
   },
@@ -26409,7 +26560,8 @@
    "values": {
     "question": "When I set up a unit using the Monolith’s Eternity Gate ability, and that unit is not wholly within 6\" of one battlefield edge, is that unit eligible to shoot in my Shooting phase?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "necrons pack FAQ"
   },
@@ -26421,7 +26573,8 @@
    "values": {
     "question": "Does the Canoptek Court Autodivinator Enhancement trigger when army rule effects such as Code Chivalric (Imperial Knights) award a player CP, or when an opponent discards a Secondary Mission card for 1CP?",
     "answer": "No in both cases. It only triggers when your opponent gains CP as the result of an ability (not any other kind of rule).",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "necrons pack FAQ"
   },
@@ -26433,7 +26586,8 @@
    "values": {
     "question": "If a unit is removed from the battlefield using the Hypercrypt Legion Hyperphasing Detachment rule and it has the Deep Strike ability, can that unit arrive from Reserves in the first battle round?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "necrons pack FAQ"
   },
@@ -26445,7 +26599,8 @@
    "values": {
     "question": "If I target a Canoptek Wraiths unit with the Canoptek Court Reactive Subroutines Stratagem, can this trigger that unit’s Wraith Form ability?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "necrons pack FAQ"
   },
@@ -26457,7 +26612,8 @@
    "values": {
     "question": "Can a unit be affected by a Resurrection Orb (e.g. from a Catacomb Command Barge and an Overlord) more than once per turn?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "necrons pack FAQ"
   },
@@ -26469,7 +26625,8 @@
    "values": {
     "question": "When using the Green Tide Mob Mentaility detachment rule, do I switch to 6+ InSv partway through a unit’s attacks when the number of models in the target unit drops below 10 models?",
     "answer": "No, the number of models in the unit when it is targeted determines the unit’s InSv until those attacks are resolved.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "orks pack FAQ"
   },
@@ -26481,7 +26638,8 @@
    "values": {
     "question": "If I attach a Big Mek to a Mek Gunz unit, does the unit now suffer 1 mortal wound for each failed hazard roll, because each model in the unit is now not a MONSTER/VEHICLE model?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "orks pack FAQ"
   },
@@ -26493,7 +26651,8 @@
    "values": {
     "question": "If a model has an ability that triggers when you call a Waaagh! and that model is embarked within a TRANSPORT when this happens (e.g. a Warboss’ Da Biggest and da Best ability), does that ability take effect?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "orks pack FAQ"
   },
@@ -26505,7 +26664,8 @@
    "values": {
     "question": "When using the Conniving Runts Stratagem, to be able to make the Normal move as part of the Stratagem, do I need to roll a 4+ and have inflicted any mortal wounds?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "orks pack FAQ"
   },
@@ -26517,7 +26677,8 @@
    "values": {
     "question": "Can a unit equipped with multiple Bomb Squigs use its Bomb Squig ability more than once each phase?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "orks pack FAQ"
   },
@@ -26529,7 +26690,8 @@
    "values": {
     "question": "If a unit has an ability that checks if the Waaagh! is active for your army in order for that ability to take effect (e.g. the Meganobz’ Krumpin’ Time ability), does that ability take effect if another rule makes the Waaagh! active for that unit (e.g. the Bully Boyz Detachment rule)?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "orks pack FAQ"
   },
@@ -26541,7 +26703,8 @@
    "values": {
     "question": "While using the Gladius Task Force Detachment, does a Combat Doctrine need to be active for my army in order to use the Adaptive Strategy Stratagem?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26553,7 +26716,8 @@
    "values": {
     "question": "If a Hellblaster is destroyed by anything other than an attack or Hazardous test, can that model use its For the Chapter! ability?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26565,7 +26729,8 @@
    "values": {
     "question": "Can I use a Captain’s Rites of Battle ability to target that Captain’s unit if it is in Reserves or Strategic Reserves?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26577,7 +26742,8 @@
    "values": {
     "question": "Does an objective marker that has been Sabotaged by my army using the A Deadly Prize Stratagem remain Sabotaged if my opponent controls it at the start or end of any turn?",
     "answer": "Yes. However, while your opponent controls that objective marker, its ability to inflict mortal wounds is not active.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": "sabotage"
    },
    "note": "space-marines pack FAQ"
   },
@@ -26589,7 +26755,8 @@
    "values": {
     "question": "While an Attached unit is embarked within a TRANSPORT, do weapons that TRANSPORT shoots with using the Firing Deck ability benefit from any abilities the attached Leader has (e.g. a Lieutenant’s Tactical Precision ability, which grants weapons in its unit the [LETHAL HITS] ability)?",
     "answer": "No. Firing Deck enables a TRANSPORT to be equipped with a number of weapons equipped by its passengers, but the TRANSPORT itself is not part of that Attached unit.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26601,7 +26768,8 @@
    "values": {
     "question": "Can a unit embarked within a TRANSPORT be selected as the Oath of Moment target?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26613,7 +26781,8 @@
    "values": {
     "question": "Can a unit in Reserves be selected as the Oath of Moment target?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26625,7 +26794,8 @@
    "values": {
     "question": "Can a unit in Reserves use an Enhancement (following all restrictions outlined by that Enhancement)?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26637,7 +26807,8 @@
    "values": {
     "question": "If I have two or more Impulsors within 6\" of a unit I target with a Stratagem, do each of their Orbital Comms Array wargear abilities trigger?",
     "answer": "No, they are Aura abilities and so do not stack.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26649,7 +26820,8 @@
    "values": {
     "question": "If I use a Stratagem on a unit within 6\" of an Impulsor with an Orbital Comms Array, but I do not roll high enough to gain as a result of that wargear, if that same unit is within 6\" of a different Impulsor that also has an Orbital Comms Array, can I attempt to roll another D6 to try to gain 1CP?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26661,7 +26833,8 @@
    "values": {
     "question": "Do multiple instances of the Astartes Banner ability stack?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26673,7 +26846,8 @@
    "values": {
     "question": "If I select one MONSTER or VEHICLE unit as the target of all of a Stormspeeder Thunderstrike’s ranged weapons, and the first weapon that model makes attacks with scores one or more hits, do I add 1 to the Wound rolls made for attacks with its remaining weapons?",
     "answer": "No. Only after you have resolved the attacks with all weapons it is shooting with this phase, has that model shot (see ‘Shot’ in the Rules Appendix, 04.03.04).",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26685,7 +26859,8 @@
    "values": {
     "question": "When making attacks with a unit from my army, I split my attacks between the first Oath of Moment target selected as part of my army rule and the second Oath of Moment target selected using Roboute Guilliman’s Master of Battle Author of the Codex ability. If I destroy the first Oath of Moment target before resolving my attacks against the second Oath of Moment target, will those attacks against the second Oath of Moment target benefit from the re-rolls to hit?",
     "answer": "No. Only after all of the attacks from that unit have been resolved will the second Oath of Moment selection become active.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26697,7 +26872,8 @@
    "values": {
     "question": "Which Detachments are considered to be Codex: Space Marines Detachments?",
     "answer": "Every Detachment printed in Codex: Space Marines and every Detachment included in the Space Marines Faction Pack.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "space-marines pack FAQ"
   },
@@ -26709,7 +26885,8 @@
    "values": {
     "question": "Can I use an Ethereal’s Coordinated Leadership ability while it is embarked within a TRANSPORT?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tau-empire pack FAQ"
   },
@@ -26721,7 +26898,8 @@
    "values": {
     "question": "If I am using the Kroot Hunting Pack Detachment, if an enemy unit selects a KROOT unit from my army as a target of its ranged attacks, but I use the Hidden Hunters Stratagem so that my KROOT unit is no longer an eligible target for any of those attacks, and there are no other eligible targets for those attacks (as described in the Rules Commentary), can my nearby KROOTOX RIDERS unit still use its Kroot Packmates ability to shoot at that attacking unit?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tau-empire pack FAQ"
   },
@@ -26733,7 +26911,8 @@
    "values": {
     "question": "When using the Touched by Tzeentch Stratagem in the Warpmeld Pact Detachment, do I have to declare if my unit will shoot or charge after Advancing as soon as I use the Stratagem?",
     "answer": "No, you may decide later in the turn.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "thousand-sons pack FAQ"
   },
@@ -26745,7 +26924,8 @@
    "values": {
     "question": "When going second, can a Tzaangor unit that started the game on the battlefield and was placed into Strategic Reserves by its Ambushing Hunters ability then arrive during my first turn using the Twisted Mirage Stratagem?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "thousand-sons pack FAQ"
   },
@@ -26757,7 +26937,8 @@
    "values": {
     "question": "Can the Exalted Sorcerer on Disk of Tzeentch and the Tzaangor Shaman lead Tzaangor Enlightened with fatecaster greatbows?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "thousand-sons pack FAQ"
   },
@@ -26769,7 +26950,8 @@
    "values": {
     "question": "While using the Rubricae Phalanx Detachment, if I attach a CHARACTER to a unit selected using the Risen Rubricae Enhancement, does that CHARACTER also gain the Infiltrators ability?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "thousand-sons pack FAQ"
   },
@@ -26781,7 +26963,8 @@
    "values": {
     "question": "When using the Cabal of Sorcerers army rule, do I have to choose whether to Channel the Warp before rolling any dice?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "thousand-sons pack FAQ"
   },
@@ -26793,7 +26976,8 @@
    "values": {
     "question": "When using the Cabal of Sorcerers army rule, if I roll one or more doubles or triples, does my model only suffer D3 mortal wounds if I chose to Channel the Warp?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "thousand-sons pack FAQ"
   },
@@ -26805,7 +26989,8 @@
    "values": {
     "question": "Do I need to sequence all of my Cabal of Sorcerers Rituals at the start of my Shooting phase?",
     "answer": "No, you just pick a model with the Cabal of Sorcerers rule, pick a Ritual to manifest, and attempt it, then repeat the process until you have run out of models or Rituals or both.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "thousand-sons pack FAQ"
   },
@@ -26817,7 +27002,8 @@
    "values": {
     "question": "Do units that are repositioned by rules that do not specify that the unit being repositioned is first placed into Reserves (e.g. the Grey Knights Teleport Assault rule) need to take a Battle-shock test on a roll of 2+ if a TYRANIDS CHARACTER with the Hunting Grounds Enhancement is on the battlefield?",
     "answer": "Yes. Rules that are triggered by or apply to Reserves units are also triggered by and apply to a repositioned unit when it is set back up.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tyranids pack FAQ"
   },
@@ -26829,7 +27015,8 @@
    "values": {
     "question": "Can I use the Rapid Regeneration Stratagem when an ability like Doombolt would inflict mortal wounds on a TYRANIDS unit from my army?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tyranids pack FAQ"
   },
@@ -26841,7 +27028,8 @@
    "values": {
     "question": "When resolving a Mawloc’s Terror From the Deep ability, which units need to take a Battle-shock test: every unit within 12\" of the Mawloc, or only those units for which a 5+ was rolled when resolving that ability?",
     "answer": "Only those units for which a 5+ was rolled.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tyranids pack FAQ"
   },
@@ -26853,7 +27041,8 @@
    "values": {
     "question": "If my opponent uses a rule to place a unit into Strategic Reserves during the first battle round, and that rule states that the unit must arrive on the battlefield in the next battle round, what happens if a model from my army uses the Psychostatic Disruption Enhancement in the second battle round when that enemy Strategic Reserves unit is due to arrive?",
     "answer": "The ‘cannot arrive’ rule takes precedence over the rule stating that the unit ‘must arrive’ from Strategic Reserves. Roll one D6: on a 4+, that enemy unit cannot arrive on the battlefield this turn.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tyranids pack FAQ"
   },
@@ -26865,7 +27054,8 @@
    "values": {
     "question": "If I select a unit of Neurogaunts for a Neurotyrant’s Neuroloids ability that is not led by a SYNAPSE unit, does that unit of Neurogaunts gain the SYNAPSE keyword?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tyranids pack FAQ"
   },
@@ -26877,7 +27067,8 @@
    "values": {
     "question": "When using the Reclaim Biomass Stratagem, can the Stratagem effect be used on the unit that was just destroyed?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tyranids pack FAQ"
   },
@@ -26889,7 +27080,8 @@
    "values": {
     "question": "Does an Attached unit containing a Hive Tyrant and Tyrant Guard receive the Stealth ability from a Venomthrope’s Foul Spores ability?",
     "answer": "No. The unit has the MONSTER keyword and the ability excludes MONSTERS.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tyranids pack FAQ"
   },
@@ -26901,7 +27093,8 @@
    "values": {
     "question": "Are Spore Mines units that are added to an army during a battle restricted by abilities that prevent Reserves from being set up within a certain range (e.g. Space Marines Infiltrators’ Omniscrambers)?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tyranids pack FAQ"
   },
@@ -26913,7 +27106,8 @@
    "values": {
     "question": "Does a unit affected by the Psychostatic Disruption Enhancement have to arrive from Reserves in the next Movement phase?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tyranids pack FAQ"
   },
@@ -26925,7 +27119,8 @@
    "values": {
     "question": "Does the Synaptic Goading Stratagem allow a unit to leave Engagement Range and move towards the closest objective marker?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tyranids pack FAQ"
   },
@@ -26937,7 +27132,8 @@
    "values": {
     "question": "Can units targeted by the Shadow in the Warp army rule use the Insane Bravery Stratagem?",
     "answer": "No. Insane Bravery can only be used in your Command phase.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tyranids pack FAQ"
   },
@@ -26949,7 +27145,8 @@
    "values": {
     "question": "While using the Subterranean Assault Detachment, does a Mawloc’s Terror from the Deep ability trigger when arriving via a Tunnel Marker?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "tyranids pack FAQ"
   },
@@ -26961,7 +27158,8 @@
    "values": {
     "question": "If Angron is destroyed and I use his Reborn in Blood ability, can I still use the Wrath of Khorne Detachment ability for the Vessels of Wrath Detachment?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "world-eaters pack FAQ"
   },
@@ -26973,7 +27171,8 @@
    "values": {
     "question": "While using the Khorne Daemonkin Detachment, can I select a CHARACTER with the Disciple of Khorne Enhancement to be my WARLORD?",
     "answer": "No.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "world-eaters pack FAQ"
   },
@@ -26985,7 +27184,8 @@
    "values": {
     "question": "While using the Khorne Daemonkin Detachment, if I attach a Lord on Juggernaut with the Disciple of Khorne Enhancement to a unit of Bloodcrushers or Flesh Hounds, does that unit benefit from the Blessings of Khorne ability, even though only the Lord on Juggernaut has that ability?",
     "answer": "Yes.",
-    "source": "Faction Pack, 26 August 2026"
+    "source": "Faction Pack, 26 August 2026",
+    "card_id": ""
    },
    "note": "world-eaters pack FAQ"
   },

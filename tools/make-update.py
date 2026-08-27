@@ -1085,21 +1085,40 @@ def faq_ops(packs_to_factions):
     faqs = json.load(open(FAQS))
     files = bundled()
     ops, stats = [], collections.Counter()
+
+    # The mission deck's questions name the card they are about — Plunder,
+    # Beacon, Death Trap — and that card is where a player will look for
+    # them. Matched by name against the core bundle's own cards.
+    cards = {}
+    for kind in ('missions', 'secondary-cards'):
+        for card in files.get('core', {}).get(kind, []):
+            if card.get('name'):
+                cards[card['name'].lower()] = card['id']
     for pack, questions in sorted(faqs.items()):
         faction = packs_to_factions.get(pack, pack)
         if faction not in files:
             stats['no bundle for this pack'] += len(questions)
             continue
         for i, entry in enumerate(questions, start=1):
+            # The longest name that appears wins: `Plunder` is also a word
+            # inside other questions, and a card called `Vital Link` must not
+            # lose to a card called `Link`.
+            named = sorted((n for n in cards
+                            if n in entry['question'].lower()), key=len)
+            about = cards[named[-1]] if named else ''
             ops.append({
                 'faction': faction, 'file': 'faqs', 'op': 'add',
                 'id': f'{PATCH_ID}-{i:02d}',
-                'values': {'question': entry['question'],
-                           'answer': entry['answer'],
-                           'source': 'Faction Pack, 26 August 2026'},
+                'values': {
+                    'question': entry['question'],
+                    'answer': entry['answer'],
+                    'source': 'Warhammer Event Companion, 26 August 2026'
+                    if pack == 'core' else 'Faction Pack, 26 August 2026',
+                    'card_id': about,
+                },
                 'note': f'{pack} pack FAQ',
             })
-            stats['question'] += 1
+            stats['about a named card' if about else 'question'] += 1
     return ops, stats
 
 

@@ -63,7 +63,12 @@ def faq_pages(raw, doc):
             if start:
                 break
     if start is None:
-        return []
+        # The Event Companion sets its heading as a vertical sidebar, so the
+        # words `CHAPTER APPROVED MISSION DECK FAQS` arrive one per line down
+        # the page and no heading is found. Fall back to the shape itself:
+        # `Q:` and `A:` are unambiguous, and a page with neither yields
+        # nothing anyway.
+        return [page['page'] for page in doc]
     after = [p for p in tops if p > start]
     return list(range(start, (min(after) if after else len(doc)) + 1))
 
@@ -100,9 +105,15 @@ def main():
 
     out = {}
     for name in sorted(os.listdir(cache)):
-        if not name.endswith('.json') or name.startswith('_'):
+        if not name.endswith('.json'):
             continue
-        pack = name[:-5]
+        # The Event Companion carries the Chapter Approved Mission Deck's own
+        # questions, which belong to no faction. Its ERRATA section reads
+        # `None.` in this version — there are no card amendments to apply, and
+        # that is worth having recorded rather than looking unparsed.
+        if name.startswith('_') and name != '_event-companion.json':
+            continue
+        pack = 'core' if name == '_event-companion.json' else name[:-5]
         raw = json.load(open(os.path.join(cache, name)))
         doc = pdf_columns.lay_out_pages(raw)
         wanted = set(faq_pages(raw, doc))

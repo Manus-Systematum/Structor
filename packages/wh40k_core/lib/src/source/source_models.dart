@@ -1308,11 +1308,20 @@ class FactionFaq {
   /// that came with an older pack.
   final String source;
 
+  /// The mission card this answers a question about, where it names one.
+  ///
+  /// Five of the mission deck's eight questions are about one card — Plunder,
+  /// Beacon, Death Trap, Surveil the Foe, Vital Link — and those belong
+  /// beside that card rather than in a list a player has to search. The other
+  /// three are about the deck as a whole and carry no id.
+  final String cardId;
+
   const FactionFaq({
     required this.id,
     required this.question,
     required this.answer,
     this.source = '',
+    this.cardId = '',
   });
 
   factory FactionFaq.fromJson(Object? v) {
@@ -1322,6 +1331,7 @@ class FactionFaq {
       question: strOr(j['question'], ''),
       answer: strOr(j['answer'], ''),
       source: strOr(j['source'], ''),
+      cardId: strOr(j['card_id'], ''),
     );
   }
 
@@ -1330,5 +1340,6 @@ class FactionFaq {
         'question': question,
         'answer': answer,
         if (source.isNotEmpty) 'source': source,
+        if (cardId.isNotEmpty) 'card_id': cardId,
       };
 }

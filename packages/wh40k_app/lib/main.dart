@@ -241,6 +241,7 @@ class _ArmyPageState extends State<ArmyPage> {
                     )
                   else
                     TurnScreen(
+                      faqs: _faqs,
                       army: army,
                       log: _log,
                       deck: SecondaryDeck.of(_pack),

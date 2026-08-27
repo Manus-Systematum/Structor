@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../theme.dart';
+import 'faq_button.dart';
 import 'remembered_toggle.dart';
 import 'scoring_text.dart';
 import 'secondary_cards.dart';
@@ -25,8 +26,12 @@ class ScoreBoard extends StatelessWidget {
   final SecondaryDeck deck;
   final void Function(BattleEvent) onEvent;
 
+  /// Published questions for the mission cards on show (§3.16).
+  final List<FactionFaq> faqs;
+
   const ScoreBoard({
     super.key,
+    this.faqs = const [],
     required this.state,
     required this.pack,
     required this.onEvent,
@@ -54,6 +59,7 @@ class ScoreBoard extends StatelessWidget {
               card: pack.card(setup?.myMissionId ?? ''),
               held: deck.hand(state.secondariesOf(Player.me)),
               deck: deck,
+              faqs: faqs,
               objectivesLabel: 'MY OBJECTIVES',
               ahead: state.me.total >= state.opponent.total,
               onEvent: onEvent,
@@ -75,6 +81,7 @@ class ScoreBoard extends StatelessWidget {
               // is most of what decides where you stand.
               held: deck.hand(state.secondariesOf(Player.opponent)),
               deck: deck,
+              faqs: faqs,
               objectivesLabel: '${opponentName.toUpperCase()} OBJECTIVES',
               ahead: state.opponent.total > state.me.total,
               onEvent: onEvent,
@@ -102,6 +109,9 @@ class _Side extends StatefulWidget {
   final List<MissionCard> held;
   final SecondaryDeck deck;
 
+  /// Published questions, so a card that has any can offer them (§3.16).
+  final List<FactionFaq> faqs;
+
   /// `My objectives` / `Kai's objectives` — what the one fold is called.
   final String objectivesLabel;
   final bool ahead;
@@ -115,6 +125,7 @@ class _Side extends StatefulWidget {
     required this.card,
     required this.held,
     required this.deck,
+    required this.faqs,
     required this.objectivesLabel,
     required this.ahead,
     required this.onEvent,
@@ -211,6 +222,9 @@ class _SideState extends State<_Side> with RemembersToggle<_Side> {
                           fontSize: 11, color: scheme.onSurfaceVariant),
                     ),
                   ),
+                  // Only where this card has questions (§3.16).
+                  if (widget.card case final mission?)
+                    FaqButton(cardId: mission.id, faqs: widget.faqs),
                 ],
               ),
             ),

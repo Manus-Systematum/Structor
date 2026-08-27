@@ -317,7 +317,16 @@ class DatasetRepository {
           .toList(),
       // No community source publishes these; they arrive with the patch
       // that carries the rules they clarify (§3.16).
-      faqs: file('faqs').map(FactionFaq.fromJson).toList(),
+      // The faction's own questions, and the mission deck's — which belong
+      // to every army, so they are carried once in the core bundle and read
+      // by every faction (§3.16).
+      faqs: [
+        ...file('faqs').map(FactionFaq.fromJson),
+        ...corrections
+            .apply((await bundle('core')).file('faqs'),
+                faction: 'core', file: 'faqs')
+            .map(FactionFaq.fromJson),
+      ],
       missingFiles: const [],
     );
 

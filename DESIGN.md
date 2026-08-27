@@ -2603,11 +2603,11 @@ before the next step; `tools/make-update.py` diffs both against the built
 bundles and writes `data/updates/<date>.json`; `bin/bundle.dart` gzips every
 file in `data/updates/` into the dist and lists it.
 
-The August file is **1,723 operations in 77 KB** — 594 wordings and 29
+The August file is **1,731 operations in 78 KB** — 594 wordings and 29
 removals from the detachment pages, 78 stratagems a chapter's copy of a shared
 detachment was missing, 195 errata from the Rules Updates sections, 169 from
 the Munitorum Field Manual (53 units repriced, 110 leader lists, 6 enhancement
-costs), 450 from the datasheets (§3.16), 96 FAQs, and 112 base sizes (§3.17).
+costs), 450 from the datasheets (§3.16), 104 FAQs (96 faction, 8 for the mission deck), and 112 base sizes (§3.17).
 
 **The Rules Updates sections, added in the same pass.** Every pack ends with
 errata to rules the codex already published, in a regular shape — a shouted
@@ -2715,7 +2715,7 @@ and giving another a value the record does not have, and again after it grew
 to cover weapon and datasheet profiles, by adding a profile the bundle does
 not have. It caught every one — and, once the Field Manual's operations arrived, caught
 a dozen chapters writing conflicting points onto the same shared datasheet,
-which is what the deduplication above exists for. **1,723 of 1,723 land.**
+which is what the deduplication above exists for. **1,731 of 1,731 land.**
 
 Segmentation is by **looking ahead to the directives**, not by streaming
 state. Streaming could not tell where a quotation ended, because an apostrophe
@@ -2927,6 +2927,25 @@ their plus, so only `BS` and `WS` are stripped. The last one through came from
 the errata handler rather than the datasheet one, so the guard runs over
 everything generated instead of inside one phase: a guard that lives in a
 single phase only guards that phase.
+
+**The mission deck's own questions belong to the card, not to a list.** The
+Warhammer Event Companion carries eight, and its `ERRATA` section — the
+amendments to Chapter Approved cards — reads **`None.`** in this version.
+That is the finding: there is nothing to apply, and recording it is what
+stops the section looking unparsed next time.
+
+Five of the eight name one card — Plunder, Beacon, Death Trap, Surveil the
+Foe, Vital Link — so a FAQ carries the id of the card it is about, matched by
+name against the deck (longest name wins, or `Vital Link` loses to a card
+called `Link`). The card then shows a small `FAQ` beside its name on the score
+board, and **nothing at all** when it has none: a control that opens nothing
+on most cards is worse than no control. The three general questions carry no
+id and appear in the faction list instead. An empty id matches nothing on
+either side — matching empty against empty put the general questions on every
+unnamed card, which a test now pins.
+
+They are carried in the **core** bundle rather than copied into thirty faction
+ones, and every faction reads them alongside its own.
 
 An answer ends at a shouted line. Without that the last answer on a page ran
 on into the datasheet printed after it — `No. ORCA DROPSHIP M T SV W 20"…` —
