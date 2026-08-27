@@ -63,7 +63,16 @@ void main() {
         ],
         'units': [
           for (final u in dataset.faction.units)
-            {'id': u.id, 'keywords': u.keywords, 'ability_ids': u.abilityIds},
+            {
+              'id': u.id,
+              'keywords': u.keywords,
+              'ability_ids': u.abilityIds,
+              'profiles': u.profiles.length,
+            },
+        ],
+        'weapons': [
+          for (final w in dataset.faction.weapons)
+            {'id': w.id, 'profiles': w.profiles.length},
         ],
       };
 
@@ -103,6 +112,12 @@ void main() {
                   got is List &&
                   got.length != want.length) {
                 failures.add('${entry.key}: ${op.id}.$field is the wrong size');
+              } else if (want is List && got is int && got != want.length) {
+                // Profiles are compared by count: the model reshapes them, so
+                // the raw list cannot be matched field for field, but a
+                // profile that failed to apply changes the count or is absent.
+                failures.add('${entry.key}: ${op.id}.$field has $got profiles, '
+                    'the patch wrote ${want.length}');
               }
             }
         }

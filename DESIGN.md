@@ -2603,9 +2603,9 @@ before the next step; `tools/make-update.py` diffs both against the built
 bundles and writes `data/updates/<date>.json`; `bin/bundle.dart` gzips every
 file in `data/updates/` into the dist and lists it.
 
-The August file is **883 operations in 49 KB** — 594 wordings and 29 removals
+The August file is **896 operations in 50 KB** — 594 wordings and 29 removals
 from the detachment pages, 78 stratagems a chapter's copy of a shared
-detachment was missing, and 182 errata from the Rules Updates sections.
+detachment was missing, and 195 errata from the Rules Updates sections.
 
 **The Rules Updates sections, added in the same pass.** Every pack ends with
 errata to rules the codex already published, in a regular shape — a shouted
@@ -2674,11 +2674,30 @@ at the last one shortened `The first time this unit’s FABIUS BILE model is
 destroyed…` to four words. Any replacement that still comes out under 25
 characters is refused rather than shipped.
 
-**The 176 still not applied are not wording.** 111 name something the app has
-no record for — datasheet sections it holds as data rather than text
-(`Transport`, `Leader`, `Damaged`, `Options`), statlines and wargear
-profiles, and fragments the parser could not read. The rest are small
-refusals, each named in `data/faction-pack-updates-unapplied.json`, which the
+**A last pass took it to 195**, by handling the things that are not prose at
+all and by loosening four lookups that were stricter than the packs:
+
+- **Characteristics.** `Change M and OC to '-'.` and `Change OC
+  characteristic to '10'.` edit a datasheet's profile; `Change AP
+  characteristic to '-2'.` under `Melee Weapons, Demiklaives` edits a
+  weapon's. The word `Weapons` in the subject is what separates the two, and
+  the weapon is whatever follows it.
+- **A detachment rule is often named outright** — `Masters of Manoeuvre
+  Detachment Rule` — rather than left to the heading, and one heading can
+  carry several rules.
+- **`Through Unity, Devastation Enhancement` is one name with a comma in
+  it**, not an owner and a name.
+- **A heading that names no detachment is not fatal** when the name is unique
+  in the faction anyway.
+- **`Add the 'FRAME' keyword.`** is the same instruction as `Add 'FRAME'.`
+
+**The 124 left have nowhere to land, and that was checked rather than
+assumed.** 23 are corrections the app already satisfies. The rest name things
+the app does not hold as records at all: a **Transport section** is capacity,
+not text — the Falcon has five abilities and none of them is its transport
+rule — and the same is true of `Leader`, `Damaged`, `Options`, `Orders` and
+`Contagion Range`. The remainder are fragments the parser could not read.
+Each is named in `data/faction-pack-updates-unapplied.json`, which the
 generator writes so the next pass starts from the list rather than a counter.
 All 358 stay in `data/faction-pack-updates.json`.
 
@@ -2689,8 +2708,10 @@ operation against the result: a `set` is present, a `remove` is gone, an
 question — an operation can name a record the bundle does not carry or key on
 the wrong field, and both fail silently, because a patch that matches nothing
 looks exactly like a patch with nothing to do. The test was confirmed to fail
-by pointing one operation at a record that does not exist and giving another
-a value the record does not have; it caught both. **883 of 883 land.**
+twice over — once by pointing an operation at a record that does not exist
+and giving another a value the record does not have, and again after it grew
+to cover weapon and datasheet profiles, by adding a profile the bundle does
+not have. It caught every one. **896 of 896 land.**
 
 Segmentation is by **looking ahead to the directives**, not by streaming
 state. Streaming could not tell where a quotation ended, because an apostrophe
@@ -2770,16 +2791,28 @@ Wahapedia does republish, those 13 `set` operations become harmless
 duplicates of what the source says — the condition for deleting the patch
 stays what §3.15 already says it is, the upstream **dataslate**, not this.
 
-**Points are not parsed, and this is the gap in the pass.** Games Workshop's
-Munitorum Field Manual is a client-side app: the unit points are not in the
-served HTML, not in the RSC payload, and not behind any request the page
-makes on load. The licensed community mirror the project already uses,
-`BSData/wh40k-11e-mfm`, last updated its points on **5 August 2026** — three
-weeks before this update — which is §3.15's own situation applied to itself.
-Scraping a lazily-rendered page for 31 factions is fragile in exactly the way
-that ships wrong points quietly, and wrong points are the most damaging thing
-this app can show a list-builder. Left undone deliberately rather than done
-badly.
+**Points cannot be had right now, and the reason is worth recording.** Games
+Workshop's Munitorum Field Manual serves its **detachments** in the page —
+their DP cost, force disposition and enhancement points are all in the HTML —
+and does **not** serve its units. The unit names are behind a Suspense
+boundary that resolves client-side: the served payload holds the surrounding
+structure (`YOUR 1ST TO 2ND UNITS COST`, `5 models`) with the names as unfilled
+`$L` references, and no request fires for them on load.
+
+Checked from the other end too. `BSData/wh40k-11e-mfm` — MIT, the mirror this
+project already uses — scrapes this same site, and its own source says *"the
+MFM's base data is server-rendered, so a plain GET covers it"*, using a
+`div.bg-slate-500.text-xl` selector for units. That selector now matches only
+the detachment cards. Their last points update was **5 August 2026**, three
+weeks before this one, which is what a scraper looks like after the page it
+reads has changed under it.
+
+So both routes are shut, and the honest thing is to leave points alone: wrong
+points are the most damaging thing this app can hand a list-builder, and
+guessing at a lazily-rendered page across 31 factions fails quietly. The
+route back in is a headless browser that forces the units section to resolve,
+with a handful of known values checked by eye — or BSData fixing their
+scraper, which would be the licensed path and helps everyone downstream.
 
 **Parsing the packs.** Two things about the PDFs decide the parser. Their grid
 changes page to page — a new detachment gets two wide columns, a reprinted

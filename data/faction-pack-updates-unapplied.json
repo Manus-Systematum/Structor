@@ -24,7 +24,7 @@
   "text": "Remove 'Hover'."
  },
  {
-  "why": "no ability of that name",
+  "why": "no datasheet profile to change",
   "pack": "adeptus-mechanicus",
   "subject": "Archaeopter Fusilave, Archaeopter Stratoraptor – Profiles",
   "directive": "Change M and OC to '-'.",
@@ -62,14 +62,6 @@
   "directive": "Change to:",
   "category": "SKITARII HUNTER COHORT DETACHMENT",
   "text": "‘While a friendly ADEPTUS MECHANICUS unit is within 6\" of this model, that unit has the Stealth ability.’ ▪ Solar atomiser weapon: Change A to '3' and D to 'D6'. Cybernetica Datasmith ▪ Core Abilities section: Remove ‘Leader’, add ‘Support’. ▪ Keywords section: Remove ‘INFANTRY’, add ‘VEHICLE’. ▪ \u0007Add new ability: ‘Data-severed: If there are no KASTELAN ROBOT models in this unit: ▫ This unit loses"
- },
- {
-  "why": "a keyword edit that is neither add nor swap",
-  "pack": "adeptus-mechanicus",
-  "subject": "Skorpius Disintegrator, Skorpius Dunerider – Keywords section",
-  "directive": "Add the ‘FRAME’ keyword.",
-  "category": "SKITARII HUNTER COHORT DETACHMENT",
-  "text": "Add the ‘FRAME’ keyword."
  },
  {
   "why": "no ability of that name",
@@ -150,14 +142,6 @@
   "directive": "Change to:",
   "category": "WINDRIDER HOST DETACHMENT",
   "text": "‘This model has a transport capacity of 12 ASURYANI INFANTRY models. Each WRAITH CONSTRUCT model takes the space of 2 models. It cannot transport JUMP PACK models or YNNARI models (excluding ASURYANI, YVRAINE and THE VISARCH models).’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "aeldari",
-  "subject": "Ynnari Incubi, Melee Weapons, Demiklaives (single blade)",
-  "directive": "Change AP characteristic to ‘-2’.",
-  "category": "WINDRIDER HOST DETACHMENT",
-  "text": "Change AP characteristic to ‘-2’."
  },
  {
   "why": "no ability of that name",
@@ -258,14 +242,6 @@
  {
   "why": "no ability of that name",
   "pack": "chaos-space-marines",
-  "subject": "Chaos Predator Destructor, Melee Weapons, Armoured Tracks",
-  "directive": "Change WS to ‘4+’.",
-  "category": "DATASHEETS",
-  "text": "Change WS to ‘4+’."
- },
- {
-  "why": "no ability of that name",
-  "pack": "chaos-space-marines",
   "subject": "Heretic Astartes Daemon Prince, Abilities Section",
   "directive": "Add the following:",
   "category": "DATASHEETS",
@@ -296,36 +272,12 @@
   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’"
  },
  {
-  "why": "detachment has no rule to correct",
-  "pack": "dark-angels",
-  "subject": "Masters of Manoeuvre Detachment Rule",
-  "directive": "Change to:",
-  "category": "COMPANY OF HUNTERS DETACHMENT",
-  "text": "‘Friendly ADEPTUS ASTARTES have: ▪ This unit’s ranged attacks have [ASSAULT]. ▪ \u0007When this unit is selected to make a fall‑back move, that fall‑back move does not prevent this unit from being eligible to shoot. Friendly ADEPTUS ASTARTES MOUNTED have: ▪ This unit’s ranged attacks have [ASSAULT]. ▪ \u0007When this unit is selected to make an advance move, that advance move does not prevent this unit from"
- },
- {
   "why": "a keyword edit that is neither add nor swap",
   "pack": "dark-angels",
   "subject": "Keywords Section",
   "directive": "Change to 'OUTRIDER SQUAD units from your army gain the",
   "category": "COMPANY OF HUNTERS DETACHMENT",
   "text": "'OUTRIDER SQUAD units from your army gain the BATTLELINE keyword.’"
- },
- {
-  "why": "detachment has no rule to correct",
-  "pack": "dark-angels",
-  "subject": "Vowed Target Detachment Rule",
-  "directive": "Change to:",
-  "category": "INNER CIRCLE TASK FORCE DETACHMENT",
-  "text": "‘At the start of your Movement phase, select one of the following: ▪ Defensive \u0007 Footing: Select one objective you control. Until the start of your next Movement phase, that objective is your Vowed objective. ▪ Aggressive \u0007 Push: Select one or more objective you do not control. Until the start of your next Movement phase, each of those objectives is one of your Vowed objectives. If a rule refers t"
- },
- {
-  "why": "detachment has no rule to correct",
-  "pack": "dark-angels",
-  "subject": "Grim Resolve Detachment Rule",
-  "directive": "Change to:",
-  "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-  "text": "‘While an ADEPTUS ASTARTES unit from your army is Battle-shocked, change the Objective Control characteristic of models in that unit to 1 instead of '-'. In your Command phase, you can select one ADEPTUS ASTARTES unit from your army. Until the start of your next Command phase, add 1 to the Objective Control characteristic of models in that unit.’"
  },
  {
   "why": "no ability of that name",
@@ -392,7 +344,7 @@
   "text": "Add 'FRAME'."
  },
  {
-  "why": "no ability of that name",
+  "why": "no datasheet profile to change",
   "pack": "death-guard",
   "subject": "Chaos Predator Destructor, Predator Autocannon",
   "directive": "Change Strength to ‘9’.",
@@ -449,30 +401,6 @@
  },
  {
   "why": "no ability of that name",
-  "pack": "emperors-children",
-  "subject": "Flawless Blades, Melee Weapons, Blissblade",
-  "directive": "Change A to '4'.",
-  "category": "DATASHEETS",
-  "text": "Change A to '4'."
- },
- {
-  "why": "no ability of that name",
-  "pack": "emperors-children",
-  "subject": "Infractors, Melee Weapons, Power Sword",
-  "directive": "Change Strength characteristic to ‘5’.",
-  "category": "DATASHEETS",
-  "text": "Change Strength characteristic to ‘5’."
- },
- {
-  "why": "no ability of that name",
-  "pack": "emperors-children",
-  "subject": "Tormentors, Melee Weapons, Power Sword",
-  "directive": "Change Strength characteristic to ‘5’.",
-  "category": "DATASHEETS",
-  "text": "Change Strength characteristic to ‘5’."
- },
- {
-  "why": "no ability of that name",
   "pack": "imperial-knights",
   "subject": "Code Chivalric, ‘We pledge to reap a great tally’ Deed",
   "directive": "Change to:",
@@ -496,7 +424,7 @@
   "text": "‘While this model has 1‑10 wounds remaining, subtract 5 from this model’s Objective Control characteristic and each time this model makes an attack, subtract 1 from the Hit roll.’ Canis Rex, Knight Castellan, Knight Crusader, Knight Defender, Knight Errant, Knight Gallant, Knight Paladin, Knight Preceptor, Knight"
  },
  {
-  "why": "no ability of that name",
+  "why": "no datasheet profile to change",
   "pack": "imperial-knights",
   "subject": "Valiant, Knight Warden – Profiles",
   "directive": "Change OC characteristic to ‘10’.",
@@ -528,7 +456,7 @@
   "text": "‘While a friendly NECRONS unit is within 3\" of this model, each time that unit’s Reanimation Protocols activate, that unit heals an additional D3 wounds.’ Catacomb Command Barge ▪ Keywords Section: Add ‘NOBLE’. ▪ Ressurection \u0007 Orb Ability: Change to: ‘(Once per battle, per unit) At the end of any phase, you can use this ability. If you do, select up to one friendly NECRONS INFANTRY/NECRONS MOUNTE"
  },
  {
-  "why": "no ability of that name",
+  "why": "no datasheet profile to change",
   "pack": "necrons",
   "subject": "Doom Scythe, Profile",
   "directive": "Change M and OC to '-'.",
@@ -720,7 +648,7 @@
   "text": "‘TARGET: One friendly ADEPTUS ASTARTES INFANTRY unit within 12\" of that enemy unit.’ DATASHEETS Drop Pod, Gladiator Lancer, Gladiator Reaper, Gladiator Valiant, Hammerfall Bunker, Impulsor, Invader ATV, Land Raider, Land Raider Crusader, Land Raider Redeemer, Predator Annihilator, Predator Destructor, Razorback, Repulsor, Repulsor Executioner, Rhino, Storm Speeder Hailstrike, Storm Speeder Hammers"
  },
  {
-  "why": "no ability of that name",
+  "why": "no datasheet profile to change",
   "pack": "space-marines",
   "subject": "Squad, Scout Squad – Combat Knife weapon",
   "directive": "Change AP to '-1'.",
@@ -728,7 +656,7 @@
   "text": "Change AP to '-1'."
  },
  {
-  "why": "no ability of that name",
+  "why": "no datasheet profile to change",
   "pack": "space-marines",
   "subject": "Combi-weapon – Paired Combat Blades weapon",
   "directive": "Change AP to '-1'.",
@@ -824,7 +752,7 @@
   "text": "Add new ‘Inspiring Commander’ section: ‘If you include this model in your army, until the end of the battle, non- CHARACTER models in ASSAULT INTERCESSORS WITH JUMP PACKS units from your army have an Objective Control characteristic of 2 while they are not Battle-shocked.’ Kor’sarro Khan ▪ \u0007\u0007Add new ‘Inspiring Commander’ section: ‘If you include this model in your army, until the end of the battle"
  },
  {
-  "why": "no ability of that name",
+  "why": "no datasheet profile to change",
   "pack": "space-marines",
   "subject": "Lieutenant in Reiver Armour, master-crafted special issue bolt pistol",
   "directive": "Change AP to ‘-1’.",
@@ -878,14 +806,6 @@
   "directive": "Change to:",
   "category": "STORMLANCE TASK FORCE DETACHMENT",
   "text": "‘This model has a transport capacity of 7 ADEPTUS ASTARTES INFANTRYmodels. Each JUMP PACK, WULFEN, GRAVIS or TERMINATOR model takes up the space of 2 models and each CENTURION model takes up the space of 3 models.’ Roboute Guilliman ▪ Keywords – Add ‘MOBILE’. ▪ \u0007Author of the Codex Ability – Change to: ‘At the Start of your Command phase, select two Author of the Codex abilities (see left). Until "
- },
- {
-  "why": "no enhancement of that name",
-  "pack": "tau-empire",
-  "subject": "Through Unity, Devastation Enhancement",
-  "directive": "Change to:",
-  "category": "KAUYON DETACHMENT",
-  "text": "‘T’AU EMPIRE model only (excluding KROOT SHAPER models). While the bearer is leading a unit, each time that unit is an Observer unit, until the end of the phase, ranged weapons equipped by models in a Guided unit have the [LETHAL HITS] ability while targeting their Spotted unit.’"
  },
  {
   "why": "no ability of that name",
@@ -962,21 +882,13 @@
  {
   "why": "no ability of that name",
   "pack": "thousand-sons",
-  "subject": "Chaos Vindicator, Profile",
-  "directive": "Change M to 9\".",
-  "category": "DATASHEETS",
-  "text": "Change M to 9\"."
- },
- {
-  "why": "no ability of that name",
-  "pack": "thousand-sons",
   "subject": "Daemon Prince of Tzeentch with Wings, Aetherstride Ability",
   "directive": "Change to:",
   "category": "DATASHEETS",
   "text": "‘In your Movement phase, when this model is set up on the battlefield using the Deep Strike ability, it can perform an aetherstride. If it does: ▪ \u0007It can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units. ▪ \u0007Until the end of the turn, its Dark Blessing has the [SUSTAINED HITS D3] ability. ▪ \u0007Until the end of the turn, it is not eligible to declare a"
  },
  {
-  "why": "no ability of that name",
+  "why": "no datasheet profile to change",
   "pack": "thousand-sons",
   "subject": "Flamers, Profile",
   "directive": "Change Ld to 7+.",
@@ -1016,7 +928,7 @@
   "text": "‘While a friendly THOUSAND SONS PSYKER model is within 6\" of this model, each time that model Channels the Warp (pg 67), add 1 to the Psychic test result. This is not cumulative with any other modifiers to the Psychic test result. Lord of Change, Ranged Weapons ▪ \u0007Change the Bolt of Change profiles to: Bolt of Change - Witchfire [PSYCHIC] RANGE A BS S AP D 18\" 9 2+ 9 -1 1 Bolt of Change - Focused "
  },
  {
-  "why": "no ability of that name",
+  "why": "no datasheet profile to change",
   "pack": "thousand-sons",
   "subject": "Screamers, Profile",
   "directive": "Change Ld to 7+.",
@@ -1040,36 +952,12 @@
   "text": "TYRANIDS model only. While the bearer is within 6\" of one or more friendly HARVESTER units, when you target this unit with the Heroic Intervention stratagem, that use is -1 CP. In addition, while the bearer is within 6\" of one or more friendly HARVESTER units, models in the bearer's unit have the Fights First ability. designed to improve the gaming experience for all players. highlighted in red."
  },
  {
-  "why": "no detachment heading to scope it",
-  "pack": "tyranids",
-  "subject": "Chameleonic Enhancement",
-  "directive": "Change to:",
-  "category": "VANGUARD ONLSAUGHT DETACHMENT",
-  "text": "‘VANGUARD INVADER model only. This unit has Stealth.’"
- },
- {
   "why": "no ability of that name",
   "pack": "world-eaters",
   "subject": "Blessings of Khorne, Unbridled Bloodlust",
   "directive": "Change to:",
   "category": "ARMY RULES",
   "text": "'This unit has +1 to charge rolls.'"
- },
- {
-  "why": "no detachment heading to scope it",
-  "pack": "world-eaters",
-  "subject": "Warp Stalkers Stratagem, Effect section",
-  "directive": "Change to:",
-  "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
-  "text": "‘Until the end of the phase, each time a model in your unit makes a Normal, Advance, Fall Back or Charge move, it can move through enemy models (excluding MONSTERS and VEHICLES). When doing so, it can move within Engagement Range of such models but, unless that move was a Charge move, it cannot end that move within Engagement Range of them, and any Desperate Escape test is automatically passed."
- },
- {
-  "why": "no detachment heading to scope it",
-  "pack": "world-eaters",
-  "subject": "Rapid Manifestation Stratagem",
-  "directive": "Change 3\" to 6\".",
-  "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
-  "text": "Change 3\" to 6\"."
  },
  {
   "why": "no detachment heading to scope it",
@@ -1102,13 +990,5 @@
   "directive": "Change to:",
   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
   "text": "'In the Charge phase, when this unit declares a charge: ▪ \u0007If an enemy unit below starting strength is within 9\" of this unit, this unit has +1 to charge rolls. ▪ \u0007Or: If an enemy unit below half strength is within 9\" of this unit, this unit has +2 to charge rolls.'"
- },
- {
-  "why": "no ability of that name",
-  "pack": "world-eaters",
-  "subject": "Slaughterbound, Melee Weapons,Lacerator and Daemonic Claw",
-  "directive": "Change S to '10'.",
-  "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
-  "text": "Change S to '10'."
  }
 ]

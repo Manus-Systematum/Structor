@@ -8517,6 +8517,45 @@
    "key": "ability_id"
   },
   {
+   "faction": "aeldari",
+   "file": "weapons",
+   "op": "set",
+   "id": "demiklaives",
+   "values": {
+    "profiles": [
+     {
+      "name": "Dual blades",
+      "range": "Melee",
+      "stats": {
+       "A": 6,
+       "S": 4,
+       "AP": "-2",
+       "D": 1,
+       "WS": 3
+      },
+      "keywords": [
+       {
+        "keyword_id": "twin-linked"
+       }
+      ]
+     },
+     {
+      "name": "Single blade",
+      "range": "Melee",
+      "stats": {
+       "A": 3,
+       "S": 4,
+       "AP": "-2",
+       "D": 2,
+       "WS": 3
+      },
+      "keywords": []
+     }
+    ]
+   },
+   "note": "aeldari pack rules update"
+  },
+  {
    "faction": "astra-militarum",
    "file": "stratagems",
    "op": "set",
@@ -8752,6 +8791,29 @@
   },
   {
    "faction": "chaos-space-marines",
+   "file": "weapons",
+   "op": "set",
+   "id": "armoured-tracks",
+   "values": {
+    "profiles": [
+     {
+      "name": "Armoured tracks",
+      "range": "Melee",
+      "stats": {
+       "A": 6,
+       "S": 8,
+       "AP": 0,
+       "D": 1,
+       "WS": "4+"
+      },
+      "keywords": []
+     }
+    ]
+   },
+   "note": "chaos-space-marines pack rules update"
+  },
+  {
+   "faction": "chaos-space-marines",
    "file": "abilities",
    "op": "set",
    "id": "warp-rift-firepower",
@@ -8787,6 +8849,17 @@
    "faction": "dark-angels",
    "file": "abilities",
    "op": "set",
+   "id": "masters-of-manoeuvre",
+   "values": {
+    "description": "Friendly ADEPTUS ASTARTES have:\n- This unit’s ranged attacks have [ASSAULT].\n- \u0007When this unit is selected to make a fall‑back move, that fall‑back move does not prevent this unit from being eligible to shoot. Friendly ADEPTUS ASTARTES MOUNTED have:\n- This unit’s ranged attacks have [ASSAULT].\n- \u0007When this unit is selected to make an advance move, that advance move does not prevent this unit from being eligible to declare a charge.\n- \u0007When this unit is selected to make a fall‑back move, that fall‑back move does not prevent this unit from being eligible to shoot and eligible to declare a charge."
+   },
+   "note": "dark-angels pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "abilities",
+   "op": "set",
    "id": "mounted-strategist",
    "values": {
     "description": "RAVENWING model only. You can re-roll Advance and Charge rolls made for the bearer’s unit."
@@ -8813,6 +8886,28 @@
     "text": "**WHEN:** Fight phase, when a friendly ADEPTUS ASTARTES unit is selected to fight. \n\n**TARGET:** That ADEPTUS ASTARTES unit. \n\n**EFFECT:** Your unit’s melee attacks have [LANCE].’ designed to improve the gaming experience for all players. highlighted in red."
    },
    "note": "dark-angels pack rules update"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "abilities",
+   "op": "set",
+   "id": "vowed-target",
+   "values": {
+    "description": "At the start of your Movement phase, select one of the following:\n- Defensive \u0007 Footing: Select one objective you control. Until the start of your next Movement phase, that objective is your Vowed objective.\n- Aggressive \u0007 Push: Select one or more objective you do not control. Until the start of your next Movement phase, each of those objectives is one of your Vowed objectives. If a rule refers to a unit or model being within range of your Vowed objective, that rule takes effect if that unit or model is within range of one or more of your Vowed objectives. Each time a DEATHWING INFANTRY unit from your army makes an attack that targets a unit within range of one or more of your Vowed objectives, add 1 to the Wound roll."
+   },
+   "note": "dark-angels pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "abilities",
+   "op": "set",
+   "id": "grim-resolve",
+   "values": {
+    "description": "While an ADEPTUS ASTARTES unit from your army is Battle-shocked, change the Objective Control characteristic of models in that unit to 1 instead of '-'. In your Command phase, you can select one ADEPTUS ASTARTES unit from your army. Until the start of your next Command phase, add 1 to the Objective Control characteristic of models in that unit."
+   },
+   "note": "dark-angels pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "dark-angels",
@@ -9091,6 +9186,75 @@
    },
    "note": "emperors-children pack rules update",
    "key": "ability_id"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "weapons",
+   "op": "set",
+   "id": "blissblade",
+   "values": {
+    "profiles": [
+     {
+      "name": "Blissblade",
+      "range": "Melee",
+      "stats": {
+       "A": "4",
+       "S": 6,
+       "AP": -3,
+       "D": 2,
+       "WS": 2
+      },
+      "keywords": []
+     }
+    ]
+   },
+   "note": "emperors-children pack rules update"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "weapons",
+   "op": "set",
+   "id": "power-sword",
+   "values": {
+    "profiles": [
+     {
+      "name": "Power sword",
+      "range": "Melee",
+      "stats": {
+       "A": 6,
+       "S": "5",
+       "AP": -2,
+       "D": 1,
+       "WS": 2
+      },
+      "keywords": []
+     }
+    ]
+   },
+   "note": "emperors-children pack rules update"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "weapons",
+   "op": "set",
+   "id": "power-sword",
+   "values": {
+    "profiles": [
+     {
+      "name": "Power sword",
+      "range": "Melee",
+      "stats": {
+       "A": 6,
+       "S": "5",
+       "AP": -2,
+       "D": 1,
+       "WS": 2
+      },
+      "keywords": []
+     }
+    ]
+   },
+   "note": "emperors-children pack rules update"
   },
   {
    "faction": "imperial-knights",
@@ -9759,6 +9923,17 @@
   },
   {
    "faction": "tau-empire",
+   "file": "abilities",
+   "op": "set",
+   "id": "through-unity-devastation",
+   "values": {
+    "description": "T’AU EMPIRE model only (excluding KROOT SHAPER models). While the bearer is leading a unit, each time that unit is an Observer unit, until the end of the phase, ranged weapons equipped by models in a Guided unit have the [LETHAL HITS] ability while targeting their Spotted unit."
+   },
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "tau-empire",
    "file": "stratagems",
    "op": "set",
    "id": "photon-grenades-kauyon",
@@ -9962,12 +10137,33 @@
    "faction": "thousand-sons",
    "file": "abilities",
    "op": "set",
-   "id": "warpfire-infusion",
+   "id": "warpmeld-sacrifice",
    "values": {
     "description": "Each time an enemy unit is selected to shoot or fight and one or more TZEENTCH MUTANT INFANTRY or TZEENTCH MUTANT MOUNTED units from your army are selected as a target of one or more of those attacks, each of those TZEENTCH MUTANT units can make a Warpmeld Sacrifice. If it does, until the end of the phase, each time an attack targets that unit, subtract 1 from the Wound roll. At the end of the phase, that TZEENTCH MUTANT unit suffers D3 mortal wounds. Each time a TZEENTCH MUTANT INFANTRY or TZEENTCH MUTANT MOUNTED unit from your army is selected to shoot or fight, before selecting its targets, that unit can make a Warpmeld Sacrifice. If it does, until the end of the phase, each time a model in that unit makes an attack, add 1 to the Wound roll. At the end of the phase, that TZEENTCH MUTANT unit suffers D3 mortal wounds."
    },
    "note": "thousand-sons pack rules update",
    "key": "ability_id"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "units",
+   "op": "set",
+   "id": "chaos-vindicator",
+   "values": {
+    "profiles": [
+     {
+      "name": "Chaos Vindicator",
+      "M": "9",
+      "T": "11",
+      "W": "11",
+      "Sv": "2+",
+      "invuln_sv": null,
+      "Ld": "6+",
+      "OC": "3"
+     }
+    ]
+   },
+   "note": "thousand-sons pack rules update"
   },
   {
    "faction": "thousand-sons",
@@ -10088,6 +10284,17 @@
    "note": "tyranids pack rules update"
   },
   {
+   "faction": "tyranids",
+   "file": "abilities",
+   "op": "set",
+   "id": "chameleonic",
+   "values": {
+    "description": "VANGUARD INVADER model only. This unit has Stealth."
+   },
+   "note": "tyranids pack rules update",
+   "key": "ability_id"
+  },
+  {
    "faction": "world-eaters",
    "file": "stratagems",
    "op": "set",
@@ -10136,6 +10343,16 @@
    "id": "summoned-by-slaughter-khorne-daemonkin",
    "values": {
     "text": "**WHEN:** Any phase, when the last model in a unit is destroyed, before removing it from play. (If that unit is a TRANSPORT, any units embarked within that TRANSPORT model must disembark first). \n\n**TARGET:** One BLOODLETTERS unit from your army that is in Reserves. \n\n**EFFECT:** Set your unit up anywhere on the battlefield wholly within 9\" of that destroyed model and more than 6\" horizontally away from all enemy units, then remove the destroyed model from play. \n\n**RESTRICTIONS:** You cannot use this Stratagem more than once per battle round. EATERS designed to improve the gaming experience for all players. highlighted in red."
+   },
+   "note": "world-eaters pack rules update"
+  },
+  {
+   "faction": "world-eaters",
+   "file": "stratagems",
+   "op": "set",
+   "id": "warp-stalkers-possessed-slaughterband",
+   "values": {
+    "text": "**WHEN:** Your Movement phase or your Charge phase.\n\n**TARGET:** One World Eaters Possessed unit from your army that has not been selected to move or declare a charge this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a Normal, Advance, Fall Back or Charge move, it can move through enemy models (excluding MONSTERS and VEHICLES). When doing so, it can move within Engagement Range of such models but, unless that move was a Charge move, it cannot end that move within Engagement Range of them, and any Desperate Escape test is automatically passed."
    },
    "note": "world-eaters pack rules update"
   },
@@ -10193,6 +10410,29 @@
    },
    "note": "world-eaters pack rules update",
    "key": "ability_id"
+  },
+  {
+   "faction": "world-eaters",
+   "file": "weapons",
+   "op": "set",
+   "id": "lacerator-and-daemonic-claw",
+   "values": {
+    "profiles": [
+     {
+      "name": "Lacerator and daemonic claw",
+      "range": "Melee",
+      "stats": {
+       "A": 6,
+       "S": "10",
+       "AP": -2,
+       "D": 2,
+       "WS": 2
+      },
+      "keywords": []
+     }
+    ]
+   },
+   "note": "world-eaters pack rules update"
   }
  ]
 }

@@ -195,9 +195,29 @@ MEASURE = re.compile(r'^Change\s+(?P<from>\d+(?:\.\d+)?["”″])\s+to\s+'
                      r'(?P<to>\d+(?:\.\d+)?["”″])\.?$', re.I)
 
 # `Add 'FRAME'.` and `Remove 'Leader', add 'Support'.`
-ADD_ONE = re.compile(r"^Add\s+['‘\"](?P<what>[^'’\"]+)['’\"]\.?$", re.I)
+ADD_ONE = re.compile(
+    r"^Add\s+(?:the\s+)?['‘\"](?P<what>[^'’\"]+)['’\"](?:\s+keyword)?\.?$", re.I)
 SWAP = re.compile(r"^Remove\s+['‘\"](?P<out>[^'’\"]+)['’\"],\s*add\s+"
                   r"['‘\"](?P<in>[^'’\"]+)['’\"]\.?$", re.I)
+
+
+STATLINE = re.compile(
+    r"^Change\s+(?P<fields>[A-Za-z ]{1,26}?)"
+    r"(?:\s+characteristics?)?\s+to\s+['‘\"]?(?P<value>[^'’\".]+)['’\"]?\.?$",
+    re.I)
+
+# What the packs call a characteristic, and what the profile record calls it.
+STAT_FIELDS = {
+    'm': 'M', 'move': 'M', 't': 'T', 'toughness': 'T', 'sv': 'Sv',
+    'save': 'Sv', 'w': 'W', 'wounds': 'W', 'ld': 'Ld', 'leadership': 'Ld',
+    'oc': 'OC',
+}
+
+# A weapon's profile keys the same characteristics under different names.
+WEAPON_FIELDS = {
+    'a': 'A', 'attacks': 'A', 'bs': 'BS', 'ws': 'WS', 's': 'S',
+    'strength': 'S', 'ap': 'AP', 'd': 'D', 'damage': 'D',
+}
 
 
 def replace_named_block(text, heading, replacement):
@@ -379,10 +399,29 @@ def rules_update_ops(packs_to_factions):
                 key(category[:-len('DETACHMENT')].strip())
                 if (category or '').endswith('DETACHMENT') else '')
             if detachment is None:
+                # A heading that names no detachment is not fatal when the
+                # name is unique in the faction anyway.
+                pool = {'stratagem': stratagems, 'enhancement': enhancements}
+                everywhere = [r for by_det in pool.get(kind, {}).values()
+                              for k2, r in by_det.items() if k2 == name]
+                if len(everywhere) == 1:
+                    one = everywhere[0]
+                    if kind == 'stratagem':
+                        return ('stratagems', one['id'], 'id', 'text',
+                                one), None
+                    if one.get('ability_id'):
+                        return ('abilities', one['ability_id'], 'ability_id',
+                                'description',
+                                by_ability_id.get(one['ability_id'], {})), None
                 return None, 'no detachment heading to scope it'
 
             if kind == 'enhancement':
                 found = enhancements[detachment['id']].get(name)
+                if not found and owner:
+                    # `Through Unity, Devastation Enhancement` is one name with
+                    # a comma in it, not an owner and a name.
+                    found = enhancements[detachment['id']].get(
+                        key(f'{owner}, {parsed.group("name")}'))
                 if not found or not found.get('ability_id'):
                     return None, 'no enhancement of that name'
                 a = by_ability_id.get(found['ability_id'], {})
@@ -395,6 +434,13 @@ def rules_update_ops(packs_to_factions):
                 return ('stratagems', found['id'], 'id', 'text', found), None
 
             rule = detachment.get('detachment_rule_id')
+            if not rule or name not in ('', key('detachment rule')):
+                # `Masters of Manoeuvre Detachment Rule` names the rule itself,
+                # and one heading can carry several.
+                named = abilities.get(name, [])
+                if len(named) == 1:
+                    return ('abilities', named[0]['ability_id'], 'ability_id',
+                            'description', named[0]), None
             if not rule:
                 return None, 'detachment has no rule to correct'
             return ('abilities', rule, 'ability_id', 'description',
@@ -479,6 +525,79 @@ def rules_update_ops(packs_to_factions):
             # `Photon Grenades Stratagem, When Section` names a stratagem and
             # a part of it. The part is held aside so what is left still ends
             # with the kind of thing it is, which is what resolution matches.
+            # --- a characteristic on a datasheet's profile -------------------
+            stat = STATLINE.match(directive)
+            if stat and not directive.endswith(':'):
+                asked = [f.strip().lower()
+                         for f in re.split(r'\band\b|,', stat.group('fields'))]
+                # `Archaeopter Fusilave, Archaeopter Stratoraptor – Profiles`
+                # names datasheets; `Ynnari Incubi, Melee Weapons, Demiklaives`
+                # names a weapon on one. The word `Weapons` is what separates
+                # the two, and the weapon is whatever follows it.
+                trimmed = re.sub(r'[,\-–—]\s*profiles?\s*$', '', base, flags=re.I)
+                weapon_at = re.search(r'\b(?:melee|ranged)\s+weapons\s*,\s*(.+)$',
+                                      trimmed, re.I)
+                if weapon_at:
+                    fields = [WEAPON_FIELDS.get(a) for a in asked]
+                    fields = [f for f in fields if f]
+                    want = key(re.sub(r'\s*\(.*$', '', weapon_at.group(1)))
+                    weapon = next((w for w in bundle.get('weapons', [])
+                                   if key(w['name']) == want), None)
+                    if weapon and fields:
+                        profiles = [dict(pr) for pr in weapon.get('profiles', [])]
+                        changed = False
+                        for pr in profiles:
+                            stats = dict(pr.get('stats') or {})
+                            for f in fields:
+                                if f in stats:
+                                    stats[f] = stat.group('value').strip()
+                                    changed = True
+                            pr['stats'] = stats
+                        if changed:
+                            ops.append({'faction': faction, 'file': 'weapons',
+                                        'op': 'set', 'id': weapon['id'],
+                                        'values': {'profiles': profiles},
+                                        'note': note})
+                            continue
+                    skipped['no weapon profile to change'] += 1
+                    refused.append({'why': 'no weapon profile to change',
+                                    'pack': pack, 'subject': subject,
+                                    'directive': directive,
+                                    'category': category,
+                                    'text': correction['text'][:400]})
+                    continue
+
+                wanted = [STAT_FIELDS.get(a) for a in asked]
+                wanted = [w for w in wanted if w]
+                names = [key(n) for n in re.split(r',|\band\b|[\-–—]', trimmed)]
+                touched = 0
+                for n in names:
+                    unit = units_by_name.get(n.strip())
+                    if not unit or not wanted:
+                        continue
+                    profiles = unit.get('profiles') or []
+                    if not profiles:
+                        continue
+                    updated = [dict(pr) for pr in profiles]
+                    for pr in updated:
+                        for w in wanted:
+                            if w in pr:
+                                pr[w] = stat.group('value').strip()
+                    if updated != profiles:
+                        touched += 1
+                        ops.append({'faction': faction, 'file': 'units',
+                                    'op': 'set', 'id': unit['id'],
+                                    'values': {'profiles': updated},
+                                    'note': note})
+                if touched:
+                    continue
+                skipped['no datasheet profile to change'] += 1
+                refused.append({'why': 'no datasheet profile to change',
+                                'pack': pack, 'subject': subject,
+                                'directive': directive, 'category': category,
+                                'text': correction['text'][:400]})
+                continue
+
             # A subject that is nothing but a section name — `Taking Cover
             # Section` — belongs to the rule the heading above it names. The
             # section then identifies a shouted block inside that rule's
