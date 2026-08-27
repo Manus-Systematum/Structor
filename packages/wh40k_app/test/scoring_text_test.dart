@@ -131,9 +131,11 @@ void main() {
       expect(scored, [4]);
     });
 
-    testWidgets('an uncapped rate keeps its single button', (tester) async {
+    testWidgets('an uncapped rate counts things instead', (tester) async {
       // `3 VP each: for each objective you control` runs as far as the board
-      // allows; there is nothing to enumerate.
+      // allows, so there is nothing to enumerate — the player counts the
+      // objectives and the points follow (§7.3.27).
+      final scored = <int>[];
       final card = cardOf(
         '3 VP each: For each objective you control.',
         [
@@ -142,11 +144,66 @@ void main() {
       );
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: ScoringText(text: card.text, card: card, onScore: (_) {}),
+          body: ScoringText(
+            text: card.text,
+            card: card,
+            headroom: 15,
+            onScore: scored.add,
+          ),
         ),
       ));
-      expect(find.text('Score 3'), findsOneWidget);
-      expect(find.text('Score 6'), findsNothing);
+      expect(find.text('Score…'), findsOneWidget);
+      expect(find.text('Score 3'), findsNothing);
+
+      await tester.tap(find.text('Score…'));
+      await tester.pumpAndSettle();
+      // It counts the things and shows what they come to.
+      expect(find.text('1 × 3 VP'), findsOneWidget);
+      expect(find.textContaining('Up to 15 more'), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pumpAndSettle();
+      expect(find.text('2 × 3 VP'), findsOneWidget);
+
+      await tester.tap(find.text('Score 6'));
+      await tester.pumpAndSettle();
+      expect(scored, [6]);
+    });
+
+    testWidgets('the counter will not score past the round cap',
+        (tester) async {
+      // Fifteen a round means the fifth objective at 3VP each is worth
+      // nothing, and the sheet says so rather than letting the total refuse
+      // to move afterwards.
+      final scored = <int>[];
+      final card = cardOf(
+        '3 VP each: For each objective you control.',
+        [
+          {'vp_per': 3},
+        ],
+      );
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: ScoringText(
+            text: card.text,
+            card: card,
+            headroom: 4,
+            onScore: scored.add,
+          ),
+        ),
+      ));
+      await tester.tap(find.text('Score…'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pumpAndSettle();
+      expect(find.text('2 × 3 VP'), findsOneWidget);
+      expect(find.textContaining('Only 4 left this round, so 6 VP scores 4'),
+          findsOneWidget);
+
+      await tester.tap(find.textContaining('Score 4'));
+      await tester.pumpAndSettle();
+      expect(scored, [4], reason: 'the excess is ignored, not scored');
     });
 
     testWidgets('with no card it behaves as it always did', (tester) async {

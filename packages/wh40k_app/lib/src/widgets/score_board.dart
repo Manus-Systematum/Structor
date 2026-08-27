@@ -235,6 +235,8 @@ class _SideState extends State<_Side> with RemembersToggle<_Side> {
               child: ScoringText(
                 text: widget.card!.text,
                 card: widget.card,
+                headroom: widget.score
+                    .headroom(widget.state.round, primaryKind: true),
                 onScore: (vp) => _score(ScoreKind.primary, vp),
                 style: TextStyle(
                     fontSize: 11.5,

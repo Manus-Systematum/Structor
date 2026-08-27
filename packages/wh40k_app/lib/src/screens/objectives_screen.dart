@@ -419,6 +419,8 @@ class _SideBlock extends StatelessWidget {
               ScoringText(
                 text: mission.text,
                 card: mission,
+                headroom: (side == Player.me ? state.me : state.opponent)
+                    .headroom(state.round, primaryKind: true),
                 onScore: (vp) => onEvent(ScoreVp(
                   side: side,
                   kind: ScoreKind.primary,

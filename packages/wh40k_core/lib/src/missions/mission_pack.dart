@@ -308,6 +308,23 @@ class MissionCard {
   /// Only awards that name **both** a rate and a maximum appear here. An
   /// uncapped `3 VP each` has no ladder — it runs as far as the board allows,
   /// and the stepper stays for those.
+  /// The rate a line pays when it pays *per* something and never stops
+  /// (§7.3.27), or null.
+  ///
+  /// `3 VP each: For each objective you control` has no ceiling of its own —
+  /// only the round's — so there is no short list of totals to offer. The
+  /// figure is the same one [ladderFor] takes, read off the line.
+  int? uncappedRateFor(int rate) {
+    for (final raw in awards) {
+      final award = asMap(raw);
+      final per = asInt(award['vp_per']);
+      if (per != null && per == rate && asInt(award['vp_max']) == null) {
+        return per;
+      }
+    }
+    return null;
+  }
+
   List<int> ladderFor(int rate) {
     for (final raw in awards) {
       final award = asMap(raw);

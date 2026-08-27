@@ -110,6 +110,8 @@ class SecondaryPanel extends StatelessWidget {
                     : null,
                 // A Fixed mission is active all battle and cannot be binned.
                 canDiscard: !state.isFixed,
+                headroom: (side == Player.me ? state.me : state.opponent)
+                    .headroom(state.round, primaryKind: false),
                 note: deck.drawNote(
                   card,
                   round: state.round,
@@ -452,6 +454,9 @@ class _CardTile extends StatelessWidget {
   /// False on Fixed missions: they stay on the table all battle.
   final bool canDiscard;
 
+  /// Points this side can still take from secondaries this round (§7.3.27).
+  final int? headroom;
+
   /// Published questions, so a card that has any can offer them.
   final List<FactionFaq> faqs;
 
@@ -463,6 +468,7 @@ class _CardTile extends StatelessWidget {
     this.onTradeForCp,
     this.onRedraw,
     this.canDiscard = true,
+    this.headroom,
     this.faqs = const [],
   });
 
@@ -507,6 +513,7 @@ class _CardTile extends StatelessWidget {
             child: ScoringText(
               text: card.text,
               card: card,
+              headroom: headroom,
               onScore: onScore,
               style: TextStyle(fontSize: 11.5, color: scheme.onSurfaceVariant),
             ),

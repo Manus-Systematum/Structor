@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import 'rule_text.dart';
+import 'score_counter.dart';
 
 /// A mission card's text, with each payout's button on the line that earns it.
 ///
@@ -25,6 +26,11 @@ class ScoringText extends StatelessWidget {
   /// card, which is every review of a past turn.
   final MissionCard? card;
 
+  /// Points this source can still score this round, or null when uncapped.
+  /// Only used by the counter (§7.3.27), which is the one place the app can
+  /// see the rate and the headroom together.
+  final int? headroom;
+
   /// Null on a card nobody can score right now: the opponent's card while
   /// their tier is closed, or a review of a turn already played.
   final void Function(int vp)? onScore;
@@ -36,6 +42,7 @@ class ScoringText extends StatelessWidget {
     required this.text,
     required this.onScore,
     this.card,
+    this.headroom,
     this.style,
   });
 
@@ -76,6 +83,11 @@ class ScoringText extends StatelessWidget {
                 ladder: payoutOf(line) == null
                     ? const []
                     : card?.ladderFor(payoutOf(line)!) ?? const [],
+                rate: payoutOf(line) == null
+                    ? null
+                    : card?.uncappedRateFor(payoutOf(line)!),
+                cardName: card?.name ?? '',
+                headroom: headroom,
                 onScore: onScore,
                 style: style,
               ),
@@ -93,6 +105,14 @@ class _Line extends StatelessWidget {
   /// Empty for a flat payout and for an uncapped rate.
   final List<int> ladder;
 
+  /// Points per thing, when the line pays a rate that never stops.
+  final int? rate;
+
+  final String cardName;
+
+  /// Points still available this round.
+  final int? headroom;
+
   final void Function(int vp)? onScore;
   final TextStyle? style;
 
@@ -102,7 +122,26 @@ class _Line extends StatelessWidget {
     required this.onScore,
     required this.style,
     this.ladder = const [],
+    this.rate,
+    this.cardName = '',
+    this.headroom,
   });
+
+  /// Counting the things, because the total cannot be listed (§7.3.27).
+  Future<void> _count(BuildContext context) async {
+    final vp = await showModalBottomSheet<int>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (context) => ScoreCounterSheet(
+        cardName: cardName,
+        line: line,
+        rate: rate!,
+        headroom: headroom,
+      ),
+    );
+    if (vp != null && vp > 0) onScore!(vp);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +158,20 @@ class _Line extends StatelessWidget {
     // (§7.3.27) — `2 VP for each kill, up to 5` is 2, 4 or 5 and never 6, and
     // working that out is arithmetic the card leaves to a player with a clock
     // running.
+    // A rate with no ceiling of its own cannot be listed, so it opens a
+    // counter instead: the player knows how many objectives they hold, not
+    // what that comes to against a cap.
+    if (ladder.isEmpty && rate != null) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(child: RuleText(line, style: style)),
+          const SizedBox(width: 8),
+          _ScoreButton(vp: null, onTap: () => _count(context)),
+        ],
+      );
+    }
+
     final figures = ladder.isEmpty ? [vp!] : ladder;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,7 +192,8 @@ class _Line extends StatelessWidget {
 }
 
 class _ScoreButton extends StatelessWidget {
-  final int vp;
+  /// Null where the figure is not knowable until the player counts.
+  final int? vp;
   final VoidCallback onTap;
 
   const _ScoreButton({required this.vp, required this.onTap});
@@ -156,7 +210,7 @@ class _ScoreButton extends StatelessWidget {
           color: scheme.primaryContainer,
           borderRadius: BorderRadius.circular(7),
         ),
-        child: Text('Score $vp',
+        child: Text(vp == null ? 'Score…' : 'Score $vp',
             style: TextStyle(
               fontSize: 11.5,
               fontWeight: FontWeight.w700,

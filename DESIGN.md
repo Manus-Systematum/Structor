@@ -1952,10 +1952,27 @@ Grievous Blow reach their cap in one.
 `vp_max`, which is why `ScoringText` now takes the card as well as its text:
 the line says *2 VP: For each…* and nothing in it says where it stops.
 
-**An uncapped rate keeps its single button.** `3 VP each: For each objective
-you control` runs as far as the board allows — there is nothing to enumerate,
-and inventing a ladder for it would be the app guessing at the table. Only an
-award naming both a rate and a maximum gets one.
+**An uncapped rate counts the things instead.** `3 VP each: For each objective
+you control` has no ceiling of its own, so there is no short list to offer.
+`Score…` opens a counter over the **objectives**, not the points: how many a
+player holds is what they know at the table, and the arithmetic follows from
+it. The sheet shows the rate, what the count comes to, and how much the round
+has left.
+
+**The round's cap is enforced there**, because it is the one place the app can
+see the rate and the headroom together. Fifteen a round means the fifth
+objective at 3VP each is worth nothing; the sheet says `Only 4 left this
+round, so 6 VP scores 4` and the button offers the figure that will actually
+land. Counting higher is still allowed — the player may genuinely hold six —
+it just stops adding points, which is what the rules say happens.
+
+Eighteen cards have such an award, fourteen of them primaries: Battlefield
+Dominance, Determined Acquisition, Outmanoeuvre and the rest of the
+objective-holding missions, plus Assassination, Beacon, Bring It Down and A
+Grievous Blow among the secondaries.
+
+**A capped rate keeps its ladder** — three buttons at most, which is quicker
+than a counter for something that can only be 2, 4 or 5.
 
 ### 7.4 Battle state
 
