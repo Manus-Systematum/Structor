@@ -263,8 +263,8 @@ void main() {
       // Not behind a tap: clicking into a unit and back out again for every
       // gun is what the design is against.
       useTallSurface(tester);
-      await tester.pumpWidget(host(TurnScreen(
-          army: army, log: gameAt(1), density: PlayDensity.full)));
+      await tester.pumpWidget(host(
+          TurnScreen(army: army, log: gameAt(1), density: PlayDensity.full)));
 
       expect(find.text('8 atk'), findsWidgets);
       expect(find.text('12 atk'), findsWidgets);
@@ -274,8 +274,8 @@ void main() {
 
     testWidgets('the names density folds the weapons away', (tester) async {
       useTallSurface(tester);
-      await tester.pumpWidget(host(TurnScreen(
-          army: army, log: gameAt(1), density: PlayDensity.names)));
+      await tester.pumpWidget(host(
+          TurnScreen(army: army, log: gameAt(1), density: PlayDensity.names)));
 
       expect(find.text('Fireknife'), findsNWidgets(2),
           reason: 'rule names stay whatever the density');
@@ -285,8 +285,8 @@ void main() {
     testWidgets('guided adds the phase prompts, each rule once',
         (tester) async {
       useTallSurface(tester);
-      await tester.pumpWidget(host(TurnScreen(
-          army: army, log: gameAt(1), density: PlayDensity.guided)));
+      await tester.pumpWidget(host(
+          TurnScreen(army: army, log: gameAt(1), density: PlayDensity.guided)));
 
       expect(find.text('THIS TURN'), findsOneWidget);
       // Four units carry Deep Strike; the prompt says so once rather than

@@ -20,8 +20,7 @@ class MissingRulesNote extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 3),
       child: Text(
-        'No rules text published for this one yet. Read it off the printed '
-        'card.',
+        'No rules text published. Read it off the card.',
         style: TextStyle(
           fontSize: 11,
           height: 1.3,

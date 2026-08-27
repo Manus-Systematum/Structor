@@ -110,8 +110,12 @@ class SecondaryPanel extends StatelessWidget {
                     : null,
                 // A Fixed mission is active all battle and cannot be binned.
                 canDiscard: !state.isFixed,
-                headroom: (side == Player.me ? state.me : state.opponent)
-                    .headroom(state.round, primaryKind: false),
+                scoredThisRound: (side == Player.me ? state.me : state.opponent)
+                        .secondary[state.round] ??
+                    0,
+                roundCap: (side == Player.me ? state.me : state.opponent)
+                    .secondaryCaps
+                    .perRound,
                 note: deck.drawNote(
                   card,
                   round: state.round,
@@ -252,8 +256,7 @@ class _PickSheetState extends State<_PickSheet> {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
               child: Text(
-                'Tap to take a card or put it back. What is selected when you '
-                'close is the hand.',
+                'What is selected when you close is your hand.',
                 style: TextStyle(
                     fontSize: 11.5,
                     height: 1.35,
@@ -426,8 +429,7 @@ class _CardTextProvenance extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 10, 16, 4),
       child: Text(
-        'Card text is transcribed, not summarised, but the printed card is '
-        'what settles a rules dispute.',
+        'Transcribed, not the printed wording.',
         style: TextStyle(fontSize: 10.5, height: 1.35, color: scheme.outline),
       ),
     );
@@ -454,8 +456,10 @@ class _CardTile extends StatelessWidget {
   /// False on Fixed missions: they stay on the table all battle.
   final bool canDiscard;
 
-  /// Points this side can still take from secondaries this round (§7.3.27).
-  final int? headroom;
+  /// What this side has taken from secondaries this round, and the ceiling
+  /// (§7.3.27).
+  final int? scoredThisRound;
+  final int? roundCap;
 
   /// Published questions, so a card that has any can offer them.
   final List<FactionFaq> faqs;
@@ -468,7 +472,8 @@ class _CardTile extends StatelessWidget {
     this.onTradeForCp,
     this.onRedraw,
     this.canDiscard = true,
-    this.headroom,
+    this.scoredThisRound,
+    this.roundCap,
     this.faqs = const [],
   });
 
@@ -513,7 +518,8 @@ class _CardTile extends StatelessWidget {
             child: ScoringText(
               text: card.text,
               card: card,
-              headroom: headroom,
+              scoredThisRound: scoredThisRound,
+              roundCap: roundCap,
               onScore: onScore,
               style: TextStyle(fontSize: 11.5, color: scheme.onSurfaceVariant),
             ),
@@ -571,9 +577,8 @@ class _CardTile extends StatelessWidget {
         title: Text(
             forCp ? 'Discard ${card.name} for 1 CP?' : 'Discard ${card.name}?'),
         content: Text(forCp
-            ? 'The card leaves your hand and you gain 1 command point. One '
-                'card a battle round can be traded this way.'
-            : 'The card leaves your hand. Choose takes it back.'),
+            ? 'Gains 1CP. Once per turn, however many cards go with it.'
+            : 'Leaves your hand.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
@@ -603,10 +608,8 @@ class _CardTile extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Swap ${card.name} for 1 CP?'),
-        content: const Text(
-          'The card is discarded and you spend 1 command point. Draw its '
-          'replacement yourself. This can be done once a battle.',
-        ),
+        content: const Text('Costs 1CP. Once per battle. Draw the '
+            'replacement yourself.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),

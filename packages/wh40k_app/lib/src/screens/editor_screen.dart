@@ -858,8 +858,8 @@ class _DetachmentPicker extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 0, 12, 6),
             child: Text(
-              'A detachment brings the stratagems, enhancements and force '
-              'disposition the rest of the app reads.',
+              'A detachment brings its stratagems, enhancements and force '
+              'disposition.',
               style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant),
             ),
           ),

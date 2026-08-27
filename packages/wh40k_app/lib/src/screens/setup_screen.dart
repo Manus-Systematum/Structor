@@ -268,8 +268,7 @@ class _SetupScreenState extends State<SetupScreen> {
             number: 2,
             title: 'Your declaration',
             subtitle: mine.length > 1
-                ? 'Two detachments means a choice — and it decides which '
-                    'mission you play.'
+                ? 'Your detachments offer more than one disposition.'
                 : 'Your detachments offer one disposition.',
             child: _opponentDisposition == null
                 ? Text('Pick your opponent’s disposition first.',
@@ -364,9 +363,8 @@ class _SetupScreenState extends State<SetupScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 6),
                       child: Text(
-                        'These are Battlemaster’s layouts. 27 of the official '
-                        '45 changed on 26 August 2026 — check the Warhammer '
-                        'Event Companion before an event.',
+                        'Battlemaster layouts. 27 of the official 45 changed '
+                        'on 26 August 2026.',
                         style: TextStyle(
                           fontSize: 11,
                           height: 1.35,
@@ -439,9 +437,8 @@ class _SetupScreenState extends State<SetupScreen> {
                       child: Text(
                         '${table.name} — ${table.sourceLabel} layout, not a '
                         'Games Workshop publication.\n'
-                        'The real parts are L-shaped; upstream publishes each '
-                        'as a bounding box, so the tick marks which way the '
-                        'piece is turned rather than where its walls run.',
+                        'Pieces are drawn as bounding boxes; the tick shows '
+                        'rotation.',
                         style: TextStyle(
                             fontSize: 11, color: scheme.onSurfaceVariant),
                       ),
@@ -798,9 +795,7 @@ class _OfficialLayouts extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(4, 12, 4, 0),
                     child: Text(
-                      'From the Warhammer Event Companion. The app draws its '
-                      'own layouts from Battlemaster\u2019s data; these are '
-                      'the printed pages, for checking one against the other.',
+                      'Warhammer Event Companion, 26 August 2026.',
                       style: TextStyle(
                           fontSize: 10.5, height: 1.35, color: scheme.outline),
                     ),
@@ -845,9 +840,7 @@ class _OneLayout extends StatelessWidget {
               final bytes = snapshot.data;
               if (bytes == null) {
                 return Text(
-                  'Not downloaded. The layout pictures are fetched when the '
-                  'dataset is served from the network, which is not set up '
-                  'yet.',
+                  'Not downloaded.',
                   style: TextStyle(
                       fontSize: 11.5,
                       height: 1.35,

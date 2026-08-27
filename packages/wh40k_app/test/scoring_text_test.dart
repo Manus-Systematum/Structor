@@ -147,7 +147,8 @@ void main() {
           body: ScoringText(
             text: card.text,
             card: card,
-            headroom: 15,
+            scoredThisRound: 0,
+            roundCap: 15,
             onScore: scored.add,
           ),
         ),
@@ -159,7 +160,7 @@ void main() {
       await tester.pumpAndSettle();
       // It counts the things and shows what they come to.
       expect(find.text('1 × 3 VP'), findsOneWidget);
-      expect(find.textContaining('Up to 15 more'), findsOneWidget);
+      expect(find.text('3/15 scored this round'), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.add));
       await tester.pumpAndSettle();
@@ -187,7 +188,8 @@ void main() {
           body: ScoringText(
             text: card.text,
             card: card,
-            headroom: 4,
+            scoredThisRound: 11,
+            roundCap: 15,
             onScore: scored.add,
           ),
         ),
@@ -198,8 +200,9 @@ void main() {
       await tester.tap(find.byIcon(Icons.add));
       await tester.pumpAndSettle();
       expect(find.text('2 × 3 VP'), findsOneWidget);
-      expect(find.textContaining('Only 4 left this round, so 6 VP scores 4'),
-          findsOneWidget);
+      // The state, not a sentence about it: eleven already, four more of the
+      // six the count is worth, and the round is full.
+      expect(find.text('15/15 scored this round'), findsOneWidget);
 
       await tester.tap(find.textContaining('Score 4'));
       await tester.pumpAndSettle();

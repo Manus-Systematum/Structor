@@ -161,8 +161,7 @@ class AppDatabase extends _$AppDatabase {
   Future<int> deleteRoster(String id) =>
       (delete(rosters)..where((r) => r.id.equals(id))).go();
 
-  Future<int> count() async =>
-      (await select(rosters).get()).length;
+  Future<int> count() async => (await select(rosters).get()).length;
 }
 
 /// Opens the on-device database file.

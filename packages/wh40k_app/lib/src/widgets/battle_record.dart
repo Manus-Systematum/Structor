@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
-
 /// What happened, in the order it happened (DESIGN.md §7.3.15).
 ///
 /// The same widget during the battle and after it. Mid-game it answers "what
@@ -78,8 +77,7 @@ class BattleRecord extends StatelessWidget {
   /// the log stays honest, not what happened in the game, and printing them
   /// turns a record into an audit.
   _Line? _line(LogEntry entry) {
-    String unit(String? id) =>
-        id == null ? '' : (unitName?.call(id) ?? id);
+    String unit(String? id) => id == null ? '' : (unitName?.call(id) ?? id);
     String card(String id) => cardName?.call(id) ?? id;
 
     return switch (entry.event) {
@@ -106,7 +104,8 @@ class BattleRecord extends StatelessWidget {
       final UseOncePerBattle e =>
         _Line(text: '${card(e.abilityId)} — ${unit(e.instanceId)}'),
       final SetUnitStatus e => switch (e.status) {
-          UnitStatus.destroyed => _Line(text: '${unit(e.instanceId)} destroyed'),
+          UnitStatus.destroyed =>
+            _Line(text: '${unit(e.instanceId)} destroyed'),
           UnitStatus.reserves =>
             _Line(text: '${unit(e.instanceId)} into reserves'),
           UnitStatus.onBoard => _Line(text: '${unit(e.instanceId)} arrived'),
@@ -164,9 +163,11 @@ class _Round extends StatelessWidget {
                 SizedBox(
                   width: 62,
                   child: Text(
-                    entry.activePlayer == Player.me ? 'your turn' : 'their turn',
-                    style:
-                        TextStyle(fontSize: 9.5, color: scheme.onSurfaceVariant),
+                    entry.activePlayer == Player.me
+                        ? 'your turn'
+                        : 'their turn',
+                    style: TextStyle(
+                        fontSize: 9.5, color: scheme.onSurfaceVariant),
                   ),
                 ),
                 Expanded(

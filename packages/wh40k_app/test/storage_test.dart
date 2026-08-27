@@ -185,8 +185,8 @@ void main() {
 
     test('a battle in progress does not come along', () async {
       await store.save(reference);
-      await store.saveBattle(reference.id,
-          const core.BattleLog().add(const core.SetRound(3)));
+      await store.saveBattle(
+          reference.id, const core.BattleLog().add(const core.SetRound(3)));
 
       final copy = (await store.duplicate(reference.id, name: 'variant'))!;
 

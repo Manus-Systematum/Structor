@@ -65,11 +65,8 @@ class _ImportScreenState extends State<ImportScreen> {
     super.dispose();
   }
 
-  String _nameOf(String id) => _factions
-      .where((f) => f.id == id)
-      .map((f) => f.name)
-      .firstOrNull ??
-      id;
+  String _nameOf(String id) =>
+      _factions.where((f) => f.id == id).map((f) => f.name).firstOrNull ?? id;
 
   Future<void> _run() async {
     setState(() {
@@ -83,8 +80,7 @@ class _ImportScreenState extends State<ImportScreen> {
       final factionId = _chosen ??
           core.matchFactionId(parsed.factionName, [
             for (final f in _factions)
-              core.FactionCandidate(
-                  id: f.id, name: f.name, aliases: f.aliases),
+              core.FactionCandidate(id: f.id, name: f.name, aliases: f.aliases),
           ]);
 
       if (factionId == null) {
@@ -254,8 +250,8 @@ class _Summary extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(army.roster.name,
-                style: const TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.w800)),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
             const SizedBox(height: 6),
             Text(
               '${army.combatUnits.length} units · '
@@ -300,8 +296,10 @@ class _IssueTile extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final (icon, colour) = switch (issue.severity) {
       core.IssueSeverity.error => (Icons.error_outline, scheme.error),
-      core.IssueSeverity.warning =>
-        (Icons.warning_amber_outlined, scheme.tertiary),
+      core.IssueSeverity.warning => (
+          Icons.warning_amber_outlined,
+          scheme.tertiary
+        ),
       core.IssueSeverity.info => (Icons.info_outline, scheme.onSurfaceVariant),
     };
 
@@ -313,8 +311,7 @@ class _IssueTile extends StatelessWidget {
           Icon(icon, size: 15, color: colour),
           const SizedBox(width: 8),
           Expanded(
-            child: Text(issue.message,
-                style: const TextStyle(fontSize: 12)),
+            child: Text(issue.message, style: const TextStyle(fontSize: 12)),
           ),
         ],
       ),

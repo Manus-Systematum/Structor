@@ -111,12 +111,6 @@ class BattlesView extends StatelessWidget {
               const Text('No battle in progress',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
               const SizedBox(height: 4),
-              Text(
-                'Setting up decides which mission you play — and with two '
-                'detachments, that is a choice.',
-                style:
-                    TextStyle(fontSize: 12.5, color: scheme.onSurfaceVariant),
-              ),
               const SizedBox(height: 14),
               FilledButton.icon(
                 onPressed: onStart,
@@ -137,8 +131,7 @@ class BattlesView extends StatelessWidget {
             child: Text(
               'Battles you finish are kept here — the missions, the armies, '
               'the score by round and the table you played on.',
-              style:
-                  TextStyle(fontSize: 12.5, color: scheme.onSurfaceVariant),
+              style: TextStyle(fontSize: 12.5, color: scheme.onSurfaceVariant),
             ),
           )
         else ...[
@@ -243,8 +236,8 @@ class _BattleCard extends StatelessWidget {
                     '${_date(row.finishedAt)} · ${row.rounds} rounds · '
                     '${row.factionId.replaceAll('-', ' ')}',
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 11, color: scheme.onSurfaceVariant),
+                    style:
+                        TextStyle(fontSize: 11, color: scheme.onSurfaceVariant),
                   ),
                 ),
               ],
@@ -307,19 +300,19 @@ class _BattleCard extends StatelessWidget {
                   ),
                 ),
               if (onDelete != null)
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: TextButton.icon(
-                    onPressed: onDelete,
-                    icon: Icon(Icons.delete_outline,
-                        size: 17, color: scheme.error),
-                    label: Text('Delete record',
-                        style: TextStyle(color: scheme.error)),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: TextButton.icon(
+                      onPressed: onDelete,
+                      icon: Icon(Icons.delete_outline,
+                          size: 17, color: scheme.error),
+                      label: Text('Delete record',
+                          style: TextStyle(color: scheme.error)),
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ),
@@ -338,8 +331,18 @@ class _BattleCard extends StatelessWidget {
       '${at.day} ${_months[at.month - 1]} ${at.year}';
 
   static const _months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
 }
 
@@ -498,8 +501,7 @@ class _ScoreTable extends StatelessWidget {
                       width: 74,
                       child: Text('Round $round',
                           style: TextStyle(
-                              fontSize: 11,
-                              color: scheme.onSurfaceVariant)),
+                              fontSize: 11, color: scheme.onSurfaceVariant)),
                     ),
                     cell(value(state.me.primary[round])),
                     cell(value(state.me.secondary[round])),
@@ -514,8 +516,8 @@ class _ScoreTable extends StatelessWidget {
                 const SizedBox(
                   width: 74,
                   child: Text('Total',
-                      style: TextStyle(
-                          fontSize: 11, fontWeight: FontWeight.w700)),
+                      style:
+                          TextStyle(fontSize: 11, fontWeight: FontWeight.w700)),
                 ),
                 cell('${state.me.primaryTotal}', strong: true),
                 cell('${state.me.secondaryTotal}', strong: true),

@@ -73,7 +73,7 @@ void main() {
   testWidgets('before setup it says what it needs', (tester) async {
     tall(tester);
     await tester.pumpWidget(host(const BattleState()));
-    expect(find.textContaining('Set up a battle'), findsOneWidget);
+    expect(find.text('No battle set up.'), findsOneWidget);
   });
 
   testWidgets('it shows the margin, not just two totals', (tester) async {

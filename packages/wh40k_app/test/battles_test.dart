@@ -38,10 +38,8 @@ void main() {
           opponentName: 'Dave',
         )),
         SetRound(3),
-        ScoreVp(
-            side: Player.me, kind: ScoreKind.primary, round: 1, vp: 10),
-        ScoreVp(
-            side: Player.me, kind: ScoreKind.secondary, round: 2, vp: 5),
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 1, vp: 10),
+        ScoreVp(side: Player.me, kind: ScoreKind.secondary, round: 2, vp: 5),
         ScoreVp(
             side: Player.opponent, kind: ScoreKind.primary, round: 1, vp: 8),
       ]);
@@ -116,8 +114,7 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    testWidgets('offers to start one when there is no history',
-        (tester) async {
+    testWidgets('offers to start one when there is no history', (tester) async {
       await pump(tester, const []);
       expect(find.text('Set up battle'), findsOneWidget);
       expect(find.textContaining('Battles you finish are kept here'),

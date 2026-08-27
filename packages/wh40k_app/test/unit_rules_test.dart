@@ -33,8 +33,8 @@ void main() {
 
     // The sheet carries the rule's own text, which the chip never showed.
     // findRichText, because RuleText renders spans rather than a plain Text.
-    expect(find.textContaining('Deep Strike', findRichText: true),
-        findsWidgets);
+    expect(
+        find.textContaining('Deep Strike', findRichText: true), findsWidgets);
     expect(find.byType(Scrollable), findsWidgets);
   });
 

@@ -490,9 +490,7 @@ class _AttachPicker extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
         child: Text(
-          'Nothing in this army may be led by it. The dataset publishes the '
-          'attachment rule, so an absent one is a gap upstream rather than a '
-          'rule against it.',
+          'Nothing in this army may be led by it.',
           style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant),
         ),
       );

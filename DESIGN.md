@@ -82,6 +82,20 @@ that is believed about points, ranges and what a stratagem costs. A sentence
 that is obviously pretending to feel something is the first thing a reader
 catches it lying about, and everything else gets discounted afterwards.
 
+**And prefer the fact to a sentence about the fact.** Added to the shared
+`product-voice` skill on 2026-08-27 so it applies by default: prose that
+narrates a number the reader can be shown is the second layer to remove, after
+the managed feeling. `11/15 scored this round` is the state; *"Only 4 left this
+round, so 6 VP scores 4"* is a paragraph doing arithmetic out loud at someone
+who can see both numbers.
+
+The same rule struck the screens' explanations of themselves — how to read the
+map, what an empty list will eventually hold, why a control looks as it does —
+and left the rules they carried stated once and stopped. **Where the app is
+quoting somebody else it changes nothing**: card text, ability descriptions and
+the packs' FAQs are reproduced as published, and only a data correction alters
+them.
+
 Pairs from this app's own strings:
 
 | Not | But |
@@ -91,6 +105,11 @@ Pairs from this app's own strings:
 | "Don't worry, deleting this won't affect anything else." | "The list is removed. Finished battles keep their own record." |
 | "No armies yet — let's build your first one!" | "No armies yet." + what the two buttons do |
 | "Great, that's a legal list!" | *(nothing — the findings panel is empty)* |
+| "Only 4 left this round, so 6 VP scores 4." | "11/15 scored this round" |
+| "Pinch to zoom — the numbers stay their own size, so crowded ones come apart." | *(nothing — the control works)* |
+| "Battles you finish are kept here — the missions, the armies, the score by round…" | "No finished battles." |
+| "The card leaves your hand and you gain 1 command point. One card a battle round can be traded this way." | "Gains 1CP. Once per turn, however many cards go with it." |
+| "Nothing in this army may be led by it. The dataset publishes the attachment rule, so an absent one is a gap upstream." | "Nothing in this army may be led by it." |
 
 This is decided here rather than at review because the register arrives as a
 package: cheerful copy has already half-decided the app will congratulate you

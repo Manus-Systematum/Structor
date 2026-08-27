@@ -862,11 +862,8 @@ class _Provenance extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Every line above is generated from the structured dataset, not '
-            'transcribed from a rulebook. Core rules — cover, Battle-shock, '
-            'the keyword glossary — are not here: the dataset carries keyword '
-            'names without their text, and writing that text out would be '
-            'reproducing rules this app has no licence to.',
+            'Generated from the dataset. Core rules and keyword text are not '
+            'included.',
             style: TextStyle(
                 fontSize: 11, height: 1.4, color: scheme.onSurfaceVariant),
           ),
@@ -910,9 +907,7 @@ class _FaqSheet extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.only(top: 4),
                       child: Text(
-                        'Games Workshop’s answers, quoted from the faction '
-                        'pack. They are not applied to anything the app '
-                        'shows — reading them is what they are for.',
+                        'Quoted, not applied.',
                         style: TextStyle(
                             fontSize: 10.5,
                             height: 1.35,

@@ -156,10 +156,11 @@ void main() {
       await tester.enterText(find.byType(SearchBar), 'negation');
       await tester.pumpAndSettle();
 
-      // The provenance note is the honest half of §7.6: core rules are absent
-      // because the app has no licence to reproduce them.
+      // The provenance note is the honest half of §7.6, stated as a fact
+      // rather than argued: core rules are not here.
       expect(
-        find.textContaining('no licence to', findRichText: true),
+        find.textContaining('Core rules and keyword text are not included',
+            findRichText: true),
         findsOneWidget,
       );
     });
@@ -237,7 +238,7 @@ void main() {
       expect(find.text('Can I use this while embarked?'), findsOneWidget);
       expect(find.text('Yes.'), findsOneWidget);
       // Said once, at the foot: these answer rules, they do not change data.
-      expect(find.textContaining('not applied to anything'), findsOneWidget);
+      expect(find.textContaining('Quoted, not applied'), findsOneWidget);
     });
 
     testWidgets('a faction with none gets no button', (tester) async {

@@ -26,10 +26,11 @@ class ScoringText extends StatelessWidget {
   /// card, which is every review of a past turn.
   final MissionCard? card;
 
-  /// Points this source can still score this round, or null when uncapped.
+  /// What this source has already taken this round, and the round's ceiling.
   /// Only used by the counter (§7.3.27), which is the one place the app can
-  /// see the rate and the headroom together.
-  final int? headroom;
+  /// see the rate and the cap together.
+  final int? scoredThisRound;
+  final int? roundCap;
 
   /// Null on a card nobody can score right now: the opponent's card while
   /// their tier is closed, or a review of a turn already played.
@@ -42,7 +43,8 @@ class ScoringText extends StatelessWidget {
     required this.text,
     required this.onScore,
     this.card,
-    this.headroom,
+    this.scoredThisRound,
+    this.roundCap,
     this.style,
   });
 
@@ -87,7 +89,8 @@ class ScoringText extends StatelessWidget {
                     ? null
                     : card?.uncappedRateFor(payoutOf(line)!),
                 cardName: card?.name ?? '',
-                headroom: headroom,
+                scoredThisRound: scoredThisRound,
+                roundCap: roundCap,
                 onScore: onScore,
                 style: style,
               ),
@@ -110,8 +113,9 @@ class _Line extends StatelessWidget {
 
   final String cardName;
 
-  /// Points still available this round.
-  final int? headroom;
+  /// What this source has already taken this round, and the ceiling.
+  final int? scoredThisRound;
+  final int? roundCap;
 
   final void Function(int vp)? onScore;
   final TextStyle? style;
@@ -124,7 +128,8 @@ class _Line extends StatelessWidget {
     this.ladder = const [],
     this.rate,
     this.cardName = '',
-    this.headroom,
+    this.scoredThisRound,
+    this.roundCap,
   });
 
   /// Counting the things, because the total cannot be listed (§7.3.27).
@@ -137,7 +142,8 @@ class _Line extends StatelessWidget {
         cardName: cardName,
         line: line,
         rate: rate!,
-        headroom: headroom,
+        scoredThisRound: scoredThisRound,
+        roundCap: roundCap,
       ),
     );
     if (vp != null && vp > 0) onScore!(vp);

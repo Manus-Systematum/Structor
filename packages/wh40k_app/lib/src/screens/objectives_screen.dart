@@ -55,7 +55,7 @@ class ObjectivesScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Text(
-            'Set up a battle to see what each side is playing for.',
+            'No battle set up.',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 13, color: scheme.onSurfaceVariant),
           ),
@@ -419,8 +419,12 @@ class _SideBlock extends StatelessWidget {
               ScoringText(
                 text: mission.text,
                 card: mission,
-                headroom: (side == Player.me ? state.me : state.opponent)
-                    .headroom(state.round, primaryKind: true),
+                scoredThisRound: (side == Player.me ? state.me : state.opponent)
+                        .primary[state.round] ??
+                    0,
+                roundCap: (side == Player.me ? state.me : state.opponent)
+                    .primaryCaps
+                    .perRound,
                 onScore: (vp) => onEvent(ScoreVp(
                   side: side,
                   kind: ScoreKind.primary,

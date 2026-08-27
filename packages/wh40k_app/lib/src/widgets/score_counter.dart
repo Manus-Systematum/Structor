@@ -26,15 +26,18 @@ class ScoreCounterSheet extends StatefulWidget {
   /// Points per thing.
   final int rate;
 
-  /// Points still available this round, or null when nothing caps it.
-  final int? headroom;
+  /// Points already taken from this source this round, and the round's
+  /// ceiling. Null when nothing caps it.
+  final int? scoredThisRound;
+  final int? roundCap;
 
   const ScoreCounterSheet({
     super.key,
     required this.cardName,
     required this.line,
     required this.rate,
-    this.headroom,
+    this.scoredThisRound,
+    this.roundCap,
   });
 
   @override
@@ -47,17 +50,13 @@ class _ScoreCounterSheetState extends State<ScoreCounterSheet> {
   /// What the count is worth before the cap.
   int get _raw => _count * widget.rate;
 
-  /// What it is actually worth. The rules say points in excess of the maximum
-  /// are ignored, so the figure offered is the one that will land.
-  int get _vp => widget.headroom == null ? _raw : _raw.clamp(0, widget.headroom!);
+  int? get _headroom => widget.roundCap == null
+      ? null
+      : (widget.roundCap! - (widget.scoredThisRound ?? 0)).clamp(0, 1 << 30);
 
-  bool get _capped => _vp < _raw;
-
-  /// The count past which nothing more can be scored this round. Counting
-  /// higher is allowed — the player may genuinely have destroyed six units —
-  /// but it stops adding points, and the sheet says so rather than refusing
-  /// the tap.
-  bool get _atCeiling => widget.headroom != null && _vp >= widget.headroom!;
+  /// What it is actually worth. Points in excess of the maximum are ignored,
+  /// so the figure offered is the one that will land.
+  int get _vp => _headroom == null ? _raw : _raw.clamp(0, _headroom!);
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +79,7 @@ class _ScoreCounterSheetState extends State<ScoreCounterSheet> {
               children: [
                 _Step(
                   icon: Icons.remove,
-                  onTap: _count <= 1
-                      ? null
-                      : () => setState(() => _count -= 1),
+                  onTap: _count <= 1 ? null : () => setState(() => _count -= 1),
                 ),
                 SizedBox(
                   width: 52,
@@ -113,16 +110,13 @@ class _ScoreCounterSheetState extends State<ScoreCounterSheet> {
                 ),
               ],
             ),
-            if (widget.headroom case final left?) ...[
+            if (widget.roundCap case final cap?) ...[
               const SizedBox(height: 10),
               Text(
-                _capped
-                    ? 'Only $left left this round, so $_raw VP scores $_vp.'
-                    : 'Up to $left more this round.',
+                '${(widget.scoredThisRound ?? 0) + _vp}/$cap scored this round',
                 style: TextStyle(
                   fontSize: 11.5,
-                  height: 1.35,
-                  color: _capped ? scheme.error : scheme.onSurfaceVariant,
+                  color: _vp < _raw ? scheme.error : scheme.onSurfaceVariant,
                 ),
               ),
             ],
@@ -132,9 +126,7 @@ class _ScoreCounterSheetState extends State<ScoreCounterSheet> {
               child: FilledButton(
                 onPressed:
                     _vp <= 0 ? null : () => Navigator.of(context).pop(_vp),
-                child: Text(_atCeiling && _capped
-                    ? 'Score $_vp (the rest is ignored)'
-                    : 'Score $_vp'),
+                child: Text('Score $_vp'),
               ),
             ),
           ],

@@ -83,7 +83,7 @@ void main() {
     expect(find.text('Choose secondaries'), findsOneWidget);
     // And the full description travels with it, not a three-line clamp.
     expect(
-      find.textContaining('settles a rules dispute', findRichText: true),
+      find.textContaining('Transcribed, not the printed wording'),
       findsOneWidget,
     );
   });
@@ -202,8 +202,10 @@ void main() {
     await tester.tap(find.text('Discard for 1 CP'));
     await tester.pumpAndSettle();
     expect(events, isEmpty);
-    expect(find.textContaining('once a battle round'), findsNothing);
-    expect(find.textContaining('One card a battle round'), findsOneWidget);
+    // The rule, stated and nothing else (§7.3.26).
+    expect(
+        find.text('Gains 1CP. Once per turn, however many cards go with it.'),
+        findsOneWidget);
 
     await tester.tap(find.widgetWithText(FilledButton, 'Discard for 1 CP'));
     await tester.pumpAndSettle();
@@ -316,8 +318,10 @@ void main() {
       // It asks, like the discards do: this chip *spends* a point where the
       // one beside it pays one.
       expect(events, isEmpty);
-      expect(find.textContaining('spend 1 command point'), findsOneWidget);
-      expect(find.textContaining('once a battle'), findsOneWidget);
+      expect(
+          find.text('Costs 1CP. Once per battle. Draw the replacement '
+              'yourself.'),
+          findsOneWidget);
 
       await tester.tap(find.widgetWithText(FilledButton, 'Swap for 1 CP'));
       await tester.pumpAndSettle();
