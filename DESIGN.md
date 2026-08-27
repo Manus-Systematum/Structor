@@ -2603,9 +2603,9 @@ before the next step; `tools/make-update.py` diffs both against the built
 bundles and writes `data/updates/<date>.json`; `bin/bundle.dart` gzips every
 file in `data/updates/` into the dist and lists it.
 
-The August file is **873 operations in 48 KB** — 594 wordings and 29 removals
+The August file is **883 operations in 49 KB** — 594 wordings and 29 removals
 from the detachment pages, 78 stratagems a chapter's copy of a shared
-detachment was missing, and 172 errata from the Rules Updates sections.
+detachment was missing, and 182 errata from the Rules Updates sections.
 
 **The Rules Updates sections, added in the same pass.** Every pack ends with
 errata to rules the codex already published, in a regular shape — a shouted
@@ -2619,7 +2619,8 @@ ability's `description`. That is why a patch operation now names the field its
 id is matched against — `abilities` keys on `ability_id`, and a table of
 per-file exceptions in the code would not have the next file in it.
 
-**A second pass took it to 172**, by handling three shapes the first refused:
+**Two further passes took it to 182**, by handling the shapes the first
+refused:
 
 - **One named section of a rule.** `Photon Grenades Stratagem, When Section`
   names a stratagem and a part of it. The app holds a stratagem as one string
@@ -2646,13 +2647,50 @@ the *next* entry's heading welded to its end. The segmentation was tightened
 twice and the last one is dropped rather than shipped: wording a version out
 of date beats wording with somebody else's heading on it.
 
-**The 186 still not applied are not wording.** 120 name something the app has
-no record for — 16 of them datasheet sections it holds as data rather than
-text (`Transport`, `Leader`, `Damaged`, `Options`), 19 statlines and wargear
-profiles, the rest fragments the parser could not read. 22 are the ambiguous
-measurements above, and 10 edit something other than a distance — a Strength
-characteristic, an AP, a paragraph deletion. All 358 stay in
-`data/faction-pack-updates.json` so the next pass starts from the parse.
+A fourth shape came out of reading the refusals rather than the packs: a
+subject that is **nothing but a section name** — `Taking Cover Section` —
+belongs to the rule the heading above it names, and identifies a shouted
+block inside that rule's description.
+
+**Three of the refusals were the tool, not the data**, and each was found by
+reading the refused list rather than by anything failing:
+
+- **22 measurements were already correct.** `Change 9" to 8".` was refused
+  because the distance was not in the record — because the app already read
+  8". Its wording comes from Wahapedia, which had made that change. A
+  correction with nothing left to correct is satisfied, not refused, and is
+  counted that way now.
+- **The measurement is counted inside the named section**, not across the
+  whole rule. `Tricksters' Retort Stratagem, Target Section` means the Target
+  section; counting across the rule found the distance twice or not at all.
+- **`Change to:` is the instruction whether or not the quotation starts on
+  the same line**, and some packs drop the colon. The verb decides, not the
+  punctuation.
+
+**And one guard was added after it truncated a rule.** The body is cut at a
+closing quote only where what follows is plainly the next entry — a heading,
+or nothing. The closer and the apostrophe are the same character, so cutting
+at the last one shortened `The first time this unit’s FABIUS BILE model is
+destroyed…` to four words. Any replacement that still comes out under 25
+characters is refused rather than shipped.
+
+**The 176 still not applied are not wording.** 111 name something the app has
+no record for — datasheet sections it holds as data rather than text
+(`Transport`, `Leader`, `Damaged`, `Options`), statlines and wargear
+profiles, and fragments the parser could not read. The rest are small
+refusals, each named in `data/faction-pack-updates-unapplied.json`, which the
+generator writes so the next pass starts from the list rather than a counter.
+All 358 stay in `data/faction-pack-updates.json`.
+
+**And then it is checked from the other end.** `patch_applied_test` reads the
+shipped patch, loads every faction the way the app does, and asserts each
+operation against the result: a `set` is present, a `remove` is gone, an
+`add` is there. The generator reports what it *wrote*, which is a different
+question — an operation can name a record the bundle does not carry or key on
+the wrong field, and both fail silently, because a patch that matches nothing
+looks exactly like a patch with nothing to do. The test was confirmed to fail
+by pointing one operation at a record that does not exist and giving another
+a value the record does not have; it caught both. **883 of 883 land.**
 
 Segmentation is by **looking ahead to the directives**, not by streaming
 state. Streaming could not tell where a quotation ended, because an apostrophe

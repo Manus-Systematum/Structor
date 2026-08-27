@@ -351,8 +351,8 @@
       "id": "2026-08-26",
       "name": "August 2026 rules update",
       "file": "patch-2026-08-26.json.gz",
-      "sha256": "3ee2fc08f5b1d0308a8657a222d145b129a7312d932d16642529f6587b4fc7b3",
-      "bytes": 49154,
+      "sha256": "b6fee21870f247859032ed4c2ce7d56353874b24e6e5db90bcff41954f5ac35e",
+      "bytes": 50179,
       "appliesTo": "pre-launch-provisional"
     }
   ]

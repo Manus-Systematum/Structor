@@ -171,6 +171,11 @@ def sections_named(subject):
     """
     found = SECTION.search(subject)
     if not found:
+        # `Taking Cover Section` is a section and nothing else: the rule it
+        # belongs to is the one the heading above it names.
+        whole = re.match(r'^(?P<part>[\w\' ]+?)\s+sections?\s*$', subject, re.I)
+        if whole:
+            return [whole.group('part').strip().lower()], ''
         return [], subject
     phrase = found.group('part').lower()
     parts = [p.strip().split()[-1] for p in re.split(r'\band\b', phrase)
@@ -186,13 +191,35 @@ SUBJECT = re.compile(r'^(?:(?P<owner>.*?),\s*)?(?P<name>.+?)\s+'
                      r'[Aa]bility|[Aa]bilities)$')
 
 # `Change 9" to 8".` — a measurement swapped for another, and nothing else.
-MEASURE = re.compile(r'^Change\s+(?P<from>\d+(?:\.\d+)?")\s+to\s+'
-                     r'(?P<to>\d+(?:\.\d+)?")\.?$', re.I)
+MEASURE = re.compile(r'^Change\s+(?P<from>\d+(?:\.\d+)?["”″])\s+to\s+'
+                     r'(?P<to>\d+(?:\.\d+)?["”″])\.?$', re.I)
 
 # `Add 'FRAME'.` and `Remove 'Leader', add 'Support'.`
 ADD_ONE = re.compile(r"^Add\s+['‘\"](?P<what>[^'’\"]+)['’\"]\.?$", re.I)
 SWAP = re.compile(r"^Remove\s+['‘\"](?P<out>[^'’\"]+)['’\"],\s*add\s+"
                   r"['‘\"](?P<in>[^'’\"]+)['’\"]\.?$", re.I)
+
+
+def replace_named_block(text, heading, replacement):
+    """A shouted sub-heading's block inside a rule, swapped.
+
+    A detachment rule is one description with its parts shouted inside it —
+    `BOMBARDMENT ... TAKING COVER ...` — and a correction can name one of
+    them. The block runs from the heading to the next shouted heading, or to
+    the end. Returns None when the heading is not there, so a correction that
+    cannot find its target is reported rather than guessed at.
+    """
+    if not text:
+        return None
+    upper = text.upper()
+    at = upper.find(heading.upper())
+    if at < 0:
+        return None
+    after = at + len(heading)
+    nxt = re.search(r'\n\s*(?:\*\*)?[A-Z][A-Z \'’\-]{4,}(?:\*\*)?',
+                    text[after:])
+    end = after + (nxt.start() if nxt else len(text) - after)
+    return text[:after] + '\n' + replacement.strip() + text[end:]
 
 
 def replace_section(text, part, replacement):
@@ -235,14 +262,18 @@ def quoted(text):
         if not body.startswith(opener):
             continue
         body = body[1:]
-        # Cut at the closing quote rather than only trimming one off the end:
-        # a subject that runs to several lines is not fully excluded by the
-        # segmentation, and `... that unit.' RAD-ZONE CORPS DETACHMENT
-        # Rad-bombardment Detachment Rule ...` was reaching the app as the
-        # rule's own wording.
-        at = body.rfind(closer)
-        if at > 0:
-            body = body[:at]
+        # Cut at a closing quote only where what follows it is plainly the
+        # next entry — a heading, or nothing. The closer and the apostrophe
+        # are the same character, so cutting at the last one truncated
+        # `The first time this unit’s FABIUS BILE model is destroyed...` to
+        # four words.
+        for at in range(len(body) - 1, 0, -1):
+            if body[at] != closer:
+                continue
+            rest = body[at + 1:].strip()
+            if not rest or re.match(r'^[A-Z][A-Z \'’\-]{3,}', rest):
+                body = body[:at]
+                break
         break
     body = re.sub(r'\s*[▪●•]\s*', '\n- ', body)
     # A nested bullet is a sub-point of the one above it.
@@ -291,7 +322,7 @@ def rules_update_ops(packs_to_factions):
 
     updates = json.load(open(updates_at))
     files = bundled()
-    ops, skipped = [], collections.Counter()
+    ops, skipped, refused = [], collections.Counter(), []
 
     for pack, corrections in sorted(updates.items()):
         faction = packs_to_factions.get(pack, pack)
@@ -376,9 +407,16 @@ def rules_update_ops(packs_to_factions):
             note = f'{pack} pack rules update'
 
             def emit(target, values):
+                # A replacement shorter than a sentence is a truncation, not
+                # a rule. Refused rather than shipped.
+                if any(isinstance(v, str) and len(v.strip()) < 25
+                       for v in values.values()):
+                    skipped['the replacement came out too short to be a rule'] += 1
+                    return
                 if any(isinstance(v, str) and LEAKED.search(v.strip())
                        for v in values.values()):
                     skipped['the replacement has a heading welded to it'] += 1
+                    refused.append({'why': 'the replacement has a heading welded to it', 'pack': pack, 'subject': subject, 'directive': directive, 'category': category, 'text': correction['text'][:400]})
                     return
                 where, ident, id_key, _, _ = target
                 op = {'faction': faction, 'file': where, 'op': 'set',
@@ -396,6 +434,7 @@ def rules_update_ops(packs_to_factions):
                 swap = SWAP.match(directive)
                 if not (add or swap):
                     skipped['a keyword edit that is neither add nor swap'] += 1
+                    refused.append({'why': 'a keyword edit that is neither add nor swap', 'pack': pack, 'subject': subject, 'directive': directive, 'category': category, 'text': correction['text'][:400]})
                     continue
                 names = [key(n) for n in re.split(r',|\band\b', base)]
                 hit = 0
@@ -434,14 +473,37 @@ def rules_update_ops(packs_to_factions):
                         })
                 if not hit:
                     skipped['no datasheet of that name'] += 1
+                    refused.append({'why': 'no datasheet of that name', 'pack': pack, 'subject': subject, 'directive': directive, 'category': category, 'text': correction['text'][:400]})
                 continue
 
             # `Photon Grenades Stratagem, When Section` names a stratagem and
             # a part of it. The part is held aside so what is left still ends
             # with the kind of thing it is, which is what resolution matches.
-            target, why = target_for(base, category)
+            # A subject that is nothing but a section name — `Taking Cover
+            # Section` — belongs to the rule the heading above it names. The
+            # section then identifies a shouted block inside that rule's
+            # description rather than a WHEN/TARGET/EFFECT part.
+            named_block = None
+            if parts and not base:
+                phrase = re.match(r'^(?P<part>[\w\' ]+?)\s+sections?\s*$',
+                                  subject, re.I)
+                named_block = phrase.group('part').strip() if phrase else None
+                # Resolved straight from the heading rather than through the
+                # subject parser, which needs a name in front of the kind and
+                # there is none here.
+                owner = detachments.get(
+                    key(category[:-len('DETACHMENT')].strip())
+                    if category.endswith('DETACHMENT') else '')
+                rule = (owner or {}).get('detachment_rule_id')
+                target = (('abilities', rule, 'ability_id', 'description',
+                           by_ability_id.get(rule, {})), None) if rule \
+                    else (None, 'no detachment rule for that heading')
+                target, why = target
+            else:
+                target, why = target_for(base, category)
             if target is None:
                 skipped[why] += 1
+                refused.append({'why': why, 'pack': pack, 'subject': subject, 'directive': directive, 'category': category, 'text': correction['text'][:400]})
                 continue
             _, _, _, field, record = target
             current = (record or {}).get(field) or ''
@@ -450,22 +512,74 @@ def rules_update_ops(packs_to_factions):
             measure = MEASURE.match(directive)
             if measure:
                 old, new_value = measure.group('from'), measure.group('to')
-                if current.count(old) != 1:
+                # `Tricksters' Retort Stratagem, Target Section — Change 9" to
+                # 8".` means inside the Target section. Counting across the
+                # whole rule found the distance twice, or not at all, and
+                # refused a correction that was never ambiguous.
+                scope = current
+                if len(parts) == 1 and parts[0] in TEXT_SECTIONS:
+                    found = re.search(
+                        r'\*\*' + parts[0].upper() + r':\*\*(.*?)'
+                        r'(?=\n\n\*\*[A-Z]+:\*\*|$)', current, re.S)
+                    scope = found.group(1) if found else ''
+                # The packs write the inch mark straight in some and curly in
+                # others; the app's text does the same.
+                variants = {old, old.replace('"', '”'), old.replace('”', '"'),
+                            old.replace('"', '″')}
+                hits = [v for v in variants if scope.count(v) == 1]
+                if not hits:
+                    # Often the app already has the new value: its wording
+                    # comes from Wahapedia, which had made this change. A
+                    # correction with nothing left to correct is satisfied,
+                    # not refused.
+                    already = {new_value, new_value.replace('"', '”'),
+                               new_value.replace('”', '"')}
+                    if any(v in scope for v in already):
+                        skipped['already reads the new value'] += 1
+                        continue
+                if len(hits) != 1:
                     skipped['the distance is not in the rule exactly once'] += 1
+                    refused.append({'why': 'the distance is not in the rule exactly once', 'pack': pack, 'subject': subject, 'directive': directive, 'category': category, 'text': correction['text'][:400]})
                     continue
-                emit(target, {field: current.replace(old, new_value)})
+                hit = hits[0]
+                to = new_value if hit == old else \
+                    new_value.replace('"', hit[-1])
+                if scope is current:
+                    emit(target, {field: current.replace(hit, to, 1)})
+                else:
+                    emit(target, {field: current.replace(
+                        scope, scope.replace(hit, to, 1), 1)})
                 continue
 
-            if not directive.endswith(':'):
+            # `Change to:` is the instruction whether or not the quotation
+            # that follows it starts on the same line, and some packs drop
+            # the colon. The verb decides, not the punctuation.
+            if not (directive.endswith(':')
+                    or re.match(r'^Change to\b', directive)):
                 skipped['edits something other than a distance'] += 1
+                refused.append({'why': 'edits something other than a distance', 'pack': pack, 'subject': subject, 'directive': directive, 'category': category, 'text': correction['text'][:400]})
                 continue
 
             text = quoted(correction['text'])
+
+            # --- a shouted block inside a rule ------------------------------
+            if named_block:
+                replaced = replace_named_block(current, named_block, text)
+                if replaced is None:
+                    skipped['the rule has no block with that heading'] += 1
+                    refused.append({'why': 'the rule has no block with that heading',
+                                    'pack': pack, 'subject': subject,
+                                    'directive': directive, 'category': category,
+                                    'text': correction['text'][:400]})
+                    continue
+                emit(target, {field: replaced})
+                continue
 
             # --- one or more named sections of a rule -----------------------
             if parts:
                 if any(p not in TEXT_SECTIONS for p in parts):
                     skipped['names a part of a datasheet, not of a rule'] += 1
+                    refused.append({'why': 'names a part of a datasheet, not of a rule', 'pack': pack, 'subject': subject, 'directive': directive, 'category': category, 'text': correction['text'][:400]})
                     continue
                 # `Target and Effect Sections` quotes both replacements in one
                 # block, each under its own heading, so the block is split on
@@ -485,6 +599,7 @@ def rules_update_ops(packs_to_factions):
                     replaced = step
                 if replaced is None:
                     skipped['the rule has no such section'] += 1
+                    refused.append({'why': 'the rule has no such section', 'pack': pack, 'subject': subject, 'directive': directive, 'category': category, 'text': correction['text'][:400]})
                     continue
                 emit(target, {field: replaced})
                 continue
@@ -492,6 +607,9 @@ def rules_update_ops(packs_to_factions):
             # --- the whole rule ---------------------------------------------
             emit(target, {field: text})
 
+    with open(f'{ROOT}/data/faction-pack-updates-unapplied.json', 'w') as f:
+        json.dump(refused, f, indent=1, ensure_ascii=False)
+        f.write('\n')
     return ops, skipped
 
 

@@ -182,8 +182,13 @@ def entries(doc):
             continue
 
         # `Add 'FRAME'.` and `Change 9" to 8".` say it all on their own line;
-        # `Change to:` opens a quotation that runs to the next entry.
-        if directive.rstrip().endswith(':'):
+        # `Change to:` opens a quotation that runs to the next entry — and it
+        # is not always alone on its line. Some packs set the quotation
+        # immediately after the colon, and some drop the colon altogether, so
+        # the verb is what decides rather than the punctuation.
+        opens = directive.rstrip().endswith(':') \
+            or re.match(r'^Change to\b', directive) is not None
+        if opens:
             stop = len(lines)
             if k + 1 < len(marks):
                 # Up to the next entry's subject, and not into the heading
@@ -197,7 +202,11 @@ def entries(doc):
                 while back > at and is_category(lines[back - 1]['text']):
                     back -= 1
                 stop = max(at + 1, back)
-            body = ' '.join(l['text'] for l in lines[at + 1:stop])
+            # Whatever followed the colon on the directive's own line is the
+            # start of the quotation, not part of the instruction.
+            inline = re.sub(r'^Change to:?\s*', '', directive).strip()
+            body = ' '.join([inline] + [l['text'] for l in lines[at + 1:stop]]) \
+                if inline else ' '.join(l['text'] for l in lines[at + 1:stop])
         else:
             body = directive
 
