@@ -267,6 +267,22 @@ Offset? labelSpot({
   return null;
 }
 
+/// The zoom past which lettering stops holding its size and starts growing.
+///
+/// Three fifths of the way from the viewer's `minScale` of 1 to its `maxScale`
+/// of 6.
+const kLetteringHoldsTo = 4.0;
+
+/// What a lettering length is divided by at this magnification (§7.3.28).
+///
+/// Below [kLetteringHoldsTo] it is the zoom itself, so a number keeps its size
+/// on screen and zooming only spreads the numbers apart — which is what
+/// untangles a crowded corner. Above it the divisor stops rising, so the
+/// lettering grows with the board: by then there is nothing left to untangle
+/// and the reader is not separating labels any more, they are reading one.
+double letteringDivisor(double zoom) =>
+    zoom < kLetteringHoldsTo ? zoom : kLetteringHoldsTo;
+
 class _BoardPainter extends CustomPainter {
   final DeploymentPattern pattern;
   final bool iAmAttacker;
@@ -328,7 +344,18 @@ class _BoardPainter extends CustomPainter {
   });
 
   /// A paper length: the same size on screen whatever the zoom.
+  ///
+  /// Hairlines, dashes and the gap a number sits off its anchor stay here at
+  /// every magnification. They are properties of the drawing, and a leader
+  /// line that thickened with the zoom would read as a wall.
   double _px(double v) => v / zoom;
+
+  /// A lettering length: paper-sized until [kLetteringHoldsTo], then growing.
+  ///
+  /// The offsets that position a label go through this as well as its font,
+  /// so a number and the gap it sits off its anchor grow together and the
+  /// text never rides onto its own leader line.
+  double _type(double v) => v / letteringDivisor(zoom);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -516,8 +543,8 @@ class _BoardPainter extends CustomPainter {
         _tick(
           canvas,
           vertical
-              ? Offset(a.dx + _px(2), size.height - _px(11))
-              : Offset(_px(3), a.dy - _px(11)),
+              ? Offset(a.dx + _type(2), size.height - _type(11))
+              : Offset(_type(3), a.dy - _type(11)),
           text,
         );
       }
@@ -646,10 +673,12 @@ class _BoardPainter extends CustomPainter {
     // sixteen-piece table the lines all cross the middle of the board, and the
     // numbers landed in a heap there with no way to tell which line each
     // belonged to. Against its own piece, a number is attributable.
-    final back = _px(12.0);
+    // A lettering length, not a paper one: it holds the number clear of its
+    // piece, so it has to grow when the number does.
+    final back = _type(12.0);
     _tick(
       canvas,
-      Offset(to.dx - ux * back + _px(2), to.dy - uy * back - _px(11)),
+      Offset(to.dx - ux * back + _type(2), to.dy - uy * back - _type(11)),
       '${inches.round()}',
       measurement: true,
     );
@@ -662,7 +691,7 @@ class _BoardPainter extends CustomPainter {
       text: TextSpan(
         text: text,
         style: TextStyle(
-          fontSize: _px(emphasis || measurement ? 8 : 8.5),
+          fontSize: _type(emphasis || measurement ? 8 : 8.5),
           fontWeight:
               emphasis || measurement ? FontWeight.w700 : FontWeight.w500,
           color: measurement
@@ -672,8 +701,8 @@ class _BoardPainter extends CustomPainter {
                   : outline.withValues(alpha: 0.8),
           // A halo, because these land on ruins as often as on bare board.
           shadows: [
-            Shadow(color: objectiveRing, blurRadius: _px(2)),
-            Shadow(color: objectiveRing, blurRadius: _px(2)),
+            Shadow(color: objectiveRing, blurRadius: _type(2)),
+            Shadow(color: objectiveRing, blurRadius: _type(2)),
           ],
         ),
       ),
@@ -691,9 +720,9 @@ class _BoardPainter extends CustomPainter {
       text: TextSpan(
         text: label,
         style: TextStyle(
-          fontSize: _px(7),
+          fontSize: _type(7),
           height: 1,
-          letterSpacing: _px(0.2),
+          letterSpacing: _type(0.2),
           fontWeight: FontWeight.w800,
           color: objectiveRing,
         ),

@@ -1993,6 +1993,31 @@ Grievous Blow among the secondaries.
 **A capped rate keeps its ladder** — three buttons at most, which is quicker
 than a counter for something that can only be 2, 4 or 5.
 
+### 7.3.28 The map's numbers hold their size, then grow
+
+A plain transform scales the lettering with the geometry, so two overlapping
+numbers stay overlapping however far you zoom — bigger, and still on top of
+each other. That is why they were paper lengths: constant on screen, so
+zooming spreads them apart and a crowded corner comes undone.
+
+That is right up to a point and wrong past it. Once the labels have separated
+the reader is no longer picking one out of a heap, they are reading it, and a
+number held at 8pt on a board magnified six times is small for no reason.
+
+**So lettering holds its size to 4× — three fifths of the way from the
+viewer's minimum to its maximum — and grows with the board after that.** At 6×
+a label is half again the size it was. `letteringDivisor` is the whole rule,
+named rather than inlined so it can be tested without a golden.
+
+**Hairlines and dashes stay paper lengths at every magnification.** A leader
+line that thickened with the zoom would read as a wall, which is a thing on
+this diagram already.
+
+**The offsets that place a label grow with it.** The stand-off that holds a
+number clear of its piece, the shadow it sits in, the letter-spacing: all
+lettering lengths. Growing the font alone would walk the text onto its own
+leader line.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.
