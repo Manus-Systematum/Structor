@@ -14,7 +14,7 @@ the page header.
 Only the WHEN/TARGET/EFFECT/RESTRICTIONS block is kept. The fluff paragraph
 above it says nothing about how the stratagem works.
 """
-import json, os, re, subprocess
+import json, os, re, subprocess, sys
 
 import pdf_columns as columns
 
@@ -138,7 +138,7 @@ SECTIONS = ('datasheets', 'rules updates', 'legends datasheets',
             'imperial armour datasheets', 'faqs')
 
 
-def detachments(doc):
+def detachments(rows):
     """The detachments a pack covers, read off its own contents page.
 
     From the contents rather than from the stratagem headers, because a
@@ -146,24 +146,31 @@ def detachments(doc):
     Conclave each have a rule and some enhancements and nothing else, checked
     against the rendered pages. Without them here, the app's records for those
     detachments would look like no pack covered them.
+
+    `rows` must already be narrowed to the contents column (see
+    `contents_rows`): every entry is `<name><leader dots><page>`, and the
+    leader dots are what identify one.
     """
-    if not doc:
-        return []
     out, inside = [], False
-    for col in doc[0]['columns']:
-        for line in col['lines']:
-            m = re.match(r'^(.+?)[' + DOTS + r']{3,}\s*(\d+)\s*$',
-                         line['text'].strip())
-            if not m:
-                continue
-            name = m.group(1).strip()
-            if name.lower() == 'detachments':
-                inside = True
-            elif name.lower() in SECTIONS:
-                inside = False
-            elif inside:
-                out.append({'name': name, 'page': int(m.group(2))})
+    for row in rows:
+        m = re.match(r'^(.+?)[' + DOTS + r']{3,}\s*(\d+)?\s*$', row.strip())
+        if not m:
+            continue
+        name = m.group(1).strip()
+        if name.lower() == 'detachments':
+            inside = True
+        elif name.lower() in SECTIONS:
+            inside = False
+        elif inside and m.group(2):
+            out.append({'name': name, 'page': int(m.group(2))})
     return out
+
+
+def contents_rows(page):
+    """The contents column of a pack's first page, as one row per entry."""
+    at = columns.word_x(page, 'CONTENTS')
+    return columns.rows_right_of(page, at) if at is not None \
+        else columns.page_lines(page)
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -171,27 +178,62 @@ PACKS = f'{ROOT}/data/faction-packs.json'
 DETS = f'{ROOT}/data/faction-pack-detachments.json'
 
 
+def listing():
+    at = f'{os.path.dirname(os.path.abspath(__file__))}/faction-packs.tsv'
+    for line in open(at):
+        line = line.strip()
+        if line and not line.startswith('#'):
+            yield line.split('\t')
+
+
+def document(name, url, cache):
+    """The pack's laid-out text, downloaded once.
+
+    Cached because the packs carry several sections the app wants and they
+    are read by separate passes — stratagems, then the rules updates, then
+    whatever the next one needs. Re-downloading a quarter of a gigabyte of
+    PDF for each pass is the only alternative.
+
+    What is cached is the **raw extraction**, not the columns: where the
+    columns are is a judgement the detector makes, and it has been corrected
+    twice. Caching the judgement would mean re-downloading every pack to fix
+    it a third time.
+    """
+    at = os.path.join(cache, f'{name}.json') if cache else None
+    if at and os.path.exists(at):
+        raw = json.load(open(at))
+    else:
+        subprocess.run(['curl', '-sSL', '-o', 'work.pdf', url], check=True)
+        raw = columns.word_pages('work.pdf')
+        os.remove('work.pdf')
+        if at:
+            os.makedirs(cache, exist_ok=True)
+            with open(at, 'w') as f:
+                json.dump(raw, f, ensure_ascii=False)
+    return columns.lay_out_pages(raw), contents_rows(raw[0]) if raw else []
+
+
 def main():
-    """Each pack is downloaded, parsed and deleted: the text is a hundredth of
-    the size, and twenty-two packs is a quarter of a gigabyte of PDF."""
+    cache = None
+    args = sys.argv[1:]
+    if '--cache' in args:
+        cache = args[args.index('--cache') + 1]
     packs = json.load(open(PACKS)) if os.path.exists(PACKS) else {}
     dets = json.load(open(DETS)) if os.path.exists(DETS) else {}
-    listing = f'{os.path.dirname(os.path.abspath(__file__))}/faction-packs.tsv'
 
-    for line in open(listing):
-        line = line.strip()
-        if not line or line.startswith('#'):
-            continue
-        name, url = line.split('\t')
+    for name, url in listing():
         # A leading underscore is a document that is not a faction pack —
-        # the Universal Rules Updates, the event companions.
-        if name.startswith('_') or name in packs:
+        # the Universal Rules Updates, the event companions. They are still
+        # cached, because other passes read them.
+        cached = cache and os.path.exists(os.path.join(cache, f'{name}.json'))
+        if name in packs and (cached or not cache):
             continue
-        subprocess.run(['curl', '-sSL', '-o', 'work.pdf', url], check=True)
-        doc = columns.document('work.pdf')
+        doc, rows = document(name, url, cache)
+        if name.startswith('_'):
+            print(f'{name:24} cached, not a faction pack', flush=True)
+            continue
         packs[name] = stratagems(doc)
-        dets[name] = detachments(doc)
-        os.remove('work.pdf')
+        dets[name] = detachments(rows)
         print(f'{name:24} {len(packs[name]):4} stratagems  '
               f'{len(dets[name]):2} detachments', flush=True)
         for path, data in ((PACKS, packs), (DETS, dets)):

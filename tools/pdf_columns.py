@@ -53,7 +53,12 @@ def gutters(words, width):
     for w in words:
         lines.setdefault(round(w[1] / LINE_TOLERANCE), []).append(w)
 
-    allowed = max(2, len(lines) // 20)
+    # A page's headers cross the gutter: a centred title, a subtitle, and an
+    # intro paragraph set across the full measure. Two crossings was not
+    # enough for the Rules Updates pages, which have four. A tenth of the
+    # lines is: on a page that really is one column every line crosses, which
+    # is an order of magnitude more than this ever allows.
+    allowed = max(2, round(len(lines) * 0.12))
     crossings = [0] * (int(width) + 2)
     for group in lines.values():
         group.sort(key=lambda w: w[0])
@@ -111,18 +116,27 @@ def lay_out(words):
 BADGE = re.compile(r'^(\d+)CP$')
 
 
-def document(pdf, first=None, last=None):
-    """`[{page, badges, columns}]`, each column a list of `{y, text}` lines.
+def word_pages(pdf, first=None, last=None):
+    """`[{page, width, words}]` — the raw extraction, before any layout call.
 
-    Cost badges come out as a column of their own — they sit right-aligned in
-    a narrow band with a gutter either side, and the detector cannot know
-    that band is not a column. They are pulled out before the split and
-    matched back to their stratagem by baseline instead, which also means it
-    does not matter that the badge sits left of the name in one layout and
-    right of it in another.
+    This is the half worth caching: it costs a download and a `pdftotext`
+    run, and it does not change when the column detector does. Keeping the
+    split out of the cache is what lets the detector be corrected without
+    fetching a quarter of a gigabyte of PDF again.
     """
+    return [
+        {'page': n, 'width': width, 'words': words}
+        for n, (width, words) in enumerate(pages(pdf, first, last),
+                                           start=first or 1)
+    ]
+
+
+def lay_out_pages(raw):
+    """`word_pages` output, split into columns."""
     out = []
-    for n, (width, words) in enumerate(pages(pdf, first, last), start=first or 1):
+    for page in raw:
+        width = page['width']
+        words = [tuple(w) for w in page['words']]
         badges = [{'y': w[1], 'x': w[0], 'cp': int(BADGE.match(w[4]).group(1))}
                   for w in words if BADGE.match(w[4])]
         rest = [w for w in words if not BADGE.match(w[4])]
@@ -145,8 +159,67 @@ def document(pdf, first=None, last=None):
                     for ln in lines
                 ],
             })
-        out.append({'page': n, 'badges': badges, 'columns': cols})
+        out.append({'page': page['page'], 'badges': badges, 'columns': cols})
     return out
+
+
+def rows_right_of(page, x):
+    """Lines built only from the words at or right of `x`.
+
+    The contents list sits beside a WHAT'S NEW column, and on some packs the
+    two are close enough that a line built from the whole page joins them with
+    a single space — `... Barracuda, Detachments` — which no amount of reading
+    the text can separate. Their x coordinates can.
+    """
+    words = [tuple(w) for w in page['words'] if w[0] >= x - 10]
+    lines = []
+    for w in sorted(words, key=lambda w: (w[1], w[0])):
+        if lines and abs(lines[-1][0] - w[1]) <= LINE_TOLERANCE:
+            lines[-1][1].append(w)
+        else:
+            lines.append((w[1], [w]))
+    return [' '.join(t for *_, t in sorted(ws, key=lambda w: w[0]))
+            for _, ws in lines]
+
+
+def word_x(page, text):
+    """Where a word starts on the page, or None. Used to find a column by its
+    heading rather than by guessing at a measurement."""
+    for w in page['words']:
+        if w[4] == text:
+            return w[0]
+    return None
+
+
+def page_lines(page):
+    """Every word on one page grouped into lines by baseline, columns ignored.
+
+    For a contents page, which is a table: each entry is one row, and running
+    the column detector over it splits the title away from its leader dots and
+    page number. Anything laid out in rows wants this rather than `columns`.
+    """
+    words = [tuple(w) for w in page['words']]
+    lines = []
+    for w in sorted(words, key=lambda w: (w[1], w[0])):
+        if lines and abs(lines[-1][0] - w[1]) <= LINE_TOLERANCE:
+            lines[-1][1].append(w)
+        else:
+            lines.append((w[1], [w]))
+    return [' '.join(t for *_, t in sorted(ws, key=lambda w: w[0]))
+            for _, ws in lines]
+
+
+def document(pdf, first=None, last=None):
+    """`[{page, badges, columns}]`, each column a list of `{y, text}` lines.
+
+    Cost badges come out as a column of their own — they sit right-aligned in
+    a narrow band with a gutter either side, and the detector cannot know that
+    band is not a column. They are pulled out before the split and matched
+    back to their stratagem by baseline instead, which also means it does not
+    matter that the badge sits left of the name in one layout and right of it
+    in another.
+    """
+    return lay_out_pages(word_pages(pdf, first, last))
 
 
 if __name__ == '__main__':

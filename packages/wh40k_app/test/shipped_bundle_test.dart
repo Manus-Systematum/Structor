@@ -236,6 +236,23 @@ void main() {
       expect(speartip, contains('ARMOUR OF CONTEMPT'));
     });
 
+    test('an errata to an army rule reaches the ability it edits', () async {
+      // Enhancements and detachments carry no wording of their own — theirs
+      // lives in `abilities` — so almost every correction in a pack's Rules
+      // Updates section ends up setting one ability's description, reached
+      // through `ability_id` rather than `id`.
+      final rule = tau.ability('for-the-greater-good');
+      expect(rule?.description, startsWith('If your Army Faction is'));
+      expect(rule?.description, contains('Spotted unit'));
+
+      // The wording is the pack's, in the shape the app's other text arrives
+      // in: the packs bullet with ▪ and nothing else here does.
+      final mantle =
+          (await repo.faction('necrons')).ability('timesplinter-mantle');
+      expect(mantle?.description, contains('\n- '));
+      expect(mantle?.description, isNot(contains('▪')));
+    });
+
     test('the patch is in the manifest, and says what it corrects', () async {
       final entry = (await repo.manifest()).patches.single;
       expect(entry.id, '2026-08-26');

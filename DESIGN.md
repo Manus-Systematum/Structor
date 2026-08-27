@@ -2593,12 +2593,61 @@ the app where it was rather than unable to start.
 deleted.** When 40kdc republishes against the released rules, `appliesTo` no
 longer matches, and the file and its manifest row go in one commit.
 
-**Pipeline.** `tools/fetch-faction-packs.py` downloads each pack, parses it and
-deletes the PDF; `tools/make-update.py` diffs the result against
-`data/merged` and writes `data/updates/<date>.json`; `bin/bundle.dart` gzips
-every file in `data/updates/` into the dist and lists it. The August file is
-**701 operations in 33 KB** — 594 wordings, 29 removals, 78 stratagems a
-chapter's copy of a shared detachment was missing.
+**Pipeline.** `tools/fetch-faction-packs.py` downloads each pack and caches
+its **raw extraction** — words and coordinates, not columns, because where the
+columns are is a judgement the detector makes and it has been corrected twice;
+caching the judgement would mean re-downloading a quarter of a gigabyte to fix
+it a third time. `tools/parse-rules-updates.py` reads the errata sections;
+`tools/check-faction-packs.py` is the gate described below and should be read
+before the next step; `tools/make-update.py` diffs both against the built
+bundles and writes `data/updates/<date>.json`; `bin/bundle.dart` gzips every
+file in `data/updates/` into the dist and lists it.
+
+The August file is **833 operations in 48 KB** — 594 wordings and 29 removals
+from the detachment pages, 78 stratagems a chapter's copy of a shared
+detachment was missing, and 132 errata from the Rules Updates sections.
+
+**The Rules Updates sections, added in the same pass.** Every pack ends with
+errata to rules the codex already published, in a regular shape — a shouted
+category, a subject, `Change to:`, and the new wording quoted. 358 of them
+were read out; **132 became operations.**
+
+The mapping is more uniform than it looks: enhancements and detachments carry
+no wording of their own, theirs lives in the `abilities` file reached by
+`ability_id` and `detachment_rule_id`, so almost every correction sets one
+ability's `description`. That is why a patch operation now names the field its
+id is matched against — `abilities` keys on `ability_id`, and a table of
+per-file exceptions in the code would not have the next file in it.
+
+The 226 not applied break down as: **89 edit a phrase rather than replace a
+rule** (`Change 9" to 8".`, `Add 'FRAME'.`) — applying those would mean
+rewriting rules text by pattern, which is what §0 forbids; **39 replace one
+section** of a rule the app stores as a single string; **90 name an ability
+the app does not carry, or name it ambiguously**; the rest are subjects the
+parser could not read. They are kept in `data/faction-pack-updates.json` so
+the next pass starts from the parse rather than the PDFs.
+
+Segmentation is by **looking ahead to the directives**, not by streaming
+state. Streaming could not tell where a quotation ended, because an apostrophe
+and a closing quote are the same character — `your opponent's` looks exactly
+like the end of a quote — and every entry after the first inherited the
+subject of the one before it. The directives are unambiguous, so they are
+found first and subject, category and body are placed relative to them.
+
+**Bullets are rewritten to the app's convention.** The packs bullet with `▪`;
+123 of the T'au abilities already bullet with `-` and none use `▪`, so leaving
+it would render one corrected rule unlike every rule beside it.
+
+**The Universal Rules Updates are recorded and not applied.** Five changes,
+and three of them — how a 0CP rule interacts with a stratagem's cost, when a
+"more than once per phase" allowance may be used, which move type a
+disembarking unit makes — are rules about how rules combine. They have no
+record to edit. Of the two that touch data, the 12" → 18" change **matches no
+stratagem the app carries**, and the "adds a new unit to your army" change
+matches six only by paraphrase: the app's wording comes from Wahapedia and
+40kdc, not from Games Workshop's sentence, so deciding which six are covered
+is a judgement about the rules rather than a transcription of them. Left for a
+pass that can check them against the printed stratagems.
 
 **Parsing the packs.** Two things about the PDFs decide the parser. Their grid
 changes page to page — a new detachment gets two wide columns, a reprinted

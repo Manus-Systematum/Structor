@@ -109,6 +109,11 @@ class PatchOperation {
   /// with no id cannot be superseded, corrected or removed later.
   final String id;
 
+  /// The field [id] is matched against. `id` for most files; `abilities`
+  /// keys on `ability_id`, and the operation says so rather than the code
+  /// carrying a table of exceptions that a new file would not be in.
+  final String key;
+
   /// The fields to set, for `set` and `add`. Empty for `remove`.
   final Map<String, Object?> values;
 
@@ -121,6 +126,7 @@ class PatchOperation {
     required this.file,
     required this.op,
     required this.id,
+    this.key = 'id',
     this.values = const {},
     this.note,
   });
@@ -136,6 +142,7 @@ class PatchOperation {
         _ => PatchOp.set,
       },
       id: strOr(j['id'], ''),
+      key: strOr(j['key'], 'id'),
       values: asMap(j['values']),
       note: str(j['note']),
     );
@@ -146,6 +153,7 @@ class PatchOperation {
         'file': file,
         'op': op.name,
         'id': id,
+        if (key != 'id') 'key': key,
         if (values.isNotEmpty) 'values': values,
         if (note != null) 'note': note,
       };
@@ -228,12 +236,16 @@ class PatchSet {
     ];
     if (ops.isEmpty) return records;
 
+    // Every file in one bundle keys the same way, so the field is taken from
+    // the operations rather than guessed at per record.
+    final key = ops.first.key;
+
     // Insertion order is the record order, so an untouched file comes back in
     // the order it was published in.
     final byId = <String, Map<String, Object?>>{};
     final loose = <Object?>[];
     for (final raw in records) {
-      final id = raw is Map ? strOr(raw['id'], '') : '';
+      final id = raw is Map ? strOr(raw[key], '') : '';
       if (id.isEmpty) {
         loose.add(raw);
       } else {
@@ -252,7 +264,7 @@ class PatchSet {
           // already, which is the outcome the patch wanted anyway.
           if (existing != null) byId[op.id] = {...existing, ...op.values};
         case PatchOp.add:
-          byId[op.id] = {...op.values, 'id': op.id};
+          byId[op.id] = {...op.values, key: op.id};
       }
     }
 
