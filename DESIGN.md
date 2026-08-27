@@ -2603,11 +2603,11 @@ before the next step; `tools/make-update.py` diffs both against the built
 bundles and writes `data/updates/<date>.json`; `bin/bundle.dart` gzips every
 file in `data/updates/` into the dist and lists it.
 
-The August file is **1,065 operations in 53 KB** — 594 wordings and 29
+The August file is **1,611 operations in 75 KB** — 594 wordings and 29
 removals from the detachment pages, 78 stratagems a chapter's copy of a shared
-detachment was missing, 195 errata from the Rules Updates sections, and 169
-from the Munitorum Field Manual: 53 units repriced, 110 leader lists, and 6
-enhancement costs.
+detachment was missing, 195 errata from the Rules Updates sections, 169 from
+the Munitorum Field Manual (53 units repriced, 110 leader lists, 6 enhancement
+costs), 450 from the datasheets (§3.16), and 96 FAQs.
 
 **The Rules Updates sections, added in the same pass.** Every pack ends with
 errata to rules the codex already published, in a regular shape — a shouted
@@ -2715,7 +2715,7 @@ and giving another a value the record does not have, and again after it grew
 to cover weapon and datasheet profiles, by adding a profile the bundle does
 not have. It caught every one — and, once the Field Manual's operations arrived, caught
 a dozen chapters writing conflicting points onto the same shared datasheet,
-which is what the deduplication above exists for. **1,065 of 1,065 land.**
+which is what the deduplication above exists for. **1,611 of 1,611 land.**
 
 Segmentation is by **looking ahead to the directives**, not by streaming
 state. Streaming could not tell where a quotation ended, because an apostrophe
@@ -2866,6 +2866,72 @@ the app deletes stratagems out of somebody's army. No `add` invents a record:
 all 78 exist in another faction's copy of the same detachment, so phase,
 timing and whose-turn come from that sibling and only the id, wording and cost
 come from the pack.
+
+### 3.16 Datasheets, Legends and the FAQs
+
+The packs' largest sections are datasheets, and they are the reason the app
+could not apply a third of the errata: a correction to a `Transport` or
+`Leader` section has nowhere to land when the datasheet itself was never read.
+**293 datasheets and 1,542 weapon profiles** now are.
+
+**The stat tables are what make it tractable.** Each column of the table is a
+column on the page and each is *labelled* — `RANGE`, `A`, `BS`, `S`, `AP`,
+`D` — on the same baseline as the `RANGED WEAPONS` header, so the columns are
+read off their own headers rather than measured, and a weapon is whatever
+sits on one baseline across them. A name that wraps has no stats beside it,
+which is how the wrap is told from a new weapon. On a narrow table the gutters
+between the stat columns are too small to detect and the header arrives as
+`RANGE A WS` in one cell; the header still names the columns in order, so the
+values are matched to it by position instead.
+
+**Three sections share the layout** — `Datasheets`, `Imperial Armour
+Datasheets` and `Legends Datasheets` — and all three are read. Which one a
+datasheet came from is kept: Legends arrives with `is_legend` so the builder
+keeps hiding it behind the existing setting, and Imperial Armour is marked as
+Forge World's so a reader can see which book it came from.
+
+**A Legends flag is only ever set on a datasheet the patch adds.** A pack's
+Legends section carries names that collide with current ones — Captain,
+Warboss, Librarian, Chaos Lord, Apothecary — and matching by name would have
+marked **23 core datasheets as Legends** and hidden them from the builder. The
+verification test caught it; the rule now is that an existing record is never
+flagged from a name match, because on a collision the collision is the more
+likely explanation.
+
+**What is written back is bounded.** A statline only when it parsed cleanly
+and the app's disagrees — `12` and `12"` are the same move, and a field the
+app leaves empty counts as a disagreement. A weapon only where the app already
+has one by that name and it has a single profile: minting ids for 1,542
+profiles is a bigger change than a patch should make, and a unit whose weapons
+are half-linked is worse than one the app already draws. **200 of 269
+statlines the app already had agreed exactly**, which is what says the parse
+can be trusted.
+
+**FAQs are quoted, never applied.** 96 questions across 17 packs. A FAQ says
+how two rules interact — *can I use this ability while embarked?* — and the
+app has no record that answers for it; deriving one would be the app
+adjudicating rather than reporting (§7.6). So they ship as their own `faqs`
+file in the faction bundle, added by the patch like everything else, and the
+Rules page grows a `FAQ (n)` button that opens them. The count is on the
+button because a player wants to know whether opening it is worth it; a
+faction whose pack carries none gets **no button at all**, since one that
+opens an empty page is worse than none. The foot of the sheet says once that
+these answer rules and do not change anything the app shows.
+
+**A skill's plus is notation, and writing it back would have shown `5++`.**
+The packs print `5+` where the app stores `5` and adds the plus when it draws.
+Comparing the printed strings reported 481 weapon differences where 469 were
+that, or an integer against the same integer as text. They are compared as
+numbers now — except that `D3+3` attacks and `D6+1` damage are values and keep
+their plus, so only `BS` and `WS` are stripped. The last one through came from
+the errata handler rather than the datasheet one, so the guard runs over
+everything generated instead of inside one phase: a guard that lives in a
+single phase only guards that phase.
+
+An answer ends at a shouted line. Without that the last answer on a page ran
+on into the datasheet printed after it — `No. ORCA DROPSHIP M T SV W 20"…` —
+which is the same class of fault as the errata segmentation, and was found
+the same way: by looking at the longest output.
 
 ### 3.13 The action section — the reverse of the card
 

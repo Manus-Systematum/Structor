@@ -107,6 +107,11 @@ class FactionData {
   /// and enhancements and no units at all (DESIGN.md §3.9).
   final String? parentFactionId;
 
+  /// Published questions and answers for this faction (§3.16). Empty until
+  /// a patch supplies them: no community source publishes FAQs, so they
+  /// arrive with the same update as the rules they clarify.
+  final List<FactionFaq> faqs;
+
   final List<String> missingFiles;
 
   const FactionData({
@@ -125,6 +130,7 @@ class FactionData {
     this.factionRuleId,
     this.factionName,
     this.parentFactionId,
+    this.faqs = const [],
     required this.missingFiles,
   });
 }

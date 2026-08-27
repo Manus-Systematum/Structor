@@ -24,6 +24,7 @@ import json, re, glob, os, collections
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MERGED = f'{ROOT}/data/merged/core'
 DATASLATE = 'pre-launch-provisional'
+PATCH_ID = '2026-08-26'
 
 def key(s):
     return re.sub(r'[^a-z0-9]+', '', (s or '').lower())
@@ -888,14 +889,264 @@ def points_ops():
     return ops, stats
 
 
+
+
+
+# --------------------------------------------------------------- datasheets
+
+"""Datasheets from the packs: new units, corrected statlines, Legends.
+
+Three sections of every pack use one layout — `Datasheets`, `Imperial Armour
+Datasheets` and `Legends Datasheets` — and `parse-datasheets.py` reads all
+three. What separates them here is what the app is told about the result: a
+Legends datasheet arrives with `is_legend`, so the builder keeps hiding it
+behind the existing setting, and an Imperial Armour one is marked as Forge
+World's so a reader can see which book it came from.
+
+A statline is only written when it is complete and the app's disagrees, and a
+weapon only when the app already has one by that name — minting weapon ids
+for 1,542 profiles is a bigger change than a patch should make, and a unit
+whose weapons are half-linked is worse than one the app already draws.
+"""
+
+DATASHEETS = f'{ROOT}/data/faction-pack-datasheets.json'
+STAT_KEYS = ('M', 'T', 'SV', 'W', 'LD', 'OC')
+# What the app calls the two sections that are not the plain codex.
+KIND_SOURCE = {'imperial-armour': 'forge-world', 'legends': 'legends'}
+
+
+def datasheet_ops(packs_to_factions):
+    if not os.path.exists(DATASHEETS):
+        return [], collections.Counter()
+
+    sheets = json.load(open(DATASHEETS))
+    files = bundled()
+    ops, stats = [], collections.Counter()
+
+    for pack, found in sorted(sheets.items()):
+        faction = packs_to_factions.get(pack, pack)
+        bundle = files.get(faction)
+        if bundle is None:
+            stats['no bundle for this pack'] += len(found)
+            continue
+        units = {key(u['name']): u for u in bundle['units']}
+        weapons = {key(w['name']): w for w in bundle.get('weapons', [])}
+
+        for sheet in found:
+            record = units.get(key(sheet['name']))
+            profile = sheet.get('profile') or {}
+
+            if record is None:
+                if not profile:
+                    stats['new, but its statline did not parse'] += 1
+                    continue
+                ops.append({
+                    'faction': faction, 'file': 'units', 'op': 'add',
+                    'id': slug(sheet['name']),
+                    'values': {
+                        'name': sheet['name'].title(),
+                        'faction_id': faction,
+                        'keywords': sheet['keywords'],
+                        'faction_keywords': sheet['faction_keywords'],
+                        'profiles': [{'name': sheet['name'].title(),
+                                      **{k: profile[k] for k in STAT_KEYS
+                                         if k in profile}}],
+                        'is_legend': sheet['kind'] == 'legends',
+                        **({'sources': [KIND_SOURCE[sheet['kind']]]}
+                           if sheet['kind'] in KIND_SOURCE else {}),
+                        'game_version': {'edition': '11th',
+                                         'dataslate': 'faction-pack-2026-08'},
+                    },
+                    'note': f'{pack} pack, {sheet["kind"]} datasheet',
+                })
+                stats[f'added ({sheet["kind"]})'] += 1
+                continue
+
+            values = {}
+            current = (record.get('profiles') or [{}])[0]
+            if profile:
+                wanted = {k: profile[k] for k in STAT_KEYS if k in profile}
+                # `12` and `12"` are the same move; only a real disagreement
+                # is worth writing, and a field the app leaves empty is one.
+                def same(a, b):
+                    return str(a).replace('"', '').strip() == \
+                        str(b).replace('"', '').strip()
+                if any(not same(current.get(k), v) for k, v in wanted.items()):
+                    values['profiles'] = [{**current, **wanted}]
+            if sheet['keywords'] and \
+                    sorted(k.lower() for k in sheet['keywords']) != \
+                    sorted(k.lower() for k in (record.get('keywords') or [])):
+                values['keywords'] = sheet['keywords']
+            # **Never** flag an existing record as Legends from a name match.
+            # A pack's Legends section carries datasheets whose names collide
+            # with current ones — Captain, Warboss, Librarian, Chaos Lord —
+            # and setting the flag on those would hide five core datasheets
+            # per faction from the builder. The flag is only ever set on a
+            # datasheet this patch adds, where there is nothing to collide
+            # with.
+            if sheet['kind'] == 'legends' and not record.get('is_legend'):
+                stats['a Legends name that a current datasheet already has'] += 1
+
+            if values:
+                ops.append({'faction': faction, 'file': 'units', 'op': 'set',
+                            'id': record['id'], 'values': values,
+                            'note': f'{pack} pack, {sheet["kind"]} datasheet'})
+                stats['datasheet corrected'] += 1
+
+            for table in sheet['weapons'].values():
+                for name, line in table:
+                    weapon = weapons.get(key(re.sub(r'\s*\[.*$', '', name)))
+                    if weapon is None:
+                        stats['weapon not in the app'] += 1
+                        continue
+                    profiles = [dict(p) for p in weapon.get('profiles', [])]
+                    if len(profiles) != 1:
+                        stats['weapon has several profiles'] += 1
+                        continue
+                    got = dict(profiles[0].get('stats') or {})
+                    # The packs print a skill as `5+` and a strength as `4`;
+                    # the app stores `5` and `4`, and adds the plus when it
+                    # draws. So the two are compared as numbers, and only a
+                    # stat that really changed is written — in the app's own
+                    # form. Comparing the printed strings instead reported 481
+                    # differences where nearly all were `5` against `5+` or an
+                    # int against the same int as text, and writing those back
+                    # would have drawn `5++`.
+                    # Only a skill's plus is notation the app adds when it
+                    # draws. `D3+3` attacks and `D6+1` damage are dice, and
+                    # stripping their plus turns a real value into a wrong
+                    # one.
+                    def plain(value, field=''):
+                        text_value = str(value).strip().replace('"', '')
+                        if field in ('BS', 'WS'):
+                            text_value = text_value.rstrip('+')
+                        try:
+                            return int(text_value)
+                        except ValueError:
+                            return text_value
+
+                    want = {}
+                    for k, v in line.items():
+                        if k == 'RANGE' or k not in got:
+                            continue
+                        if plain(got[k], k) != plain(v, k):
+                            want[k] = plain(v, k) if isinstance(got[k], int) \
+                                else str(plain(v, k))
+                    # Belt and braces: if the result reads the same as what
+                    # is already there, there is nothing to write. Type churn
+                    # — an int becoming the same int as text — is not a
+                    # correction, and every operation this patch carries
+                    # should change something a player can see.
+                    merged = {**got, **want}
+                    if {k: plain(v, k) for k, v in merged.items()} == \
+                            {k: plain(v, k) for k, v in got.items()}:
+                        stats['weapon already reads the same'] += 1
+                        continue
+                    profiles[0]['stats'] = merged
+                    ops.append({'faction': faction, 'file': 'weapons',
+                                'op': 'set', 'id': weapon['id'],
+                                'values': {'profiles': profiles},
+                                'note': f'{pack} pack datasheet'})
+                    stats['weapon profile corrected'] += 1
+
+    # One operation per record: a weapon is printed on every datasheet that
+    # carries it, and the same unit can appear in two sections.
+    seen, unique = set(), []
+    for op in ops:
+        at = (op['faction'], op['file'], op['id'])
+        if at in seen:
+            stats['already written by another datasheet'] += 1
+            continue
+        seen.add(at)
+        unique.append(op)
+    return unique, stats
+
+
+
+
+
+# --------------------------------------------------------------------- faqs
+
+"""The packs' FAQs, carried as text (§3.16).
+
+Nothing is interpreted. There is no record in the app a FAQ corrects — it
+answers how two rules interact, and deriving a rule change from that would be
+the app adjudicating rather than quoting. They ship as their own file so the
+Rules page can show a player the ones for the faction they are playing.
+"""
+
+FAQS = f'{ROOT}/data/faction-pack-faqs.json'
+
+
+def faq_ops(packs_to_factions):
+    if not os.path.exists(FAQS):
+        return [], collections.Counter()
+
+    faqs = json.load(open(FAQS))
+    files = bundled()
+    ops, stats = [], collections.Counter()
+    for pack, questions in sorted(faqs.items()):
+        faction = packs_to_factions.get(pack, pack)
+        if faction not in files:
+            stats['no bundle for this pack'] += len(questions)
+            continue
+        for i, entry in enumerate(questions, start=1):
+            ops.append({
+                'faction': faction, 'file': 'faqs', 'op': 'add',
+                'id': f'{PATCH_ID}-{i:02d}',
+                'values': {'question': entry['question'],
+                           'answer': entry['answer'],
+                           'source': 'Faction Pack, 26 August 2026'},
+                'note': f'{pack} pack FAQ',
+            })
+            stats['question'] += 1
+    return ops, stats
+
+
+def strip_stray_pluses(ops):
+    """No operation may give a skill a plus the app does not already store.
+
+    The app adds one when it draws, so writing the printed `4+` back shows
+    `4++`. Applied over everything generated rather than inside one phase:
+    the case that got through came from the errata handler, not the datasheet
+    one, and a guard that lives in a single phase only guards that phase.
+
+    A dice expression keeps its plus — `D3+3` attacks and `D6+1` damage are
+    values, not notation.
+    """
+    files = bundled()
+    for op in ops:
+        if op['file'] != 'weapons':
+            continue
+        record = next((w for w in files.get(op['faction'], {}).get('weapons', [])
+                       if w['id'] == op['id']), None)
+        here = ((record or {}).get('profiles') or [{}])[0].get('stats') or {}
+        for profile in op['values'].get('profiles', []):
+            for skill in ('BS', 'WS'):
+                value = profile.get('stats', {}).get(skill)
+                if value is None or '+' not in str(value):
+                    continue
+                if '+' in str(here.get(skill, '')):
+                    continue
+                text = str(value).rstrip('+')
+                profile['stats'][skill] = int(text) if text.isdigit() else text
+    return ops
+
+
 if __name__ == '__main__':
     rules_ops, skipped = rules_update_ops(PACK_TO_FACTION)
     ops.extend(rules_ops)
     mfm_ops, mfm_stats = points_ops()
     ops.extend(mfm_ops)
+    sheet_ops, sheet_stats = datasheet_ops(PACK_TO_FACTION)
+    ops.extend(sheet_ops)
+    faq_operations, faq_stats = faq_ops(PACK_TO_FACTION)
+    ops.extend(faq_operations)
+
+    strip_stray_pluses(ops)
 
     patch = {
-        'id': '2026-08-26',
+        'id': PATCH_ID,
         'name': 'August 2026 rules update',
         'appliesTo': DATASLATE,
         'source': 'Warhammer Community Faction Packs, 26 August 2026',
@@ -916,5 +1167,11 @@ if __name__ == '__main__':
         print(f'   not applied  {k:38} {v}')
     print(f'\nfrom the Munitorum Field Manual: {len(mfm_ops)} applied')
     for k, v in mfm_stats.most_common():
+        print(f'   {k:38} {v}')
+    print(f'\nfrom the datasheets: {len(sheet_ops)} applied')
+    for k, v in sheet_stats.most_common():
+        print(f'   {k:38} {v}')
+    print(f'\nFAQs carried: {len(faq_operations)}')
+    for k, v in faq_stats.most_common():
         print(f'   {k:38} {v}')
     print(f'\nfactions touched {len({o["faction"] for o in ops})}')

@@ -297,6 +297,9 @@ class DatasetRepository {
           .map(SourceWargearOption.fromJson)
           .where((o) => o.unitId.isNotEmpty)
           .toList(),
+      // No community source publishes these; they arrive with the patch
+      // that carries the rules they clarify (§3.16).
+      faqs: file('faqs').map(FactionFaq.fromJson).toList(),
       missingFiles: const [],
     );
 

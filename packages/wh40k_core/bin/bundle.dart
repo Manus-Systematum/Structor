@@ -133,6 +133,10 @@ void main(List<String> args) {
   for (final factionId in loader.availableFactions()) {
     final files = <String, List<Object?>>{
       for (final f in _factionFiles) f: read('core/$factionId/$f'),
+      // Empty from 40kdc, which publishes no FAQs. The file exists so the
+      // August patch has somewhere to add them, and so a later one can
+      // replace them without an app release (§3.16).
+      'faqs': read('core/$factionId/faqs'),
       for (final f in _enrichmentFiles) f: read('enrichment/$factionId/$f'),
     };
 

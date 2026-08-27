@@ -5,6 +5,7 @@ import '../widgets/rule_text.dart';
 
 import '../data/army.dart';
 import '../widgets/collapsible.dart';
+import '../widgets/sheet_header.dart';
 import '../widgets/source_pill.dart';
 import '../widgets/unit_profiles.dart';
 
@@ -28,7 +29,16 @@ import '../widgets/unit_profiles.dart';
 class ReferenceScreen extends StatefulWidget {
   final Army army;
 
-  const ReferenceScreen({super.key, required this.army});
+  /// Published questions and answers for this army's faction (§3.16). Empty
+  /// on a faction whose pack carries none, and the button is then absent —
+  /// a button that opens an empty page is worse than no button.
+  final List<FactionFaq> faqs;
+
+  const ReferenceScreen({
+    super.key,
+    required this.army,
+    this.faqs = const [],
+  });
 
   @override
   State<ReferenceScreen> createState() => _ReferenceScreenState();
@@ -92,6 +102,23 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
             onChanged: (value) => setState(() => _query = value),
           ),
         ),
+        if (widget.faqs.isNotEmpty && !searching)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: OutlinedButton.icon(
+                onPressed: () => showModalBottomSheet<void>(
+                  context: context,
+                  showDragHandle: true,
+                  isScrollControlled: true,
+                  builder: (context) => _FaqSheet(faqs: widget.faqs),
+                ),
+                icon: const Icon(Icons.help_outline, size: 17),
+                label: Text('FAQ (${widget.faqs.length})'),
+              ),
+            ),
+          ),
         Expanded(
           child: searching
               ? _SearchResults(matches: matches, army: widget.army)
@@ -847,6 +874,74 @@ class _Provenance extends StatelessWidget {
           Text('Dataset ${army.snapshot.version}',
               style: TextStyle(fontSize: 10.5, color: scheme.outline)),
         ],
+      ),
+    );
+  }
+}
+
+/// The faction's published questions, as published (§3.16).
+///
+/// Quoted and not interpreted: a FAQ says how two rules interact, the app has
+/// no record that answers for it, and deriving one would be the app
+/// adjudicating rather than reporting (§7.6). So this is a reading surface —
+/// the question, the answer, and where it came from.
+class _FaqSheet extends StatelessWidget {
+  final List<FactionFaq> faqs;
+
+  const _FaqSheet({required this.faqs});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return SafeArea(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.85,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SheetHeader(title: 'Published questions'),
+            Expanded(
+              child: ListView.separated(
+                padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+                itemCount: faqs.length + 1,
+                separatorBuilder: (_, __) => const Divider(height: 20),
+                itemBuilder: (context, i) {
+                  if (i == faqs.length) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        'Games Workshop’s answers, quoted from the faction '
+                        'pack. They are not applied to anything the app '
+                        'shows — reading them is what they are for.',
+                        style: TextStyle(
+                            fontSize: 10.5,
+                            height: 1.35,
+                            color: scheme.outline),
+                      ),
+                    );
+                  }
+                  final faq = faqs[i];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(faq.question,
+                          style: const TextStyle(
+                              fontSize: 13,
+                              height: 1.35,
+                              fontWeight: FontWeight.w700)),
+                      const SizedBox(height: 4),
+                      Text(faq.answer,
+                          style: TextStyle(
+                              fontSize: 12.5,
+                              height: 1.4,
+                              color: scheme.onSurfaceVariant)),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

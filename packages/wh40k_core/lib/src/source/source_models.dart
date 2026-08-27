@@ -1280,3 +1280,43 @@ class PhaseMapping {
     );
   }
 }
+
+/// One published question and its answer (§3.16).
+///
+/// Carried as text and never interpreted. A FAQ answers how two rules
+/// interact — *can I use this ability while embarked?* — and there is no
+/// record in the app for that to correct. Deriving one would be the app
+/// adjudicating rather than quoting, which §7.6 already refuses.
+class FactionFaq {
+  final String id;
+  final String question;
+  final String answer;
+
+  /// Where it was published, so a reader can tell a current answer from one
+  /// that came with an older pack.
+  final String source;
+
+  const FactionFaq({
+    required this.id,
+    required this.question,
+    required this.answer,
+    this.source = '',
+  });
+
+  factory FactionFaq.fromJson(Object? v) {
+    final j = asMap(v);
+    return FactionFaq(
+      id: strOr(j['id'], ''),
+      question: strOr(j['question'], ''),
+      answer: strOr(j['answer'], ''),
+      source: strOr(j['source'], ''),
+    );
+  }
+
+  Map<String, Object?> toJson() => {
+        'id': id,
+        'question': question,
+        'answer': answer,
+        if (source.isNotEmpty) 'source': source,
+      };
+}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wh40k_core/wh40k_core.dart';
 import 'package:wh40k_app/src/data/army.dart';
 import 'package:wh40k_app/src/screens/reference_screen.dart';
 
@@ -81,8 +82,7 @@ void main() {
   });
 
   group('tracing a dot back to its headings', () {
-    testWidgets('tapping a rule names it and lists who has it',
-        (tester) async {
+    testWidgets('tapping a rule names it and lists who has it', (tester) async {
       await open(tester);
       expect(find.textContaining('Tap a rule or a unit'), findsOneWidget);
 
@@ -109,8 +109,7 @@ void main() {
       expect(find.textContaining('Tap a rule or a unit'), findsOneWidget);
     });
 
-    testWidgets('tapping a unit lists the shared rules it has',
-        (tester) async {
+    testWidgets('tapping a unit lists the shared rules it has', (tester) async {
       await open(tester);
       await tester.tap(find.text('Ghostkeel Battlesuit').first);
       await tester.pumpAndSettle();
@@ -208,5 +207,49 @@ void main() {
       }
     }
     expect(raw, isEmpty, reason: raw.take(2).join(' | '));
+  });
+
+  group('the faction\'s published questions', () {
+    const faqs = [
+      FactionFaq(
+        id: '2026-08-26-01',
+        question: 'Can I use this while embarked?',
+        answer: 'Yes.',
+        source: 'Faction Pack, 26 August 2026',
+      ),
+    ];
+
+    testWidgets('a button opens them, and quotes them', (tester) async {
+      tester.view.physicalSize = const Size(500, 1400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(body: ReferenceScreen(army: army, faqs: faqs)),
+      ));
+      await tester.pumpAndSettle();
+
+      // The count is on the button: a player wants to know whether opening it
+      // is worth it before they do.
+      await tester.tap(find.text('FAQ (1)'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Can I use this while embarked?'), findsOneWidget);
+      expect(find.text('Yes.'), findsOneWidget);
+      // Said once, at the foot: these answer rules, they do not change data.
+      expect(find.textContaining('not applied to anything'), findsOneWidget);
+    });
+
+    testWidgets('a faction with none gets no button', (tester) async {
+      // A button that opens an empty page is worse than no button.
+      tester.view.physicalSize = const Size(500, 1400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(
+          MaterialApp(home: Scaffold(body: ReferenceScreen(army: army))));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('FAQ ('), findsNothing);
+    });
   });
 }

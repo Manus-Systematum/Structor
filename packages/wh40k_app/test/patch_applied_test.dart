@@ -69,6 +69,7 @@ void main() {
               'ability_ids': u.abilityIds,
               'profiles': u.profiles.length,
               'points': u.points.length,
+              'is_legend': u.isLegend,
             },
         ],
         'weapons': [
@@ -80,6 +81,15 @@ void main() {
             {
               'leader_id': a.leaderId,
               'eligible_bodyguard_ids': a.eligibleBodyguardIds,
+            },
+        ],
+        'faqs': [
+          for (final f in dataset.faction.faqs)
+            {
+              'id': f.id,
+              'question': f.question,
+              'answer': f.answer,
+              'source': f.source
             },
         ],
         'enhancements': [

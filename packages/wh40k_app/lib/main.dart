@@ -78,6 +78,10 @@ class ArmyPage extends StatefulWidget {
 
 class _ArmyPageState extends State<ArmyPage> {
   late Future<Army?> _army = widget.store.load(widget.rosterId);
+
+  /// The published questions for this army's faction (§3.16), empty until
+  /// they load and on a faction whose pack carries none.
+  List<FactionFaq> _faqs = const [];
   int _tab = 0;
 
   /// How much detail the turn page carries, for *this* army (§7.3.13).
@@ -99,6 +103,17 @@ class _ArmyPageState extends State<ArmyPage> {
     });
     widget.datasets.missions().then((pack) {
       if (mounted) setState(() => _pack = pack);
+    });
+    // The army says which faction's questions to load; the FAQs ride in the
+    // faction bundle like everything else (§3.16).
+    _army.then((army) async {
+      if (army == null) return;
+      try {
+        final dataset = await widget.datasets.faction(army.roster.factionId);
+        if (mounted) setState(() => _faqs = dataset.faction.faqs);
+      } on StateError {
+        // A faction whose bundle is not available keeps an empty list.
+      }
     });
     widget.datasets.weaponKeywords().then((keywords) {
       if (mounted) setState(() => _keywords = keywords);
@@ -245,7 +260,7 @@ class _ArmyPageState extends State<ArmyPage> {
                         ? null
                         : () => _finishBattle(army),
                   ),
-                  ReferenceScreen(army: army),
+                  ReferenceScreen(army: army, faqs: _faqs),
                 ],
               ),
             );
