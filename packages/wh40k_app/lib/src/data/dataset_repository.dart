@@ -196,6 +196,24 @@ class DatasetRepository {
     return downloaded;
   }
 
+  /// A file the manifest lists but the app does not load at start — a
+  /// rendered terrain layout (§3.17).
+  ///
+  /// Null when the manifest does not list it, or when nothing can serve it:
+  /// the images are published beside the bundles rather than inside the app,
+  /// so until a base URL is configured (§3.4) there is nothing to fetch and
+  /// the caller shows no button rather than one that fails.
+  Future<List<int>?> asset(String kind, String id) async {
+    final entry = (await manifest()).assetsOf(kind)[id];
+    if (entry == null) return null;
+    return _bytes(entry.file, entry.sha256);
+  }
+
+  /// Which assets of a kind the manifest knows about, whether or not they can
+  /// be fetched yet.
+  Future<Set<String>> assetIds(String kind) async =>
+      (await manifest()).assetsOf(kind).keys.toSet();
+
   /// The corrections in force (§3.15).
   ///
   /// A patch the app cannot fetch is skipped rather than fatal. The bundles

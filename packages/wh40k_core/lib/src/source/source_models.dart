@@ -366,6 +366,16 @@ class SourceUnit {
   final String factionId;
   final List<ModelProfile> profiles;
   final List<PointsBracket> points;
+
+  /// The model's base, as published — `{shape: round, diameter: 32}`,
+  /// `{shape: oval, width: 105, length: 70}` or `{shape: hull}`.
+  ///
+  /// Carried in the data since the first bundle and read by nothing until the
+  /// Warhammer Event Companion's base size guide filled in 95 datasheets that
+  /// had none and corrected 17 (§3.17). Kept as the published map rather than
+  /// a type: three shapes with different fields, and no screen depends on it
+  /// yet.
+  final Map<String, Object?> baseSizeMm;
   final List<WargearCost> wargearCosts;
   final List<WargearBudget> wargearBudgets;
   final List<String> keywords;
@@ -401,6 +411,7 @@ class SourceUnit {
     required this.attachmentRole,
     this.gameModes = const [],
     required this.gameVersion,
+    this.baseSizeMm = const {},
   });
 
   factory SourceUnit.fromJson(Object? v) {
@@ -412,6 +423,7 @@ class SourceUnit {
       profiles: asList(j['profiles'])
           .map(ModelProfile.fromJson)
           .toList(growable: false),
+      baseSizeMm: asMap(j['base_size_mm']),
       points: asList(j['points'])
           .map(PointsBracket.fromJson)
           .toList(growable: false),

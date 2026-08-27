@@ -102,6 +102,55 @@ class BundleEntry {
       };
 }
 
+/// A file the app fetches on demand rather than at load: a rendered terrain
+/// layout, today (§3.17).
+///
+/// Kept out of `bundles` for the same reason patches are — an older build
+/// reads an unknown `kind` as a faction — and out of the app binary because
+/// forty-five of them is eleven megabytes for something most players open
+/// rarely, if ever.
+class AssetEntry {
+  final String id;
+
+  /// What it is, so a build that does not know this kind can skip it.
+  final String kind;
+
+  /// File name relative to the manifest.
+  final String file;
+
+  /// SHA-256 of the bytes.
+  final String sha256;
+
+  final int bytes;
+
+  const AssetEntry({
+    required this.id,
+    required this.kind,
+    required this.file,
+    required this.sha256,
+    required this.bytes,
+  });
+
+  factory AssetEntry.fromJson(Object? v) {
+    final j = asMap(v);
+    return AssetEntry(
+      id: strOr(j['id'], ''),
+      kind: strOr(j['kind'], ''),
+      file: strOr(j['file'], ''),
+      sha256: strOr(j['sha256'], ''),
+      bytes: intOr(j['bytes'], 0),
+    );
+  }
+
+  Map<String, Object?> toJson() => {
+        'id': id,
+        'kind': kind,
+        'file': file,
+        'sha256': sha256,
+        'bytes': bytes,
+      };
+}
+
 class DatasetManifest {
   final int schema;
   final String generated;
@@ -118,11 +167,15 @@ class DatasetManifest {
   /// patch as an army.
   final List<PatchEntry> patches;
 
+  /// Files fetched on demand — the rendered terrain layouts (§3.17).
+  final List<AssetEntry> assets;
+
   const DatasetManifest({
     required this.generated,
     required this.source,
     required this.bundles,
     this.patches = const [],
+    this.assets = const [],
     this.schema = bundleSchemaVersion,
   });
 
@@ -134,6 +187,7 @@ class DatasetManifest {
       source: strOr(j['source'], ''),
       bundles: asList(j['bundles']).map(BundleEntry.fromJson).toList(),
       patches: asList(j['patches']).map(PatchEntry.fromJson).toList(),
+      assets: asList(j['assets']).map(AssetEntry.fromJson).toList(),
     );
   }
 
@@ -144,6 +198,7 @@ class DatasetManifest {
         'bundles': [for (final b in bundles) b.toJson()],
         if (patches.isNotEmpty)
           'patches': [for (final p in patches) p.toJson()],
+        if (assets.isNotEmpty) 'assets': [for (final a in assets) a.toJson()],
       };
 
   /// True when this manifest was produced by a newer builder than this build
@@ -156,6 +211,12 @@ class DatasetManifest {
     }
     return null;
   }
+
+  /// Every asset of one kind, by id.
+  Map<String, AssetEntry> assetsOf(String kind) => {
+        for (final a in assets)
+          if (a.kind == kind) a.id: a,
+      };
 
   List<BundleEntry> get factions =>
       bundles.where((b) => b.kind == BundleKind.faction).toList()

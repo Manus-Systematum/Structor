@@ -29,3 +29,4 @@ dist/
 
 # Cross-check source — refetch with tools/fetch-mfm.sh
 data/mfm/
+dist/

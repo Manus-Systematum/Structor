@@ -351,9 +351,326 @@
       "id": "2026-08-26",
       "name": "August 2026 rules update",
       "file": "patch-2026-08-26.json.gz",
-      "sha256": "9e51ac6884fa67183e16d3b75a7c0d10fd16bd504baee4817ce9e7309adda1b5",
-      "bytes": 77178,
+      "sha256": "31af40a0f4c67bcadc3278754939e454e7837573beeacb0d4f15853a577104a8",
+      "bytes": 78776,
       "appliesTo": "pre-launch-provisional"
+    }
+  ],
+  "assets": [
+    {
+      "id": "disruption-vs-disruption-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/disruption-vs-disruption-a.png",
+      "sha256": "fbd78e708b0f228b0b189d20cff298439c21d6050825d704adb8b714816f8329",
+      "bytes": 266945
+    },
+    {
+      "id": "disruption-vs-disruption-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/disruption-vs-disruption-b.png",
+      "sha256": "3adaa0425860c9bab93a68a146025c90381fa4cc9f56dffe6538a4f35f03fd63",
+      "bytes": 257161
+    },
+    {
+      "id": "disruption-vs-disruption-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/disruption-vs-disruption-c.png",
+      "sha256": "977b584c4507e77d3732534cb77d21726676dc299c071ec6e227feb1ae63a4d4",
+      "bytes": 273594
+    },
+    {
+      "id": "disruption-vs-priority-assets-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/disruption-vs-priority-assets-a.png",
+      "sha256": "995550ac7c807d45e0019e642c936f4752d34e44ccb333c863a2ce8b7efe0e0a",
+      "bytes": 275206
+    },
+    {
+      "id": "disruption-vs-priority-assets-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/disruption-vs-priority-assets-b.png",
+      "sha256": "215c29cfec08f44a71f63df04296a1dfa485284b4e8c9acc2417c7c37d211a91",
+      "bytes": 255944
+    },
+    {
+      "id": "disruption-vs-priority-assets-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/disruption-vs-priority-assets-c.png",
+      "sha256": "a3851c5273769ef09c588f8f221750ec0d8ebeef0450364e76f93b6923af31f9",
+      "bytes": 277200
+    },
+    {
+      "id": "disruption-vs-reconnaissance-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/disruption-vs-reconnaissance-a.png",
+      "sha256": "fcb6d7978963f10dd8289bbf96520de424483ecb582d3c66b0394c9fc96d7814",
+      "bytes": 255120
+    },
+    {
+      "id": "disruption-vs-reconnaissance-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/disruption-vs-reconnaissance-b.png",
+      "sha256": "cd576038008de57f57cc561e45c4c5a93cb26ea346573620b8323a9f4e8a5d48",
+      "bytes": 270744
+    },
+    {
+      "id": "disruption-vs-reconnaissance-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/disruption-vs-reconnaissance-c.png",
+      "sha256": "f80f5fbb569a24a6bb391d68f43e5d3e540e1d72cb35294a6400edeb00cd63cb",
+      "bytes": 272990
+    },
+    {
+      "id": "priority-assets-vs-priority-assets-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/priority-assets-vs-priority-assets-a.png",
+      "sha256": "71ee23519602475013f23b16e435b7ebaa1ab5be621fed1e2c9924c71cd91ef3",
+      "bytes": 278915
+    },
+    {
+      "id": "priority-assets-vs-priority-assets-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/priority-assets-vs-priority-assets-b.png",
+      "sha256": "20c96f91c9570133dd35cc2e43dd3f127f8bb4207424667ffe548f270b1acaf7",
+      "bytes": 269561
+    },
+    {
+      "id": "priority-assets-vs-priority-assets-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/priority-assets-vs-priority-assets-c.png",
+      "sha256": "b480b55520ee2d64eb771f90027024986e7001c738d28dae1af7e916f9e0d4a2",
+      "bytes": 259408
+    },
+    {
+      "id": "purge-the-foe-vs-disruption-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/purge-the-foe-vs-disruption-a.png",
+      "sha256": "4cd0a089cb81ca6efb706fdf29019a0eb26cded3399854a075c432f72ff13d36",
+      "bytes": 273954
+    },
+    {
+      "id": "purge-the-foe-vs-disruption-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/purge-the-foe-vs-disruption-b.png",
+      "sha256": "8f07e2bcebdee36869e41c13fbeeed30f40367bd38f0314b819058d088cfb2be",
+      "bytes": 257097
+    },
+    {
+      "id": "purge-the-foe-vs-disruption-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/purge-the-foe-vs-disruption-c.png",
+      "sha256": "a7de3071556e7b090e89691ffe3425f84e6b4aabc5323869632439673ab9acac",
+      "bytes": 275239
+    },
+    {
+      "id": "purge-the-foe-vs-priority-assets-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/purge-the-foe-vs-priority-assets-a.png",
+      "sha256": "373077553707eeb2e90d3a64804979e176455f49d34e58a1961a53ed46b39ab6",
+      "bytes": 266549
+    },
+    {
+      "id": "purge-the-foe-vs-priority-assets-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/purge-the-foe-vs-priority-assets-b.png",
+      "sha256": "f3e04d22dc7b7ad6145b3f57b39c48b76a5705b1b954e106fb9fd3cfa38f2907",
+      "bytes": 272857
+    },
+    {
+      "id": "purge-the-foe-vs-priority-assets-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/purge-the-foe-vs-priority-assets-c.png",
+      "sha256": "2694b8a43459706501ea5174848de1aa43d317ad4cb0e08dd9cb89f82213fb77",
+      "bytes": 243505
+    },
+    {
+      "id": "purge-the-foe-vs-purge-the-foe-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/purge-the-foe-vs-purge-the-foe-a.png",
+      "sha256": "96458f5ba4f6b0a241552729b69d0af4dc4cbe32160bc0f7c366c40a952ca39c",
+      "bytes": 279525
+    },
+    {
+      "id": "purge-the-foe-vs-purge-the-foe-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/purge-the-foe-vs-purge-the-foe-b.png",
+      "sha256": "bc0d4f18ee40978a44dab333a492d4d7e8a2a1727fe5ea55a516c3eeb758cf21",
+      "bytes": 250922
+    },
+    {
+      "id": "purge-the-foe-vs-purge-the-foe-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/purge-the-foe-vs-purge-the-foe-c.png",
+      "sha256": "da1a8610a4330766f2ea0d2050c0744cfac26553dd843166db028d29f7b4f943",
+      "bytes": 278544
+    },
+    {
+      "id": "purge-the-foe-vs-reconnaissance-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/purge-the-foe-vs-reconnaissance-a.png",
+      "sha256": "cbf6883de052dd80c6eb812194eb77dd00d804b7a0fca97ae9573754230d0a8a",
+      "bytes": 242790
+    },
+    {
+      "id": "purge-the-foe-vs-reconnaissance-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/purge-the-foe-vs-reconnaissance-b.png",
+      "sha256": "e04e6134c39d6e932e019f280e9e23f88db153d850b272d4d666831b91278445",
+      "bytes": 272104
+    },
+    {
+      "id": "purge-the-foe-vs-reconnaissance-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/purge-the-foe-vs-reconnaissance-c.png",
+      "sha256": "726e99ce9355186be63cfb0e6d87847082dbd131a0250bf9a670a5f0571f6576",
+      "bytes": 272910
+    },
+    {
+      "id": "reconnaissance-vs-priority-assets-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/reconnaissance-vs-priority-assets-a.png",
+      "sha256": "7b17ea3ac9c1a5bbc03c8912044e631350152d61ccb232e45995c23c1a9a2a49",
+      "bytes": 264380
+    },
+    {
+      "id": "reconnaissance-vs-priority-assets-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/reconnaissance-vs-priority-assets-b.png",
+      "sha256": "cfd082f5f15c5143f804d59889a5455cfcfcd97f252c7f9d1fec412c12d31b74",
+      "bytes": 253344
+    },
+    {
+      "id": "reconnaissance-vs-priority-assets-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/reconnaissance-vs-priority-assets-c.png",
+      "sha256": "cdbbc5e8940e142824fe86fae1870247142c25cef74da5c646066fb45f98ba1c",
+      "bytes": 273970
+    },
+    {
+      "id": "reconnaissance-vs-reconnaissance-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/reconnaissance-vs-reconnaissance-a.png",
+      "sha256": "e7eeb24f25039769e9cf699f0fc00dd00ec5eb423d9d92fb4000282aeb91dac0",
+      "bytes": 274369
+    },
+    {
+      "id": "reconnaissance-vs-reconnaissance-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/reconnaissance-vs-reconnaissance-b.png",
+      "sha256": "29f29cd74eaf91240c74c8a38d750811872f8e85e859a9affefe3a9a051d2673",
+      "bytes": 266650
+    },
+    {
+      "id": "reconnaissance-vs-reconnaissance-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/reconnaissance-vs-reconnaissance-c.png",
+      "sha256": "87d7804ed4747997d200905eff46b6f85999f452a5a0af2f3bfbdda8afd41abf",
+      "bytes": 258414
+    },
+    {
+      "id": "take-and-hold-vs-disruption-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-disruption-a.png",
+      "sha256": "e5401cc90a8fac954e7792cd2bb5bd3e048edc562f984484c60ac70ee19ce3a1",
+      "bytes": 271222
+    },
+    {
+      "id": "take-and-hold-vs-disruption-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-disruption-b.png",
+      "sha256": "fe144fef0841a1b3f739fdd6f2e6612547b669867769dacfd40c2f32c6a52981",
+      "bytes": 271306
+    },
+    {
+      "id": "take-and-hold-vs-disruption-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-disruption-c.png",
+      "sha256": "e851cdff1e899ca6ae053d49e6f665fcd0de3361963a06ef8fe88d808cdb0570",
+      "bytes": 241717
+    },
+    {
+      "id": "take-and-hold-vs-priority-assets-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-priority-assets-a.png",
+      "sha256": "74b6fd3e6717490f73587a5ed29319f40f54ca017686f4e4de71cc84458cd58f",
+      "bytes": 272466
+    },
+    {
+      "id": "take-and-hold-vs-priority-assets-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-priority-assets-b.png",
+      "sha256": "1d60307f79ed498b3e0ba5179e78f4756f83e12002ed30f936f6c14105321d2f",
+      "bytes": 240624
+    },
+    {
+      "id": "take-and-hold-vs-priority-assets-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-priority-assets-c.png",
+      "sha256": "529908045a30552542004705b5e6d23209281c248c908f2353cbe8038ad81cfa",
+      "bytes": 271049
+    },
+    {
+      "id": "take-and-hold-vs-purge-the-foe-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-purge-the-foe-a.png",
+      "sha256": "858631811b95bac507b48cc1eef60de816ca6007b51d52522f1494f87548bf83",
+      "bytes": 268333
+    },
+    {
+      "id": "take-and-hold-vs-purge-the-foe-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-purge-the-foe-b.png",
+      "sha256": "4b368ea8aba67b35eefbb4d3a10cdffe5d7d8a3bde47507888b3335638ef21a4",
+      "bytes": 275400
+    },
+    {
+      "id": "take-and-hold-vs-purge-the-foe-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-purge-the-foe-c.png",
+      "sha256": "0c84a6daf04c0c77a32bf9bdc660c69dc36998019fc0aca224c178db26e2da39",
+      "bytes": 244133
+    },
+    {
+      "id": "take-and-hold-vs-reconnaissance-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-reconnaissance-a.png",
+      "sha256": "4cb0173819eb28441da0a0b347f09cd02ec3975a72fbf351c15f64a474fdc058",
+      "bytes": 254413
+    },
+    {
+      "id": "take-and-hold-vs-reconnaissance-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-reconnaissance-b.png",
+      "sha256": "f7985ce27b63232cfcd5ab91c76072a3cae562f2501c3bf0d1aa0c41638701c5",
+      "bytes": 268141
+    },
+    {
+      "id": "take-and-hold-vs-reconnaissance-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-reconnaissance-c.png",
+      "sha256": "891075fdb08d950f8450f49ed8f9ae1c7cb02ccca2a0fec88230ba58b6709a29",
+      "bytes": 272100
+    },
+    {
+      "id": "take-and-hold-vs-take-and-hold-a",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-take-and-hold-a.png",
+      "sha256": "126edeea0d0a119ee9bb27b039c9b689d752db87b0ad6733f95498eb3ddce800",
+      "bytes": 253453
+    },
+    {
+      "id": "take-and-hold-vs-take-and-hold-b",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-take-and-hold-b.png",
+      "sha256": "ceafdc76e6861fd595e4b854ed75998c13f80696e24c0e3a033359b3cf857284",
+      "bytes": 268930
+    },
+    {
+      "id": "take-and-hold-vs-take-and-hold-c",
+      "kind": "terrain-layout",
+      "file": "layout-images/take-and-hold-vs-take-and-hold-c.png",
+      "sha256": "06aedc621bc0e6de7d250e7d152ceb3e25033de6211a3ac8eb3cf75d3c3d1f3b",
+      "bytes": 275595
     }
   ]
 }

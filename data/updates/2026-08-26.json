@@ -26988,6 +26988,1469 @@
     "source": "Faction Pack, 26 August 2026"
    },
    "note": "world-eaters pack FAQ"
+  },
+  {
+   "faction": "adepta-sororitas",
+   "file": "units",
+   "op": "set",
+   "id": "saint-celestine",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "aeldari",
+   "file": "units",
+   "op": "set",
+   "id": "ynnari-archon",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "astra-militarum",
+   "file": "units",
+   "op": "set",
+   "id": "cadian-recon-squad",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 28.5
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "astra-militarum",
+   "file": "units",
+   "op": "set",
+   "id": "centaur-rsv",
+   "values": {
+    "base_size_mm": {
+     "shape": "hull"
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "astra-militarum",
+   "file": "units",
+   "op": "set",
+   "id": "hippogriff-afv",
+   "values": {
+    "base_size_mm": {
+     "shape": "hull"
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "castellan",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "crusade-ancient",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "execrator",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "gladiator-lancer",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 100
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "gladiator-reaper",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 100
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "gladiator-valiant",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 100
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "high-marshal-helbrecht",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 60
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "impulsor",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 100
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "land-raider-crusader",
+   "values": {
+    "base_size_mm": {
+     "shape": "hull"
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "marshal",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "repulsor",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 100
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "repulsor-executioner",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 100
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "sternguard-veteran-squad",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "terminator-squad",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "astorath",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "baal-predator",
+   "values": {
+    "base_size_mm": {
+     "shape": "hull"
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "blood-angels-captain",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "chief-librarian-mephiston",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "death-company-captain",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "death-company-captain-with-jump-pack",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "death-company-dreadnought",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 90
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "death-company-marines",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "death-company-marines-with-bolt-rifles",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "death-company-marines-with-jump-packs",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "lemartes",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "sanguinary-guard",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "sanguinary-priest",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "the-sanguinor",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "chaos-space-marines",
+   "file": "units",
+   "op": "set",
+   "id": "dark-apostle",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "chaos-space-marines",
+   "file": "units",
+   "op": "set",
+   "id": "huron-blackheart",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 50
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "chaos-space-marines",
+   "file": "units",
+   "op": "set",
+   "id": "red-corsairs-raiders",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "chaos-space-marines",
+   "file": "units",
+   "op": "set",
+   "id": "red-corsairs-reave-captain",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "chaos-space-marines",
+   "file": "units",
+   "op": "set",
+   "id": "sorcerer",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "chaos-space-marines",
+   "file": "units",
+   "op": "set",
+   "id": "traitor-enforcer",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "asmodai",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 50
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "azrael",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 50
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "belial",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 50
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "deathwing-knights",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "deathwing-terminator-squad",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "ezekiel",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 25
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "inner-circle-companions",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "lazarus",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "lion-eljonson",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 60
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "nephilim-jetfighter",
+   "values": {
+    "base_size_mm": {
+     "shape": "oval",
+     "width": 120,
+     "length": 92
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "ravenwing-black-knights",
+   "values": {
+    "base_size_mm": {
+     "shape": "oval",
+     "width": 75,
+     "length": 42
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "ravenwing-dark-talon",
+   "values": {
+    "base_size_mm": {
+     "shape": "oval",
+     "width": 120,
+     "length": 92
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "death-guard",
+   "file": "units",
+   "op": "set",
+   "id": "beasts-of-nurgle",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 60
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "death-guard",
+   "file": "units",
+   "op": "set",
+   "id": "great-unclean-one",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 130
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "death-guard",
+   "file": "units",
+   "op": "set",
+   "id": "nurglings",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "death-guard",
+   "file": "units",
+   "op": "set",
+   "id": "plaguebearers",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "death-guard",
+   "file": "units",
+   "op": "set",
+   "id": "rotigus",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 130
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "corvus-blackstar",
+   "values": {
+    "base_size_mm": {
+     "shape": "oval",
+     "width": 120,
+     "length": 92
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "deathwatch-terminator-squad",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "deathwatch-veterans",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "fortis-kill-team",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "indomitor-kill-team",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "spectrus-kill-team",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "talonstrike-kill-team",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "watch-captain-artemis",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "watch-master",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "drukhari",
+   "file": "units",
+   "op": "set",
+   "id": "archon",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "units",
+   "op": "set",
+   "id": "defiler",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 160
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "units",
+   "op": "set",
+   "id": "sorcerer",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "units",
+   "op": "set",
+   "id": "daemonettes",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 25
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "units",
+   "op": "set",
+   "id": "fiends",
+   "values": {
+    "base_size_mm": {
+     "shape": "oval",
+     "width": 75,
+     "length": 42
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "units",
+   "op": "set",
+   "id": "keeper-of-secrets",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 100
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "units",
+   "op": "set",
+   "id": "seekers",
+   "values": {
+    "base_size_mm": {
+     "shape": "oval",
+     "width": 60,
+     "length": 35.5
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "units",
+   "op": "set",
+   "id": "shalaxi-helbane",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 100
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "agents-of-the-imperium",
+   "file": "units",
+   "op": "set",
+   "id": "voidsmen-at-arms",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 25
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "leagues-of-votann",
+   "file": "units",
+   "op": "set",
+   "id": "brokhyr-iron-master",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "leagues-of-votann",
+   "file": "units",
+   "op": "set",
+   "id": "grimnyr",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "necrons",
+   "file": "units",
+   "op": "set",
+   "id": "ctan-shard-of-the-nightbringer",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 90
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "orks",
+   "file": "units",
+   "op": "set",
+   "id": "wartrakk",
+   "values": {
+    "base_size_mm": {
+     "shape": "oval",
+     "width": 105,
+     "length": 70
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "darnath-lysander",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 50
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "land-speeder",
+   "values": {
+    "base_size_mm": {
+     "shape": "oval",
+     "width": 105,
+     "length": 70
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "vulkan-hestan",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "arjac-rockfist",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 50
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "bjorn-the-fell-handed",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 60
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "blood-claws",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "fenrisian-wolves",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "grey-hunters",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "iron-priest",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "logan-grimnar",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 80
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "murderfang",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 60
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "njal-stormcaller",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "ragnar-blackmane",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "thunderwolf-cavalry",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 60
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "ulrik-the-slayer",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "venerable-dreadnought",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 60
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wolf-guard-battle-leader",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wolf-guard-headtakers",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wolf-guard-terminators",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wolf-priest",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wolf-scouts",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wulfen",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wulfen-dreadnought",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 60
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wulfen-with-storm-shields",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 40
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "units",
+   "op": "set",
+   "id": "blue-horrors",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 25
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "units",
+   "op": "set",
+   "id": "flamers",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "units",
+   "op": "set",
+   "id": "kairos-fateweaver",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 100
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "units",
+   "op": "set",
+   "id": "lord-of-change",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 100
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "units",
+   "op": "set",
+   "id": "pink-horrors",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "world-eaters",
+   "file": "units",
+   "op": "set",
+   "id": "bloodcrushers",
+   "values": {
+    "base_size_mm": {
+     "shape": "oval",
+     "width": 90,
+     "length": 52.5
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "world-eaters",
+   "file": "units",
+   "op": "set",
+   "id": "bloodletters",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "world-eaters",
+   "file": "units",
+   "op": "set",
+   "id": "bloodthirster",
+   "values": {
+    "base_size_mm": {
+     "shape": "oval",
+     "width": 120,
+     "length": 92
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "world-eaters",
+   "file": "units",
+   "op": "set",
+   "id": "flesh-hounds",
+   "values": {
+    "base_size_mm": {
+     "shape": "oval",
+     "width": 60,
+     "length": 35.5
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "world-eaters",
+   "file": "units",
+   "op": "set",
+   "id": "skarbrand",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 100
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
   }
  ]
 }

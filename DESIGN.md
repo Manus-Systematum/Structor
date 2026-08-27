@@ -2603,11 +2603,11 @@ before the next step; `tools/make-update.py` diffs both against the built
 bundles and writes `data/updates/<date>.json`; `bin/bundle.dart` gzips every
 file in `data/updates/` into the dist and lists it.
 
-The August file is **1,611 operations in 75 KB** — 594 wordings and 29
+The August file is **1,723 operations in 77 KB** — 594 wordings and 29
 removals from the detachment pages, 78 stratagems a chapter's copy of a shared
 detachment was missing, 195 errata from the Rules Updates sections, 169 from
 the Munitorum Field Manual (53 units repriced, 110 leader lists, 6 enhancement
-costs), 450 from the datasheets (§3.16), and 96 FAQs.
+costs), 450 from the datasheets (§3.16), 96 FAQs, and 112 base sizes (§3.17).
 
 **The Rules Updates sections, added in the same pass.** Every pack ends with
 errata to rules the codex already published, in a regular shape — a shouted
@@ -2715,7 +2715,7 @@ and giving another a value the record does not have, and again after it grew
 to cover weapon and datasheet profiles, by adding a profile the bundle does
 not have. It caught every one — and, once the Field Manual's operations arrived, caught
 a dozen chapters writing conflicting points onto the same shared datasheet,
-which is what the deduplication above exists for. **1,611 of 1,611 land.**
+which is what the deduplication above exists for. **1,723 of 1,723 land.**
 
 Segmentation is by **looking ahead to the directives**, not by streaming
 state. Streaming could not tell where a quotation ended, because an apostrophe
@@ -2932,6 +2932,43 @@ An answer ends at a shouted line. Without that the last answer on a page ran
 on into the datasheet printed after it — `No. ORCA DROPSHIP M T SV W 20"…` —
 which is the same class of fault as the errata segmentation, and was found
 the same way: by looking at the longest output.
+
+### 3.17 The layouts are pictures, and the base sizes are data
+
+**The geometry is not extractable, and that is a finding rather than a
+failure.** A layout page's battlefield art is raster — 76 embedded images —
+and the only vectors are the deployment zones and the callout rules. The
+letter codes and the dimensions *are* text, so a layout's feature inventory
+and its measurements can be read; a feature's **rotation appears nowhere**,
+and a map drawn without rotations is a plausible wrong map. §3.15's rule about
+the packs applies here too: better the app says whose layout it is drawing
+than that it invents one.
+
+So the page itself is the reference. Each of the 45 layouts is rendered at
+120 dpi, cropped to the diagram and quantised to 256 colours — 11.6 MB for the
+set, against a 6.5 MB data bundle for the whole app. They are therefore
+**published beside the bundles and not inside the app**, listed in a new
+`assets` array in the manifest and fetched on demand, cached and hashed by the
+same path as everything else. Until a base URL is configured (§3.4) there is
+nothing to fetch, and the sheet says so rather than showing an empty frame.
+
+`assets` is its own array for the same reason `patches` is: an older build
+reads an unknown `kind` inside `bundles` as a faction. The schema stays at 1.
+
+**The Base Size Guide is the other half of the Companion, and it is data.**
+Forty pages at the back list every datasheet's base. **820 of the 932 the app
+already had agree exactly** — which is what says the extraction can be trusted
+— and the 112 that do not are the reason to carry it: 95 datasheets had no
+base size at all and 17 were wrong. `SourceUnit` now reads the field, which
+had been in the bundle since the first build and parsed by nothing.
+
+Two details in that are the app's convention rather than the guide's, and both
+would have been silent. **The first number of an oval is its width**: 820
+records already read that way, and writing `120 x 92mm` as length-then-width
+would have turned every oval base ninety degrees. And a whole number is stored
+as an integer, so `40.0` is not written over `40`. Reading the generated
+operations is what caught both — 165 "corrections" that were the same value in
+a different shape.
 
 ### 3.13 The action section — the reverse of the card
 

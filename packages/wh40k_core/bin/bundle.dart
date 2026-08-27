@@ -54,6 +54,8 @@ void main(List<String> args) {
   var revision = 'local';
   var correctionsPath = '../../data-corrections.yaml';
   var updatesDir = '../../data/updates';
+  var layoutsDir = '';
+  var layoutOut = '';
 
   for (var i = 0; i < args.length; i++) {
     switch (args[i]) {
@@ -67,11 +69,16 @@ void main(List<String> args) {
         if (i + 1 < args.length) correctionsPath = args[++i];
       case '--updates':
         if (i + 1 < args.length) updatesDir = args[++i];
+      case '--layouts':
+        if (i + 1 < args.length) layoutsDir = args[++i];
+      case '--layout-out':
+        if (i + 1 < args.length) layoutOut = args[++i];
       case '-h':
       case '--help':
         stdout.writeln('usage: dart run bin/bundle.dart '
             '[--data <dir>] [--out <dir>] [--revision <rev>] '
-            '[--corrections <file>] [--updates <dir>]');
+            '[--corrections <file>] [--updates <dir>] '
+            '[--layouts <dir>] [--layout-out <dir>]');
         return;
     }
   }
@@ -223,6 +230,41 @@ void main(List<String> args) {
     }
   }
 
+  // The rendered terrain layouts, fetched on demand (§3.17). Copied rather
+  // than compressed: a PNG is already compressed, and gzipping it again buys
+  // nothing but a decode step on a phone.
+  final assets = <AssetEntry>[];
+  // Named rather than derived: the last attempt guessed a relative path and
+  // wrote eleven megabytes outside the repository.
+  final imagesDir =
+      layoutOut.isNotEmpty ? layoutOut : '$outDir/../layout-images';
+  if (layoutsDir.isNotEmpty && Directory(layoutsDir).existsSync()) {
+    final images = Directory(layoutsDir)
+        .listSync()
+        .whereType<File>()
+        .where((f) => f.path.endsWith('.png'))
+        .toList()
+      ..sort((a, b) => a.path.compareTo(b.path));
+    for (final image in images) {
+      final bytes = image.readAsBytesSync();
+      final name = image.uri.pathSegments.last;
+      // Written beside the bundles but **not** into the app's assets: forty
+      // five of them is eleven megabytes and the whole data bundle is six.
+      // They are fetched on demand from wherever the manifest is served
+      // (§3.4); until that is configured the app has no image to show and
+      // says so rather than offering a button that does nothing.
+      final at = File('$imagesDir/$name')..createSync(recursive: true);
+      at.writeAsBytesSync(bytes);
+      assets.add(AssetEntry(
+        id: name.replaceAll('.png', ''),
+        kind: 'terrain-layout',
+        file: 'layout-images/$name',
+        sha256: sha256Of(bytes),
+        bytes: bytes.length,
+      ));
+    }
+  }
+
   final manifest = DatasetManifest(
     // Stamped by the caller rather than read from the clock, so a rebuild of
     // the same revision produces byte-identical bundles.
@@ -230,6 +272,7 @@ void main(List<String> args) {
     source: '40kdc-data',
     bundles: entries,
     patches: patches,
+    assets: assets,
   );
   File('$outDir/manifest.json').writeAsStringSync(
       '${const JsonEncoder.withIndent('  ').convert(manifest.toJson())}\n');
@@ -244,6 +287,12 @@ void main(List<String> args) {
     ..writeln()
     ..writeln('${entries.length} bundles, ${_kb(total)} total')
     ..writeln('manifest: $outDir/manifest.json');
+
+  if (assets.isNotEmpty) {
+    final total = assets.fold(0, (n, a) => n + a.bytes);
+    stdout.writeln('  ${assets.length} layout images, ${_kb(total)} '
+        '(fetched on demand)');
+  }
 
   for (final patch in patches) {
     final ops =

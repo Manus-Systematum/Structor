@@ -125,7 +125,12 @@ class _ArmyPageState extends State<ArmyPage> {
   Future<void> _runSetup(Army army) async {
     final setup = await Navigator.of(context).push<MissionSetup>(
       MaterialPageRoute(
-        builder: (_) => SetupScreen(army: army, pack: _pack),
+        builder: (_) => SetupScreen(
+          army: army,
+          pack: _pack,
+          // Fetched on demand, and only if the manifest lists them (§3.17).
+          officialLayout: (id) => widget.datasets.asset('terrain-layout', id),
+        ),
       ),
     );
     if (setup != null) await _apply(_log.add(ConfigureBattle(setup)));

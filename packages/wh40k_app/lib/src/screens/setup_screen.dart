@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
@@ -5,6 +7,7 @@ import '../widgets/rule_text.dart';
 
 import '../data/army.dart';
 import '../widgets/deployment_diagram.dart';
+import '../widgets/sheet_header.dart';
 
 /// Pre-game setup (DESIGN.md §7.3.1).
 ///
@@ -20,7 +23,16 @@ class SetupScreen extends StatefulWidget {
   final Army army;
   final MissionPack pack;
 
-  const SetupScreen({super.key, required this.army, required this.pack});
+  /// Fetches the official layout picture on demand (§3.17). Null in tests
+  /// and wherever the pictures are not wanted; the button is then absent.
+  final Future<List<int>?> Function(String id)? officialLayout;
+
+  const SetupScreen({
+    super.key,
+    required this.army,
+    required this.pack,
+    this.officialLayout,
+  });
 
   @override
   State<SetupScreen> createState() => _SetupScreenState();
@@ -137,6 +149,25 @@ class _SetupScreenState extends State<SetupScreen> {
 
   /// Picking a table also sets the deployment, because the layout is built on
   /// one — offering them as separate questions would let the two disagree.
+  /// The Warhammer Event Companion's own picture of this matchup (§3.17).
+  ///
+  /// Offered beside the app's drawing rather than replacing it: the geometry
+  /// is not extractable — the battlefield art is raster and a feature's
+  /// rotation appears nowhere on the page — so the page itself is the only
+  /// honest reference for what the official layout actually is.
+  Future<void> _showOfficialLayout(BuildContext context) async {
+    final matchup = '${_myDisposition!}-vs-${_opponentDisposition!}';
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (context) => _OfficialLayouts(
+        matchup: matchup,
+        fetch: widget.officialLayout!,
+      ),
+    );
+  }
+
   void _pickLayout(TerrainLayout? layout) {
     setState(() {
       _layoutId = layout?.id;
@@ -309,6 +340,20 @@ class _SetupScreenState extends State<SetupScreen> {
                         ),
                     ],
                   ),
+                  if (widget.officialLayout != null &&
+                      _myDisposition != null &&
+                      _opponentDisposition != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: OutlinedButton.icon(
+                          onPressed: () => _showOfficialLayout(context),
+                          icon: const Icon(Icons.map_outlined, size: 17),
+                          label: const Text('Official layouts'),
+                        ),
+                      ),
+                    ),
                   // The chips name the source; this says how current it is
                   // (§7.6, §3.15). The Warhammer Event Companion of 26 August
                   // 2026 lists 27 of the official 45 layouts as changed in
@@ -713,6 +758,108 @@ class _Step extends StatelessWidget {
             ),
           const SizedBox(height: 10),
           child,
+        ],
+      ),
+    );
+  }
+}
+
+/// The Warhammer Event Companion's three layouts for one matchup (§3.17).
+///
+/// A, B and C, as printed. The pictures are fetched rather than bundled —
+/// forty-five of them is eleven megabytes against a six-megabyte data bundle
+/// — so each one says what it is doing while it loads, and says plainly when
+/// it cannot be fetched rather than showing an empty frame.
+class _OfficialLayouts extends StatelessWidget {
+  final String matchup;
+  final Future<List<int>?> Function(String id) fetch;
+
+  const _OfficialLayouts({required this.matchup, required this.fetch});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return SafeArea(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.9,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SheetHeader(title: 'Official layouts'),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(12, 0, 12, 16),
+                children: [
+                  for (final letter in ['a', 'b', 'c'])
+                    _OneLayout(
+                      label: 'Layout ${letter.toUpperCase()}',
+                      image: fetch('$matchup-$letter'),
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(4, 12, 4, 0),
+                    child: Text(
+                      'From the Warhammer Event Companion. The app draws its '
+                      'own layouts from Battlemaster\u2019s data; these are '
+                      'the printed pages, for checking one against the other.',
+                      style: TextStyle(
+                          fontSize: 10.5, height: 1.35, color: scheme.outline),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _OneLayout extends StatelessWidget {
+  final String label;
+  final Future<List<int>?> image;
+
+  const _OneLayout({required this.label, required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label,
+              style: const TextStyle(
+                  fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1)),
+          const SizedBox(height: 4),
+          FutureBuilder<List<int>?>(
+            future: image,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 24),
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+              final bytes = snapshot.data;
+              if (bytes == null) {
+                return Text(
+                  'Not downloaded. The layout pictures are fetched when the '
+                  'dataset is served from the network, which is not set up '
+                  'yet.',
+                  style: TextStyle(
+                      fontSize: 11.5,
+                      height: 1.35,
+                      color: scheme.onSurfaceVariant),
+                );
+              }
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: Image.memory(Uint8List.fromList(bytes)),
+              );
+            },
+          ),
         ],
       ),
     );

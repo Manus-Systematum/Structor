@@ -1133,6 +1133,87 @@ def strip_stray_pluses(ops):
     return ops
 
 
+
+
+
+# -------------------------------------------------------------- base sizes
+
+"""Base sizes from the Warhammer Event Companion's guide (§3.17).
+
+Forty pages at the back of the Companion list every datasheet's base. The app
+has a `base_size_mm` field and nothing else published fills it: **820 of the
+932 it already had agree exactly**, which is what says the extraction can be
+trusted, and the 112 that do not are the reason to carry it.
+"""
+
+BASE_SIZES = f'{ROOT}/data/event-companion-base-sizes.json'
+BASE_FACTION = {'space-marines': 'adeptus-astartes',
+                'imperial-agents': 'agents-of-the-imperium'}
+
+
+def base_size(text):
+    """`25mm`, `105 x 70mm` and `Hull`, in the shape the app already stores.
+
+    Two details are the app's convention rather than the guide's. The first
+    number of an oval is its **width** — 820 records already read that way,
+    and writing `120 x 92mm` as length-then-width would have silently turned
+    every oval base ninety degrees. And a whole number is stored as an
+    integer, so `40.0` is not written over `40`.
+    """
+    def number(value):
+        as_float = float(value)
+        return int(as_float) if as_float == int(as_float) else as_float
+
+    plain = text.strip().lower()
+    if plain == 'hull':
+        return {'shape': 'hull'}
+    oval = re.match(r'^(\d+(?:\.\d+)?)\s*x\s*(\d+(?:\.\d+)?)\s*mm', plain)
+    if oval:
+        return {'shape': 'oval', 'width': number(oval.group(1)),
+                'length': number(oval.group(2))}
+    round_ = re.match(r'^(\d+(?:\.\d+)?)\s*mm', plain)
+    if round_:
+        return {'shape': 'round', 'diameter': number(round_.group(1))}
+    return None
+
+
+def base_size_ops():
+    if not os.path.exists(BASE_SIZES):
+        return [], collections.Counter()
+
+    guide = json.load(open(BASE_SIZES))
+    files = bundled()
+    ops, stats = [], collections.Counter()
+    for faction, rows in sorted(guide.items()):
+        fid = slug(faction.replace('’', ''))
+        fid = BASE_FACTION.get(fid, fid)
+        bundle = files.get(fid)
+        if bundle is None:
+            stats['no bundle for this faction'] += 1
+            continue
+        units = {key(u['name']): u for u in bundle['units']}
+        for row in rows:
+            record = units.get(key(row['name']))
+            if record is None:
+                stats['datasheet not in the app'] += 1
+                continue
+            wanted = base_size(row['base'])
+            if wanted is None:
+                stats['base size not understood'] += 1
+                continue
+            current = record.get('base_size_mm')
+            if current and all(current.get(k) == v
+                               for k, v in wanted.items()):
+                stats['already agrees'] += 1
+                continue
+            ops.append({'faction': fid, 'file': 'units', 'op': 'set',
+                        'id': record['id'],
+                        'values': {'base_size_mm': wanted},
+                        'note': 'Warhammer Event Companion base size guide'})
+            stats['filled in' if not current else 'corrected'] += 1
+    return ops, stats
+
+
 if __name__ == '__main__':
     rules_ops, skipped = rules_update_ops(PACK_TO_FACTION)
     ops.extend(rules_ops)
@@ -1142,6 +1223,8 @@ if __name__ == '__main__':
     ops.extend(sheet_ops)
     faq_operations, faq_stats = faq_ops(PACK_TO_FACTION)
     ops.extend(faq_operations)
+    base_ops, base_stats = base_size_ops()
+    ops.extend(base_ops)
 
     strip_stray_pluses(ops)
 
@@ -1173,5 +1256,8 @@ if __name__ == '__main__':
         print(f'   {k:38} {v}')
     print(f'\nFAQs carried: {len(faq_operations)}')
     for k, v in faq_stats.most_common():
+        print(f'   {k:38} {v}')
+    print(f'\nbase sizes: {len(base_ops)} applied')
+    for k, v in base_stats.most_common():
         print(f'   {k:38} {v}')
     print(f'\nfactions touched {len({o["faction"] for o in ops})}')

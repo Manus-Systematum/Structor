@@ -70,6 +70,7 @@ void main() {
               'profiles': u.profiles.length,
               'points': u.points.length,
               'is_legend': u.isLegend,
+              'base_size_mm': u.baseSizeMm,
             },
         ],
         'weapons': [
