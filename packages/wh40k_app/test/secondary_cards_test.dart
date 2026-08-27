@@ -279,4 +279,71 @@ void main() {
       expect(events, isEmpty);
     });
   });
+
+  // §7.3.26 — the published sequence, minus the two the app keeps its own
+  // way: one card is drawn at a time, and `Choose` stays a free correction.
+  group('the published rules reach the panel', () {
+    const fixed = MissionSetup(
+      myDisposition: 'a',
+      opponentDisposition: 'b',
+      myMissionId: 'm',
+      opponentMissionId: 'n',
+      secondaryMode: SecondaryMode.fixed,
+    );
+
+    testWidgets('a fixed mission cannot be discarded at all', (tester) async {
+      tall(tester);
+      final state = const BattleLog(events: [
+        ConfigureBattle(fixed),
+        DrawSecondary('outflank'),
+      ]).state;
+      await tester.pumpWidget(host(state, (_) {}));
+
+      expect(find.text('Outflank'), findsOneWidget);
+      expect(find.text('Discard'), findsNothing);
+      expect(find.text('Discard for 1 CP'), findsNothing);
+      expect(find.text('Swap for 1 CP'), findsNothing);
+    });
+
+    testWidgets('the swap spends a point and says so', (tester) async {
+      tall(tester);
+      final events = <BattleEvent>[];
+      final state = const BattleLog(events: [DrawSecondary('outflank')]).state;
+      await tester.pumpWidget(host(state, events.add));
+
+      await tester.tap(find.text('Swap for 1 CP'));
+      await tester.pumpAndSettle();
+      // It asks, like the discards do: this chip *spends* a point where the
+      // one beside it pays one.
+      expect(events, isEmpty);
+      expect(find.textContaining('spend 1 command point'), findsOneWidget);
+      expect(find.textContaining('once a battle'), findsOneWidget);
+
+      await tester.tap(find.widgetWithText(FilledButton, 'Swap for 1 CP'));
+      await tester.pumpAndSettle();
+      expect(events.single, isA<RedrawSecondary>());
+    });
+
+    testWidgets('the swap is offered once a battle', (tester) async {
+      tall(tester);
+      final state = const BattleLog(events: [
+        DrawSecondary('outflank'),
+        RedrawSecondary('per-objective'),
+      ]).state;
+      await tester.pumpWidget(host(state, (_) {}));
+      expect(find.text('Swap for 1 CP'), findsNothing);
+      // The plain discard is still there — only the paid swap is spent.
+      expect(find.text('Discard'), findsOneWidget);
+    });
+
+    testWidgets('the command point is offered once per turn', (tester) async {
+      tall(tester);
+      final state = const BattleLog(events: [
+        DrawSecondary('outflank'),
+        DiscardSecondary('per-objective', forCp: true),
+      ]).state;
+      await tester.pumpWidget(host(state, (_) {}));
+      expect(find.text('Discard for 1 CP'), findsNothing);
+    });
+  });
 }

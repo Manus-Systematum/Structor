@@ -249,6 +249,8 @@ class _SideState extends State<_Side> with RemembersToggle<_Side> {
                 child: _Line(
                   label: 'PRIMARY',
                   thisRound: widget.score.primary[widget.state.round] ?? 0,
+                  headroom: widget.score
+                      .headroom(widget.state.round, primaryKind: true),
                   onScore: (vp) => _score(ScoreKind.primary, vp),
                 ),
               ),
@@ -257,6 +259,8 @@ class _SideState extends State<_Side> with RemembersToggle<_Side> {
                 child: _Line(
                   label: 'SECONDARY',
                   thisRound: widget.score.secondary[widget.state.round] ?? 0,
+                  headroom: widget.score
+                      .headroom(widget.state.round, primaryKind: false),
                   onScore: (vp) => _score(ScoreKind.secondary, vp),
                 ),
               ),
@@ -286,12 +290,21 @@ class _SideState extends State<_Side> with RemembersToggle<_Side> {
 class _Line extends StatelessWidget {
   final String label;
   final int thisRound;
+
+  /// Points this source can still score this round, or null when uncapped.
+  ///
+  /// Shown only once it is nearly spent (§7.3.26). A cap that is nowhere near
+  /// biting is noise on a screen read mid-turn; a cap that is about to stop
+  /// the number moving is the reason it stopped.
+  final int? headroom;
+
   final void Function(int) onScore;
 
   const _Line({
     required this.label,
     required this.thisRound,
     required this.onScore,
+    this.headroom,
   });
 
   @override
@@ -309,6 +322,15 @@ class _Line extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                   color: scheme.onSurfaceVariant,
                 )),
+            if (headroom case final left? when left <= 5) ...[
+              const SizedBox(width: 5),
+              Text(left == 0 ? 'round full' : '$left left',
+                  style: TextStyle(
+                    fontSize: 9,
+                    fontWeight: FontWeight.w700,
+                    color: left == 0 ? scheme.error : scheme.onSurfaceVariant,
+                  )),
+            ],
             if (thisRound > 0) ...[
               const SizedBox(width: 5),
               Text('+$thisRound',

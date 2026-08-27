@@ -1876,6 +1876,65 @@ a chip sitting a finger's width from `Score 5`.
   what it spends: one card a battle round trades this way, and the tap that
   spends it should not be the tap that was aimed at `Score 5`.
 
+### 7.3.26 The published secondary sequence, with two corrections
+
+The Warhammer Event Companion prints the whole Secondary Mission sequence, and
+the app had been following a version assembled from what was known at the
+time. It now follows the published one, **except two things it keeps its own
+way, at the user's decision on 2026-08-27**:
+
+- **One card is drawn at a time.** The rules say draw two at the start of your
+  Command phase. Two taps is more manageable on a phone than one that deals a
+  pair, and the resulting hand is identical.
+- **`Choose` stays a free correction.** §7.3.25 made it the whole deck as a
+  checklist so a mis-recorded hand can be fixed. It is not made to obey the
+  drawing rules — it carries labels and no limits, because what it is for is
+  the moment the app and the table disagree.
+
+Everything else now matches:
+
+| | Fixed | Tactical |
+|---|---|---|
+| Chosen | two, at setup | drawn from the deck |
+| Achieving it | keeps the card | discards it |
+| Discarding | **not possible** | end of your turn |
+| Command point | — | one for the act, once per **your turn** |
+| The paid swap | — | 1CP, once per battle |
+| Cap | 20VP per card | — |
+
+**The discard point moved from the round to the turn.** Superseding §7.3.18:
+the allowance was one per battle round and shared; the sequence puts it at the
+end of *your* turn, one or more cards discarded together for a **single**
+point. So it is tracked per side and per turn, and passing the turn is what
+refreshes it.
+
+**The paid swap is its own event.** `RedrawSecondary` rather than a flag on
+`DiscardSecondary`, because it is the opposite transaction — a plain discard
+*gains* a point, this one *spends* one — and a log that cannot tell them apart
+cannot answer where the points went. It discards and charges; the draw that
+follows is the player's own, since the app records what happened rather than
+dealing cards. Its confirmation says what it costs, because the two chips sit
+a finger apart and move CP in opposite directions.
+
+**A Fixed mission is a different card.** It is active all battle, so achieving
+it does not spend it, it cannot be discarded at all — the chips are absent
+rather than disabled — and it caps at 20VP, which is the only per-card ceiling
+in the game and exists because a Fixed card would otherwise have none.
+
+**The primary is capped now too.** It never was, because nothing the app read
+published its limits. The Companion does: 15 in a round and 45 over the
+battle, the same as the secondary. Both tables are capped as they are built,
+so a round's figure and the total always agree — capping only the total left
+the breakdown saying something the sum did not.
+
+**The caps are shown, not enforced.** The board says `3 left` or `round full`
+beside a source, and only once five or fewer remain: a cap nowhere near biting
+is noise on a screen read mid-turn, and a cap about to stop the number moving
+is the reason it stopped.
+
+Battle Ready's 10VP is deliberately not modelled — it is a property of the
+army's paint, which the app has no business asserting.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.

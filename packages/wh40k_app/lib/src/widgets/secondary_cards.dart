@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 import '../theme.dart';
+import 'faq_button.dart';
 import 'rule_text.dart';
 import 'scoring_text.dart';
 import 'sheet_header.dart';
@@ -28,6 +29,9 @@ class SecondaryPanel extends StatelessWidget {
   /// from the opponent's row needs to say so.
   final String? title;
 
+  /// Published questions, so a card that has any can offer them (§3.16).
+  final List<FactionFaq> faqs;
+
   const SecondaryPanel({
     super.key,
     required this.state,
@@ -35,6 +39,7 @@ class SecondaryPanel extends StatelessWidget {
     required this.onEvent,
     this.side = Player.me,
     this.title,
+    this.faqs = const [],
   });
 
   SecondaryState get _mine => state.secondariesOf(side);
@@ -90,14 +95,21 @@ class SecondaryPanel extends StatelessWidget {
             for (final card in hand)
               _CardTile(
                 card: card,
-                // One card per battle round buys a command point, and only
-                // this player's points are tracked (§7.3.18). Their panel
-                // offers a plain discard.
-                onTradeForCp: side == Player.me &&
-                        !state.cpTradedRounds.contains(state.round)
+                // The published sequence (§7.3.26): at the end of your turn
+                // you may discard one or more and gain a single command
+                // point, once per your turn — and never on Fixed missions,
+                // which cannot be discarded at all.
+                onTradeForCp: state.canTradeForCp(side)
                     ? () => onEvent(
                         DiscardSecondary(card.id, side: side, forCp: true))
                     : null,
+                // Once per battle, a point buys a swap. The draw after it is
+                // the player's own, which is why this only discards.
+                onRedraw: state.canRedraw(side)
+                    ? () => onEvent(RedrawSecondary(card.id, side: side))
+                    : null,
+                // A Fixed mission is active all battle and cannot be binned.
+                canDiscard: !state.isFixed,
                 note: deck.drawNote(
                   card,
                   round: state.round,
@@ -110,6 +122,7 @@ class SecondaryPanel extends StatelessWidget {
                   side: side,
                 )),
                 onDiscard: () => onEvent(DiscardSecondary(card.id, side: side)),
+                faqs: faqs,
               ),
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 6, 12, 4),
@@ -429,9 +442,18 @@ class _CardTile extends StatelessWidget {
   final void Function(int) onScore;
   final VoidCallback onDiscard;
 
-  /// Null when the allowance is already spent this round, or when the cards
-  /// are the opponent's — their command points are not tracked.
+  /// Null when this side has already taken the point this turn, or is
+  /// playing Fixed missions, which cannot be discarded (§7.3.26).
   final VoidCallback? onTradeForCp;
+
+  /// Null once the once-per-battle swap has been spent.
+  final VoidCallback? onRedraw;
+
+  /// False on Fixed missions: they stay on the table all battle.
+  final bool canDiscard;
+
+  /// Published questions, so a card that has any can offer them.
+  final List<FactionFaq> faqs;
 
   const _CardTile({
     required this.card,
@@ -439,6 +461,9 @@ class _CardTile extends StatelessWidget {
     required this.onScore,
     required this.onDiscard,
     this.onTradeForCp,
+    this.onRedraw,
+    this.canDiscard = true,
+    this.faqs = const [],
   });
 
   @override
@@ -453,9 +478,16 @@ class _CardTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(card.name,
-              style:
-                  const TextStyle(fontSize: 13, fontWeight: FontWeight.w700)),
+          Row(
+            children: [
+              Flexible(
+                child: Text(card.name,
+                    style: const TextStyle(
+                        fontSize: 13, fontWeight: FontWeight.w700)),
+              ),
+              FaqButton(cardId: card.id, faqs: faqs),
+            ],
+          ),
           if (note case final note?)
             Padding(
               padding: const EdgeInsets.only(top: 2),
@@ -489,18 +521,26 @@ class _CardTile extends StatelessWidget {
                   label: const Text('Score…'),
                   onPressed: () => _scoreCustom(context),
                 ),
-              ActionChip(
-                visualDensity: VisualDensity.compact,
-                avatar: const Icon(Icons.close, size: 15),
-                label: const Text('Discard'),
-                onPressed: () => _confirmDiscard(context, forCp: false),
-              ),
+              if (canDiscard)
+                ActionChip(
+                  visualDensity: VisualDensity.compact,
+                  avatar: const Icon(Icons.close, size: 15),
+                  label: const Text('Discard'),
+                  onPressed: () => _confirmDiscard(context, forCp: false),
+                ),
               if (onTradeForCp != null)
                 ActionChip(
                   visualDensity: VisualDensity.compact,
                   avatar: const Icon(Icons.bolt, size: 15),
                   label: const Text('Discard for 1 CP'),
                   onPressed: () => _confirmDiscard(context, forCp: true),
+                ),
+              if (onRedraw != null)
+                ActionChip(
+                  visualDensity: VisualDensity.compact,
+                  avatar: const Icon(Icons.autorenew, size: 15),
+                  label: const Text('Swap for 1 CP'),
+                  onPressed: () => _confirmRedraw(context),
                 ),
             ],
           ),
@@ -544,6 +584,34 @@ class _CardTile extends StatelessWidget {
     } else {
       onDiscard();
     }
+  }
+
+  /// The once-per-battle swap (§7.3.26). It asks like the discards do, and
+  /// says what it costs: this one *spends* a point where the other pays one,
+  /// and two chips a finger apart that move CP in opposite directions is
+  /// exactly where a mis-tap is expensive.
+  Future<void> _confirmRedraw(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Swap ${card.name} for 1 CP?'),
+        content: const Text(
+          'The card is discarded and you spend 1 command point. Draw its '
+          'replacement yourself. This can be done once a battle.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Swap for 1 CP'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) onRedraw!();
   }
 
   Future<void> _scoreCustom(BuildContext context) async {

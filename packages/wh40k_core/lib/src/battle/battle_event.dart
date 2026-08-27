@@ -81,6 +81,10 @@ sealed class BattleEvent {
       'setup' => ConfigureBattle(MissionSetup.fromJson(j['setup'])),
       'drawSecondary' =>
         DrawSecondary(strOr(j['card'], ''), side: _side(j['side'])),
+      'redrawSecondary' => RedrawSecondary(
+          strOr(j['card'], ''),
+          side: _side(j['side']),
+        ),
       'discardSecondary' => DiscardSecondary(
           strOr(j['card'], ''),
           side: _side(j['side']),
@@ -320,6 +324,27 @@ class DiscardSecondary extends BattleEvent {
         'side': side.name,
         if (forCp) 'forCp': true,
       };
+}
+
+/// A command point spent to swap one secondary for a fresh one (§7.3.26).
+///
+/// Once per battle, at the end of the Command phase. Its own event rather
+/// than a flag on [DiscardSecondary], because it is a different decision with
+/// a different cost — a plain discard *gains* a point at the end of the turn,
+/// this one *spends* one — and a log that cannot tell them apart cannot
+/// answer where the points went.
+class RedrawSecondary extends BattleEvent {
+  final String cardId;
+  final Player side;
+
+  const RedrawSecondary(this.cardId, {this.side = Player.me});
+
+  @override
+  String get type => 'redrawSecondary';
+
+  @override
+  Map<String, Object?> toJson() =>
+      {'type': 'redrawSecondary', 'card': cardId, 'side': side.name};
 }
 
 class ScoreSecondaryCard extends BattleEvent {

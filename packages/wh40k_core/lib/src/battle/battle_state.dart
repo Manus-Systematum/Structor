@@ -81,11 +81,43 @@ class SideScore {
   final Map<int, int> primary;
   final Map<int, int> secondary;
 
-  const SideScore({this.primary = const {}, this.secondary = const {}});
+  /// The caps the published rules put on each source (§7.3.26). Applied to
+  /// the totals rather than to the entries: the log records what the player
+  /// said happened, and the rules say points in excess of the maximum are
+  /// *ignored*, not that they cannot be scored.
+  final ScoreCaps primaryCaps;
+  final ScoreCaps secondaryCaps;
 
+  const SideScore({
+    this.primary = const {},
+    this.secondary = const {},
+    this.primaryCaps = const ScoreCaps(),
+    this.secondaryCaps = const ScoreCaps(),
+  });
+
+  /// The tables are capped as they are built, so these are plain sums and a
+  /// round's figure and the total always agree.
   int get primaryTotal => primary.values.fold(0, (a, b) => a + b);
   int get secondaryTotal => secondary.values.fold(0, (a, b) => a + b);
   int get total => primaryTotal + secondaryTotal;
+
+  /// Points still available this round from one source, or null when
+  /// uncapped. The board shows it as `3 of 15 left` so a player who scores
+  /// into a cap can see why the number stopped moving (§7.3.26).
+  int? headroom(int round, {required bool primaryKind}) {
+    final caps = primaryKind ? primaryCaps : secondaryCaps;
+    if (caps.perRound >= 1 << 29) return null;
+    final table = primaryKind ? primary : secondary;
+    return (caps.perRound - (table[round] ?? 0)).clamp(0, caps.perRound);
+  }
+
+  /// Points still available for the whole battle, or null when uncapped.
+  int? remaining({required bool primaryKind}) {
+    final caps = primaryKind ? primaryCaps : secondaryCaps;
+    if (caps.perGame >= 1 << 29) return null;
+    final scored = primaryKind ? primaryTotal : secondaryTotal;
+    return (caps.perGame - scored).clamp(0, caps.perGame);
+  }
 }
 
 /// Round and game caps on victory points. Defaults are the secondary caps of
@@ -94,9 +126,22 @@ class ScoreCaps {
   final int perRound;
   final int perGame;
 
-  const ScoreCaps({this.perRound = 15, this.perGame = 45});
+  /// The most one card may ever contribute. Only Fixed Secondary Missions
+  /// have one — 20VP each — because a Fixed card stays on the table all
+  /// battle and would otherwise have no ceiling of its own (§7.3.26).
+  final int perCard;
 
-  static const none = ScoreCaps(perRound: 1 << 30, perGame: 1 << 30);
+  const ScoreCaps({
+    this.perRound = 15,
+    this.perGame = 45,
+    this.perCard = 1 << 30,
+  });
+
+  static const none =
+      ScoreCaps(perRound: 1 << 30, perGame: 1 << 30, perCard: 1 << 30);
+
+  /// What the published rules put on Fixed Secondary Missions.
+  static const fixedSecondary = ScoreCaps(perCard: 20);
 }
 
 class SecondaryState {
@@ -140,11 +185,21 @@ class BattleState {
   /// that only [Player.me] had cards and the field was a single state.
   final Map<Player, SecondaryState> hands;
 
-  /// Battle rounds in which a card was already traded for a command point.
+  /// Turns in which a side has already taken the command point for
+  /// discarding secondaries, by side (§7.3.26).
   ///
-  /// The allowance is one per battle round rather than per turn, so it does
-  /// not refresh when the turn passes back (§7.3.18).
-  final Set<int> cpTradedRounds;
+  /// Superseded, 2026-08-27: this was one trade per *battle round*, shared.
+  /// The published sequence puts it at the end of **your** turn, one or more
+  /// cards discarded together for a single point, so the allowance is per
+  /// side and per turn — and a turn, not a round, is what refreshes it.
+  final Map<Player, Set<int>> cpTradedTurns;
+
+  /// Sides that have spent the once-per-battle command point to swap a
+  /// secondary for a fresh one.
+  final Set<Player> redrawUsed;
+
+  /// Turns taken so far. The trade allowance is keyed on it.
+  final int turn;
 
   /// This player's hand — what almost every caller wants.
   SecondaryState get secondaries => hands[Player.me] ?? const SecondaryState();
@@ -163,8 +218,27 @@ class BattleState {
     this.units = const {},
     this.stratagemsUsed = const [],
     this.hands = const {},
-    this.cpTradedRounds = const {},
+    this.cpTradedTurns = const {},
+    this.redrawUsed = const {},
+    this.turn = 1,
   });
+
+  /// Whether this side is playing Fixed Secondary Missions, which is decided
+  /// at setup and changes almost every rule about them: a Fixed card cannot
+  /// be discarded, is not spent by achieving it, and caps at 20VP.
+  bool get isFixed =>
+      (setup?.secondaryMode ?? SecondaryMode.tactical) == SecondaryMode.fixed;
+
+  /// May this side take the command point for discarding now? (§7.3.26)
+  ///
+  /// Never on Fixed, where the cards cannot be discarded at all; otherwise
+  /// once per that side's turn.
+  bool canTradeForCp(Player side) =>
+      !isFixed && !(cpTradedTurns[side] ?? const {}).contains(turn);
+
+  /// May this side still spend a command point to swap a card? Once per
+  /// battle, and never on Fixed.
+  bool canRedraw(Player side) => !isFixed && !redrawUsed.contains(side);
 
   UnitState unit(String instanceId) => units[instanceId] ?? const UnitState();
 
@@ -232,13 +306,21 @@ class BattleLog {
   final List<BattleEvent> events;
   final ScoreCaps secondaryCaps;
 
+  /// The primary's caps, which the published rules make the same as the
+  /// secondary's: 45 over the battle, 15 in any one round (§7.3.26).
+  final ScoreCaps primaryCaps;
+
   const BattleLog({
     this.events = const [],
     this.secondaryCaps = const ScoreCaps(),
+    this.primaryCaps = const ScoreCaps(),
   });
 
-  BattleLog add(BattleEvent event) =>
-      BattleLog(events: [...events, event], secondaryCaps: secondaryCaps);
+  BattleLog add(BattleEvent event) => BattleLog(
+        events: [...events, event],
+        secondaryCaps: secondaryCaps,
+        primaryCaps: primaryCaps,
+      );
 
   /// Undo. A pop, because state is derived rather than mutated.
   BattleLog undo() => events.isEmpty
@@ -246,6 +328,7 @@ class BattleLog {
       : BattleLog(
           events: events.sublist(0, events.length - 1),
           secondaryCaps: secondaryCaps,
+          primaryCaps: primaryCaps,
         );
 
   bool get canUndo => events.isNotEmpty;
@@ -323,7 +406,9 @@ class BattleLog {
 
     // A pair of everything: the decks are copies, so both sides can hold the
     // same card and each side's "already seen" is its own.
-    final cpTraded = <int>{};
+    final cpTraded = {for (final p in Player.values) p: <int>{}};
+    final redrawUsed = <Player>{};
+    var turn = 1;
     final secondaryUsed = {for (final p in Player.values) p: <String>{}};
     final hand = {for (final p in Player.values) p: <String>[]};
     final scoredCards = {for (final p in Player.values) p: <String, int>{}};
@@ -357,6 +442,7 @@ class BattleLog {
           final next = activePlayer == Player.me ? Player.opponent : Player.me;
           if (next == opener && round < 5) round++;
           activePlayer = next;
+          turn++;
           cp += 1;
           opponentCp += 1;
         case final SetActivePlayer e:
@@ -428,20 +514,43 @@ class BattleLog {
           hand[e.side]!.remove(e.cardId);
           discarded[e.side]!.add(e.cardId);
           if (e.forCp) {
-            cpTraded.add(round);
-            // Both sides now have points, so both sides' trades pay
-            // (§7.3.21). The allowance is still one per battle round.
-            if (e.side == Player.me) {
-              cp++;
-            } else {
-              opponentCp++;
+            // One point for the act, however many cards went with it, and
+            // once per that side's turn (§7.3.26). Recorded rather than
+            // refused: the log says what happened at the table, and the
+            // screens are what stop a second one being offered.
+            if (cpTraded[e.side]!.add(turn)) {
+              if (e.side == Player.me) {
+                cp++;
+              } else {
+                opponentCp++;
+              }
             }
           }
         case final ScoreSecondaryCard e:
-          hand[e.side]!.remove(e.cardId);
-          scoredCards[e.side]![e.cardId] = e.vp;
+          final fixed = (setup?.secondaryMode ?? SecondaryMode.tactical) ==
+              SecondaryMode.fixed;
+          // A Fixed mission stays on the table: achieving it is not what
+          // spends it, and it caps at 20VP over the whole battle. A Tactical
+          // one is discarded the moment it is achieved (§7.3.26).
+          final already = scoredCards[e.side]![e.cardId] ?? 0;
+          final gained =
+              fixed ? e.vp.clamp(0, (20 - already).clamp(0, 20)) : e.vp;
+          if (!fixed) hand[e.side]!.remove(e.cardId);
+          scoredCards[e.side]![e.cardId] = already + gained;
           final table = secondary[e.side]!;
-          table[e.round] = (table[e.round] ?? 0) + e.vp;
+          table[e.round] = (table[e.round] ?? 0) + gained;
+        case final RedrawSecondary e:
+          // Once per battle, at the end of the Command phase, a command point
+          // buys one swap. The draw that follows is the player's own.
+          hand[e.side]!.remove(e.cardId);
+          discarded[e.side]!.add(e.cardId);
+          if (redrawUsed.add(e.side)) {
+            if (e.side == Player.me) {
+              cp = (cp - 1).clamp(0, 1 << 30);
+            } else {
+              opponentCp = (opponentCp - 1).clamp(0, 1 << 30);
+            }
+          }
       }
     }
 
@@ -451,17 +560,30 @@ class BattleLog {
       activePlayer: activePlayer,
       cp: cp,
       opponentCp: opponentCp,
+      // The primary is capped the same way and was not capped at all before
+      // (§7.3.26): 45 over the battle, 15 in any one round.
       me: SideScore(
-        primary: Map.unmodifiable(primary[Player.me]!),
-        secondary: Map.unmodifiable(_capped(secondary[Player.me]!)),
+        primary: Map.unmodifiable(_capped(primary[Player.me]!, primaryCaps)),
+        secondary:
+            Map.unmodifiable(_capped(secondary[Player.me]!, secondaryCaps)),
+        primaryCaps: primaryCaps,
+        secondaryCaps: secondaryCaps,
       ),
       opponent: SideScore(
-        primary: Map.unmodifiable(primary[Player.opponent]!),
-        secondary: Map.unmodifiable(_capped(secondary[Player.opponent]!)),
+        primary:
+            Map.unmodifiable(_capped(primary[Player.opponent]!, primaryCaps)),
+        secondary: Map.unmodifiable(
+            _capped(secondary[Player.opponent]!, secondaryCaps)),
+        primaryCaps: primaryCaps,
+        secondaryCaps: secondaryCaps,
       ),
       units: Map.unmodifiable(units),
       stratagemsUsed: List.unmodifiable(uses),
-      cpTradedRounds: Set.unmodifiable(cpTraded),
+      cpTradedTurns: {
+        for (final p in Player.values) p: Set.unmodifiable(cpTraded[p]!),
+      },
+      redrawUsed: Set.unmodifiable(redrawUsed),
+      turn: turn,
       hands: {
         for (final p in Player.values)
           p: SecondaryState(
@@ -476,14 +598,14 @@ class BattleLog {
 
   /// Applies the per-round then per-game cap, in round order so an early round
   /// keeps its points and a later one is trimmed.
-  Map<int, int> _capped(Map<int, int> byRound) {
+  Map<int, int> _capped(Map<int, int> byRound, ScoreCaps caps) {
     final rounds = byRound.keys.toList()..sort();
     final out = <int, int>{};
     var running = 0;
     for (final round in rounds) {
-      var vp = byRound[round]!.clamp(0, secondaryCaps.perRound);
-      if (running + vp > secondaryCaps.perGame) {
-        vp = secondaryCaps.perGame - running;
+      var vp = byRound[round]!.clamp(0, caps.perRound);
+      if (running + vp > caps.perGame) {
+        vp = caps.perGame - running;
       }
       if (vp < 0) vp = 0;
       out[round] = vp;

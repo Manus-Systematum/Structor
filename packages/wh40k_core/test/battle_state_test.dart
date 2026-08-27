@@ -152,11 +152,14 @@ void main() {
       expect(state.me.secondary[4], 0, reason: 'the cap trims later rounds');
     });
 
-    test('primary is not capped by the secondary limits', () {
+    // Superseded, 2026-08-27: the primary was uncapped here because nothing
+    // the app read published its limits. The Warhammer Event Companion does
+    // — 15 a round and 45 a battle, the same as the secondary (§7.3.26).
+    test('primary is capped the same way the secondary is', () {
       final state = logOf(const [
         ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 1, vp: 20),
       ]).state;
-      expect(state.me.primaryTotal, 20);
+      expect(state.me.primaryTotal, 15);
     });
 
     test('a round cannot be driven below zero', () {
@@ -300,7 +303,7 @@ void main() {
         DiscardSecondary('outflank', forCp: true),
       ]);
       expect(log.state.cp, 1);
-      expect(log.state.cpTradedRounds, {1});
+      expect(log.state.cpTradedTurns[Player.me], {1});
       expect(log.state.secondaries.hand, isEmpty);
       expect(log.state.secondaries.discarded, ['outflank']);
     });
@@ -323,7 +326,7 @@ void main() {
         DiscardSecondary('outflank'),
       ]);
       expect(log.state.cp, 0);
-      expect(log.state.cpTradedRounds, isEmpty);
+      expect(log.state.cpTradedTurns[Player.me], isEmpty);
     });
 
     test('the allowance is per round, not per turn', () {
@@ -340,8 +343,12 @@ void main() {
       ]);
       // Their turn now, still battle round one.
       expect(log.state.round, 1);
-      expect(log.state.cpTradedRounds, contains(1),
-          reason: 'the allowance stays spent while the round does');
+      // Superseded, 2026-08-27: the allowance was one per battle round and
+      // is now one per *your* turn (§7.3.26), so passing the turn is exactly
+      // what refreshes it.
+      expect(log.state.cpTradedTurns[Player.me], contains(1));
+      expect(log.state.canTradeForCp(Player.me), isTrue,
+          reason: 'a new turn, a new allowance');
     });
 
     test('their trade does not spend my command points', () {
@@ -747,6 +754,114 @@ void main() {
 
       final mid = log.add(const SetActivePlayer(Player.opponent));
       expect(mid.state.passingEndsRound, isTrue);
+    });
+  });
+
+  // §7.3.26 — the published Secondary sequence, with the two corrections the
+  // app keeps: one card is drawn at a time, and `Choose` stays a free
+  // correction rather than a rule.
+  group('the published secondary sequence', () {
+    const fixed = ConfigureBattle(MissionSetup(
+      myDisposition: 'a',
+      opponentDisposition: 'b',
+      myMissionId: 'm',
+      opponentMissionId: 'n',
+      secondaryMode: SecondaryMode.fixed,
+    ));
+    const tactical = ConfigureBattle(MissionSetup(
+      myDisposition: 'a',
+      opponentDisposition: 'b',
+      myMissionId: 'm',
+      opponentMissionId: 'n',
+    ));
+
+    test('achieving a tactical mission spends it', () {
+      final log = BattleLog(events: const [
+        tactical,
+        DrawSecondary('outflank'),
+        ScoreSecondaryCard(cardId: 'outflank', round: 1, vp: 5),
+      ]);
+      expect(log.state.secondaries.hand, isEmpty);
+      expect(log.state.me.secondaryTotal, 5);
+    });
+
+    test('a fixed mission stays on the table and caps at 20', () {
+      // It is active all battle, so achieving it is not what spends it — and
+      // without a ceiling of its own it would have none.
+      final log = BattleLog(events: const [
+        fixed,
+        DrawSecondary('marked'),
+        ScoreSecondaryCard(cardId: 'marked', round: 1, vp: 12),
+        ScoreSecondaryCard(cardId: 'marked', round: 2, vp: 12),
+      ]);
+      expect(log.state.secondaries.hand, ['marked'],
+          reason: 'a fixed card is not discarded by achieving it');
+      expect(log.state.secondaries.scored['marked'], 20);
+      expect(log.state.me.secondaryTotal, 20);
+    });
+
+    test('a fixed mission cannot be discarded, nor traded, nor redrawn', () {
+      final state = const BattleLog(events: [fixed]).state;
+      expect(state.isFixed, isTrue);
+      expect(state.canTradeForCp(Player.me), isFalse);
+      expect(state.canRedraw(Player.me), isFalse);
+    });
+
+    test('the discard point is once per your turn, not per round', () {
+      final log = BattleLog(events: const [
+        tactical,
+        DrawSecondary('a'),
+        DrawSecondary('b'),
+        DiscardSecondary('a', forCp: true),
+        DiscardSecondary('b', forCp: true),
+      ]);
+      // One point for the act, however many cards went with it — on top of
+      // the point a battle starts with.
+      expect(log.state.cp, 2);
+      expect(log.state.canTradeForCp(Player.me), isFalse);
+
+      final next = log.add(const EndTurn()).add(const EndTurn());
+      expect(next.state.canTradeForCp(Player.me), isTrue,
+          reason: 'a new turn of mine, a new allowance');
+    });
+
+    test('the redraw spends a point, once per battle', () {
+      final log = BattleLog(events: const [
+        tactical,
+        AdjustCp(3),
+        DrawSecondary('a'),
+        DrawSecondary('b'),
+        RedrawSecondary('a'),
+      ]);
+      expect(log.state.cp, 3,
+          reason: 'one to start, three added, one spent on the swap');
+      expect(log.state.secondaries.hand, ['b']);
+      expect(log.state.canRedraw(Player.me), isFalse);
+
+      final again = log.add(const RedrawSecondary('b'));
+      expect(again.state.cp, 3, reason: 'the second one is not paid for');
+    });
+
+    test('a round caps at 15 and the battle at 45', () {
+      final log = BattleLog(events: const [
+        tactical,
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 1, vp: 20),
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 2, vp: 15),
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 3, vp: 15),
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 4, vp: 15),
+      ]);
+      // The primary was uncapped before this; 15 a round, 45 a battle.
+      expect(log.state.me.primary[1], 15);
+      expect(log.state.me.primaryTotal, 45);
+      expect(log.state.me.headroom(1, primaryKind: true), 0);
+      expect(log.state.me.remaining(primaryKind: true), 0);
+    });
+
+    test('a redraw survives the round trip', () {
+      const event = RedrawSecondary('outflank', side: Player.opponent);
+      final back = BattleEvent.fromJson(event.toJson()) as RedrawSecondary;
+      expect(back.cardId, 'outflank');
+      expect(back.side, Player.opponent);
     });
   });
 }
