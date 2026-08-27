@@ -253,6 +253,26 @@ void main() {
       expect(mantle?.description, isNot(contains('▪')));
     });
 
+    test('a keyword the update adds reaches the datasheet', () async {
+      // `Add 'FRAME'.` edits a list, not prose, so it is applied as a list.
+      final marines = await repo.faction('adeptus-astartes');
+      expect(marines.unit('vindicator')?.keywords, contains('Frame'));
+    });
+
+    test('a rewritten stratagem keeps its sections', () async {
+      // The packs print a stratagem's sections as running text — `WHEN: ...
+      // TARGET: ...` — where the app holds them as `**WHEN:**` paragraphs.
+      // Ten replacements flattened a stratagem into one unheaded blob before
+      // that was normalised, which is worse than wording a version behind.
+      final aeldari = await repo.faction('aeldari');
+      final text = aeldari.faction.stratagems
+          .firstWhere((s) => s.id == 'overflight-windrider-host')
+          .text;
+      for (final section in ['WHEN', 'TARGET', 'EFFECT']) {
+        expect(text, contains('**$section:**'));
+      }
+    });
+
     test('the patch is in the manifest, and says what it corrects', () async {
       final entry = (await repo.manifest()).patches.single;
       expect(entry.id, '2026-08-26');

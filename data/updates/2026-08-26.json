@@ -8217,97 +8217,107 @@
    "file": "abilities",
    "op": "set",
    "id": "doctrina-imperatives",
-   "key": "ability_id",
    "values": {
     "description": "- \u0007Ranged weapons equipped by models in this unit have the [HEAVY] ability.\n- \u0007Improve the Ballistic Skill characteristic of ranged weapons equipped by models in this unit by 1.\n- \u0007Each time a melee attack targets this unit, if this unit has the BATTLELINE keyword and/or it is within 6\" of one or more friendly"
    },
-   "note": "adeptus-mechanicus pack rules update"
+   "note": "adeptus-mechanicus pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-mechanicus",
    "file": "abilities",
    "op": "set",
    "id": "cyber-psalm-programming",
-   "key": "ability_id",
    "values": {
-    "description": "Add 2\" to the Move characteristic of models in LEGIO CYBERNETICA units from your army. In addition, unless that unit is Battle‑shocked, add 1 to the Objective Control characteristic of models in that unit.’ RAD-ZONE CORPS DETACHMENT Rad-bombardment Detachment Rule, Battle Round 1 Section, Unit"
+    "description": "Add 2\" to the Move characteristic of models in LEGIO CYBERNETICA units from your army. In addition, unless that unit is Battle‑shocked, add 1 to the Objective Control characteristic of models in that unit."
    },
-   "note": "adeptus-mechanicus pack rules update"
+   "note": "adeptus-mechanicus pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-mechanicus",
    "file": "abilities",
    "op": "set",
    "id": "stealth-optimisation",
-   "key": "ability_id",
    "values": {
     "description": "Friendly SKITARII INFANTRY, SKITARII MOUNTED and IRONSTRIDER BALLISTARII units have Stealth."
    },
-   "note": "adeptus-mechanicus pack rules update"
+   "note": "adeptus-mechanicus pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-mechanicus",
    "file": "abilities",
    "op": "set",
    "id": "veiled-hunter",
-   "key": "ability_id",
    "values": {
-    "description": "SKITARII MARSHAL model only. After both players have deployed their armies, you can select up to three SKITARII INFANTRY units from your army and redeploy all of those units. When doing so, any of those units can be placed into Strategic Reserves, regardless of how many units are already in Strategic Reserves.’ designed to improve the gaming experience for all players. highlighted in red. DATASHEETS Belisarius Cawl, Corpuscarii Electro-Priests, Cybernetica Datasmith, Fulgurite Electro-Priests, Kastelan Robots, Tech-Priest Dominus, Tech-Priest Enginseer, Tech-Priest Manipulus, Technoarcheologist –"
+    "description": "SKITARII MARSHAL model only. After both players have deployed their armies, you can select up to three SKITARII INFANTRY units from your army and redeploy all of those units. When doing so, any of those units can be placed into Strategic Reserves, regardless of how many units are already in Strategic Reserves."
    },
-   "note": "adeptus-mechanicus pack rules update"
+   "note": "adeptus-mechanicus pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-mechanicus",
    "file": "abilities",
    "op": "set",
    "id": "bomb-rack",
-   "key": "ability_id",
    "values": {
-    "description": "At the end of your opponent’s Fight phase, select one visible enemy unit (excluding Lone Operative units) within 24” of this unit, and roll six D6 for that unit: for each 4+, that unit suffers 1 mortal wound.’ Archaeopter Transvector\n- Profile: Change M to 14\".\n- Keywords: Remove 'AIRCRAFT'."
+    "description": "At the end of your opponent’s Fight phase, select one visible enemy unit (excluding Lone Operative units) within 24” of this unit, and roll six D6 for that unit: for each 4+, that unit suffers 1 mortal wound."
    },
-   "note": "adeptus-mechanicus pack rules update"
+   "note": "adeptus-mechanicus pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-mechanicus",
    "file": "abilities",
    "op": "set",
    "id": "aerial-deployment",
-   "key": "ability_id",
    "values": {
     "description": "In your first Movement phase, this unit can make an ingress move."
    },
-   "note": "adeptus-mechanicus pack rules update"
+   "note": "adeptus-mechanicus pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-mechanicus",
    "file": "abilities",
    "op": "set",
    "id": "repulsor-grid",
-   "key": "ability_id",
    "values": {
-    "description": "When an enemy unit targets this unit with ranged attacks, until that enemy unit has shot, when this unit makes a save roll:\n- \u0007On an unmodified 6, that enemy unit suffers 1 mortal wound after that enemy unit has shot.’ Onager Dunecrawler\n- \u0007Change the following weapon profiles: Daedalus Missile Launcher [ANTI-FLY 2+] RANGE A BS S AP 48\" 2 4+ 10 -2 Eradication Beamer - dissipated [BLAST, SUSTAINED HITS 1] RANGE A BS S AP 36\" 3D3 4+ 9 -2 Eradication Beamer - focused [BLAST, SUSTAINED HITS 1] RANGE A BS S AP 18\" 3D3 4+ 10 -3 Neutron Laser [HEAVY] RANGE A BS S AP 48\" 3 4+ 16 -4 Twin Onager Heavy Phosphor Blaster [IGNORES COVER, TWIN-LINKED] RANGE A BS S AP 36\" 12 4+ 6 -1\n- \u0007\u0007Add the following ability: 'Scuttling Walker: Each time this model makes Fall Back move, it can move through friendly models and sections of terrain features that"
+    "description": "When an enemy unit targets this unit with ranged attacks, until that enemy unit has shot, when this unit makes a save roll:\n- \u0007On an unmodified 6, that enemy unit suffers 1 mortal wound after that enemy unit has shot."
    },
-   "note": "adeptus-mechanicus pack rules update"
+   "note": "adeptus-mechanicus pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-mechanicus",
    "file": "abilities",
    "op": "set",
    "id": "servo-skull-uplink",
-   "key": "ability_id",
    "values": {
     "description": "Once per battle, at the start of any phase, you can select one friendly SKITARII unit that is Battle-shocked and within 6” of this model. unit is no longer Battle-shocked."
    },
-   "note": "adeptus-mechanicus pack rules update"
+   "note": "adeptus-mechanicus pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "aeldari",
    "file": "abilities",
    "op": "set",
    "id": "star-engines",
-   "key": "ability_id",
    "values": {
-    "description": "TRIGGER: When an eligible VEHICLE unit from your army is selected to make an Advance move.’ ‘EFFECT: Until the end of the turn, ranged weapons equipped by this unit have the [ASSAULT] ability.’ ASPECT HOST DETACHMENT"
+    "description": "TRIGGER: When an eligible VEHICLE unit from your army is selected to make an Advance move.’ ‘\n\n**EFFECT:** Until the end of the turn, ranged weapons equipped by this unit have the [ASSAULT] ability."
+   },
+   "note": "aeldari pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "aeldari",
+   "file": "stratagems",
+   "op": "set",
+   "id": "skyborne-sanctuary-aspect-host",
+   "values": {
+    "text": "**WHEN:** End of the Fight phase.\n\n**TARGET:** One unengaged ASURYANIunit from your army that was eligible to fight this phase, and one friendly TRANSPORT it is able to embark within.‘ ‘\n\n**EFFECT:** If your ASURYANI unit is wholly within 6\" of that TRANSPORT, it can embark within it.’ DEVOTED OF YNNEAD DETACHMENT Strength from Death Detachment Rule \u0007Change Lethal Intent to: 'At the end of your opponent"
    },
    "note": "aeldari pack rules update"
   },
@@ -8316,9 +8326,19 @@
    "file": "abilities",
    "op": "set",
    "id": "breath-of-vaul",
-   "key": "ability_id",
    "values": {
-    "description": "ASURYANI model only. While the bearer is leading a STORM GUARDIANS unit, each time you roll to determine the number of attacks made with a flamer equipped by a model in that unit, you can re‑roll the result, and each time you make a Damage roll for a model equipped with a fusion gun in that unit, you can re‑roll the result.' designed to improve the gaming experience for all players. highlighted in red. SEER COUNCIL DETACHMENT"
+    "description": "ASURYANI model only. While the bearer is leading a STORM GUARDIANS unit, each time you roll to determine the number of attacks made with a flamer equipped by a model in that unit, you can re‑roll the result, and each time you make a Damage roll for a model equipped with a fusion gun in that unit, you can re‑roll the result."
+   },
+   "note": "aeldari pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "aeldari",
+   "file": "stratagems",
+   "op": "set",
+   "id": "unshrouded-truth-seer-council",
+   "values": {
+    "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One ASURYANI INFANTRY unit from your army (excluding WRAITH CONSTRUCT units) that has not been selected to move this phase, was not set up on the battlefield this phase, and is within 9\" of one or more friendly ASURYANI PSYKER models.\n\n**EFFECT:** - Place your unit in strategic reserves.\n- Your unit has Deep Strike.\n- Your unit must make an ingress move this phase.\n\n**RESTRICTIONS:** Until the end of the phase, your unit is not eligible to be selected to move."
    },
    "note": "aeldari pack rules update"
   },
@@ -8327,9 +8347,29 @@
    "file": "abilities",
    "op": "set",
    "id": "higher-duty",
-   "key": "ability_id",
    "values": {
-    "description": "SPIRITSEER model only. In your opponent's Movement phase, if an enemy unit ends a move within 8\" of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to 6\".' WARHOST DETACHMENT"
+    "description": "SPIRITSEER model only. In your opponent's Movement phase, if an enemy unit ends a move within 8\" of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to 6\"."
+   },
+   "note": "aeldari pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "aeldari",
+   "file": "stratagems",
+   "op": "set",
+   "id": "fire-and-fade-warhost",
+   "values": {
+    "text": "**WHEN:** Your Shooting phase, just after an Asuryani Infantry unit from your army (excluding Aircraft, Asurmen and Wraith Construct units) has shot.\n\n**TARGET:** That ASURYANI unit.\n\n**EFFECT:** Your unit can make a Normal move of up to D6+1\".\n\n**RESTRICTIONS:** Until the end of the turn, your unit is not eligible to declare a charge or embark within a TRANSPORT."
+   },
+   "note": "aeldari pack rules update"
+  },
+  {
+   "faction": "aeldari",
+   "file": "stratagems",
+   "op": "set",
+   "id": "skyborne-sanctuary-warhost",
+   "values": {
+    "text": "**WHEN:** End of the Fight phase.\n\n**TARGET:** One unengaged ASURYANI unit from your army that was eligible to fight this phase and one friendly TRANSPORT it is able to embark within.\n\n**EFFECT:** If your ASURYANI unit is wholly within 6\" of that TRANSPORT, it can embark within it."
    },
    "note": "aeldari pack rules update"
   },
@@ -8339,7 +8379,7 @@
    "op": "set",
    "id": "overflight-windrider-host",
    "values": {
-    "text": "WHEN: End of your Shooting phase or the end of the Fight phase. TARGET: One ASURYANI MOUNTED unit from your army that destroyed one or more enemy units this phase. EFFECT: Your unit can make a Normal move of up to 7\"."
+    "text": "**WHEN:** End of your Shooting phase or the end of the Fight phase. \n\n**TARGET:** One ASURYANI MOUNTED unit from your army that destroyed one or more enemy units this phase. \n\n**EFFECT:** Your unit can make a Normal move of up to 7\"."
    },
    "note": "aeldari pack rules update"
   },
@@ -8348,42 +8388,60 @@
    "file": "abilities",
    "op": "set",
    "id": "hand-of-asuryan",
-   "key": "ability_id",
    "values": {
     "description": "Once per battle, when this model is selected to shoot, it can use this ability. If it does, until the end of the phase, its Bloody Twins weapon has a Damage characteristic of 3 and the [ANTI‑INFANTRY 5+] and [DEVASTATING WOUNDS] abilities."
    },
-   "note": "aeldari pack rules update"
+   "note": "aeldari pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "aeldari",
    "file": "abilities",
    "op": "set",
    "id": "cloudstrider",
-   "key": "ability_id",
    "values": {
-    "description": "While this model is leading a unit, at the end of your opponent’s turn, if that unit is not within Engagement Range of one or more enemy units, you can remove it from the battlefield and place it into Strategic Reserves. In addition, while this model is leading a unit, when that unit is set up on the battlefield using the Deep Strike ability, in your Movement phase, it can use this ability. If it does, that unit can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy models, but until the end of the turn, it is not eligible to declare a charge.' Corsair Voidreavers\n- Faction Abilities: Add 'Battle Focus'.\n- \u0007Wargear Options, third bullet point: Change to: 'Any number ofCorsair Voidreavers in this unit can each have their shuriken pistol and power sword replaced with 1 shuriken rifle.' Crimson Hunter, Hemlock Wraithfighter\n- Profile: \u0007 Change M and OC to ‘-’."
+    "description": "While this model is leading a unit, at the end of your opponent’s turn, if that unit is not within Engagement Range of one or more enemy units, you can remove it from the battlefield and place it into Strategic Reserves. In addition, while this model is leading a unit, when that unit is set up on the battlefield using the Deep Strike ability, in your Movement phase, it can use this ability. If it does, that unit can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy models, but until the end of the turn, it is not eligible to declare a charge.' Corsair Voidreavers\n- Faction Abilities: Add 'Battle Focus'.\n- \u0007Wargear Options, third bullet point: Change to: 'Any number ofCorsair Voidreavers in this unit can each have their shuriken pistol and power sword replaced with 1 shuriken rifle."
    },
-   "note": "aeldari pack rules update"
+   "note": "aeldari pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "aeldari",
    "file": "abilities",
    "op": "set",
    "id": "acrobatic-grace",
-   "key": "ability_id",
    "values": {
     "description": "- This unit has Stealth.\n- Melee attacks that target this unit have ‑1 to hit rolls."
    },
-   "note": "aeldari pack rules update"
+   "note": "aeldari pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "aeldari",
    "file": "abilities",
    "op": "set",
    "id": "rapid-embarkation",
-   "key": "ability_id",
    "values": {
     "description": "That unit can embark within this TRANSPORT in a turn it disembarked from this TRANSPORT."
+   },
+   "note": "aeldari pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "aeldari",
+   "file": "units",
+   "op": "set",
+   "id": "the-visarch",
+   "values": {
+    "ability_ids": [
+     "way-of-the-blade",
+     "yvraines-champion",
+     "support",
+     "servant-of-the-whispering-god",
+     "battle-focus",
+     "disparate-paths",
+     "fights-first"
+    ]
    },
    "note": "aeldari pack rules update"
   },
@@ -8392,9 +8450,25 @@
    "file": "abilities",
    "op": "set",
    "id": "inevitable-death",
-   "key": "ability_id",
    "values": {
     "description": "Once in each of your opponent’s turns, if this model is on the battlefield when another friendly AELDARI unit is destroyed, just after removing the last model in that unit, you can remove this model from the battlefield and set it up as close as possible to where that destroyed model was destroyed and not within Engagement Range of one or more enemy units. Doing so does not prevent this model from being eligible to move."
+   },
+   "note": "aeldari pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "aeldari",
+   "file": "units",
+   "op": "set",
+   "id": "warlock",
+   "values": {
+    "ability_ids": [
+     "support",
+     "runes-of-fortune-psychic",
+     "psychic-communion-psychic",
+     "support",
+     "battle-focus"
+    ]
    },
    "note": "aeldari pack rules update"
   },
@@ -8403,20 +8477,40 @@
    "file": "abilities",
    "op": "set",
    "id": "herald-of-ynnead",
-   "key": "ability_id",
    "values": {
-    "description": "At the start of the Fight phase, select one enemy unit within Engagement Range of this model. Until the end of the phase, each time a friendly AELDARI model makes an attack that targets that unit, you can re‑roll a Wound roll of 1.’ Ynnari Venom\n- \u0007Lithe Embarkation Ability: add 'That unit can embark within this TRANSPORT in a turn it disembarked from this TRANSPORT.'\n- \u0007Transport section, second paragraph: Change to: 'Before the battle, at the start of the Declare Battle Formations step, you can select one YNNARI KABALITE WARRIORS or YNNARI WYCHESunit from your army that has not already been split. If you do, that unit is split into two units, each containing as equal a number of models as possible (when splitting a unit in this way, make a note of which models form each of the two new units). One of these units must start the battle embarked within this TRANSPORT; the other can start the battle embarked within another TRANSPORT, or it can be deployed as a separate unit.'"
+    "description": "At the start of the Fight phase, select one enemy unit within Engagement Range of this model. Until the end of the phase, each time a friendly AELDARI model makes an attack that targets that unit, you can re‑roll a Wound roll of 1."
    },
-   "note": "aeldari pack rules update"
+   "note": "aeldari pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "astra-militarum",
+   "file": "stratagems",
+   "op": "set",
+   "id": "swift-interception-mechanised-assault",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.\n\n**TARGET:** One TRANSPORT unit from your army (excluding AIRCRAFT and TITANIC units) that is not within Engagement Range of one or more enemy units, and is within 8\" of the enemy unit that just ended that move.\n\n**EFFECT:** Your TRANSPORT can make a Normal move of up to 6\"."
+   },
+   "note": "astra-militarum pack rules update"
   },
   {
    "faction": "astra-militarum",
    "file": "abilities",
    "op": "set",
    "id": "masters-of-camouflage",
-   "key": "ability_id",
    "values": {
     "description": "Friendly ASTRA MILITARUM units (excluding TITANIC units) have Stealth."
+   },
+   "note": "astra-militarum pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "astra-militarum",
+   "file": "stratagems",
+   "op": "set",
+   "id": "tanglefoot-grenades-recon-element",
+   "values": {
+    "text": "**WHEN:** Start of your opponent’s Charge phase.\n\n**TARGET:** One ASTRA MILITARUM GRENADES unit from your army.\n\n**EFFECT:** Select one visible enemy unit within 12\" of your unit. When that enemy unit declares a charge, that enemy unit has -1 to charge rolls."
    },
    "note": "astra-militarum pack rules update"
   },
@@ -8425,64 +8519,84 @@
    "file": "abilities",
    "op": "set",
    "id": "cadia-stands",
-   "key": "ability_id",
    "values": {
     "description": "While this unit contains an OFFICER model and this unit is within range of an objective, this unit can re-roll battle‑shock rolls."
    },
-   "note": "astra-militarum pack rules update"
+   "note": "astra-militarum pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "astra-militarum",
    "file": "abilities",
    "op": "set",
    "id": "earthshaker-rounds",
-   "key": "ability_id",
    "values": {
     "description": "In your Shooting phase, after this model has shot, if one or more of those attacks made with its earthshaker cannon scored a hit against an enemy INFANTRY unit, until the start of your next Shooting phase, that unit is shaken. While a unit is shaken, subtract 2\" from its Move characteristic and subtract 2 from Charge rolls made for it."
    },
-   "note": "astra-militarum pack rules update"
+   "note": "astra-militarum pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "astra-militarum",
    "file": "abilities",
    "op": "set",
    "id": "remote-mine",
-   "key": "ability_id",
    "values": {
     "description": "Once per battle, at the start of your Shooting phase, you can select one enemy unit within 9\" of and visible to the bearer and roll one D6: on a 3+, that enemy unit suffers D3 mortal wounds, or 2D3 mortal wounds instead if it is a VEHICLE or FORTIFICATIONS unit.’ Krieg Command Squad,\n- Ranged Weapons table, bolt pistol: Add ‘[PISTOL]’.\n- \u0007Wargear Options, fifth bullet: Change to ‘1 Veteran Guardsman not equipped with alchemyk counteragents can replace its laspistol with one of the following: ▫ \u00071 bolt pistol ▫ \u00071 plasma pistol’ Krieg Heavy Weapons Squad\n- Ranged Weapons, laspistol: Change Range characteristic to ‘12\"’.\n- Final \u0007 Duty ability: Change to ‘While the Fire Coordinator model is on the battlefield, each time a Heavy Weapons Gunner model is destroyed, roll one D6: on a 3+, do not remove it from play. The destroyed model can shoot after the attacking model’s unit has finished making its attacks, and is then removed from play."
    },
-   "note": "astra-militarum pack rules update"
+   "note": "astra-militarum pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "astra-militarum",
    "file": "abilities",
    "op": "set",
    "id": "death-befitting-an-officer",
-   "key": "ability_id",
    "values": {
     "description": "In your opponent’s Shooting phase, when this unit is destroyed, before this unit’s deadly demise roll, roll one D6:\n- \u0007On a 2+, do not remove this unit from the battlefield. After the attacking unit has shot, this unit can shoot using normal shooting, but while doing so this unit can only target that enemy unit. When this unit has shot, or at the end of the phase (whichever comes first), resolve this unit’s deadly demise roll, then this unit is removed from the battlefield."
    },
-   "note": "astra-militarum pack rules update"
+   "note": "astra-militarum pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "astra-militarum",
    "file": "abilities",
    "op": "set",
    "id": "covert-stealth-team",
-   "key": "ability_id",
    "values": {
     "description": "At the end of your opponent’s turn, if this unit is unengaged, you can use this ability. If you do:\n- Place this unit in strategic reserves.\n- This unit has Deep Strike until the start of your next Shooting phase.\n- \u0007This unit must make an ingress move in your next Movement phase (including in your first turn).’ Valkyrie\n- Profile: Change M to ‘14\"’ and OC to ‘-’.\n- Keywords: Remove ‘AIRCRAFT’. FAQS Q: Can the Reinforcements! Stratagem be used on a unit that is Battle- shocked? A: No. Q: If a unit contains two models equipped with a vox-caster, can I attempt to generate twice when the bearer’s unit is targeted with a Stratagem? A: No. Q: Can I attempt to generate from a unit containing a vox-caster, when targeting that unit with the Reinforcements! Stratagem? A: No. Q: When using the Creeping Barrage ability, how do you resolve the maximum number of units that can be shaken? A: You roll one D6 for each enemy unit that is more than 12\" from every model from your army that is on the battlefield, in an order of your choosing, one at a time. Once the maximum number of enemy units for the battle size have been shaken, stop rolling for any additional units. Q: When an Ogryn Bodyguard joins a Militarum Tempestus Command Squad, can the unit set up using the Deep Strike ability? A: No, as the Ogryn Bodyguard model does not have the Deep Strike ability. Q: If a unit becomes affected by the same Order multiple times, do those Orders affect that unit multiple times? A: No."
    },
-   "note": "astra-militarum pack rules update"
+   "note": "astra-militarum pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "chaos-space-marines",
    "file": "abilities",
    "op": "set",
    "id": "warped-foresight",
-   "key": "ability_id",
    "values": {
-    "description": "DARK APOSTLE or DAMNED model only. While the bearer is leading a unit with the Scouts 6” ability, every model in the bearer’s unit has the Scouts 6” ability. DECEPTORS DETACHMENT"
+    "description": "DARK APOSTLE or DAMNED model only. While the bearer is leading a unit with the Scouts 6” ability, every model in the bearer"
+   },
+   "note": "chaos-space-marines pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "chaos-space-marines",
+   "file": "stratagems",
+   "op": "set",
+   "id": "screaming-descent-dread-talons",
+   "values": {
+    "text": "**WHEN:** Reinforcements step of your Movement phase, from the second battle round onwards.\n\n**TARGET:** One HERETIC ASTARTES JUMP PACK unit from your army that is in Reserves.\n\n**EFFECT:** Set your unit up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units, but until the end of the turn, it is not eligible to declare a charge. Then select one enemy INFANTRY or MOUNTED unit within 9\" of and visible to your unit: that unit makes a battle‑shock roll.’"
+   },
+   "note": "chaos-space-marines pack rules update"
+  },
+  {
+   "faction": "chaos-space-marines",
+   "file": "stratagems",
+   "op": "set",
+   "id": "unfailingly-obdurate-renegade-raiders",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One HERETIC ASTARTES unit from your army (excluding DAMNED units) that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
    },
    "note": "chaos-space-marines pack rules update"
   },
@@ -8491,9 +8605,19 @@
    "file": "abilities",
    "op": "set",
    "id": "eager-for-vengeance",
-   "key": "ability_id",
    "values": {
-    "description": "HERETIC ASTARTES model only (excluding DAMNED models). The bearer’s unit is eligible to shoot and declare a charge in a turn in which it Fell Back. Each time a model in the bearer’s unit makes an attack that targets your focus of hatred, if the bearer’s unit Fell Back this turn, add 1 to the Hit roll, and each time you select your focus of hatred as a target of that unit’s charge, add 1 to the Charge roll.’ Bringers of Despair Stratagem\n- CP Cost: change to '1CP'.\n- When section: change to 'Fight phase.'"
+    "description": "HERETIC ASTARTES model only (excluding DAMNED models). The bearer’s unit is eligible to shoot and declare a charge in a turn in which it Fell Back. Each time a model in the bearer’s unit makes an attack that targets your focus of hatred, if the bearer’s unit Fell Back this turn, add 1 to the Hit roll, and each time you select your focus of hatred as a target of that unit’s charge, add 1 to the Charge roll."
+   },
+   "note": "chaos-space-marines pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "chaos-space-marines",
+   "file": "stratagems",
+   "op": "set",
+   "id": "contemptuous-disregard-veterans-of-the-long-war",
+   "values": {
+    "text": "**WHEN:** Your opponents Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One HERETIC ASTARTES unit from your army (excluding DAMNED units) that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
    },
    "note": "chaos-space-marines pack rules update"
   },
@@ -8502,77 +8626,77 @@
    "file": "abilities",
    "op": "set",
    "id": "dark-destiny",
-   "key": "ability_id",
    "values": {
     "description": "Each time this model’s unit makes a Dark Pact and does not fail the resulting leadership roll, if the result of that roll was 7+, you gain 1CP."
    },
-   "note": "chaos-space-marines pack rules update"
+   "note": "chaos-space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "chaos-space-marines",
    "file": "abilities",
    "op": "set",
    "id": "howling-horde",
-   "key": "ability_id",
    "values": {
     "description": "In your opponent's Shooting phase, when an enemy unit has shot, if a model from this unit was destroyed as a result of those attacks, this unit can make a surge move of up to D6\"."
    },
-   "note": "chaos-space-marines pack rules update"
+   "note": "chaos-space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "chaos-space-marines",
    "file": "abilities",
    "op": "set",
    "id": "chirurgeon",
-   "key": "ability_id",
    "values": {
-    "description": "The first time this unit’s FABIUS BILE model is destroyed, at the end of the phase, roll one D6: on a 2+, set it back up on the battlefield, as close as possible to where it was destroyed and not within Engagement Range of any enemy models, with its full wounds remaining.'"
+    "description": "The first time this unit"
    },
-   "note": "chaos-space-marines pack rules update"
+   "note": "chaos-space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "chaos-space-marines",
    "file": "abilities",
    "op": "set",
    "id": "annihilator",
-   "key": "ability_id",
    "values": {
     "description": "Each time a ranged attack made by this model is allocated to a MONSTER or VEHICLE model, you can re‑roll the Damage roll."
    },
-   "note": "chaos-space-marines pack rules update"
+   "note": "chaos-space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "chaos-space-marines",
    "file": "abilities",
    "op": "set",
    "id": "warp-rift-firepower",
-   "key": "ability_id",
    "values": {
-    "description": "Warp Rift Firepower (Once per battle, per unit): In your Shooting phase, when this unit is selected to shoot, you can use this ability. If you do, this unit's ranged attacks have [INDIRECT FIRE].' Vashtorr the Arkifane\n- \u0007Abilities section: add ‘Indentured Daemon Engines: While this model is within 3\" of one or more friendly DAEMON VEHICLE units, this model has the Lone Operative ability.’\n- \u0007Reorder Reality ability: change to 'Each time an enemy unit within 18\" of this model targets this model, subtract 1 from the Hit roll and, until the end of the phase, that enemy unit’s ranged weapons have the [HAZARDOUS] ability.’\n- \u0007Unholy Mechanisms ability: change to 'While a friendly DAEMON VEHICLE unit is within 6\" of this model, add 2 to the Strength characteristic of weapons equipped by models in that unit.’\n- Vashtorr’s \u0007 hammer weapon profile: change to: Vashtorr's Hammer - Strike [ANTI-VEHICLE 4+, DEVASTATING WOUNDS] RANGE A WS S AP D Melee 6 2+ 14 -3 3 Vashtorr's Hammer - Sweep [ANTI-VEHICLE 4+, DEVASTATING WOUNDS] RANGE A WS S AP D Melee 12 2+ 8 -1 2"
+    "description": "Warp Rift Firepower (Once per battle, per unit): In your Shooting phase, when this unit is selected to shoot, you can use this ability. If you do, this unit's ranged attacks have [INDIRECT FIRE].' Vashtorr the Arkifane\n- \u0007Abilities section: add ‘Indentured Daemon Engines: While this model is within 3\" of one or more friendly DAEMON VEHICLE units, this model has the Lone Operative ability.’\n- \u0007Reorder Reality ability: change to 'Each time an enemy unit within 18\" of this model targets this model, subtract 1 from the Hit roll and, until the end of the phase, that enemy unit’s ranged weapons have the [HAZARDOUS] ability.’\n- \u0007Unholy Mechanisms ability: change to 'While a friendly DAEMON VEHICLE unit is within 6\" of this model, add 2 to the Strength characteristic of weapons equipped by models in that unit.’\n- Vashtorr"
    },
-   "note": "chaos-space-marines pack rules update"
+   "note": "chaos-space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "chaos-space-marines",
    "file": "abilities",
    "op": "set",
    "id": "warp-strike",
-   "key": "ability_id",
    "values": {
     "description": "At the end of the Fight phase, if this unit destroyed one or more enemy units this phase and is not within Engagement Range of one or more enemy units, you can remove this unit from the battlefield and place it into Strategic Reserves."
    },
-   "note": "chaos-space-marines pack rules update"
+   "note": "chaos-space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "chaos-space-marines",
    "file": "abilities",
    "op": "set",
    "id": "twisted-defence-force",
-   "key": "ability_id",
    "values": {
-    "description": "While this unit is within range of an objective, this unit has +1 Sv against ranged attacks.' FAQS Q: If I use the Cults of the Dark Gods rule to add Plague Marines to my Chaos Space Marines army, does the Plague Marines’ Infused with the Blessings of Nurgle ability have any effect? A: No Q: When using the Soul Link Enhancement, can the bearer use a datasheet ability it gains as a result even if that ability has already been used by another CHARACTER model as many times as its restrictions allow (e.g. ‘once per battle’, ‘once per phase’)? A: Yes. Q: When using the Soul Link Enhancement, can I select a CHARACTER model from my army that is not on the battlefield? A: Yes. Q: Can my CHARACTER with the Soul Link Enhancement use that Enhancement while it is in Strategic Reserves? A: Yes. Q: When replacing the datasheet abilities of the bearer of the Soul Link Enhancement with those of the selected CHARACTER model, does this include Core and Faction abilities? A: Yes. Q: When replacing the datasheet abilities of the bearer of the Soul Link Enhancement with those of the selected CHARACTER model, does this include which units the bearer can be attached to? A: No. Q: If I am using the Veterans of the Long War Detachment, can I select a unit embarked within a TRANSPORT to be my focus of hatred? A: Yes. Q: For the Opportunistic Raiders Stratagem, is a unit that did not fight this phase an eligible target for that Stratagem, provided it was eligible to fight at one point during the phase? A: Yes. Q: Can I use the Opportunistic Raiders Stratagem to Fall Back with a unit of Warp Talons, then use that unit’s Warp Strike ability to place it into Strategic Reserves? A: If that Warp Talons unit destroyed one or more units this phase, yes; otherwise, no. Q:For the Warp Talons’ Warp Strike ability, is a unit that did not fight this phase eligible to use that ability, provided it was eligible to fight at one point during the phase? A: No. Q: When is the model destroyed by the Traitor Enforcer’s Brutal Example ability removed? A: Before resolving the Fire Overwatch Stratagem with that unit. Q: When I target a unit with the Fire Overwatch Stratagem, can that unit make a Dark Pact? A: Yes, as the unit is selected to shoot. Q: Can I select a unit to shoot when there are no eligible targets so that unit can make a Dark Pact? A: No. Q: Does Fabius Bile’s Enhanced Warriors ability apply if Fabius starts the battle as part of an Attached unit inside a transport? A: Yes. Q: When I replace the datasheet abilities of the bearer of the Soul Link Enhancement, do persisting effects that were gained from the replaced abilities continue to apply to the bearer of the Soul Link Enhancement? A: No."
+    "description": "While this unit is within range of an objective, this unit has +1 Sv against ranged attacks."
    },
-   "note": "chaos-space-marines pack rules update"
+   "note": "chaos-space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "dark-angels",
@@ -8580,7 +8704,7 @@
    "op": "set",
    "id": "death-on-the-wind-company-of-hunters",
    "values": {
-    "text": "WHEN: Your Movement phase, when a friendly ADEPTUS ASTARTES unit ends an advance move. TARGET: That ADEPTUS ASTARTES unit. EFFECT: That advance move does not prevent your unit from being eligible to declare a charge."
+    "text": "**WHEN:** Your Movement phase, when a friendly ADEPTUS ASTARTES unit ends an advance move. \n\n**TARGET:** That ADEPTUS ASTARTES unit. \n\n**EFFECT:** That advance move does not prevent your unit from being eligible to declare a charge."
    },
    "note": "dark-angels pack rules update"
   },
@@ -8590,7 +8714,7 @@
    "op": "set",
    "id": "talon-strike-company-of-hunters",
    "values": {
-    "text": "WHEN: Fight phase, when a friendly ADEPTUS ASTARTES unit is selected to fight. TARGET: That ADEPTUS ASTARTES unit. EFFECT: Your unit’s melee attacks have [LANCE].’ designed to improve the gaming experience for all players. highlighted in red. INNER CIRCLE TASK FORCE DETACHMENT"
+    "text": "**WHEN:** Fight phase, when a friendly ADEPTUS ASTARTES unit is selected to fight. \n\n**TARGET:** That ADEPTUS ASTARTES unit. \n\n**EFFECT:** Your unit’s melee attacks have [LANCE]."
    },
    "note": "dark-angels pack rules update"
   },
@@ -8599,154 +8723,204 @@
    "file": "abilities",
    "op": "set",
    "id": "shroud-of-heroes",
-   "key": "ability_id",
    "values": {
-    "description": "ADEPTUS ASTARTES model only. (Once per battle, per army) When this model is destroyed, at the end of the phase, roll one D6:\n- \u0007On a 2+, set up this model on the battlefield, unengaged and as close as possible to where it was destroyed. This model is not part of an attached unit and its unit has a starting strength of 1. This model has 3 wounds remaining, or its full wounds remaining if this model was battle-shocked when it was destroyed.’ DATASHEETS Nephilim Jetfighter, Ravenwing Dark Talon\n- Core Abilities: Remove 'Hover'.\n- Profile: \u0007 Change M and OC to '-'. Deathwing Terminator Squad, Deathwing Knights – Watcher in the"
+    "description": "ADEPTUS ASTARTES model only. (Once per battle, per army) When this model is destroyed, at the end of the phase, roll one D6:\n- \u0007On a 2+, set up this model on the battlefield, unengaged and as close as possible to where it was destroyed. This model is not part of an attached unit and its unit has a starting strength of 1. This model has 3 wounds remaining, or its full wounds remaining if this model was battle-shocked when it was destroyed."
    },
-   "note": "dark-angels pack rules update"
+   "note": "dark-angels pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "dark-angels",
    "file": "abilities",
    "op": "set",
    "id": "braziers-of-judgement",
-   "key": "ability_id",
    "values": {
     "description": "- This unit has Stealth.\n- Melee attacks that target this unit have ‑1"
    },
-   "note": "dark-angels pack rules update"
+   "note": "dark-angels pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "dark-angels",
    "file": "abilities",
    "op": "set",
    "id": "lightning-fast-manoeuvres",
-   "key": "ability_id",
    "values": {
-    "description": "Ranged attacks that target this unit have ‑1 to wound rolls.’ Ravenwing Black Knights, Ravenwing Command Squad – Black Knight Combat Weapon Profile Black Knight Combat Weapon [DEVASTATING WOUNDS] RANGE A WS S AP D Melee 3 3+ 5 -2 1"
+    "description": "Ranged attacks that target this unit have ‑1 to wound rolls."
    },
-   "note": "dark-angels pack rules update"
+   "note": "dark-angels pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "dark-angels",
    "file": "abilities",
    "op": "set",
    "id": "honour-or-death",
-   "key": "ability_id",
    "values": {
     "description": "While this unit contains a Ravenwing Champion, add 1 to Advance and Charge rolls made for this unit.When you target this unit with the Heroic Intervention stratagem, that use is -1 CP."
    },
-   "note": "dark-angels pack rules update"
+   "note": "dark-angels pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "dark-angels",
    "file": "abilities",
    "op": "set",
    "id": "stasis-bomb",
-   "key": "ability_id",
    "values": {
     "description": "Stasis Bomb: At the end of your opponent’s Fight phase, select one visible enemy unit (excluding AIRCRAFT/Lone Operative units) within 24\" of this unit. That enemy unit is slowed until the end of your opponent’s next Movement phase:\n- \u0007While a unit is slowed, in your opponent’s Movement phase, when that unit is selected to move, unless that unit remains stationary, roll one D6: ▫ \u0007On a 1-4, that unit suffers D3 mortal wounds and that unit has -2\" M. ▫ \u0007On a 5-6, that unit suffers 2D3 mortal wounds and that unit has -3\" M."
    },
-   "note": "dark-angels pack rules update"
+   "note": "dark-angels pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "dark-angels",
    "file": "abilities",
    "op": "set",
    "id": "grand-master-of-the-ravenwing",
-   "key": "ability_id",
    "values": {
     "description": "- This unit’s ranged attacks have [ASSAULT].\n- \u0007When this unit is selected to make an advance move, that advance move does not prevent this unit from being eligible to declare a charge.\n- This unit has MOBILE. Land Speeder Vengeance, Ravenwing Darkshroud, Sammael –"
    },
-   "note": "dark-angels pack rules update"
+   "note": "dark-angels pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "death-guard",
+   "file": "stratagems",
+   "op": "set",
+   "id": "stinking-mire-mortarions-hammer",
+   "values": {
+    "text": "**WHEN:** Start of your opponent’s Charge phase.\n\n**TARGET:** One friendly unengaged DEATH GUARD VEHICLE unit.\n\n**EFFECT:** Select one visible enemy unit within 12\" of your unit. When that enemy unit declares a charge, that enemy unit has ‑1 to charge rolls."
+   },
+   "note": "death-guard pack rules update"
   },
   {
    "faction": "death-guard",
    "file": "abilities",
    "op": "set",
    "id": "beckoning-blight",
-   "key": "ability_id",
    "values": {
-    "description": "DEATH GUARD model only. Each time a PLAGUE LEGIONS unit from your army is set up on the battlefield using the Deep Strike ability, if it is set up wholly within 12\" of the bearer, it can be set up anywhere that is more than 6\" horizontally away from all enemy models, instead of more than 8\".’ VIRULENT VECTORIUM DETACHMENT"
+    "description": "DEATH GUARD model only. Each time a PLAGUE LEGIONS unit from your army is set up on the battlefield using the Deep Strike ability, if it is set up wholly within 12\" of the bearer, it can be set up anywhere that is more than 6\" horizontally away from all enemy models, instead of more than 8\"."
    },
-   "note": "death-guard pack rules update"
+   "note": "death-guard pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "death-guard",
    "file": "abilities",
    "op": "set",
    "id": "worldblight",
-   "key": "ability_id",
    "values": {
-    "description": "At the end of your Command phase, if a friendly DEATH GUARD unit is controlling an objective, that objective is secured. Until you lose control of that objective, while an enemy unit is within range of that objective, that enemy unit is Afflicted (pg 71).’ DATASHEETS Chaos Land Raider, Chaos Predator Annihilator, Chaos Predator Destructor, Chaos Rhino, Miasmic Malignifier, Plagueburst Crawler –"
+    "description": "At the end of your Command phase, if a friendly DEATH GUARD unit is controlling an objective, that objective is secured. Until you lose control of that objective, while an enemy unit is within range of that objective, that enemy unit is Afflicted (pg 71)."
    },
-   "note": "death-guard pack rules update"
+   "note": "death-guard pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "death-guard",
    "file": "abilities",
    "op": "set",
    "id": "death-approaches",
-   "key": "ability_id",
    "values": {
     "description": "In your Movement phase, each time this unit is set up on the battlefield using the Deep Strike ability, it can be set up anywhere on the battlefield that is more than 6\" horizontally away from all Afflicted enemy units, and more than 8\" horizontally away from all other enemy units.’"
    },
-   "note": "death-guard pack rules update"
+   "note": "death-guard pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "drukhari",
+   "file": "stratagems",
+   "op": "set",
+   "id": "postmortality-covenite-coterie",
+   "values": {
+    "text": "**WHEN:** Any phase.\n\n**TARGET:** One HAEMONCULUS model from your army that was just destroyed. You can use this Stratagem on that model even though it was just destroyed.\n\n**EFFECT:** Spend 1-3 Pain tokens. At the end of the phase, set up the destroyed model on the battlefield, unengaged and as close as possible to where it was destroyed. That model is not part of an attached unit and its unit has a starting strength of 1. That model has a number of wounds remaining equal to the number of Pain tokens you just spent.\n\n**RESTRICTION:** You cannot use this Stratagem if you have 0 Pain tokens, and you cannot target the same HAEMONCULUS model with this **Stratagem** more than once per battle."
+   },
+   "note": "drukhari pack rules update"
+  },
+  {
+   "faction": "drukhari",
+   "file": "stratagems",
+   "op": "set",
+   "id": "enfolding-nightmare-covenite-coterie",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One HAEMONCULUS COVENS unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Your unit can make a surge move of up to D6\"."
+   },
+   "note": "drukhari pack rules update"
+  },
+  {
+   "faction": "drukhari",
+   "file": "stratagems",
+   "op": "set",
+   "id": "connoisseurs-of-pain-covenite-coterie",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Drukhari unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Spend 1 Pain Token. Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1. At the end of the phase, if your unit is still on the battlefield and it is a HAEMONCULUS COVENS unit, you gain 1 Pain Token."
+   },
+   "note": "drukhari pack rules update"
   },
   {
    "faction": "drukhari",
    "file": "abilities",
    "op": "set",
    "id": "shadowfield",
-   "key": "ability_id",
    "values": {
     "description": "While this model has an InSv, this unit cannot re-roll save rolls. When this model loses a wound (excluding from mortal wounds), this model has no InSv until the end of the battle."
    },
-   "note": "drukhari pack rules update"
+   "note": "drukhari pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "drukhari",
    "file": "abilities",
    "op": "set",
    "id": "skyboard-evasion",
-   "key": "ability_id",
    "values": {
     "description": "In your opponent's Movement phase, if an enemy unit ends a move within 8” of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to D6”."
    },
-   "note": "drukhari pack rules update"
+   "note": "drukhari pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "drukhari",
    "file": "abilities",
    "op": "set",
    "id": "mind-like-a-steel-trap",
-   "key": "ability_id",
    "values": {
     "description": "Mind Like a Steel Trap: Once per turn, when your opponent targets a unit from their army within 12” of this model with a stratagem, you can use this ability. If you do increase the CP cost of that use of that stratagem by 1CP."
    },
-   "note": "drukhari pack rules update"
+   "note": "drukhari pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "drukhari",
    "file": "abilities",
    "op": "set",
    "id": "void-mine",
-   "key": "ability_id",
    "values": {
     "description": "At the end of your opponent’s Fight phase, select one visible enemy model (excluding Lone Operative units) within 24\" of this unit, and roll one D6 for each enemy unit within D6\" of that model:\n- For each 4+, that enemy unit suffers D6 mortal wounds.' FAQS Q: Does the Venom’s Aerialists ability allow a unit to embark within a TRANSPORT even if it disembarked from a TRANSPORT this turn? A: Yes, because it states 'That unit can embark within this TRANSPORT in a turn it disembarked from a TRANSPORT."
    },
-   "note": "drukhari pack rules update"
+   "note": "drukhari pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "stratagems",
+   "op": "set",
+   "id": "armour-of-abhorrence-coterie-of-the-conceited",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Emperor’s Children unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
+   },
+   "note": "emperors-children pack rules update"
   },
   {
    "faction": "emperors-children",
    "file": "abilities",
    "op": "set",
    "id": "faultless-opportunist",
-   "key": "ability_id",
    "values": {
-    "description": "You can target this unit with the Heroic Intervention stratagem, regardless of any other uses of that stratagem this phase. If you do:\n- \u0007That use is -1 CP.\n- \u0007That use does not prevent any uses of that stratagem on other units this phase.' RAPID EVISCERATION DETACHMENT"
+    "description": "You can target this unit with the Heroic Intervention stratagem, regardless of any other uses of that stratagem this phase. If you do:\n- \u0007That use is -1 CP.\n- \u0007That use does not prevent any uses of that stratagem on other units this phase."
    },
-   "note": "emperors-children pack rules update"
+   "note": "emperors-children pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "emperors-children",
@@ -8754,7 +8928,7 @@
    "op": "set",
    "id": "on-to-the-next-rapid-evisceration",
    "values": {
-    "text": "WHEN: End of the Fight phase. TARGET: One EMPEROR’S CHILDREN unit from your army that destroyed an enemy unit this phase, and one friendly TRANSPORT it is able to embark within. EFFECT: If your EMPEROR’S CHILDREN unit is wholly within 6\" of that TRANSPORT, it can embark within it. Your unit can embark within that TRANSPORT in a turn it disembarked from a TRANSPORT."
+    "text": "**WHEN:** End of the Fight phase. \n\n**TARGET:** One EMPEROR’S CHILDREN unit from your army that destroyed an enemy unit this phase, and one friendly TRANSPORT it is able to embark within. \n\n**EFFECT:** If your EMPEROR’S CHILDREN unit is wholly within 6\" of that TRANSPORT, it can embark within it. Your unit can embark within that TRANSPORT in a turn it disembarked from a TRANSPORT."
    },
    "note": "emperors-children pack rules update"
   },
@@ -8763,9 +8937,19 @@
    "file": "abilities",
    "op": "set",
    "id": "mechanised-murder",
-   "key": "ability_id",
    "values": {
-    "description": "Each time an EMPEROR’S CHILDREN model from your army makes an attack, if it is a TRANSPORT model or disembarked from a TRANSPORT this turn, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.’ SLAANESH’S CHOSEN DETACHMENT"
+    "description": "Each time an EMPEROR’S CHILDREN model from your army makes an attack, if it is a TRANSPORT model or disembarked from a TRANSPORT this turn, re-roll a Hit roll of 1 and re-roll a Wound roll of 1."
+   },
+   "note": "emperors-children pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "stratagems",
+   "op": "set",
+   "id": "vengeful-surge-slaaneshs-chosen",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One EMPEROR’S CHILDREN CHARACTER unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** CHILDREN designed to improve the gaming experience for all players. highlighted in red. 'Your unit can make a surge move of up to D6\". If your unit is not your army's Favoured Champions, you can re-roll the dice to determine the distance of that surge move.'"
    },
    "note": "emperors-children pack rules update"
   },
@@ -8775,7 +8959,7 @@
    "op": "set",
    "id": "refusal-to-be-outdone-slaaneshs-chosen",
    "values": {
-    "text": "WHEN: Your Charge phase, when a friendly EMPEROR’S CHILDREN CHARACTER unit within 12\" of an engaged enemy unit declares a charge. TARGET: That EMPEROR’S CHILDREN CHARACTER unit. EFFECT:\n- Your unit can re-roll charge rolls.\n- \u0007Your unit must end that charge move engaged with one or more of those enemy units.’ DATASHEETS"
+    "text": "**WHEN:** Your Charge phase, when a friendly EMPEROR’S CHILDREN CHARACTER unit within 12\" of an engaged enemy unit declares a charge. \n\n**TARGET:** That EMPEROR’S CHILDREN CHARACTER unit. \n\n**EFFECT:** - Your unit can re-roll charge rolls.\n- \u0007Your unit must end that charge move engaged with one or more of those enemy units."
    },
    "note": "emperors-children pack rules update"
   },
@@ -8784,42 +8968,62 @@
    "file": "abilities",
    "op": "set",
    "id": "scuttling-horrors",
-   "key": "ability_id",
    "values": {
     "description": "In your opponent's Movement phase, if an enemy unit ends a move within 8” of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to 6”."
    },
-   "note": "emperors-children pack rules update"
+   "note": "emperors-children pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "emperors-children",
    "file": "abilities",
    "op": "set",
    "id": "lethal-obsession",
-   "key": "ability_id",
    "values": {
     "description": "In your Shooting phase, after this unit has shot, you can use this ability. If you do, select one enemy unit hit by those ranged attacks. Until the end of the turn, when this unit declares a charge:\n- \u0007This unit can re-roll that charge roll.\n- \u0007This unit must end that charge move engaged with that enemy unit."
    },
-   "note": "emperors-children pack rules update"
+   "note": "emperors-children pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "imperial-knights",
    "file": "abilities",
    "op": "set",
    "id": "dauntless-defenders",
-   "key": "ability_id",
    "values": {
-    "description": "At the start of the first battle round, select two objectives to be your foundations. Place a circular 40mm foundation marker in each one. When you draw a line from any part of one your foundation markers to any part of the other, if any part of a model’s base (or any part of a model’s hull, for a model without a base) crosses that line, that model’s unit is said to be on your defensive line. While an IMPERIAL KNIGHTS unit from your army is on your defensive line, that unit has the following ability: Against the Horde: Each time a model in this unit makes an attack that targets a visible enemy unit, you can ignore any or all modifiers to the Hit roll, and weapons equipped by models in this unit have the [SUSTAINED HITS 1] ability.’ VALOURSTRIKE LANCE DETACHMENT"
+    "description": "At the start of the first battle round, select two objectives to be your foundations. Place a circular 40mm foundation marker in each one. When you draw a line from any part of one your foundation markers to any part of the other, if any part of a model’s base (or any part of a model’s hull, for a model without a base) crosses that line, that model’s unit is said to be on your defensive line. While an IMPERIAL KNIGHTS unit from your army is on your defensive line, that unit has the following ability: Against the Horde: Each time a model in this unit makes an attack that targets a visible enemy unit, you can ignore any or all modifiers to the Hit roll, and weapons equipped by models in this unit have the [SUSTAINED HITS 1] ability."
    },
-   "note": "imperial-knights pack rules update"
+   "note": "imperial-knights pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "imperial-knights",
    "file": "abilities",
    "op": "set",
    "id": "bold-gallantry",
-   "key": "ability_id",
    "values": {
     "description": "Each time an IMPERIAL KNIGHTS unit from your army Advances, until the end of the turn, ranged weapons equipped by IMPERIAL KNIGHTS models from your army have the [ASSAULT] ability."
+   },
+   "note": "imperial-knights pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "imperial-knights",
+   "file": "stratagems",
+   "op": "set",
+   "id": "run-them-through-valourstrike-lance",
+   "values": {
+    "text": "**WHEN:** Fight phase.\n\n**TARGET:** One IMPERIAL KNIGHTS unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, melee weapons equipped by your models have the [LANCE] ability."
+   },
+   "note": "imperial-knights pack rules update"
+  },
+  {
+   "faction": "imperial-knights",
+   "file": "stratagems",
+   "op": "set",
+   "id": "full-tilt-valourstrike-lance",
+   "values": {
+    "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One IMPERIAL KNIGHTS unit from your army that has not been selected to move this phase.\n\n**EFFECT:** Until the end of the phase, add 2\" to the Move characteristic of your models and add 2 to Advance rolls made for those model’s units."
    },
    "note": "imperial-knights pack rules update"
   },
@@ -8828,11 +9032,11 @@
    "file": "abilities",
    "op": "set",
    "id": "annihilation-protocol",
-   "key": "ability_id",
    "values": {
     "description": "Each time a DESTROYER CULT unit from your army makes a ranged attack that targets the closest eligible target, add 1 to the Armour Penetration characteristic of that attack."
    },
-   "note": "necrons pack rules update"
+   "note": "necrons pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "necrons",
@@ -8840,7 +9044,7 @@
    "op": "set",
    "id": "insanitys-ire-annihilation-legion",
    "values": {
-    "text": "WHEN: Your opponent’s Shooting phase, when an enemy unit that targeted a friendly unengaged DESTROYER CULT/FLAYED ONES unit this phase has shot. TARGET: That DESTROYER CULT/FLAYED ONES unit. EFFECT: Your unit can make a surge move of up to D6\".’ AWAKENED DYNASTY DETACHMENT"
+    "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit that targeted a friendly unengaged DESTROYER CULT/FLAYED ONES unit this phase has shot. \n\n**TARGET:** That DESTROYER CULT/FLAYED ONES unit. \n\n**EFFECT:** Your unit can make a surge move of up to D6\"."
    },
    "note": "necrons pack rules update"
   },
@@ -8849,9 +9053,49 @@
    "file": "abilities",
    "op": "set",
    "id": "veil-of-darkness",
-   "key": "ability_id",
    "values": {
     "description": "(Once per battle, per army) At the end of your opponent’s turn, if this unit is unengaged, you can use this ability. If you do:\n- Place this unit in strategic reserves.\n- This unit has Deep Strike until the start of your next Shooting phase.\n- \u0007This unit must make an ingress move in your next Movement phase (including in your first turn)."
+   },
+   "note": "necrons pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "necrons",
+   "file": "stratagems",
+   "op": "set",
+   "id": "protocol-of-the-eternal-revenant-awakened-dynasty",
+   "values": {
+    "text": "**WHEN:** Any phase.\n\n**TARGET:** One NECRONS INFANTRY CHARACTER model from your army that was just destroyed. You can use this Stratagem on that model even though it was just destroyed.\n\n**EFFECT:** At the end of the phase, set up the destroyed model on the battlefield, unengaged and as close as possible to where it was destroyed. That model is not part of an attached unit and its unit has a starting strength of 1. That model has half of its starting number of wounds remaining.\n\n**RESTRICTION:** Each model can only be targeted with this **Stratagem** once per battle."
+   },
+   "note": "necrons pack rules update"
+  },
+  {
+   "faction": "necrons",
+   "file": "stratagems",
+   "op": "set",
+   "id": "cynosure-of-eradication-canoptek-court",
+   "values": {
+    "text": "**WHEN:** The start of your Shooting phase or the start of the Fight phase.\n\n**TARGET:** One CRYPTEK or CANOPTEK unit from your army that is wholly within your army’s Power Matrix.\n\n**EFFECT:** Until the end of the phase, weapons equipped by CRYPTEK or CANOPTEK models in your unit have the [DEVASTATING WOUNDS] ability."
+   },
+   "note": "necrons pack rules update"
+  },
+  {
+   "faction": "necrons",
+   "file": "stratagems",
+   "op": "set",
+   "id": "cosmic-precision-hypercrypt-legion",
+   "values": {
+    "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One NECRONS unit from your army (excluding MONSTER units) that is arriving using an ingress move this phase.\n\n**EFFECT:** Your unit can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy models.\n\n**RESTRICTIONS:** A unit targeted with this Stratagem is not eligible to declare a charge in the same turn."
+   },
+   "note": "necrons pack rules update"
+  },
+  {
+   "faction": "necrons",
+   "file": "stratagems",
+   "op": "set",
+   "id": "territorial-obsession-obeisance-phalanx",
+   "values": {
+    "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One LYCHGUARD or TRIARCH unit from your army.\n\n**EFFECT:** Until the start of your next Command phase, add 1 to the Objective Control characteristic of models in your unit. If your unit has the VEHICLE keyword, add 3 to the Objective Control characteristic instead."
    },
    "note": "necrons pack rules update"
   },
@@ -8860,97 +9104,106 @@
    "file": "abilities",
    "op": "set",
    "id": "worthy-foes",
-   "key": "ability_id",
    "values": {
     "description": "In your Command phase, select one enemy unit. Until the start of your next Command phase, each time a NOBLE, LYCHGUARD or TRIARCH unit from your army makes an attack that targets that unit, add 1 to the Wound roll. DATASHEETS Annihilation Barge, Catacomb Command Barge, Convergence of Dominion, Doomsday Ark, Ghost Ark, Monolith, Obelisk, Seraptek"
    },
-   "note": "necrons pack rules update"
+   "note": "necrons pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "necrons",
    "file": "abilities",
    "op": "set",
    "id": "resurrection-orb",
-   "key": "ability_id",
    "values": {
-    "description": "(Once per battle, per unit) At the end of any phase, you can use this ability. If you do, this unit resurrects:\n- \u0007When a unit resurrects, that unit’s Reanimation Protocols activate, but that unit heals D6 wounds (instead of D3 wounds). You cannot resurrect more than one unit per turn.’ Chronomancer, Geomancer, Orikan The Diviner, Plasmancer,"
+    "description": "(Once per battle, per unit) At the end of any phase, you can use this ability. If you do, this unit resurrects:\n- \u0007When a unit resurrects, that unit’s Reanimation Protocols activate, but that unit heals D6 wounds (instead of D3 wounds). You cannot resurrect more than one unit per turn."
    },
-   "note": "necrons pack rules update"
+   "note": "necrons pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "necrons",
    "file": "abilities",
    "op": "set",
    "id": "timesplinter-mantle",
-   "key": "ability_id",
    "values": {
     "description": "- This unit has Stealth.\n- Melee attacks that target this unit have ‑1 to hit rolls."
    },
-   "note": "necrons pack rules update"
+   "note": "necrons pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "necrons",
    "file": "abilities",
    "op": "set",
    "id": "eternity-gate",
-   "key": "ability_id",
    "values": {
-    "description": "In your Movement phase (excluding the first battle round), you can select one friendly NECRONS INFANTRY unit that is either in strategic reserves or on the battlefield (if you select a unit on the battlefield, remove that unit from the battlefield and place it into strategic reserves). That unit can make an ingress move, and while making that ingress move, that unit must be set up wholly within 6\" of this unit and unengaged (instead of more than 8\" horizontally from all enemy units), even if that is within your opponent’s deployment zone. That unit cannot make a charge move this turn.' Night Scythe\n- Core Abilities: Add ‘Deep Strike’."
+    "description": "In your Movement phase (excluding the first battle round), you can select one friendly NECRONS INFANTRY unit that is either in strategic reserves or on the battlefield (if you select a unit on the battlefield, remove that unit from the battlefield and place it into strategic reserves). That unit can make an ingress move, and while making that ingress move, that unit must be set up wholly within 6\" of this unit and unengaged (instead of more than 8\" horizontally from all enemy units), even if that is within your opponent’s deployment zone. That unit cannot make a charge move this turn."
    },
-   "note": "necrons pack rules update"
+   "note": "necrons pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "necrons",
    "file": "abilities",
    "op": "set",
    "id": "tunnelling-horrors",
-   "key": "ability_id",
    "values": {
     "description": "At the end of your opponent’s turn, if this unit is unengaged, you can use this ability. If you do:\n- Place this unit in strategic reserves.\n- \u0007This unit must make an ingress move in your next Movement phase (including in your first turn)."
    },
-   "note": "necrons pack rules update"
-  },
-  {
-   "faction": "necrons",
-   "file": "abilities",
-   "op": "set",
-   "id": "living-lightning",
-   "key": "ability_id",
-   "values": {
-    "description": "In your Shooting phase, select one enemy unit within 18\" of and visible to this model (excluding units with the Lone Operative ability that are not part of an Attached unit and are not within 12\" of this model) and roll four D6: for each 4+, that enemy unit suffers 1 mortal wound. The Silent King\n- \u0007Bringer of Unity Ability: Change to ‘Relentless March (Aura): While a friendly NECRONS unit is within 6\" of this unit’s Szarekh model, add 2\" to the Move characteristic of models in that unit.’\n- \u0007Keywords: Change to: ‘ \u0007– ALL MODELS: VEHICLE, EPIC HERO, TRIARCH – SZAREKH MODEL: CHARACTER, THE SILENT KING"
-   },
-   "note": "necrons pack rules update"
+   "note": "necrons pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "necrons",
    "file": "abilities",
    "op": "set",
    "id": "transdimensional-displacement",
-   "key": "ability_id",
    "values": {
-    "description": "In your Movement phase, when this unit is selected to make an advance move, you can use this ability. If you do:\n- That advance move has no maximum distance.\n- \u0007This unit can move through all types of model (including enemy models and MONSTER/VEHICLE models).\n- \u0007After moving, this unit must be more than 8\" horizontally from all enemy units.’ FAQS Q: Can a Cryptothrall that has used its Systematic Vigour ability to ‘fight on death’ later fight again if returned to its unit before that unit is selected to fight? A: Yes. Q: When using the Protocol of the Undying Legions Stratagem, are any other rules that are applicable to Reanimation Protocols applied (e.g. Necron Warriors’ Their Number is Legion ability)? A: Yes. Q: If I am using the Canoptek Court Detachment, if there are no objective markers within No Man’s Land or within my opponent’s deployment zone, can those areas be within my army’s Power Matrix? A: No. Q: Can I use the Cosmic Precision Stratagem to set up a unit anywhere on the battlefield instead of only wholly within 6\" of a battlefield edge, even if it doesn't have the Deep Strike ability? A: Yes. Q: When being set up using the Cosmic Precision Stratagem, does a model that is large (e.g. a Tesseract Vault) have to follow the rules for large models in Setting Up Large Models (Rules Appendix, 03.02.02)? A: Yes. Q: When using the Protocol of the Conquering Tyrant Stratagem or Lokhust Destroyers’ Hard-wired for Destruction ability, to be eligible to re-roll the Hit roll, does the unit also need to be eligible to re-roll a Hit roll of 1? A: Yes (see Rules with Multiple Conditions and Effects, Rules Appendix 02.03.01). Q: When I set up a unit using the Monolith’s Eternity Gate ability, do I have to set that unit up wholly within 6\" of one battlefield edge? A: No. Q: When I set up a unit using the Monolith’s Eternity Gate ability, and that unit is not wholly within 6\" of one battlefield edge, is that unit eligible to shoot in my Shooting phase? A: Yes. Q: Does the Canoptek Court Autodivinator Enhancement trigger when army rule effects such as Code Chivalric (Imperial Knights) award a player CP, or when an opponent discards a Secondary Mission card for 1CP? A: No in both cases. It only triggers when your opponent gains CP as the result of an ability (not any other kind of rule). Q: If a unit is removed from the battlefield using the Hypercrypt Legion Hyperphasing Detachment rule and it has the Deep Strike ability, can that unit arrive from Reserves in the first battle round? A: No. Q: If I target a Canoptek Wraiths unit with the Canoptek Court Reactive Subroutines Stratagem, can this trigger that unit’s Wraith Form ability? A: Yes. Q: Can a unit be affected by a Resurrection Orb (e.g. from a Catacomb Command Barge and an Overlord) more than once per turn? A: No."
+    "description": "In your Movement phase, when this unit is selected to make an advance move, you can use this ability. If you do:\n- That advance move has no maximum distance.\n- \u0007This unit can move through all types of model (including enemy models and MONSTER/VEHICLE models).\n- \u0007After moving, this unit must be more than 8\" horizontally from all enemy units.’ FAQS Q: Can a Cryptothrall that has used its Systematic Vigour ability to ‘fight on death’ later fight again if returned to its unit before that unit is selected to fight? A: Yes. Q: When using the Protocol of the Undying Legions Stratagem, are any other rules that are applicable to Reanimation Protocols applied (e.g. Necron Warriors’ Their Number is Legion ability)? A: Yes. Q: If I am using the Canoptek Court Detachment, if there are no objective markers within No Man’s Land or within my opponent’s deployment zone, can those areas be within my army’s Power Matrix? A: No. Q: Can I use the Cosmic Precision Stratagem to set up a unit anywhere on the battlefield instead of only wholly within 6\" of a battlefield edge, even if it doesn't have the Deep Strike ability? A: Yes. Q: When being set up using the Cosmic Precision Stratagem, does a model that is large (e.g. a Tesseract Vault) have to follow the rules for large models in Setting Up Large Models (Rules Appendix, 03.02.02)? A: Yes. Q: When using the Protocol of the Conquering Tyrant Stratagem or Lokhust Destroyers’ Hard-wired for Destruction ability, to be eligible to re-roll the Hit roll, does the unit also need to be eligible to re-roll a Hit roll of 1? A: Yes (see Rules with Multiple Conditions and Effects, Rules Appendix 02.03.01). Q: When I set up a unit using the Monolith’s Eternity Gate ability, do I have to set that unit up wholly within 6\" of one battlefield edge? A: No. Q: When I set up a unit using the Monolith’s Eternity Gate ability, and that unit is not wholly within 6\" of one battlefield edge, is that unit eligible to shoot in my Shooting phase? A: Yes. Q: Does the Canoptek Court Autodivinator Enhancement trigger when army rule effects such as Code Chivalric (Imperial Knights) award a player CP, or when an opponent discards a Secondary Mission card for 1CP? A: No in both cases. It only triggers when your opponent gains CP as the result of an ability (not any other kind of rule). Q: If a unit is removed from the battlefield using the Hypercrypt Legion Hyperphasing Detachment rule and it has the Deep Strike ability, can that unit arrive from Reserves in the first battle round? A: No. Q: If I target a Canoptek Wraiths unit with the Canoptek Court Reactive Subroutines Stratagem, can this trigger that unit"
    },
-   "note": "necrons pack rules update"
+   "note": "necrons pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "waaagh",
-   "key": "ability_id",
    "values": {
-    "description": "If your Army Faction is ORKS, once per battle, at the start of your Command phase, you can call a Waaagh!. If you do, until the start of your next Command phase, the Waaagh! is active for your army and:’ BULLY BOYZ DETACHMENT"
+    "description": "If your Army Faction is ORKS, once per battle, at the start of your Command phase, you can call a Waaagh!. If you do, until the start of your next Command phase, the Waaagh! is active for your army and:"
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "da-boss-is-watchin",
-   "key": "ability_id",
    "values": {
     "description": "At the start of your Command phase, in a turn in which you have not called a Waaagh!, if you have one or more WARBOSS models on the battlefield (or embarked within a TRANSPORT that is on the battlefield), you can call a Waaagh! for a second time this battle. When doing so, that second Waaagh! only counts as having been called for WARBOSS, NOBZ and MEGANOBZ units from your army."
+   },
+   "note": "orks pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "orks",
+   "file": "stratagems",
+   "op": "set",
+   "id": "hulking-brutes-bully-boyz",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Nobz or Meganobz unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
+   },
+   "note": "orks pack rules update"
+  },
+  {
+   "faction": "orks",
+   "file": "stratagems",
+   "op": "set",
+   "id": "dat-ones-even-bigga-da-big-hunt",
+   "values": {
+    "text": "**WHEN:** Your Charge phase.\n\n**TARGET:** One BEAST SNAGGA unit from your army.\n\n**EFFECT:** Until the end of the phase, your unit is eligible to charge in a turn in which it Advanced or Fell Back. In addition, you can re-roll charge rolls made for your unit. If you do, your unit must end that charge move engaged with your Prey."
    },
    "note": "orks pack rules update"
   },
@@ -8959,9 +9212,19 @@
    "file": "abilities",
    "op": "set",
    "id": "da-hunt-is-on",
-   "key": "ability_id",
    "values": {
-    "description": "At the start of your Command phase, select one MONSTER, VEHICLE or CHARACTER unit from your opponent’s army. Until the start of your next"
+    "description": "At the start of your Command phase, select one MONSTER, VEHICLE or CHARACTER unit from your opponent"
+   },
+   "note": "orks pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "orks",
+   "file": "stratagems",
+   "op": "set",
+   "id": "tide-of-muscle-green-tide",
+   "values": {
+    "text": "**WHEN:** Your Charge phase.\n\n**TARGET:** One Boyz unit from your army that has not declared a charge this phase.\n\n**EFFECT:** Until the end of the phase, each time your unit declares a charge, add 1 to the Charge roll and, if your unit contains 10 or more models, you can re-roll the Charge roll."
    },
    "note": "orks pack rules update"
   },
@@ -8971,7 +9234,7 @@
    "op": "set",
    "id": "go-get-em-green-tide",
    "values": {
-    "text": "WHEN: Your opponent’s Shooting phase, when an enemy unit that targeted a friendly unengaged BOYZ unit this phase has shot. TARGET: That BOYZ unit. EFFECT: Your unit can make a surge move of up to D6\"."
+    "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit that targeted a friendly unengaged BOYZ unit this phase has shot. \n\n**TARGET:** That BOYZ unit. \n\n**EFFECT:** Your unit can make a surge move of up to D6\"."
    },
    "note": "orks pack rules update"
   },
@@ -8980,20 +9243,30 @@
    "file": "abilities",
    "op": "set",
    "id": "mob-mentality",
-   "key": "ability_id",
    "values": {
-    "description": "Each time an attack targets a BOYZ unit from your army, models in that unit have a 6+ invulnerable save against that attack. Each time an attack targets a BOYZ unit from your army that contains 10 or more models, models in that unit have a 5+ invulnerable save against that attack.' KULT OF SPEED DETACHMENT"
+    "description": "Each time an attack targets a BOYZ unit from your army, models in that unit have a 6+ invulnerable save against that attack. Each time an attack targets a BOYZ unit from your army that contains 10 or more models, models in that unit have a 5+ invulnerable save against that attack.'"
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "adrenaline-junkies",
-   "key": "ability_id",
    "values": {
-    "description": "SPEED FREEKS units from your army are eligible to shoot and declare a charge in a turn in which they Advanced or Fell Back.’ WAR HORDE DETACHMENT"
+    "description": "SPEED FREEKS units from your army are eligible to shoot and declare a charge in a turn in which they Advanced or Fell Back."
+   },
+   "note": "orks pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "orks",
+   "file": "stratagems",
+   "op": "set",
+   "id": "careen-war-horde",
+   "values": {
+    "text": "**WHEN:** Any phase, just after an Orks Vehicle unit from your army with the Deadly Demise ability is destroyed.\n\n**TARGET:** That destroyed ORKS VEHICLE unit, if you roll a 6 for its Deadly Demise ability. You can use this Stratagem on that unit even though it was just destroyed.\n\n**EFFECT:** Your unit can make a Normal or Fall Back move before its Deadly Demise ability is resolved, and before any embarked units perform an emergency disembark move. When making this move, your unit can move over enemy units (excluding MONSTERS and VEHICLES) as if they were not there."
    },
    "note": "orks pack rules update"
   },
@@ -9002,174 +9275,184 @@
    "file": "abilities",
    "op": "set",
    "id": "single-minded-predator",
-   "key": "ability_id",
    "values": {
     "description": "You can target this unit with the Heroic Intervention stratagem, regardless of any other uses of that stratagem this phase. If you do:\n- \u0007That use is -1 CP.\n- \u0007That use does not prevent any uses of that stratagem on other units this phase."
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "shokk-boosta",
-   "key": "ability_id",
    "values": {
     "description": "You can re‑roll Advance rolls made for this model’s unit. In addition, each time this model’s unit makes a Normal, Advance or Fall Back move, models in that unit can move through models and terrain features. When doing so, they can move within Engagement Range of such models but cannot end that move within Engagement Range of them, and any Desperate Escape test is automatically passed."
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "boom-bomb",
-   "key": "ability_id",
    "values": {
     "description": "At the end of your opponent’s Fight phase, select one visible enemy unit (excluding Lone Operative units) within 24\" of this unit, and roll one D6 for that unit: On a 4+, that unit suffers D6 mortal wounds."
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "burna-bomb",
-   "key": "ability_id",
    "values": {
     "description": "At the end of your opponent’s Fight phase, you can select one visible enemy unit (excluding Lone Operative units) within 24\" of this unit:\n- \u0007Friendly ORKS units' ranged attacks that target that enemy unit have [IGNORES COVER] until the end of your next turn.\n- \u0007Roll one D6 for each model in that enemy unit: ▫ \u0007For each 6, that enemy unit suffers 1 mortal wound."
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "piston-driven-brutality",
-   "key": "ability_id",
    "values": {
     "description": "Each time this model ends a Charge move, select one enemy unit within Engagement Range of it and roll one D6: on a 2-5, that enemy unit suffers D3 mortal wounds; on a 6, that enemy unit suffers D3+3 mortal wounds."
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "shooty-power-trip",
-   "key": "ability_id",
    "values": {
     "description": "Each time this unit is selected to shoot, you can roll one D6:\n- \u0007On a 1‑2, this unit suffers D3 mortal wounds.\n- \u0007On a 3‑4, until the end of the phase, add 1 to the Strength characteristic of ranged weapons equipped by models in this unit.\n- \u0007On a 5‑6, until the end of the phase, add 1 to the Attacks characteristic of ranged weapons equipped by models in this unit."
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "rivetin-dakka",
-   "key": "ability_id",
    "values": {
     "description": "In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks made with a rivet kannon. Until the start of your next turn, that enemy unit is suppressed. While a unit is suppressed, each time a model in that unit makes a ranged attack, subtract 1 from the Hit roll."
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "krumpin-time",
-   "key": "ability_id",
    "values": {
     "description": "While the Waaagh! is active for your army, models in this unit have the Feel No Pain 5+ ability."
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "big-an-shooty",
-   "key": "ability_id",
    "values": {
     "description": "Each time this model makes a ranged attack, if the Waaagh! is active for your army, add 1 to the Hit roll."
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "shokk-tunnel",
-   "key": "ability_id",
    "values": {
     "description": "In your Movement phase, when this unit is selected to make an advance move, you can use this ability. If you do:\n- That move has no maximum distance.\n- \u0007This unit can move through all types of model (including enemy models and MONSTER/VEHICLE models).\n- \u0007After moving, your unit must be more than 8\" horizontally from all enemy units."
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "dead-brutal",
-   "key": "ability_id",
    "values": {
-    "description": "While the Waaagh! is active for your army, this model’s ’uge choppa has a Damage characteristic of 3.’ Wartrakk\n- Core Abilities: Remove this section.\n- Support Section: Remove this section."
+    "description": "While the Waaagh! is active for your army, this model’s ’uge choppa has a Damage characteristic of 3."
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "orks",
    "file": "abilities",
    "op": "set",
    "id": "special-dose",
-   "key": "ability_id",
    "values": {
-    "description": "While the Waaagh! is active for your army, add 6\" to the Move characteristic of models in this model’s unit.’ FAQS Q: When using the Green Tide Mob Mentaility detachment rule, do I switch to 6+ InSv partway through a unit’s attacks when the number of models in the target unit drops below 10 models? A: No, the number of models in the unit when it is targeted determines the unit’s InSv until those attacks are resolved. Q: If I attach a Big Mek to a Mek Gunz unit, does the unit now suffer 1 mortal wound for each failed hazard roll, because each model in the unit is now not a MONSTER/VEHICLE model? A: Yes. Q: If a model has an ability that triggers when you call a Waaagh! and that model is embarked within a TRANSPORT when this happens (e.g. a Warboss’ Da Biggest and da Best ability), does that ability take effect? A: Yes. Q: When using the Conniving Runts Stratagem, to be able to make the Normal move as part of the Stratagem, do I need to roll a 4+ and have inflicted any mortal wounds? A: No. Q: Can a unit equipped with multiple Bomb Squigs use its Bomb Squig ability more than once each phase? A: No. Q: If a unit has an ability that checks if the Waaagh! is active for your army in order for that ability to take effect (e.g. the Meganobz’ Krumpin’ Time ability), does that ability take effect if another rule makes the Waaagh! active for that unit (e.g. the Bully Boyz Detachment rule)? A: Yes."
+    "description": "While the Waaagh! is active for your army, add 6\" to the Move characteristic of models in this model’s unit.’ FAQS Q: When using the Green Tide Mob Mentaility detachment rule, do I switch to 6+ InSv partway through a unit’s attacks when the number of models in the target unit drops below 10 models? A: No, the number of models in the unit when it is targeted determines the unit’s InSv until those attacks are resolved. Q: If I attach a Big Mek to a Mek Gunz unit, does the unit now suffer 1 mortal wound for each failed hazard roll, because each model in the unit is now not a MONSTER/VEHICLE model? A: Yes. Q: If a model has an ability that triggers when you call a Waaagh! and that model is embarked within a TRANSPORT when this happens (e.g. a Warboss’ Da Biggest and da Best ability), does that ability take effect? A: Yes. Q: When using the Conniving Runts Stratagem, to be able to make the Normal move as part of the Stratagem, do I need to roll a 4+ and have inflicted any mortal wounds? A: No. Q: Can a unit equipped with multiple Bomb Squigs use its Bomb Squig ability more than once each phase? A: No. Q: If a unit has an ability that checks if the Waaagh! is active for your army in order for that ability to take effect (e.g. the Meganobz’ Krumpin"
    },
-   "note": "orks pack rules update"
+   "note": "orks pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
    "id": "oath-of-moment",
-   "key": "ability_id",
    "values": {
     "description": "If your Army Faction is ADEPTUS ASTARTES, at the start of your Command phase, select one unit from your opponent’s army. Until the start of your next Command phase, that enemy unit is your Oath of Moment target. Each time a model with this ability makes an attack that targets your Oath of Moment target:\n- \u0007You can re-roll the Hit roll.\n- \u0007If you are using a Codex: Space Marines Detachment and your army does not include one or more units with the BLOOD ANGELS, DARK ANGELS, DEATHWATCH or SPACE WOLVES keywords, or one or more units from those factions’ Munitorum Field Manual sections, add 1 to the Wound roll as well."
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
    "id": "space-marine-chapters",
-   "key": "ability_id",
    "values": {
     "description": "- \u0007If your army includes one or more BLACK TEMPLARS units, it cannot include any ADEPTUS ASTARTES PSYKER models, and cannot include any of the following models that do not have the BLACK TEMPLARS keyword: Gladiator Lancer; Gladiator Reaper; Gladiator Valiant; Impulsor; Repulsor; Repulsor Executioner.\n- \u0007If your army includes one or more SPACE WOLVES units, it cannot include any of the following units: Apothecary; Devastator Squad;"
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
    "id": "stoic-defender",
-   "key": "ability_id",
    "values": {
-    "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, models in that unit have the Feel No Pain 6+ ability while they are within an objective you control and, while that unit is Battle-shocked, halve the Objective Control characteristic of models in that unit instead of changing it to ‘-’.’ FIRESTORM ASSAULT FORCE DETACHMENT"
+    "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, models in that unit have the Feel No Pain 6+ ability while they are within an objective you control and, while that unit is Battle-shocked, halve the Objective Control characteristic of models in that unit instead of changing it to ‘-’."
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
    "id": "forged-in-battle",
-   "key": "ability_id",
    "values": {
-    "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, once per turn, after making a Hit roll or a saving throw for a model in that unit, you can change the result of that roll to an unmodified 6.’ GLADIUS TASK FORCE DETACHMENT"
+    "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, once per turn, after making a Hit roll or a saving throw for a model in that unit, you can change the result of that roll to an unmodified 6.’"
+   },
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "stratagems",
+   "op": "set",
+   "id": "storm-of-fire-gladius-task-force",
+   "values": {
+    "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One ADEPTUS ASTARTES unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, ranged weapons equipped by models in your unit have the [IGNORES COVER] ability. If your unit is under the effects of the Devastator Doctrine, until the end of the phase, improve the Armour Penetration characteristic of such weapons by 1 as well."
    },
    "note": "space-marines pack rules update"
   },
@@ -9178,20 +9461,30 @@
    "file": "abilities",
    "op": "set",
    "id": "fire-discipline",
-   "key": "ability_id",
    "values": {
-    "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, ranged weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability. In addition, while the bearer’s unit is under the effects of the Devastator Doctrine, you can re-roll Advance rolls made for that unit.' IRONSTORM SPEARHEAD DETACHMENT"
+    "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, ranged weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability. In addition, while the bearer’s unit is under the effects of the Devastator Doctrine, you can re-roll Advance rolls made for that unit."
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
    "id": "master-of-the-machine-war",
-   "key": "ability_id",
    "values": {
     "description": "ADEPTUS ASTARTES model only. In your Command phase, select one ADEPTUS ASTARTES VEHICLE model within 6\" of the bearer. Until the start of your next Command phase, that VEHICLE is eligible to shoot even if it Fell Back or Advanced this turn."
+   },
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "stratagems",
+   "op": "set",
+   "id": "ancient-fury-ironstorm-spearhead",
+   "values": {
+    "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One ADEPTUS ASTARTES WALKER model from your army.\n\n**EFFECT:** Until the start of your next Command phase, improve your model"
    },
    "note": "space-marines pack rules update"
   },
@@ -9200,11 +9493,11 @@
    "file": "abilities",
    "op": "set",
    "id": "target-augury-web",
-   "key": "ability_id",
    "values": {
-    "description": "TECHMARINE model only. In your Command phase, select one ADEPTUS ASTARTES VEHICLE model within 6\" of the bearer. Until the start of your next Command phase, weapons equipped by that VEHICLE model have the [LETHAL HITS] ability.’ STORMLANCE TASK FORCE DETACHMENT"
+    "description": "TECHMARINE model only. In your Command phase, select one ADEPTUS ASTARTES VEHICLE model within 6\" of the bearer. Until the start of your next Command phase, weapons equipped by that VEHICLE model have the [LETHAL HITS] ability."
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
@@ -9212,7 +9505,49 @@
    "op": "set",
    "id": "shock-assault-stormlance-task-force",
    "values": {
-    "text": "WHEN: Fight phase, when a friendly ADEPTUS ASTARTES unit is selected to fight. TARGET: That ADEPTUS ASTARTES unit. EFFECT: Your unit’s melee attacks have [LANCE]."
+    "text": "**WHEN:** Fight phase, when a friendly ADEPTUS ASTARTES unit is selected to fight. \n\n**TARGET:** That ADEPTUS ASTARTES unit. \n\n**EFFECT:** Your unit’s melee attacks have [LANCE]."
+   },
+   "note": "space-marines pack rules update"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "stratagems",
+   "op": "set",
+   "id": "wind-swift-evasion-stormlance-task-force",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.\n\n**TARGET:** One ADEPTUS ASTARTES INFANTRY or ADEPTUS ASTARTES MOUNTED unit from your army that is within 8\" of that enemy unit.' VANGUARD SPEARHEAD DETACHMENT Vanguard Spearhead Detachment\n- \u0007Shadow Masters Detachment Rule: Change to 'Each time a ranged attack targets an ADEPTUS ASTARTES unit from your army, unless the attacking model is within 12\", the target has the benefit of cover.'\n- \u0007Shadow War Veteran Enhancement: Change to 'Once per turn, when your opponent targets a unit from their army within 12” of this model with a stratagem, you can use this ability. If you do increase the CP cost of that use of that stratagem by 1CP.'\n\n**EFFECT:** Your unit can make a Normal move of up to 6\".\n\n**RESTRICTIONS:** You cannot select a unit that is within Engagement Range of one or more enemy units."
+   },
+   "note": "space-marines pack rules update"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "vindicator",
+   "values": {
+    "keywords": [
+     "Vehicle",
+     "Smoke",
+     "Imperium",
+     "Vindicator",
+     "Frame"
+    ]
+   },
+   "note": "space-marines pack rules update"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "whirlwind",
+   "values": {
+    "keywords": [
+     "Imperium",
+     "Vehicle",
+     "Smoke",
+     "Whirlwind",
+     "Frame"
+    ]
    },
    "note": "space-marines pack rules update"
   },
@@ -9221,97 +9556,107 @@
    "file": "abilities",
    "op": "set",
    "id": "bladeguard",
-   "key": "ability_id",
    "values": {
     "description": "(Once per turn, per unit): In the Fight phase, when this unit is selected to fight or when an enemy unit targets this unit, you can select one of the following:\n- This unit’s melee attacks have +1 to hit rolls.\n- Or: Attacks that target this unit have ‑1 to hit rolls."
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
    "id": "master-of-deceit",
-   "key": "ability_id",
    "values": {
     "description": "After both players have deployed their armies, if your army includes one or more models with this ability, you can select up to three friendly ADEPTUS ASTARTES INFANTRY units and redeploy all of those units. When doing so, any of those units can be placed into Strategic Reserves, regardless of how many units are already in Strategic Reserves."
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
    "id": "meteoric-descent",
-   "key": "ability_id",
    "values": {
     "description": "In your Movement phase, when this unit is set up on the battlefield using the Deep Strike ability, it can perform a meteoric descent. If it does, this unit can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units, but until the end of the turn, it is not eligible to declare a charge."
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
    "id": "incendiary-terror",
-   "key": "ability_id",
    "values": {
     "description": "In your Shooting phase, after this unit has shot, you can select one enemy INFANTRY unit hit by one or more of those attacks made with a pyreblaster. That enemy unit must take a Battle-shock test, subtracting 1 from that test."
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
    "id": "strategic-dispersal",
-   "key": "ability_id",
    "values": {
     "description": "In your Shooting phase, after this model’s unit has shot, if it is not within Engagement Range of one or more enemy units, it can make a Normal move of up to 6\". If it does, until the end of the turn, that unit is not eligible to declare a charge."
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
    "id": "evade-and-survive",
-   "key": "ability_id",
    "values": {
     "description": "In your opponent's Movement phase, if an enemy unit ends a move within 8” of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to 6”."
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
    "id": "annihilator",
-   "key": "ability_id",
    "values": {
     "description": "Each time a ranged attack made by this model is allocated to a MONSTER or VEHICLE model, you can re‑roll the Damage roll."
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
    "id": "sternguard-focus",
-   "key": "ability_id",
    "values": {
-    "description": "Each time a model in this unit makes an attack that targets your Oath of Moment target, you can re-roll the Wound roll.’ Stormhawk Interceptor, Stormtalon Gunship\n- Core Abilities: Remove ‘Hover’.\n- Profile: Change M and OC to ‘-’. Stormraven Gunship\n- Profile: Change M to 14”.\n- Keywords: Remove ‘AIRCRAFT’."
+    "description": "Each time a model in this unit makes an attack that targets your Oath of Moment target, you can re-roll the Wound roll.’ Stormhawk Interceptor, Stormtalon Gunship\n- Core Abilities: Remove ‘Hover’.\n- Profile: Change M and OC to ‘-’. Stormraven Gunship\n- Profile: Change M to 14”.\n- Keywords: Remove ‘AIRCRAFT"
    },
-   "note": "space-marines pack rules update"
+   "note": "space-marines pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
    "id": "for-the-greater-good",
-   "key": "ability_id",
    "values": {
-    "description": "If your Army Faction is T’AU EMPIRE, at the start of your Shooting phase you can select units from your army with this ability to become Observer units. During your Shooting phase, for each Observer unit from your army that has not been selected to shoot this phase and is eligible to shoot (excluding FORTIFICATION and Battle-shocked units) select one enemy unit that is visible to be marked as their Spotted unit until the end of the phase. Each enemy unit can only be marked as a Spotted unit once per phase. Units from your army with the For the Greater Good ability (excluding Observer units) are Guided units while targeting one or more Spotted units. Until the end of the phase, each time a model from your army in a Guided unit makes an attack that targets a Spotted unit, improve the Ballistic Skill characteristic of that attack by 1 and, if the Spotted unit was marked by an Observer unit that has the Markerlight keyword, that attack has the [IGNORES COVER] ability.’ KAUYON DETACHMENT"
+    "description": "If your Army Faction is T’AU EMPIRE, at the start of your Shooting phase you can select units from your army with this ability to become Observer units. During your Shooting phase, for each Observer unit from your army that has not been selected to shoot this phase and is eligible to shoot (excluding FORTIFICATION and Battle-shocked units) select one enemy unit that is visible to be marked as their Spotted unit until the end of the phase. Each enemy unit can only be marked as a Spotted unit once per phase. Units from your army with the For the Greater Good ability (excluding Observer units) are Guided units while targeting one or more Spotted units. Until the end of the phase, each time a model from your army in a Guided unit makes an attack that targets a Spotted unit, improve the Ballistic Skill characteristic of that attack by 1 and, if the Spotted unit was marked by an Observer unit that has the Markerlight keyword, that attack has the [IGNORES COVER] ability."
+   },
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "tau-empire",
+   "file": "stratagems",
+   "op": "set",
+   "id": "photon-grenades-kauyon",
+   "values": {
+    "text": "**WHEN:** Your opponent’s charge phase, just after an enemy unit has selected its charge target.\n\n**TARGET:** One T’AU EMPIRE GRENADES unit from your army that was selected as one of the targets of that charge.\n\n**EFFECT:** That enemy unit must immediately take a Battle-shock test, and until the end of the phase, subtract 2 from Charge rolls made for that enemy unit.\n\n**RESTRICTION:** You cannot target a unit that is within Engagement Range of one or more enemy units."
    },
    "note": "tau-empire pack rules update"
   },
@@ -9320,64 +9665,82 @@
    "file": "abilities",
    "op": "set",
    "id": "patient-hunter",
-   "key": "ability_id",
    "values": {
-    "description": "During the third, fourth and fifth battle rounds, ranged weapons equipped by T’AU EMPIRE models from your army have the [SUSTAINED HITS 1] ability. During the third, fourth and fifth battle rounds, while a unit is a Guided unit (see For the Greater Good), each time a ranged attack is made by a model in that unit that targets a Spotted unit, you can ignore any or all modifiers to that attack’s Ballistic skill characteristics and/or all modifiers to the Hit roll.’ designed to improve the gaming experience for all players. in red. MONT’KA DETACHMENT"
+    "description": "During the third, fourth and fifth battle rounds, ranged weapons equipped by T’AU EMPIRE models from your army have the [SUSTAINED HITS 1] ability. During the third, fourth and fifth battle rounds, while a unit is a Guided unit (see For the Greater Good), each time a ranged attack is made by a model in that unit that targets a Spotted unit, you can ignore any or all modifiers to that attack’s Ballistic skill characteristics and/or all modifiers to the Hit roll."
    },
-   "note": "tau-empire pack rules update"
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
    "id": "coordinated-exploitation",
-   "key": "ability_id",
    "values": {
     "description": "T’AU EMPIRE model only (excluding KROOT SHAPER models). While the bearer is leading a unit, each time that unit is an Observer unit, until the end of the phase, ranged weapons equipped by models in a Guided unit have the [SUSTAINED HITS 1] ability while targeting their Spotted unit."
    },
-   "note": "tau-empire pack rules update"
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
    "id": "strike-swiftly",
-   "key": "ability_id",
    "values": {
     "description": "In the Resolve Pre-battle Abilities step, you can select up to two friendly T’AU EMPIRE units within 6\" of this model that do not have the Scouts ability. Until the end of the battle, all models in the selected units have the Scouts 6\" ability."
    },
-   "note": "tau-empire pack rules update"
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
    "id": "killing-blow",
-   "key": "ability_id",
    "values": {
-    "description": "During the first, second and third battle rounds, ranged weapons equipped by T’AU EMPIRE models from your army have the [ASSAULT] ability. During the first, second and third battle rounds, while a unit is a Guided unit (see For the Greater Good), its ranged weapons have the [LETHAL HITS] ability.’ RETALIATION CADRE DETACHMENT"
+    "description": "During the first, second and third battle rounds, ranged weapons equipped by T’AU EMPIRE models from your army have the [ASSAULT] ability. During the first, second and third battle rounds, while a unit is a Guided unit (see For the Greater Good), its ranged weapons have the [LETHAL HITS] ability."
    },
-   "note": "tau-empire pack rules update"
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
    "id": "puretide-engram-neurochip",
-   "key": "ability_id",
    "values": {
     "description": "T’AU EMPIRE BATTLESUIT model only. Each time you target the bearer’s unit with a Stratagem, roll one D6: on a 4+, you gain 1CP."
    },
-   "note": "tau-empire pack rules update"
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
    "id": "bonded-heroes",
-   "key": "ability_id",
    "values": {
-    "description": "Each time a T’AU EMPIRE BATTLESUIT model from your army makes a ranged attack that targets a unit within 12\", improve the Strength characteristic of that attack by 1. If that attack targets a unit within 8\", improve the Armour Penetration characteristic of that attack by 1 as well.’ DATASHEETS Devilfish, Hammerhead Gunship, Piranhas, Sky Ray Gunship, Tidewall"
+    "description": "Each time a T’AU EMPIRE BATTLESUIT model from your army makes a ranged attack that targets a unit within 12\", improve the Strength characteristic of that attack by 1. If that attack targets a unit within 8\", improve the Armour Penetration characteristic of that attack by 1 as well."
+   },
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "tau-empire",
+   "file": "units",
+   "op": "set",
+   "id": "tidewall-shieldline",
+   "values": {
+    "keywords": [
+     "Fortification",
+     "Vehicle",
+     "Transport",
+     "Fly",
+     "Tidewall Shieldline",
+     "Non-Kroot",
+     "Frame"
+    ]
    },
    "note": "tau-empire pack rules update"
   },
@@ -9386,66 +9749,66 @@
    "file": "abilities",
    "op": "set",
    "id": "sunforge",
-   "key": "ability_id",
    "values": {
     "description": "Each time a model in this unit makes a ranged attack that targets a MONSTER or VEHICLE unit, you can re-roll the Wound roll and you can re-roll the Damage roll."
    },
-   "note": "tau-empire pack rules update"
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
    "id": "precise-targeting",
-   "key": "ability_id",
    "values": {
     "description": "Each time a model in this unit makes an attack that targets a Spotted unit, you can re-roll the Hit roll.’ Kroot Trail Shaper\n- \u0007Kroot Ambush Ability – Change to: ‘After both players have deployed their armies, you can redeploy this model’s unit and one other friendly KROOT unit. When doing so, any of those units can be placed into Strategic Reserves, regardless of how many units are already in Strategic Reserves.’\n- \u0007Trail Finding Ability – Change to: ‘In your opponent’s Movement phase, if an enemy unit ends a move within 8\" of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to D6\"."
    },
-   "note": "tau-empire pack rules update"
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
    "id": "target-uploaded",
-   "key": "ability_id",
    "values": {
     "description": "Each time a model in this unit makes an attack that targets their Spotted unit, improve the Ballistic Skill characteristic of that attack by 1 and that attack has the [IGNORES COVER] ability."
    },
-   "note": "tau-empire pack rules update"
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
    "id": "pulse-bombs",
-   "key": "ability_id",
    "values": {
     "description": "At the end of your opponent’s Fight phase, select one visible enemy unit (excluding Lone Operative units) within 24\" of this unit, and roll six D6 for that unit: For each 4+, that unit suffers 1 mortal wound."
    },
-   "note": "tau-empire pack rules update"
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
    "id": "neocapacitor-shields",
-   "key": "ability_id",
    "values": {
-    "description": "At the start of your opponent’s Charge phase, you can select one visible enemy unit (excluding MONSTER and VEHICLE units) within 12\" of this unit. That unit must take a Battle-shock test and, until the end of the turn, subtract 1 from Charge rolls made for that unit.’ FAQS Q: Can I use an Ethereal’s Coordinated Leadership ability while it is embarked within a TRANSPORT? A: Yes. Q: If I am using the Kroot Hunting Pack Detachment, if an enemy unit selects a KROOT unit from my army as a target of its ranged attacks, but I use the Hidden Hunters Stratagem so that my KROOT unit is no longer an eligible target for any of those attacks, and there are no other eligible targets for those attacks (as described in the Rules Commentary), can my nearby KROOTOX RIDERS unit still use its Kroot Packmates ability to shoot at that attacking unit? A: No."
+    "description": "At the start of your opponent’s Charge phase, you can select one visible enemy unit (excluding MONSTER and VEHICLE units) within 12\" of this unit. That unit must take a Battle-shock test and, until the end of the turn, subtract 1 from Charge rolls made for that unit.’ FAQS Q: Can I use an Ethereal"
    },
-   "note": "tau-empire pack rules update"
+   "note": "tau-empire pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "thousand-sons",
    "file": "abilities",
    "op": "set",
    "id": "cabal-of-sorcerers",
-   "key": "ability_id",
    "values": {
     "description": "If your Army Faction is THOUSAND SONS, at the start of your Shooting phase, one or more models from your army with this ability can attempt Rituals from those listed on the right. To do so, select one model from your army with this ability that has not yet attempted a Ritual this turn and select one Ritual no model from your army has attempted to manifest this turn, then take a Psychic test for that model by following the sequence below."
    },
-   "note": "thousand-sons pack rules update"
+   "note": "thousand-sons pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "thousand-sons",
@@ -9453,7 +9816,7 @@
    "op": "set",
    "id": "chronosorcerous-bleed-changehost-of-deceit",
    "values": {
-    "text": "WHEN: Start of your opponent's Charge phase. TARGET: One friendly unengaged THOUSAND SONS PSYKER/ SCINTILLATING LEGIONS unit. EFFECT: Select one visible enemy unit within 12\" of your unit. When that enemy unit declares a charge, that enemy unit has -1 to charge rolls. GRAND COVEN DETACHMENT"
+    "text": "**WHEN:** Start of your opponent's Charge phase. \n\n**TARGET:** One friendly unengaged THOUSAND SONS PSYKER/ SCINTILLATING LEGIONS unit. \n\n**EFFECT:** Select one visible enemy unit within 12\" of your unit. When that enemy unit declares a charge, that enemy unit has -1 to charge rolls."
    },
    "note": "thousand-sons pack rules update"
   },
@@ -9462,9 +9825,29 @@
    "file": "abilities",
    "op": "set",
    "id": "umbralefic-crystal",
-   "key": "ability_id",
    "values": {
-    "description": "THOUSAND SONS model only. (Once per battle, per army) In your Command phase, if this unit is unengaged, you can use this ability. If you do:\n- Place this unit in strategic reserves.\n- This unit has Deep Strike until the start of your next Shooting phase.\n- \u0007This unit must make an ingress move in your next Movement phase (including in your first turn).’ WARPFORGED CABAL DETACHMENT"
+    "description": "THOUSAND SONS model only. (Once per battle, per army) In your Command phase, if this unit is unengaged, you can use this ability. If you do:\n- Place this unit in strategic reserves.\n- This unit has Deep Strike until the start of your next Shooting phase.\n- \u0007This unit must make an ingress move in your next Movement phase (including in your first turn)."
+   },
+   "note": "thousand-sons pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "stratagems",
+   "op": "set",
+   "id": "hex-marked-armour-warpforged-cabal",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Thousand Sons Vehicle unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
+   },
+   "note": "thousand-sons pack rules update"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "stratagems",
+   "op": "set",
+   "id": "ensorcelled-infusion-warpforged-cabal",
+   "values": {
+    "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One THOUSAND SONS VEHICLE unit from your army that has not been selected to shoot this phase, that is within 6\" of one or more friendly THOUSAND SONS PSYKER units.\n\n**EFFECT:** Until the end of the phase, ranged weapons equipped by VEHICLE models in your unit have the [PSYCHIC] ability and each time an attack is made with such a weapon, add 1 to the Wound roll."
    },
    "note": "thousand-sons pack rules update"
   },
@@ -9473,86 +9856,106 @@
    "file": "abilities",
    "op": "set",
    "id": "warpfire-infusion",
-   "key": "ability_id",
    "values": {
-    "description": "Each time an enemy unit is selected to shoot or fight and one or more TZEENTCH MUTANT INFANTRY or TZEENTCH MUTANT MOUNTED units from your army are selected as a target of one or more of those attacks, each of those TZEENTCH MUTANT units can make a Warpmeld Sacrifice. If it does, until the end of the phase, each time an attack targets that unit, subtract 1 from the Wound roll. At the end of the phase, that TZEENTCH MUTANT unit suffers D3 mortal wounds. Each time a TZEENTCH MUTANT INFANTRY or TZEENTCH MUTANT MOUNTED unit from your army is selected to shoot or fight, before selecting its targets, that unit can make a Warpmeld Sacrifice. If it does, until the end of the phase, each time a model in that unit makes an attack, add 1 to the Wound roll. At the end of the phase, that TZEENTCH MUTANT unit suffers D3 mortal wounds.’ DATASHEETS Chaos Land Raider, Chaos Predator Annihilator, Chaos Predator"
+    "description": "Each time an enemy unit is selected to shoot or fight and one or more TZEENTCH MUTANT INFANTRY or TZEENTCH MUTANT MOUNTED units from your army are selected as a target of one or more of those attacks, each of those TZEENTCH MUTANT units can make a Warpmeld Sacrifice. If it does, until the end of the phase, each time an attack targets that unit, subtract 1 from the Wound roll. At the end of the phase, that TZEENTCH MUTANT unit suffers D3 mortal wounds. Each time a TZEENTCH MUTANT INFANTRY or TZEENTCH MUTANT MOUNTED unit from your army is selected to shoot or fight, before selecting its targets, that unit can make a Warpmeld Sacrifice. If it does, until the end of the phase, each time a model in that unit makes an attack, add 1 to the Wound roll. At the end of the phase, that TZEENTCH MUTANT unit suffers D3 mortal wounds."
    },
-   "note": "thousand-sons pack rules update"
+   "note": "thousand-sons pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "thousand-sons",
    "file": "abilities",
    "op": "set",
    "id": "snarling-protector",
-   "key": "ability_id",
    "values": {
     "description": "- '\u0007You can target this unit with the Heroic Intervention stratagem, regardless of any other uses of that stratagem this phase. If you do: ▫ \u0007That use is -1 CP. ▫ \u0007That use does not prevent any uses of that stratagem on other units this phase. ▫ \u0007When this unit declares a charge, If a friendly engaged PSYKER unit is within 12\" of this unit, you can use this part of this ability. If you do:\n- \u0007This unit can re-roll that charge roll.\n- \u0007This unit must end that charge move engaged with an enemy unit engaged with that friendly PSYKER unit."
    },
-   "note": "thousand-sons pack rules update"
+   "note": "thousand-sons pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "thousand-sons",
    "file": "abilities",
    "op": "set",
    "id": "prophetic-sentinels",
-   "key": "ability_id",
    "values": {
     "description": "Once per turn, when you target this unit with the Fire Overwatch/ Heroic Intervention stratagem, that use is -1 CP."
    },
-   "note": "thousand-sons pack rules update"
+   "note": "thousand-sons pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "thousand-sons",
    "file": "abilities",
    "op": "set",
    "id": "malign-trickery",
-   "key": "ability_id",
    "values": {
-    "description": "In your opponent's Movement phase, if an enemy unit ends a move within 8\" of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to D6\".' FAQS Q: When using the Touched by Tzeentch Stratagem in the Warpmeld Pact Detachment, do I have to declare if my unit will shoot or charge after Advancing as soon as I use the Stratagem? A: No, you may decide later in the turn. Q: When going second, can a Tzaangor unit that started the game on the battlefield and was placed into Strategic Reserves by its Ambushing Hunters ability then arrive during my first turn using the Twisted Mirage Stratagem? A: No. Q: Can the Exalted Sorcerer on Disk of Tzeentch and the Tzaangor Shaman lead Tzaangor Enlightened with fatecaster greatbows? A: Yes. Q: While using the Rubricae Phalanx Detachment, if I attach a CHARACTER to a unit selected using the Risen Rubricae Enhancement, does that CHARACTER also gain the Infiltrators ability? A: Yes. Q: When using the Cabal of Sorcerers army rule, do I have to choose whether to Channel the Warp before rolling any dice? A: No. Q: When using the Cabal of Sorcerers army rule, if I roll one or more doubles or triples, does my model only suffer D3 mortal wounds if I chose to Channel the Warp? A: Yes. Q: Do I need to sequence all of my Cabal of Sorcerers Rituals at the start of my Shooting phase? A: No, you just pick a model with the Cabal of Sorcerers rule, pick a Ritual to manifest, and attempt it, then repeat the process until you have run out of models or Rituals or both."
+    "description": "In your opponent's Movement phase, if an enemy unit ends a move within 8\" of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to D6\"."
    },
-   "note": "thousand-sons pack rules update"
+   "note": "thousand-sons pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tyranids",
    "file": "abilities",
    "op": "set",
    "id": "shadow-in-the-warp",
-   "key": "ability_id",
    "values": {
     "description": "If your Army Faction is TYRANIDS, once per battle, in either player’s Command phase, if one or more units from your army with this ability are on the battlefield, you can unleash the Shadow in the Warp. When you do, each enemy unit on the battlefield must take a Battle-shock test. Each time an enemy unit takes such a Battle-shock test, if it is within 6\" of one or more SYNAPSE units from your army, subtract 1 from that test."
    },
-   "note": "tyranids pack rules update"
+   "note": "tyranids pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tyranids",
    "file": "abilities",
    "op": "set",
    "id": "synapse",
-   "key": "ability_id",
    "values": {
-    "description": "If your Army Faction is TYRANIDS, while a TYRANIDS unit from your army is within 6\" of one or more friendly SYNAPSE models, that TYRANIDS unit is said to be within Synapse Range of that model and of your army. While a TYRANIDS unit from your army is within Synapse Range of your army:\n- \u0007Each time that unit takes a Battle-shock test, take that test on 3D6 instead of 2D6.\n- \u0007Each time a model in that unit makes a melee attack, add 1 to the Strength characteristic of that attack.’ ASSIMILATION SWARM DETACHMENT"
+    "description": "If your Army Faction is TYRANIDS, while a TYRANIDS unit from your army is within 6\" of one or more friendly SYNAPSE models, that TYRANIDS unit is said to be within Synapse Range of that model and of your army. While a TYRANIDS unit from your army is within Synapse Range of your army:\n- \u0007Each time that unit takes a Battle-shock test, take that test on 3D6 instead of 2D6.\n- \u0007Each time a model in that unit makes a melee attack, add 1 to the Strength characteristic of that attack."
    },
-   "note": "tyranids pack rules update"
+   "note": "tyranids pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tyranids",
    "file": "abilities",
    "op": "set",
    "id": "feed-the-swarm",
-   "key": "ability_id",
    "values": {
     "description": "In your Command phase, each HARVESTER unit from your army can Regenerate one friendly TYRANIDS unit that is within 6\" of it. A unit can only be regenerated once per phase. Each time a unit regenerates, do one of the following:\n- \u0007One model in that unit regains up to D3+1 lost wounds.\n- \u0007One destroyed INFANTRY model (excluding CHARACTERS) is returned to that unit with its full wounds remaining. If that unit is an ENDLESS MULTITUDE unit, up to 3 destroyed models are returned instead."
    },
-   "note": "tyranids pack rules update"
+   "note": "tyranids pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "tyranids",
    "file": "abilities",
    "op": "set",
    "id": "enraged-behemoths",
-   "key": "ability_id",
    "values": {
-    "description": "Each time a TYRANIDS MONSTER model from your army makes an attack, add 1 to the Hit roll if that model’s unit is below its Starting Strength, and add 1 to the Wound roll as well if that model’s unit is Below Half-strength. In addition, while a TYRANIDS MONSTER unit from your army (excluding Battle-shocked units) is at its Starting Strength, add 2 to the Objective Control characteristic of models in that unit."
+    "description": "Each time a TYRANIDS MONSTER model from your army makes an attack, add 1 to the Hit roll if that model’s unit is below its Starting Strength, and add 1 to the Wound roll as well if that model"
+   },
+   "note": "tyranids pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "tyranids",
+   "file": "stratagems",
+   "op": "set",
+   "id": "untrammelled-ferocity-crusher-stampede",
+   "values": {
+    "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Tyranids Monster unit from your army that has not been selected to move this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a Normal, Advance or Fall Back move, it can move through models (excluding TITANIC models) and sections of terrain features that are 4\" or less in height. When doing so:\n- \u0007It can move within Engagement Range of enemy models, but cannot end that move within Engagement Range of them.\n- \u0007It can also move through sections of terrain features that are more than 4\" in height, but if it does, after its unit has moved, roll one D6: on a 1, your unit is Battle-shocked."
+   },
+   "note": "tyranids pack rules update"
+  },
+  {
+   "faction": "tyranids",
+   "file": "stratagems",
+   "op": "set",
+   "id": "reinforced-hive-node-synaptic-nexus",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Synapse unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’"
    },
    "note": "tyranids pack rules update"
   },
@@ -9561,20 +9964,50 @@
    "file": "abilities",
    "op": "set",
    "id": "insurmountable-odds",
-   "key": "ability_id",
    "values": {
     "description": "In your opponent’s Shooting phase, when an enemy unit has shot, if a model from a friendly ENDLESS MULTITUDE unit was destroyed as a result of those attacks, that friendly unit can make a surge move of up to D6\"."
    },
+   "note": "tyranids pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "tyranids",
+   "file": "stratagems",
+   "op": "set",
+   "id": "synaptic-goading-unending-swarm",
+   "values": {
+    "text": "**WHEN:** Any phase, just before an ENDLESS MULTITUDE unit from your army that is within Synapse Range of your army makes a surge move.\n\n**TARGET:** That ENDLESS MULTITUDE unit.\n\n**EFFECT:** When making that surge move, you can re-roll the D6 to determine how far your unit moves, and your unit can end that move as close as possible to the closest objective marker (instead of as close as possible to the closest enemy unit). All other rules for making surge moves still apply."
+   },
    "note": "tyranids pack rules update"
+  },
+  {
+   "faction": "world-eaters",
+   "file": "stratagems",
+   "op": "set",
+   "id": "berzerkers-wrath-berzerker-warband",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One KHORNE BERZERKERS unit from your army that can make a surge move as a result of those attacks.\n\n**EFFECT:** Do not roll a D6 to determine how far models in your unit can move when they make a surge move. Instead, when making a surge move, those models can move up to 8\"."
+   },
+   "note": "world-eaters pack rules update"
   },
   {
    "faction": "world-eaters",
    "file": "abilities",
    "op": "set",
    "id": "butcher-lord",
-   "key": "ability_id",
    "values": {
-    "description": "WORLD EATERS INFANTRY model only. The bearer has the Infiltrators ability.’ GORETRACK ONSLAUGHT DETACHMENT"
+    "description": "WORLD EATERS INFANTRY model only. The bearer has the Infiltrators ability."
+   },
+   "note": "world-eaters pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "world-eaters",
+   "file": "stratagems",
+   "op": "set",
+   "id": "fury-unleashed-goretrack-onslaught",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One WORLD EATERS RHINO model from your army that has one or more wounds remaining and was hit by one or more of the attacking unit’s attacks.\n\n**EFFECT:** One KHORNE BERZERKERS unit embarked within your model can make a disembark move and then make a surge move of up to D6+2\".\n\n**RESTRICTION:** A unit cannot be targeted by this Stratagem and the Unrelenting Advance Stratagem in the same phase."
    },
    "note": "world-eaters pack rules update"
   },
@@ -9583,11 +10016,11 @@
    "file": "abilities",
    "op": "set",
    "id": "disciple-of-khorne",
-   "key": "ability_id",
    "values": {
     "description": "LORD ON JUGGERNAUT model only. The bearer has the Deep Strike ability, and it has the BLOOD LEGIONS Faction keyword instead of the WORLD EATERS Faction keyword."
    },
-   "note": "world-eaters pack rules update"
+   "note": "world-eaters pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "world-eaters",
@@ -9595,7 +10028,7 @@
    "op": "set",
    "id": "summoned-by-slaughter-khorne-daemonkin",
    "values": {
-    "text": "WHEN: Any phase, when the last model in a unit is destroyed, before removing it from play. (If that unit is a TRANSPORT, any units embarked within that TRANSPORT model must disembark first). TARGET: One BLOODLETTERS unit from your army that is in Reserves. EFFECT: Set your unit up anywhere on the battlefield wholly within 9\" of that destroyed model and more than 6\" horizontally away from all enemy units, then remove the destroyed model from play. RESTRICTIONS: You cannot use this Stratagem more than once per battle round. EATERS designed to improve the gaming experience for all players. highlighted in red. POSSESSED SLAUGHTERBOUND DETACHMENT"
+    "text": "**WHEN:** Any phase, when the last model in a unit is destroyed, before removing it from play. (If that unit is a TRANSPORT, any units embarked within that TRANSPORT model must disembark first). \n\n**TARGET:** One BLOODLETTERS unit from your army that is in Reserves. \n\n**EFFECT:** Set your unit up anywhere on the battlefield wholly within 9\" of that destroyed model and more than 6\" horizontally away from all enemy units, then remove the destroyed model from play. \n\n**RESTRICTIONS:** You cannot use this Stratagem more than once per battle round. EATERS designed to improve the gaming experience for all players. highlighted in red."
    },
    "note": "world-eaters pack rules update"
   },
@@ -9604,55 +10037,55 @@
    "file": "abilities",
    "op": "set",
    "id": "rend-and-tear",
-   "key": "ability_id",
    "values": {
     "description": "Each time a model in this unit makes a melee attack that targets a MONSTER or VEHICLE unit, until the end of the phase, improve the Damage characteristic of that attack by 1.'"
    },
-   "note": "world-eaters pack rules update"
+   "note": "world-eaters pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "world-eaters",
    "file": "abilities",
    "op": "set",
    "id": "loping-speed",
-   "key": "ability_id",
    "values": {
     "description": "In your opponent's Movement phase, if an enemy unit ends a move within 8\" of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to D6\"."
    },
-   "note": "world-eaters pack rules update"
+   "note": "world-eaters pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "world-eaters",
    "file": "abilities",
    "op": "set",
    "id": "the-betrayer",
-   "key": "ability_id",
    "values": {
     "description": "At the end of your Charge phase, if this unit is on the battlefield, is unengaged, and contains a bodyguard model, this unit makes a leadership roll:\n- \u0007If that leadership roll is failed, one bodyguard model in this unit is destroyed."
    },
-   "note": "world-eaters pack rules update"
+   "note": "world-eaters pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "world-eaters",
    "file": "abilities",
    "op": "set",
    "id": "blood-surge",
-   "key": "ability_id",
    "values": {
     "description": "In your opponent’s Shooting phase, when an enemy unit has shot, if a model in this unit was destroyed as a result of those attacks, this unit can make a surge move of up to D6+2\"."
    },
-   "note": "world-eaters pack rules update"
+   "note": "world-eaters pack rules update",
+   "key": "ability_id"
   },
   {
    "faction": "world-eaters",
    "file": "abilities",
    "op": "set",
    "id": "frenzy",
-   "key": "ability_id",
    "values": {
     "description": "(Once per turn, per unit) In the Fight phase, when an enemy unit targets this unit, after that unit has resolved its attacks, you can use this ability. If you do, this unit is eligible to fight (even if it has already fought this phase) and must be selected to fight next."
    },
-   "note": "world-eaters pack rules update"
+   "note": "world-eaters pack rules update",
+   "key": "ability_id"
   }
  ]
 }

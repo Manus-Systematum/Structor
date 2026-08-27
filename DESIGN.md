@@ -2603,9 +2603,9 @@ before the next step; `tools/make-update.py` diffs both against the built
 bundles and writes `data/updates/<date>.json`; `bin/bundle.dart` gzips every
 file in `data/updates/` into the dist and lists it.
 
-The August file is **833 operations in 48 KB** — 594 wordings and 29 removals
+The August file is **873 operations in 48 KB** — 594 wordings and 29 removals
 from the detachment pages, 78 stratagems a chapter's copy of a shared
-detachment was missing, and 132 errata from the Rules Updates sections.
+detachment was missing, and 172 errata from the Rules Updates sections.
 
 **The Rules Updates sections, added in the same pass.** Every pack ends with
 errata to rules the codex already published, in a regular shape — a shouted
@@ -2619,13 +2619,40 @@ ability's `description`. That is why a patch operation now names the field its
 id is matched against — `abilities` keys on `ability_id`, and a table of
 per-file exceptions in the code would not have the next file in it.
 
-The 226 not applied break down as: **89 edit a phrase rather than replace a
-rule** (`Change 9" to 8".`, `Add 'FRAME'.`) — applying those would mean
-rewriting rules text by pattern, which is what §0 forbids; **39 replace one
-section** of a rule the app stores as a single string; **90 name an ability
-the app does not carry, or name it ambiguously**; the rest are subjects the
-parser could not read. They are kept in `data/faction-pack-updates.json` so
-the next pass starts from the parse rather than the PDFs.
+**A second pass took it to 172**, by handling three shapes the first refused:
+
+- **One named section of a rule.** `Photon Grenades Stratagem, When Section`
+  names a stratagem and a part of it. The app holds a stratagem as one string
+  with `**WHEN:**`-style headings in it, so the named part is replaced inside
+  it and the rest left alone. The packs separate the section with a comma in
+  some and an en dash in others, and write `Target and Effect Sections` when
+  one correction replaces two.
+- **One measurement swapped for another.** `Change 9" to 8".` This is the one
+  place the tool rewrites rules text by pattern, and it is bounded: Games
+  Workshop name both the old value and the new, and the substitution is
+  refused unless the old appears **exactly once** in the record. Twice means
+  the correction is ambiguous and the app keeps what it has — 22 were refused
+  on that test.
+- **Keywords and core abilities.** `Add 'FRAME'.` and `Remove 'Leader', add
+  'Support'.` edit lists, not prose, and are applied as lists across every
+  datasheet the subject names.
+
+**Two faults were found by checking rather than by it failing.** Ten
+replacements flattened a stratagem into one unheaded blob, because the packs
+print the sections as running text — `WHEN: ... TARGET: ...` — where the app
+holds them as `**WHEN:**` paragraphs; they are normalised now, and a test
+pins that a rewritten stratagem keeps its headings. And one replacement had
+the *next* entry's heading welded to its end. The segmentation was tightened
+twice and the last one is dropped rather than shipped: wording a version out
+of date beats wording with somebody else's heading on it.
+
+**The 186 still not applied are not wording.** 120 name something the app has
+no record for — 16 of them datasheet sections it holds as data rather than
+text (`Transport`, `Leader`, `Damaged`, `Options`), 19 statlines and wargear
+profiles, the rest fragments the parser could not read. 22 are the ambiguous
+measurements above, and 10 edit something other than a distance — a Strength
+characteristic, an AP, a paragraph deletion. All 358 stay in
+`data/faction-pack-updates.json` so the next pass starts from the parse.
 
 Segmentation is by **looking ahead to the directives**, not by streaming
 state. Streaming could not tell where a quotation ended, because an apostrophe

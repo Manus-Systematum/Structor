@@ -156,12 +156,59 @@ BUNDLES = f'{ROOT}/packages/wh40k_app/assets/bundles'
 
 # A subject naming a part of a rule rather than the whole of it: the
 # correction replaces that part, and the app has no such part to replace.
-SECTION = re.compile(r',\s*(when|target|effect|restrictions|keywords|abilities)'
-                     r'\s+section\b', re.I)
+# A subject naming a part of a rule rather than the whole of it. The app
+# holds the rule as one string with `**WHEN:**`-style headings in it, so the
+# named part can be replaced inside it.
+SECTION = re.compile(r'[,\-–—]\s*(?P<part>[\w ]+?)\s+sections?\s*$', re.I)
+
+
+def sections_named(subject):
+    """`(parts, subject-without-them)`, or `([], subject)`.
+
+    The separator is a comma in most packs and an en dash in others, and the
+    packs write `Target and Effect Sections` when one correction replaces
+    two — so this returns a list, not a part.
+    """
+    found = SECTION.search(subject)
+    if not found:
+        return [], subject
+    phrase = found.group('part').lower()
+    parts = [p.strip().split()[-1] for p in re.split(r'\band\b', phrase)
+             if p.strip()]
+    return parts, subject[:found.start()].strip()
+
+# The sections a stratagem's own text is divided into. `Transport`, `Leader`
+# and the rest name parts of a datasheet, which is a different shape.
+TEXT_SECTIONS = ('when', 'target', 'effect', 'restrictions')
 
 SUBJECT = re.compile(r'^(?:(?P<owner>.*?),\s*)?(?P<name>.+?)\s+'
                      r'(?P<kind>Enhancement|Stratagem|Detachment [Rr]ule|'
                      r'[Aa]bility|[Aa]bilities)$')
+
+# `Change 9" to 8".` — a measurement swapped for another, and nothing else.
+MEASURE = re.compile(r'^Change\s+(?P<from>\d+(?:\.\d+)?")\s+to\s+'
+                     r'(?P<to>\d+(?:\.\d+)?")\.?$', re.I)
+
+# `Add 'FRAME'.` and `Remove 'Leader', add 'Support'.`
+ADD_ONE = re.compile(r"^Add\s+['‘\"](?P<what>[^'’\"]+)['’\"]\.?$", re.I)
+SWAP = re.compile(r"^Remove\s+['‘\"](?P<out>[^'’\"]+)['’\"],\s*add\s+"
+                  r"['‘\"](?P<in>[^'’\"]+)['’\"]\.?$", re.I)
+
+
+def replace_section(text, part, replacement):
+    """A rule's named section swapped, leaving the rest of it alone.
+
+    Returns None when the section is not there to replace: a correction that
+    cannot find its target is reported, never guessed at.
+    """
+    pattern = re.compile(r'(\*\*' + part.upper() + r':\*\*)(.*?)'
+                         r'(?=\n\n\*\*[A-Z]+:\*\*|$)', re.S)
+    if not pattern.search(text or ''):
+        return None
+    body = replacement.strip()
+    # The pack quotes the replacement with its own heading sometimes.
+    body = re.sub(r'^\*\*' + part.upper() + r':\*\*\s*', '', body, flags=re.I)
+    return pattern.sub(lambda m: f'{m.group(1)} {body}', text, count=1)
 
 
 def bundled():
@@ -185,18 +232,59 @@ def quoted(text):
     """
     body = text.strip()
     for opener, closer in (('‘', '’'), ("'", "'"), ('"', '"')):
-        if body.startswith(opener):
-            body = body[1:]
-            if body.endswith(closer):
-                body = body[:-1]
-            break
+        if not body.startswith(opener):
+            continue
+        body = body[1:]
+        # Cut at the closing quote rather than only trimming one off the end:
+        # a subject that runs to several lines is not fully excluded by the
+        # segmentation, and `... that unit.' RAD-ZONE CORPS DETACHMENT
+        # Rad-bombardment Detachment Rule ...` was reaching the app as the
+        # rule's own wording.
+        at = body.rfind(closer)
+        if at > 0:
+            body = body[:at]
+        break
     body = re.sub(r'\s*[▪●•]\s*', '\n- ', body)
     # A nested bullet is a sub-point of the one above it.
     body = re.sub(r'\s*[◦□]\s*', '\n  - ', body)
+
+    # A stratagem's sections are printed as running text here — `WHEN: ...
+    # TARGET: ...` — where the app holds them as `**WHEN:**` paragraphs. Ten
+    # of the replacements flattened a stratagem into one unheaded blob before
+    # this, which is worse than the wording being a version out of date.
+    if not re.search(r'\*\*(WHEN|TARGET|EFFECT|RESTRICTIONS):\*\*', body):
+        body = re.sub(r'\b(WHEN|TARGET|EFFECT|RESTRICTIONS):\s*',
+                      lambda m: f'\n\n**{m.group(1)}:** ', body)
+    # A bullet with nothing after it is the start of the next entry, not part
+    # of this one.
+    body = re.sub(r'\n\s*-\s*$', '', body)
     return re.sub(r'\n{3,}', '\n\n', body).strip()
 
 
+# A replacement that still ends in a run of shouted words has the next entry's
+# heading on it. One of the 174 does, and it is dropped rather than shipped:
+# the app keeping wording that is a version out of date beats it showing
+# wording with somebody else's heading welded to the end.
+LEAKED = re.compile(r'\b[A-Z]{3,}(?: [A-Z]{3,}){2,}\s*\S*$')
+
+
 def rules_update_ops(packs_to_factions):
+    """Every correction that can be placed on a record, as operations.
+
+    Four shapes, and each is refused rather than guessed at when its target
+    is not found:
+
+      whole      `Change to:` a rule, replacing its wording outright
+      section    `Change to:` one named part of a rule, replaced inside it
+      measure    `Change 9" to 8".` — one distance, if it occurs exactly once
+      keywords   `Add 'FRAME'.` and `Remove 'Leader', add 'Support'.`
+
+    The measurement one is the only place this rewrites rules text by
+    pattern, and it is bounded: Games Workshop specify both the old value and
+    the new, and the substitution is refused unless the old appears exactly
+    once in the record. Two occurrences means the correction is ambiguous and
+    the app should keep the wording it has.
+    """
     updates_at = f'{ROOT}/data/faction-pack-updates.json'
     if not os.path.exists(updates_at):
         return [], collections.Counter()
@@ -217,26 +305,17 @@ def rules_update_ops(packs_to_factions):
         for e in bundle.get('enhancements', []):
             enhancements[e.get('detachment_id')][key(e['name'])] = e
         stratagems = collections.defaultdict(dict)
-        for s in bundle.get('stratagems', []):
-            stratagems[s.get('detachment_id')][key(s['name'])] = s
+        for st in bundle.get('stratagems', []):
+            stratagems[st.get('detachment_id')][key(st['name'])] = st
         abilities = collections.defaultdict(list)
         for a in bundle.get('abilities', []):
             abilities[key(a['name'])].append(a)
+        by_ability_id = {a['ability_id']: a for a in bundle.get('abilities', [])}
         units = {u['id']: u for u in bundle.get('units', [])}
+        units_by_name = {key(u['name']): u for u in units.values()}
 
-        for correction in corrections:
-            category = (correction['category'] or '').strip()
-            subject = correction['subject'].strip()
-            directive = correction['directive'].rstrip()
-
-            # `Change to:` opens a replacement; anything else edits a phrase.
-            if not directive.endswith(':'):
-                skipped['edits a phrase, not a whole rule'] += 1
-                continue
-            if SECTION.search(subject):
-                skipped['replaces one section of a rule'] += 1
-                continue
-
+        def target_for(subject, category):
+            """The record a subject names: `(file, id, key, field, record)`."""
             parsed = SUBJECT.match(subject)
             if parsed:
                 kind = parsed.group('kind').lower()
@@ -244,71 +323,174 @@ def rules_update_ops(packs_to_factions):
                 owner = parsed.group('owner')
             else:
                 # An army rule is named without saying what it is — `For the
-                # Greater Good`, not `For the Greater Good Ability` — and so
-                # is a datasheet's rule where the pack shortens it. The name
-                # either matches an ability or it does not, and the lookup
-                # below is what decides.
+                # Greater Good`, not `For the Greater Good Ability`.
                 kind = 'ability'
                 owner, _, tail = subject.rpartition(',')
                 name = key(tail if owner else subject)
                 owner = owner.strip() or None
-            text = quoted(correction['text'])
-            note = f'{pack} pack rules update'
 
-            def ability_op(ability_id):
-                return {
-                    'faction': faction, 'file': 'abilities', 'op': 'set',
-                    'id': ability_id, 'key': 'ability_id',
-                    'values': {'description': text}, 'note': note,
-                }
-
-            # The heading above a subject can be stale — a datasheet ability is
-            # printed under whichever detachment heading came last — so the
-            # subject's own shape is tried first and the heading only scopes
-            # the things that need scoping.
             if kind in ('ability', 'abilities'):
                 found = abilities.get(name, [])
                 if len(found) > 1 and owner:
                     wanted = key(owner)
-                    found = [a for a in found if any(
+                    narrowed = [a for a in found if any(
                         key(units.get(u, {}).get('name', '')) == wanted
-                        for u in a.get('unit_ids', []))] or found
-                if len(found) == 1:
-                    ops.append(ability_op(found[0]['ability_id']))
-                else:
-                    skipped['no ability of that name' if not found
-                            else 'that ability name is not unique'] += 1
-                continue
+                        for u in a.get('unit_ids', []))]
+                    found = narrowed or found
+                if len(found) != 1:
+                    return None, ('no ability of that name' if not found
+                                  else 'that ability name is not unique')
+                a = found[0]
+                return ('abilities', a['ability_id'], 'ability_id',
+                        'description', a), None
 
             detachment = detachments.get(
                 key(category[:-len('DETACHMENT')].strip())
-                if category.endswith('DETACHMENT') else '')
+                if (category or '').endswith('DETACHMENT') else '')
             if detachment is None:
-                skipped['no detachment heading to scope it'] += 1
-                continue
+                return None, 'no detachment heading to scope it'
 
             if kind == 'enhancement':
                 found = enhancements[detachment['id']].get(name)
-                if found and found.get('ability_id'):
-                    ops.append(ability_op(found['ability_id']))
-                else:
-                    skipped['no enhancement of that name'] += 1
-            elif kind == 'stratagem':
+                if not found or not found.get('ability_id'):
+                    return None, 'no enhancement of that name'
+                a = by_ability_id.get(found['ability_id'], {})
+                return ('abilities', found['ability_id'], 'ability_id',
+                        'description', a), None
+            if kind == 'stratagem':
                 found = stratagems[detachment['id']].get(name)
-                if found:
-                    ops.append({
-                        'faction': faction, 'file': 'stratagems', 'op': 'set',
-                        'id': found['id'], 'values': {'text': text},
-                        'note': note,
-                    })
-                else:
-                    skipped['no stratagem of that name'] += 1
-            else:
-                rule = detachment.get('detachment_rule_id')
-                if rule:
-                    ops.append(ability_op(rule))
-                else:
-                    skipped['detachment has no rule to correct'] += 1
+                if not found:
+                    return None, 'no stratagem of that name'
+                return ('stratagems', found['id'], 'id', 'text', found), None
+
+            rule = detachment.get('detachment_rule_id')
+            if not rule:
+                return None, 'detachment has no rule to correct'
+            return ('abilities', rule, 'ability_id', 'description',
+                    by_ability_id.get(rule, {})), None
+
+        for correction in corrections:
+            category = (correction['category'] or '').strip()
+            subject = correction['subject'].strip()
+            directive = correction['directive'].rstrip()
+            note = f'{pack} pack rules update'
+
+            def emit(target, values):
+                if any(isinstance(v, str) and LEAKED.search(v.strip())
+                       for v in values.values()):
+                    skipped['the replacement has a heading welded to it'] += 1
+                    return
+                where, ident, id_key, _, _ = target
+                op = {'faction': faction, 'file': where, 'op': 'set',
+                      'id': ident, 'values': values, 'note': note}
+                if id_key != 'id':
+                    op['key'] = id_key
+                ops.append(op)
+
+            # --- keywords and core abilities, named for a list of units -----
+            parts, base = sections_named(subject)
+            part = parts[0] if len(parts) == 1 else None
+            if parts and parts[0] in ('keywords', 'abilities') \
+                    and not directive.endswith(':'):
+                add = ADD_ONE.match(directive)
+                swap = SWAP.match(directive)
+                if not (add or swap):
+                    skipped['a keyword edit that is neither add nor swap'] += 1
+                    continue
+                names = [key(n) for n in re.split(r',|\band\b', base)]
+                hit = 0
+                for n in names:
+                    unit = units_by_name.get(n.strip())
+                    if not unit:
+                        continue
+                    hit += 1
+                    if part == 'keywords' and add:
+                        word = add.group('what').title()
+                        if word not in unit.get('keywords', []):
+                            ops.append({
+                                'faction': faction, 'file': 'units',
+                                'op': 'set', 'id': unit['id'],
+                                'values': {'keywords':
+                                           [*unit.get('keywords', []), word]},
+                                'note': note,
+                            })
+                    elif part == 'abilities' and swap:
+                        out_id = next(
+                            (a['ability_id'] for a in
+                             abilities.get(key(swap.group('out')), [])), None)
+                        in_id = next(
+                            (a['ability_id'] for a in
+                             abilities.get(key(swap.group('in')), [])), None)
+                        current = unit.get('ability_ids', [])
+                        if not in_id or out_id not in current:
+                            continue
+                        ops.append({
+                            'faction': faction, 'file': 'units', 'op': 'set',
+                            'id': unit['id'],
+                            'values': {'ability_ids':
+                                       [in_id if a == out_id else a
+                                        for a in current]},
+                            'note': note,
+                        })
+                if not hit:
+                    skipped['no datasheet of that name'] += 1
+                continue
+
+            # `Photon Grenades Stratagem, When Section` names a stratagem and
+            # a part of it. The part is held aside so what is left still ends
+            # with the kind of thing it is, which is what resolution matches.
+            target, why = target_for(base, category)
+            if target is None:
+                skipped[why] += 1
+                continue
+            _, _, _, field, record = target
+            current = (record or {}).get(field) or ''
+
+            # --- one measurement swapped for another ------------------------
+            measure = MEASURE.match(directive)
+            if measure:
+                old, new_value = measure.group('from'), measure.group('to')
+                if current.count(old) != 1:
+                    skipped['the distance is not in the rule exactly once'] += 1
+                    continue
+                emit(target, {field: current.replace(old, new_value)})
+                continue
+
+            if not directive.endswith(':'):
+                skipped['edits something other than a distance'] += 1
+                continue
+
+            text = quoted(correction['text'])
+
+            # --- one or more named sections of a rule -----------------------
+            if parts:
+                if any(p not in TEXT_SECTIONS for p in parts):
+                    skipped['names a part of a datasheet, not of a rule'] += 1
+                    continue
+                # `Target and Effect Sections` quotes both replacements in one
+                # block, each under its own heading, so the block is split on
+                # the headings rather than shared between them.
+                replaced = current
+                for p_name in parts:
+                    piece = re.search(
+                        r'\*\*' + p_name.upper() + r':\*\*(.*?)'
+                        r'(?=\*\*(?:' + '|'.join(
+                            x.upper() for x in TEXT_SECTIONS) + r'):\*\*|$)',
+                        text, re.S | re.I)
+                    body = piece.group(1) if piece else text
+                    step = replace_section(replaced, p_name, body)
+                    if step is None:
+                        replaced = None
+                        break
+                    replaced = step
+                if replaced is None:
+                    skipped['the rule has no such section'] += 1
+                    continue
+                emit(target, {field: replaced})
+                continue
+
+            # --- the whole rule ---------------------------------------------
+            emit(target, {field: text})
 
     return ops, skipped
 

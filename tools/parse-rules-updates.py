@@ -186,10 +186,15 @@ def entries(doc):
         if directive.rstrip().endswith(':'):
             stop = len(lines)
             if k + 1 < len(marks):
-                # Up to the next entry's subject, not its directive.
+                # Up to the next entry's subject, and not into the heading
+                # above it either: a category line left inside the body put
+                # `RAD-ZONE CORPS DETACHMENT Rad-bombardment Detachment` on
+                # the end of the rule before it.
                 nxt = marks[k + 1]
                 back = nxt - 1
                 while back > at and BULLET.match(lines[back]['text']):
+                    back -= 1
+                while back > at and is_category(lines[back - 1]['text']):
                     back -= 1
                 stop = max(at + 1, back)
             body = ' '.join(l['text'] for l in lines[at + 1:stop])

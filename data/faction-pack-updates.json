@@ -11,7 +11,7 @@
    "category": "ARMY RULES",
    "subject": "ADEPTUS MECHANICUS BATTLELINE units, subtract 1 from the Hit roll.'",
    "directive": "Change Conqueror Imperative to:",
-   "text": "▪ \u0007Ranged weapons equipped by models in this unit have the [ASSAULT] ability. ▪ \u0007Improve the Weapon Skill characteristic of melee weapons equipped by models in this unit by 1. ▪ \u0007Each time a model in this unit makes an attack, if this unit has the BATTLELINE keyword and/or it is within 6\" of one or more friendly ADEPTUS MECHANICUS BATTLELINE units, improve the Armour Penetration characteristic of that attack by 1. COHORT CYBERNETICA DETACHMENT",
+   "text": "▪ \u0007Ranged weapons equipped by models in this unit have the [ASSAULT] ability. ▪ \u0007Improve the Weapon Skill characteristic of melee weapons equipped by models in this unit by 1. ▪ \u0007Each time a model in this unit makes an attack, if this unit has the BATTLELINE keyword and/or it is within 6\" of one or more friendly ADEPTUS MECHANICUS BATTLELINE units, improve the Armour Penetration characteristic of that attack by 1.",
    "page": 17
   },
   {
@@ -25,7 +25,7 @@
    "category": "RAD-ZONE CORPS DETACHMENT",
    "subject": "Taking Cover Section",
    "directive": "Change to:",
-   "text": "‘• That unit is battle-shocked. • On a 5+, that unit suffers D3 mortal wounds.’ SKITARII HUNTER COHORT DETACHMENT",
+   "text": "‘• That unit is battle-shocked. • On a 5+, that unit suffers D3 mortal wounds.’",
    "page": 17
   },
   {
@@ -160,7 +160,7 @@
    "category": "ARMY RULES",
    "subject": "Agile Manoeuvres, Star Engines",
    "directive": "Change to:",
-   "text": "‘TRIGGER: When an eligible VEHICLE unit from your army is selected to make an Advance move.’ ‘EFFECT: Until the end of the turn, ranged weapons equipped by this unit have the [ASSAULT] ability.’ ASPECT HOST DETACHMENT",
+   "text": "‘TRIGGER: When an eligible VEHICLE unit from your army is selected to make an Advance move.’ ‘EFFECT: Until the end of the turn, ranged weapons equipped by this unit have the [ASSAULT] ability.’",
    "page": 30
   },
   {
@@ -174,7 +174,7 @@
    "category": "ASPECT HOST DETACHMENT",
    "subject": "your destroyed unit. That unit can make a normal move of up to D6+1.'•",
    "directive": "Change Lethal Surge to:",
-   "text": "'Once per turn, when a YNNARI unit from your army performs the Fade Back Agile Manouvre, it can make a surge move of up to D6+1\" instead of a normal move.' GHOSTS OF THE WEBWAY DETACHMENT",
+   "text": "'Once per turn, when a YNNARI unit from your army performs the Fade Back Agile Manouvre, it can make a surge move of up to D6+1\" instead of a normal move.'",
    "page": 30
   },
   {
@@ -195,21 +195,21 @@
    "category": "GUARDIAN BATTLEHOST DETACHMENT",
    "subject": "Breath of Vaul Enhancement",
    "directive": "Change to:",
-   "text": "'ASURYANI model only. While the bearer is leading a STORM GUARDIANS unit, each time you roll to determine the number of attacks made with a flamer equipped by a model in that unit, you can re‑roll the result, and each time you make a Damage roll for a model equipped with a fusion gun in that unit, you can re‑roll the result.' designed to improve the gaming experience for all players. highlighted in red. SEER COUNCIL DETACHMENT",
+   "text": "'ASURYANI model only. While the bearer is leading a STORM GUARDIANS unit, each time you roll to determine the number of attacks made with a flamer equipped by a model in that unit, you can re‑roll the result, and each time you make a Damage roll for a model equipped with a fusion gun in that unit, you can re‑roll the result.' designed to improve the gaming experience for all players. highlighted in red.",
    "page": 30
   },
   {
    "category": "SEER COUNCIL DETACHMENT",
    "subject": "Unshrouded Truth Stratagem,Target and Effect Sections",
    "directive": "Change to:",
-   "text": "'TARGET: One ASURYANI INFANTRY unit from your army (excluding WRAITH CONSTRUCT units) that has not been selected to move this phase, was not set up on the battlefield this phase, and is within 9\" of one or more friendly ASURYANI PSYKER models. EFFECT: ▪ Place your unit in strategic reserves. ▪ Your unit has Deep Strike. ▪ Your unit must make an ingress move this phase.' SPIRIT CONCLAVE DETACHMENT",
+   "text": "'TARGET: One ASURYANI INFANTRY unit from your army (excluding WRAITH CONSTRUCT units) that has not been selected to move this phase, was not set up on the battlefield this phase, and is within 9\" of one or more friendly ASURYANI PSYKER models. EFFECT: ▪ Place your unit in strategic reserves. ▪ Your unit has Deep Strike. ▪ Your unit must make an ingress move this phase.'",
    "page": 30
   },
   {
    "category": "SPIRIT CONCLAVE DETACHMENT",
    "subject": "Higher Duty Enhancement",
    "directive": "Change to:",
-   "text": "'SPIRITSEER model only. In your opponent's Movement phase, if an enemy unit ends a move within 8\" of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to 6\".' WARHOST DETACHMENT",
+   "text": "'SPIRITSEER model only. In your opponent's Movement phase, if an enemy unit ends a move within 8\" of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to 6\".'",
    "page": 30
   },
   {
@@ -223,7 +223,7 @@
    "category": "WARHOST DETACHMENT",
    "subject": "Skyborne Sanctuary Stratagem, Target and Effect Sections",
    "directive": "Change to:",
-   "text": "'TARGET: One unengaged ASURYANI unit from your army that was eligible to fight this phase and one friendly TRANSPORT it is able to embark within. EFFECT: If your ASURYANI unit is wholly within 6\" of that TRANSPORT, it can embark within it.' WINDRIDER HOST DETACHMENT",
+   "text": "'TARGET: One unengaged ASURYANI unit from your army that was eligible to fight this phase and one friendly TRANSPORT it is able to embark within. EFFECT: If your ASURYANI unit is wholly within 6\" of that TRANSPORT, it can embark within it.'",
    "page": 30
   },
   {
@@ -379,7 +379,7 @@
    "category": "MECHANISED ASSAULT DETACHMENT",
    "subject": "Swift Interception Stratagem, Target section",
    "directive": "Change to:",
-   "text": "‘One TRANSPORT unit from your army (excluding AIRCRAFT and TITANIC units) that is not within Engagement Range of one or more enemy units, and is within 8\" of the enemy unit that just ended that move.’ RECON ELEMENT DETACHMENT",
+   "text": "‘One TRANSPORT unit from your army (excluding AIRCRAFT and TITANIC units) that is not within Engagement Range of one or more enemy units, and is within 8\" of the enemy unit that just ended that move.’",
    "page": 23
   },
   {
@@ -407,7 +407,7 @@
    "category": "RECON ELEMENT DETACHMENT",
    "subject": "Tanglefoot Grenades Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "'Select one visible enemy unit within 12\" of your unit. When that enemy unit declares a charge, that enemy unit has -1 to charge rolls. SIEGE REGIMENT DETACHMENT",
+   "text": "'Select one visible enemy unit within 12\" of your unit. When that enemy unit declares a charge, that enemy unit has -1 to charge rolls.",
    "page": 23
   },
   {
@@ -516,7 +516,7 @@
    "category": "CHAOS CULT DETACHMENT",
    "subject": "Warped Foresight Enhancement",
    "directive": "Change to:",
-   "text": "‘DARK APOSTLE or DAMNED model only. While the bearer is leading a unit with the Scouts 6” ability, every model in the bearer’s unit has the Scouts 6” ability. DECEPTORS DETACHMENT",
+   "text": "‘DARK APOSTLE or DAMNED model only. While the bearer is leading a unit with the Scouts 6” ability, every model in the bearer’s unit has the Scouts 6” ability.",
    "page": 37
   },
   {
@@ -530,14 +530,14 @@
    "category": "DECEPTORS DETACHMENT",
    "subject": "Falsehood Enhancement, third sentence",
    "directive": "Change to:",
-   "text": "‘If you do, in one of your Movement phases, you can select one model in a friendly LEGIONARIES or CHOSEN unit that has two or more models remaining and is on the battlefield (excluding Attached units).’ DREAD TALONS DETACHMENT",
+   "text": "‘If you do, in one of your Movement phases, you can select one model in a friendly LEGIONARIES or CHOSEN unit that has two or more models remaining and is on the battlefield (excluding Attached units).’",
    "page": 37
   },
   {
    "category": "DREAD TALONS DETACHMENT",
    "subject": "Screaming Descent Stratagem, Effect section",
    "directive": "Change to:",
-   "text": "'Set your unit up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units, but until the end of the turn, it is not eligible to declare a charge. Then select one enemy INFANTRY or MOUNTED unit within 9\" of and visible to your unit: that unit makes a battle‑shock roll.’ PACTBOUND ZEALOTS DETACHMENT",
+   "text": "'Set your unit up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units, but until the end of the turn, it is not eligible to declare a charge. Then select one enemy INFANTRY or MOUNTED unit within 9\" of and visible to your unit: that unit makes a battle‑shock roll.’",
    "page": 37
   },
   {
@@ -551,14 +551,14 @@
    "category": "PACTBOUND ZEALOTS DETACHMENT",
    "subject": "Restrictions Section",
    "directive": "Change to:",
-   "text": "‘A CHARACTER/EPIC HERO unit can only be attached to a unit if both units share the same keyword from the list above.' RENEGADE RAIDERS DETACHMENT",
+   "text": "‘A CHARACTER/EPIC HERO unit can only be attached to a unit if both units share the same keyword from the list above.'",
    "page": 37
   },
   {
    "category": "RENEGADE RAIDERS DETACHMENT",
    "subject": "Unfailingly Obdurate Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’ MARINES designed to improve the gaming experience for all players. highlighted in red. SOULFORGED WARPACK DETACHMENT",
+   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’ MARINES designed to improve the gaming experience for all players. highlighted in red.",
    "page": 37
   },
   {
@@ -600,7 +600,7 @@
    "category": "VETERANS OF THE LONG WAR DETACHMENT",
    "subject": "Contemptuous Disregard Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’ DATASHEETS",
+   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’",
    "page": 37
   },
   {
@@ -721,7 +721,7 @@
    "category": "DETACHMENTS (VARIOUS)",
    "subject": "Armour of Contempt Stratagem, Effect section",
    "directive": "Change to:",
-   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’ COMPANY OF HUNTERS DETACHMENT",
+   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’",
    "page": 9
   },
   {
@@ -756,7 +756,7 @@
    "category": "COMPANY OF HUNTERS DETACHMENT",
    "subject": "Talon Strike Stratagem",
    "directive": "Change to:",
-   "text": "‘WHEN: Fight phase, when a friendly ADEPTUS ASTARTES unit is selected to fight. TARGET: That ADEPTUS ASTARTES unit. EFFECT: Your unit’s melee attacks have [LANCE].’ designed to improve the gaming experience for all players. highlighted in red. INNER CIRCLE TASK FORCE DETACHMENT",
+   "text": "‘WHEN: Fight phase, when a friendly ADEPTUS ASTARTES unit is selected to fight. TARGET: That ADEPTUS ASTARTES unit. EFFECT: Your unit’s melee attacks have [LANCE].’ designed to improve the gaming experience for all players. highlighted in red.",
    "page": 9
   },
   {
@@ -884,21 +884,21 @@
    "category": "ARMY RULES",
    "subject": "Nurgle's Gift, Skullsquirm Blight",
    "directive": "Change to:",
-   "text": "‘• \u0007Each time a model in this unit makes a ranged attack, enemy units have the benefit of cover against that attack. • \u0007Each time a model in this unit makes a melee attack, subtract 1 from the Hit roll.’ MORTARION’S HAMMER DETACHMENT",
+   "text": "‘• \u0007Each time a model in this unit makes a ranged attack, enemy units have the benefit of cover against that attack. • \u0007Each time a model in this unit makes a melee attack, subtract 1 from the Hit roll.’",
    "page": 7
   },
   {
    "category": "MORTARION’S HAMMER DETACHMENT",
    "subject": "Stinking Mire Stratagem, Target and Effect Sections",
    "directive": "Change to:",
-   "text": "‘TARGET: One friendly unengaged DEATH GUARD VEHICLE unit. EFFECT: Select one visible enemy unit within 12\" of your unit. When that enemy unit declares a charge, that enemy unit has ‑1 to charge rolls.’ TALLYBAND SUMMONERS DETACHMENT",
+   "text": "‘TARGET: One friendly unengaged DEATH GUARD VEHICLE unit. EFFECT: Select one visible enemy unit within 12\" of your unit. When that enemy unit declares a charge, that enemy unit has ‑1 to charge rolls.’",
    "page": 7
   },
   {
    "category": "TALLYBAND SUMMONERS DETACHMENT",
    "subject": "Beckoning Blight Enhancement",
    "directive": "Change to:",
-   "text": "‘DEATH GUARD model only. Each time a PLAGUE LEGIONS unit from your army is set up on the battlefield using the Deep Strike ability, if it is set up wholly within 12\" of the bearer, it can be set up anywhere that is more than 6\" horizontally away from all enemy models, instead of more than 8\".’ VIRULENT VECTORIUM DETACHMENT",
+   "text": "‘DEATH GUARD model only. Each time a PLAGUE LEGIONS unit from your army is set up on the battlefield using the Deep Strike ability, if it is set up wholly within 12\" of the bearer, it can be set up anywhere that is more than 6\" horizontally away from all enemy models, instead of more than 8\".’",
    "page": 7
   },
   {
@@ -956,7 +956,7 @@
    "category": "ARMY RULES",
    "subject": "Army Rule Section",
    "directive": "Add the following:",
-   "text": "‘Corsairs and Travelling Players If your Army Faction is DRUKHARI, you can include HARLEQUINS and ANHRATHE units in your army, even though they do not have the DRUKHARI Faction keyword. The combined points value of HARLEQUINS and/or ANHRATHE units you can include in your army depends on the battle size, as follows: ▪ \u0007 Incursion: Up to 250 pts ▪ Strike \u0007 Force: Up to 500 pts ▪ Onslaught: \u0007 Up to 750 pts No HARLEQUINS or ANHRATHE models included in your army in this way can be your WARLORD, and they cannot be given Enhancements.’ COVENITE COTERIE DETACHMENT",
+   "text": "‘Corsairs and Travelling Players If your Army Faction is DRUKHARI, you can include HARLEQUINS and ANHRATHE units in your army, even though they do not have the DRUKHARI Faction keyword. The combined points value of HARLEQUINS and/or ANHRATHE units you can include in your army depends on the battle size, as follows: ▪ \u0007 Incursion: Up to 250 pts ▪ Strike \u0007 Force: Up to 500 pts ▪ Onslaught: \u0007 Up to 750 pts No HARLEQUINS or ANHRATHE models included in your army in this way can be your WARLORD, and they cannot be given Enhancements.’",
    "page": 7
   },
   {
@@ -977,7 +977,7 @@
    "category": "COVENITE COTERIE DETACHMENT",
    "subject": "Connoisseurs of Pain Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "'Spend 1 Pain Token. Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1. At the end of the phase, if your unit is still on the battlefield and it is a HAEMONCULUS COVENS unit, you gain 1 Pain Token.' SKYSPLINTER ASSAULT DETACHMENT",
+   "text": "'Spend 1 Pain Token. Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1. At the end of the phase, if your unit is still on the battlefield and it is a HAEMONCULUS COVENS unit, you gain 1 Pain Token.'",
    "page": 7
   },
   {
@@ -1056,7 +1056,7 @@
    "category": "COTERIE OF THE CONCEITED DETACHMENT",
    "subject": "Armour of Abhorrence Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’ MERCURIAL HOST DETACHMENT",
+   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’",
    "page": 9
   },
   {
@@ -1070,7 +1070,7 @@
    "category": "PEERLESS BLADESMEN DETACHMENT",
    "subject": "Faultless Opportunist Enhancement",
    "directive": "Change to:",
-   "text": "'You can target this unit with the Heroic Intervention stratagem, regardless of any other uses of that stratagem this phase. If you do: ▪ \u0007That use is -1 CP. ▪ \u0007That use does not prevent any uses of that stratagem on other units this phase.' RAPID EVISCERATION DETACHMENT",
+   "text": "'You can target this unit with the Heroic Intervention stratagem, regardless of any other uses of that stratagem this phase. If you do: ▪ \u0007That use is -1 CP. ▪ \u0007That use does not prevent any uses of that stratagem on other units this phase.'",
    "page": 9
   },
   {
@@ -1084,7 +1084,7 @@
    "category": "RAPID EVISCERATION DETACHMENT",
    "subject": "Mechanised Murder Detachment Rule",
    "directive": "Change to:",
-   "text": "‘Each time an EMPEROR’S CHILDREN model from your army makes an attack, if it is a TRANSPORT model or disembarked from a TRANSPORT this turn, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.’ SLAANESH’S CHOSEN DETACHMENT",
+   "text": "‘Each time an EMPEROR’S CHILDREN model from your army makes an attack, if it is a TRANSPORT model or disembarked from a TRANSPORT this turn, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.’",
    "page": 9
   },
   {
@@ -1098,7 +1098,7 @@
    "category": "SLAANESH’S CHOSEN DETACHMENT",
    "subject": "Refusal to be Outdone Stratagem",
    "directive": "Change to:",
-   "text": "‘WHEN: Your Charge phase, when a friendly EMPEROR’S CHILDREN CHARACTER unit within 12\" of an engaged enemy unit declares a charge. TARGET: That EMPEROR’S CHILDREN CHARACTER unit. EFFECT: ▪ Your unit can re-roll charge rolls. ▪ \u0007Your unit must end that charge move engaged with one or more of those enemy units.’ DATASHEETS",
+   "text": "‘WHEN: Your Charge phase, when a friendly EMPEROR’S CHILDREN CHARACTER unit within 12\" of an engaged enemy unit declares a charge. TARGET: That EMPEROR’S CHILDREN CHARACTER unit. EFFECT: ▪ Your unit can re-roll charge rolls. ▪ \u0007Your unit must end that charge move engaged with one or more of those enemy units.’",
    "page": 10
   },
   {
@@ -1156,14 +1156,14 @@
    "category": "ARMY RULES",
    "subject": "Code Chivalric, ‘We pledge to reap a great tally’ Deed",
    "directive": "Change to:",
-   "text": "‘This deed is completed at the end of the battle round if the number of enemy units destroyed this battle round is greater than the battle round number even if those units are subsequently returned to the battlefield (for example, two destroyed enemy units in the first battle round).’ GATE WARDEN LANCE DETACHMENT",
+   "text": "‘This deed is completed at the end of the battle round if the number of enemy units destroyed this battle round is greater than the battle round number even if those units are subsequently returned to the battlefield (for example, two destroyed enemy units in the first battle round).’",
    "page": 27
   },
   {
    "category": "GATE WARDEN LANCE DETACHMENT",
    "subject": "Dauntless Defenders Detachment Rule",
    "directive": "Change to:",
-   "text": "‘At the start of the first battle round, select two objectives to be your foundations. Place a circular 40mm foundation marker in each one. When you draw a line from any part of one your foundation markers to any part of the other, if any part of a model’s base (or any part of a model’s hull, for a model without a base) crosses that line, that model’s unit is said to be on your defensive line. While an IMPERIAL KNIGHTS unit from your army is on your defensive line, that unit has the following ability: Against the Horde: Each time a model in this unit makes an attack that targets a visible enemy unit, you can ignore any or all modifiers to the Hit roll, and weapons equipped by models in this unit have the [SUSTAINED HITS 1] ability.’ VALOURSTRIKE LANCE DETACHMENT",
+   "text": "‘At the start of the first battle round, select two objectives to be your foundations. Place a circular 40mm foundation marker in each one. When you draw a line from any part of one your foundation markers to any part of the other, if any part of a model’s base (or any part of a model’s hull, for a model without a base) crosses that line, that model’s unit is said to be on your defensive line. While an IMPERIAL KNIGHTS unit from your army is on your defensive line, that unit has the following ability: Against the Horde: Each time a model in this unit makes an attack that targets a visible enemy unit, you can ignore any or all modifiers to the Hit roll, and weapons equipped by models in this unit have the [SUSTAINED HITS 1] ability.’",
    "page": 27
   },
   {
@@ -1221,7 +1221,7 @@
    "category": "ARMY RULES",
    "subject": "Reanimation Protocols Army Rule",
    "directive": "Change to:",
-   "text": "‘If your Army Faction is NECRONS, at the end of your Command phase, each friendly unit with this ability that is on the battlefield activates its Reanimation Protocols: ▪ \u0007When a unit’s Reanimation Protocols activate, that unit heals D3 wounds.’ ANNIHILATION LEGION DETACHMENT",
+   "text": "‘If your Army Faction is NECRONS, at the end of your Command phase, each friendly unit with this ability that is on the battlefield activates its Reanimation Protocols: ▪ \u0007When a unit’s Reanimation Protocols activate, that unit heals D3 wounds.’",
    "page": 29
   },
   {
@@ -1235,7 +1235,7 @@
    "category": "ANNIHILATION LEGION DETACHMENT",
    "subject": "Insanity’s Ire Stratagem",
    "directive": "Change to:",
-   "text": "‘WHEN: Your opponent’s Shooting phase, when an enemy unit that targeted a friendly unengaged DESTROYER CULT/FLAYED ONES unit this phase has shot. TARGET: That DESTROYER CULT/FLAYED ONES unit. EFFECT: Your unit can make a surge move of up to D6\".’ AWAKENED DYNASTY DETACHMENT",
+   "text": "‘WHEN: Your opponent’s Shooting phase, when an enemy unit that targeted a friendly unengaged DESTROYER CULT/FLAYED ONES unit this phase has shot. TARGET: That DESTROYER CULT/FLAYED ONES unit. EFFECT: Your unit can make a surge move of up to D6\".’",
    "page": 29
   },
   {
@@ -1249,7 +1249,7 @@
    "category": "AWAKENED DYNASTY DETACHMENT",
    "subject": "Protocol of the Eternal Revenant Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "‘At the end of the phase, set up the destroyed model on the battlefield, unengaged and as close as possible to where it was destroyed. That model is not part of an attached unit and its unit has a starting strength of 1. That model has half of its starting number of wounds remaining.’ designed to improve the gaming experience for all players. highlighted in red. CANOPTEK COURT DETACHMENT",
+   "text": "‘At the end of the phase, set up the destroyed model on the battlefield, unengaged and as close as possible to where it was destroyed. That model is not part of an attached unit and its unit has a starting strength of 1. That model has half of its starting number of wounds remaining.’ designed to improve the gaming experience for all players. highlighted in red.",
    "page": 29
   },
   {
@@ -1263,7 +1263,7 @@
    "category": "CANOPTEK COURT DETACHMENT",
    "subject": "Cynosure of Eradication Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "‘Until the end of the phase, weapons equipped by CRYPTEK or CANOPTEK models in your unit have the [DEVASTATING WOUNDS] ability.’ HYPERCRYPT LEGION DETACHMENT",
+   "text": "‘Until the end of the phase, weapons equipped by CRYPTEK or CANOPTEK models in your unit have the [DEVASTATING WOUNDS] ability.’",
    "page": 29
   },
   {
@@ -1277,7 +1277,7 @@
    "category": "HYPERCRYPT LEGION DETACHMENT",
    "subject": "Hyperphasing Detachment Rule, Battle Size Table",
    "directive": "Change to:",
-   "text": "‘Incursion: Up to 1 unit Strike Force: Up to 2 units Onslaught: Up to 3 units’ OBEISANCE PHALANX DETACHMENT",
+   "text": "‘Incursion: Up to 1 unit Strike Force: Up to 2 units Onslaught: Up to 3 units’",
    "page": 29
   },
   {
@@ -1370,7 +1370,7 @@
    "category": "ARMY RULES",
    "subject": "Waaagh!",
    "directive": "Change first paragraph to:",
-   "text": "‘If your Army Faction is ORKS, once per battle, at the start of your Command phase, you can call a Waaagh!. If you do, until the start of your next Command phase, the Waaagh! is active for your army and:’ BULLY BOYZ DETACHMENT",
+   "text": "‘If your Army Faction is ORKS, once per battle, at the start of your Command phase, you can call a Waaagh!. If you do, until the start of your next Command phase, the Waaagh! is active for your army and:’",
    "page": 24
   },
   {
@@ -1391,7 +1391,7 @@
    "category": "BULLY BOYZ DETACHMENT",
    "subject": "Hulking Brutes Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’ DA BIG HUNT DETACHMENT",
+   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’",
    "page": 24
   },
   {
@@ -1412,7 +1412,7 @@
    "category": "DA BIG HUNT DETACHMENT",
    "subject": "Command phase, that enemy unit is your Prey:'",
    "directive": "Change first bullet point to:",
-   "text": "▪ \u0007When a friendly BEAST SNAGGA unit declares a charge, If your Prey is within 12\" of that unit, you can use this part of this ability. If you do: ▫ \u0007That BEAST SNAGGA unit can re-roll that charge roll. ▫ \u0007That BEAST SNAGGA unit must end that charge move engaged with your Prey. designed to improve the gaming experience for all players. highlighted in red. DREAD MOB DETACHMENT",
+   "text": "▪ \u0007When a friendly BEAST SNAGGA unit declares a charge, If your Prey is within 12\" of that unit, you can use this part of this ability. If you do: ▫ \u0007That BEAST SNAGGA unit can re-roll that charge roll. ▫ \u0007That BEAST SNAGGA unit must end that charge move engaged with your Prey. designed to improve the gaming experience for all players. highlighted in red.",
    "page": 24
   },
   {
@@ -1447,7 +1447,7 @@
    "category": "GREEN TIDE DETACHMENT",
    "subject": "Mob Mentality Detachment Rule",
    "directive": "Change to:",
-   "text": "‘Each time an attack targets a BOYZ unit from your army, models in that unit have a 6+ invulnerable save against that attack. Each time an attack targets a BOYZ unit from your army that contains 10 or more models, models in that unit have a 5+ invulnerable save against that attack.' KULT OF SPEED DETACHMENT",
+   "text": "‘Each time an attack targets a BOYZ unit from your army, models in that unit have a 6+ invulnerable save against that attack. Each time an attack targets a BOYZ unit from your army that contains 10 or more models, models in that unit have a 5+ invulnerable save against that attack.'",
    "page": 24
   },
   {
@@ -1461,14 +1461,14 @@
    "category": "KULT OF SPEED DETACHMENT",
    "subject": "Adrenaline Junkies Detachment Rule",
    "directive": "Change to:",
-   "text": "‘SPEED FREEKS units from your army are eligible to shoot and declare a charge in a turn in which they Advanced or Fell Back.’ WAR HORDE DETACHMENT",
+   "text": "‘SPEED FREEKS units from your army are eligible to shoot and declare a charge in a turn in which they Advanced or Fell Back.’",
    "page": 24
   },
   {
    "category": "WAR HORDE DETACHMENT",
    "subject": "Careen! Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "‘Your unit can make a Normal or Fall Back move before its Deadly Demise ability is resolved, and before any embarked units perform an emergency disembark move. When making this move, your unit can move over enemy units (excluding MONSTERS and VEHICLES) as if they were not there.’ DATASHEETS",
+   "text": "‘Your unit can make a Normal or Fall Back move before its Deadly Demise ability is resolved, and before any embarked units perform an emergency disembark move. When making this move, your unit can move over enemy units (excluding MONSTERS and VEHICLES) as if they were not there.’",
    "page": 24
   },
   {
@@ -1687,21 +1687,21 @@
    "category": "ARMY RULES",
    "subject": "Vanguard Spearhead – Armour of Contempt Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’ designed to improve the gaming experience for all players. in red. ANVIL SIEGE FORCE DETACHMENT",
+   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’ designed to improve the gaming experience for all players. in red.",
    "page": 60
   },
   {
    "category": "ANVIL SIEGE FORCE DETACHMENT",
    "subject": "Stoic Defender Enhancement",
    "directive": "Change to:",
-   "text": "‘ADEPTUS ASTARTES model only. While the bearer is leading a unit, models in that unit have the Feel No Pain 6+ ability while they are within an objective you control and, while that unit is Battle-shocked, halve the Objective Control characteristic of models in that unit instead of changing it to ‘-’.’ FIRESTORM ASSAULT FORCE DETACHMENT",
+   "text": "‘ADEPTUS ASTARTES model only. While the bearer is leading a unit, models in that unit have the Feel No Pain 6+ ability while they are within an objective you control and, while that unit is Battle-shocked, halve the Objective Control characteristic of models in that unit instead of changing it to ‘-’.’",
    "page": 60
   },
   {
    "category": "FIRESTORM ASSAULT FORCE DETACHMENT",
    "subject": "Forged in Battle Enhancement",
    "directive": "Change to:",
-   "text": "'ADEPTUS ASTARTES model only. While the bearer is leading a unit, once per turn, after making a Hit roll or a saving throw for a model in that unit, you can change the result of that roll to an unmodified 6.’ GLADIUS TASK FORCE DETACHMENT",
+   "text": "'ADEPTUS ASTARTES model only. While the bearer is leading a unit, once per turn, after making a Hit roll or a saving throw for a model in that unit, you can change the result of that roll to an unmodified 6.’",
    "page": 60
   },
   {
@@ -1722,7 +1722,7 @@
    "category": "GLADIUS TASK FORCE DETACHMENT",
    "subject": "Fire Discipline Enhancement",
    "directive": "Change to:",
-   "text": "'ADEPTUS ASTARTES model only. While the bearer is leading a unit, ranged weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability. In addition, while the bearer’s unit is under the effects of the Devastator Doctrine, you can re-roll Advance rolls made for that unit.' IRONSTORM SPEARHEAD DETACHMENT",
+   "text": "'ADEPTUS ASTARTES model only. While the bearer is leading a unit, ranged weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability. In addition, while the bearer’s unit is under the effects of the Devastator Doctrine, you can re-roll Advance rolls made for that unit.'",
    "page": 60
   },
   {
@@ -1750,7 +1750,7 @@
    "category": "IRONSTORM SPEARHEAD DETACHMENT",
    "subject": "Target Augury Web Enhancement",
    "directive": "Delete ‘Aura’ from this Enhancement and change to:",
-   "text": "‘TECHMARINE model only. In your Command phase, select one ADEPTUS ASTARTES VEHICLE model within 6\" of the bearer. Until the start of your next Command phase, weapons equipped by that VEHICLE model have the [LETHAL HITS] ability.’ STORMLANCE TASK FORCE DETACHMENT",
+   "text": "‘TECHMARINE model only. In your Command phase, select one ADEPTUS ASTARTES VEHICLE model within 6\" of the bearer. Until the start of your next Command phase, weapons equipped by that VEHICLE model have the [LETHAL HITS] ability.’",
    "page": 61
   },
   {
@@ -2011,7 +2011,7 @@
    "category": "ARMY RULES",
    "subject": "For the Greater Good",
    "directive": "Change to:",
-   "text": "‘If your Army Faction is T’AU EMPIRE, at the start of your Shooting phase you can select units from your army with this ability to become Observer units. During your Shooting phase, for each Observer unit from your army that has not been selected to shoot this phase and is eligible to shoot (excluding FORTIFICATION and Battle-shocked units) select one enemy unit that is visible to be marked as their Spotted unit until the end of the phase. Each enemy unit can only be marked as a Spotted unit once per phase. Units from your army with the For the Greater Good ability (excluding Observer units) are Guided units while targeting one or more Spotted units. Until the end of the phase, each time a model from your army in a Guided unit makes an attack that targets a Spotted unit, improve the Ballistic Skill characteristic of that attack by 1 and, if the Spotted unit was marked by an Observer unit that has the Markerlight keyword, that attack has the [IGNORES COVER] ability.’ KAUYON DETACHMENT",
+   "text": "‘If your Army Faction is T’AU EMPIRE, at the start of your Shooting phase you can select units from your army with this ability to become Observer units. During your Shooting phase, for each Observer unit from your army that has not been selected to shoot this phase and is eligible to shoot (excluding FORTIFICATION and Battle-shocked units) select one enemy unit that is visible to be marked as their Spotted unit until the end of the phase. Each enemy unit can only be marked as a Spotted unit once per phase. Units from your army with the For the Greater Good ability (excluding Observer units) are Guided units while targeting one or more Spotted units. Until the end of the phase, each time a model from your army in a Guided unit makes an attack that targets a Spotted unit, improve the Ballistic Skill characteristic of that attack by 1 and, if the Spotted unit was marked by an Observer unit that has the Markerlight keyword, that attack has the [IGNORES COVER] ability.’",
    "page": 19
   },
   {
@@ -2032,7 +2032,7 @@
    "category": "KAUYON DETACHMENT",
    "subject": "Patient Hunter Detachment Rule",
    "directive": "Change to:",
-   "text": "‘During the third, fourth and fifth battle rounds, ranged weapons equipped by T’AU EMPIRE models from your army have the [SUSTAINED HITS 1] ability. During the third, fourth and fifth battle rounds, while a unit is a Guided unit (see For the Greater Good), each time a ranged attack is made by a model in that unit that targets a Spotted unit, you can ignore any or all modifiers to that attack’s Ballistic skill characteristics and/or all modifiers to the Hit roll.’ designed to improve the gaming experience for all players. in red. MONT’KA DETACHMENT",
+   "text": "‘During the third, fourth and fifth battle rounds, ranged weapons equipped by T’AU EMPIRE models from your army have the [SUSTAINED HITS 1] ability. During the third, fourth and fifth battle rounds, while a unit is a Guided unit (see For the Greater Good), each time a ranged attack is made by a model in that unit that targets a Spotted unit, you can ignore any or all modifiers to that attack’s Ballistic skill characteristics and/or all modifiers to the Hit roll.’ designed to improve the gaming experience for all players. in red.",
    "page": 19
   },
   {
@@ -2053,7 +2053,7 @@
    "category": "MONT’KA DETACHMENT",
    "subject": "Killing Blow Detachment rule",
    "directive": "Change to:",
-   "text": "‘During the first, second and third battle rounds, ranged weapons equipped by T’AU EMPIRE models from your army have the [ASSAULT] ability. During the first, second and third battle rounds, while a unit is a Guided unit (see For the Greater Good), its ranged weapons have the [LETHAL HITS] ability.’ RETALIATION CADRE DETACHMENT",
+   "text": "‘During the first, second and third battle rounds, ranged weapons equipped by T’AU EMPIRE models from your army have the [ASSAULT] ability. During the first, second and third battle rounds, while a unit is a Guided unit (see For the Greater Good), its ranged weapons have the [LETHAL HITS] ability.’",
    "page": 19
   },
   {
@@ -2167,7 +2167,7 @@
    "category": "ARMY RULES",
    "subject": "Twist of Fate (Psychic)",
    "directive": "Change to:",
-   "text": "‘Select one enemy unit within 24\" of and visible to the manifesting model. Until the end of the phase, each time a THOUSAND SONS or SCINTILLATING LEGIONS model from your army makes an attack that targets that unit, improve the Armour Penetration characteristic of that attack by 1. If the Psychic test result for this Ritual was 12+, improve the Armour Penetration characteristic of that attack by 2 instead.’ SONS designed to improve the gaming experience for all players. highlighted in red. CHANGEHOST OF DECEIT DETACHMENT",
+   "text": "‘Select one enemy unit within 24\" of and visible to the manifesting model. Until the end of the phase, each time a THOUSAND SONS or SCINTILLATING LEGIONS model from your army makes an attack that targets that unit, improve the Armour Penetration characteristic of that attack by 1. If the Psychic test result for this Ritual was 12+, improve the Armour Penetration characteristic of that attack by 2 instead.’ SONS designed to improve the gaming experience for all players. highlighted in red.",
    "page": 9
   },
   {
@@ -2181,7 +2181,7 @@
    "category": "CHANGEHOST OF DECEIT DETACHMENT",
    "subject": "Chronosorcerous Bleed Stratagem",
    "directive": "Change to:",
-   "text": "WHEN: Start of your opponent's Charge phase. TARGET: One friendly unengaged THOUSAND SONS PSYKER/ SCINTILLATING LEGIONS unit. EFFECT: Select one visible enemy unit within 12\" of your unit. When that enemy unit declares a charge, that enemy unit has -1 to charge rolls. GRAND COVEN DETACHMENT",
+   "text": "WHEN: Start of your opponent's Charge phase. TARGET: One friendly unengaged THOUSAND SONS PSYKER/ SCINTILLATING LEGIONS unit. EFFECT: Select one visible enemy unit within 12\" of your unit. When that enemy unit declares a charge, that enemy unit has -1 to charge rolls.",
    "page": 9
   },
   {
@@ -2195,7 +2195,7 @@
    "category": "GRAND COVEN DETACHMENT",
    "subject": "Umbralefic Crystal Enhancement",
    "directive": "Change to:",
-   "text": "‘THOUSAND SONS model only. (Once per battle, per army) In your Command phase, if this unit is unengaged, you can use this ability. If you do: ▪ Place this unit in strategic reserves. ▪ This unit has Deep Strike until the start of your next Shooting phase. ▪ \u0007This unit must make an ingress move in your next Movement phase (including in your first turn).’ WARPFORGED CABAL DETACHMENT",
+   "text": "‘THOUSAND SONS model only. (Once per battle, per army) In your Command phase, if this unit is unengaged, you can use this ability. If you do: ▪ Place this unit in strategic reserves. ▪ This unit has Deep Strike until the start of your next Shooting phase. ▪ \u0007This unit must make an ingress move in your next Movement phase (including in your first turn).’",
    "page": 9
   },
   {
@@ -2337,7 +2337,7 @@
    "category": "ARMY RULES",
    "subject": "Synapse",
    "directive": "Change to:",
-   "text": "‘If your Army Faction is TYRANIDS, while a TYRANIDS unit from your army is within 6\" of one or more friendly SYNAPSE models, that TYRANIDS unit is said to be within Synapse Range of that model and of your army. While a TYRANIDS unit from your army is within Synapse Range of your army: ▪ \u0007Each time that unit takes a Battle-shock test, take that test on 3D6 instead of 2D6. ▪ \u0007Each time a model in that unit makes a melee attack, add 1 to the Strength characteristic of that attack.’ ASSIMILATION SWARM DETACHMENT",
+   "text": "‘If your Army Faction is TYRANIDS, while a TYRANIDS unit from your army is within 6\" of one or more friendly SYNAPSE models, that TYRANIDS unit is said to be within Synapse Range of that model and of your army. While a TYRANIDS unit from your army is within Synapse Range of your army: ▪ \u0007Each time that unit takes a Battle-shock test, take that test on 3D6 instead of 2D6. ▪ \u0007Each time a model in that unit makes a melee attack, add 1 to the Strength characteristic of that attack.’",
    "page": 19
   },
   {
@@ -2351,7 +2351,7 @@
    "category": "ASSIMILATION SWARM DETACHMENT",
    "subject": "Instinctive Defence Enhancement",
    "directive": "Change to:",
-   "text": "TYRANIDS model only. While the bearer is within 6\" of one or more friendly HARVESTER units, when you target this unit with the Heroic Intervention stratagem, that use is -1 CP. In addition, while the bearer is within 6\" of one or more friendly HARVESTER units, models in the bearer's unit have the Fights First ability. designed to improve the gaming experience for all players. highlighted in red. CRUSHER STAMPEDE DETACHMENT",
+   "text": "TYRANIDS model only. While the bearer is within 6\" of one or more friendly HARVESTER units, when you target this unit with the Heroic Intervention stratagem, that use is -1 CP. In addition, while the bearer is within 6\" of one or more friendly HARVESTER units, models in the bearer's unit have the Fights First ability. designed to improve the gaming experience for all players. highlighted in red.",
    "page": 19
   },
   {
@@ -2365,14 +2365,14 @@
    "category": "CRUSHER STAMPEDE DETACHMENT",
    "subject": "Untrammelled Ferocity Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "‘Until the end of the phase, each time a model in your unit makes a Normal, Advance or Fall Back move, it can move through models (excluding TITANIC models) and sections of terrain features that are 4\" or less in height. When doing so: ▪ \u0007It can move within Engagement Range of enemy models, but cannot end that move within Engagement Range of them. ▪ \u0007It can also move through sections of terrain features that are more than 4\" in height, but if it does, after its unit has moved, roll one D6: on a 1, your unit is Battle-shocked.’ SYNAPTIC NEXUS DETACHMENT",
+   "text": "‘Until the end of the phase, each time a model in your unit makes a Normal, Advance or Fall Back move, it can move through models (excluding TITANIC models) and sections of terrain features that are 4\" or less in height. When doing so: ▪ \u0007It can move within Engagement Range of enemy models, but cannot end that move within Engagement Range of them. ▪ \u0007It can also move through sections of terrain features that are more than 4\" in height, but if it does, after its unit has moved, roll one D6: on a 1, your unit is Battle-shocked.’",
    "page": 19
   },
   {
    "category": "SYNAPTIC NEXUS DETACHMENT",
    "subject": "Reinforced Hive Node Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "'Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’ UNENDING SWARM DETACHMENT",
+   "text": "'Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’",
    "page": 19
   },
   {
@@ -2386,7 +2386,7 @@
    "category": "UNENDING SWARM DETACHMENT",
    "subject": "Synaptic Goading Stratagem, When and Effect Sections",
    "directive": "Change to:",
-   "text": "‘WHEN: Any phase, just before an ENDLESS MULTITUDE unit from your army that is within Synapse Range of your army makes a surge move. EFFECT: When making that surge move, you can re-roll the D6 to determine how far your unit moves, and your unit can end that move as close as possible to the closest objective marker (instead of as close as possible to the closest enemy unit). All other rules for making surge moves still apply.’ VANGUARD ONLSAUGHT DETACHMENT",
+   "text": "‘WHEN: Any phase, just before an ENDLESS MULTITUDE unit from your army that is within Synapse Range of your army makes a surge move. EFFECT: When making that surge move, you can re-roll the D6 to determine how far your unit moves, and your unit can end that move as close as possible to the closest objective marker (instead of as close as possible to the closest enemy unit). All other rules for making surge moves still apply.’",
    "page": 19
   },
   {
@@ -2402,28 +2402,28 @@
    "category": "ARMY RULES",
    "subject": "Blessings of Khorne, Unbridled Bloodlust",
    "directive": "Change to:",
-   "text": "'This unit has +1 to charge rolls.' BERZERKER WARBAND DETACHMENT",
+   "text": "'This unit has +1 to charge rolls.'",
    "page": 7
   },
   {
    "category": "BERZERKER WARBAND DETACHMENT",
    "subject": "Berzerker's Wrath Stratagem, Target and Effect Sections",
    "directive": "Change to:",
-   "text": "'TARGET: One KHORNE BERZERKERS unit from your army that can make a surge move as a result of those attacks. EFFECT: Do not roll a D6 to determine how far models in your unit can move when they make a surge move. Instead, when making a surge move, those models can move up to 8\".' CULT OF BLOOD DETACHMENT",
+   "text": "'TARGET: One KHORNE BERZERKERS unit from your army that can make a surge move as a result of those attacks. EFFECT: Do not roll a D6 to determine how far models in your unit can move when they make a surge move. Instead, when making a surge move, those models can move up to 8\".'",
    "page": 7
   },
   {
    "category": "CULT OF BLOOD DETACHMENT",
    "subject": "Butcher Lord Enhancement",
    "directive": "Change to:",
-   "text": "‘WORLD EATERS INFANTRY model only. The bearer has the Infiltrators ability.’ GORETRACK ONSLAUGHT DETACHMENT",
+   "text": "‘WORLD EATERS INFANTRY model only. The bearer has the Infiltrators ability.’",
    "page": 7
   },
   {
    "category": "GORETRACK ONSLAUGHT DETACHMENT",
    "subject": "Fury Unleashed Stratagem, Effect Section",
    "directive": "Change to:",
-   "text": "'One KHORNE BERZERKERS unit embarked within your model can make a disembark move and then make a surge move of up to D6+2\".' KHORNE DAEMONKIN DETACHMENT",
+   "text": "'One KHORNE BERZERKERS unit embarked within your model can make a disembark move and then make a surge move of up to D6+2\".'",
    "page": 7
   },
   {
@@ -2437,7 +2437,7 @@
    "category": "KHORNE DAEMONKIN DETACHMENT",
    "subject": "Summoned by Slaughter Stratagem",
    "directive": "Change to:",
-   "text": "‘WHEN: Any phase, when the last model in a unit is destroyed, before removing it from play. (If that unit is a TRANSPORT, any units embarked within that TRANSPORT model must disembark first). TARGET: One BLOODLETTERS unit from your army that is in Reserves. EFFECT: Set your unit up anywhere on the battlefield wholly within 9\" of that destroyed model and more than 6\" horizontally away from all enemy units, then remove the destroyed model from play. RESTRICTIONS: You cannot use this Stratagem more than once per battle round. EATERS designed to improve the gaming experience for all players. highlighted in red. POSSESSED SLAUGHTERBOUND DETACHMENT",
+   "text": "‘WHEN: Any phase, when the last model in a unit is destroyed, before removing it from play. (If that unit is a TRANSPORT, any units embarked within that TRANSPORT model must disembark first). TARGET: One BLOODLETTERS unit from your army that is in Reserves. EFFECT: Set your unit up anywhere on the battlefield wholly within 9\" of that destroyed model and more than 6\" horizontally away from all enemy units, then remove the destroyed model from play. RESTRICTIONS: You cannot use this Stratagem more than once per battle round. EATERS designed to improve the gaming experience for all players. highlighted in red.",
    "page": 7
   },
   {
