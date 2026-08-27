@@ -298,6 +298,32 @@ class MissionCard {
   /// typed model.
   final Object? rawWhenDrawn;
 
+  /// Every total a *per-something* award can actually come to (§7.3.27).
+  ///
+  /// `2 VP: For each enemy unit destroyed this turn`, capped at 5, can only
+  /// ever be worth 2, 4 or 5 — the third kill is worth one point, not two.
+  /// The card says the rate and the ceiling and leaves the arithmetic to the
+  /// player, which at a table with a clock is where mistakes come from.
+  ///
+  /// Only awards that name **both** a rate and a maximum appear here. An
+  /// uncapped `3 VP each` has no ladder — it runs as far as the board allows,
+  /// and the stepper stays for those.
+  List<int> ladderFor(int rate) {
+    for (final raw in awards) {
+      final award = asMap(raw);
+      final per = asInt(award['vp_per']);
+      final max = asInt(award['vp_max']);
+      if (per == null || max == null || per != rate || per <= 0) continue;
+      final out = <int>[];
+      for (var total = per; out.isEmpty || out.last < max; total += per) {
+        out.add(total > max ? max : total);
+        if (out.last >= max) break;
+      }
+      return out;
+    }
+    return const [];
+  }
+
   const MissionCard({
     required this.id,
     required this.name,
@@ -437,8 +463,7 @@ class MissionPack {
       },
       deployments: deployments.map(DeploymentPattern.fromJson).toList(),
       matchups: matchups.map(MissionMatchupEntry.fromJson).toList(),
-      terrainLayouts:
-          terrainLayouts.map(TerrainLayout.fromJson).toList(),
+      terrainLayouts: terrainLayouts.map(TerrainLayout.fromJson).toList(),
       terrainTemplates: {
         for (final raw in terrainTemplates)
           if (TerrainTemplate.fromJson(raw) case final t when t.id.isNotEmpty)

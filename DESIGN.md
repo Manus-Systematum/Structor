@@ -1935,6 +1935,28 @@ is the reason it stopped.
 Battle Ready's 10VP is deliberately not modelled — it is a property of the
 army's paint, which the app has no business asserting.
 
+### 7.3.27 A capped rate has only a few answers
+
+`2 VP: For each enemy unit destroyed this turn`, capped at 5, can only ever
+be worth **2, 4 or 5**. The third kill is worth one point, not two. The card
+prints the rate and the ceiling and leaves the arithmetic to a player with a
+clock running, and the app was doing the same: one `Score 2` button, or a
+stepper to type a figure into.
+
+Each reachable total is now its own button on the line that earns it. Six of
+the shipped cards have such an award — Burden of Trust and No Prisoners are
+2/4/5, Overwhelming Force and Behind Enemy Lines are 3/5, Bring It Down and A
+Grievous Blow reach their cap in one.
+
+**The ceiling is in the structured award, not in the wording.** `vp_per` with
+`vp_max`, which is why `ScoringText` now takes the card as well as its text:
+the line says *2 VP: For each…* and nothing in it says where it stops.
+
+**An uncapped rate keeps its single button.** `3 VP each: For each objective
+you control` runs as far as the board allows — there is nothing to enumerate,
+and inventing a ladder for it would be the app guessing at the table. Only an
+award naming both a rate and a maximum gets one.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.

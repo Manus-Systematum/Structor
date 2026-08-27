@@ -506,6 +506,7 @@ class _CardTile extends StatelessWidget {
             padding: const EdgeInsets.only(top: 2),
             child: ScoringText(
               text: card.text,
+              card: card,
               onScore: onScore,
               style: TextStyle(fontSize: 11.5, color: scheme.onSurfaceVariant),
             ),

@@ -234,6 +234,7 @@ class _SideState extends State<_Side> with RemembersToggle<_Side> {
               padding: const EdgeInsets.only(top: 2, bottom: 4),
               child: ScoringText(
                 text: widget.card!.text,
+                card: widget.card,
                 onScore: (vp) => _score(ScoreKind.primary, vp),
                 style: TextStyle(
                     fontSize: 11.5,

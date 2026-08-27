@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wh40k_app/src/widgets/scoring_text.dart';
+import 'package:wh40k_core/wh40k_core.dart';
 
 void main() {
   group('which lines carry a payout', () {
@@ -90,4 +91,76 @@ void main() {
         findsOneWidget);
     expect(find.text('Score 4'), findsNothing);
   });
+
+  // §7.3.27. A line that pays per something and caps can only come to a few
+  // totals, and the card leaves that arithmetic to the player.
+  group('a capped per-something line offers every total it can reach', () {
+    MissionCard cardOf(String text, List<Map<String, Object?>> awards) =>
+        MissionCard.fromJson({
+          'id': 'no-prisoners',
+          'name': 'No Prisoners',
+          'card_type': 'secondary',
+          'text': text,
+          'awards': awards,
+        });
+
+    testWidgets('2 a kill up to 5 is 2, 4 and 5 — never 6', (tester) async {
+      final scored = <int>[];
+      final card = cardOf(
+        '2 VP: For each enemy unit destroyed this turn.',
+        [
+          {'vp_per': 2, 'vp_max': 5},
+        ],
+      );
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: ScoringText(
+            text: card.text,
+            card: card,
+            onScore: scored.add,
+          ),
+        ),
+      ));
+
+      expect(find.text('Score 2'), findsOneWidget);
+      expect(find.text('Score 4'), findsOneWidget);
+      expect(find.text('Score 5'), findsOneWidget);
+      expect(find.text('Score 6'), findsNothing);
+
+      await tester.tap(find.text('Score 4'));
+      expect(scored, [4]);
+    });
+
+    testWidgets('an uncapped rate keeps its single button', (tester) async {
+      // `3 VP each: for each objective you control` runs as far as the board
+      // allows; there is nothing to enumerate.
+      final card = cardOf(
+        '3 VP each: For each objective you control.',
+        [
+          {'vp_per': 3},
+        ],
+      );
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: ScoringText(text: card.text, card: card, onScore: (_) {}),
+        ),
+      ));
+      expect(find.text('Score 3'), findsOneWidget);
+      expect(find.text('Score 6'), findsNothing);
+    });
+
+    testWidgets('with no card it behaves as it always did', (tester) async {
+      await tester.pumpWidget(const MaterialApp(
+        home: Scaffold(
+          body: ScoringText(
+            text: '4 VP: One or more enemy units were surveilled.',
+            onScore: _ignore,
+          ),
+        ),
+      ));
+      expect(find.text('Score 4'), findsOneWidget);
+    });
+  });
 }
+
+void _ignore(int vp) {}

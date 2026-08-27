@@ -418,6 +418,7 @@ class _SideBlock extends StatelessWidget {
               // Each payout's button on the line that earns it (§7.3.22).
               ScoringText(
                 text: mission.text,
+                card: mission,
                 onScore: (vp) => onEvent(ScoreVp(
                   side: side,
                   kind: ScoreKind.primary,

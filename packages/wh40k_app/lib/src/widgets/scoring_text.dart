@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wh40k_core/wh40k_core.dart';
 
 import 'rule_text.dart';
 
@@ -16,6 +17,14 @@ import 'rule_text.dart';
 class ScoringText extends StatelessWidget {
   final String text;
 
+  /// The card the text came from, when there is one.
+  ///
+  /// Only for the payout ladders (§7.3.27): a line that pays *per* something
+  /// and caps can only ever come to a few totals, and those are on the card's
+  /// awards rather than in its wording. Null where the caller has text and no
+  /// card, which is every review of a past turn.
+  final MissionCard? card;
+
   /// Null on a card nobody can score right now: the opponent's card while
   /// their tier is closed, or a review of a turn already played.
   final void Function(int vp)? onScore;
@@ -26,6 +35,7 @@ class ScoringText extends StatelessWidget {
     super.key,
     required this.text,
     required this.onScore,
+    this.card,
     this.style,
   });
 
@@ -63,6 +73,9 @@ class ScoringText extends StatelessWidget {
               child: _Line(
                 line: line,
                 vp: payoutOf(line),
+                ladder: payoutOf(line) == null
+                    ? const []
+                    : card?.ladderFor(payoutOf(line)!) ?? const [],
                 onScore: onScore,
                 style: style,
               ),
@@ -75,6 +88,11 @@ class ScoringText extends StatelessWidget {
 class _Line extends StatelessWidget {
   final String line;
   final int? vp;
+
+  /// Every total this line can come to, when it pays per something and caps.
+  /// Empty for a flat payout and for an uncapped rate.
+  final List<int> ladder;
+
   final void Function(int vp)? onScore;
   final TextStyle? style;
 
@@ -83,6 +101,7 @@ class _Line extends StatelessWidget {
     required this.vp,
     required this.onScore,
     required this.style,
+    this.ladder = const [],
   });
 
   @override
@@ -95,12 +114,25 @@ class _Line extends StatelessWidget {
     // The button sits at the end of the sentence rather than beside it: a
     // fixed column would leave the text a phone-width column of two words,
     // and these lines run to three lines of their own.
+    //
+    // A capped per-something line gets one button per total it can reach
+    // (§7.3.27) — `2 VP for each kill, up to 5` is 2, 4 or 5 and never 6, and
+    // working that out is arithmetic the card leaves to a player with a clock
+    // running.
+    final figures = ladder.isEmpty ? [vp!] : ladder;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(child: RuleText(line, style: style)),
         const SizedBox(width: 8),
-        _ScoreButton(vp: vp!, onTap: () => onScore!(vp!)),
+        Wrap(
+          spacing: 4,
+          runSpacing: 4,
+          children: [
+            for (final figure in figures)
+              _ScoreButton(vp: figure, onTap: () => onScore!(figure)),
+          ],
+        ),
       ],
     );
   }
