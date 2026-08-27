@@ -206,11 +206,50 @@ void main() {
     expect(builder.build(result.roster).factionRuleId, 'for-the-greater-good');
   });
 
-  // §3.14's fallback ran out: 40kdc publishes these as structure with no
-  // wording, BSData has the detachment but not its cards, and Wahapedia has
-  // not written them up. The app says so on the card (§7.6) rather than
-  // filling the gap from memory — and this pins that the gap is only ever a
-  // provisional record, so the note never appears on a published stratagem.
+  // The August 2026 Faction Packs, reaching the app as a patch rather than a
+  // build (§3.15). What is asserted is the shape of the fix, not its size: a
+  // stratagem the released detachment does not have is *removed*, not
+  // annotated, and one it does have arrives with its wording.
+  group('the August 2026 update is applied', () {
+    test('a stratagem the released rules dropped is gone', () async {
+      final cadre = tau.faction.stratagems
+          .where((s) => s.detachmentId == 'experimental-prototype-cadre');
+
+      // 40kdc listed six for this detachment. The pack publishes one.
+      expect(cadre.map((s) => s.name), ['EXPERIMENTAL AMMUNITION']);
+      expect(cadre.single.text, isNotEmpty);
+      expect(
+        tau.faction.stratagems.map((s) => s.name),
+        isNot(contains('EXPERIMENTAL WEAPONRY')),
+        reason: 'it is not in the released detachment',
+      );
+    });
+
+    test('a chapter gains the one its copy of a shared detachment missed',
+        () async {
+      // Every chapter carries its own partial copy of Armoured Speartip;
+      // Black Templars' was missing Armour of Contempt, which the pack lists.
+      final templars = await repo.faction('black-templars');
+      final speartip = templars.faction.stratagems
+          .where((s) => s.detachmentId == 'armoured-speartip')
+          .map((s) => s.name.toUpperCase());
+      expect(speartip, contains('ARMOUR OF CONTEMPT'));
+    });
+
+    test('the patch is in the manifest, and says what it corrects', () async {
+      final entry = (await repo.manifest()).patches.single;
+      expect(entry.id, '2026-08-26');
+      expect(entry.appliesTo, 'pre-launch-provisional',
+          reason: 'the condition for deleting it');
+    });
+  });
+
+  // §3.14's fallback ran out for what the packs do not cover: 40kdc publishes
+  // these as structure with no wording, BSData has the detachment but not its
+  // cards, and Wahapedia has not written them up. The app says so on the card
+  // (§7.6) rather than filling the gap from memory — and this pins that the
+  // gap is only ever a provisional record, so the note never appears on a
+  // published stratagem.
   test('every stratagem without text is a pre-launch one', () async {
     final withoutText = <SourceStratagem>[];
     for (final entry in await repo.availableFactions()) {

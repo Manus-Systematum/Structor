@@ -53,6 +53,7 @@ void main(List<String> args) {
   var outDir = '../../dist';
   var revision = 'local';
   var correctionsPath = '../../data-corrections.yaml';
+  var updatesDir = '../../data/updates';
 
   for (var i = 0; i < args.length; i++) {
     switch (args[i]) {
@@ -64,11 +65,13 @@ void main(List<String> args) {
         if (i + 1 < args.length) revision = args[++i];
       case '--corrections':
         if (i + 1 < args.length) correctionsPath = args[++i];
+      case '--updates':
+        if (i + 1 < args.length) updatesDir = args[++i];
       case '-h':
       case '--help':
         stdout.writeln('usage: dart run bin/bundle.dart '
             '[--data <dir>] [--out <dir>] [--revision <rev>] '
-            '[--corrections <file>]');
+            '[--corrections <file>] [--updates <dir>]');
         return;
     }
   }
@@ -185,15 +188,47 @@ void main(List<String> args) {
     ));
   }
 
+  // Corrections ship as their own downloads (§3.15), so a rules update that
+  // the upstream source has not caught up with reaches installed apps through
+  // the manifest rather than through the App Store. Adding one later is a new
+  // file here and a new row there; nothing in the app changes.
+  final patches = <PatchEntry>[];
+  final updates = Directory(updatesDir);
+  if (updates.existsSync()) {
+    final files = updates
+        .listSync()
+        .whereType<File>()
+        .where((f) => f.path.endsWith('.json'))
+        .toList()
+      ..sort((a, b) => a.path.compareTo(b.path));
+    for (final source in files) {
+      final patch =
+          DatasetPatch.fromJson(jsonDecode(source.readAsStringSync()));
+      if (patch.id.isEmpty || patch.operations.isEmpty) continue;
+      final compressed = patch.encode();
+      final file = 'patch-${patch.id}.json.gz';
+      File('$outDir/$file').writeAsBytesSync(compressed);
+      patches.add(PatchEntry(
+        id: patch.id,
+        name: patch.name,
+        file: file,
+        sha256: sha256Of(compressed),
+        bytes: compressed.length,
+        appliesTo: patch.appliesTo,
+      ));
+    }
+  }
+
   final manifest = DatasetManifest(
     // Stamped by the caller rather than read from the clock, so a rebuild of
     // the same revision produces byte-identical bundles.
     generated: revision,
     source: '40kdc-data',
     bundles: entries,
+    patches: patches,
   );
-  File('$outDir/manifest.json')
-      .writeAsStringSync('${const JsonEncoder.withIndent('  ').convert(manifest.toJson())}\n');
+  File('$outDir/manifest.json').writeAsStringSync(
+      '${const JsonEncoder.withIndent('  ').convert(manifest.toJson())}\n');
 
   var total = 0;
   for (final entry in entries) {
@@ -205,6 +240,15 @@ void main(List<String> args) {
     ..writeln()
     ..writeln('${entries.length} bundles, ${_kb(total)} total')
     ..writeln('manifest: $outDir/manifest.json');
+
+  for (final patch in patches) {
+    final ops =
+        DatasetPatch.decode(File('$outDir/${patch.file}').readAsBytesSync())
+            .operations;
+    stdout.writeln('  ${patch.file.padRight(34)} '
+        '${_kb(patch.bytes).padLeft(8)}  ${ops.length} corrections '
+        '(${patch.appliesTo})');
+  }
 
   for (final c in loader.corrections.neverApplied(appliedCorrections)) {
     staleCorrections.add('*/${c.subject}');

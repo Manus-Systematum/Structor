@@ -16,7 +16,9 @@ import 'package:wh40k_core/wh40k_core.dart';
 abstract interface class BundleSource {
   Future<DatasetManifest?> manifest();
 
-  Future<List<int>?> fetch(BundleEntry entry);
+  /// By file name rather than by [BundleEntry]: a patch is fetched, cached
+  /// and verified exactly like a bundle (§3.15), and it is not one.
+  Future<List<int>?> fetch(String file);
 }
 
 /// Bundles shipped inside the app. Always present, so the app works on first
@@ -35,9 +37,9 @@ class AssetBundleSource implements BundleSource {
   }
 
   @override
-  Future<List<int>?> fetch(BundleEntry entry) async {
+  Future<List<int>?> fetch(String file) async {
     try {
-      final data = await rootBundle.load('assets/bundles/${entry.file}');
+      final data = await rootBundle.load('assets/bundles/$file');
       return data.buffer.asUint8List();
     } on FlutterError {
       return null;
@@ -84,7 +86,7 @@ class HttpBundleSource implements BundleSource {
   }
 
   @override
-  Future<List<int>?> fetch(BundleEntry entry) => _get(entry.file);
+  Future<List<int>?> fetch(String file) => _get(file);
 }
 
 /// Downloaded bundles on disk.
@@ -100,20 +102,18 @@ class BundleCache {
     return BundleCache(dir);
   }
 
-  File _file(BundleEntry entry) => File(p.join(dir.path, entry.file));
-
   /// Returns the cached bytes only if they hash to what the manifest expects.
   /// A corrupt or superseded file is treated as absent rather than trusted.
-  List<int>? read(BundleEntry entry) {
-    final file = _file(entry);
-    if (!file.existsSync()) return null;
-    final bytes = file.readAsBytesSync();
-    if (sha256Of(bytes) != entry.sha256) return null;
+  List<int>? read(String file, String sha256) {
+    final at = File(p.join(dir.path, file));
+    if (!at.existsSync()) return null;
+    final bytes = at.readAsBytesSync();
+    if (sha256Of(bytes) != sha256) return null;
     return bytes;
   }
 
-  void write(BundleEntry entry, List<int> bytes) =>
-      _file(entry).writeAsBytesSync(bytes);
+  void write(String file, List<int> bytes) =>
+      File(p.join(dir.path, file)).writeAsBytesSync(bytes);
 
   void clear() {
     if (dir.existsSync()) dir.deleteSync(recursive: true);
@@ -128,6 +128,7 @@ class DatasetRepository {
   final BundleCache? cache;
 
   DatasetManifest? _manifest;
+  PatchSet? _patches;
   final Map<String, DatasetBundle> _loaded = {};
   Dataset? _faction;
   MissionPack? _missions;
@@ -172,21 +173,50 @@ class DatasetRepository {
     final entry = (await manifest()).entry(id);
     if (entry == null) throw StateError('no bundle "$id" in the manifest');
 
-    final bytes = cache?.read(entry) ??
-        await assets.fetch(entry) ??
-        await _download(entry);
+    final bytes = await _bytes(entry.file, entry.sha256);
     if (bytes == null) throw StateError('bundle "$id" is unavailable');
 
     return _loaded[id] = DatasetBundle.decode(bytes);
   }
 
-  Future<List<int>?> _download(BundleEntry entry) async {
-    final bytes = await remote?.fetch(entry);
-    if (bytes == null) return null;
+  /// Cache, then the shipped assets, then the network — and never bytes that
+  /// do not hash to what the manifest says.
+  Future<List<int>?> _bytes(String file, String sha256) async {
+    final cached = cache?.read(file, sha256);
+    if (cached != null) return cached;
+
+    final shipped = await assets.fetch(file);
+    if (shipped != null && sha256Of(shipped) == sha256) return shipped;
+
+    final downloaded = await remote?.fetch(file);
+    if (downloaded == null) return null;
     // Verify before caching: a bad download must not become a bad cache.
-    if (sha256Of(bytes) != entry.sha256) return null;
-    cache?.write(entry, bytes);
-    return bytes;
+    if (sha256Of(downloaded) != sha256) return null;
+    cache?.write(file, downloaded);
+    return downloaded;
+  }
+
+  /// The corrections in force (§3.15).
+  ///
+  /// A patch the app cannot fetch is skipped rather than fatal. The bundles
+  /// are the data; a patch corrects them, and a correction that did not
+  /// arrive leaves the app where it was rather than unable to start.
+  Future<PatchSet> patches() async {
+    final cached = _patches;
+    if (cached != null) return cached;
+
+    final entries = (await manifest()).patches;
+    final loaded = <DatasetPatch>[];
+    for (final entry in entries) {
+      final bytes = await _bytes(entry.file, entry.sha256);
+      if (bytes == null) continue;
+      try {
+        loaded.add(DatasetPatch.decode(bytes));
+      } on FormatException {
+        continue;
+      }
+    }
+    return _patches = PatchSet(loaded);
   }
 
   Future<Dataset> faction(String id) async {
@@ -214,9 +244,21 @@ class DatasetRepository {
     final parentId = self?['parent_faction_id']?.toString();
     final parent = parentId == null ? null : await bundle(parentId);
 
-    List<Object?> file(String name) => data.file(name);
-    List<Object?> sheets(String name) => _merge(data.file(name),
-        parent == null ? const [] : parent.file(name));
+    // Corrections land on the **source records**, before any model has seen
+    // them (§3.15), so a patch can set a field this build does not read yet
+    // and a later one will. Applied per faction: a chapter's copy of a shared
+    // detachment is corrected as the chapter's, not the parent's.
+    final corrections = await patches();
+    List<Object?> patched(String name, List<Object?> records, String owner) =>
+        corrections.apply(records, faction: owner, file: name);
+
+    List<Object?> file(String name) => patched(name, data.file(name), id);
+    List<Object?> sheets(String name) => _merge(
+          patched(name, data.file(name), id),
+          parent == null
+              ? const []
+              : patched(name, parent.file(name), parentId!),
+        );
 
     final faction = FactionData(
       factionId: id,
@@ -280,8 +322,8 @@ class DatasetRepository {
     final parentId = dataset.faction.parentFactionId;
     final parent = parentId == null ? null : await bundle(parentId);
 
-    List<Object?> sheets(String name) => _merge(data.file(name),
-        parent == null ? const [] : parent.file(name));
+    List<Object?> sheets(String name) =>
+        _merge(data.file(name), parent == null ? const [] : parent.file(name));
 
     Map<String, Object?> index(List<Object?> records, {String key = 'id'}) => {
           for (final record in records)
@@ -320,8 +362,7 @@ class DatasetRepository {
       for (final raw in data.file('weapon-keywords'))
         if (raw is Map)
           if (raw['id']?.toString() case final id?)
-            if (raw['text']?.toString() case final text?
-                when text.isNotEmpty)
+            if (raw['text']?.toString() case final text? when text.isNotEmpty)
               id: WeaponKeywordText(
                 id: id,
                 name: raw['name']?.toString() ?? id,

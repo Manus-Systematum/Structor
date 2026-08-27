@@ -21,6 +21,7 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 
 import '../source/json.dart';
+import 'patch.dart';
 
 const bundleSchemaVersion = 1;
 
@@ -107,10 +108,21 @@ class DatasetManifest {
   final String source;
   final List<BundleEntry> bundles;
 
+  /// Corrections to apply on top of the bundles (§3.15).
+  ///
+  /// A list of their own rather than another [BundleKind], and the schema
+  /// stays at 1: a build that predates patches reads `bundles` and ignores a
+  /// key it does not know, so it keeps working unpatched. Had these ridden
+  /// along inside `bundles`, that same build would have read `kind: patch` as
+  /// `faction` — [BundleEntry.fromJson] falls back — and tried to load a
+  /// patch as an army.
+  final List<PatchEntry> patches;
+
   const DatasetManifest({
     required this.generated,
     required this.source,
     required this.bundles,
+    this.patches = const [],
     this.schema = bundleSchemaVersion,
   });
 
@@ -121,6 +133,7 @@ class DatasetManifest {
       generated: strOr(j['generated'], ''),
       source: strOr(j['source'], ''),
       bundles: asList(j['bundles']).map(BundleEntry.fromJson).toList(),
+      patches: asList(j['patches']).map(PatchEntry.fromJson).toList(),
     );
   }
 
@@ -129,6 +142,8 @@ class DatasetManifest {
         'generated': generated,
         'source': source,
         'bundles': [for (final b in bundles) b.toJson()],
+        if (patches.isNotEmpty)
+          'patches': [for (final p in patches) p.toJson()],
       };
 
   /// True when this manifest was produced by a newer builder than this build

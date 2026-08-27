@@ -130,14 +130,14 @@ Powered by 40kdc-data — https://40kdc.alpacasoft.dev — licensed CC BY 4.0, �
 
 Powered by Wahapedia — https://wahapedia.ru/wh40k11ed/
 
-Datasheet and ability text from BSData; mission card text from gdmissions.app; the Core Stratagems by way of the stratagem card generator by pguetschow.
+Datasheet and ability text from BSData; mission card text from gdmissions.app; the Core Stratagems by way of the stratagem card generator by pguetschow. Where those sources have not caught up with a rules update, the wording comes from Games Workshop's own free Faction Pack downloads at warhammer-community.com.
 
 Structor is free and open source. Its code is MIT licensed and lives at https://github.com/Manus-Systematum/Structor — the rules data keeps the terms named above.
 
-Everything the app knows about the game was collected from the openly published sources named above. Warhammer 40,000, all associated names, marks and imagery, and any wording that matches Games Workshop's printed rules, remain © Games Workshop Limited. This app is unofficial and is neither endorsed by nor affiliated with Games Workshop.
+Everything the app knows about the game was collected from the openly published sources named above, some of them Games Workshop's own free downloads. Warhammer 40,000, all associated names, marks and imagery, and any wording that matches Games Workshop's printed rules, remain © Games Workshop Limited. This app is unofficial and is neither endorsed by nor affiliated with Games Workshop.
 ```
 
-(3,163 characters, against a 4,000 limit.)
+(3,373 characters, against a 4,000 limit.)
 
 ### Keywords — 100 characters, comma-separated, no spaces after commas
 

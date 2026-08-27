@@ -15,9 +15,9 @@ class FakeSource implements BundleSource {
   Future<DatasetManifest?> manifest() async => manifestValue;
 
   @override
-  Future<List<int>?> fetch(BundleEntry entry) async {
+  Future<List<int>?> fetch(String file) async {
     fetches++;
-    return files[entry.file];
+    return files[file];
   }
 }
 
@@ -27,9 +27,13 @@ DatasetBundle bundleOf(String id, {String revision = 'r1'}) => DatasetBundle(
       revision: revision,
       files: {
         'units': [
-          {'id': 'grot', 'name': 'Grot', 'points': [
-            {'models': 1, 'cost': 5},
-          ]},
+          {
+            'id': 'grot',
+            'name': 'Grot',
+            'points': [
+              {'models': 1, 'cost': 5},
+            ]
+          },
         ],
       },
     );
@@ -152,7 +156,10 @@ void main() {
 
       expect((await repo.bundle('orks')).id, 'orks');
       expect(remote.fetches, 1);
-      expect(cache.read(manifest.bundles.single), isNotNull);
+      expect(
+          cache.read(
+              manifest.bundles.single.file, manifest.bundles.single.sha256),
+          isNotNull);
 
       // A second repository reads the cache instead of the network.
       final second = DatasetRepository(
@@ -167,9 +174,10 @@ void main() {
     test('a corrupt cache entry is ignored rather than trusted', () async {
       final (remote, manifest) = sourceWith(bundleOf('orks'));
       final entry = manifest.bundles.single;
-      cache.write(entry, [1, 2, 3]);
+      cache.write(entry.file, [1, 2, 3]);
 
-      expect(cache.read(entry), isNull, reason: 'hash mismatch');
+      expect(cache.read(entry.file, entry.sha256), isNull,
+          reason: 'hash mismatch');
 
       final repo = DatasetRepository(
         assets: FakeSource()..manifestValue = manifest,
@@ -191,7 +199,7 @@ void main() {
         cache: cache,
       );
       expect(repo.bundle('orks'), throwsStateError);
-      expect(cache.read(entry), isNull);
+      expect(cache.read(entry.file, entry.sha256), isNull);
     });
   });
 }

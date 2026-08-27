@@ -345,5 +345,15 @@
       "bytes": 196802,
       "revision": "local"
     }
+  ],
+  "patches": [
+    {
+      "id": "2026-08-26",
+      "name": "August 2026 rules update",
+      "file": "patch-2026-08-26.json.gz",
+      "sha256": "81c32308651de8c8db479db90fc398efe9d7be9caffe8ef429e938c37c27d8dd",
+      "bytes": 33617,
+      "appliesTo": "pre-launch-provisional"
+    }
   ]
 }

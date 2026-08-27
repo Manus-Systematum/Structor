@@ -142,6 +142,28 @@ class _AboutScreenState extends State<AboutScreen> {
             'Datasheet and ability text are drawn from BSData, and mission '
             'card text from gdmissions.app.',
           ),
+
+          const SizedBox(height: 14),
+          const Text('Warhammer Community downloads',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 2),
+          const SelectableText(
+            'https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/',
+            style: TextStyle(fontSize: 13),
+          ),
+          const SizedBox(height: 10),
+          // Named as its own source rather than folded into the line above.
+          // The sources above are community projects that set their own
+          // terms; this one is Games Workshop's, and a reader deciding
+          // whether to trust a stratagem's wording should be able to see
+          // which of the two it came from (§3.15).
+          const _Body(
+            'Where the community sources have not caught up with a rules '
+            'update, the wording comes from Games Workshop’s own free Faction '
+            'Pack downloads. These corrections arrive as a separate data '
+            'update and are removed once the sources above publish the same '
+            'rules.',
+          ),
           if (manifest != null) ...[
             const SizedBox(height: 10),
             _Row(label: 'Dataset', value: manifest.generated),
@@ -206,11 +228,12 @@ class _AboutScreenState extends State<AboutScreen> {
           // quiet about the text is the narrower claim, and the narrower claim
           // reads as avoidance. Same wording as the site.
           const _Body(
-            'Everything above was collected from openly published sources. '
-            'Warhammer 40,000, all associated names, marks and imagery, and '
-            'any wording here that matches Games Workshop’s printed rules, '
-            'remain © Games Workshop Limited. This app is unofficial and is '
-            'neither endorsed by nor affiliated with Games Workshop.',
+            'Everything above was collected from openly published sources, '
+            'some of them Games Workshop’s own free downloads. Warhammer '
+            '40,000, all associated names, marks and imagery, and any wording '
+            'here that matches Games Workshop’s printed rules, remain © Games '
+            'Workshop Limited. This app is unofficial and is neither endorsed '
+            'by nor affiliated with Games Workshop.',
           ),
 
           const _Heading('Privacy'),

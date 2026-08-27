@@ -2538,6 +2538,98 @@ until its units are re-added. That is the same property that let a roster
 built against 40kdc survive the source swap at all.
 
 
+### 3.15 Corrections ship as data, not as builds
+
+**The problem this exists for.** 40kdc publishes 11th-edition records ahead of
+the printed rules, marked `pre-launch-provisional`. On 26 August 2026 Games
+Workshop published nineteen Faction Packs, and those provisional records
+turned out to be wrong in *both* directions: missing the wording, and listing
+stratagems the released detachments do not have. Experimental Prototype Cadre
+carried six in the app and has one in the pack. Waiting for the upstream
+source to catch up leaves the app confidently wrong about somebody's army;
+editing `data/40kdc` in place makes the next `tools/fetch-40kdc.sh` silently
+undo the fix.
+
+And this will keep happening — the packs are revised often, and each revision
+lands before any community source has caught up. So the fix is a channel, not
+an edit.
+
+**A patch is a list of operations over the source records**, applied where the
+raw JSON is read and before any model class has seen it
+(`DatasetRepository.faction`). Three operations cover everything:
+
+| | |
+|---|---|
+| `set` | merge these fields into the record with this id |
+| `remove` | drop the record with this id |
+| `add` | append this record, replacing one already carrying that id |
+
+**Removal is an instruction, never an omission.** A stratagem the released
+detachment does not have has to be *said* to be gone: a patch is a diff over
+data the app already holds, and a record's absence from the patch means the
+patch has nothing to say about it.
+
+**Patching raw maps rather than parsed models is what lets a patch outlive the
+build reading it.** A field this version knows nothing about survives the
+round trip untouched and is picked up the moment a later version's `fromJson`
+looks for it. The alternative — patching typed objects — would have made every
+new field an app release.
+
+**They travel through the manifest.** `dist/patch-<id>.json.gz` alongside the
+bundles, listed in a `patches:` array of its own. Deliberately not another
+`BundleKind`: `BundleEntry.fromJson` falls back to `faction` on an unknown
+kind, so an older build meeting `kind: patch` inside `bundles` would try to
+load a patch as an army. An unknown top-level key it simply ignores — old app,
+new manifest, no patches, nothing broken. The schema stays at 1 for the same
+reason: bumping it would make `isFuture` refuse the whole manifest.
+
+Fetching, hashing and caching are the bundles' own path, which is why
+`BundleSource.fetch` now takes a file name rather than a `BundleEntry`. A
+patch that cannot be fetched is skipped rather than fatal: the bundles are the
+data, a patch corrects them, and a correction that did not arrive should leave
+the app where it was rather than unable to start.
+
+**Every patch names the dataslate it corrects, because it is meant to be
+deleted.** When 40kdc republishes against the released rules, `appliesTo` no
+longer matches, and the file and its manifest row go in one commit.
+
+**Pipeline.** `tools/fetch-faction-packs.py` downloads each pack, parses it and
+deletes the PDF; `tools/make-update.py` diffs the result against
+`data/merged` and writes `data/updates/<date>.json`; `bin/bundle.dart` gzips
+every file in `data/updates/` into the dist and lists it. The August file is
+**701 operations in 33 KB** — 594 wordings, 29 removals, 78 stratagems a
+chapter's copy of a shared detachment was missing.
+
+**Parsing the packs.** Two things about the PDFs decide the parser. Their grid
+changes page to page — a new detachment gets two wide columns, a reprinted
+codex one gets a narrower three-column layout on a different page size — so
+columns are *detected* rather than assumed: a gutter is a vertical band that
+almost no line of text crosses, where a line covers its words and only the
+gaps narrow enough to be word spacing. Requiring a *clear* gutter found no
+columns at all, because a page title runs the full width above the body; a
+fixed split at half the width silently dropped every reprinted detachment.
+
+And a stratagem names itself the same way whatever the grid — its name, then
+`<DETACHMENT> STRATAGEM` under it — so the detachment is read off that line
+and never inferred from the page header. The cost is set beside the block
+rather than on the name's line, a couple of points above it in one layout and
+forty to seventy-five below it in the other, so it is matched by column and
+then by the nearest name at or above it.
+
+Only the `WHEN`/`TARGET`/`EFFECT`/`RESTRICTIONS` block is taken. The fluff
+paragraph above it says nothing about how the stratagem works.
+
+**What was checked before trusting it.** All 430 parsed stratagems have a cost
+and an effect block, none is duplicated, and every detachment on every pack's
+contents page is accounted for. Two came out with no stratagems at all —
+Sanctified Orators and Librarius Conclave — and both were confirmed by
+rendering the page and looking at it, because "parsed to nothing" and "has
+none" are indistinguishable in the output and the difference decides whether
+the app deletes stratagems out of somebody's army. No `add` invents a record:
+all 78 exist in another faction's copy of the same detachment, so phase,
+timing and whose-turn come from that sibling and only the id, wording and cost
+come from the pack.
+
 ### 3.13 The action section — the reverse of the card
 
 Secure Asset's front reads *"4 VP: A friendly unit **secured the asset** this

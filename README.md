@@ -63,6 +63,7 @@ about the game comes from community projects that keep their own terms:
 | [BSData/wh40k-11e](https://github.com/BSData/wh40k-11e) | datasheet and ability text | **no licence file**; maintainers gave permission in [issue 918](https://github.com/BSData/wh40k-11e/issues/918), which is not the same as a licence |
 | [BSData/wh40k-11e-mfm](https://github.com/BSData/wh40k-11e-mfm) | Munitorum points, as a cross-check | MIT |
 | [gdmissions.app](https://gdmissions.app) | the sentence printed on each mission card | publishes no licence, terms or notice |
+| [Warhammer Community downloads](https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/) | the Faction Packs, for the rules the community sources have not caught up with (§3.15) | Games Workshop's own free downloads, used as published; no licence is granted by them |
 
 CC BY 4.0 obliges attribution, a link, and a statement that changes were made;
 the About screen carries all three, and **a test asserts the phrase "Powered by
@@ -70,4 +71,6 @@ the About screen carries all three, and **a test asserts the phrase "Powered by
 the screen is what should change.
 
 Warhammer 40,000 and all associated names, marks and imagery are © Games
-Workshop Limited. This project is unofficial and unaffiliated.
+Workshop Limited. This project is unofficial and unaffiliated. Some of what
+the app shows is taken from Games Workshop's own freely published rules
+downloads, which remain theirs.

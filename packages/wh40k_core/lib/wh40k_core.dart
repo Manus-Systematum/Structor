@@ -11,6 +11,7 @@ export 'src/crosscheck/crosscheck.dart';
 export 'src/crosscheck/mfm.dart';
 export 'src/content/content_hash.dart';
 export 'src/content/dataset.dart';
+export 'src/content/patch.dart';
 export 'src/content/roster_snapshot.dart';
 export 'src/import/faction_match.dart';
 export 'src/import/name_match.dart';

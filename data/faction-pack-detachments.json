@@ -1,0 +1,452 @@
+{
+ "adepta-sororitas": [
+  {
+   "name": "Chorus of Condemnation",
+   "page": 2
+  },
+  {
+   "name": "Sacred Champions",
+   "page": 3
+  },
+  {
+   "name": "Sanctified Orators",
+   "page": 4
+  },
+  {
+   "name": "Champions of Faith",
+   "page": 5
+  }
+ ],
+ "adeptus-mechanicus": [
+  {
+   "name": "Cohort Acquisitus",
+   "page": 2
+  },
+  {
+   "name": "Lords of the Forge",
+   "page": 3
+  },
+  {
+   "name": "Luminen Auto-choir",
+   "page": 4
+  },
+  {
+   "name": "Eradication Cohort",
+   "page": 5
+  },
+  {
+   "name": "Haloscreed Battle Clade",
+   "page": 7
+  }
+ ],
+ "aeldari": [
+  {
+   "name": "Armoured Warhost",
+   "page": 2
+  },
+  {
+   "name": "Fateful Performance",
+   "page": 3
+  },
+  {
+   "name": "Path of the Outcast",
+   "page": 4
+  },
+  {
+   "name": "Twilight Flickers",
+   "page": 5
+  },
+  {
+   "name": "Serpent’s Brood",
+   "page": 6
+  },
+  {
+   "name": "Eldritch Raiders",
+   "page": 8
+  },
+  {
+   "name": "Corsair Coterie",
+   "page": 10
+  }
+ ],
+ "astra-militarum": [
+  {
+   "name": "Abhuman Auxiliaries",
+   "page": 2
+  },
+  {
+   "name": "Bridgehead Strike",
+   "page": 3
+  },
+  {
+   "name": "Designation Force",
+   "page": 4
+  },
+  {
+   "name": "Steel Hammer",
+   "page": 5
+  },
+  {
+   "name": "Armoured Infantry",
+   "page": 7
+  },
+  {
+   "name": "Grizzled Company",
+   "page": 9
+  }
+ ],
+ "chaos-knights": [
+  {
+   "name": "Bastions of Tyranny",
+   "page": 2
+  },
+  {
+   "name": "Hunting Warpack",
+   "page": 3
+  },
+  {
+   "name": "Iconoclast Fiefdom",
+   "page": 4
+  },
+  {
+   "name": "Helhunt Lance",
+   "page": 5
+  }
+ ],
+ "chaos-space-marines": [
+  {
+   "name": "Cabal of Chaos",
+   "page": 2
+  },
+  {
+   "name": "Devotees of Destruction",
+   "page": 3
+  },
+  {
+   "name": "Murdertalon Raiders",
+   "page": 4
+  },
+  {
+   "name": "Warpstrike Champions",
+   "page": 5
+  },
+  {
+   "name": "Cult of the Arkifane",
+   "page": 7
+  },
+  {
+   "name": "Creations of Bile",
+   "page": 9
+  },
+  {
+   "name": "Nightmare Hunt",
+   "page": 11
+  },
+  {
+   "name": "Huron’s Marauders",
+   "page": 13
+  },
+  {
+   "name": "Renegade Warband",
+   "page": 15
+  }
+ ],
+ "dark-angels": [
+  {
+   "name": "Dark Age Arsenal",
+   "page": 2
+  },
+  {
+   "name": "Darkflight Pursuit",
+   "page": 3
+  },
+  {
+   "name": "Interrogation Conclave",
+   "page": 4
+  },
+  {
+   "name": "Lion’s Blade Task Force",
+   "page": 5
+  },
+  {
+   "name": "Wrath of the Rock",
+   "page": 7
+  }
+ ],
+ "death-guard": [
+  {
+   "name": "Contagion Engines",
+   "page": 2
+  },
+  {
+   "name": "Flyblown Host",
+   "page": 3
+  },
+  {
+   "name": "Paragons of Putrescence",
+   "page": 4
+  }
+ ],
+ "drukhari": [
+  {
+   "name": "Exhibition of Slaughter",
+   "page": 2
+  },
+  {
+   "name": "Kabalite Agonysts",
+   "page": 3
+  },
+  {
+   "name": "Tools of Torment",
+   "page": 4
+  },
+  {
+   "name": "Reaper’s Wager",
+   "page": 5
+  }
+ ],
+ "emperors-children": [
+  {
+   "name": "Elegant Brutes",
+   "page": 2
+  },
+  {
+   "name": "Frenzied Host",
+   "page": 3
+  },
+  {
+   "name": "Spectacle of Slaughter",
+   "page": 4
+  },
+  {
+   "name": "Court of the Phoenician",
+   "page": 5
+  }
+ ],
+ "imperial-knights": [
+  {
+   "name": "Dominus Foebreakers",
+   "page": 2
+  },
+  {
+   "name": "Questor Forgepact",
+   "page": 3
+  },
+  {
+   "name": "Throne-bonded Outriders",
+   "page": 4
+  },
+  {
+   "name": "Freeblade Company",
+   "page": 5
+  }
+ ],
+ "necrons": [
+  {
+   "name": "Hand of the Dynasty",
+   "page": 2
+  },
+  {
+   "name": "Skyshroud Spearhead",
+   "page": 3
+  },
+  {
+   "name": "The Phaeron's Armoury",
+   "page": 4
+  },
+  {
+   "name": "Starshatter Arsenal",
+   "page": 5
+  },
+  {
+   "name": "Cryptek Conclave",
+   "page": 7
+  },
+  {
+   "name": "Cursed Legion",
+   "page": 9
+  },
+  {
+   "name": "Pantheon of Woe",
+   "page": 11
+  }
+ ],
+ "orks": [
+  {
+   "name": "Equatorial Hordes",
+   "page": 2
+  },
+  {
+   "name": "Rollin’ Deff",
+   "page": 3
+  },
+  {
+   "name": "More Dakka!",
+   "page": 4
+  },
+  {
+   "name": "Taktikal Brigade",
+   "page": 5
+  },
+  {
+   "name": "Speedwaaagh!",
+   "page": 6
+  },
+  {
+   "name": "Blitz Brigade",
+   "page": 8
+  },
+  {
+   "name": "Freebooter Krew",
+   "page": 10
+  }
+ ],
+ "space-marines": [
+  {
+   "name": "Vengeful Hosts",
+   "page": 2
+  },
+  {
+   "name": "Fulguris Task Force",
+   "page": 3
+  },
+  {
+   "name": "Librarius Conclave",
+   "page": 4
+  },
+  {
+   "name": "Subversion Assets",
+   "page": 5
+  },
+  {
+   "name": "Armoured Speartip",
+   "page": 6
+  },
+  {
+   "name": "Headhunter Task Force",
+   "page": 8
+  },
+  {
+   "name": "Ceramite Sentinels",
+   "page": 10
+  },
+  {
+   "name": "Blade of Ultramar",
+   "page": 12
+  },
+  {
+   "name": "Hammer of Avernii",
+   "page": 14
+  },
+  {
+   "name": "Spearpoint Task Force",
+   "page": 16
+  },
+  {
+   "name": "Forgefather’s Seekers",
+   "page": 18
+  },
+  {
+   "name": "Emperor’s Shield",
+   "page": 20
+  },
+  {
+   "name": "Shadowmark Talon",
+   "page": 22
+  },
+  {
+   "name": "Bastion Task Force",
+   "page": 24
+  },
+  {
+   "name": "Orbital Assault Force",
+   "page": 26
+  },
+  {
+   "name": "Reclamation Force",
+   "page": 28
+  }
+ ],
+ "space-wolves": [
+  {
+   "name": "Champions of Fenris",
+   "page": 2
+  },
+  {
+   "name": "Legends of Saga and Song",
+   "page": 3
+  },
+  {
+   "name": "Veterans of the Fang",
+   "page": 4
+  },
+  {
+   "name": "Saga of the Great Wolf",
+   "page": 5
+  }
+ ],
+ "tau-empire": [
+  {
+   "name": "Advanced Acquisition Cadre",
+   "page": 2
+  },
+  {
+   "name": "Auxiliary Cadre",
+   "page": 3
+  },
+  {
+   "name": "Experimental Prototype Cadre",
+   "page": 4
+  }
+ ],
+ "thousand-sons": [
+  {
+   "name": "Ritual of Regeneration",
+   "page": 2
+  },
+  {
+   "name": "Sekhetar Cohort",
+   "page": 3
+  },
+  {
+   "name": "Servants of Change",
+   "page": 4
+  },
+  {
+   "name": "Hexwarp Thrallband",
+   "page": 5
+  }
+ ],
+ "tyranids": [
+  {
+   "name": "Ambush Predators",
+   "page": 2
+  },
+  {
+   "name": "Talons of the Norn Queen",
+   "page": 3
+  },
+  {
+   "name": "Warrior Bioform Onslaught",
+   "page": 4
+  },
+  {
+   "name": "Subterranean Assault",
+   "page": 5
+  }
+ ],
+ "world-eaters": [
+  {
+   "name": "Brazen Engines",
+   "page": 2
+  },
+  {
+   "name": "Butchers of Khorne",
+   "page": 3
+  },
+  {
+   "name": "Vessels of Wrath",
+   "page": 4
+  }
+ ]
+}
