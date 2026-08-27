@@ -2674,6 +2674,37 @@ active Secondary Mission card.* Checked against the app rather than assumed —
 §7.3.18 already allows one discard-for-CP per battle round and §7.3.21's
 per-turn point is Core CP, so nothing needed changing.
 
+**Has Wahapedia caught up? No, and it was checked rather than assumed.**
+Re-fetched on 2026-08-27: the live export is **byte-identical** to the
+snapshot committed on 19 August, a week before the packs landed. Nothing has
+been published since.
+
+It looks current at a glance, because it tracks previews — it already carries
+text for **425 of the 430** stratagems the packs publish. Three measurements
+say otherwise:
+
+- It has text for **none of the app's 116 textless stratagems**. Those are not
+  a gap in the fallback chain; they are mostly records that do not exist.
+- **27 of the 29 stratagems this patch removes are absent from Wahapedia
+  too** — an independent source agreeing they are not real. The other two,
+  `Long, Uncontrolled Bursts` and `Speshul Shells`, are duplicate records: the
+  app files each under both More Dakka! and Rollin' Deff, the pack lists them
+  under More Dakka! only, and the patch removes the Rollin' Deff copy. Checked
+  by id rather than by name, which is what a name-only cross-check missed.
+- On wording it agrees with the packs on 412 of 425 — 252 exactly, 160 down
+  to whitespace — and **differs substantively on 13**, where its text is the
+  older one. `BURST OF SPEED` moved from the end of the Shooting phase to the
+  end of the Movement phase and changed its target; `RAPID EMBARKATION` now
+  targets an Infantry unit rather than a Transport; `GUIDED RETREAT`,
+  `MEKANISED BRUTALITY`, `APOPLECTIC CLARITY`, `SOULSIGHT`, `FIRING HOT`,
+  `ADDITIONAL ARMOUR`, `UNNATURAL AGGRESSION`, `FIRE SHOCKED`, `THE FOE
+  FORESEEN`, `DRONING HORROR` and `ASPIRE TO INFAMY` differ in a clause each.
+
+So the fallback chain has not closed and the patch is not redundant. When
+Wahapedia does republish, those 13 `set` operations become harmless
+duplicates of what the source says — the condition for deleting the patch
+stays what §3.15 already says it is, the upstream **dataslate**, not this.
+
 **Points are not parsed, and this is the gap in the pass.** Games Workshop's
 Munitorum Field Manual is a client-side app: the unit points are not in the
 served HTML, not in the RSC payload, and not behind any request the page
