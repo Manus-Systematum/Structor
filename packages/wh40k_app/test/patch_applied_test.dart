@@ -68,11 +68,23 @@ void main() {
               'keywords': u.keywords,
               'ability_ids': u.abilityIds,
               'profiles': u.profiles.length,
+              'points': u.points.length,
             },
         ],
         'weapons': [
           for (final w in dataset.faction.weapons)
             {'id': w.id, 'profiles': w.profiles.length},
+        ],
+        'leader-attachments': [
+          for (final a in dataset.faction.leaderAttachments)
+            {
+              'leader_id': a.leaderId,
+              'eligible_bodyguard_ids': a.eligibleBodyguardIds,
+            },
+        ],
+        'enhancements': [
+          for (final e in dataset.faction.enhancements)
+            {'id': e.id, 'cost': e.cost.toString()},
         ],
       };
 

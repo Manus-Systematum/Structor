@@ -64,6 +64,7 @@ about the game comes from community projects that keep their own terms:
 | [BSData/wh40k-11e-mfm](https://github.com/BSData/wh40k-11e-mfm) | Munitorum points, as a cross-check | MIT |
 | [gdmissions.app](https://gdmissions.app) | the sentence printed on each mission card | publishes no licence, terms or notice |
 | [Warhammer Community downloads](https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/) | the Faction Packs, for the rules the community sources have not caught up with (§3.15) | Games Workshop's own free downloads, used as published; no licence is granted by them |
+| [Munitorum Field Manual](https://mfm.warhammer-community.com/) | points, enhancement costs, and which units each character can lead | the same: Games Workshop's own, free to read, used as published |
 
 CC BY 4.0 obliges attribution, a link, and a statement that changes were made;
 the About screen carries all three, and **a test asserts the phrase "Powered by

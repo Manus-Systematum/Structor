@@ -160,10 +160,14 @@ class _AboutScreenState extends State<AboutScreen> {
           const _Body(
             'Where the community sources have not caught up with a rules '
             'update, the wording comes from Games Workshop’s own free Faction '
-            'Pack downloads. These corrections arrive as a separate data '
-            'update and are removed once the sources above publish the same '
-            'rules.',
+            'Pack downloads, and the points, enhancement costs and leader '
+            'lists from their Munitorum Field Manual. These corrections '
+            'arrive as a separate data update and are removed once the '
+            'sources above publish the same rules.',
           ),
+          const SizedBox(height: 2),
+          const SelectableText('https://mfm.warhammer-community.com',
+              style: TextStyle(fontSize: 12)),
           if (manifest != null) ...[
             const SizedBox(height: 10),
             _Row(label: 'Dataset', value: manifest.generated),

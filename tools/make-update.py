@@ -732,9 +732,167 @@ def rules_update_ops(packs_to_factions):
     return ops, skipped
 
 
+
+
+
+# ------------------------------------------------------------------- points
+
+"""Points, and who can lead whom, from the Munitorum Field Manual.
+
+The MFM is Games Workshop's own and is updated with each rules pass; the
+community sources are not. It publishes three things the app holds and cannot
+get elsewhere: what a unit costs at each size, what a detachment's
+enhancements cost, and — in a `LEADER` block on each character's card — which
+datasheets that character can attach to.
+
+Two shapes have to be respected when writing points back. A unit priced by
+how many of it you have already taken carries two blocks, `YOUR 1ST TO 2ND
+UNITS COST` and `YOUR 3RD + UNIT COSTS`, and the app stores those as separate
+entries for the same model count. And `WARGEAR OPTIONS` on the same card is
+priced per item and is not a unit cost at all.
+"""
+
+MFM = f'{ROOT}/data/mfm-points.json'
+# The MFM's slug for a faction, where it differs from the app's id.
+MFM_SLUG = {'space-marines': 'adeptus-astartes',
+            'imperial-agents': 'agents-of-the-imperium'}
+MODELS = re.compile(r'(\d+)\s*model')
+
+
+def points_ops():
+    if not os.path.exists(MFM):
+        return [], collections.Counter()
+
+    mfm = json.load(open(MFM))
+    files = bundled()
+    ops, stats = [], collections.Counter()
+    # A Space Marine chapter's page lists its parent's datasheets, so the same
+    # record is described by a dozen pages. One operation per record: the
+    # first page to say it wins, and a page that says something different is
+    # counted rather than allowed to overwrite it.
+    written = {}
+
+    def once(op):
+        at = (op['faction'], op['file'], op['id'])
+        if at in written:
+            if written[at]['values'] != op['values']:
+                stats['pages disagree about this record'] += 1
+            return False
+        written[at] = op
+        ops.append(op)
+        return True
+
+    def parent_of(fid):
+        for f in files.get(fid, {}).get('factions', []):
+            if f.get('id') == fid:
+                return f.get('parent_faction_id')
+        return None
+
+    for slug, data in sorted(mfm.items()):
+        faction = MFM_SLUG.get(slug, slug)
+        bundle = files.get(faction)
+        if bundle is None:
+            stats['no bundle for this faction'] += 1
+            continue
+        parent = parent_of(faction)
+
+        # A Space Marine chapter's MFM page lists its parent's datasheets. The
+        # operation has to name the faction whose bundle actually carries the
+        # record, or it lands nowhere.
+        owner, units = {}, {}
+        for u in bundle['units']:
+            units[key(u['name'])] = u
+            owner[key(u['name'])] = faction
+        if parent in files:
+            for u in files[parent]['units']:
+                units.setdefault(key(u['name']), u)
+                owner.setdefault(key(u['name']), parent)
+
+        attachments = {}
+        for row in bundle.get('leader-attachments', []):
+            attachments[row['leader_id']] = row
+
+        for entry in data['units']:
+            record = units.get(key(entry['name']))
+            if record is None:
+                stats['no datasheet of that name'] += 1
+                continue
+            at = owner[key(entry['name'])]
+
+            # Grouped by model count and then by scope, which is the order the
+            # app's own records are in.
+            counts, priced = [], collections.defaultdict(list)
+            for block in entry['costs']:
+                for tier in block['tiers']:
+                    found = MODELS.search(tier['of'])
+                    if not found:
+                        continue
+                    n = int(found.group(1))
+                    if n not in priced:
+                        counts.append(n)
+                    priced[n].append(tier['cost'])
+            wanted = [{'models': n, 'cost': c}
+                      for n in counts for c in priced[n]]
+            if not wanted:
+                stats['no model counts on the card'] += 1
+                continue
+
+            current = record.get('points') or []
+            if sorted(p.get('cost') for p in current) != \
+                    sorted(p['cost'] for p in wanted):
+                if once({'faction': at, 'file': 'units', 'op': 'set',
+                         'id': record['id'], 'values': {'points': wanted},
+                         'note': 'Munitorum Field Manual'}):
+                    stats['points corrected'] += 1
+
+            if entry.get('leader'):
+                targets = [units[key(n)]['id'] for n in entry['leader']
+                           if key(n) in units]
+                if len(targets) != len(entry['leader']):
+                    stats['a unit it can lead is not in the app'] += 1
+                if not targets:
+                    continue
+                row = attachments.get(record['id'])
+                have = sorted(row.get('eligible_bodyguard_ids') or []) \
+                    if row else []
+                if sorted(targets) == have:
+                    continue
+                if once({
+                    'faction': faction, 'file': 'leader-attachments',
+                    'op': 'set' if row else 'add', 'id': record['id'],
+                    'key': 'leader_id',
+                    'values': {'eligible_bodyguard_ids': targets},
+                    'note': 'Munitorum Field Manual, LEADER section',
+                }):
+                    stats['leader list corrected' if row
+                          else 'leader list added'] += 1
+
+        detachments = {key(d['name']): d for d in bundle.get('detachments', [])}
+        costs = collections.defaultdict(dict)
+        for e in bundle.get('enhancements', []):
+            costs[e.get('detachment_id')][key(e['name'])] = e
+        for d in data['detachments']:
+            record = detachments.get(key(d['name']))
+            if record is None:
+                continue
+            for e in d['enhancements']:
+                found = costs[record['id']].get(key(e['name']))
+                if found is None or str(found.get('cost')) == str(e['cost']):
+                    continue
+                if once({'faction': faction, 'file': 'enhancements',
+                         'op': 'set', 'id': found['id'],
+                         'values': {'cost': str(e['cost'])},
+                         'note': 'Munitorum Field Manual'}):
+                    stats['enhancement cost corrected'] += 1
+
+    return ops, stats
+
+
 if __name__ == '__main__':
     rules_ops, skipped = rules_update_ops(PACK_TO_FACTION)
     ops.extend(rules_ops)
+    mfm_ops, mfm_stats = points_ops()
+    ops.extend(mfm_ops)
 
     patch = {
         'id': '2026-08-26',
@@ -756,4 +914,7 @@ if __name__ == '__main__':
     print(f'\nfrom the rules updates: {len(rules_ops)} applied')
     for k, v in skipped.most_common():
         print(f'   not applied  {k:38} {v}')
+    print(f'\nfrom the Munitorum Field Manual: {len(mfm_ops)} applied')
+    for k, v in mfm_stats.most_common():
+        print(f'   {k:38} {v}')
     print(f'\nfactions touched {len({o["faction"] for o in ops})}')

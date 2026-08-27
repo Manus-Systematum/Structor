@@ -2603,9 +2603,11 @@ before the next step; `tools/make-update.py` diffs both against the built
 bundles and writes `data/updates/<date>.json`; `bin/bundle.dart` gzips every
 file in `data/updates/` into the dist and lists it.
 
-The August file is **896 operations in 50 KB** — 594 wordings and 29 removals
-from the detachment pages, 78 stratagems a chapter's copy of a shared
-detachment was missing, and 195 errata from the Rules Updates sections.
+The August file is **1,065 operations in 53 KB** — 594 wordings and 29
+removals from the detachment pages, 78 stratagems a chapter's copy of a shared
+detachment was missing, 195 errata from the Rules Updates sections, and 169
+from the Munitorum Field Manual: 53 units repriced, 110 leader lists, and 6
+enhancement costs.
 
 **The Rules Updates sections, added in the same pass.** Every pack ends with
 errata to rules the codex already published, in a regular shape — a shouted
@@ -2711,7 +2713,9 @@ looks exactly like a patch with nothing to do. The test was confirmed to fail
 twice over — once by pointing an operation at a record that does not exist
 and giving another a value the record does not have, and again after it grew
 to cover weapon and datasheet profiles, by adding a profile the bundle does
-not have. It caught every one. **896 of 896 land.**
+not have. It caught every one — and, once the Field Manual's operations arrived, caught
+a dozen chapters writing conflicting points onto the same shared datasheet,
+which is what the deduplication above exists for. **1,065 of 1,065 land.**
 
 Segmentation is by **looking ahead to the directives**, not by streaming
 state. Streaming could not tell where a quotation ended, because an apostrophe
@@ -2791,30 +2795,49 @@ Wahapedia does republish, those 13 `set` operations become harmless
 duplicates of what the source says — the condition for deleting the patch
 stays what §3.15 already says it is, the upstream **dataslate**, not this.
 
-**Points cannot be had right now, and the reason is worth recording.** Games
-Workshop's Munitorum Field Manual serves its **detachments** in the page —
-their DP cost, force disposition and enhancement points are all in the HTML —
-and does **not** serve its units. The unit names are behind a Suspense
-boundary that resolves client-side: the served payload holds the surrounding
-structure (`YOUR 1ST TO 2ND UNITS COST`, `5 models`) with the names as unfilled
-`$L` references, and no request fires for them on load.
+**Points, and who can lead whom, from the Munitorum Field Manual.**
 
-Checked from the other end too. `BSData/wh40k-11e-mfm` — MIT, the mirror this
-project already uses — scrapes this same site, and its own source says *"the
-MFM's base data is server-rendered, so a plain GET covers it"*, using a
-`div.bg-slate-500.text-xl` selector for units. That selector now matches only
-the detachment cards. Their last points update was **5 August 2026**, three
-weeks before this one, which is what a scraper looks like after the page it
-reads has changed under it.
+⚠ **Superseded, and it was wrong.** An earlier pass here recorded that the MFM
+"serves its detachments in the page and does not serve its units", that the
+unit names sit behind a Suspense boundary that never resolves server-side,
+and that BSData's mirror had gone stale because the page changed under their
+scraper. **The units were there the whole time.** The mistake was mine and it
+was mechanical: the page is a single line of HTML, so `grep -c` counts *one*
+and reads like one match where there are eighty-two. Everything built on that
+count was wrong, including the conclusion that the licensed mirror must be
+broken. The kept record is the point: a measurement taken with the wrong tool
+reads exactly like a finding.
 
-So both routes are shut, and the honest thing is to leave points alone: wrong
-points are the most damaging thing this app can hand a list-builder, and
-guessing at a lazily-rendered page across 31 factions fails quietly. The
-route back in is a headless browser that forces the units section to resolve,
-with a handful of known values checked by eye — or BSData fixing their
-scraper, which would be the licensed path and helps everyone downstream.
+The pages **are** server-rendered, and streamed out of order. React sends the
+skeleton with `<template id="P:7a"></template>` where each name and cost goes,
+then the content in `<div hidden id="S:7a">…</div>`, with a
+`<script>$RS("S:7a","P:7a")</script>` that splices the two in the browser.
+`tools/fetch-mfm-points.py` does that splice before parsing anything, and the
+whole document is then in reading order.
 
-**Parsing the packs.** Two things about the PDFs decide the parser. Their grid
+Three things come out of it that the app holds and no community source
+currently has:
+
+- **What a unit costs at each size.** Read as blocks, not as one list. `YOUR
+  UNIT COSTS` is flat; `YOUR 1ST TO 2ND UNITS COST` and `YOUR 3RD + UNIT
+  COSTS` price the same unit by how many you have already taken, and the app
+  stores those as separate entries for one model count; `WARGEAR OPTIONS` on
+  the same card is per item and is not a unit price at all. Flattening the
+  three put a meltagun's 5 points in with a squad's and reported 485
+  differences where there were 146.
+- **Enhancement costs**, per detachment.
+- **Who can lead whom.** Each character's card carries a `LEADER` block naming
+  the datasheets it may attach to — the app's `leader-attachments`, and
+  nothing else publishes it in one place. Vespid Stingwings gained one in this
+  update and the app had nothing at all for it.
+
+**One operation per record.** A Space Marine chapter's MFM page lists its
+parent's datasheets, so a shared record is described by a dozen pages. The
+first page to describe it wins and a page that disagrees is counted, not
+allowed to overwrite — 13 disagreed, and without that the verification test
+caught the last writer clobbering the others.
+
+**Parsing the packs.** Two things about the PDFs decide the parser.**Parsing the packs.** Two things about the PDFs decide the parser. Their grid
 changes page to page — a new detachment gets two wide columns, a reprinted
 codex one gets a narrower three-column layout on a different page size — so
 columns are *detected* rather than assumed: a gutter is a vertical band that
