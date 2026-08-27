@@ -2649,6 +2649,42 @@ matches six only by paraphrase: the app's wording comes from Wahapedia and
 is a judgement about the rules rather than a transcription of them. Left for a
 pass that can check them against the printed stratagems.
 
+**The Event Companions: layouts, and a rule the app already follows.** The
+Warhammer Event Companion publishes the **official 45 terrain layouts** — 15
+mission matchups × three, labelled A, B and C — and its version 1.2 lists **27
+of them as changed on 26 August 2026**. The app's own 45 are Battlemaster's
+import, marked `pre-launch-provisional`, over exactly the same 15 matchups ×
+three variants. So the structures agree and the geometry may not.
+
+The geometry is **printed as a diagram, not as text**, so it is not extracted
+here: reading rectangles out of the vector art and calling them a battlefield
+is the kind of parse that produces a plausible wrong map, which is worse for
+this app than no map. What is extracted is the index —
+`data/event-companion-layouts.json` — so the app can say how current its own
+layouts are, and so a later pass starts from the list rather than the PDF.
+
+Until the geometry is read, **the layout picker says so**: the chips already
+name the source (`Battlemaster 2`), and a line under them now says 27 of the
+official 45 changed on that date and to check the pack before an event. Said
+once, where the layout is chosen, rather than under every drawing of it.
+
+The Companion also caps command points: *excluding Core CP, each player can
+gain a maximum of 1CP per battle round, including the CP from discarding an
+active Secondary Mission card.* Checked against the app rather than assumed —
+§7.3.18 already allows one discard-for-CP per battle round and §7.3.21's
+per-turn point is Core CP, so nothing needed changing.
+
+**Points are not parsed, and this is the gap in the pass.** Games Workshop's
+Munitorum Field Manual is a client-side app: the unit points are not in the
+served HTML, not in the RSC payload, and not behind any request the page
+makes on load. The licensed community mirror the project already uses,
+`BSData/wh40k-11e-mfm`, last updated its points on **5 August 2026** — three
+weeks before this update — which is §3.15's own situation applied to itself.
+Scraping a lazily-rendered page for 31 factions is fragile in exactly the way
+that ships wrong points quietly, and wrong points are the most damaging thing
+this app can show a list-builder. Left undone deliberately rather than done
+badly.
+
 **Parsing the packs.** Two things about the PDFs decide the parser. Their grid
 changes page to page — a new detachment gets two wide columns, a reprinted
 codex one gets a narrower three-column layout on a different page size — so

@@ -1,0 +1,386 @@
+{
+ "source": "Warhammer Event Companion, version 1.2, 26 August 2026",
+ "note": "The official terrain layouts, by matchup. Geometry is printed as a diagram and is not extracted here — this records which layouts exist and which this version changed, so the app can say how current its own are (DESIGN.md §3.15).",
+ "layouts": [
+  {
+   "matchup": "take-and-hold-vs-take-and-hold",
+   "layout": "A",
+   "page": 9,
+   "mission": "MISSION BATTLEFIELD DOMINANCE BATTLEFIELD DOMINANCE"
+  },
+  {
+   "matchup": "take-and-hold-vs-take-and-hold",
+   "layout": "B",
+   "page": 10,
+   "mission": "MISSION BATTLEFIELD DOMINANCE BATTLEFIELD DOMINANCE"
+  },
+  {
+   "matchup": "take-and-hold-vs-take-and-hold",
+   "layout": "C",
+   "page": 11,
+   "mission": "MISSION BATTLEFIELD DOMINANCE BATTLEFIELD DOMINANCE"
+  },
+  {
+   "matchup": "take-and-hold-vs-purge-the-foe",
+   "layout": "A",
+   "page": 12,
+   "mission": "MISSION IMMOVABLE OBJECT UNSTOPPABLE"
+  },
+  {
+   "matchup": "take-and-hold-vs-purge-the-foe",
+   "layout": "B",
+   "page": 13,
+   "mission": "MISSION IMMOVABLE OBJECT UNSTOPPABLE"
+  },
+  {
+   "matchup": "take-and-hold-vs-purge-the-foe",
+   "layout": "C",
+   "page": 14,
+   "mission": "MISSION IMMOVABLE OBJECT UNSTOPPABLE"
+  },
+  {
+   "matchup": "take-and-hold-vs-disruption",
+   "layout": "A",
+   "page": 15,
+   "mission": "MISSION DETERMINED ACQUISITION DEATH TRAP"
+  },
+  {
+   "matchup": "take-and-hold-vs-disruption",
+   "layout": "B",
+   "page": 16,
+   "mission": "MISSION DETERMINED ACQUISITION DEATH TRAP"
+  },
+  {
+   "matchup": "take-and-hold-vs-disruption",
+   "layout": "C",
+   "page": 17,
+   "mission": "MISSION DETERMINED ACQUISITION DEATH TRAP"
+  },
+  {
+   "matchup": "take-and-hold-vs-reconnaissance",
+   "layout": "A",
+   "page": 18,
+   "mission": "MISSION PURGE AND SECURE RECONNAISSANCE SWEEP"
+  },
+  {
+   "matchup": "take-and-hold-vs-reconnaissance",
+   "layout": "B",
+   "page": 19,
+   "mission": "MISSION PURGE AND SECURE RECONNAISSANCE SWEEP"
+  },
+  {
+   "matchup": "take-and-hold-vs-reconnaissance",
+   "layout": "C",
+   "page": 20,
+   "mission": "MISSION PURGE AND SECURE RECONNAISSANCE SWEEP"
+  },
+  {
+   "matchup": "take-and-hold-vs-priority-assets",
+   "layout": "A",
+   "page": 21,
+   "mission": "MISSION INESCAPABLE DOMINION SECURE ASSET"
+  },
+  {
+   "matchup": "take-and-hold-vs-priority-assets",
+   "layout": "B",
+   "page": 22,
+   "mission": "MISSION INESCAPABLE DOMINION SECURE ASSET"
+  },
+  {
+   "matchup": "take-and-hold-vs-priority-assets",
+   "layout": "C",
+   "page": 23,
+   "mission": "MISSION INESCAPABLE DOMINION SECURE ASSET"
+  },
+  {
+   "matchup": "purge-the-foe-vs-purge-the-foe",
+   "layout": "A",
+   "page": 24,
+   "mission": "MISSION MEATGRINDER MEATGRINDER"
+  },
+  {
+   "matchup": "purge-the-foe-vs-purge-the-foe",
+   "layout": "B",
+   "page": 25,
+   "mission": "MISSION MEATGRINDER MEATGRINDER"
+  },
+  {
+   "matchup": "purge-the-foe-vs-purge-the-foe",
+   "layout": "C",
+   "page": 26,
+   "mission": "MISSION MEATGRINDER MEATGRINDER"
+  },
+  {
+   "matchup": "purge-the-foe-vs-disruption",
+   "layout": "A",
+   "page": 27,
+   "mission": "MISSION PUNISHMENT DELAYING ACTION"
+  },
+  {
+   "matchup": "purge-the-foe-vs-disruption",
+   "layout": "B",
+   "page": 28,
+   "mission": "MISSION PUNISHMENT DELAYING ACTION"
+  },
+  {
+   "matchup": "purge-the-foe-vs-disruption",
+   "layout": "C",
+   "page": 29,
+   "mission": "MISSION PUNISHMENT DELAYING ACTION"
+  },
+  {
+   "matchup": "purge-the-foe-vs-reconnaissance",
+   "layout": "A",
+   "page": 30,
+   "mission": "MISSION CONSECRATE TRIANGULATION"
+  },
+  {
+   "matchup": "purge-the-foe-vs-reconnaissance",
+   "layout": "B",
+   "page": 31,
+   "mission": "MISSION CONSECRATE TRIANGULATION"
+  },
+  {
+   "matchup": "purge-the-foe-vs-reconnaissance",
+   "layout": "C",
+   "page": 32,
+   "mission": "MISSION CONSECRATE TRIANGULATION"
+  },
+  {
+   "matchup": "purge-the-foe-vs-priority-assets",
+   "layout": "A",
+   "page": 33,
+   "mission": "MISSION DESTROYER’S WRATH VITAL LINK"
+  },
+  {
+   "matchup": "purge-the-foe-vs-priority-assets",
+   "layout": "B",
+   "page": 34,
+   "mission": "MISSION DESTROYER’S WRATH VITAL LINK"
+  },
+  {
+   "matchup": "purge-the-foe-vs-priority-assets",
+   "layout": "C",
+   "page": 35,
+   "mission": "MISSION DESTROYER’S WRATH VITAL LINK"
+  },
+  {
+   "matchup": "disruption-vs-disruption",
+   "layout": "A",
+   "page": 36,
+   "mission": "MISSION OUTMANOEUVRE OUTMANOEUVRE"
+  },
+  {
+   "matchup": "disruption-vs-disruption",
+   "layout": "B",
+   "page": 37,
+   "mission": "MISSION OUTMANOEUVRE OUTMANOEUVRE"
+  },
+  {
+   "matchup": "disruption-vs-disruption",
+   "layout": "C",
+   "page": 38,
+   "mission": "MISSION OUTMANOEUVRE OUTMANOEUVRE"
+  },
+  {
+   "matchup": "disruption-vs-reconnaissance",
+   "layout": "A",
+   "page": 39,
+   "mission": "MISSION SMOKE AND MIRRORS SURVEIL THE FOE"
+  },
+  {
+   "matchup": "disruption-vs-reconnaissance",
+   "layout": "B",
+   "page": 40,
+   "mission": "MISSION SMOKE AND MIRRORS SURVEIL THE FOE"
+  },
+  {
+   "matchup": "disruption-vs-reconnaissance",
+   "layout": "C",
+   "page": 41,
+   "mission": "MISSION SMOKE AND MIRRORS SURVEIL THE FOE"
+  },
+  {
+   "matchup": "disruption-vs-priority-assets",
+   "layout": "A",
+   "page": 42,
+   "mission": "MISSION LOCATE AND DENY EXTRACT RELIC"
+  },
+  {
+   "matchup": "disruption-vs-priority-assets",
+   "layout": "B",
+   "page": 43,
+   "mission": "MISSION LOCATE AND DENY EXTRACT RELIC"
+  },
+  {
+   "matchup": "disruption-vs-priority-assets",
+   "layout": "C",
+   "page": 44,
+   "mission": "MISSION LOCATE AND DENY EXTRACT RELIC"
+  },
+  {
+   "matchup": "reconnaissance-vs-reconnaissance",
+   "layout": "A",
+   "page": 45,
+   "mission": "MISSION GATHER INTEL GATHER INTEL"
+  },
+  {
+   "matchup": "reconnaissance-vs-reconnaissance",
+   "layout": "B",
+   "page": 46,
+   "mission": "MISSION GATHER INTEL GATHER INTEL"
+  },
+  {
+   "matchup": "reconnaissance-vs-reconnaissance",
+   "layout": "C",
+   "page": 47,
+   "mission": "MISSION GATHER INTEL GATHER INTEL"
+  },
+  {
+   "matchup": "reconnaissance-vs-priority-assets",
+   "layout": "A",
+   "page": 48,
+   "mission": "MISSION SEARCH AND SCOUR VANGUARD OPERATION"
+  },
+  {
+   "matchup": "reconnaissance-vs-priority-assets",
+   "layout": "B",
+   "page": 49,
+   "mission": "MISSION SEARCH AND SCOUR VANGUARD OPERATION"
+  },
+  {
+   "matchup": "reconnaissance-vs-priority-assets",
+   "layout": "C",
+   "page": 50,
+   "mission": "MISSION SEARCH AND SCOUR VANGUARD OPERATION"
+  },
+  {
+   "matchup": "priority-assets-vs-priority-assets",
+   "layout": "A",
+   "page": 51,
+   "mission": "MISSION SABOTAGE SABOTAGE"
+  },
+  {
+   "matchup": "priority-assets-vs-priority-assets",
+   "layout": "B",
+   "page": 52,
+   "mission": "MISSION SABOTAGE SABOTAGE"
+  },
+  {
+   "matchup": "priority-assets-vs-priority-assets",
+   "layout": "C",
+   "page": 53,
+   "mission": "MISSION SABOTAGE SABOTAGE"
+  }
+ ],
+ "updatedInThisVersion": [
+  {
+   "matchup": "event-organisers-and-players-to-use-in-all-of-their-games-take-and-hold-vs-take-and-hold",
+   "layout": "B"
+  },
+  {
+   "matchup": "of-warhammer-40-000-using-the-most-recent-chapter-take-and-hold-vs-take-and-hold",
+   "layout": "C"
+  },
+  {
+   "matchup": "approved-mission-deck-these-are-the-layouts-that-are-take-and-hold-vs-priority-assets",
+   "layout": "B"
+  },
+  {
+   "matchup": "used-at-games-workshop-events-and-are-designed-for-the-take-and-hold-vs-reconnaissance",
+   "layout": "A"
+  },
+  {
+   "matchup": "best-experience-by-the-warhammer-studio-team-to-reflect-take-and-hold-vs-reconnaissance",
+   "layout": "C"
+  },
+  {
+   "matchup": "battlefields-that-create-risk-and-reward-decisions-with-each-take-and-hold-vs-disruption",
+   "layout": "A"
+  },
+  {
+   "matchup": "player-s-objectives-in-mind-take-and-hold-vs-disruption",
+   "layout": "B"
+  },
+  {
+   "matchup": "take-and-hold-vs-disruption",
+   "layout": "C"
+  },
+  {
+   "matchup": "each-combination-of-primary-missions-has-three-purge-the-foe-vs-purge-the-foe",
+   "layout": "A"
+  },
+  {
+   "matchup": "recommended-layouts-labelled-a-b-and-c-as-directed-by-purge-the-foe-vs-purge-the-foe",
+   "layout": "B"
+  },
+  {
+   "matchup": "the-warhammer-event-organiser-the-players-either-use-purge-the-foe-vs-purge-the-foe",
+   "layout": "C"
+  },
+  {
+   "matchup": "the-layout-specified-or-randomly-determine-which-of-these-purge-the-foe-vs-priority-assets",
+   "layout": "B"
+  },
+  {
+   "matchup": "layouts-to-use-purge-the-foe-vs-reconnaissance",
+   "layout": "A"
+  },
+  {
+   "matchup": "purge-the-foe-vs-reconnaissance",
+   "layout": "C"
+  },
+  {
+   "matchup": "purge-the-foe-vs-disruption",
+   "layout": "A"
+  },
+  {
+   "matchup": "we-have-listed-the-terrain-area-footprints-these-purge-the-foe-vs-disruption",
+   "layout": "B"
+  },
+  {
+   "matchup": "recommended-layouts-use-you-can-find-a-pdf-priority-assets-vs-priority-assets",
+   "layout": "B"
+  },
+  {
+   "matchup": "with-these-footprints-ready-for-you-to-print-priority-assets-vs-priority-assets",
+   "layout": "C"
+  },
+  {
+   "matchup": "on-warhammer-community-com-priority-assets-vs-reconnaissance",
+   "layout": "B"
+  },
+  {
+   "matchup": "priority-assets-vs-disruption",
+   "layout": "A"
+  },
+  {
+   "matchup": "terrain-area-priority-assets-vs-disruption",
+   "layout": "B"
+  },
+  {
+   "matchup": "footprint-size-priority-assets-vs-disruption",
+   "layout": "C"
+  },
+  {
+   "matchup": "reconnaissance-vs-reconnaissance",
+   "layout": "A"
+  },
+  {
+   "matchup": "6-x-4-4-reconnaissance-vs-reconnaissance",
+   "layout": "B"
+  },
+  {
+   "matchup": "reconnaissance-vs-reconnaissance",
+   "layout": "C"
+  },
+  {
+   "matchup": "10-x-2-5-2-reconnaissance-vs-disruption",
+   "layout": "A"
+  },
+  {
+   "matchup": "reconnaissance-vs-disruption",
+   "layout": "B"
+  }
+ ]
+}

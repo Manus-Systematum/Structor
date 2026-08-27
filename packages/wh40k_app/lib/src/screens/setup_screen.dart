@@ -309,6 +309,26 @@ class _SetupScreenState extends State<SetupScreen> {
                         ),
                     ],
                   ),
+                  // The chips name the source; this says how current it is
+                  // (§7.6, §3.15). The Warhammer Event Companion of 26 August
+                  // 2026 lists 27 of the official 45 layouts as changed in
+                  // that version, and the app has no way yet to tell which of
+                  // its own match. Said once, where the layout is chosen,
+                  // rather than under every drawing of it.
+                  if (_layouts.any((l) => l.source == 'battlemaster-11e'))
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6),
+                      child: Text(
+                        'These are Battlemaster’s layouts. 27 of the official '
+                        '45 changed on 26 August 2026 — check the Warhammer '
+                        'Event Companion before an event.',
+                        style: TextStyle(
+                          fontSize: 11,
+                          height: 1.35,
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
+                      ),
+                    ),
                   const SizedBox(height: 10),
                 ],
                 Text(
