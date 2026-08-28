@@ -37,7 +37,13 @@ AGENT = 'Structor/1.0 (personal 40k companion app)'
 
 CARD = re.compile(r'<div class="flex flex-col space-y-1 m-1[^"]*">(.*?)'
                   r'(?=<div class="flex flex-col space-y-1 m-1|$)', re.S)
-TITLE = re.compile(r'<div class="[^"]*bg-slate-500[^"]*">(.*?)</div>', re.S)
+# A card's title bar is grey — except on a unit whose points **changed in
+# this update**, which gets a red one and a ▲/▼ badge beside the name. Reading
+# only the grey bar skipped exactly the units the update is about: the T'au
+# page has 43 cards, and the three it hid were Crisis Starscythes, Tiger Shark
+# and The Twin Lance.
+TITLE = re.compile(
+    r'<div class="[^"]*bg-(?:slate-500|red-500)[^"]*">(.*?)</div>', re.S)
 # On a detachment card the title shares its div with the `2DP` badge.
 TITLE_SPAN = re.compile(r'<span[^>]*>(.*?)</span>', re.S)
 
@@ -51,8 +57,12 @@ BLOCK = re.compile(
     r'<div class="[^"]*bg-slate-200[^"]*"[^>]*>(?:<span[^>]*>)?'
     r'(?P<label>[A-Z][A-Z0-9 \'’+/-]*?)(?:</span>)?(?:<img[^>]*>)?</div>'
     r'(?P<body>.*?)(?=<div class="[^"]*bg-slate-200|$)', re.S)
+# A changed price is written `▲ (+10) 230 pts` in its own coloured span, so
+# the figure is not the whole of the text. The delta is dropped: the app holds
+# what a unit costs, and what it cost last month is not a second price.
 ROW = re.compile(r'<li[^>]*>\s*<span[^>]*>([^<]*?)</span>\s*'
-                 r'<span[^>]*>([\d,]+)\s*pts</span>', re.S)
+                 r'<span[^>]*>\s*(?:[▲▼]\s*\([+-]?[\d,]+\)\s*)?'
+                 r'([\d,]+)\s*pts</span>', re.S)
 
 DP = re.compile(r'<span class="text-sm self-end pl-2">(\d+)DP</span>')
 # `LEADER` and `SUPPORT` head a list of the datasheets a character can attach
@@ -70,14 +80,36 @@ HIDDEN = re.compile(r'<div hidden id="(?P<id>S:[^"]+)">(?P<body>.*?)</div>'
 
 
 def splice(page):
-    """The streamed page, with every deferred block put where it belongs."""
+    """The streamed page, with every deferred block put where it belongs.
+
+    The blocks are copied into place and **left where they were streamed as
+    well**, because for these pages the tail is the document: the head holds
+    the detachment cards and a template for nothing else, and every unit card
+    arrives later. Reading the tail is therefore not a mistake, but its blocks
+    have to be kept apart from each other.
+
+    Hence the marker. A block that is a whole card carries its own wrapper; a
+    block that is a *fragment* — a title whose card streamed earlier, a price
+    list whose title has not streamed yet — carries none, and without a
+    boundary it is read as more of whichever card precedes it. That is how
+    Vespid Stingwings came to cost "5 models 70 pts, 10 models 115 pts,
+    1 model 50 pts" and to lead Breacher Teams: the 50 and the leader list are
+    the next card's. Marked, a fragment is its own card — one with no title,
+    or no prices, and either way not something to read.
+
+    Names still arrive twice, once in place and once in the tail. `parse`
+    keeps the first.
+    """
     blocks = {m.group('id'): m.group('body') for m in HIDDEN.finditer(page)}
     for m in RESOLVE.finditer(page):
         body = blocks.get(m.group('from'))
         if body is None:
             continue
         page = page.replace(f'<template id="{m.group("to")}"></template>', body)
-    return page
+
+    return page.replace('<div hidden id="S:',
+                        '<div class="flex flex-col space-y-1 m-1" '
+                        'hidden id="S:')
 
 
 def text(raw):
@@ -92,6 +124,11 @@ def fetch(slug):
 
 def parse(page):
     units, detachments = [], []
+    # `splice` copies each deferred block into place and leaves the original
+    # `<div hidden>` where it was, so every card is in the page twice. Both
+    # copies say the same thing; the second is dropped rather than parsed into
+    # a duplicate entry.
+    seen = set()
     for card in CARD.findall(page):
         title = TITLE.search(card)
         if not title:
@@ -113,7 +150,11 @@ def parse(page):
             elif 'COST' in label:
                 costs.append({'scope': label, 'tiers': rows})
 
+        if name in seen:
+            continue
+
         if costs:
+            seen.add(name)
             attaches = {}
             for role, targets in ATTACH.findall(card):
                 names = [t.strip() for t in text(targets).split(',')]
@@ -124,6 +165,7 @@ def parse(page):
                 **attaches,
             })
         elif DP.search(card):
+            seen.add(name)
             body = card[card.find('ENHANCEMENTS'):] if 'ENHANCEMENTS' in card \
                 else ''
             detachments.append({

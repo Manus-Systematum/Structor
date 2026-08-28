@@ -180,6 +180,49 @@ void main() {
     }
   });
 
+  // The Munitorum Field Manual marks a unit whose points changed *in this
+  // update* with a red title bar and a `▲ (+10) 230 pts` row. The parser read
+  // only the grey bars and only bare figures, so it skipped precisely the
+  // units the update exists to carry — 36 of them, The Twin Lance among them,
+  // which stayed at its old 220 while the published price was 230 (§3.15).
+  test('a unit whose points changed carries the new price', () async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final repo = DatasetRepository();
+
+    int costOf(List<SourceUnit> units) => units
+        .firstWhere((u) => u.id == 'the-twin-lance')
+        .points
+        .single
+        .cost;
+
+    final shipped = DatasetBundle.decode(
+        (await const AssetBundleSource().fetch(
+            (await repo.manifest()).entry('tau-empire')!.file))!);
+    expect(
+      costOf(shipped
+          .file('units')
+          .map(SourceUnit.fromJson)
+          .toList()),
+      220,
+      reason: 'the bundle is what 40kdc published',
+    );
+
+    expect(costOf((await repo.faction('tau-empire')).faction.units), 230,
+        reason: 'the patch carries the August price');
+  });
+
+  // The same failure at scale: a parser that silently stops matching leaves a
+  // patch that still applies cleanly and corrects nothing.
+  test('the patch carries points for the units that were repriced', () async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final patch = (await DatasetRepository().patches()).patches.single;
+    final repriced = patch.operations
+        .where((op) => op.values.containsKey('points'))
+        .length;
+    expect(repriced, greaterThan(65),
+        reason: '73 units are repriced by the August manual');
+  });
+
   // §3.19. Every published name carries a hash of the bytes under it, so an
   // updated file is a URL no cache has ever seen and an unchanged one keeps
   // the URL every cache already has. The check is that the name says what the

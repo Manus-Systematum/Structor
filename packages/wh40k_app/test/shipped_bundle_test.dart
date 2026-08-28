@@ -90,9 +90,21 @@ void main() {
   group('the real exports import clean from the bundle', () {
     // Both are in the core package's fixtures; this reads them through the
     // app's own path — bundle, not loader.
+    // Two numbers, because they stopped being the same one on 2026-08-26.
+    // The export prints what the list cost when it was written; the bundle
+    // prices it at today's points. Both lists field The Twin Lance and two
+    // units of Crisis Starscythes, and the August manual put 10 points on
+    // each of the three — so each list is 30 points dearer than its own
+    // header says, and that is the data being right rather than wrong.
     const fixtures = {
-      '../wh40k_core/test/fixtures/war_organ_export.txt': 2000,
-      '../wh40k_core/test/fixtures/war_organ_incursion_1000.txt': 995,
+      '../wh40k_core/test/fixtures/war_organ_export.txt': (
+        printed: 2000,
+        now: 2030,
+      ),
+      '../wh40k_core/test/fixtures/war_organ_incursion_1000.txt': (
+        printed: 995,
+        now: 1025,
+      ),
     };
 
     for (final entry in fixtures.entries) {
@@ -109,8 +121,9 @@ void main() {
         // does not list is the symptom of a bundle built before the
         // corrections, which is the thing this file exists to catch.
         expect(result.issues, isEmpty, reason: result.issues.join('\n'));
-        expect(PointsCalculator(tau).price(result.roster).total, entry.value);
-        expect(result.printedPoints, entry.value);
+        expect(PointsCalculator(tau).price(result.roster).total,
+            entry.value.now);
+        expect(result.printedPoints, entry.value.printed);
       });
     }
   });

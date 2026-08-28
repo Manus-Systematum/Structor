@@ -2175,6 +2175,42 @@ thing §2.2 exists to prevent, and the night before a game it is the wrong
 time to re-cost an army. Accepting reports both numbers: how many were
 rebuilt, and how many of them changed points.
 
+### 3.21 The manual marks what it changed, and the parser skipped it
+
+Reported as one wrong number: The Twin Lance costs 230 in the August manual
+and the app was still charging 220. It was not one number.
+
+**A repriced unit gets a red title bar and a `▲ (+10) 230 pts` row.** The
+parser matched `bg-slate-500` titles and bare `230 pts` figures, so a unit
+whose points changed *in this update* failed both tests at once — and those
+are precisely the units the update exists to carry. On the T'au page it hid
+three of forty-three: Crisis Starscythes, Tiger Shark and The Twin Lance.
+Across the manual it was 20 units, which is why the patch corrected 53 sets
+of points and not 73.
+
+**A second fault was hiding in the same place.** The page streams its cards
+out of order and `$RS` splices them into position, and the parser both copied
+the blocks into place *and* read the tail they were streamed from — so every
+card was parsed twice. Worse, a block that is a fragment rather than a whole
+card carries no wrapper, so it was read as more of whichever card preceded it
+in the tail. That is how Vespid Stingwings came to cost "5 models 70 pts,
+10 models 115 pts, **1 model 50 pts**" and to lead Breacher Teams: the 50 and
+the leader list belong to the next card, whose own title had not streamed
+yet. The app was shipping that phantom tier.
+
+The fix is a boundary rather than a rewrite: each streamed block is marked as
+a card of its own, so a fragment is either a card with no title or a card with
+no prices, and neither is something to read. Names still arrive twice and the
+first is kept.
+
+**Both reference lists went up 30 points, and that is the data being right.**
+`war_organ_export.txt` prints 2000 and now prices at 2030; the 1,000-point
+list prints 995 and prices at 1025. Both field The Twin Lance and two units of
+Crisis Starscythes, and the manual put 10 points on each of the three. The
+test that asserted one number now asserts two — what the export printed when
+it was written, and what the same list costs today — because an import being
+repriced by a published update is the system working.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.

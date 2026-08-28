@@ -10435,80 +10435,70 @@
    "note": "world-eaters pack rules update"
   },
   {
-   "faction": "adepta-sororitas",
+   "faction": "adeptus-custodes",
    "file": "units",
    "op": "set",
-   "id": "zephyrim-squad",
+   "id": "allarus-custodians",
    "values": {
     "points": [
      {
-      "models": 5,
-      "cost": 75
+      "models": 2,
+      "cost": 110
+     },
+     {
+      "models": 2,
+      "cost": 140
+     },
+     {
+      "models": 3,
+      "cost": 165
+     },
+     {
+      "models": 3,
+      "cost": 195
      },
      {
       "models": 5,
-      "cost": 85
+      "cost": 280
      },
      {
-      "models": 10,
-      "cost": 150
+      "models": 5,
+      "cost": 310
      },
      {
-      "models": 10,
-      "cost": 160
+      "models": 6,
+      "cost": 340
      },
      {
-      "models": 1,
-      "cost": 75
+      "models": 6,
+      "cost": 370
      }
     ]
    },
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "adepta-sororitas",
-   "file": "leader-attachments",
-   "op": "add",
-   "id": "zephyrim-squad",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "seraphim-squad",
-     "zephyrim-squad"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
    "faction": "adeptus-custodes",
    "file": "units",
    "op": "set",
-   "id": "witchseekers",
+   "id": "vertus-praetors",
    "values": {
     "points": [
      {
-      "models": 4,
-      "cost": 50
+      "models": 2,
+      "cost": 145
      },
      {
-      "models": 5,
-      "cost": 55
+      "models": 2,
+      "cost": 170
      },
      {
-      "models": 9,
-      "cost": 90
+      "models": 3,
+      "cost": 215
      },
      {
-      "models": 10,
-      "cost": 100
-     },
-     {
-      "models": 1,
-      "cost": 65
-     },
-     {
-      "models": 1,
-      "cost": 75
+      "models": 3,
+      "cost": 240
      }
     ]
    },
@@ -10544,6 +10534,25 @@
      {
       "models": 3,
       "cost": 265
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-mechanicus",
+   "file": "units",
+   "op": "set",
+   "id": "servitor-battleclade",
+   "values": {
+    "points": [
+     {
+      "models": 9,
+      "cost": 65
+     },
+     {
+      "models": 9,
+      "cost": 75
      }
     ]
    },
@@ -10623,59 +10632,30 @@
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "aeldari",
+   "faction": "astra-militarum",
    "file": "units",
    "op": "set",
-   "id": "yvraine",
+   "id": "catachan-heavy-weapons-squad",
    "values": {
     "points": [
      {
-      "models": 1,
-      "cost": 100
-     },
-     {
-      "models": 1,
-      "cost": 125
+      "models": 3,
+      "cost": 70
      }
     ]
    },
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "aeldari",
-   "file": "leader-attachments",
-   "op": "set",
-   "id": "yvraine",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "swooping-hawks"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
    "faction": "astra-militarum",
    "file": "units",
    "op": "set",
-   "id": "wyvern",
+   "id": "krieg-heavy-weapons-squad",
    "values": {
     "points": [
      {
-      "models": 1,
-      "cost": 95
-     },
-     {
-      "models": 1,
-      "cost": 115
-     },
-     {
-      "models": 1,
-      "cost": 415
-     },
-     {
-      "models": 1,
-      "cost": 450
+      "models": 4,
+      "cost": 70
      }
     ]
    },
@@ -10959,6 +10939,25 @@
    "faction": "adeptus-astartes",
    "file": "units",
    "op": "set",
+   "id": "land-raider-redeemer",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 260
+     },
+     {
+      "models": 1,
+      "cost": 280
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
    "id": "outrider-squad",
    "values": {
     "points": [
@@ -10994,29 +10993,6 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "whirlwind",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 175
-     },
-     {
-      "models": 1,
-      "cost": 195
-     },
-     {
-      "models": 1,
-      "cost": 40
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
   },
   {
    "faction": "blood-angels",
@@ -11444,6 +11420,38 @@
    "faction": "adeptus-astartes",
    "file": "units",
    "op": "set",
+   "id": "librarian-in-terminator-armour",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 85
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "leader-attachments",
+   "op": "add",
+   "id": "librarian-in-terminator-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "deathwatch-terminator-squad",
+     "deathwing-knights",
+     "deathwing-terminator-squad",
+     "terminator-assault-squad",
+     "terminator-squad"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
    "id": "repulsor-executioner",
    "values": {
     "points": [
@@ -11508,19 +11516,111 @@
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "blood-angels",
-   "file": "leader-attachments",
-   "op": "add",
-   "id": "whirlwind",
-   "key": "leader_id",
+   "faction": "chaos-daemons",
+   "file": "units",
+   "op": "set",
+   "id": "beasts-of-nurgle",
    "values": {
-    "eligible_bodyguard_ids": [
-     "assault-intercessors-with-jump-packs",
-     "sanguinary-guard",
-     "vanguard-veteran-squad-with-jump-packs"
+    "points": [
+     {
+      "models": 1,
+      "cost": 80
+     },
+     {
+      "models": 2,
+      "cost": 150
+     }
     ]
    },
-   "note": "Munitorum Field Manual, LEADER section"
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "chaos-daemons",
+   "file": "units",
+   "op": "set",
+   "id": "bloodcrushers",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 95
+     },
+     {
+      "models": 3,
+      "cost": 135
+     },
+     {
+      "models": 6,
+      "cost": 200
+     },
+     {
+      "models": 6,
+      "cost": 240
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "chaos-daemons",
+   "file": "units",
+   "op": "set",
+   "id": "contorted-epitome",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 115
+     },
+     {
+      "models": 1,
+      "cost": 125
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "chaos-daemons",
+   "file": "units",
+   "op": "set",
+   "id": "daemonettes",
+   "values": {
+    "points": [
+     {
+      "models": 10,
+      "cost": 100
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "chaos-daemons",
+   "file": "units",
+   "op": "set",
+   "id": "fiends",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 90
+     },
+     {
+      "models": 3,
+      "cost": 105
+     },
+     {
+      "models": 6,
+      "cost": 190
+     },
+     {
+      "models": 6,
+      "cost": 205
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "chaos-daemons",
@@ -11536,6 +11636,97 @@
      {
       "models": 2,
       "cost": 160
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "chaos-daemons",
+   "file": "units",
+   "op": "set",
+   "id": "keeper-of-secrets",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 265
+     },
+     {
+      "models": 1,
+      "cost": 280
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "chaos-daemons",
+   "file": "units",
+   "op": "set",
+   "id": "poxbringer",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 60
+     },
+     {
+      "models": 1,
+      "cost": 70
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "chaos-daemons",
+   "file": "units",
+   "op": "set",
+   "id": "rendmaster-on-blood-throne",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 160
+     },
+     {
+      "models": 1,
+      "cost": 180
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "chaos-daemons",
+   "file": "units",
+   "op": "set",
+   "id": "seekers",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 85
+     },
+     {
+      "models": 10,
+      "cost": 155
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "chaos-daemons",
+   "file": "units",
+   "op": "set",
+   "id": "skull-cannon",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 100
      }
     ]
    },
@@ -11561,19 +11752,19 @@
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "chaos-knights",
+   "faction": "chaos-space-marines",
    "file": "units",
    "op": "set",
-   "id": "war-dog-stalker",
+   "id": "defiler",
    "values": {
     "points": [
      {
       "models": 1,
-      "cost": 135
+      "cost": 300
      },
      {
       "models": 1,
-      "cost": 415
+      "cost": 350
      }
     ]
    },
@@ -11609,37 +11800,6 @@
      {
       "models": 2,
       "cost": 170
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-space-marines",
-   "file": "units",
-   "op": "set",
-   "id": "warp-talons",
-   "values": {
-    "points": [
-     {
-      "models": 5,
-      "cost": 125
-     },
-     {
-      "models": 5,
-      "cost": 135
-     },
-     {
-      "models": 10,
-      "cost": 280
-     },
-     {
-      "models": 10,
-      "cost": 290
-     },
-     {
-      "models": 1,
-      "cost": 240
      }
     ]
    },
@@ -11736,6 +11896,62 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "tactical-squad"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "ravenwing-black-knights",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 75
+     },
+     {
+      "models": 3,
+      "cost": 85
+     },
+     {
+      "models": 6,
+      "cost": 150
+     },
+     {
+      "models": 6,
+      "cost": 160
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "sammael",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 105
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "leader-attachments",
+   "op": "add",
+   "id": "sammael",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "outrider-squad",
+     "ravenwing-black-knights"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11977,6 +12193,23 @@
    "faction": "dark-angels",
    "file": "leader-attachments",
    "op": "add",
+   "id": "librarian-in-terminator-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "deathwatch-terminator-squad",
+     "deathwing-knights",
+     "deathwing-terminator-squad",
+     "terminator-assault-squad",
+     "terminator-squad"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "leader-attachments",
+   "op": "add",
    "id": "techmarine",
    "key": "leader_id",
    "values": {
@@ -12008,6 +12241,25 @@
    "faction": "death-guard",
    "file": "units",
    "op": "set",
+   "id": "defiler",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 300
+     },
+     {
+      "models": 1,
+      "cost": 350
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "death-guard",
+   "file": "units",
+   "op": "set",
    "id": "beasts-of-nurgle",
    "values": {
     "points": [
@@ -12018,25 +12270,6 @@
      {
       "models": 2,
       "cost": 140
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "death-guard",
-   "file": "units",
-   "op": "set",
-   "id": "rotigus",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 280
-     },
-     {
-      "models": 1,
-      "cost": 280
      }
     ]
    },
@@ -12186,6 +12419,25 @@
    "note": "Munitorum Field Manual, LEADER section"
   },
   {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "centurion-devastator-squad",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 175
+     },
+     {
+      "models": 6,
+      "cost": 365
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
    "faction": "deathwatch",
    "file": "leader-attachments",
    "op": "add",
@@ -12328,6 +12580,23 @@
    "faction": "deathwatch",
    "file": "leader-attachments",
    "op": "add",
+   "id": "librarian-in-terminator-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "deathwatch-terminator-squad",
+     "deathwing-knights",
+     "deathwing-terminator-squad",
+     "terminator-assault-squad",
+     "terminator-squad"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "leader-attachments",
+   "op": "add",
    "id": "techmarine",
    "key": "leader_id",
    "values": {
@@ -12344,25 +12613,6 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "drukhari",
-   "file": "units",
-   "op": "set",
-   "id": "wyches",
-   "values": {
-    "points": [
-     {
-      "models": 10,
-      "cost": 90
-     },
-     {
-      "models": 10,
-      "cost": 115
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
   },
   {
    "faction": "emperors-children",
@@ -12383,16 +12633,107 @@
    "faction": "emperors-children",
    "file": "units",
    "op": "set",
-   "id": "shalaxi-helbane",
+   "id": "defiler",
    "values": {
     "points": [
      {
       "models": 1,
-      "cost": 315
+      "cost": 300
      },
      {
       "models": 1,
-      "cost": 185
+      "cost": 350
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "units",
+   "op": "set",
+   "id": "lord-exultant",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 90
+     },
+     {
+      "models": 1,
+      "cost": 100
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "units",
+   "op": "set",
+   "id": "daemonettes",
+   "values": {
+    "points": [
+     {
+      "models": 10,
+      "cost": 100
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "units",
+   "op": "set",
+   "id": "fiends",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 90
+     },
+     {
+      "models": 6,
+      "cost": 190
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "units",
+   "op": "set",
+   "id": "keeper-of-secrets",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 265
+     },
+     {
+      "models": 1,
+      "cost": 280
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "units",
+   "op": "set",
+   "id": "seekers",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 85
+     },
+     {
+      "models": 10,
+      "cost": 155
      }
     ]
    },
@@ -12454,60 +12795,66 @@
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "genestealer-cults",
+   "faction": "grey-knights",
    "file": "units",
    "op": "set",
-   "id": "sanctus",
+   "id": "land-raider-redeemer",
    "values": {
     "points": [
      {
       "models": 1,
-      "cost": 65
+      "cost": 260
      },
      {
-      "models": 2,
+      "models": 1,
+      "cost": 280
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "grey-knights",
+   "file": "units",
+   "op": "set",
+   "id": "paladin-squad",
+   "values": {
+    "points": [
+     {
+      "models": 4,
       "cost": 170
+     },
+     {
+      "models": 4,
+      "cost": 210
+     },
+     {
+      "models": 5,
+      "cost": 215
+     },
+     {
+      "models": 5,
+      "cost": 255
+     },
+     {
+      "models": 8,
+      "cost": 360
+     },
+     {
+      "models": 8,
+      "cost": 400
+     },
+     {
+      "models": 10,
+      "cost": 460
+     },
+     {
+      "models": 10,
+      "cost": 500
      }
     ]
    },
    "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "grey-knights",
-   "file": "units",
-   "op": "set",
-   "id": "venerable-dreadnought",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 130
-     },
-     {
-      "models": 1,
-      "cost": 140
-     },
-     {
-      "models": 1,
-      "cost": 100
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "grey-knights",
-   "file": "leader-attachments",
-   "op": "add",
-   "id": "venerable-dreadnought",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "brotherhood-terminator-squad",
-     "paladin-squad"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
   },
   {
    "faction": "agents-of-the-imperium",
@@ -12548,44 +12895,192 @@
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "agents-of-the-imperium",
+   "faction": "leagues-of-votann",
    "file": "units",
    "op": "set",
-   "id": "eversor-assassin",
+   "id": "brokhyr-thunderkyn",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 80
+     },
+     {
+      "models": 3,
+      "cost": 90
+     },
+     {
+      "models": 6,
+      "cost": 170
+     },
+     {
+      "models": 6,
+      "cost": 180
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "leagues-of-votann",
+   "file": "units",
+   "op": "set",
+   "id": "ironkin-steeljacks-with-heavy-volkanite-disintegrators",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 80
+     },
+     {
+      "models": 3,
+      "cost": 90
+     },
+     {
+      "models": 6,
+      "cost": 170
+     },
+     {
+      "models": 6,
+      "cost": 180
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "leagues-of-votann",
+   "file": "units",
+   "op": "set",
+   "id": "kapricus-defenders",
    "values": {
     "points": [
      {
       "models": 1,
-      "cost": 110
+      "cost": 70
+     },
+     {
+      "models": 1,
+      "cost": 80
+     },
+     {
+      "models": 2,
+      "cost": 140
+     },
+     {
+      "models": 2,
+      "cost": 150
      }
     ]
    },
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "agents-of-the-imperium",
+   "faction": "necrons",
    "file": "units",
    "op": "set",
-   "id": "exaction-squad",
+   "id": "lokhust-destroyers",
    "values": {
     "points": [
      {
-      "models": 11,
+      "models": 1,
+      "cost": 40
+     },
+     {
+      "models": 1,
+      "cost": 70
+     },
+     {
+      "models": 2,
+      "cost": 55
+     },
+     {
+      "models": 2,
       "cost": 85
+     },
+     {
+      "models": 3,
+      "cost": 80
+     },
+     {
+      "models": 3,
+      "cost": 110
+     },
+     {
+      "models": 6,
+      "cost": 175
+     },
+     {
+      "models": 6,
+      "cost": 205
      }
     ]
    },
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "agents-of-the-imperium",
+   "faction": "necrons",
    "file": "units",
    "op": "set",
-   "id": "grey-knights-terminator-squad",
+   "id": "lokhust-heavy-destroyers",
    "values": {
     "points": [
      {
-      "models": 5,
+      "models": 1,
+      "cost": 50
+     },
+     {
+      "models": 1,
+      "cost": 60
+     },
+     {
+      "models": 2,
+      "cost": 100
+     },
+     {
+      "models": 2,
+      "cost": 110
+     },
+     {
+      "models": 3,
+      "cost": 165
+     },
+     {
+      "models": 3,
+      "cost": 175
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "necrons",
+   "file": "units",
+   "op": "set",
+   "id": "lokhust-lord",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 80
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "necrons",
+   "file": "units",
+   "op": "set",
+   "id": "necron-warriors",
+   "values": {
+    "points": [
+     {
+      "models": 10,
+      "cost": 85
+     },
+     {
+      "models": 20,
       "cost": 190
      }
     ]
@@ -12593,164 +13088,52 @@
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "agents-of-the-imperium",
+   "faction": "necrons",
    "file": "units",
    "op": "set",
-   "id": "inquisitor",
+   "id": "ophydian-destroyers",
    "values": {
     "points": [
      {
-      "models": 1,
-      "cost": 65
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "agents-of-the-imperium",
-   "file": "units",
-   "op": "set",
-   "id": "inquisitor-coteaz",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 95
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "agents-of-the-imperium",
-   "file": "units",
-   "op": "set",
-   "id": "inquisitor-draxus",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 110
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "agents-of-the-imperium",
-   "file": "units",
-   "op": "set",
-   "id": "navigator",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 75
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "agents-of-the-imperium",
-   "file": "units",
-   "op": "set",
-   "id": "rogue-trader-entourage",
-   "values": {
-    "points": [
-     {
-      "models": 4,
-      "cost": 105
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "agents-of-the-imperium",
-   "file": "units",
-   "op": "set",
-   "id": "sisters-of-battle-immolator",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 105
+      "models": 3,
+      "cost": 80
      },
      {
-      "models": 1,
-      "cost": 115
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "agents-of-the-imperium",
-   "file": "units",
-   "op": "set",
-   "id": "sisters-of-battle-squad",
-   "values": {
-    "points": [
-     {
-      "models": 10,
-      "cost": 110
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "agents-of-the-imperium",
-   "file": "units",
-   "op": "set",
-   "id": "subductor-squad",
-   "values": {
-    "points": [
-     {
-      "models": 11,
-      "cost": 100
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "agents-of-the-imperium",
-   "file": "units",
-   "op": "set",
-   "id": "vindicare-assassin",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 125
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "agents-of-the-imperium",
-   "file": "units",
-   "op": "set",
-   "id": "voidsmen-at-arms",
-   "values": {
-    "points": [
+      "models": 3,
+      "cost": 90
+     },
      {
       "models": 6,
-      "cost": 70
+      "cost": 150
+     },
+     {
+      "models": 6,
+      "cost": 160
      }
     ]
    },
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "agents-of-the-imperium",
+   "faction": "necrons",
    "file": "units",
    "op": "set",
-   "id": "watch-master",
+   "id": "plasmancer",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 60
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "necrons",
+   "file": "units",
+   "op": "set",
+   "id": "skorpekh-lord",
    "values": {
     "points": [
      {
@@ -12758,31 +13141,8 @@
       "cost": 95
      },
      {
-      "models": 11,
-      "cost": 85
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "imperial-knights",
-   "file": "units",
-   "op": "set",
-   "id": "questoris-knight-styrix",
-   "values": {
-    "points": [
-     {
       "models": 1,
-      "cost": 375
-     },
-     {
-      "models": 1,
-      "cost": 390
-     },
-     {
-      "models": 1,
-      "cost": 140
+      "cost": 105
      }
     ]
    },
@@ -12973,6 +13333,21 @@
   },
   {
    "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "vulkan-hestan",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 95
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
    "file": "leader-attachments",
    "op": "set",
    "id": "captain-titus",
@@ -13049,25 +13424,6 @@
    "note": "Munitorum Field Manual, LEADER section"
   },
   {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "suboden-khan",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 90
-     },
-     {
-      "models": 1,
-      "cost": 40
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
    "faction": "space-wolves",
    "file": "leader-attachments",
    "op": "add",
@@ -13139,6 +13495,33 @@
   },
   {
    "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "thunderwolf-cavalry",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 100
+     },
+     {
+      "models": 3,
+      "cost": 130
+     },
+     {
+      "models": 6,
+      "cost": 200
+     },
+     {
+      "models": 6,
+      "cost": 230
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
    "file": "leader-attachments",
    "op": "add",
    "id": "ulrik-the-slayer",
@@ -13166,6 +13549,33 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wolf-guard-terminators",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 155
+     },
+     {
+      "models": 5,
+      "cost": 195
+     },
+     {
+      "models": 10,
+      "cost": 310
+     },
+     {
+      "models": 10,
+      "cost": 350
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "space-wolves",
@@ -13438,6 +13848,23 @@
    "faction": "space-wolves",
    "file": "leader-attachments",
    "op": "add",
+   "id": "librarian-in-terminator-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "deathwatch-terminator-squad",
+     "deathwing-knights",
+     "deathwing-terminator-squad",
+     "terminator-assault-squad",
+     "terminator-squad"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "leader-attachments",
+   "op": "add",
    "id": "techmarine",
    "key": "leader_id",
    "values": {
@@ -13459,20 +13886,16 @@
    "faction": "tau-empire",
    "file": "units",
    "op": "set",
-   "id": "vespid-stingwings",
+   "id": "crisis-starscythe-battlesuits",
    "values": {
     "points": [
      {
-      "models": 5,
-      "cost": 70
+      "models": 3,
+      "cost": 100
      },
      {
-      "models": 10,
-      "cost": 115
-     },
-     {
-      "models": 1,
-      "cost": 50
+      "models": 3,
+      "cost": 110
      }
     ]
    },
@@ -13480,17 +13903,37 @@
   },
   {
    "faction": "tau-empire",
-   "file": "leader-attachments",
-   "op": "add",
-   "id": "vespid-stingwings",
-   "key": "leader_id",
+   "file": "units",
+   "op": "set",
+   "id": "the-twin-lance",
    "values": {
-    "eligible_bodyguard_ids": [
-     "breacher-team",
-     "strike-team"
+    "points": [
+     {
+      "models": 2,
+      "cost": 230
+     }
     ]
    },
-   "note": "Munitorum Field Manual, LEADER section"
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "tau-empire",
+   "file": "units",
+   "op": "set",
+   "id": "tiger-shark",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 395
+     },
+     {
+      "models": 1,
+      "cost": 445
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "tau-empire",
@@ -13506,20 +13949,84 @@
    "faction": "thousand-sons",
    "file": "units",
    "op": "set",
-   "id": "screamers",
+   "id": "defiler",
    "values": {
     "points": [
      {
-      "models": 3,
-      "cost": 80
-     },
-     {
-      "models": 6,
-      "cost": 160
+      "models": 1,
+      "cost": 300
      },
      {
       "models": 1,
-      "cost": 150
+      "cost": 350
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "units",
+   "op": "set",
+   "id": "exalted-sorcerer",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 95
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "units",
+   "op": "set",
+   "id": "infernal-master",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 100
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "units",
+   "op": "set",
+   "id": "sorcerer",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 95
+     },
+     {
+      "models": 1,
+      "cost": 105
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "units",
+   "op": "set",
+   "id": "sorcerer-in-terminator-armour",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 100
+     },
+     {
+      "models": 1,
+      "cost": 110
      }
     ]
    },
@@ -13539,12 +14046,16 @@
    "faction": "tyranids",
    "file": "units",
    "op": "set",
-   "id": "barbgaunts",
+   "id": "tyrant-guard",
    "values": {
     "points": [
      {
       "models": 3,
-      "cost": 90
+      "cost": 80
+     },
+     {
+      "models": 6,
+      "cost": 170
      }
     ]
    },
@@ -13557,29 +14068,6 @@
    "id": "synaptoprescience-upgrade-talons-of-the-norn-queen",
    "values": {
     "cost": "30"
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "world-eaters",
-   "file": "units",
-   "op": "set",
-   "id": "skarbrand",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 315
-     },
-     {
-      "models": 1,
-      "cost": 75
-     },
-     {
-      "models": 1,
-      "cost": 85
-     }
-    ]
    },
    "note": "Munitorum Field Manual"
   },
