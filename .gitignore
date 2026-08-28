@@ -30,3 +30,7 @@ dist/
 # Cross-check source — refetch with tools/fetch-mfm.sh
 data/mfm/
 dist/
+
+# Local path overrides: they point at sibling checkouts of Structor_core and
+# are one person's directory layout, not the project's (DESIGN.md §3.24).
+pubspec_overrides.yaml

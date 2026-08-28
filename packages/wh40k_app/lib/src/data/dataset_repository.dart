@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+
+import 'app_assets.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 /// Somewhere bundles can come from (DESIGN.md §3.4).
@@ -29,7 +30,8 @@ class AssetBundleSource implements BundleSource {
   @override
   Future<DatasetManifest?> manifest() async {
     try {
-      final raw = await rootBundle.loadString('assets/bundles/manifest.json');
+      final raw = await AppAssets.loadString('assets/bundles/manifest.json');
+      if (raw == null) return null;
       return DatasetManifest.fromJson(jsonDecode(raw));
     } on FlutterError {
       return null;
@@ -39,8 +41,8 @@ class AssetBundleSource implements BundleSource {
   @override
   Future<List<int>?> fetch(String file) async {
     try {
-      final data = await rootBundle.load('assets/bundles/$file');
-      return data.buffer.asUint8List();
+      final data = await AppAssets.load('assets/bundles/$file');
+      return data?.buffer.asUint8List();
     } on FlutterError {
       return null;
     }
@@ -324,8 +326,7 @@ class DatasetRepository {
     final unavailable = <String>[];
     for (final (id, file, digest) in [
       for (final entry in after.bundles) (entry.id, entry.file, entry.sha256),
-      for (final patch in after.patches)
-        (patch.id, patch.file, patch.sha256),
+      for (final patch in after.patches) (patch.id, patch.file, patch.sha256),
     ]) {
       final bytes = await _bytes(file, digest);
       if (bytes == null) {
@@ -497,7 +498,8 @@ class DatasetRepository {
     List<Object?> patched(String name, List<Object?> records, String owner) =>
         corrections.apply(records, faction: owner, file: name);
 
-    List<Object?> file(String name) => patched(name, data.file(name), factionId);
+    List<Object?> file(String name) =>
+        patched(name, data.file(name), factionId);
     List<Object?> sheets(String name) => _merge(
           patched(name, data.file(name), factionId),
           parent == null

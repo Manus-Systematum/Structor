@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
+import 'app_assets.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
 /// A roster plus everything needed to render it.
@@ -65,9 +65,9 @@ class Army {
   /// nothing pre-installs it, so a fresh install starts with no armies.
   static Future<Army> loadReference() async {
     final rosterJson =
-        await rootBundle.loadString('assets/reference_roster.json');
+        await AppAssets.loadString('assets/reference_roster.json') ?? '';
     final snapshotJson =
-        await rootBundle.loadString('assets/reference_snapshot.json');
+        await AppAssets.loadString('assets/reference_snapshot.json') ?? '';
     return Army.fromSnapshot(
       Roster.fromJson(jsonDecode(rosterJson)),
       RosterSnapshot.fromJson(jsonDecode(snapshotJson)),

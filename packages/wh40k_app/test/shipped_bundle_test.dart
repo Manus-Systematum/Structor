@@ -90,6 +90,11 @@ void main() {
   group('the real exports import clean from the bundle', () {
     // Both are in the core package's fixtures; this reads them through the
     // app's own path — bundle, not loader.
+    // The exports are copied here rather than read out of the engine's
+    // repository: this suite asks what *this* app makes of them, and a test
+    // that reaches into a sibling checkout passes or fails on whether that
+    // checkout is there (§3.24).
+    //
     // Two numbers, because they stopped being the same one on 2026-08-26.
     // The export prints what the list cost when it was written; the bundle
     // prices it at today's points. Both lists field The Twin Lance and two
@@ -97,11 +102,11 @@ void main() {
     // each of the three — so each list is 30 points dearer than its own
     // header says, and that is the data being right rather than wrong.
     const fixtures = {
-      '../wh40k_core/test/fixtures/war_organ_export.txt': (
+      'test/fixtures/war_organ_export.txt': (
         printed: 2000,
         now: 2030,
       ),
-      '../wh40k_core/test/fixtures/war_organ_incursion_1000.txt': (
+      'test/fixtures/war_organ_incursion_1000.txt': (
         printed: 995,
         now: 1025,
       ),
@@ -209,7 +214,7 @@ void main() {
     // And it has to reach the snapshot, which is what the play screens read.
     final builder = await repo.snapshotBuilder('tau-empire');
     final parsed = const TextListParser().parse(
-        File('../wh40k_core/test/fixtures/war_organ_export.txt')
+        File('test/fixtures/war_organ_export.txt')
             .readAsStringSync());
     final result = RosterResolver(
       tau,

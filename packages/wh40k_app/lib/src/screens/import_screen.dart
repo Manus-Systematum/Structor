@@ -180,7 +180,13 @@ class _ImportScreenState extends State<ImportScreen> {
             controller: _controller,
             maxLines: 10,
             minLines: 6,
-            style: const TextStyle(fontSize: 12, fontFamily: 'Menlo'),
+            // Monospace, because a pasted list is columns — and named twice
+            // because the two platforms ship different ones.
+            style: const TextStyle(
+              fontSize: 12,
+              fontFamily: 'Menlo',
+              fontFamilyFallback: ['monospace'],
+            ),
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Paste here…',

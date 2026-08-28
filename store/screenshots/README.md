@@ -15,7 +15,7 @@ import screen takes a pasted list, so:
 ```bash
 # The simulator pasteboard reads its input as MacRoman, so UTF-8 goes in as
 # mojibake: "•" arrives as ",Ä¢" and "Shas'ui" as "Shas,Äôui". Convert first.
-iconv -f UTF-8 -t MACROMAN packages/wh40k_core/test/fixtures/war_organ_incursion_1000.txt \
+iconv -f UTF-8 -t MACROMAN packages/wh40k_app/test/fixtures/war_organ_incursion_1000.txt \
   | xcrun simctl pbcopy <udid>
 ```
 

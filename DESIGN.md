@@ -2265,6 +2265,51 @@ A cache write that fails no longer costs the caller the bytes it just
 downloaded, either. A full disk should cost the next launch a download, not
 this reader their map.
 
+### 3.24 Three repositories, one app
+
+`Structor_android` and `Structor_core` exist because the same code is now two
+apps, and a package inside one of them is not a thing the other can depend on.
+
+**What went where.** The rules engine — the dataset model, points, missions,
+the importer and the tools that build bundles — is `Structor_core`, which
+neither app owns. The Android project, which is Gradle, a manifest, launcher
+icons, signing and store material, is `Structor_android`. Everything else
+stays here: the Flutter app, its 280 tests, the dataset, the tooling that
+builds it, and this record.
+
+**The Android repository is a shell, deliberately.** Its `lib/main.dart` is
+one line, delegating to `package:wh40k_app` — the same package the iOS build
+is. The alternative on offer was a second copy of the app configured for
+Android, and every fix, every correction and every design decision would have
+had to be applied twice by hand. A screen belongs to the app, not to a
+platform.
+
+**Assets moved with the package, so they had to be found twice.** A Flutter
+package's assets live at `assets/…` when it is the root project and at
+`packages/wh40k_app/…` when it is a dependency, and the app is now both.
+`AppAssets` tries the package path first and remembers which one answered;
+the APK confirms the arrangement, carrying all 38 dataset files under the
+package prefix.
+
+**The dataset stays here, and the engine reaches for it.** It is large,
+derived, and belongs beside the tooling that publishes it. `bin/paths.dart`
+and `test/support.dart` in the engine resolve it from `STRUCTOR_DATA` or a
+sibling checkout, and every test that needs it already skipped when it was
+absent — so that suite is green on a clone with nothing beside it, testing
+what it can rather than pretending.
+
+**Git dependencies, path overrides.** Both apps depend on the engine by git
+ref, which is what a clone builds against. Working on two at once means a
+`pubspec_overrides.yaml` pointing at sibling checkouts, and it is not
+committed: it is one person's directory layout, not the project's.
+
+**What the split cost.** `tools/rebuild-assets.sh` and `tools/make-icons.sh`
+now look for sibling checkouts and say so plainly when they are missing,
+rather than half-running. Two test fixtures the app suite read out of the
+engine's repository were copied into the app's own, because a test that
+reaches across repositories passes or fails on whether the other one is
+checked out.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.
@@ -2312,7 +2357,7 @@ This is §6.4's format design cashing out. It works with no network, which a sha
 
 Started 2026-08-11. Toolchain: Dart SDK 3.12.2 (Homebrew). Flutter not yet installed — not needed until the app package.
 
-**Done — `packages/wh40k_core`** (pure Dart, no Flutter dependency per §2):
+**Done — `Structor_core`**, a repository of its own since §3.24 (pure Dart, no Flutter dependency per §2):
 
 - `tools/fetch-40kdc.sh` — pinned snapshot fetch, per faction, into `data/40kdc/`
 - `src/source/` — tolerant source DTOs for the 40kdc format, plus `DatasetLoader`

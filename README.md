@@ -9,7 +9,8 @@ record of decisions, not the commit history.
 ## Layout
 
 ```
-packages/wh40k_core/   pure Dart: source ingest, domain model, validation,
+../Structor_core/      pure Dart, its own repository: source ingest, domain
+                       model, validation,
                        rules rendering. No Flutter dependency, so the same
                        code runs in the ETL, the app and (later) the server.
 tools/                 data fetch and build scripts
@@ -22,7 +23,7 @@ Requires the Dart SDK (the app package, added later, will require Flutter).
 
 ```bash
 tools/fetch-40kdc.sh                     # pull a 40kdc-data snapshot (tau-empire)
-cd packages/wh40k_core && dart pub get
+cd ../Structor_core && dart pub get
 dart test
 dart run bin/coverage.dart               # coverage + referential integrity
 ```

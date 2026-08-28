@@ -17,8 +17,14 @@ dependencies:
   path: ^1.9.1
   path_provider: ^2.1.6
   sqlite3_flutter_libs: ^0.6.0+eol
+  # The rules engine, which two apps depend on and neither owns
+  # (DESIGN.md §3.24). `pubspec_overrides.yaml` points this at a sibling
+  # checkout while working on both at once; it is not committed, so a clone
+  # builds against what is pushed.
   wh40k_core:
-    path: ../wh40k_core
+    git:
+      url: git@github.com:Manus-Systematum/Structor_core.git
+      ref: main
 
 dev_dependencies:
   flutter_test:

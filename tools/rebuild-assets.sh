@@ -9,7 +9,7 @@
 #
 # Three outputs, all committed, all easy to forget:
 #
-#   packages/wh40k_core/test/fixtures/tau_strike_force_2000.json  (from the export)
+#   ../Structor_core/test/fixtures/tau_strike_force_2000.json      (from the export)
 #   packages/wh40k_app/assets/reference_roster.json               (same file)
 #   packages/wh40k_app/assets/reference_snapshot.json             (from the roster)
 #   packages/wh40k_app/assets/bundles/                            (from the dataset)
@@ -22,8 +22,21 @@
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-core="$root/packages/wh40k_core"
 app="$root/packages/wh40k_app"
+
+# The engine and its tools are a repository of their own (DESIGN.md §3.24).
+# Everything below runs from inside it and is handed absolute paths, because
+# the dataset it reads and the assets it writes are both over here.
+core=""
+for at in "$root/../Structor_core" "$root/../structor-core"; do
+  [ -d "$at/bin" ] && core="$(cd "$at" && pwd)" && break
+done
+if [ -z "$core" ]; then
+  echo "no Structor_core checkout beside this one — clone it first:" >&2
+  echo "  git clone git@github.com:Manus-Systematum/Structor_core.git" >&2
+  exit 2
+fi
+export STRUCTOR_DATA="$root/data"
 
 if [ ! -d "$root/data/40kdc" ]; then
   echo "no snapshot at data/40kdc — run tools/fetch-40kdc.sh first" >&2
@@ -41,7 +54,7 @@ dart run bin/merge.dart
 
 echo "==> importing the reference export"
 dart run bin/import.dart test/fixtures/war_organ_export.txt \
-  --data ../../data/merged --out /tmp/reference-roster.json
+  --data "$root/data/merged" --out /tmp/reference-roster.json
 
 # Keep the fixture's header comment, which says how to regenerate it.
 python3 - "$core/test/fixtures/tau_strike_force_2000.json" <<'PY'
@@ -62,7 +75,7 @@ cp "$core/test/fixtures/tau_strike_force_2000.json" \
 
 echo "==> writing the reference snapshot"
 dart run bin/roster.dart test/fixtures/tau_strike_force_2000.json \
-  --data ../../data/merged --snapshot "$app/assets/reference_snapshot.json"
+  --data "$root/data/merged" --snapshot "$app/assets/reference_snapshot.json"
 
 echo "==> building the bundles"
 # The layouts are read from the renderer's output and published beside the
@@ -71,13 +84,13 @@ echo "==> building the bundles"
 # it read from would hash the hashed names on the next run.
 layouts=""
 if [ -d "$root/dist/layout-source" ]; then
-  layouts="--layouts ../../dist/layout-source --layout-out ../../dist/layout-images"
+  layouts="--layouts $root/dist/layout-source --layout-out $root/dist/layout-images"
 else
   echo "    no dist/layout-source — run tools/render-layouts.py first;" \
        "the manifest will list no layout images" >&2
 fi
 # shellcheck disable=SC2086
-dart run bin/bundle.dart --data ../../data/merged \
+dart run bin/bundle.dart --data "$root/data/merged" \
   --out "$app/assets/bundles" $layouts
 
 echo
