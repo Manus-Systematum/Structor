@@ -306,7 +306,8 @@ void main() {
       expect(find.text('SCOUT MOVES'), findsNothing);
     });
 
-    testWidgets('ending a turn is one tap', (tester) async {
+    testWidgets('both controls end the turn, through the review',
+        (tester) async {
       useTallSurface(tester);
       final events = <BattleEvent>[];
       await tester.pumpWidget(host(TurnScreen(
@@ -316,17 +317,21 @@ void main() {
       )));
 
       // Two of them: the bar's, and the one at the foot of the page where a
-      // turn actually ends (§7.3.20). Both do the same thing.
+      // turn actually ends (§7.3.20). Both open the review first (§7.3.29) —
+      // otherwise the bar's would be a way past it.
       expect(find.text('End turn'), findsNWidgets(2));
 
-      await tester.tap(find.text('End turn').first);
-      await tester.pump();
-      expect(events.single, isA<EndTurn>());
+      for (final control in [0, 1]) {
+        await tester.tap(find.text('End turn').at(control));
+        await tester.pumpAndSettle();
+        expect(find.text('Nothing scored this turn.'), findsOneWidget,
+            reason: 'the review opens rather than the turn ending');
 
-      await tester.tap(find.text('End turn').last);
-      await tester.pump();
-      expect(events, hasLength(2));
-      expect(events.last, isA<EndTurn>());
+        await tester.tap(find.text('End turn').last);
+        await tester.pumpAndSettle();
+        expect(events, hasLength(control + 1));
+        expect(events.last, isA<EndTurn>());
+      }
     });
   });
 

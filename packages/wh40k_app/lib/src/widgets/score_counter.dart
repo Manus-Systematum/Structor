@@ -15,14 +15,13 @@ import 'sheet_header.dart';
 /// the fifth objective at 3VP each is worth nothing, and a player who counts
 /// five and scores fifteen should be told that rather than discover it when
 /// the total does not move.
-class ScoreCounterSheet extends StatefulWidget {
-  /// What is being scored, for the heading.
-  final String cardName;
-
-  /// The line that earns it, so the counter is anchored to the words the
-  /// player just read rather than to the card as a whole.
-  final String line;
-
+/// The counter itself, without a sheet around it.
+///
+/// Used inline where the card's own text is already on screen: the secondary
+/// scoring popup shows every line and its buttons, and opening a second modal
+/// on top of that to count objectives would be a window over a window
+/// (§7.3.29).
+class ScoreCounter extends StatefulWidget {
   /// Points per thing.
   final int rate;
 
@@ -31,20 +30,21 @@ class ScoreCounterSheet extends StatefulWidget {
   final int? scoredThisRound;
   final int? roundCap;
 
-  const ScoreCounterSheet({
+  final void Function(int vp) onScore;
+
+  const ScoreCounter({
     super.key,
-    required this.cardName,
-    required this.line,
     required this.rate,
+    required this.onScore,
     this.scoredThisRound,
     this.roundCap,
   });
 
   @override
-  State<ScoreCounterSheet> createState() => _ScoreCounterSheetState();
+  State<ScoreCounter> createState() => _ScoreCounterState();
 }
 
-class _ScoreCounterSheetState extends State<ScoreCounterSheet> {
+class _ScoreCounterState extends State<ScoreCounter> {
   int _count = 1;
 
   /// What the count is worth before the cap.
@@ -61,6 +61,88 @@ class _ScoreCounterSheetState extends State<ScoreCounterSheet> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            _Step(
+              icon: Icons.remove,
+              onTap: _count <= 1 ? null : () => setState(() => _count -= 1),
+            ),
+            SizedBox(
+              width: 52,
+              child: Center(
+                child: Text('$_count',
+                    style: AppTheme.numeric(context, size: 26)
+                        .copyWith(fontWeight: FontWeight.w800)),
+              ),
+            ),
+            _Step(
+              icon: Icons.add,
+              onTap: () => setState(() => _count += 1),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('$_count × ${widget.rate} VP',
+                      style: TextStyle(
+                          fontSize: 12, color: scheme.onSurfaceVariant)),
+                  Text('$_vp VP',
+                      style: AppTheme.numeric(context, size: 20).copyWith(
+                          fontWeight: FontWeight.w800, color: scheme.primary)),
+                ],
+              ),
+            ),
+          ],
+        ),
+        if (widget.roundCap case final cap?) ...[
+          const SizedBox(height: 10),
+          Text(
+            '${(widget.scoredThisRound ?? 0) + _vp}/$cap scored this round',
+            style: TextStyle(
+              fontSize: 11.5,
+              color: _vp < _raw ? scheme.error : scheme.onSurfaceVariant,
+            ),
+          ),
+        ],
+        const SizedBox(height: 10),
+        Align(
+          alignment: Alignment.centerRight,
+          child: FilledButton(
+            onPressed: _vp <= 0 ? null : () => widget.onScore(_vp),
+            child: Text('Score $_vp'),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// The counter in a sheet of its own, for a caller with no room to show it
+/// inline — the score board's primary line.
+class ScoreCounterSheet extends StatelessWidget {
+  final String cardName;
+  final String line;
+  final int rate;
+  final int? scoredThisRound;
+  final int? roundCap;
+
+  const ScoreCounterSheet({
+    super.key,
+    required this.cardName,
+    required this.line,
+    required this.rate,
+    this.scoredThisRound,
+    this.roundCap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
@@ -68,66 +150,18 @@ class _ScoreCounterSheetState extends State<ScoreCounterSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SheetHeader(title: widget.cardName),
-            Text(
-              widget.line,
-              style: TextStyle(
-                  fontSize: 12, height: 1.35, color: scheme.onSurfaceVariant),
-            ),
-            const SizedBox(height: 14),
-            Row(
-              children: [
-                _Step(
-                  icon: Icons.remove,
-                  onTap: _count <= 1 ? null : () => setState(() => _count -= 1),
-                ),
-                SizedBox(
-                  width: 52,
-                  child: Center(
-                    child: Text('$_count',
-                        style: AppTheme.numeric(context, size: 26)
-                            .copyWith(fontWeight: FontWeight.w800)),
-                  ),
-                ),
-                _Step(
-                  icon: Icons.add,
-                  onTap: () => setState(() => _count += 1),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('$_count × ${widget.rate} VP',
-                          style: TextStyle(
-                              fontSize: 12, color: scheme.onSurfaceVariant)),
-                      Text('$_vp VP',
-                          style: AppTheme.numeric(context, size: 20).copyWith(
-                              fontWeight: FontWeight.w800,
-                              color: scheme.primary)),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            if (widget.roundCap case final cap?) ...[
-              const SizedBox(height: 10),
-              Text(
-                '${(widget.scoredThisRound ?? 0) + _vp}/$cap scored this round',
+            SheetHeader(title: cardName),
+            Text(line,
                 style: TextStyle(
-                  fontSize: 11.5,
-                  color: _vp < _raw ? scheme.error : scheme.onSurfaceVariant,
-                ),
-              ),
-            ],
+                    fontSize: 12,
+                    height: 1.35,
+                    color: scheme.onSurfaceVariant)),
             const SizedBox(height: 14),
-            Align(
-              alignment: Alignment.centerRight,
-              child: FilledButton(
-                onPressed:
-                    _vp <= 0 ? null : () => Navigator.of(context).pop(_vp),
-                child: Text('Score $_vp'),
-              ),
+            ScoreCounter(
+              rate: rate,
+              scoredThisRound: scoredThisRound,
+              roundCap: roundCap,
+              onScore: (vp) => Navigator.of(context).pop(vp),
             ),
           ],
         ),

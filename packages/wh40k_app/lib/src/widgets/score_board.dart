@@ -29,9 +29,14 @@ class ScoreBoard extends StatelessWidget {
   /// Published questions for the mission cards on show (§3.16).
   final List<FactionFaq> faqs;
 
+  /// This turn's scoring, so each side's row can say what it has put on the
+  /// board without the fold being open (§7.3.29).
+  final List<LogEntry> thisTurn;
+
   const ScoreBoard({
     super.key,
     this.faqs = const [],
+    this.thisTurn = const [],
     required this.state,
     required this.pack,
     required this.onEvent,
@@ -60,6 +65,7 @@ class ScoreBoard extends StatelessWidget {
               held: deck.hand(state.secondariesOf(Player.me)),
               deck: deck,
               faqs: faqs,
+              thisTurn: thisTurn,
               objectivesLabel: 'MY OBJECTIVES',
               ahead: state.me.total >= state.opponent.total,
               onEvent: onEvent,
@@ -82,6 +88,7 @@ class ScoreBoard extends StatelessWidget {
               held: deck.hand(state.secondariesOf(Player.opponent)),
               deck: deck,
               faqs: faqs,
+              thisTurn: thisTurn,
               objectivesLabel: '${opponentName.toUpperCase()} OBJECTIVES',
               ahead: state.opponent.total > state.me.total,
               onEvent: onEvent,
@@ -112,6 +119,10 @@ class _Side extends StatefulWidget {
   /// Published questions, so a card that has any can offer them (§3.16).
   final List<FactionFaq> faqs;
 
+  /// What this side has put on the board this turn, so the fold says it
+  /// without being opened (§7.3.29).
+  final List<LogEntry> thisTurn;
+
   /// `My objectives` / `Kai's objectives` — what the one fold is called.
   final String objectivesLabel;
   final bool ahead;
@@ -126,6 +137,7 @@ class _Side extends StatefulWidget {
     required this.held,
     required this.deck,
     required this.faqs,
+    required this.thisTurn,
     required this.objectivesLabel,
     required this.ahead,
     required this.onEvent,
@@ -136,6 +148,20 @@ class _Side extends StatefulWidget {
 }
 
 class _SideState extends State<_Side> with RemembersToggle<_Side> {
+  /// Points this side has scored so far this turn, corrections included.
+  int get _thisTurn {
+    var total = 0;
+    for (final entry in widget.thisTurn) {
+      total += switch (entry.event) {
+        final ScoreVp e when e.side == widget.side => e.vp,
+        final ScoreSecondaryCard e when e.side == widget.side => e.vp,
+        final UnscoreSecondary e when e.side == widget.side => -e.vp,
+        _ => 0,
+      };
+    }
+    return total;
+  }
+
   @override
   Object get toggleId => 'cards:${widget.side.name}';
 
@@ -215,6 +241,10 @@ class _SideState extends State<_Side> with RemembersToggle<_Side> {
                         if (widget.held.isNotEmpty)
                           '${widget.held.length} card'
                               '${widget.held.length == 1 ? '' : 's'}',
+                        // What this turn has already put on the board. Folded
+                        // away, the row still says it (§7.3.29).
+                        if (_thisTurn case final scored when scored != 0)
+                          '$scored VP this turn',
                       ].join(' · '),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

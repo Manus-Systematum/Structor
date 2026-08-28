@@ -864,4 +864,88 @@ void main() {
       expect(back.side, Player.opponent);
     });
   });
+
+  // §7.3.29 — what a turn scored, and taking it back.
+  group('a turn\'s scoring', () {
+    const setup = ConfigureBattle(MissionSetup(
+      myDisposition: 'a',
+      opponentDisposition: 'b',
+      myMissionId: 'm',
+      opponentMissionId: 'n',
+    ));
+
+    test('it gathers only this turn, and both sides of it', () {
+      final log = BattleLog(events: const [
+        setup,
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 1, vp: 5),
+        EndTurn(),
+        ScoreVp(
+            side: Player.opponent, kind: ScoreKind.primary, round: 1, vp: 4),
+        ScoreSecondaryCard(
+            cardId: 'outflank', round: 1, vp: 3, side: Player.opponent),
+      ]);
+      expect(log.scoringIn(1).map((e) => e.event), [isA<ScoreVp>()]);
+      expect(log.scoringIn(2).length, 2);
+      expect(log.state.turn, 2);
+    });
+
+    test('the timeline and the state agree about the turn', () {
+      // They walk the same events by different code, and a review that
+      // disagreed with the tally would correct the wrong turn.
+      final log = BattleLog(events: const [setup, EndTurn(), EndTurn()]);
+      expect(log.timeline.last.turn, log.state.turn);
+    });
+
+    test('taking a secondary back returns it and subtracts its points', () {
+      final log = BattleLog(events: const [
+        setup,
+        DrawSecondary('outflank'),
+        ScoreSecondaryCard(cardId: 'outflank', round: 2, vp: 5),
+      ]);
+      expect(log.state.me.secondaryTotal, 5);
+      expect(log.state.secondaries.hand, isEmpty);
+
+      final back =
+          log.add(const UnscoreSecondary(cardId: 'outflank', vp: 5, round: 2));
+      expect(back.state.me.secondaryTotal, 0);
+      expect(back.state.secondaries.hand, ['outflank'],
+          reason: 'a correction is not a statement that it was never drawn');
+      expect(back.state.secondaries.scored, isEmpty);
+    });
+
+    test('it subtracts from the round it was scored in', () {
+      // The state knows what a card scored, not when. Guessing the round
+      // would move points between rounds, which is what the table exists to
+      // get right.
+      final log = BattleLog(events: const [
+        setup,
+        ScoreVp(side: Player.me, kind: ScoreKind.secondary, round: 3, vp: 4),
+        DrawSecondary('outflank'),
+        ScoreSecondaryCard(cardId: 'outflank', round: 2, vp: 5),
+        UnscoreSecondary(cardId: 'outflank', vp: 5, round: 2),
+      ]);
+      expect(log.state.me.secondary[2] ?? 0, 0);
+      expect(log.state.me.secondary[3], 4, reason: 'untouched');
+    });
+
+    test('a correction is a delta, so undo still works one pop at a time', () {
+      final log = BattleLog(events: const [
+        setup,
+        DrawSecondary('outflank'),
+        ScoreSecondaryCard(cardId: 'outflank', round: 1, vp: 5),
+        UnscoreSecondary(cardId: 'outflank', vp: 5, round: 1),
+      ]);
+      expect(log.undo().state.me.secondaryTotal, 5);
+    });
+
+    test('an unscore survives the round trip', () {
+      const event = UnscoreSecondary(
+          cardId: 'outflank', vp: 5, round: 2, side: Player.opponent);
+      final back = BattleEvent.fromJson(event.toJson()) as UnscoreSecondary;
+      expect(back.cardId, 'outflank');
+      expect(back.vp, 5);
+      expect(back.round, 2);
+      expect(back.side, Player.opponent);
+    });
+  });
 }

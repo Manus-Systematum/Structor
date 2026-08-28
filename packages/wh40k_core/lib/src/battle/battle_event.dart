@@ -81,6 +81,12 @@ sealed class BattleEvent {
       'setup' => ConfigureBattle(MissionSetup.fromJson(j['setup'])),
       'drawSecondary' =>
         DrawSecondary(strOr(j['card'], ''), side: _side(j['side'])),
+      'unscoreSecondary' => UnscoreSecondary(
+          cardId: strOr(j['card'], ''),
+          vp: intOr(j['vp'], 0),
+          round: intOr(j['round'], 1),
+          side: _side(j['side']),
+        ),
       'redrawSecondary' => RedrawSecondary(
           strOr(j['card'], ''),
           side: _side(j['side']),
@@ -345,6 +351,41 @@ class RedrawSecondary extends BattleEvent {
   @override
   Map<String, Object?> toJson() =>
       {'type': 'redrawSecondary', 'card': cardId, 'side': side.name};
+}
+
+/// Taking back a secondary that was scored (§7.3.29).
+///
+/// Its own event, and it carries the figures rather than looking them up:
+/// what to subtract and which round's tally it came from. The state knows
+/// what a card scored but not when, and a correction that guessed the round
+/// would move points between rounds — which is the one thing the per-round
+/// table exists to get right.
+class UnscoreSecondary extends BattleEvent {
+  final String cardId;
+  final Player side;
+
+  /// What the card was credited, and the round it was credited in.
+  final int vp;
+  final int round;
+
+  const UnscoreSecondary({
+    required this.cardId,
+    required this.vp,
+    required this.round,
+    this.side = Player.me,
+  });
+
+  @override
+  String get type => 'unscoreSecondary';
+
+  @override
+  Map<String, Object?> toJson() => {
+        'type': 'unscoreSecondary',
+        'card': cardId,
+        'vp': vp,
+        'round': round,
+        'side': side.name,
+      };
 }
 
 class ScoreSecondaryCard extends BattleEvent {

@@ -9,6 +9,7 @@ import '../widgets/collapsible.dart';
 import '../widgets/remembered_toggle.dart';
 import '../widgets/rule_text.dart';
 import '../widgets/score_board.dart';
+import '../widgets/turn_review.dart';
 import '../widgets/sheet_header.dart';
 import '../widgets/stratagem_list.dart';
 import '../widgets/unit_profiles.dart';
@@ -162,6 +163,29 @@ class _TurnScreenState extends State<TurnScreen> {
     );
   }
 
+  /// The turn's scoring, before it is handed over (§7.3.29).
+  ///
+  /// The review is where a turn is corrected, so `End turn` opens it rather
+  /// than passing straight over: once the turn is handed on, what was scored
+  /// in it is a question about the past.
+  Future<void> _endTurn(BuildContext context) async {
+    final ended = await showModalBottomSheet<bool>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (context) => TurnReviewSheet(
+        log: widget.log,
+        state: widget.log.state,
+        opponentName:
+            widget.log.state.setup?.opponentName?.trim().isNotEmpty ?? false
+                ? widget.log.state.setup!.opponentName!.trim()
+                : 'Opponent',
+        onEvent: widget.onEvent,
+      ),
+    );
+    if (ended == true) widget.onEvent(const EndTurn());
+  }
+
   @override
   Widget build(BuildContext context) {
     final shown = _shown;
@@ -187,6 +211,7 @@ class _TurnScreenState extends State<TurnScreen> {
           onUndo: widget.onUndo,
           onDensity: widget.onDensity,
           onRecord: () => _showRecord(context),
+          onEndTurn: reviewing ? null : () => _endTurn(context),
         ),
         Expanded(
           child: ListView(
@@ -198,6 +223,7 @@ class _TurnScreenState extends State<TurnScreen> {
                   onExit: () => setState(() => _reviewing = null),
                 ),
               ScoreBoard(
+                thisTurn: widget.log.scoringIn(state.turn),
                 state: state,
                 pack: widget.pack,
                 faqs: widget.faqs,
@@ -256,7 +282,7 @@ class _TurnScreenState extends State<TurnScreen> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
                   child: FilledButton.icon(
-                    onPressed: () => widget.onEvent(const EndTurn()),
+                    onPressed: () => _endTurn(context),
                     icon: const Icon(Icons.done_all, size: 18),
                     label: const Text('End turn'),
                   ),
@@ -330,6 +356,12 @@ class _TurnBar extends StatelessWidget {
   final void Function(PlayDensity)? onDensity;
   final VoidCallback onRecord;
 
+  /// Opens the turn review (§7.3.29) rather than ending the turn outright —
+  /// both `End turn` controls go through it, or the one in the bar would be a
+  /// way to skip the check. Null while a past round is on screen, like every
+  /// other control that would write to the present.
+  final VoidCallback? onEndTurn;
+
   const _TurnBar({
     required this.state,
     required this.density,
@@ -337,6 +369,7 @@ class _TurnBar extends StatelessWidget {
     required this.onEvent,
     required this.onUndo,
     required this.onRecord,
+    required this.onEndTurn,
     this.onDensity,
   });
 
@@ -389,7 +422,7 @@ class _TurnBar extends StatelessWidget {
                 icon: const Icon(Icons.undo, size: 20),
               ),
               FilledButton(
-                onPressed: () => onEvent(const EndTurn()),
+                onPressed: onEndTurn,
                 style: FilledButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 14),
                   visualDensity: VisualDensity.compact,

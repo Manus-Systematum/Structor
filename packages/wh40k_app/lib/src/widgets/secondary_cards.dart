@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
-import '../theme.dart';
 import 'faq_button.dart';
 import 'rule_text.dart';
+import 'score_counter.dart';
 import 'scoring_text.dart';
 import 'sheet_header.dart';
 
@@ -200,13 +200,28 @@ class SecondaryPanel extends StatelessWidget {
         cards: deck.cards,
         inHand: held,
         discarded: _mine.discarded.toSet(),
+        scored: _mine.scored,
         selection: selection,
       ),
     );
     for (final card in deck.cards) {
       final chosen = selection.contains(card.id);
       if (chosen && !held.contains(card.id)) {
-        onEvent(DrawSecondary(card.id, side: side));
+        // Taking back a card that was already scored takes its points with
+        // it (§7.3.29). The round it was scored in is the one being
+        // corrected, which is the round the app is on: a card is scored and
+        // put right in the same turn, and a later correction is a different
+        // conversation the log's undo already covers.
+        if (_mine.scored[card.id] case final vp?) {
+          onEvent(UnscoreSecondary(
+            cardId: card.id,
+            vp: vp,
+            round: state.round,
+            side: side,
+          ));
+        } else {
+          onEvent(DrawSecondary(card.id, side: side));
+        }
       } else if (!chosen && held.contains(card.id)) {
         onEvent(DiscardSecondary(card.id, side: side));
       }
@@ -228,6 +243,10 @@ class _PickSheet extends StatefulWidget {
   final Set<String> inHand;
   final Set<String> discarded;
 
+  /// What each achieved card was credited, so taking one back can say what
+  /// it costs (§7.3.29).
+  final Map<String, int> scored;
+
   /// Written in place: what the hand should be when the sheet closes.
   final Set<String> selection;
 
@@ -235,6 +254,7 @@ class _PickSheet extends StatefulWidget {
     required this.cards,
     required this.inHand,
     required this.discarded,
+    required this.scored,
     required this.selection,
   });
 
@@ -243,6 +263,39 @@ class _PickSheet extends StatefulWidget {
 }
 
 class _PickSheetState extends State<_PickSheet> {
+  /// Taking an achieved card back subtracts what it scored, so it asks first.
+  ///
+  /// The other rows toggle on a tap and this one costs points — a card
+  /// chosen by mistake in a list of eighteen should not quietly move the
+  /// score (§7.3.29).
+  Future<void> _toggle(MissionCard card) async {
+    final vp = widget.scored[card.id];
+    final taking = vp != null && !widget.selection.contains(card.id);
+    if (taking) {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Take back ${card.name}?'),
+          content: Text('Subtracts the $vp VP it scored.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancel'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text('Take back $vp VP'),
+            ),
+          ],
+        ),
+      );
+      if (confirmed != true) return;
+    }
+    setState(() {
+      if (!widget.selection.remove(card.id)) widget.selection.add(card.id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
@@ -272,11 +325,8 @@ class _PickSheetState extends State<_PickSheet> {
                       selected: widget.selection.contains(card.id),
                       wasInHand: widget.inHand.contains(card.id),
                       wasDiscarded: widget.discarded.contains(card.id),
-                      onTap: () => setState(() {
-                        if (!widget.selection.remove(card.id)) {
-                          widget.selection.add(card.id);
-                        }
-                      }),
+                      scoredFor: widget.scored[card.id],
+                      onTap: () => _toggle(card),
                     ),
                   const _CardTextProvenance(),
                   const SizedBox(height: 8),
@@ -302,6 +352,10 @@ class _PickRow extends StatelessWidget {
   final bool selected;
   final bool wasInHand;
   final bool wasDiscarded;
+
+  /// What it scored, when it was achieved.
+  final int? scoredFor;
+
   final VoidCallback onTap;
 
   const _PickRow({
@@ -309,6 +363,7 @@ class _PickRow extends StatelessWidget {
     required this.selected,
     required this.wasInHand,
     required this.wasDiscarded,
+    required this.scoredFor,
     required this.onTap,
   });
 
@@ -317,9 +372,11 @@ class _PickRow extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final background = selected
         ? scheme.primaryContainer.withValues(alpha: 0.45)
-        : wasDiscarded
-            ? scheme.errorContainer.withValues(alpha: 0.3)
-            : null;
+        : scoredFor != null
+            ? scheme.tertiaryContainer.withValues(alpha: 0.3)
+            : wasDiscarded
+                ? scheme.errorContainer.withValues(alpha: 0.3)
+                : null;
 
     return InkWell(
       onTap: onTap,
@@ -360,6 +417,14 @@ class _PickRow extends StatelessWidget {
                           label: 'discarded',
                           color: scheme.onErrorContainer,
                           background: scheme.errorContainer,
+                        ),
+                      ],
+                      if (scoredFor case final vp?) ...[
+                        const SizedBox(width: 6),
+                        _Pill(
+                          label: 'scored $vp',
+                          color: scheme.onTertiaryContainer,
+                          background: scheme.tertiaryContainer,
                         ),
                       ],
                     ],
@@ -480,9 +545,6 @@ class _CardTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    // A card that pays only per objective or per unit names no total, and the
-    // app cannot see the table — those keep the stepper.
-    final named = ScoringText.hasPayout(card.text);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
@@ -510,17 +572,15 @@ class _CardTile extends StatelessWidget {
                     color: scheme.error),
               ),
             ),
-          // Each payout's button on the line that earns it, the same as the
-          // primary (§7.3.22). A secondary is read at the moment it is scored
-          // — it was drawn a turn ago and the conditions are the whole card.
+          // The card's text, to read. Its figures live in the popup that
+          // `Score…` opens (§7.3.29): a hand of three cards each carrying its
+          // own row of chips made the panel a wall of buttons, and the one a
+          // player wants is on the card they are reading.
           Padding(
             padding: const EdgeInsets.only(top: 2),
             child: ScoringText(
               text: card.text,
-              card: card,
-              scoredThisRound: scoredThisRound,
-              roundCap: roundCap,
-              onScore: onScore,
+              onScore: null,
               style: TextStyle(fontSize: 11.5, color: scheme.onSurfaceVariant),
             ),
           ),
@@ -529,12 +589,12 @@ class _CardTile extends StatelessWidget {
             spacing: 6,
             runSpacing: 4,
             children: [
-              if (!named)
-                ActionChip(
-                  visualDensity: VisualDensity.compact,
-                  label: const Text('Score…'),
-                  onPressed: () => _scoreCustom(context),
-                ),
+              ActionChip(
+                visualDensity: VisualDensity.compact,
+                avatar: const Icon(Icons.check, size: 15),
+                label: const Text('Score…'),
+                onPressed: () => _score(context),
+              ),
               if (canDiscard)
                 ActionChip(
                   visualDensity: VisualDensity.compact,
@@ -625,11 +685,17 @@ class _CardTile extends StatelessWidget {
     if (confirmed == true) onRedraw!();
   }
 
-  Future<void> _scoreCustom(BuildContext context) async {
+  /// The card, its figures, and nothing else on screen (§7.3.29).
+  Future<void> _score(BuildContext context) async {
     final vp = await showModalBottomSheet<int>(
       context: context,
       showDragHandle: true,
-      builder: (context) => _AmountSheet(name: card.name),
+      isScrollControlled: true,
+      builder: (context) => SecondaryScoreSheet(
+        card: card,
+        scoredThisRound: scoredThisRound,
+        roundCap: roundCap,
+      ),
     );
     if (vp != null && vp > 0) onScore(vp);
   }
@@ -637,51 +703,74 @@ class _CardTile extends StatelessWidget {
 
 /// For cards that pay per objective or per unit, where only the player can see
 /// the board.
-class _AmountSheet extends StatefulWidget {
-  final String name;
+/// One card, its text, and every figure it can score (§7.3.29).
+///
+/// Scoring moved off the panel and into here because a hand is three cards
+/// deep and each carried its own row of chips: the panel became a wall of
+/// buttons, and the figure a player wants belongs on the card they are
+/// reading, not in a row shared with two other cards.
+///
+/// A rate with no ceiling of its own counts inline rather than opening a
+/// second sheet — a window over a window is not a place to count objectives.
+class SecondaryScoreSheet extends StatelessWidget {
+  final MissionCard card;
+  final int? scoredThisRound;
+  final int? roundCap;
 
-  const _AmountSheet({required this.name});
-
-  @override
-  State<_AmountSheet> createState() => _AmountSheetState();
-}
-
-class _AmountSheetState extends State<_AmountSheet> {
-  int _vp = 2;
+  const SecondaryScoreSheet({
+    super.key,
+    required this.card,
+    this.scoredThisRound,
+    this.roundCap,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.8,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(widget.name,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                _Tap(
-                    icon: Icons.remove,
-                    onTap: () => setState(() => _vp = (_vp - 1).clamp(1, 15))),
-                SizedBox(
-                  width: 44,
-                  child: Text('$_vp',
-                      style: AppTheme.numeric(context, size: 22)
-                          .copyWith(fontWeight: FontWeight.w800)),
-                ),
-                _Tap(
-                    icon: Icons.add,
-                    onTap: () => setState(() => _vp = (_vp + 1).clamp(1, 15))),
-                const Spacer(),
-                FilledButton(
-                  onPressed: () => Navigator.of(context).pop(_vp),
-                  child: const Text('Score'),
-                ),
-              ],
+            SheetHeader(title: card.name),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                children: [
+                  ScoringText(
+                    text: card.text,
+                    card: card,
+                    scoredThisRound: scoredThisRound,
+                    roundCap: roundCap,
+                    inlineCounter: true,
+                    onScore: (vp) => Navigator.of(context).pop(vp),
+                    style: TextStyle(
+                        fontSize: 12.5, height: 1.4, color: scheme.onSurface),
+                  ),
+                  // A card whose text names no figure at all still has to be
+                  // scorable: the wording is transcribed from a source that
+                  // can change, and a card the parser cannot read is not a
+                  // card the player can skip.
+                  if (!ScoringText.hasPayout(card.text)) ...[
+                    const SizedBox(height: 8),
+                    Text('Victory points',
+                        style: TextStyle(
+                            fontSize: 10.5,
+                            letterSpacing: 1,
+                            fontWeight: FontWeight.w800,
+                            color: scheme.onSurfaceVariant)),
+                    const SizedBox(height: 6),
+                    ScoreCounter(
+                      rate: 1,
+                      scoredThisRound: scoredThisRound,
+                      roundCap: roundCap,
+                      onScore: (vp) => Navigator.of(context).pop(vp),
+                    ),
+                  ],
+                  const _CardTextProvenance(),
+                ],
+              ),
             ),
           ],
         ),
@@ -715,21 +804,4 @@ class _ScoredStrip extends StatelessWidget {
       ),
     );
   }
-}
-
-class _Tap extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onTap;
-
-  const _Tap({required this.icon, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) => InkResponse(
-        onTap: onTap,
-        radius: 18,
-        child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Icon(icon, size: 16),
-        ),
-      );
 }

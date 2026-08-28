@@ -159,7 +159,7 @@ void main() {
     // manifest names that is *not* in the binary is the 45 layout images,
     // which are eleven megabytes against six for everything else.
     TestWidgetsFlutterBinding.ensureInitialized();
-    final assets = const AssetBundleSource();
+    const assets = AssetBundleSource();
     final manifest = await assets.manifest();
     expect(manifest, isNotNull);
 

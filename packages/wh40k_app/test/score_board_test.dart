@@ -87,6 +87,43 @@ void main() {
           findsNothing);
     });
 
+    // What this turn has already put on the board, without opening anything
+    // (§7.3.29). The review on `End turn` is the full account; this is the
+    // running total beside it.
+    testWidgets('folded, it says what this turn scored', (tester) async {
+      tall(tester);
+      const log = BattleLog(events: [
+        ConfigureBattle(setup),
+        ScoreVp(side: Player.me, kind: ScoreKind.primary, round: 1, vp: 5),
+        ScoreSecondaryCard(cardId: 'outflank', round: 1, vp: 3),
+        ScoreVp(
+            side: Player.opponent, kind: ScoreKind.primary, round: 1, vp: 4),
+      ]);
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: SingleChildScrollView(
+            child: ScoreBoard(
+              state: log.state,
+              pack: pack,
+              deck: deck,
+              onEvent: (_) {},
+              thisTurn: log.scoringIn(log.state.turn),
+            ),
+          ),
+        ),
+      ));
+
+      expect(find.textContaining('8 VP this turn'), findsOneWidget);
+      expect(find.textContaining('4 VP this turn'), findsOneWidget);
+    });
+
+    testWidgets('a turn that scored nothing says nothing', (tester) async {
+      tall(tester);
+      await tester.pumpWidget(host(stateWith(const []), (_) {}));
+      expect(find.textContaining('this turn'), findsNothing);
+    });
+
     testWidgets('opening it gives the card and the hand together',
         (tester) async {
       tall(tester);
@@ -201,6 +238,10 @@ void main() {
       await tester.pumpWidget(host(state, events.add));
 
       await tester.tap(find.text('KAI OBJECTIVES'));
+      await tester.pumpAndSettle();
+      // The tile opens the card's own popup, and the figure is scored from
+      // the line that earns it (§7.3.29).
+      await tester.tap(find.text('Score…'));
       await tester.pumpAndSettle();
       // Score 3 is the secondary's own line; the primary beside it pays 4.
       // Reading the figure off the text rather than the structured awards is

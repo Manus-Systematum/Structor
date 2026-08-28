@@ -88,44 +88,60 @@ void main() {
     );
   });
 
-  testWidgets('a card offers the payouts it names, and a discard',
+  testWidgets('the card offers its payouts in a popup, not on the panel',
       (tester) async {
+    // §7.3.29. Three cards each carrying a row of chips made the panel a wall
+    // of buttons; the figure belongs on the card being read.
     tall(tester);
     final events = <BattleEvent>[];
     final state = const BattleLog(events: [DrawSecondary('outflank')]).state;
     await tester.pumpWidget(host(state, events.add));
 
     expect(find.text('Outflank'), findsOneWidget);
+    expect(find.text('Score 3'), findsNothing, reason: 'not on the panel');
+
+    await tester.tap(find.text('Score…'));
+    await tester.pumpAndSettle();
+
     // Outflank pays 3 or 5 depending on how well it went, and each figure is
-    // on the line that earns it rather than in a row underneath.
+    // on the line that earns it.
     expect(find.text('Score 3'), findsOneWidget);
     expect(find.text('Score 5'), findsOneWidget);
     expect(find.textContaining('Two or more units', findRichText: true),
-        findsOneWidget);
+        findsWidgets);
 
     await tester.tap(find.text('Score 5'));
+    await tester.pumpAndSettle();
     final scored = events.single as ScoreSecondaryCard;
     expect(scored.cardId, 'outflank');
     expect(scored.vp, 5);
   });
 
-  testWidgets('a per-something card asks instead of guessing', (tester) async {
+  testWidgets('a per-something card counts inside the same popup',
+      (tester) async {
+    // 2 VP per objective is a number only the player can see (§7.6), and it
+    // is counted in the popup rather than in a second one over it (§7.3.29).
     tall(tester);
     final events = <BattleEvent>[];
     final state =
         const BattleLog(events: [DrawSecondary('per-objective')]).state;
     await tester.pumpWidget(host(state, events.add));
 
-    // 2 VP per objective is a number only the player can see (§7.6).
-    expect(find.text('Score…'), findsOneWidget);
-    expect(find.textContaining('Score 2'), findsNothing);
-
     await tester.tap(find.text('Score…'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Score'));
-    await tester.pumpAndSettle();
 
-    expect((events.single as ScoreSecondaryCard).cardId, 'per-objective');
+    // This fixture's text names no figure, so the popup falls back to
+    // counting points directly rather than leaving the card unscorable.
+    expect(find.text('1 × 1 VP'), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pumpAndSettle();
+    expect(find.text('2 × 1 VP'), findsOneWidget);
+
+    await tester.tap(find.text('Score 2'));
+    await tester.pumpAndSettle();
+    final scored = events.single as ScoreSecondaryCard;
+    expect(scored.cardId, 'per-objective');
+    expect(scored.vp, 2);
   });
 
   testWidgets('a card drawn too early says so and stays put', (tester) async {
@@ -348,6 +364,64 @@ void main() {
       ]).state;
       await tester.pumpWidget(host(state, (_) {}));
       expect(find.text('Discard for 1 CP'), findsNothing);
+    });
+  });
+
+  // §7.3.29 — an achieved card is still in the picker, and taking it back
+  // costs what it scored.
+  group('taking back a card that was scored', () {
+    BattleState scoredState() => const BattleLog(events: [
+          DrawSecondary('outflank'),
+          ScoreSecondaryCard(cardId: 'outflank', round: 1, vp: 5),
+        ]).state;
+
+    testWidgets('the picker shows it, marked with what it scored',
+        (tester) async {
+      tall(tester);
+      await tester.pumpWidget(host(scoredState(), (_) {}));
+
+      await tester.tap(find.text('Choose'));
+      await tester.pumpAndSettle();
+      expect(find.text('scored 5'), findsOneWidget);
+    });
+
+    testWidgets('choosing it warns, and says what it costs', (tester) async {
+      tall(tester);
+      final events = <BattleEvent>[];
+      await tester.pumpWidget(host(scoredState(), events.add));
+
+      await tester.tap(find.text('Choose'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Outflank').last);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Take back Outflank?'), findsOneWidget);
+      expect(find.text('Subtracts the 5 VP it scored.'), findsOneWidget);
+
+      await tester.tap(find.text('Cancel'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.textContaining('Close ('));
+      await tester.pumpAndSettle();
+      expect(events, isEmpty, reason: 'cancelling changes nothing');
+    });
+
+    testWidgets('confirming subtracts the points it scored', (tester) async {
+      tall(tester);
+      final events = <BattleEvent>[];
+      await tester.pumpWidget(host(scoredState(), events.add));
+
+      await tester.tap(find.text('Choose'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Outflank').last);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Take back 5 VP'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.textContaining('Close ('));
+      await tester.pumpAndSettle();
+
+      final taken = events.single as UnscoreSecondary;
+      expect(taken.cardId, 'outflank');
+      expect(taken.vp, 5, reason: 'what it was credited, not a guess');
     });
   });
 }

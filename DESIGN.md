@@ -2018,6 +2018,50 @@ number clear of its piece, the shadow it sits in, the letter-spacing: all
 lettering lengths. Growing the font alone would walk the text onto its own
 leader line.
 
+### 7.3.29 A turn's scoring is reviewable, and a card's is takeable back
+
+Two halves of one problem: points went onto the board one tap at a time, with
+no moment where the turn as a whole could be read back, and no way to correct
+a card scored by mistake except undo — which pops the last event, not the
+wrong one.
+
+**`End turn` opens the turn's scoring first.** Every `ScoreVp`,
+`ScoreSecondaryCard` and `UnscoreSecondary` since the last `EndTurn`, one row
+each, with who scored it and what for. It is the last moment a turn can be
+corrected while the player still remembers what happened; once the turn is
+handed on, what was in it is a question about the past. Both `End turn`
+controls go through it — the bar's and the one at the foot of the page — or
+the bar's would be a way past the check.
+
+`LogEntry` gained a `turn`, and `BattleLog.scoringIn(turn)` is the query. The
+timeline increments its turn on `EndTurn`, in step with the state, so the
+sheet and the board agree about which turn is being reviewed.
+
+**Corrections are appended, never cut out.** Taking back a primary emits a
+`ScoreVp` of the same size with the sign flipped; taking back a card emits
+`UnscoreSecondary`, which subtracts the points, drops it from the scored set
+and puts it back in the hand. The events are deltas, so a take-back is another
+delta and undo still works one pop at a time. A row that *is* a correction
+offers no take-back of its own — undoing an undo is undo's job.
+
+**The fold says the running total.** `12 VP this turn` beside `MY OBJECTIVES`,
+so the number that the review will account for is visible without opening
+anything.
+
+**A secondary is scored in its own popup.** The tile carries `Score…`; the
+popup shows the card's text with each payout's button on the line that earns
+it (§7.3.22), the ladders where the line caps (§7.3.27), and — this is the
+part that differs from the board — the counter **inline** where the rate has
+no ceiling of its own. A second modal on top of a modal to count objectives
+would be a window over a window, so `ScoreCounter` was split out of
+`ScoreCounterSheet`: the board opens the sheet, the popup embeds the counter.
+
+**Scoring it removes it from the hand, and choosing it again warns.** A card
+already scored shows a `scored 5` pill in `Choose`; re-selecting it asks *Take
+back Outflank? · Subtracts the 5 VP it scored.* and, confirmed, emits the same
+`UnscoreSecondary`. So there is exactly one way back from a mistake, reachable
+from either end.
+
 ### 3.18 The dataset is served, and the app is pointed at it
 
 `HttpBundleSource` existed from §3.4 and was never constructed: the app read

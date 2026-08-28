@@ -287,6 +287,12 @@ class BattleState {
 /// derived value in the log and makes an undo able to leave it wrong.
 class LogEntry {
   final int round;
+
+  /// Turns taken when this event was logged, counted the way [BattleState]
+  /// counts them so the two never disagree about which turn a score belongs
+  /// to (§7.3.29).
+  final int turn;
+
   final Player activePlayer;
   final BattleEvent event;
 
@@ -295,6 +301,7 @@ class LogEntry {
 
   const LogEntry({
     required this.round,
+    required this.turn,
     required this.activePlayer,
     required this.event,
     required this.index,
@@ -333,6 +340,24 @@ class BattleLog {
 
   bool get canUndo => events.isNotEmpty;
 
+  /// Everything one turn put on the board, in the order it was entered
+  /// (§7.3.29).
+  ///
+  /// The end-of-turn review is the only place a player sees a turn's scoring
+  /// together, and correcting it is the point: a card scored twice, a primary
+  /// entered against the wrong side, a figure counted before the last unit
+  /// died. Corrections are appended rather than cut out of the log — the
+  /// events are deltas, so taking something back is another delta and undo
+  /// still works one pop at a time.
+  List<LogEntry> scoringIn(int turn) => [
+        for (final entry in timeline)
+          if (entry.turn == turn &&
+              (entry.event is ScoreVp ||
+                  entry.event is ScoreSecondaryCard ||
+                  entry.event is UnscoreSecondary))
+            entry,
+      ];
+
   List<Map<String, Object?>> toJson() =>
       [for (final event in events) event.toJson()];
 
@@ -357,6 +382,7 @@ class BattleLog {
   List<LogEntry> get timeline {
     MissionSetup? setup;
     var round = 1;
+    var turn = 1;
     var activePlayer = Player.me;
     final out = <LogEntry>[];
 
@@ -371,6 +397,7 @@ class BattleLog {
           final next = activePlayer == Player.me ? Player.opponent : Player.me;
           if (next == opener && round < 5) round++;
           activePlayer = next;
+          turn++;
         case final SetRound e:
           round = e.round;
         case final SetActivePlayer e:
@@ -385,6 +412,7 @@ class BattleLog {
       }
       out.add(LogEntry(
         round: round,
+        turn: turn,
         activePlayer: activePlayer,
         event: event,
         index: index,
@@ -539,6 +567,15 @@ class BattleLog {
           scoredCards[e.side]![e.cardId] = already + gained;
           final table = secondary[e.side]!;
           table[e.round] = (table[e.round] ?? 0) + gained;
+        case final UnscoreSecondary e:
+          // Back into the hand, out of the tally. Not into the deck: the card
+          // was drawn, and a correction to how it was scored is not a
+          // statement that it never was.
+          scoredCards[e.side]!.remove(e.cardId);
+          if (!hand[e.side]!.contains(e.cardId)) hand[e.side]!.add(e.cardId);
+          discarded[e.side]!.remove(e.cardId);
+          final table = secondary[e.side]!;
+          table[e.round] = ((table[e.round] ?? 0) - e.vp).clamp(0, 1 << 30);
         case final RedrawSecondary e:
           // Once per battle, at the end of the Command phase, a command point
           // buys one swap. The draw that follows is the player's own.

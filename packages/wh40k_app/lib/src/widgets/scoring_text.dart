@@ -32,6 +32,13 @@ class ScoringText extends StatelessWidget {
   final int? scoredThisRound;
   final int? roundCap;
 
+  /// Show the counter under the line rather than behind a button.
+  ///
+  /// True inside the secondary scoring popup, where the card's own text is
+  /// already on screen and a second modal would be a window over a window
+  /// (§7.3.29).
+  final bool inlineCounter;
+
   /// Null on a card nobody can score right now: the opponent's card while
   /// their tier is closed, or a review of a turn already played.
   final void Function(int vp)? onScore;
@@ -45,6 +52,7 @@ class ScoringText extends StatelessWidget {
     this.card,
     this.scoredThisRound,
     this.roundCap,
+    this.inlineCounter = false,
     this.style,
   });
 
@@ -91,6 +99,7 @@ class ScoringText extends StatelessWidget {
                 cardName: card?.name ?? '',
                 scoredThisRound: scoredThisRound,
                 roundCap: roundCap,
+                inlineCounter: inlineCounter,
                 onScore: onScore,
                 style: style,
               ),
@@ -116,6 +125,7 @@ class _Line extends StatelessWidget {
   /// What this source has already taken this round, and the ceiling.
   final int? scoredThisRound;
   final int? roundCap;
+  final bool inlineCounter;
 
   final void Function(int vp)? onScore;
   final TextStyle? style;
@@ -130,6 +140,7 @@ class _Line extends StatelessWidget {
     this.cardName = '',
     this.scoredThisRound,
     this.roundCap,
+    this.inlineCounter = false,
   });
 
   /// Counting the things, because the total cannot be listed (§7.3.27).
@@ -167,6 +178,22 @@ class _Line extends StatelessWidget {
     // A rate with no ceiling of its own cannot be listed, so it opens a
     // counter instead: the player knows how many objectives they hold, not
     // what that comes to against a cap.
+    if (ladder.isEmpty && rate != null && inlineCounter) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RuleText(line, style: style),
+          const SizedBox(height: 6),
+          ScoreCounter(
+            rate: rate!,
+            scoredThisRound: scoredThisRound,
+            roundCap: roundCap,
+            onScore: onScore!,
+          ),
+        ],
+      );
+    }
+
     if (ladder.isEmpty && rate != null) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
