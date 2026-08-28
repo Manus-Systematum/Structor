@@ -1,7 +1,7 @@
 # App Store submission pack
 
 Everything App Store Connect asks for, written out so it can be pasted rather
-than composed at the keyboard. Prepared 2026-08-23 against `0.2.0+3`.
+than composed at the keyboard. Prepared 2026-08-23 against `0.2.0+3`; the version is now `1.0.0+4`.
 
 **§1 is decided: option 1, submit as built** (2026-08-24). The stratagem text
 stays. Everything in this pack is written for that, so nothing below needs
@@ -322,7 +322,7 @@ cd packages/wh40k_app && flutter build ipa
 **Increment the build number on every upload.** `pubspec.yaml` carries it after
 the `+`. App Store Connect refuses a build number it has already accepted, even
 when the version before it is unchanged. `0.2.0+3` is uploaded; the next is
-`0.2.0+4`, or `0.3.0+4` if the version moves.
+`1.0.0+4`, which is what `pubspec.yaml` now reads.
 
 Then Xcode → Organizer → Distribute App, or `xcrun altool`/Transporter with the
 `.ipa` from `build/ios/ipa/`.
@@ -364,12 +364,9 @@ Budget an hour, plus a rebuild of the bundles and both suites.
 ## 12. Before submitting
 
 - [x] §1 decided — option 1, submit as built (2026-08-24); review notes match
-- [ ] **Build number** — `pubspec.yaml` still reads `0.2.0+3`, which is the
-      number the earlier TestFlight build used. App Store Connect refuses a
-      build number it has already accepted, so an upload either passed
-      `--build-number` on the command line or was rejected as a duplicate. If
-      it was passed on the command line, bump `pubspec.yaml` to match, or the
-      repository and the store disagree about what `+3` means.
+- [x] **Build number** — `1.0.0+4` (2026-08-28). `+3` was the number the
+      earlier TestFlight build used, so the next upload had to move past it
+      whatever the version did.
 - [x] Screenshots — eleven, 6.9-inch and iPad-13, against the current build
 - [x] Both suites green (482 core, 189 app) and the shipped-bundle guard passes
 - [x] The three URLs resolve — checked 2026-08-24
