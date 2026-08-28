@@ -260,7 +260,12 @@ class DatasetRepository {
     if (downloaded == null) return null;
     // Verify before caching: a bad download must not become a bad cache.
     if (sha256Of(downloaded) != sha256) return null;
-    cache?.write(file, downloaded);
+    try {
+      cache?.write(file, downloaded);
+    } on FileSystemException {
+      // A full or unwritable disk costs the next launch a download. It must
+      // not cost this caller the bytes it already has in hand.
+    }
     return downloaded;
   }
 

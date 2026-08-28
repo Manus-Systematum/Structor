@@ -2240,6 +2240,31 @@ after every reload, and the ones whose snapshot actually differs are the ones
 offered. An army already built from today's data is not mentioned, since a
 dialog about it would be a question with one answer.
 
+### 3.23 A matchup is printed once, in one order
+
+Reported as "I can't download official maps", and the download was never the
+problem: all 45 pictures are on the server, served at the right sizes, and
+the app was asking for pages that do not exist.
+
+The Event Companion prints **one page per matchup**. Five dispositions give
+fifteen unordered pairs, which is exactly the 45 pictures — three letters
+each — and the name it prints them under is one of the two orders:
+`take-and-hold-vs-reconnaissance`, never `reconnaissance-vs-take-and-hold`.
+The app composed the id from the order the player answered the two questions
+in, so **30 of the 75 orderings named nothing**, and all three letters read
+*Not downloaded* on a table whose picture was on the server all along.
+
+The sheet now asks both ways round. The table is the same table either way;
+which of the two zones is yours is not a property of the page.
+
+**Not downloaded** stays the wording for a picture that genuinely is not
+here, which after this means the network was unreachable — that is a fact
+about this device, and the sentence says it without elaborating.
+
+A cache write that fails no longer costs the caller the bytes it just
+downloaded, either. A full disk should cost the next launch a download, not
+this reader their map.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.

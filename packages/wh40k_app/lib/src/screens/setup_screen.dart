@@ -156,13 +156,13 @@ class _SetupScreenState extends State<SetupScreen> {
   /// rotation appears nowhere on the page — so the page itself is the only
   /// honest reference for what the official layout actually is.
   Future<void> _showOfficialLayout(BuildContext context) async {
-    final matchup = '${_myDisposition!}-vs-${_opponentDisposition!}';
     await showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
       builder: (context) => _OfficialLayouts(
-        matchup: matchup,
+        mine: _myDisposition!,
+        theirs: _opponentDisposition!,
         fetch: widget.officialLayout!,
       ),
     );
@@ -768,10 +768,32 @@ class _Step extends StatelessWidget {
 /// — so each one says what it is doing while it loads, and says plainly when
 /// it cannot be fetched rather than showing an empty frame.
 class _OfficialLayouts extends StatelessWidget {
-  final String matchup;
+  final String mine;
+  final String theirs;
   final Future<List<int>?> Function(String id) fetch;
 
-  const _OfficialLayouts({required this.matchup, required this.fetch});
+  const _OfficialLayouts({
+    required this.mine,
+    required this.theirs,
+    required this.fetch,
+  });
+
+  /// The Event Companion prints one page per matchup, in one order — there is
+  /// a `take-and-hold-vs-disruption` and no `disruption-vs-take-and-hold`.
+  /// Asking only in the order the player answered the two questions found
+  /// nothing for half of them: 30 of the 75 orderings name a page that was
+  /// never published under that name, and all three letters then read *Not
+  /// downloaded* on a table whose picture was on the server all along.
+  ///
+  /// The table is the same table either way round. Which of the two zones is
+  /// yours is not a property of the page.
+  Future<List<int>?> _page(String letter) async {
+    for (final id in ['$mine-vs-$theirs-$letter', '$theirs-vs-$mine-$letter']) {
+      final bytes = await fetch(id);
+      if (bytes != null) return bytes;
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -790,7 +812,7 @@ class _OfficialLayouts extends StatelessWidget {
                   for (final letter in ['a', 'b', 'c'])
                     _OneLayout(
                       label: 'Layout ${letter.toUpperCase()}',
-                      image: fetch('$matchup-$letter'),
+                      image: _page(letter),
                     ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(4, 12, 4, 0),

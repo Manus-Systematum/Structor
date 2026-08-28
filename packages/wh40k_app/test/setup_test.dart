@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wh40k_app/src/data/army.dart';
@@ -292,5 +294,55 @@ void main() {
     expect(find.textContaining('36″ × 36″'), findsOneWidget);
     expect(find.textContaining('objectives'), findsNothing,
         reason: 'it publishes none, so none are claimed');
+  });
+
+  group('the official layouts', () {
+    // The Event Companion prints one page per matchup, under one name. Asked
+    // in the order the player answered the questions, half the matchups named
+    // a page that does not exist (§3.23).
+    final published = {
+      for (final letter in ['a', 'b', 'c'])
+        'take-and-hold-vs-reconnaissance-$letter': base64Decode(
+            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8'
+            'z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='),
+    };
+
+    Future<void> open(WidgetTester tester, List<String> asked) async {
+      tester.view.physicalSize = const Size(1200, 4200);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(MaterialApp(
+        home: SetupScreen(
+          army: army,
+          pack: pack,
+          officialLayout: (id) async {
+            asked.add(id);
+            return published[id];
+          },
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      // Their Take and Hold against my Reconnaissance — so the app asks for
+      // `reconnaissance-vs-take-and-hold`, which the book never printed.
+      await tester.tap(find.widgetWithText(ChoiceChip, 'Take and Hold'));
+      await tester.pumpAndSettle();
+      await chooseMine(tester, 'Reconnaissance Sweep');
+      await tester.tap(find.widgetWithText(OutlinedButton, 'Official layouts'));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('a matchup printed the other way round still opens',
+        (tester) async {
+      final asked = <String>[];
+      await open(tester, asked);
+
+      expect(find.text('Not downloaded.'), findsNothing);
+      expect(find.byType(Image), findsNWidgets(3));
+      expect(asked, contains('reconnaissance-vs-take-and-hold-a'));
+      expect(asked, contains('take-and-hold-vs-reconnaissance-a'),
+          reason: 'asked the other way round before giving up');
+    });
   });
 }
