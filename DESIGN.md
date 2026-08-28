@@ -2088,8 +2088,9 @@ sha256 does not match the manifest, so a stale bundle is not *wrong*, it is
 updating. Cloudflare honours that for the manifest (`cf-cache-status:
 DYNAMIC`) and overrides it for `.json.gz` and `.png`, which it holds at the
 edge for four hours. Safe, since the hash check rejects them, but it delays an
-update by up to that long. The durable fix is a content hash in the published
-file name, which the manifest already computes.
+update by up to that long. **Done in §3.19**: the published names now carry
+the hash, so the edge holding a file for four hours is no longer a delay but
+the intended behaviour.
 
 **Two things the deploy check exists to catch.** The bundles are already
 gzipped and must never be sent with `Content-Encoding: gzip` — the app gunzips
@@ -2103,6 +2104,44 @@ deploy. It was `TestWidgetsFlutterBinding.ensureInitialized()`: Flutter's test
 binding stubs HTTP out. The same code without it fetched the manifest, a
 bundle, the patch and an image. A network probe that runs inside `flutter
 test` is measuring the harness.
+
+### 3.19 Published names carry the hash
+
+Every file the manifest names is published as `core.345fbbd057f6.json.gz` —
+the stem, twelve hex characters of its sha256, then the extension it always
+had. The content decides the name, so a file that changed is a URL nothing has
+ever cached, and a file that did not keeps the URL every cache already holds.
+
+**This is what §3.18 was working around.** The app verifies the sha256 of
+everything it loads, so a stale bundle was never *wrong* — it was rejected,
+and the app fell back to the copy in its binary and quietly stopped updating.
+Correct, and invisible: a correction could take Cloudflare's four hours to
+reach a phone that already had the old bytes, with nothing on either end
+saying so. A name that cannot be stale removes the situation rather than
+handling it.
+
+**So the cache policy inverts.** `/data/` now serves
+`max-age=31536000, immutable`, and only `manifest.json` revalidates — it is
+the entry point, its name is fixed, and it is the file that has to be re-read
+to learn the others. The deploy check fails if the manifest comes back
+cacheable or a bundle comes back without `immutable`, because both failures
+look like a working deploy.
+
+**Names are swept, not accumulated.** A content-named file is never
+overwritten, so the previous build's copies are still in the output directory
+— and that directory is the app's own asset folder. `bin/bundle.dart` deletes
+what the new manifest does not name, scoped by extension and directory, since
+a sweep that took anything it did not recognise would be one wrong `--out`
+away from deleting the wrong tree. The same applies on the phone:
+`BundleCache.prune` drops cached files the live manifest no longer names, and
+only against a manifest that came from the network — falling back to the
+shipped one because the network was down is not evidence that a downloaded
+update is superseded.
+
+**The layouts now have a source directory.** The renderer writes
+`dist/layout-source`; the builder publishes hashed copies into
+`dist/layout-images`. Publishing into the directory it read from would hash
+the hashed names on the next run.
 
 ### 7.4 Battle state
 

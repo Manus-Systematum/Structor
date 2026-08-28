@@ -201,5 +201,43 @@ void main() {
       expect(repo.bundle('orks'), throwsStateError);
       expect(cache.read(entry.file, entry.sha256), isNull);
     });
+
+    // §3.19. A published name carries a hash of its bytes, so an updated
+    // bundle is a new file rather than an overwrite — and the one it replaced
+    // would sit in the cache for the life of the install.
+    test('a superseded file is dropped when the live manifest lands',
+        () async {
+      final (remote, manifest) = sourceWith(bundleOf('orks'));
+      cache.write('orks.deadbeef0000.json.gz', [1, 2, 3]);
+      cache.write('layout-images/old.0000deadbeef.png', [4, 5, 6]);
+
+      await DatasetRepository(
+        assets: FakeSource(),
+        remote: remote,
+        cache: cache,
+      ).manifest();
+
+      expect(File('${dir.path}/orks.deadbeef0000.json.gz').existsSync(),
+          isFalse);
+      expect(
+          File('${dir.path}/layout-images/old.0000deadbeef.png').existsSync(),
+          isFalse);
+      expect(manifest.bundles, hasLength(1));
+    });
+
+    // Starting offline is not evidence that a downloaded update is stale.
+    test('the shipped manifest prunes nothing', () async {
+      final (_, manifest) = sourceWith(bundleOf('orks'));
+      cache.write('newer.abcdef123456.json.gz', [1, 2, 3]);
+
+      await DatasetRepository(
+        assets: FakeSource()..manifestValue = manifest,
+        remote: FakeSource(),
+        cache: cache,
+      ).manifest();
+
+      expect(
+          File('${dir.path}/newer.abcdef123456.json.gz').existsSync(), isTrue);
+    });
   });
 }

@@ -7,7 +7,7 @@
       "id": "core",
       "kind": "core",
       "name": "Core rules data",
-      "file": "core.json.gz",
+      "file": "core.345fbbd057f6.json.gz",
       "sha256": "345fbbd057f6cdbc35b624a596ddf966f8e9d2e5e79b35086932e260cbd887bc",
       "bytes": 32431,
       "revision": "local"
@@ -16,7 +16,7 @@
       "id": "adepta-sororitas",
       "kind": "faction",
       "name": "Adepta Sororitas",
-      "file": "adepta-sororitas.json.gz",
+      "file": "adepta-sororitas.e12dd1dc9f55.json.gz",
       "sha256": "e12dd1dc9f55d00faa273bd177eb647045d4b7a1dfbdd233aa6ff0b22eef320a",
       "bytes": 191020,
       "revision": "local"
@@ -25,7 +25,7 @@
       "id": "adeptus-astartes",
       "kind": "faction",
       "name": "Adeptus Astartes",
-      "file": "adeptus-astartes.json.gz",
+      "file": "adeptus-astartes.332bc05aaefa.json.gz",
       "sha256": "332bc05aaefa0be2434057645ca6818bccf2a492199be7b86e687e0ddc14d052",
       "bytes": 261322,
       "revision": "local",
@@ -37,7 +37,7 @@
       "id": "adeptus-custodes",
       "kind": "faction",
       "name": "Adeptus Custodes",
-      "file": "adeptus-custodes.json.gz",
+      "file": "adeptus-custodes.faa5e590f1d6.json.gz",
       "sha256": "faa5e590f1d66e78df2fd9c346dfedd543b6e1dc6bd5ee17bba697edcb458da1",
       "bytes": 184485,
       "revision": "local"
@@ -46,7 +46,7 @@
       "id": "adeptus-mechanicus",
       "kind": "faction",
       "name": "Adeptus Mechanicus",
-      "file": "adeptus-mechanicus.json.gz",
+      "file": "adeptus-mechanicus.4569c8ceecc1.json.gz",
       "sha256": "4569c8ceecc15952992ef07340fba5689820e44b4ca3117d3a080a54c15aed98",
       "bytes": 192807,
       "revision": "local"
@@ -55,7 +55,7 @@
       "id": "aeldari",
       "kind": "faction",
       "name": "Aeldari",
-      "file": "aeldari.json.gz",
+      "file": "aeldari.42ac5d1f25de.json.gz",
       "sha256": "42ac5d1f25dec4dffcbc0b8855e64c0ad46e03ace64568118768e2c90ab9c90d",
       "bytes": 234482,
       "revision": "local"
@@ -64,7 +64,7 @@
       "id": "agents-of-the-imperium",
       "kind": "faction",
       "name": "Agents of the Imperium",
-      "file": "agents-of-the-imperium.json.gz",
+      "file": "agents-of-the-imperium.3e4a5c9c698a.json.gz",
       "sha256": "3e4a5c9c698a72554ebc58ea5f108466863c38b523247be140227c3c003f5071",
       "bytes": 199031,
       "revision": "local",
@@ -76,7 +76,7 @@
       "id": "astra-militarum",
       "kind": "faction",
       "name": "Astra Militarum",
-      "file": "astra-militarum.json.gz",
+      "file": "astra-militarum.c18786bd7ed3.json.gz",
       "sha256": "c18786bd7ed3b1bdeed9cc9a090fe6b02de7a7715615f6bd78a9b711cb9de430",
       "bytes": 226247,
       "revision": "local"
@@ -85,7 +85,7 @@
       "id": "black-templars",
       "kind": "faction",
       "name": "Black Templars",
-      "file": "black-templars.json.gz",
+      "file": "black-templars.c2f5d55d9d2f.json.gz",
       "sha256": "c2f5d55d9d2faf6cc49cd473e46f26456ec48618c931a4b75fa1aca39a578163",
       "bytes": 176529,
       "revision": "local",
@@ -95,7 +95,7 @@
       "id": "blood-angels",
       "kind": "faction",
       "name": "Blood Angels",
-      "file": "blood-angels.json.gz",
+      "file": "blood-angels.ad908ab6f686.json.gz",
       "sha256": "ad908ab6f68662a8d7a89f25c84cd520a94d43b5b92357668a9f4f759baf4dd6",
       "bytes": 178560,
       "revision": "local",
@@ -105,7 +105,7 @@
       "id": "chaos-daemons",
       "kind": "faction",
       "name": "Chaos Daemons",
-      "file": "chaos-daemons.json.gz",
+      "file": "chaos-daemons.8e3bf21efe2d.json.gz",
       "sha256": "8e3bf21efe2dc625c07e54e603f8a4840992b5c4f6fa52a14fdc519504d7650d",
       "bytes": 207539,
       "revision": "local"
@@ -114,7 +114,7 @@
       "id": "chaos-knights",
       "kind": "faction",
       "name": "Chaos Knights",
-      "file": "chaos-knights.json.gz",
+      "file": "chaos-knights.1b0dd85917b7.json.gz",
       "sha256": "1b0dd85917b75b9e81ee35087818ba2a7706c38302d6052800d4ad4f2ce12b12",
       "bytes": 189298,
       "revision": "local"
@@ -123,7 +123,7 @@
       "id": "chaos-space-marines",
       "kind": "faction",
       "name": "Chaos Space Marines",
-      "file": "chaos-space-marines.json.gz",
+      "file": "chaos-space-marines.085f306467ef.json.gz",
       "sha256": "085f306467efde91fab8fd1f97759178653a2dcbff74e356cd4242e833900054",
       "bytes": 223123,
       "revision": "local"
@@ -132,7 +132,7 @@
       "id": "crimson-fists",
       "kind": "faction",
       "name": "Crimson Fists",
-      "file": "crimson-fists.json.gz",
+      "file": "crimson-fists.8affa3e8f375.json.gz",
       "sha256": "8affa3e8f375a917c7d24b5b4931fa9fdcc360cbccff6b032a6939448bbff2f9",
       "bytes": 9984,
       "revision": "local",
@@ -142,7 +142,7 @@
       "id": "dark-angels",
       "kind": "faction",
       "name": "Dark Angels",
-      "file": "dark-angels.json.gz",
+      "file": "dark-angels.111ae40777cb.json.gz",
       "sha256": "111ae40777cb142bd5cf039fcc165437125e115dd9e99c6b03ecae2708e30c41",
       "bytes": 177932,
       "revision": "local",
@@ -152,7 +152,7 @@
       "id": "death-guard",
       "kind": "faction",
       "name": "Death Guard",
-      "file": "death-guard.json.gz",
+      "file": "death-guard.852b3ca5b224.json.gz",
       "sha256": "852b3ca5b2243b7197c5414f0e5a5185c6a622896c2130911809ea83ca0a0d96",
       "bytes": 194523,
       "revision": "local"
@@ -161,7 +161,7 @@
       "id": "deathwatch",
       "kind": "faction",
       "name": "Deathwatch",
-      "file": "deathwatch.json.gz",
+      "file": "deathwatch.2c6698a17916.json.gz",
       "sha256": "2c6698a17916d37678614c728fa818a030c00dc6478e7bfa59c1059d3f5fce7a",
       "bytes": 173077,
       "revision": "local",
@@ -171,7 +171,7 @@
       "id": "drukhari",
       "kind": "faction",
       "name": "Drukhari",
-      "file": "drukhari.json.gz",
+      "file": "drukhari.9de32b860acb.json.gz",
       "sha256": "9de32b860acb722a4a3e2c4d29cfe445907ac78a87c18175b999adc739724ce2",
       "bytes": 196014,
       "revision": "local"
@@ -180,7 +180,7 @@
       "id": "emperors-children",
       "kind": "faction",
       "name": "Emperor’s Children",
-      "file": "emperors-children.json.gz",
+      "file": "emperors-children.5af0123d7f15.json.gz",
       "sha256": "5af0123d7f15bcaea36765d7eeb4d81eccc42fe120bd0fb0d1245e931637e23d",
       "bytes": 187560,
       "revision": "local"
@@ -189,7 +189,7 @@
       "id": "genestealer-cults",
       "kind": "faction",
       "name": "Genestealer Cults",
-      "file": "genestealer-cults.json.gz",
+      "file": "genestealer-cults.0003b55c4c72.json.gz",
       "sha256": "0003b55c4c72904c2d24e16274dbb8b418add7d1c2928eeec3a454f482a8ae97",
       "bytes": 216613,
       "revision": "local"
@@ -198,7 +198,7 @@
       "id": "grey-knights",
       "kind": "faction",
       "name": "Grey Knights",
-      "file": "grey-knights.json.gz",
+      "file": "grey-knights.ac72235743b6.json.gz",
       "sha256": "ac72235743b6d358a3824127260deac8ead7821a0fa5ee2477190fa5177b32df",
       "bytes": 180818,
       "revision": "local"
@@ -207,7 +207,7 @@
       "id": "imperial-fists",
       "kind": "faction",
       "name": "Imperial Fists",
-      "file": "imperial-fists.json.gz",
+      "file": "imperial-fists.78c392251992.json.gz",
       "sha256": "78c39225199232fedc71b78fc478067993e8502e9e3587cc20b4d4b450400829",
       "bytes": 168157,
       "revision": "local",
@@ -217,7 +217,7 @@
       "id": "imperial-knights",
       "kind": "faction",
       "name": "Imperial Knights",
-      "file": "imperial-knights.json.gz",
+      "file": "imperial-knights.90644823397b.json.gz",
       "sha256": "90644823397b931631a748d38231862badd78543ecbe8b26ca162034c8c4319a",
       "bytes": 181012,
       "revision": "local"
@@ -226,7 +226,7 @@
       "id": "iron-hands",
       "kind": "faction",
       "name": "Iron Hands",
-      "file": "iron-hands.json.gz",
+      "file": "iron-hands.de5d15502bee.json.gz",
       "sha256": "de5d15502beedabbdcec18e7d258749b153ac2e606b7540c053f1e2488f03544",
       "bytes": 168330,
       "revision": "local",
@@ -236,7 +236,7 @@
       "id": "leagues-of-votann",
       "kind": "faction",
       "name": "Leagues of Votann",
-      "file": "leagues-of-votann.json.gz",
+      "file": "leagues-of-votann.3610fc0b3ad6.json.gz",
       "sha256": "3610fc0b3ad64ffa2f912a374049eec1f079517a90955c4ace421f35cf337970",
       "bytes": 184730,
       "revision": "local"
@@ -245,7 +245,7 @@
       "id": "necrons",
       "kind": "faction",
       "name": "Necrons",
-      "file": "necrons.json.gz",
+      "file": "necrons.b31a3562ff7a.json.gz",
       "sha256": "b31a3562ff7a331694ad3a2909711b613a43210b2105d4858d6217947d41e181",
       "bytes": 203992,
       "revision": "local"
@@ -254,7 +254,7 @@
       "id": "orks",
       "kind": "faction",
       "name": "Orks",
-      "file": "orks.json.gz",
+      "file": "orks.3eb32bb27c9a.json.gz",
       "sha256": "3eb32bb27c9a75150bc0e600730c8aa89f3fa2dece92ad38e24b09e5db5eee6a",
       "bytes": 208724,
       "revision": "local"
@@ -263,7 +263,7 @@
       "id": "raven-guard",
       "kind": "faction",
       "name": "Raven Guard",
-      "file": "raven-guard.json.gz",
+      "file": "raven-guard.e35b5fa41920.json.gz",
       "sha256": "e35b5fa41920f575101c0589f1c5824a4df1028accefd618ff6d57e5f9db8671",
       "bytes": 168115,
       "revision": "local",
@@ -273,7 +273,7 @@
       "id": "salamanders",
       "kind": "faction",
       "name": "Salamanders",
-      "file": "salamanders.json.gz",
+      "file": "salamanders.97d90919e812.json.gz",
       "sha256": "97d90919e812aad2cbc3c6a0c0f0617cc44b132a0f53f1a7ab4b9f9ee9dae1b7",
       "bytes": 167784,
       "revision": "local",
@@ -283,7 +283,7 @@
       "id": "space-wolves",
       "kind": "faction",
       "name": "Space Wolves",
-      "file": "space-wolves.json.gz",
+      "file": "space-wolves.eb3e94f6d45e.json.gz",
       "sha256": "eb3e94f6d45e20d9d0e9e3c076162a00d64f157e2405672a2804760aa781111b",
       "bytes": 182494,
       "revision": "local",
@@ -293,7 +293,7 @@
       "id": "tau-empire",
       "kind": "faction",
       "name": "T’au Empire",
-      "file": "tau-empire.json.gz",
+      "file": "tau-empire.9e594a0a4ab5.json.gz",
       "sha256": "9e594a0a4ab58593d6f203301c239d5c637ae227d3ece45f9f2950905f8ed7c2",
       "bytes": 198409,
       "revision": "local"
@@ -302,7 +302,7 @@
       "id": "thousand-sons",
       "kind": "faction",
       "name": "Thousand Sons",
-      "file": "thousand-sons.json.gz",
+      "file": "thousand-sons.e9b66f433035.json.gz",
       "sha256": "e9b66f4330357b816f443e59d411a4293620b377c687d9f84b753abcbab09d64",
       "bytes": 194951,
       "revision": "local"
@@ -311,7 +311,7 @@
       "id": "tyranids",
       "kind": "faction",
       "name": "Tyranids",
-      "file": "tyranids.json.gz",
+      "file": "tyranids.467eed16dac5.json.gz",
       "sha256": "467eed16dac54b58a5be585ee0bc2da8a399ecf0df985647a536928d30f9ec83",
       "bytes": 193610,
       "revision": "local"
@@ -320,7 +320,7 @@
       "id": "ultramarines",
       "kind": "faction",
       "name": "Ultramarines",
-      "file": "ultramarines.json.gz",
+      "file": "ultramarines.24e50efdb9da.json.gz",
       "sha256": "24e50efdb9dade7bae2c9f0352a76b194a02a4c0b12c6268e08a78628058e36e",
       "bytes": 173102,
       "revision": "local",
@@ -330,7 +330,7 @@
       "id": "white-scars",
       "kind": "faction",
       "name": "White Scars",
-      "file": "white-scars.json.gz",
+      "file": "white-scars.004cfd513304.json.gz",
       "sha256": "004cfd5133044279fed279f4473c2b5c2b20a55ecae3f3157dc28568c5556b30",
       "bytes": 167913,
       "revision": "local",
@@ -340,7 +340,7 @@
       "id": "world-eaters",
       "kind": "faction",
       "name": "World Eaters",
-      "file": "world-eaters.json.gz",
+      "file": "world-eaters.e36f396821d0.json.gz",
       "sha256": "e36f396821d0231460e2e0c13330279760e0800c8502a15e41278c64376cc5c2",
       "bytes": 196808,
       "revision": "local"
@@ -350,7 +350,7 @@
     {
       "id": "2026-08-26",
       "name": "August 2026 rules update",
-      "file": "patch-2026-08-26.json.gz",
+      "file": "patch-2026-08-26.9922e016908d.json.gz",
       "sha256": "9922e016908d80bec28709db956f8bdf995afb472635c889580daefd1da003a2",
       "bytes": 79651,
       "appliesTo": "pre-launch-provisional"
@@ -360,315 +360,315 @@
     {
       "id": "disruption-vs-disruption-a",
       "kind": "terrain-layout",
-      "file": "layout-images/disruption-vs-disruption-a.png",
+      "file": "layout-images/disruption-vs-disruption-a.fbd78e708b0f.png",
       "sha256": "fbd78e708b0f228b0b189d20cff298439c21d6050825d704adb8b714816f8329",
       "bytes": 266945
     },
     {
       "id": "disruption-vs-disruption-b",
       "kind": "terrain-layout",
-      "file": "layout-images/disruption-vs-disruption-b.png",
+      "file": "layout-images/disruption-vs-disruption-b.3adaa0425860.png",
       "sha256": "3adaa0425860c9bab93a68a146025c90381fa4cc9f56dffe6538a4f35f03fd63",
       "bytes": 257161
     },
     {
       "id": "disruption-vs-disruption-c",
       "kind": "terrain-layout",
-      "file": "layout-images/disruption-vs-disruption-c.png",
+      "file": "layout-images/disruption-vs-disruption-c.977b584c4507.png",
       "sha256": "977b584c4507e77d3732534cb77d21726676dc299c071ec6e227feb1ae63a4d4",
       "bytes": 273594
     },
     {
       "id": "disruption-vs-priority-assets-a",
       "kind": "terrain-layout",
-      "file": "layout-images/disruption-vs-priority-assets-a.png",
+      "file": "layout-images/disruption-vs-priority-assets-a.995550ac7c80.png",
       "sha256": "995550ac7c807d45e0019e642c936f4752d34e44ccb333c863a2ce8b7efe0e0a",
       "bytes": 275206
     },
     {
       "id": "disruption-vs-priority-assets-b",
       "kind": "terrain-layout",
-      "file": "layout-images/disruption-vs-priority-assets-b.png",
+      "file": "layout-images/disruption-vs-priority-assets-b.215c29cfec08.png",
       "sha256": "215c29cfec08f44a71f63df04296a1dfa485284b4e8c9acc2417c7c37d211a91",
       "bytes": 255944
     },
     {
       "id": "disruption-vs-priority-assets-c",
       "kind": "terrain-layout",
-      "file": "layout-images/disruption-vs-priority-assets-c.png",
+      "file": "layout-images/disruption-vs-priority-assets-c.a3851c527376.png",
       "sha256": "a3851c5273769ef09c588f8f221750ec0d8ebeef0450364e76f93b6923af31f9",
       "bytes": 277200
     },
     {
       "id": "disruption-vs-reconnaissance-a",
       "kind": "terrain-layout",
-      "file": "layout-images/disruption-vs-reconnaissance-a.png",
+      "file": "layout-images/disruption-vs-reconnaissance-a.fcb6d7978963.png",
       "sha256": "fcb6d7978963f10dd8289bbf96520de424483ecb582d3c66b0394c9fc96d7814",
       "bytes": 255120
     },
     {
       "id": "disruption-vs-reconnaissance-b",
       "kind": "terrain-layout",
-      "file": "layout-images/disruption-vs-reconnaissance-b.png",
+      "file": "layout-images/disruption-vs-reconnaissance-b.cd576038008d.png",
       "sha256": "cd576038008de57f57cc561e45c4c5a93cb26ea346573620b8323a9f4e8a5d48",
       "bytes": 270744
     },
     {
       "id": "disruption-vs-reconnaissance-c",
       "kind": "terrain-layout",
-      "file": "layout-images/disruption-vs-reconnaissance-c.png",
+      "file": "layout-images/disruption-vs-reconnaissance-c.f80f5fbb569a.png",
       "sha256": "f80f5fbb569a24a6bb391d68f43e5d3e540e1d72cb35294a6400edeb00cd63cb",
       "bytes": 272990
     },
     {
       "id": "priority-assets-vs-priority-assets-a",
       "kind": "terrain-layout",
-      "file": "layout-images/priority-assets-vs-priority-assets-a.png",
+      "file": "layout-images/priority-assets-vs-priority-assets-a.71ee23519602.png",
       "sha256": "71ee23519602475013f23b16e435b7ebaa1ab5be621fed1e2c9924c71cd91ef3",
       "bytes": 278915
     },
     {
       "id": "priority-assets-vs-priority-assets-b",
       "kind": "terrain-layout",
-      "file": "layout-images/priority-assets-vs-priority-assets-b.png",
+      "file": "layout-images/priority-assets-vs-priority-assets-b.20c96f91c957.png",
       "sha256": "20c96f91c9570133dd35cc2e43dd3f127f8bb4207424667ffe548f270b1acaf7",
       "bytes": 269561
     },
     {
       "id": "priority-assets-vs-priority-assets-c",
       "kind": "terrain-layout",
-      "file": "layout-images/priority-assets-vs-priority-assets-c.png",
+      "file": "layout-images/priority-assets-vs-priority-assets-c.b480b55520ee.png",
       "sha256": "b480b55520ee2d64eb771f90027024986e7001c738d28dae1af7e916f9e0d4a2",
       "bytes": 259408
     },
     {
       "id": "purge-the-foe-vs-disruption-a",
       "kind": "terrain-layout",
-      "file": "layout-images/purge-the-foe-vs-disruption-a.png",
+      "file": "layout-images/purge-the-foe-vs-disruption-a.4cd0a089cb81.png",
       "sha256": "4cd0a089cb81ca6efb706fdf29019a0eb26cded3399854a075c432f72ff13d36",
       "bytes": 273954
     },
     {
       "id": "purge-the-foe-vs-disruption-b",
       "kind": "terrain-layout",
-      "file": "layout-images/purge-the-foe-vs-disruption-b.png",
+      "file": "layout-images/purge-the-foe-vs-disruption-b.8f07e2bcebde.png",
       "sha256": "8f07e2bcebdee36869e41c13fbeeed30f40367bd38f0314b819058d088cfb2be",
       "bytes": 257097
     },
     {
       "id": "purge-the-foe-vs-disruption-c",
       "kind": "terrain-layout",
-      "file": "layout-images/purge-the-foe-vs-disruption-c.png",
+      "file": "layout-images/purge-the-foe-vs-disruption-c.a7de3071556e.png",
       "sha256": "a7de3071556e7b090e89691ffe3425f84e6b4aabc5323869632439673ab9acac",
       "bytes": 275239
     },
     {
       "id": "purge-the-foe-vs-priority-assets-a",
       "kind": "terrain-layout",
-      "file": "layout-images/purge-the-foe-vs-priority-assets-a.png",
+      "file": "layout-images/purge-the-foe-vs-priority-assets-a.373077553707.png",
       "sha256": "373077553707eeb2e90d3a64804979e176455f49d34e58a1961a53ed46b39ab6",
       "bytes": 266549
     },
     {
       "id": "purge-the-foe-vs-priority-assets-b",
       "kind": "terrain-layout",
-      "file": "layout-images/purge-the-foe-vs-priority-assets-b.png",
+      "file": "layout-images/purge-the-foe-vs-priority-assets-b.f3e04d22dc7b.png",
       "sha256": "f3e04d22dc7b7ad6145b3f57b39c48b76a5705b1b954e106fb9fd3cfa38f2907",
       "bytes": 272857
     },
     {
       "id": "purge-the-foe-vs-priority-assets-c",
       "kind": "terrain-layout",
-      "file": "layout-images/purge-the-foe-vs-priority-assets-c.png",
+      "file": "layout-images/purge-the-foe-vs-priority-assets-c.2694b8a43459.png",
       "sha256": "2694b8a43459706501ea5174848de1aa43d317ad4cb0e08dd9cb89f82213fb77",
       "bytes": 243505
     },
     {
       "id": "purge-the-foe-vs-purge-the-foe-a",
       "kind": "terrain-layout",
-      "file": "layout-images/purge-the-foe-vs-purge-the-foe-a.png",
+      "file": "layout-images/purge-the-foe-vs-purge-the-foe-a.96458f5ba4f6.png",
       "sha256": "96458f5ba4f6b0a241552729b69d0af4dc4cbe32160bc0f7c366c40a952ca39c",
       "bytes": 279525
     },
     {
       "id": "purge-the-foe-vs-purge-the-foe-b",
       "kind": "terrain-layout",
-      "file": "layout-images/purge-the-foe-vs-purge-the-foe-b.png",
+      "file": "layout-images/purge-the-foe-vs-purge-the-foe-b.bc0d4f18ee40.png",
       "sha256": "bc0d4f18ee40978a44dab333a492d4d7e8a2a1727fe5ea55a516c3eeb758cf21",
       "bytes": 250922
     },
     {
       "id": "purge-the-foe-vs-purge-the-foe-c",
       "kind": "terrain-layout",
-      "file": "layout-images/purge-the-foe-vs-purge-the-foe-c.png",
+      "file": "layout-images/purge-the-foe-vs-purge-the-foe-c.da1a8610a433.png",
       "sha256": "da1a8610a4330766f2ea0d2050c0744cfac26553dd843166db028d29f7b4f943",
       "bytes": 278544
     },
     {
       "id": "purge-the-foe-vs-reconnaissance-a",
       "kind": "terrain-layout",
-      "file": "layout-images/purge-the-foe-vs-reconnaissance-a.png",
+      "file": "layout-images/purge-the-foe-vs-reconnaissance-a.cbf6883de052.png",
       "sha256": "cbf6883de052dd80c6eb812194eb77dd00d804b7a0fca97ae9573754230d0a8a",
       "bytes": 242790
     },
     {
       "id": "purge-the-foe-vs-reconnaissance-b",
       "kind": "terrain-layout",
-      "file": "layout-images/purge-the-foe-vs-reconnaissance-b.png",
+      "file": "layout-images/purge-the-foe-vs-reconnaissance-b.e04e6134c39d.png",
       "sha256": "e04e6134c39d6e932e019f280e9e23f88db153d850b272d4d666831b91278445",
       "bytes": 272104
     },
     {
       "id": "purge-the-foe-vs-reconnaissance-c",
       "kind": "terrain-layout",
-      "file": "layout-images/purge-the-foe-vs-reconnaissance-c.png",
+      "file": "layout-images/purge-the-foe-vs-reconnaissance-c.726e99ce9355.png",
       "sha256": "726e99ce9355186be63cfb0e6d87847082dbd131a0250bf9a670a5f0571f6576",
       "bytes": 272910
     },
     {
       "id": "reconnaissance-vs-priority-assets-a",
       "kind": "terrain-layout",
-      "file": "layout-images/reconnaissance-vs-priority-assets-a.png",
+      "file": "layout-images/reconnaissance-vs-priority-assets-a.7b17ea3ac9c1.png",
       "sha256": "7b17ea3ac9c1a5bbc03c8912044e631350152d61ccb232e45995c23c1a9a2a49",
       "bytes": 264380
     },
     {
       "id": "reconnaissance-vs-priority-assets-b",
       "kind": "terrain-layout",
-      "file": "layout-images/reconnaissance-vs-priority-assets-b.png",
+      "file": "layout-images/reconnaissance-vs-priority-assets-b.cfd082f5f15c.png",
       "sha256": "cfd082f5f15c5143f804d59889a5455cfcfcd97f252c7f9d1fec412c12d31b74",
       "bytes": 253344
     },
     {
       "id": "reconnaissance-vs-priority-assets-c",
       "kind": "terrain-layout",
-      "file": "layout-images/reconnaissance-vs-priority-assets-c.png",
+      "file": "layout-images/reconnaissance-vs-priority-assets-c.cdbbc5e8940e.png",
       "sha256": "cdbbc5e8940e142824fe86fae1870247142c25cef74da5c646066fb45f98ba1c",
       "bytes": 273970
     },
     {
       "id": "reconnaissance-vs-reconnaissance-a",
       "kind": "terrain-layout",
-      "file": "layout-images/reconnaissance-vs-reconnaissance-a.png",
+      "file": "layout-images/reconnaissance-vs-reconnaissance-a.e7eeb24f2503.png",
       "sha256": "e7eeb24f25039769e9cf699f0fc00dd00ec5eb423d9d92fb4000282aeb91dac0",
       "bytes": 274369
     },
     {
       "id": "reconnaissance-vs-reconnaissance-b",
       "kind": "terrain-layout",
-      "file": "layout-images/reconnaissance-vs-reconnaissance-b.png",
+      "file": "layout-images/reconnaissance-vs-reconnaissance-b.29f29cd74eaf.png",
       "sha256": "29f29cd74eaf91240c74c8a38d750811872f8e85e859a9affefe3a9a051d2673",
       "bytes": 266650
     },
     {
       "id": "reconnaissance-vs-reconnaissance-c",
       "kind": "terrain-layout",
-      "file": "layout-images/reconnaissance-vs-reconnaissance-c.png",
+      "file": "layout-images/reconnaissance-vs-reconnaissance-c.87d7804ed474.png",
       "sha256": "87d7804ed4747997d200905eff46b6f85999f452a5a0af2f3bfbdda8afd41abf",
       "bytes": 258414
     },
     {
       "id": "take-and-hold-vs-disruption-a",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-disruption-a.png",
+      "file": "layout-images/take-and-hold-vs-disruption-a.e5401cc90a8f.png",
       "sha256": "e5401cc90a8fac954e7792cd2bb5bd3e048edc562f984484c60ac70ee19ce3a1",
       "bytes": 271222
     },
     {
       "id": "take-and-hold-vs-disruption-b",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-disruption-b.png",
+      "file": "layout-images/take-and-hold-vs-disruption-b.fe144fef0841.png",
       "sha256": "fe144fef0841a1b3f739fdd6f2e6612547b669867769dacfd40c2f32c6a52981",
       "bytes": 271306
     },
     {
       "id": "take-and-hold-vs-disruption-c",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-disruption-c.png",
+      "file": "layout-images/take-and-hold-vs-disruption-c.e851cdff1e89.png",
       "sha256": "e851cdff1e899ca6ae053d49e6f665fcd0de3361963a06ef8fe88d808cdb0570",
       "bytes": 241717
     },
     {
       "id": "take-and-hold-vs-priority-assets-a",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-priority-assets-a.png",
+      "file": "layout-images/take-and-hold-vs-priority-assets-a.74b6fd3e6717.png",
       "sha256": "74b6fd3e6717490f73587a5ed29319f40f54ca017686f4e4de71cc84458cd58f",
       "bytes": 272466
     },
     {
       "id": "take-and-hold-vs-priority-assets-b",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-priority-assets-b.png",
+      "file": "layout-images/take-and-hold-vs-priority-assets-b.1d60307f79ed.png",
       "sha256": "1d60307f79ed498b3e0ba5179e78f4756f83e12002ed30f936f6c14105321d2f",
       "bytes": 240624
     },
     {
       "id": "take-and-hold-vs-priority-assets-c",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-priority-assets-c.png",
+      "file": "layout-images/take-and-hold-vs-priority-assets-c.529908045a30.png",
       "sha256": "529908045a30552542004705b5e6d23209281c248c908f2353cbe8038ad81cfa",
       "bytes": 271049
     },
     {
       "id": "take-and-hold-vs-purge-the-foe-a",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-purge-the-foe-a.png",
+      "file": "layout-images/take-and-hold-vs-purge-the-foe-a.858631811b95.png",
       "sha256": "858631811b95bac507b48cc1eef60de816ca6007b51d52522f1494f87548bf83",
       "bytes": 268333
     },
     {
       "id": "take-and-hold-vs-purge-the-foe-b",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-purge-the-foe-b.png",
+      "file": "layout-images/take-and-hold-vs-purge-the-foe-b.4b368ea8aba6.png",
       "sha256": "4b368ea8aba67b35eefbb4d3a10cdffe5d7d8a3bde47507888b3335638ef21a4",
       "bytes": 275400
     },
     {
       "id": "take-and-hold-vs-purge-the-foe-c",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-purge-the-foe-c.png",
+      "file": "layout-images/take-and-hold-vs-purge-the-foe-c.0c84a6daf04c.png",
       "sha256": "0c84a6daf04c0c77a32bf9bdc660c69dc36998019fc0aca224c178db26e2da39",
       "bytes": 244133
     },
     {
       "id": "take-and-hold-vs-reconnaissance-a",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-reconnaissance-a.png",
+      "file": "layout-images/take-and-hold-vs-reconnaissance-a.4cb0173819eb.png",
       "sha256": "4cb0173819eb28441da0a0b347f09cd02ec3975a72fbf351c15f64a474fdc058",
       "bytes": 254413
     },
     {
       "id": "take-and-hold-vs-reconnaissance-b",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-reconnaissance-b.png",
+      "file": "layout-images/take-and-hold-vs-reconnaissance-b.f7985ce27b63.png",
       "sha256": "f7985ce27b63232cfcd5ab91c76072a3cae562f2501c3bf0d1aa0c41638701c5",
       "bytes": 268141
     },
     {
       "id": "take-and-hold-vs-reconnaissance-c",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-reconnaissance-c.png",
+      "file": "layout-images/take-and-hold-vs-reconnaissance-c.891075fdb08d.png",
       "sha256": "891075fdb08d950f8450f49ed8f9ae1c7cb02ccca2a0fec88230ba58b6709a29",
       "bytes": 272100
     },
     {
       "id": "take-and-hold-vs-take-and-hold-a",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-take-and-hold-a.png",
+      "file": "layout-images/take-and-hold-vs-take-and-hold-a.126edeea0d0a.png",
       "sha256": "126edeea0d0a119ee9bb27b039c9b689d752db87b0ad6733f95498eb3ddce800",
       "bytes": 253453
     },
     {
       "id": "take-and-hold-vs-take-and-hold-b",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-take-and-hold-b.png",
+      "file": "layout-images/take-and-hold-vs-take-and-hold-b.ceafdc76e686.png",
       "sha256": "ceafdc76e6861fd595e4b854ed75998c13f80696e24c0e3a033359b3cf857284",
       "bytes": 268930
     },
     {
       "id": "take-and-hold-vs-take-and-hold-c",
       "kind": "terrain-layout",
-      "file": "layout-images/take-and-hold-vs-take-and-hold-c.png",
+      "file": "layout-images/take-and-hold-vs-take-and-hold-c.06aedc621bc0.png",
       "sha256": "06aedc621bc0e6de7d250e7d152ceb3e25033de6211a3ac8eb3cf75d3c3d1f3b",
       "bytes": 275595
     }

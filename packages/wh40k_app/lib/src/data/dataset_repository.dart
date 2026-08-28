@@ -112,8 +112,30 @@ class BundleCache {
     return bytes;
   }
 
-  void write(String file, List<int> bytes) =>
-      File(p.join(dir.path, file)).writeAsBytesSync(bytes);
+  void write(String file, List<int> bytes) {
+    final at = File(p.join(dir.path, file));
+    // The layout images are published in a directory of their own, so the
+    // first one written has nowhere to go until this makes it.
+    at.parent.createSync(recursive: true);
+    at.writeAsBytesSync(bytes);
+  }
+
+  /// Deletes cached files the manifest in force no longer names.
+  ///
+  /// Published names carry a content hash (§3.19), so a corrected bundle
+  /// arrives as a new file rather than an overwrite — and without this the
+  /// one it replaced would sit in the cache for the life of the install.
+  int prune(Set<String> keep) {
+    if (!dir.existsSync()) return 0;
+    var pruned = 0;
+    for (final file in dir.listSync(recursive: true).whereType<File>()) {
+      final relative = p.relative(file.path, from: dir.path);
+      if (keep.contains(relative)) continue;
+      file.deleteSync();
+      pruned++;
+    }
+    return pruned;
+  }
 
   void clear() {
     if (dir.existsSync()) dir.deleteSync(recursive: true);
@@ -148,6 +170,15 @@ class DatasetRepository {
 
     final fromRemote = await remote?.manifest();
     if (fromRemote != null && !fromRemote.isFuture) {
+      // Only against a manifest that came from the network. Falling back to
+      // the shipped one because the network was down is not evidence that a
+      // downloaded update is superseded, and pruning against it would throw
+      // the update away for having started offline.
+      cache?.prune({
+        for (final entry in fromRemote.bundles) entry.file,
+        for (final patch in fromRemote.patches) patch.file,
+        for (final asset in fromRemote.assets) asset.file,
+      });
       return _manifest = fromRemote;
     }
 

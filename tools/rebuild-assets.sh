@@ -13,6 +13,7 @@
 #   packages/wh40k_app/assets/reference_roster.json               (same file)
 #   packages/wh40k_app/assets/reference_snapshot.json             (from the roster)
 #   packages/wh40k_app/assets/bundles/                            (from the dataset)
+#   dist/layout-images/                                           (from dist/layout-source)
 #
 # Forgetting the bundles is the dangerous one: the core tests read the dataset
 # through a loader that applies corrections live, so they stay green while the
@@ -64,7 +65,20 @@ dart run bin/roster.dart test/fixtures/tau_strike_force_2000.json \
   --data ../../data/merged --snapshot "$app/assets/reference_snapshot.json"
 
 echo "==> building the bundles"
-dart run bin/bundle.dart --data ../../data/merged --out "$app/assets/bundles"
+# The layouts are read from the renderer's output and published beside the
+# bundles under content-hashed names (§3.19), which is why the source and the
+# published directory are two different places: publishing into the directory
+# it read from would hash the hashed names on the next run.
+layouts=""
+if [ -d "$root/dist/layout-source" ]; then
+  layouts="--layouts ../../dist/layout-source --layout-out ../../dist/layout-images"
+else
+  echo "    no dist/layout-source — run tools/render-layouts.py first;" \
+       "the manifest will list no layout images" >&2
+fi
+# shellcheck disable=SC2086
+dart run bin/bundle.dart --data ../../data/merged \
+  --out "$app/assets/bundles" $layouts
 
 echo
 echo "done — now run both test suites before committing"

@@ -11,7 +11,10 @@ So the page itself is the reference. Each layout is rendered, cropped to the
 diagram and quantised, and the app offers it beside its own drawing rather
 than pretending to reproduce it.
 
-Usage:  tools/render-layouts.py <event-companion.pdf> <out-dir>
+Usage:  tools/render-layouts.py <event-companion.pdf> dist/layout-source
+
+Render into dist/layout-source, not dist/layout-images: the second is
+written by bin/bundle.dart under content-hashed names (§3.19).
 """
 import json
 import os

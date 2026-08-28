@@ -179,4 +179,32 @@ void main() {
           reason: '${asset.file} is fetched, not bundled');
     }
   });
+
+  // §3.19. Every published name carries a hash of the bytes under it, so an
+  // updated file is a URL no cache has ever seen and an unchanged one keeps
+  // the URL every cache already has. The check is that the name says what the
+  // manifest says, because a name that drifted would be a permanent miss.
+  test('every published name carries its own hash', () async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final manifest = await const AssetBundleSource().manifest();
+
+    final files = <String, String>{
+      for (final b in manifest!.bundles) b.file: b.sha256,
+      for (final p in manifest.patches) p.file: p.sha256,
+      for (final a in manifest.assets) a.file: a.sha256,
+    };
+    expect(files, hasLength(greaterThan(70)));
+
+    for (final entry in files.entries) {
+      final name = entry.key.split('/').last;
+      final parts = name.split('.');
+      expect(parts.length, greaterThan(2), reason: '$name has no hash in it');
+      expect(parts[1], entry.value.substring(0, 12),
+          reason: '$name does not carry its own digest');
+    }
+
+    // The manifest itself is not hashed: it is the entry point, and a name
+    // that changed with its contents would be unfindable.
+    expect(files.keys, isNot(contains(startsWith('manifest'))));
+  });
 }

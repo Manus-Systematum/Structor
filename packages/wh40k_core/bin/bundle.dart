@@ -110,14 +110,15 @@ void main(List<String> args) {
   BundleEntry write(DatasetBundle bundle, String displayName,
       {String? parentId, List<String> aliases = const []}) {
     final compressed = bundle.encode();
-    final file = '${bundle.id}.json.gz';
+    final digest = sha256Of(compressed);
+    final file = _published('${bundle.id}.json.gz', digest);
     File('$outDir/$file').writeAsBytesSync(compressed);
     return BundleEntry(
       id: bundle.id,
       kind: bundle.kind,
       name: displayName,
       file: file,
-      sha256: sha256Of(compressed),
+      sha256: digest,
       bytes: compressed.length,
       revision: bundle.revision,
       parentId: parentId,
@@ -222,13 +223,14 @@ void main(List<String> args) {
           DatasetPatch.fromJson(jsonDecode(source.readAsStringSync()));
       if (patch.id.isEmpty || patch.operations.isEmpty) continue;
       final compressed = patch.encode();
-      final file = 'patch-${patch.id}.json.gz';
+      final digest = sha256Of(compressed);
+      final file = _published('patch-${patch.id}.json.gz', digest);
       File('$outDir/$file').writeAsBytesSync(compressed);
       patches.add(PatchEntry(
         id: patch.id,
         name: patch.name,
         file: file,
-        sha256: sha256Of(compressed),
+        sha256: digest,
         bytes: compressed.length,
         appliesTo: patch.appliesTo,
       ));
@@ -252,7 +254,8 @@ void main(List<String> args) {
       ..sort((a, b) => a.path.compareTo(b.path));
     for (final image in images) {
       final bytes = image.readAsBytesSync();
-      final name = image.uri.pathSegments.last;
+      final digest = sha256Of(bytes);
+      final name = _published(image.uri.pathSegments.last, digest);
       // Written beside the bundles but **not** into the app's assets: forty
       // five of them is eleven megabytes and the whole data bundle is six.
       // They are fetched on demand from wherever the manifest is served
@@ -261,10 +264,12 @@ void main(List<String> args) {
       final at = File('$imagesDir/$name')..createSync(recursive: true);
       at.writeAsBytesSync(bytes);
       assets.add(AssetEntry(
-        id: name.replaceAll('.png', ''),
+        // The id is the layout's own name, which the app asks for; the file
+        // beside it carries the hash.
+        id: image.uri.pathSegments.last.replaceAll('.png', ''),
         kind: 'terrain-layout',
         file: 'layout-images/$name',
-        sha256: sha256Of(bytes),
+        sha256: digest,
         bytes: bytes.length,
       ));
     }
@@ -281,6 +286,23 @@ void main(List<String> args) {
   );
   File('$outDir/manifest.json').writeAsStringSync(
       '${const JsonEncoder.withIndent('  ').convert(manifest.toJson())}\n');
+
+  // Content-named files are never overwritten, so the previous build's copies
+  // are still here. Left alone they would ship in the binary and be published
+  // beside the current ones — dead weight that nothing points at.
+  final published = {
+    for (final entry in entries) entry.file,
+    for (final patch in patches) patch.file,
+  };
+  final swept = _sweep(Directory(outDir), '.json.gz', published);
+  final sweptImages = assets.isEmpty
+      ? 0
+      : _sweep(Directory(imagesDir), '.png',
+          {for (final asset in assets) asset.file.split('/').last});
+  if (swept + sweptImages > 0) {
+    stdout.writeln('swept ${swept + sweptImages} superseded '
+        'file${swept + sweptImages == 1 ? '' : 's'}\n');
+  }
 
   var total = 0;
   for (final entry in entries) {
@@ -324,9 +346,43 @@ void main(List<String> args) {
   }
 }
 
+/// Deletes files of a kind that the manifest no longer names.
+///
+/// Scoped by extension and by directory: this runs over the app's own asset
+/// folder, and a sweep that took anything it did not recognise would be one
+/// wrong `--out` away from deleting the wrong tree.
+int _sweep(Directory dir, String extension, Set<String> keep) {
+  if (!dir.existsSync()) return 0;
+  var swept = 0;
+  for (final file in dir.listSync().whereType<File>()) {
+    final name = file.uri.pathSegments.last;
+    if (!name.endsWith(extension) || keep.contains(name)) continue;
+    file.deleteSync();
+    swept++;
+  }
+  return swept;
+}
+
 String _kb(int bytes) => '${(bytes / 1024).toStringAsFixed(1)} KB';
 
 String _title(String id) => id
     .split('-')
     .map((w) => w.isEmpty ? w : '${w[0].toUpperCase()}${w.substring(1)}')
     .join(' ');
+
+/// `core.json.gz` published as `core.4b8f2a1c9e70.json.gz` (§3.19).
+///
+/// The content decides the name, so a file that changed is a URL nothing has
+/// ever cached and a file that did not keeps the URL everything already has.
+/// Twelve hex characters is what the build log already prints of the digest,
+/// and the app verifies the whole of it anyway — the name only has to be
+/// unique, not authoritative.
+///
+/// The hash goes before the extension rather than after the stem, so
+/// `core.json.gz` keeps its `.json.gz` and the server keeps typing it right.
+String _published(String name, String sha256) {
+  final dot = name.indexOf('.');
+  final stem = dot == -1 ? name : name.substring(0, dot);
+  final extension = dot == -1 ? '' : name.substring(dot);
+  return '$stem.${sha256.substring(0, 12)}$extension';
+}
