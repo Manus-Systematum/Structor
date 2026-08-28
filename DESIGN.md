@@ -2018,6 +2018,48 @@ number clear of its piece, the shadow it sits in, the letter-spacing: all
 lettering lengths. Growing the font alone would walk the text onto its own
 leader line.
 
+### 3.18 The dataset is served, and the app is pointed at it
+
+`HttpBundleSource` existed from §3.4 and was never constructed: the app read
+its own assets and nothing else. So the layout button said *Not downloaded*,
+and a correction patch could not reach an installed app at all — the whole
+point of §3.15's channel.
+
+**`https://structor.systematum.net/data/`** now serves the manifest, the 36
+faction bundles, the correction patch and the 45 layout pictures — 18 MB, off
+the same container as the page, so DNS, TLS and the tunnel are already there.
+The paths match the manifest's own `file` values, which is why the images keep
+their own directory. `main.dart` reads the base URL from
+`String.fromEnvironment('STRUCTOR_DATA')`, so a build can be pointed elsewhere
+and an empty value turns the network off.
+
+**The app still installs complete.** Everything but the pictures is in the
+binary: 38 files, 6.5 MB, patch included. A test asserts exactly that — every
+bundle and patch the manifest names is fetchable from assets, and every layout
+image is not.
+
+**The data path revalidates rather than caching.** The app refuses bytes whose
+sha256 does not match the manifest, so a stale bundle is not *wrong*, it is
+**absent** — the app falls back to its built-in copy and quietly stops
+updating. Cloudflare honours that for the manifest (`cf-cache-status:
+DYNAMIC`) and overrides it for `.json.gz` and `.png`, which it holds at the
+edge for four hours. Safe, since the hash check rejects them, but it delays an
+update by up to that long. The durable fix is a content hash in the published
+file name, which the manifest already computes.
+
+**Two things the deploy check exists to catch.** The bundles are already
+gzipped and must never be sent with `Content-Encoding: gzip` — the app gunzips
+the body itself and would hand plain JSON to the inflater. And the sha256 of a
+bundle, the patch and an image are verified over the wire, because "the file
+is served" and "the app can read it" are different claims.
+
+**A false alarm worth recording.** The first probe of the live host through
+the app's own code returned null on every attempt, which read as a broken
+deploy. It was `TestWidgetsFlutterBinding.ensureInitialized()`: Flutter's test
+binding stubs HTTP out. The same code without it fetched the manifest, a
+bundle, the patch and an image. A network probe that runs inside `flutter
+test` is measuring the harness.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.

@@ -20,7 +20,18 @@ import 'src/theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final store = RosterStore(await openAppDatabase());
-  final datasets = DatasetRepository(cache: await BundleCache.open());
+  // Where published data is served from (§3.4). A compile-time constant so a
+  // build can be pointed elsewhere — `--dart-define=STRUCTOR_DATA=…` — and an
+  // empty value turns the network off entirely, which is what the tests and
+  // any offline build use.
+  const dataUrl = String.fromEnvironment(
+    'STRUCTOR_DATA',
+    defaultValue: 'https://structor.systematum.net/data/',
+  );
+  final datasets = DatasetRepository(
+    cache: await BundleCache.open(),
+    remote: dataUrl.isEmpty ? null : HttpBundleSource(Uri.parse(dataUrl)),
+  );
   runApp(StructorApp(store: store, datasets: datasets));
 }
 

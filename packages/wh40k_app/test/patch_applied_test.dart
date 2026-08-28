@@ -152,4 +152,31 @@ void main() {
         reason: '${failures.length} operations did not land:\n'
             '${failures.take(20).join('\n')}');
   });
+
+  test('a fresh install needs the network only for layout pictures', () async {
+    // §3.4. The app ships its bundles, its manifest and the correction patch,
+    // so it is fully current offline on first launch. The only thing the
+    // manifest names that is *not* in the binary is the 45 layout images,
+    // which are eleven megabytes against six for everything else.
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final assets = const AssetBundleSource();
+    final manifest = await assets.manifest();
+    expect(manifest, isNotNull);
+
+    final missing = <String>[];
+    for (final file in [
+      for (final b in manifest!.bundles) b.file,
+      for (final p in manifest.patches) p.file,
+    ]) {
+      if (await assets.fetch(file) == null) missing.add(file);
+    }
+    expect(missing, isEmpty, reason: 'shipped in the binary');
+
+    // And the pictures are deliberately not.
+    expect(manifest.assets, isNotEmpty);
+    for (final asset in manifest.assets) {
+      expect(await assets.fetch(asset.file), isNull,
+          reason: '${asset.file} is fetched, not bundled');
+    }
+  });
 }
