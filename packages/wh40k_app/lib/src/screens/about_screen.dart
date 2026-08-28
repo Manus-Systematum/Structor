@@ -35,6 +35,11 @@ class _AboutScreenState extends State<AboutScreen> {
   bool? _provisional;
   bool _showLegends = false;
 
+  /// Null when no reload has been asked for; the sheet reports the last one
+  /// rather than a snackbar that is gone before it is read.
+  DatasetReload? _reloaded;
+  bool _reloading = false;
+
   @override
   void initState() {
     super.initState();
@@ -47,9 +52,106 @@ class _AboutScreenState extends State<AboutScreen> {
     widget.datasets.manifest().then((manifest) {
       if (mounted) setState(() => _manifest = manifest);
     });
+    _readProvisional();
+  }
+
+  /// Whether any of the data is still on the provisional dataslate (§3.0),
+  /// read off one faction because the flag is carried by the dataset rather
+  /// than the faction. Best effort: a repository that cannot serve that
+  /// bundle is a test or a partial install, and the badge is simply absent.
+  void _readProvisional() {
     widget.datasets.faction('tau-empire').then((dataset) {
       if (mounted) setState(() => _provisional = dataset.hasProvisionalContent);
+    }).catchError((Object _) {
+      if (mounted) setState(() => _provisional = null);
     });
+  }
+
+  /// Fetches the manifest and anything it names that this device does not
+  /// have, then offers the saved armies the same data (§3.20).
+  Future<void> _reload() async {
+    setState(() {
+      _reloading = true;
+      _reloaded = null;
+    });
+    final result = await widget.datasets.reload();
+    if (!mounted) return;
+    setState(() {
+      _reloading = false;
+      _reloaded = result;
+    });
+
+    // The page's own two readings of the dataset are now stale.
+    widget.datasets.manifest().then((manifest) {
+      if (mounted) setState(() => _manifest = manifest);
+    });
+    _readProvisional();
+
+    if (result.changed.isNotEmpty && mounted) await _offerArmies();
+  }
+
+  /// A saved army keeps a copy of the data it was built from (§2.2), so new
+  /// data does not reach one until it is asked to. Asked here rather than
+  /// done: rebuilding silently is what §2.2 exists to prevent, and the answer
+  /// is no the night before a game.
+  Future<void> _offerArmies() async {
+    final store = widget.store;
+    if (store == null) return;
+    final rows = await store.list();
+    if (rows.isEmpty || !mounted) return;
+
+    final go = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(rows.length == 1
+            ? 'Update ${rows.single.name}?'
+            : 'Update ${rows.length} saved armies?'),
+        content: const Text(
+          'A saved army keeps a copy of the data it was built from. Updating '
+          'replaces that copy with the data just downloaded.\n\n'
+          'The units, loadouts and detachments do not change. Points, rules '
+          'and stratagem text may.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Not now'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Update'),
+          ),
+        ],
+      ),
+    );
+    if (go != true || !mounted) return;
+
+    var updated = 0;
+    var repointed = 0;
+    final failed = <String>[];
+    // One builder per faction, not per army: it is a full dataset read, and
+    // several armies of the same faction is the normal case.
+    final builders = <String, SnapshotBuilder>{};
+    for (final row in rows) {
+      try {
+        final builder = builders[row.factionId] ??=
+            await widget.datasets.snapshotBuilder(row.factionId);
+        final army = await store.refreshSnapshot(row.id, builder: builder);
+        if (army == null) continue;
+        updated++;
+        if (army.points != row.points) repointed++;
+      } catch (_) {
+        failed.add(row.name);
+      }
+    }
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text([
+        '$updated updated',
+        if (repointed > 0) '$repointed changed points',
+        if (failed.isNotEmpty) '${failed.length} failed: ${failed.join(', ')}',
+      ].join('. ')),
+    ));
   }
 
   @override
@@ -168,6 +270,12 @@ class _AboutScreenState extends State<AboutScreen> {
           const SizedBox(height: 2),
           const SelectableText('https://mfm.warhammer-community.com',
               style: TextStyle(fontSize: 12)),
+          const SizedBox(height: 14),
+          _DataUpdate(
+            running: _reloading,
+            result: _reloaded,
+            onReload: _reload,
+          ),
           if (manifest != null) ...[
             const SizedBox(height: 10),
             _Row(label: 'Dataset', value: manifest.generated),
@@ -307,6 +415,82 @@ class _Row extends StatelessWidget {
                   const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
         ],
       ),
+    );
+  }
+}
+
+/// The control that fetches the dataset, and what the last fetch found.
+///
+/// The app resolves the manifest at launch, so this is not how data normally
+/// arrives. It is here because a reader who has been told a correction exists
+/// has no other way to find out whether they have it (§3.20).
+class _DataUpdate extends StatelessWidget {
+  final bool running;
+  final DatasetReload? result;
+  final VoidCallback onReload;
+
+  const _DataUpdate({
+    required this.running,
+    required this.result,
+    required this.onReload,
+  });
+
+  /// What happened, as the facts of it. A run that changed nothing still says
+  /// so — silence after an action the reader asked for reads as nothing
+  /// having happened.
+  static String _report(DatasetReload result) {
+    if (result.error case final error?) {
+      return 'Could not read the data: $error';
+    }
+
+    final lines = <String>[];
+    if (!result.fromNetwork) {
+      lines.add('The data server could not be reached. '
+          'Still on the dataset in the app.');
+    } else if (result.changed.isEmpty) {
+      lines.add('No change. Dataset ${result.revision}.');
+    } else {
+      lines.add('${result.changed.length} updated: '
+          '${_names(result.changed)}.');
+    }
+    if (result.unavailable.isNotEmpty) {
+      lines.add('${result.unavailable.length} could not be fetched: '
+          '${_names(result.unavailable)}.');
+    }
+    return lines.join('\n');
+  }
+
+  static String _names(List<String> ids) => ids.length <= 4
+      ? ids.join(', ')
+      : '${ids.take(4).join(', ')} and ${ids.length - 4} more';
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        FilledButton.tonalIcon(
+          onPressed: running ? null : onReload,
+          icon: running
+              ? const SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(strokeWidth: 2))
+              : const Icon(Icons.cloud_download_outlined, size: 18),
+          label: Text(running ? 'Downloading…' : 'Download the current data'),
+        ),
+        if (result case final done? when !running) ...[
+          const SizedBox(height: 8),
+          Text(_report(done),
+              style: TextStyle(
+                  fontSize: 12,
+                  height: 1.35,
+                  color: done.error == null
+                      ? scheme.onSurfaceVariant
+                      : scheme.error)),
+        ],
+      ],
     );
   }
 }

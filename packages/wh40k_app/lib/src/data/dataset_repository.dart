@@ -143,6 +143,36 @@ class BundleCache {
   }
 }
 
+/// What a [DatasetRepository.reload] found.
+///
+/// Reported rather than acted on: the screen that asked is the one that knows
+/// whether to offer the reader anything next.
+class DatasetReload {
+  /// The manifest's own revision, or null when none could be resolved.
+  final String? revision;
+
+  /// False when the manifest in force is the one in the binary — the network
+  /// was unreachable, or no base URL is configured (§3.4).
+  final bool fromNetwork;
+
+  /// Bundle and patch ids whose bytes are not the bytes they had before.
+  final List<String> changed;
+
+  /// Ids the manifest names that nothing could serve. The app keeps running
+  /// on what it has; a faction in this list is one that cannot be opened.
+  final List<String> unavailable;
+
+  final String? error;
+
+  const DatasetReload({
+    this.revision,
+    this.fromNetwork = false,
+    this.changed = const [],
+    this.unavailable = const [],
+    this.error,
+  });
+}
+
 /// Resolves datasets from cache, then the shipped assets, then the network.
 class DatasetRepository {
   final BundleSource assets;
@@ -150,6 +180,11 @@ class DatasetRepository {
   final BundleCache? cache;
 
   DatasetManifest? _manifest;
+
+  /// Whether the manifest in force came from the network rather than from the
+  /// binary. Read by [reload], which otherwise cannot tell "already current"
+  /// from "could not ask".
+  bool _fromNetwork = false;
   PatchSet? _patches;
   final Map<String, DatasetBundle> _loaded = {};
   Dataset? _faction;
@@ -179,8 +214,10 @@ class DatasetRepository {
         for (final patch in fromRemote.patches) patch.file,
         for (final asset in fromRemote.assets) asset.file,
       });
+      _fromNetwork = true;
       return _manifest = fromRemote;
     }
+    _fromNetwork = false;
 
     final fromAssets = await assets.manifest();
     if (fromAssets == null) {
@@ -238,6 +275,67 @@ class DatasetRepository {
     final entry = (await manifest()).assetsOf(kind)[id];
     if (entry == null) return null;
     return _bytes(entry.file, entry.sha256);
+  }
+
+  /// Fetches the manifest again and brings down whatever it names that this
+  /// device does not already have (§3.20).
+  ///
+  /// The app looks for an updated manifest at launch, so this is not how data
+  /// normally arrives — it is how a reader who has just been told a
+  /// correction exists finds out whether they have it, without waiting for a
+  /// relaunch or guessing.
+  ///
+  /// **Nothing is deleted first.** The published names carry a hash of their
+  /// bytes (§3.19), so a cached file under a given name is by definition the
+  /// right content and re-fetching it would download what is already here.
+  /// Clearing the cache to be thorough would open a window in which the app
+  /// has *less* data than it started with, on the one screen where the reader
+  /// is trying to make it more current.
+  ///
+  /// The pictures are left alone: eleven megabytes fetched on demand (§3.17),
+  /// and the reader asked to be current, not to fill the disk.
+  Future<DatasetReload> reload() async {
+    final before = {
+      for (final entry in _manifest?.bundles ?? const <BundleEntry>[])
+        entry.id: entry.sha256,
+      for (final patch in _manifest?.patches ?? const <PatchEntry>[])
+        patch.id: patch.sha256,
+    };
+
+    _manifest = null;
+    _patches = null;
+    _faction = null;
+    _missions = null;
+    _loaded.clear();
+
+    final DatasetManifest after;
+    try {
+      after = await manifest();
+    } on StateError catch (error) {
+      return DatasetReload(error: '$error');
+    }
+
+    final changed = <String>[];
+    final unavailable = <String>[];
+    for (final (id, file, digest) in [
+      for (final entry in after.bundles) (entry.id, entry.file, entry.sha256),
+      for (final patch in after.patches)
+        (patch.id, patch.file, patch.sha256),
+    ]) {
+      final bytes = await _bytes(file, digest);
+      if (bytes == null) {
+        unavailable.add(id);
+      } else if (before[id] != null && before[id] != digest) {
+        changed.add(id);
+      }
+    }
+
+    return DatasetReload(
+      revision: after.generated,
+      fromNetwork: _fromNetwork,
+      changed: changed,
+      unavailable: unavailable,
+    );
   }
 
   /// Which assets of a kind the manifest knows about, whether or not they can

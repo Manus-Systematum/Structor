@@ -2143,6 +2143,38 @@ update is superseded.
 `dist/layout-images`. Publishing into the directory it read from would hash
 the hashed names on the next run.
 
+### 3.20 Downloading the data, and offering it to the armies
+
+The app resolves the manifest at launch, so a published correction arrives on
+its own — eventually, and invisibly. That leaves no answer to the question a
+reader actually has, which is *do I have it?* A button on the About page
+fetches the manifest and everything it names that this device does not
+already have, and then says what it found.
+
+**Nothing is deleted first.** The names carry a hash of their bytes (§3.19),
+so a cached file under a given name is by definition the right content, and
+clearing the cache to be thorough would open a window where the app has
+*less* data than it started with — on the screen where the reader is trying
+to make it more current. The pictures are left out: eleven megabytes fetched
+on demand (§3.17), and the reader asked to be current, not to fill the disk.
+
+**Every outcome is stated.** `No change. Dataset r2.` is a result; silence
+after an action the reader asked for reads as nothing having happened. So is
+`The data server could not be reached. Still on the dataset in the app.` —
+which is the one the old code could not distinguish from being up to date,
+since a manifest that fell back to the binary looked exactly like a manifest
+that had nothing new in it. `DatasetReload` carries `fromNetwork` for that
+reason alone.
+
+**Then the saved armies are offered it, and not given it.** A roster keeps a
+copy of the data it was built from (§2.2) so that it stops moving; the cost
+is that it also stops gaining. So a reload that changed something asks
+whether to rebuild the saved armies against it, in the same words the
+per-army menu item uses, and the answer is allowed to be no — this is the
+thing §2.2 exists to prevent, and the night before a game it is the wrong
+time to re-cost an army. Accepting reports both numbers: how many were
+rebuilt, and how many of them changed points.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.
