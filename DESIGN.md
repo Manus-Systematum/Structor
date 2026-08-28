@@ -2211,6 +2211,35 @@ test that asserted one number now asserts two — what the export printed when
 it was written, and what the same list costs today — because an import being
 repriced by a published update is the system working.
 
+### 3.22 The corrections reached the dataset and not the snapshot
+
+Reported as "done everything, updated app and data, list still not changed" —
+and it was right. The Twin Lance read 230 on the reference screen and cost
+220 in every army, and nothing a player could do would change it.
+
+**The snapshot was built from the raw bundle, uncorrected.** §2.2 has a saved
+army keep its own copy of the data in *source form*, so `snapshotBuilder`
+reads the bundle rather than the parsed dataset — correct, and it was reading
+it before `PatchSet.apply` had touched it. `faction()` patched its records;
+the snapshot beside it did not. So every correction in the patch — 1,751 of
+them — reached the reference screens and nothing that a list is priced or
+played from. The dataset test proving The Twin Lance costs 230 was reading
+the half that was already right.
+
+The snapshot now applies the same corrections, per faction and per file, the
+way `faction()` does. This is app code, not data: no published patch can fix
+an installed build, and a build carrying this reads every patch it already
+had correctly.
+
+**And the button asked the wrong question.** `Download the current data`
+offered to rebuild saved armies only when the *download* had changed
+something — but an app that picked the update up at launch downloads nothing,
+while its armies are exactly as stale as before. Two different questions, and
+the second is the one worth asking: the armies are now rebuilt in memory
+after every reload, and the ones whose snapshot actually differs are the ones
+offered. An army already built from today's data is not mentioned, since a
+dialog about it would be a question with one answer.
+
 ### 7.4 Battle state
 
 Event-sourced. Mid-game mistakes are constant, so undo is not optional.

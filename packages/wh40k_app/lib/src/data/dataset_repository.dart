@@ -481,8 +481,24 @@ class DatasetRepository {
     final parentId = dataset.faction.parentFactionId;
     final parent = parentId == null ? null : await bundle(parentId);
 
-    List<Object?> sheets(String name) =>
-        _merge(data.file(name), parent == null ? const [] : parent.file(name));
+    // **And apply the corrections, exactly as `faction()` does** (§3.22).
+    // Reading the raw bundle was right; reading it uncorrected was not. Every
+    // saved army is priced and played from its snapshot, so a patch that
+    // reached the dataset and not the snapshot reached nothing a player sees:
+    // The Twin Lance read 230 in the reference screen and cost 220 in every
+    // list, and no amount of updating the app or refreshing the army could
+    // change it, because the number was being copied from the wrong side.
+    final corrections = await patches();
+    List<Object?> patched(String name, List<Object?> records, String owner) =>
+        corrections.apply(records, faction: owner, file: name);
+
+    List<Object?> file(String name) => patched(name, data.file(name), factionId);
+    List<Object?> sheets(String name) => _merge(
+          patched(name, data.file(name), factionId),
+          parent == null
+              ? const []
+              : patched(name, parent.file(name), parentId!),
+        );
 
     Map<String, Object?> index(List<Object?> records, {String key = 'id'}) => {
           for (final record in records)
@@ -494,13 +510,13 @@ class DatasetRepository {
       dataset: dataset,
       rawUnits: index(sheets('units')),
       rawWeapons: index(sheets('weapons')),
-      rawDetachments: index(data.file('detachments')),
+      rawDetachments: index(file('detachments')),
       rawAbilities: index(sheets('abilities'), key: 'ability_id'),
       rawStratagems: {
-        ...index(core.file('stratagems')),
-        ...index(data.file('stratagems')),
+        ...index(patched('stratagems', core.file('stratagems'), 'core')),
+        ...index(file('stratagems')),
       },
-      rawEnhancements: index(data.file('enhancements')),
+      rawEnhancements: index(file('enhancements')),
     );
   }
 

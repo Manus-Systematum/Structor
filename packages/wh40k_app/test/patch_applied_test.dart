@@ -211,6 +211,38 @@ void main() {
         reason: 'the patch carries the August price');
   });
 
+  // §3.22. Every saved army is priced and played from its **snapshot**, and
+  // the snapshot is built from the raw bundle. Built from the *uncorrected*
+  // raw bundle, every correction in the patch reached the reference screens
+  // and nothing a list actually uses: The Twin Lance read 230 in one place
+  // and cost 220 in every army, and refreshing the army could not fix it.
+  test('the snapshot is built from corrected records, not raw ones', () async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final repo = DatasetRepository();
+    final builder = await repo.snapshotBuilder('tau-empire');
+
+    const roster = Roster(
+      name: 'the same list, snapshotted',
+      factionId: 'tau-empire',
+      battleSizeId: 'strike-force',
+      units: [
+        RosterUnit(instanceId: 'u1', datasheetId: 'the-twin-lance', models: 2),
+      ],
+    );
+
+    final raw = builder.build(roster).units['the-twin-lance'];
+    expect((raw! as Map)['points'], [
+      {'models': 2, 'cost': 230},
+    ]);
+
+    // And the army built from it prices at the corrected figure, which is the
+    // number on the screen the player actually reads.
+    expect(
+      PointsCalculator(await repo.faction('tau-empire')).price(roster).total,
+      230,
+    );
+  });
+
   // The same failure at scale: a parser that silently stops matching leaves a
   // patch that still applies cleanly and corrects nothing.
   test('the patch carries points for the units that were repriced', () async {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../data/army.dart';
+import '../data/database.dart';
 import '../data/roster_store.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
@@ -87,25 +89,48 @@ class _AboutScreenState extends State<AboutScreen> {
     });
     _readProvisional();
 
-    if (result.changed.isNotEmpty && mounted) await _offerArmies();
+    if (mounted) await _offerArmies();
   }
 
   /// A saved army keeps a copy of the data it was built from (§2.2), so new
   /// data does not reach one until it is asked to. Asked here rather than
   /// done: rebuilding silently is what §2.2 exists to prevent, and the answer
   /// is no the night before a game.
+  ///
+  /// **Asked about the armies, not about the download** (§3.22). Whether this
+  /// device fetched new bytes just now and whether a saved army is behind the
+  /// data are different questions: an app that picked the update up at launch
+  /// downloads nothing here, and its armies are just as stale as before. The
+  /// armies are rebuilt in memory and only the ones that actually differ are
+  /// offered.
   Future<void> _offerArmies() async {
     final store = widget.store;
     if (store == null) return;
     final rows = await store.list();
     if (rows.isEmpty || !mounted) return;
 
+    final stale = <RosterRow, Army>{};
+    final builders = <String, SnapshotBuilder>{};
+    for (final row in rows) {
+      try {
+        final builder = builders[row.factionId] ??=
+            await widget.datasets.snapshotBuilder(row.factionId);
+        final army = await store.rebuilt(row.id, builder: builder);
+        if (army != null && await store.differsFromSaved(army)) {
+          stale[row] = army;
+        }
+      } catch (_) {
+        // A faction this build cannot serve is not an army to offer.
+      }
+    }
+    if (stale.isEmpty || !mounted) return;
+
     final go = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(rows.length == 1
-            ? 'Update ${rows.single.name}?'
-            : 'Update ${rows.length} saved armies?'),
+        title: Text(stale.length == 1
+            ? 'Update ${stale.keys.single.name}?'
+            : 'Update ${stale.length} saved armies?'),
         content: const Text(
           'A saved army keeps a copy of the data it was built from. Updating '
           'replaces that copy with the data just downloaded.\n\n'
@@ -129,19 +154,14 @@ class _AboutScreenState extends State<AboutScreen> {
     var updated = 0;
     var repointed = 0;
     final failed = <String>[];
-    // One builder per faction, not per army: it is a full dataset read, and
-    // several armies of the same faction is the normal case.
-    final builders = <String, SnapshotBuilder>{};
-    for (final row in rows) {
+    // Already rebuilt above; this only writes them.
+    for (final entry in stale.entries) {
       try {
-        final builder = builders[row.factionId] ??=
-            await widget.datasets.snapshotBuilder(row.factionId);
-        final army = await store.refreshSnapshot(row.id, builder: builder);
-        if (army == null) continue;
+        await store.save(entry.value);
         updated++;
-        if (army.points != row.points) repointed++;
+        if (entry.value.points != entry.key.points) repointed++;
       } catch (_) {
-        failed.add(row.name);
+        failed.add(entry.key.name);
       }
     }
     if (!mounted) return;

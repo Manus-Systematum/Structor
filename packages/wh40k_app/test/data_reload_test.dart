@@ -219,6 +219,28 @@ void main() {
       expect((await repo.faction('orks')).faction.units.single.points.single.cost, 8);
     });
 
+    // The one that was missed: the app picked the update up at launch, so
+    // pressing the button downloads nothing — and the saved army is exactly
+    // as stale as it was. What is offered is decided by the armies, not by
+    // whether bytes moved just now (§3.22).
+    testWidgets('an army behind current data is offered it, download or not',
+        (tester) async {
+      await publish(8);
+      await repo.reload();
+      await pumpAbout(tester);
+
+      await tester.tap(find.text('Download the current data'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('No change. Dataset r2.'), findsOneWidget,
+          reason: 'this device already had it');
+      expect(find.text('Update Grots?'), findsOneWidget);
+
+      await tester.tap(find.text('Update'));
+      await tester.pumpAndSettle();
+      expect((await store.list()).single.points, 8);
+    });
+
     testWidgets('nothing changed asks nothing', (tester) async {
       await pumpAbout(tester);
 

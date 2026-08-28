@@ -129,12 +129,31 @@ class RosterStore {
     String id, {
     required core.SnapshotBuilder builder,
   }) async {
+    final army = await rebuilt(id, builder: builder);
+    if (army != null) await save(army);
+    return army;
+  }
+
+  /// The same rebuild, **not** saved.
+  ///
+  /// For asking whether an army would change at all before offering to change
+  /// it: an army already built from today's data has nothing to update, and a
+  /// dialog about it is a question with one answer.
+  Future<Army?> rebuilt(
+    String id, {
+    required core.SnapshotBuilder builder,
+  }) async {
     final row = await db.rosterById(id);
     if (row == null) return null;
     final roster = core.Roster.fromJson(jsonDecode(row.rosterJson));
-    final army = Army.fromSnapshot(roster, builder.build(roster), id: row.id);
-    await save(army);
-    return army;
+    return Army.fromSnapshot(roster, builder.build(roster), id: row.id);
+  }
+
+  /// Whether [army] says anything its saved copy does not.
+  Future<bool> differsFromSaved(Army army) async {
+    final row = await db.rosterById(army.id);
+    return row != null &&
+        jsonEncode(army.snapshot.toJson()) != row.snapshotJson;
   }
 
   /// Copies a saved roster under a new name.
