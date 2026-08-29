@@ -52,12 +52,21 @@ class Army {
           ),
       ],
     );
+    // **A list saved before the builder could record an upgrade is repaired
+    // here.** Until §4.7.1 the only door was `setEnhancement`, so a Unit
+    // Upgrade went into the enhancement list and the validator reported a
+    // legal army as carrying an enhancement on a non-Character. Only the
+    // catalogue knows which of the two a record is, so the correction happens
+    // where the catalogue is — every read path builds an Army — and the next
+    // save writes it back in the right place.
+    final repaired = RosterEditor(catalogue).reclassifyUpgrades(roster);
+
     return Army._(
       id: id,
-      roster: roster,
+      roster: repaired,
       snapshot: snapshot,
       catalogue: catalogue,
-      validation: RosterValidator(catalogue).validate(roster),
+      validation: RosterValidator(catalogue).validate(repaired),
     );
   }
 

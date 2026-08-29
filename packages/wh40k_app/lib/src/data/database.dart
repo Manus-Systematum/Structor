@@ -26,6 +26,29 @@ class Rosters extends Table {
   IntColumn get points => integer()();
   IntColumn get unitCount => integer()();
   DateTimeColumn get updatedAt => dateTime()();
+
+  /// When the army was first saved, which is what the list is ordered by.
+  ///
+  /// Ordering by `updatedAt` meant the list rearranged itself under the
+  /// reader: opening an army to look something up moved it to the top, so the
+  /// order was a record of what had been touched rather than what the armies
+  /// are. Creation is fixed, and a list that does not move is one you can
+  /// learn the shape of.
+  ///
+  /// Rows written before this column existed are backfilled with `updatedAt`,
+  /// the only evidence there is — approximate for an army edited since, exact
+  /// for one never edited, and stable from then on either way.
+  ///
+  /// **The stored default is the epoch, and the real one is [clientDefault].**
+  /// SQLite refuses `ADD COLUMN` with a non-constant default, so a column
+  /// defaulted to `CURRENT_TIMESTAMP` cannot be added to a database that
+  /// already exists — every install with armies in it would have failed to
+  /// open. A constant satisfies the statement, the migration immediately
+  /// overwrites it, and new rows are stamped in Dart before they ever reach
+  /// SQL.
+  DateTimeColumn get createdAt => dateTime()
+      .withDefault(Constant(DateTime.fromMillisecondsSinceEpoch(0)))
+      .clientDefault(DateTime.now)();
   TextColumn get rosterJson => text()();
   TextColumn get snapshotJson => text()();
 
@@ -91,7 +114,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.memory() : super(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -99,6 +122,14 @@ class AppDatabase extends _$AppDatabase {
           if (from < 2) await m.addColumn(rosters, rosters.battleLogJson);
           if (from < 3) await m.createTable(battles);
           if (from < 4) await m.createTable(settings);
+          if (from < 5) {
+            await m.addColumn(rosters, rosters.createdAt);
+            // The default stamps every existing row with the moment of the
+            // migration, which would order them all alike; `updatedAt` is the
+            // only evidence of age these rows carry.
+            await customStatement(
+                'UPDATE rosters SET created_at = updated_at');
+          }
         },
       );
 
@@ -141,12 +172,22 @@ class AppDatabase extends _$AppDatabase {
   Future<int> deleteBattle(String id) =>
       (delete(battles)..where((b) => b.id.equals(id))).go();
 
-  Future<List<RosterRow>> allRosters() =>
-      (select(rosters)..orderBy([(r) => OrderingTerm.desc(r.updatedAt)])).get();
+  /// Saved armies, newest **made** first.
+  ///
+  /// Not newest edited: see [Rosters.createdAt].
+  SimpleSelectStatement<$RostersTable, RosterRow> _rosters() =>
+      select(rosters)
+        ..orderBy([
+          (r) => OrderingTerm.desc(r.createdAt),
+          // Two armies made in the same millisecond — a duplicate, or a
+          // restore — still need a fixed order, or the list flickers between
+          // rebuilds.
+          (r) => OrderingTerm.desc(r.id),
+        ]);
 
-  Stream<List<RosterRow>> watchRosters() =>
-      (select(rosters)..orderBy([(r) => OrderingTerm.desc(r.updatedAt)]))
-          .watch();
+  Future<List<RosterRow>> allRosters() => _rosters().get();
+
+  Stream<List<RosterRow>> watchRosters() => _rosters().watch();
 
   Future<RosterRow?> rosterById(String id) =>
       (select(rosters)..where((r) => r.id.equals(id))).getSingleOrNull();

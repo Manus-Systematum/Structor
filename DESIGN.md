@@ -803,6 +803,76 @@ this unit?* — and the section appears when the answer is yes. The heading read
 `ENHANCEMENT` on a Character and `UNIT UPGRADE` otherwise, because on a tank
 the first word is wrong.
 
+### 4.7.1 It could be offered, and taking it wrote it in the wrong list
+
+The section from §4.7 appeared, the upgrade could be chosen, and choosing it
+produced an error on a legal army: *Unmasking Suite is on Stealth Battlesuits,
+which is not a Character.*
+
+**The picker had one door.** `RosterEditor` grew `setEnhancement` and never a
+`setUpgrade`, so every selection became an `EnhancementSelection` whatever the
+record was. The importer knew better and wrote `roster.upgrades` correctly, so
+an imported list was right and a built one was wrong — the same army, two
+answers, depending on how it got there. Three things then followed from the
+mis-filing: the validator reported the enhancement rule against a unit no
+enhancement rule applies to, the upgrade could hold only one target where the
+mechanic allows three, and each target after the first would have gone
+uncounted.
+
+**What it takes to record one.** `setUpgrade(roster, id, instanceId, on:)`
+adds or removes a target of a single `UpgradeSelection`, and the last target
+leaving removes the selection rather than leaving it empty — an empty target
+list is a shape the validator reports, so ordinary use must not be able to
+reach it. `setEnhancement` now routes an upgrade to it rather than only the
+caller being fixed, because the next caller would have made the same mistake.
+
+**Two sections, not one heading.** §4.7 chose the heading by
+`isCharacter`, which was right when a unit could hold one or the other. A
+Character may take an Enhancement *and* an Upgrade, and a single-select picker
+could only express one of them — choosing the upgrade would have read as
+dropping the enhancement. So the screen now draws whichever of the two sections
+has something to offer, each with its own picker. Being on another unit is not
+a reason to grey an upgrade out, the way a taken enhancement is greyed: it says
+`on 2 others` instead, because that is a fact rather than a refusal.
+
+**Lists already saved wrong are repaired where the catalogue is.** Only the
+catalogue knows which of the two a record id is, so this cannot be a database
+migration; `Army.fromSnapshot` reclassifies on the way in, every read path
+builds an `Army`, and the next save writes it back in the right place.
+
+### 4.8 The list is ordered by when an army was made
+
+It was ordered by `updatedAt`, so the list rearranged itself under the reader:
+opening an army to check a statline moved it to the top, and after a week the
+order recorded what had been touched rather than what the armies are. Every
+list in this app stays where it was put (§7.7); an order that reshuffles itself
+is the same failure a screen away.
+
+`createdAt` is set once and never rewritten — the autosave upsert would
+otherwise stamp a new one every few seconds and reintroduce exactly the
+ordering being replaced. Rows written before the column existed are backfilled
+from `updatedAt`: approximate for an army edited since, exact for one never
+edited, and fixed from then on either way.
+
+**The column's stored default is the epoch, and the real one is in Dart.**
+SQLite refuses `ADD COLUMN` with a non-constant default, so `CURRENT_TIMESTAMP`
+— the obvious choice — cannot be added to a database that already exists. Every
+install with armies in it would have failed to open on upgrade. A constant
+satisfies the statement, the migration overwrites it immediately, and
+`clientDefault` stamps new rows before they reach SQL. The test that found this
+writes a version 4 database by hand and opens it with this one, because a
+migration that is only read looks fine.
+
+### 4.9 The total is in the app bar
+
+The points total lived in the header, which is the first thing off the top of
+the screen once units are being added — so the number every edit is made
+against was answered by scrolling back up. It now sits in the app bar beside
+`Revert changes`, as the bare figure: the header a scroll away carries the
+`POINTS` label, and a second one costs the room the number needs. At 360 dp
+the bar holds a back arrow, a title, the total and the button only with its
+paddings tightened, which is the width that decided them.
+
 ## 5. Open questions
 
 - [ ] ⚠ **Licence on `BSData/wh40k-11e`** — see §0. Blocks §3.4.

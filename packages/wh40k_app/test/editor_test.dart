@@ -603,4 +603,70 @@ void main() {
           contains('Symphonic Payload (Upgrade)'));
     });
   });
+
+  testWidgets('the points total is in the app bar, and follows the edits',
+      (tester) async {
+    // The header carries it too, but the header is the first thing off the
+    // top of the screen once units are being added.
+    await open(tester, initial: tau());
+
+    final bar = find.descendant(
+      of: find.byType(AppBar),
+      matching: find.text('0/2000'),
+    );
+    expect(bar, findsOneWidget);
+
+    await tester.tap(find.text('Add unit'));
+    await settle(tester);
+    await tester.enterText(find.byType(SearchBar), 'broadside');
+    await settle(tester);
+    await tester.tap(find.text('Broadside Battlesuits').last);
+    await settle(tester);
+
+    expect(
+      find.descendant(of: find.byType(AppBar), matching: find.text('0/2000')),
+      findsNothing,
+    );
+    // Whatever a Broadside costs, the bar is showing it against the limit.
+    expect(
+      find.descendant(
+          of: find.byType(AppBar), matching: find.textContaining('/2000')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('a Unit Upgrade on a unit that is no Character is not an error',
+      (tester) async {
+    // §2.1: an Upgrade and an Enhancement share a record shape and are two
+    // mechanics. The builder had one door, so an upgrade taken on Stealth
+    // Battlesuits was written as an enhancement and the validator reported a
+    // legal army as carrying one on a non-Character.
+    late Roster roster;
+    await tester.runAsync(() async {
+      final editor = RosterEditor(await datasets.faction('tau-empire'));
+      roster = editor.addDetachment(tau(), 'advanced-acquisition-cadre');
+      roster = editor.addUnit(roster, 'stealth-battlesuits');
+    });
+
+    await open(tester, initial: roster);
+    await tester.tap(find.text('Stealth Battlesuits').first);
+    await settle(tester);
+
+    expect(find.text('UNIT UPGRADE'), findsOneWidget);
+    await tester.tap(find.text('Unmasking Suite (Upgrade)'));
+    await settle(tester);
+    // The autosave is on a 700 ms timer, and fake time only moves when pumped.
+    await tester.pump(const Duration(milliseconds: 800));
+    await tester.runAsync(() => Future<void>.delayed(Duration.zero));
+
+    final rows = await store.list();
+    final saved = await store.load(rows.single.id);
+    expect(saved!.roster.enhancements, isEmpty);
+    expect(saved.roster.upgrades.single.upgradeId,
+        'unmasking-suite-upgrade-advanced-acquisition-cadre');
+    expect(
+      saved.validation.errors.map((f) => f.code),
+      isNot(contains('enhancement.non-character')),
+    );
+  });
 }

@@ -188,6 +188,11 @@ class RosterStore {
   /// Saves a roster, deriving the list-view columns from the army itself so
   /// the roster list never has to parse a document to draw a row.
   Future<void> save(Army army) async {
+    // **Creation is set once and never rewritten.** The upsert would otherwise
+    // stamp a new one on every autosave, and the list — ordered by it — would
+    // put whatever was last edited on top, which is the ordering this column
+    // exists to replace.
+    final existing = await db.rosterById(army.id);
     await db.upsertRoster(RostersCompanion.insert(
       id: army.id,
       name: army.roster.name,
@@ -196,6 +201,7 @@ class RosterStore {
       points: army.points,
       unitCount: army.combatUnits.length,
       updatedAt: DateTime.now(),
+      createdAt: Value(existing?.createdAt ?? DateTime.now()),
       rosterJson: jsonEncode(army.roster.toJson()),
       snapshotJson: jsonEncode(army.snapshot.toJson()),
     ));

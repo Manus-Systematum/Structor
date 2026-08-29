@@ -27,6 +27,9 @@ dependencies:
       ref: main
 
 dev_dependencies:
+  # Writing a version 4 database by hand, to open it with this one and prove
+  # the migration runs (test/migration_v5_test.dart).
+  sqlite3: ^3.5.1
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0

@@ -237,16 +237,34 @@ class UnitEditorSheet extends StatelessWidget {
                 // game could not be offered an upgrade they may legally take,
                 // even though the picker inside already sorted the two out
                 // (§4.7).
+                //
+                // **Two sections, because they are two mechanics.** A
+                // Character may take one of each, and a single picker could
+                // only express one — choosing an upgrade would have read as
+                // dropping the enhancement.
                 if (datasheet.isCharacter ||
                     EnhancementOffers.any(dataset, roster, datasheet)) ...[
-                  _Heading(
-                      datasheet.isCharacter ? 'ENHANCEMENT' : 'UNIT UPGRADE'),
-                  _EnhancementPicker(
-                    dataset: dataset,
-                    roster: roster,
-                    instanceId: instanceId,
-                    onEdit: onEdit,
-                  ),
+                  if (datasheet.isCharacter ||
+                      EnhancementOffers.of(dataset, roster, datasheet)
+                          .any((e) => !e.isUpgrade)) ...[
+                    const _Heading('ENHANCEMENT'),
+                    _EnhancementPicker(
+                      dataset: dataset,
+                      roster: roster,
+                      instanceId: instanceId,
+                      onEdit: onEdit,
+                    ),
+                  ],
+                  if (EnhancementOffers.of(dataset, roster, datasheet)
+                      .any((e) => e.isUpgrade)) ...[
+                    const _Heading('UNIT UPGRADE'),
+                    _UpgradePicker(
+                      dataset: dataset,
+                      roster: roster,
+                      instanceId: instanceId,
+                      onEdit: onEdit,
+                    ),
+                  ],
                 ],
 
                 const _Heading('ARMY'),
@@ -681,14 +699,15 @@ class _EnhancementPicker extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final datasheet =
         dataset.unit(roster.unitByInstance(instanceId)?.datasheetId ?? '');
-    final offered = EnhancementOffers.of(dataset, roster, datasheet);
+    final offered = EnhancementOffers.of(dataset, roster, datasheet)
+        .where((e) => !e.isUpgrade)
+        .toList();
 
     if (offered.isEmpty) {
       final none = datasheet != null && datasheet.isEpicHero
           ? 'An Epic Hero brings their own wargear and takes no enhancements.'
           : datasheet != null && !datasheet.isCharacter
-              ? 'Enhancements go on Characters. Unit Upgrades that name this '
-                  'datasheet would appear here.'
+              ? 'Enhancements go on Characters.'
               : 'Add a detachment to unlock its enhancements.';
       return Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
@@ -726,6 +745,75 @@ class _EnhancementPicker extends StatelessWidget {
       onSelect: (id) => onEdit((e) => id == null
           ? (mine == null ? roster : e.setEnhancement(roster, mine, null))
           : e.setEnhancement(roster, id, instanceId)),
+    );
+  }
+}
+
+/// A Unit Upgrade, which is not an Enhancement (DESIGN.md §2.1).
+///
+/// One upgrade goes on up to three units and they share one slot, so being on
+/// another unit is not a reason to grey it out here — it is a fact worth
+/// stating, which is what the note does.
+class _UpgradePicker extends StatelessWidget {
+  final Dataset dataset;
+  final Roster roster;
+  final String instanceId;
+  final void Function(Roster Function(RosterEditor)) onEdit;
+
+  const _UpgradePicker({
+    required this.dataset,
+    required this.roster,
+    required this.instanceId,
+    required this.onEdit,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final datasheet =
+        dataset.unit(roster.unitByInstance(instanceId)?.datasheetId ?? '');
+    final offered = EnhancementOffers.of(dataset, roster, datasheet)
+        .where((e) => e.isUpgrade)
+        .toList();
+    if (offered.isEmpty) return const SizedBox.shrink();
+
+    String? mine;
+    final elsewhere = <String, int>{};
+    for (final upgrade in roster.upgrades) {
+      for (final target in upgrade.targetInstanceIds) {
+        if (target == instanceId) {
+          mine = upgrade.upgradeId;
+        } else {
+          elsewhere[upgrade.upgradeId] =
+              (elsewhere[upgrade.upgradeId] ?? 0) + 1;
+        }
+      }
+    }
+
+    return _ChipPicker<String?>(
+      value: mine,
+      entries: [
+        (value: null, label: 'None', note: null, dimmed: false),
+        for (final upgrade in offered)
+          (
+            value: upgrade.id,
+            label: upgrade.name,
+            note: [
+              '${upgrade.cost} pts',
+              if (elsewhere[upgrade.id] case final others?)
+                'on $others other${others == 1 ? '' : 's'}',
+            ].join(' · '),
+            dimmed: false,
+          ),
+      ],
+      onSelect: (id) => onEdit((e) {
+        // Off this unit, then on to it: selecting a different upgrade replaces
+        // the one this unit had without disturbing the units sharing it.
+        var next = mine == null
+            ? roster
+            : e.setUpgrade(roster, mine, instanceId, on: false);
+        if (id != null) next = e.setUpgrade(next, id, instanceId, on: true);
+        return next;
+      }),
     );
   }
 }

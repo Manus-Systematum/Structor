@@ -255,9 +255,21 @@ class _EditorScreenState extends State<EditorScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
+          // Three things and a back arrow on a 360 dp phone: the spacing is
+          // taken back from the paddings so the title does not have to
+          // ellipsize to "Edit a…" to make room for the number.
+          titleSpacing: 4,
           title: Text(widget.initial == null ? 'New army' : 'Edit army'),
+          // **The total follows the scroll.** It is the number every edit is
+          // made against, and it lived only in the header — which is the first
+          // thing off the top of the screen once units are being added, so the
+          // question "how much have I spent" was answered by scrolling back up.
           actions: [
+            if (dataset != null) _AppBarTotal(cost: _total(dataset)),
             TextButton(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+              ),
               onPressed: dataset == null || _saving || !_changedSinceOpen
                   ? null
                   : _revert,
@@ -282,6 +294,14 @@ class _EditorScreenState extends State<EditorScreen> {
       ),
     );
   }
+
+  /// What the header and the app bar both show, computed once so they cannot
+  /// disagree.
+  ({int total, int? limit}) _total(Dataset dataset) => (
+        total: PointsCalculator(dataset).price(_roster).total,
+        limit: _roster.pointsLimitOverride ??
+            BattleSize.byId(_roster.battleSizeId)?.points,
+      );
 
   Widget _body(Dataset dataset) {
     final validation = RosterValidator(dataset).validate(_roster);
@@ -454,6 +474,34 @@ class _EditorScreenState extends State<EditorScreen> {
             },
           );
         },
+      ),
+    );
+  }
+}
+
+/// The points total, in the app bar beside the only other action there.
+///
+/// Just the number: the header a scroll away carries the label, and a second
+/// "POINTS" in a bar this narrow costs the room the number needs.
+class _AppBarTotal extends StatelessWidget {
+  final ({int total, int? limit}) cost;
+
+  const _AppBarTotal({required this.cost});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final over = cost.limit != null && cost.total > cost.limit!;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2),
+      child: Center(
+        child: Text(
+          cost.limit == null ? '${cost.total}' : '${cost.total}/${cost.limit}',
+          style: AppTheme.numeric(context, size: 15).copyWith(
+            fontWeight: FontWeight.w700,
+            color: over ? scheme.error : scheme.onSurfaceVariant,
+          ),
+        ),
       ),
     );
   }

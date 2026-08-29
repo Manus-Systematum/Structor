@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:drift/drift.dart' show Value;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wh40k_app/src/data/army.dart';
 import 'package:wh40k_app/src/data/database.dart';
@@ -213,6 +214,79 @@ void main() {
 
     test('ignores the whitespace a typed name collects', () {
       expect(copyName('2k ret', ['  2k ret Copy  ']), '2k ret Copy 2');
+    });
+  });
+
+  group('the list is ordered by when an army was made', () {
+    // Ordering by the last edit meant the list rearranged itself under the
+    // reader: opening an army to look something up moved it to the top. The
+    // order is now a fact about the armies rather than about what has been
+    // touched.
+    Future<void> saveAs(String id, String name) async {
+      final army = Army.fromSnapshot(
+        reference.roster.copyWith(name: name),
+        reference.snapshot,
+        id: id,
+      );
+      await store.save(army);
+    }
+
+    test('newest made first, whatever order they were edited in', () async {
+      await saveAs('first', 'One');
+      await saveAs('second', 'Two');
+      await saveAs('third', 'Three');
+
+      // Edit the oldest, which under the old ordering put it on top.
+      await saveAs('first', 'One, edited');
+
+      expect((await store.list()).map((r) => r.name),
+          ['Three', 'Two', 'One, edited']);
+    });
+
+    test('editing does not rewrite when an army was made', () async {
+      await saveAs('only', 'One');
+      final made = (await store.list()).single.createdAt;
+
+      await saveAs('only', 'One, edited');
+      final row = (await store.list()).single;
+
+      expect(row.createdAt, made);
+      expect(row.updatedAt.isBefore(made), isFalse);
+    });
+
+    test('creation leads, and the id only breaks a tie', () async {
+      // Written straight to the table, because `save` stamps the clock: the
+      // row with the later id is the older army, so an order that follows
+      // creation and one that follows the id disagree here.
+      Future<void> row(String id, String name, DateTime made) =>
+          db.upsertRoster(RostersCompanion.insert(
+            id: id,
+            name: name,
+            factionId: 'tau-empire',
+            battleSizeId: 'strike-force',
+            points: 0,
+            unitCount: 0,
+            updatedAt: made,
+            createdAt: Value(made),
+            rosterJson: '{}',
+            snapshotJson: '{}',
+          ));
+
+      await row('zzz', 'Older', DateTime(2026, 1, 1));
+      await row('aaa', 'Newer', DateTime(2026, 6, 1));
+
+      expect((await store.list()).map((r) => r.name), ['Newer', 'Older']);
+    });
+
+    test('armies made in the same instant still have a fixed order', () async {
+      // Two saves inside one millisecond — a duplicate, or a restore. Without
+      // a tiebreak the list flickers between rebuilds.
+      await saveAs('aaa', 'A');
+      await saveAs('bbb', 'B');
+      final once = (await store.list()).map((r) => r.id).toList();
+      final twice = (await store.list()).map((r) => r.id).toList();
+
+      expect(once, twice);
     });
   });
 }

@@ -47,6 +47,15 @@ class $RostersTable extends Rosters with TableInfo<$RostersTable, RosterRow> {
   late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
       'updated_at', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: Constant(DateTime.fromMillisecondsSinceEpoch(0)),
+      clientDefault: DateTime.now);
   static const VerificationMeta _rosterJsonMeta =
       const VerificationMeta('rosterJson');
   @override
@@ -74,6 +83,7 @@ class $RostersTable extends Rosters with TableInfo<$RostersTable, RosterRow> {
         points,
         unitCount,
         updatedAt,
+        createdAt,
         rosterJson,
         snapshotJson,
         battleLogJson
@@ -131,6 +141,10 @@ class $RostersTable extends Rosters with TableInfo<$RostersTable, RosterRow> {
     } else if (isInserting) {
       context.missing(_updatedAtMeta);
     }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    }
     if (data.containsKey('roster_json')) {
       context.handle(
           _rosterJsonMeta,
@@ -176,6 +190,8 @@ class $RostersTable extends Rosters with TableInfo<$RostersTable, RosterRow> {
           .read(DriftSqlType.int, data['${effectivePrefix}unit_count'])!,
       updatedAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
       rosterJson: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}roster_json'])!,
       snapshotJson: attachedDatabase.typeMapping
@@ -199,6 +215,27 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
   final int points;
   final int unitCount;
   final DateTime updatedAt;
+
+  /// When the army was first saved, which is what the list is ordered by.
+  ///
+  /// Ordering by `updatedAt` meant the list rearranged itself under the
+  /// reader: opening an army to look something up moved it to the top, so the
+  /// order was a record of what had been touched rather than what the armies
+  /// are. Creation is fixed, and a list that does not move is one you can
+  /// learn the shape of.
+  ///
+  /// Rows written before this column existed are backfilled with `updatedAt`,
+  /// the only evidence there is — approximate for an army edited since, exact
+  /// for one never edited, and stable from then on either way.
+  ///
+  /// **The stored default is the epoch, and the real one is [clientDefault].**
+  /// SQLite refuses `ADD COLUMN` with a non-constant default, so a column
+  /// defaulted to `CURRENT_TIMESTAMP` cannot be added to a database that
+  /// already exists — every install with armies in it would have failed to
+  /// open. A constant satisfies the statement, the migration immediately
+  /// overwrites it, and new rows are stamped in Dart before they ever reach
+  /// SQL.
+  final DateTime createdAt;
   final String rosterJson;
   final String snapshotJson;
 
@@ -214,6 +251,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
       required this.points,
       required this.unitCount,
       required this.updatedAt,
+      required this.createdAt,
       required this.rosterJson,
       required this.snapshotJson,
       this.battleLogJson});
@@ -227,6 +265,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
     map['points'] = Variable<int>(points);
     map['unit_count'] = Variable<int>(unitCount);
     map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['created_at'] = Variable<DateTime>(createdAt);
     map['roster_json'] = Variable<String>(rosterJson);
     map['snapshot_json'] = Variable<String>(snapshotJson);
     if (!nullToAbsent || battleLogJson != null) {
@@ -244,6 +283,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
       points: Value(points),
       unitCount: Value(unitCount),
       updatedAt: Value(updatedAt),
+      createdAt: Value(createdAt),
       rosterJson: Value(rosterJson),
       snapshotJson: Value(snapshotJson),
       battleLogJson: battleLogJson == null && nullToAbsent
@@ -263,6 +303,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
       points: serializer.fromJson<int>(json['points']),
       unitCount: serializer.fromJson<int>(json['unitCount']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       rosterJson: serializer.fromJson<String>(json['rosterJson']),
       snapshotJson: serializer.fromJson<String>(json['snapshotJson']),
       battleLogJson: serializer.fromJson<String?>(json['battleLogJson']),
@@ -279,6 +320,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
       'points': serializer.toJson<int>(points),
       'unitCount': serializer.toJson<int>(unitCount),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
       'rosterJson': serializer.toJson<String>(rosterJson),
       'snapshotJson': serializer.toJson<String>(snapshotJson),
       'battleLogJson': serializer.toJson<String?>(battleLogJson),
@@ -293,6 +335,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
           int? points,
           int? unitCount,
           DateTime? updatedAt,
+          DateTime? createdAt,
           String? rosterJson,
           String? snapshotJson,
           Value<String?> battleLogJson = const Value.absent()}) =>
@@ -304,6 +347,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
         points: points ?? this.points,
         unitCount: unitCount ?? this.unitCount,
         updatedAt: updatedAt ?? this.updatedAt,
+        createdAt: createdAt ?? this.createdAt,
         rosterJson: rosterJson ?? this.rosterJson,
         snapshotJson: snapshotJson ?? this.snapshotJson,
         battleLogJson:
@@ -320,6 +364,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
       points: data.points.present ? data.points.value : this.points,
       unitCount: data.unitCount.present ? data.unitCount.value : this.unitCount,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       rosterJson:
           data.rosterJson.present ? data.rosterJson.value : this.rosterJson,
       snapshotJson: data.snapshotJson.present
@@ -341,6 +386,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
           ..write('points: $points, ')
           ..write('unitCount: $unitCount, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('createdAt: $createdAt, ')
           ..write('rosterJson: $rosterJson, ')
           ..write('snapshotJson: $snapshotJson, ')
           ..write('battleLogJson: $battleLogJson')
@@ -350,7 +396,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
 
   @override
   int get hashCode => Object.hash(id, name, factionId, battleSizeId, points,
-      unitCount, updatedAt, rosterJson, snapshotJson, battleLogJson);
+      unitCount, updatedAt, createdAt, rosterJson, snapshotJson, battleLogJson);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -362,6 +408,7 @@ class RosterRow extends DataClass implements Insertable<RosterRow> {
           other.points == this.points &&
           other.unitCount == this.unitCount &&
           other.updatedAt == this.updatedAt &&
+          other.createdAt == this.createdAt &&
           other.rosterJson == this.rosterJson &&
           other.snapshotJson == this.snapshotJson &&
           other.battleLogJson == this.battleLogJson);
@@ -375,6 +422,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
   final Value<int> points;
   final Value<int> unitCount;
   final Value<DateTime> updatedAt;
+  final Value<DateTime> createdAt;
   final Value<String> rosterJson;
   final Value<String> snapshotJson;
   final Value<String?> battleLogJson;
@@ -387,6 +435,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
     this.points = const Value.absent(),
     this.unitCount = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
     this.rosterJson = const Value.absent(),
     this.snapshotJson = const Value.absent(),
     this.battleLogJson = const Value.absent(),
@@ -400,6 +449,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
     required int points,
     required int unitCount,
     required DateTime updatedAt,
+    this.createdAt = const Value.absent(),
     required String rosterJson,
     required String snapshotJson,
     this.battleLogJson = const Value.absent(),
@@ -421,6 +471,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
     Expression<int>? points,
     Expression<int>? unitCount,
     Expression<DateTime>? updatedAt,
+    Expression<DateTime>? createdAt,
     Expression<String>? rosterJson,
     Expression<String>? snapshotJson,
     Expression<String>? battleLogJson,
@@ -434,6 +485,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
       if (points != null) 'points': points,
       if (unitCount != null) 'unit_count': unitCount,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (createdAt != null) 'created_at': createdAt,
       if (rosterJson != null) 'roster_json': rosterJson,
       if (snapshotJson != null) 'snapshot_json': snapshotJson,
       if (battleLogJson != null) 'battle_log_json': battleLogJson,
@@ -449,6 +501,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
       Value<int>? points,
       Value<int>? unitCount,
       Value<DateTime>? updatedAt,
+      Value<DateTime>? createdAt,
       Value<String>? rosterJson,
       Value<String>? snapshotJson,
       Value<String?>? battleLogJson,
@@ -461,6 +514,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
       points: points ?? this.points,
       unitCount: unitCount ?? this.unitCount,
       updatedAt: updatedAt ?? this.updatedAt,
+      createdAt: createdAt ?? this.createdAt,
       rosterJson: rosterJson ?? this.rosterJson,
       snapshotJson: snapshotJson ?? this.snapshotJson,
       battleLogJson: battleLogJson ?? this.battleLogJson,
@@ -492,6 +546,9 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
     if (updatedAt.present) {
       map['updated_at'] = Variable<DateTime>(updatedAt.value);
     }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
     if (rosterJson.present) {
       map['roster_json'] = Variable<String>(rosterJson.value);
     }
@@ -517,6 +574,7 @@ class RostersCompanion extends UpdateCompanion<RosterRow> {
           ..write('points: $points, ')
           ..write('unitCount: $unitCount, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('createdAt: $createdAt, ')
           ..write('rosterJson: $rosterJson, ')
           ..write('snapshotJson: $snapshotJson, ')
           ..write('battleLogJson: $battleLogJson, ')
@@ -1257,6 +1315,7 @@ typedef $$RostersTableCreateCompanionBuilder = RostersCompanion Function({
   required int points,
   required int unitCount,
   required DateTime updatedAt,
+  Value<DateTime> createdAt,
   required String rosterJson,
   required String snapshotJson,
   Value<String?> battleLogJson,
@@ -1270,6 +1329,7 @@ typedef $$RostersTableUpdateCompanionBuilder = RostersCompanion Function({
   Value<int> points,
   Value<int> unitCount,
   Value<DateTime> updatedAt,
+  Value<DateTime> createdAt,
   Value<String> rosterJson,
   Value<String> snapshotJson,
   Value<String?> battleLogJson,
@@ -1305,6 +1365,9 @@ class $$RostersTableFilterComposer
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
       column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get rosterJson => $composableBuilder(
       column: $table.rosterJson, builder: (column) => ColumnFilters(column));
@@ -1346,6 +1409,9 @@ class $$RostersTableOrderingComposer
 
   ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
       column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get rosterJson => $composableBuilder(
       column: $table.rosterJson, builder: (column) => ColumnOrderings(column));
@@ -1389,6 +1455,9 @@ class $$RostersTableAnnotationComposer
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
   GeneratedColumn<String> get rosterJson => $composableBuilder(
       column: $table.rosterJson, builder: (column) => column);
 
@@ -1429,6 +1498,7 @@ class $$RostersTableTableManager extends RootTableManager<
             Value<int> points = const Value.absent(),
             Value<int> unitCount = const Value.absent(),
             Value<DateTime> updatedAt = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
             Value<String> rosterJson = const Value.absent(),
             Value<String> snapshotJson = const Value.absent(),
             Value<String?> battleLogJson = const Value.absent(),
@@ -1442,6 +1512,7 @@ class $$RostersTableTableManager extends RootTableManager<
             points: points,
             unitCount: unitCount,
             updatedAt: updatedAt,
+            createdAt: createdAt,
             rosterJson: rosterJson,
             snapshotJson: snapshotJson,
             battleLogJson: battleLogJson,
@@ -1455,6 +1526,7 @@ class $$RostersTableTableManager extends RootTableManager<
             required int points,
             required int unitCount,
             required DateTime updatedAt,
+            Value<DateTime> createdAt = const Value.absent(),
             required String rosterJson,
             required String snapshotJson,
             Value<String?> battleLogJson = const Value.absent(),
@@ -1468,6 +1540,7 @@ class $$RostersTableTableManager extends RootTableManager<
             points: points,
             unitCount: unitCount,
             updatedAt: updatedAt,
+            createdAt: createdAt,
             rosterJson: rosterJson,
             snapshotJson: snapshotJson,
             battleLogJson: battleLogJson,
