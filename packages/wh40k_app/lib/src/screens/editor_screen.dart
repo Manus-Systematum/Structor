@@ -6,6 +6,7 @@ import 'package:wh40k_core/wh40k_core.dart';
 
 import '../data/army.dart';
 import '../data/dataset_repository.dart';
+import '../data/play_density.dart';
 import '../data/roster_store.dart';
 import '../theme.dart';
 import '../widgets/collapsible.dart';
@@ -63,6 +64,15 @@ class _EditorScreenState extends State<EditorScreen> {
   /// a stream here.
   bool _showLegends = false;
 
+  /// How much this roster's owner wants in front of them (§7.3.13), which
+  /// here decides whether a unit's rules arrive open or as names.
+  ///
+  /// The turn page owns the control; the builder only reads it. A new army
+  /// has no setting yet and no id to store one under, so it opens the way
+  /// `full` does — building a list is when the wording matters most, and it
+  /// is one tap per rule to fold away.
+  PlayDensity _density = PlayDensity.full;
+
   /// The id this army is being written under. Fixed on the first autosave of
   /// a new army so every later one overwrites rather than piling up copies.
   late String? _id = widget.rosterId;
@@ -79,6 +89,11 @@ class _EditorScreenState extends State<EditorScreen> {
     widget.store.showLegends().then((on) {
       if (mounted) setState(() => _showLegends = on);
     });
+    if (widget.rosterId case final rosterId?) {
+      widget.store.density(rosterId).then((density) {
+        if (mounted && density != null) setState(() => _density = density);
+      });
+    }
   }
 
   @override
@@ -435,6 +450,7 @@ class _EditorScreenState extends State<EditorScreen> {
             dataset: dataset,
             roster: _roster,
             instanceId: editing,
+            rulesOpen: _density.showsRuleText,
             // Only when there is a choice to make; a lone datasheet needs no
             // switcher above it.
             groupInstanceIds: group.length > 1 ? group : const [],

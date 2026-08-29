@@ -136,28 +136,49 @@ class CarriedWeaponProfiles extends StatelessWidget {
   final SourceUnit datasheet;
   final Map<String, int> carried;
 
+  /// Everything the datasheet may take, when the caller wants the choice
+  /// shown rather than only the choice made (DESIGN.md §4.12).
+  ///
+  /// Null keeps the old behaviour — the reference screen reads a saved army
+  /// and has no choice left to offer.
+  final Set<String>? takeable;
+
   const CarriedWeaponProfiles({
     super.key,
     required this.dataset,
     required this.datasheet,
     required this.carried,
+    this.takeable,
   });
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    // Carried first, then anything else the datasheet could take. The order
+    // is the answer to two different questions — what is on the table, and
+    // what could be — and the first one must not move as the second is
+    // browsed, so taken rows keep the top of the table.
+    final rows = <(String, int)>[
+      for (final entry in carried.entries)
+        if (entry.value > 0) (entry.key, entry.value),
+      for (final id in takeable ?? const <String>{})
+        if ((carried[id] ?? 0) <= 0) (id, 0),
+    ];
+
     final profiles = <(String, String, WeaponProfile, _Kind)>[];
-    for (final entry in carried.entries) {
-      if (entry.value <= 0) continue;
-      final weapon = dataset.weaponFor(datasheet, entry.key) ??
-          dataset.weapon(entry.key) ??
+    for (final (itemId, count) in rows) {
+      final weapon = dataset.weaponFor(datasheet, itemId) ??
+          dataset.weapon(itemId) ??
           // A drone is wargear whose rules are an ability, and the ability
           // names the gun it brings (§3.8).
-          _granted(entry.key);
+          _granted(itemId);
       if (weapon == null) continue;
       for (final profile in weapon.profiles) {
         profiles.add((
-          '${entry.value}×',
+          // An untaken row has no count, and the bar down its left is
+          // missing too: two marks for one fact, so the table still reads
+          // when the accent colour does not (§4.12).
+          count == 0 ? '' : '$count×',
           // **A profile name alone is not a weapon.** A Plasma pistol
           // publishes `Standard` and `Supercharge`, so the table listed
           // `Supercharge` with no way to tell which gun it belonged to — and
@@ -212,8 +233,18 @@ class CarriedWeaponProfiles extends StatelessWidget {
             // pistol on its own again — it is a ranged weapon that can be
             // fired inside engagement range, which is the one thing you are
             // checking the list for when the enemy is already on you.
-            color: kind.tint(scheme),
-            padding: const EdgeInsets.fromLTRB(20, 2, 12, 2),
+            //
+            // Taken rows carry a bar down the left. The tint is already
+            // saying which kind of weapon a row is, so it cannot also say
+            // whether the unit has one; a bar is a second channel, and it
+            // survives a greyscale screenshot and a colourblind reader.
+            decoration: BoxDecoration(
+              color: kind.tint(scheme),
+              border: count.isEmpty
+                  ? null
+                  : Border(left: BorderSide(color: scheme.primary, width: 3)),
+            ),
+            padding: EdgeInsets.fromLTRB(count.isEmpty ? 20 : 17, 2, 12, 2),
             child: Row(
               children: [
                 Expanded(
@@ -221,10 +252,16 @@ class CarriedWeaponProfiles extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('$count $name',
+                      Text(count.isEmpty ? name : '$count $name',
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 12)),
+                          style: TextStyle(
+                            fontSize: 12,
+                            // Not a colour change: the untaken row is the
+                            // same ink, and what it lacks is the count and
+                            // the bar.
+                            color: scheme.onSurface,
+                          )),
                       // The keywords, named and not explained. Half of what a
                       // weapon does is here — TORRENT, DEVASTATING WOUNDS,
                       // HAZARDOUS — and the table was six numbers with none

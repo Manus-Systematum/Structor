@@ -4,6 +4,8 @@ import 'package:wh40k_core/wh40k_core.dart';
 import '../data/enhancement_offers.dart';
 import '../theme.dart';
 import 'sheet_header.dart';
+import 'remembered_toggle.dart';
+import 'rule_text.dart';
 import 'unit_profiles.dart';
 
 /// Editing one unit: size, loadout, who it joins, what it carries.
@@ -44,6 +46,14 @@ class UnitEditorSheet extends StatelessWidget {
   /// Switches which member the sheet is editing.
   final void Function(String instanceId)? onSelect;
 
+  /// Whether a unit's rules arrive open or as names to tap.
+  ///
+  /// The roster's own setting (§7.3.13), not a second one: an army you know
+  /// well enough to play from names is one you know well enough to build
+  /// from them. It decides the *first* state only — a fold the reader opens
+  /// or closes outranks it and is remembered (§7.7).
+  final bool rulesOpen;
+
   const UnitEditorSheet({
     super.key,
     required this.dataset,
@@ -51,6 +61,7 @@ class UnitEditorSheet extends StatelessWidget {
     required this.instanceId,
     required this.onEdit,
     required this.onRemove,
+    this.rulesOpen = true,
     this.groupInstanceIds = const [],
     this.onSelect,
   });
@@ -116,6 +127,28 @@ class UnitEditorSheet extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 11, color: scheme.onSurfaceVariant)),
                 ),
+
+                // **What it does, before what it carries.** The sheet used to
+                // open on the wargear counters, so the question a unit is
+                // bought to answer — what are its rules — was on a different
+                // screen entirely (§4.11). Names always; the bodies fold,
+                // because in full they run 789–2,840 px against a sheet that
+                // is 686–1,511.
+                if (_rules(dataset, datasheet) case final rules
+                    when rules.isNotEmpty) ...[
+                  const _Heading('RULES'),
+                  for (final (abilityId, name, body) in rules)
+                    _RuleFold(
+                      // Namespaced by datasheet, not by instance: two copies
+                      // of the same unit ask the same question of the same
+                      // rule, and the second should not have to be opened
+                      // again.
+                      rememberAs: 'unit-rule:${datasheet.id}:$abilityId',
+                      name: name,
+                      body: body,
+                      initiallyOpen: rulesOpen,
+                    ),
+                ],
 
                 _Row(
                   label: 'Models',
@@ -201,10 +234,19 @@ class UnitEditorSheet extends StatelessWidget {
                   ),
                 ),
 
+                // Everything the datasheet may take, not only what is on it:
+                // choosing between a burst cannon and a fusion blaster means
+                // comparing them, and the untaken one used to be invisible
+                // until it was bought (§4.12).
                 CarriedWeaponProfiles(
                   dataset: dataset,
                   datasheet: datasheet,
                   carried: carried,
+                  takeable: {
+                    ...loadout.fixed.keys,
+                    for (final group in loadout.groups) ...group.items,
+                    for (final counter in loadout.counters) counter.itemId,
+                  },
                 ),
 
                 if (datasheet.attachesToUnit) ...[
@@ -267,30 +309,26 @@ class UnitEditorSheet extends StatelessWidget {
                   ],
                 ],
 
-                const _Heading('ARMY'),
-                SwitchListTile(
-                  dense: true,
-                  title: const Text('Warlord', style: TextStyle(fontSize: 13)),
-                  subtitle: Text(
-                    datasheet.isCharacter
-                        ? 'One per army'
-                        : 'The Warlord must be a Character',
-                    style:
-                        TextStyle(fontSize: 11, color: scheme.onSurfaceVariant),
+                // **Absent rather than dead.** The switch was drawn greyed on
+                // every non-Character with a line explaining why it could not
+                // be used — a control that exists to be refused, on the 80% of
+                // datasheets that can never take it. A rule the reader cannot
+                // act on is not information here: nothing about a Devilfish
+                // raises the question of it being Warlord (§4.13).
+                if (datasheet.isCharacter) ...[
+                  const _Heading('ARMY'),
+                  SwitchListTile(
+                    dense: true,
+                    title:
+                        const Text('Warlord', style: TextStyle(fontSize: 13)),
+                    subtitle: Text('One per army',
+                        style: TextStyle(
+                            fontSize: 11, color: scheme.onSurfaceVariant)),
+                    value: roster.warlordInstanceId == instanceId,
+                    onChanged: (on) => onEdit(
+                        (e) => e.setWarlord(roster, on ? instanceId : null)),
                   ),
-                  value: roster.warlordInstanceId == instanceId,
-                  // Refused rather than merely flagged. §2.3's permissiveness is
-                  // about data the source states badly — wargear options are
-                  // incomplete, so enforcing them would reject legal armies. This is
-                  // not that: "the Warlord must be a Character" is a rule with no
-                  // missing data behind it, and the keyword is on every datasheet
-                  // that has it. Paragon Warsuits are a Vehicle, and offering the
-                  // switch only to fail validation afterwards wastes the tap.
-                  onChanged: datasheet.isCharacter
-                      ? (on) => onEdit(
-                          (e) => e.setWarlord(roster, on ? instanceId : null))
-                      : null,
-                ),
+                ],
                 // Duplicate and remove share a row: two rare actions were taking two
                 // full-width tiles at the end of every unit.
                 Padding(
@@ -620,17 +658,53 @@ class _LeaderPicker extends StatelessWidget {
 /// Radio tiles cost a full row each; a Crisis-heavy army offers eight of them
 /// and the sheet turned into a page of radio buttons. Chips wrap, so the same
 /// choice fits in two or three lines and stays one tap (§4.5).
+/// What the chosen enhancement or upgrade actually does.
+///
+/// Null when nothing is taken, or when the record publishes no text — the
+/// data has 159 of 1,623 with none, and a heading over an empty space reads
+/// as a failure to load.
+Widget? _offerBody(
+  Catalogue dataset,
+  List<SourceEnhancement> offered,
+  String? chosenId,
+) {
+  if (chosenId == null) return null;
+  for (final offer in offered) {
+    if (offer.id != chosenId) continue;
+    final body =
+        (dataset.ability(offer.abilityId ?? '')?.description ?? '').trim();
+    if (body.isEmpty) return null;
+    return Builder(
+      // The picker already indents; this only needs the gap under the chips.
+      builder: (context) => Padding(
+        padding: const EdgeInsets.fromLTRB(0, 6, 8, 2),
+        child: RuleText(body,
+            style: TextStyle(
+              fontSize: 12,
+              height: 1.35,
+              color: Theme.of(context).colorScheme.onSurface,
+            )),
+      ),
+    );
+  }
+  return null;
+}
+
 class _ChipPicker<T> extends StatelessWidget {
   final T value;
   final List<({T value, String label, String? note, bool dimmed})> entries;
   final void Function(T) onSelect;
   final String? footnote;
 
+  /// Shown under the chips, for the choice that has been made.
+  final Widget? body;
+
   const _ChipPicker({
     required this.value,
     required this.entries,
     required this.onSelect,
     this.footnote,
+    this.body,
   });
 
   @override
@@ -675,6 +749,7 @@ class _ChipPicker<T> extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 10.5, color: scheme.onSurfaceVariant)),
             ),
+          if (body != null) body!,
         ],
       ),
     );
@@ -745,6 +820,10 @@ class _EnhancementPicker extends StatelessWidget {
       onSelect: (id) => onEdit((e) => id == null
           ? (mine == null ? roster : e.setEnhancement(roster, mine, null))
           : e.setEnhancement(roster, id, instanceId)),
+      // The one that is taken, in full. Every offer in full is 700–5,300 px
+      // on a Character; the one chosen is 82–286, and it is the one whose
+      // wording the points were spent on (§4.14).
+      body: _offerBody(dataset, offered, mine),
     );
   }
 }
@@ -814,6 +893,87 @@ class _UpgradePicker extends StatelessWidget {
         if (id != null) next = e.setUpgrade(next, id, instanceId, on: true);
         return next;
       }),
+      body: _offerBody(dataset, offered, mine),
+    );
+  }
+}
+
+/// The unit's own rules: id, name, and printed text.
+///
+/// Rules with no text are dropped rather than listed as bare names. The
+/// datasheet's keyword line already sits above, and a name with nothing
+/// behind it reads as a rule the app failed to load.
+List<(String, String, String)> _rules(Catalogue dataset, SourceUnit sheet) => [
+      for (final abilityId in sheet.abilityIds)
+        if (dataset.ability(abilityId) case final ability?)
+          if ((ability.description ?? '').trim() case final body
+              when body.isNotEmpty)
+            (abilityId, ability.name, body),
+    ];
+
+/// One rule: its name, and its text a tap away.
+///
+/// Not a [CollapsibleGroup]: that draws a section heading, and these are the
+/// rules' own names in their own case. What is shared is the part that
+/// matters — [RemembersToggle], so a rule opened here is still open after the
+/// list has thrown the row away and rebuilt it (§7.7).
+class _RuleFold extends StatefulWidget {
+  final String name;
+  final String body;
+  final String rememberAs;
+  final bool initiallyOpen;
+
+  const _RuleFold({
+    required this.name,
+    required this.body,
+    required this.rememberAs,
+    required this.initiallyOpen,
+  });
+
+  @override
+  State<_RuleFold> createState() => _RuleFoldState();
+}
+
+class _RuleFoldState extends State<_RuleFold> with RemembersToggle<_RuleFold> {
+  @override
+  Object get toggleId => widget.rememberAs;
+
+  @override
+  bool get initiallyOpen => widget.initiallyOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return InkWell(
+      onTap: toggleOpen,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 5, 12, 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(widget.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w600)),
+                ),
+                Icon(open ? Icons.expand_less : Icons.expand_more,
+                    size: 18, color: scheme.onSurfaceVariant),
+              ],
+            ),
+            if (open)
+              Padding(
+                padding: const EdgeInsets.only(top: 2, right: 8),
+                child: RuleText(widget.body,
+                    style: TextStyle(
+                        fontSize: 12, height: 1.35, color: scheme.onSurface)),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

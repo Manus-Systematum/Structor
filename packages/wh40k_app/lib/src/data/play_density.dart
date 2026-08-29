@@ -26,6 +26,19 @@ enum PlayDensity {
   guided;
 
   bool get showsWeapons => this != PlayDensity.names;
+
+  /// Whether a rule arrives open or as a name to tap (DESIGN.md §4.11).
+  ///
+  /// The same question the turn page asks, asked in the builder: how much of
+  /// this army do you already know. It reads the roster's setting rather than
+  /// adding a second one — an army you know well enough to play from names is
+  /// one you know well enough to build from them.
+  ///
+  /// `names` folds the bodies away; `full` and `guided` open them. Measured:
+  /// rule bodies add 789–2,840 px to a sheet that is 686–1,511 px, and rule
+  /// names add 58–203.
+  bool get showsRuleText => this != PlayDensity.names;
+
   bool get showsPrompts => this == PlayDensity.guided;
 
   String get label => switch (this) {

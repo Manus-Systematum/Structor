@@ -890,6 +890,105 @@ because it teaches the reader to scroll past the build log.
 
 If Xcode offers it again, it is offering the same thing: leave it off.
 
+### 4.11 The unit sheet reads before it edits
+
+**Measured first, because the request and the fear were both about size.** The
+ask was for a unit's rules in full, every weapon profile it could take, and the
+wording of whatever enhancement it carries — with the worry that the sheet
+would become unreadable. Two contrasting cases were rendered through the sheet
+itself at 360×800: **T'au Empire**, option-rich and text-light, and **Chaos
+Daemons**, text-heavy and option-poor. Six datasheets each, plus a pass over
+all 4,724 datasheets in the 35 bundles.
+
+| per unit, px at 360 dp | T'au | Daemons |
+| --- | --- | --- |
+| The sheet as it was | 820–1,388 | 686–980 |
+| **+ rule bodies in full** | **+1,090–1,498** | **+789–2,840** |
+| + rule names only | +87–116 | +58–203 |
+| + every takeable weapon profile | +74–436 | +0–370 |
+| + the chosen enhancement's text | +99 | +82–286 |
+| + every offered enhancement's text (Character) | +4,818 | +5,334 |
+
+Game-wide: 3 abilities per datasheet (max 10) and 710 characters of rules text
+(p90 1,867, max 4,537); 4 takeable profiles (p90 11, max 49); **1,772 of 4,724
+datasheets gain no extra profile row at all**, because their extra options are
+not weapons.
+
+Two numbers were checked a second way, since the whole design rests on them.
+Rules height: a `TextPainter` estimate against the app's own `RuleText` laid
+out at the same width — 1,117 vs 1,090 and 2,897 vs 2,840, agreeing within 3%.
+Profile rows: counted from `UnitLoadout`, then verified by rendering the table
+— the units that gain nothing agree both ways. A third measurement was
+*discarded*: a lazy `ListView` reports an estimated scroll extent, which made
+the first pass read 5,013 px where the laid-out height is 2,566. Heights here
+are `ListView` sizes in a viewport taller than the content.
+
+**So: rule bodies are the only thing that threatens the page.** In full they
+add 1.0×–3.7× the entire sheet; their names add 3–13%. Everything else the
+request asked for is affordable. The sheet now carries all of it, ordered the
+way the decision runs — what it is, what it does, what it carries, what that
+does, what it is worth — with the bodies foldable.
+
+**Which the roster's own density decides** (§7.3.13). `names` folds the rule
+bodies away; `full` and `guided` open them. It is read here and set on the turn
+page: an army you know well enough to play from names is one you know well
+enough to build from them, and a second control for the same question would
+have been two answers to keep in step. A new army has no setting and no id to
+store one under, so it opens as `full` does — building is when the wording
+matters most, and folding is one tap.
+
+The density decides the *first* state only. A fold the reader opens or closes
+outranks it and is remembered for the visit (§7.7), keyed by datasheet rather
+than by instance: two copies of the same unit ask the same question of the same
+rule. The route is new on each entry to the builder, so density decides again
+next time — remembered within a visit, re-decided between them.
+
+**What it costs, measured after the fact and like for like:** with the bodies
+folded the sheet is 734–1,966 px against 686–1,388 before (+48 to +578). With
+them open it is 1,863–3,878.
+
+### 4.12 Every profile the unit could take, and a bar for the ones it has
+
+Choosing between a burst cannon and a fusion blaster means comparing them, and
+the one not taken was invisible until it was bought — the table listed only
+what was carried. It now lists everything the datasheet can take.
+
+**Taken rows keep the top of the table**, because the two questions are
+different — what is on the table, and what could be — and the answer to the
+first must not move while the second is browsed.
+
+**The mark is a bar down the left, not a colour**, because colour is taken: the
+row tint already says melee, pistol or ranged, and one channel cannot carry two
+facts. The bar has a second channel beside it — a taken row carries its count
+(`5×`) and an untaken row does not — so the table survives greyscale and a
+colourblind reader. Nothing is greyed: an untaken weapon is not disabled, it is
+simply not bought yet.
+
+The reference screen passes no takeable set and is unchanged: it reads a saved
+army, where there is no choice left to offer.
+
+### 4.13 A control that can never be used is absent, not greyed
+
+The Warlord switch was drawn on every datasheet, greyed on the ones that cannot
+take it, with a line explaining why. That is roughly four datasheets in five —
+a control whose only function there was to refuse, and a rule the reader cannot
+act on. Nothing about a Devilfish raises the question of it being Warlord.
+
+It is now drawn for Characters only, with `One per army` beside it. §2.3's
+permissiveness is untouched: that is about data the source states badly, and
+this is a rule with no missing data behind it.
+
+### 4.14 The enhancement you took says what it does
+
+The chips named an enhancement and its cost; what it actually did was on
+another screen. The text of the one taken is now under the chips.
+
+Only the one taken. Every offer in full is 4,818–5,334 px on a Character with
+its detachments — a wall of text to scroll past on the way to a decision that
+takes one tap. The one chosen is 82–286, and it is the one the points were
+spent on. 159 of 1,623 records publish no text at all, so nothing is drawn for
+those rather than a heading over a blank.
+
 ## 5. Open questions
 
 - [ ] ⚠ **Licence on `BSData/wh40k-11e`** — see §0. Blocks §3.4.

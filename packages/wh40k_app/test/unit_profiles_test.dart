@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wh40k_app/src/data/army.dart';
+import 'package:wh40k_app/src/data/dataset_repository.dart';
 import 'package:wh40k_app/src/widgets/unit_profiles.dart';
+import 'package:wh40k_core/wh40k_core.dart';
 
 /// The compact profile table in the unit editor and on the reference screen.
 void main() {
@@ -50,9 +52,17 @@ void main() {
     // weapon you look for when the enemy is already in engagement range.
     await pump(tester, 'commander-in-enforcer-battlesuit');
 
+    // Read off the decoration as well as the bare colour: a taken row also
+    // carries a border, and a Container cannot have both `color` and
+    // `decoration`, so the tint moved inside the decoration when the left
+    // bar arrived (§4.12).
     final tints = tester
         .widgetList<Container>(find.byType(Container))
-        .map((c) => c.color)
+        .map((c) =>
+            c.color ??
+            (c.decoration is BoxDecoration
+                ? (c.decoration as BoxDecoration).color
+                : null))
         .whereType<Color>()
         .toSet();
     expect(tints, isNotEmpty, reason: 'the melee row is tinted');
@@ -95,5 +105,97 @@ void main() {
     // The XV pulse pistol is one of the few in a T'au list.
     await pump(tester, 'the-twin-lance');
     expect(find.text('Pistol'), findsOneWidget, reason: 'the key');
+  });
+
+  group('what the unit could take, beside what it has', () {
+    // Choosing between a burst cannon and a fusion blaster means comparing
+    // them, and the one not taken used to be invisible until it was bought.
+    //
+    // Read from the faction bundle rather than the reference army: a saved
+    // army's snapshot carries the wargear it took, not the options it chose
+    // from, so there is nothing there to offer.
+    late Dataset tau;
+
+    Future<void> pumpTakeable(WidgetTester tester, String datasheetId) async {
+      tester.view.physicalSize = const Size(1400, 3000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+
+      await tester.runAsync(() async {
+        tau = await DatasetRepository().faction('tau-empire');
+      });
+      final datasheet = tau.unit(datasheetId)!;
+      final roster = RosterEditor(tau).addUnit(
+        RosterEditor.blank(name: 'p', factionId: 'tau-empire'),
+        datasheetId,
+      );
+      final loadout = UnitLoadout.forDatasheet(datasheet,
+          catalogue: tau, vocabulary: datasheet.wargearVocabulary);
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: SingleChildScrollView(
+            child: CarriedWeaponProfiles(
+              dataset: tau,
+              datasheet: datasheet,
+              carried: {
+                for (final item in roster.units.single.wargear)
+                  item.itemId: item.count,
+              },
+              takeable: {
+                ...loadout.fixed.keys,
+                for (final group in loadout.groups) ...group.items,
+                for (final counter in loadout.counters) counter.itemId,
+              },
+            ),
+          ),
+        ),
+      ));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('an untaken weapon is listed, without a count', (tester) async {
+      await pumpTakeable(tester, 'stealth-battlesuits');
+
+      // Carried, so it has one.
+      expect(find.textContaining('× Burst cannon'), findsOneWidget);
+      // Not carried, so it is named alone.
+      expect(find.text('Fusion blaster'), findsOneWidget);
+      expect(find.textContaining('× Fusion blaster'), findsNothing);
+    });
+
+    testWidgets('taken rows keep the top of the table', (tester) async {
+      await pumpTakeable(tester, 'stealth-battlesuits');
+
+      final taken = tester.getTopLeft(find.textContaining('× Burst cannon')).dy;
+      final untaken = tester.getTopLeft(find.text('Fusion blaster')).dy;
+      expect(taken, lessThan(untaken),
+          reason: 'what is on the table is read before what could be');
+    });
+
+    testWidgets('the mark is a bar, and it is not the tint', (tester) async {
+      await pumpTakeable(tester, 'stealth-battlesuits');
+
+      Border? borderUnder(Finder text) {
+        final container = tester.widget<Container>(
+            find.ancestor(of: text, matching: find.byType(Container)).first);
+        final decoration = container.decoration;
+        return decoration is BoxDecoration
+            ? decoration.border as Border?
+            : null;
+      }
+
+      expect(borderUnder(find.textContaining('× Burst cannon'))?.left.width, 3,
+          reason: 'a taken row carries the bar');
+      expect(borderUnder(find.text('Fusion blaster'))?.left.width, isNot(3),
+          reason: 'an untaken one does not');
+    });
+
+    testWidgets('without takeable, nothing changes for the reference screen',
+        (tester) async {
+      await pump(tester, 'stealth-battlesuits');
+
+      expect(find.text('Fusion blaster'), findsNothing);
+    });
   });
 }

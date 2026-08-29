@@ -4,7 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wh40k_app/src/data/database.dart';
 import 'package:wh40k_app/src/data/army.dart';
 import 'package:wh40k_app/src/data/dataset_repository.dart';
+import 'package:wh40k_app/src/data/play_density.dart';
 import 'package:wh40k_app/src/data/roster_store.dart';
+import 'package:wh40k_app/src/widgets/rule_text.dart';
 import 'package:wh40k_app/src/screens/editor_screen.dart';
 import 'package:wh40k_app/src/widgets/sheet_header.dart';
 import 'package:wh40k_app/src/data/enhancement_offers.dart';
@@ -668,5 +670,99 @@ void main() {
       saved.validation.errors.map((f) => f.code),
       isNot(contains('enhancement.non-character')),
     );
+  });
+
+  group('the unit sheet reads before it edits', () {
+    /// Opens the sheet for one datasheet, on a screen tall enough that
+    /// nothing has to be scrolled into existence.
+    Future<Roster> openUnit(
+      WidgetTester tester,
+      String datasheetId, {
+      PlayDensity? density,
+      String? detachmentId,
+    }) async {
+      late Roster roster;
+      await tester.runAsync(() async {
+        final editor = RosterEditor(await datasets.faction('tau-empire'));
+        roster = tau();
+        if (detachmentId != null) {
+          roster = editor.addDetachment(roster, detachmentId);
+        }
+        roster = editor.addUnit(roster, datasheetId);
+      });
+      if (density != null) {
+        await store.setDensity('existing', density);
+      }
+      await open(tester, initial: roster);
+      await tester.tap(find.text(
+          (await datasets.faction('tau-empire')).unit(datasheetId)!.name));
+      await settle(tester);
+      return roster;
+    }
+
+    testWidgets('a unit brings its rules, in full', (tester) async {
+      // The sheet used to open on the wargear counters: what the unit is for
+      // was on another screen.
+      await openUnit(tester, 'stealth-battlesuits');
+
+      expect(find.text('RULES'), findsOneWidget);
+      expect(find.text('Infiltrators'), findsWidgets);
+      // The printed wording, not only the name.
+      expect(find.textContaining('During deployment'), findsWidgets);
+    });
+
+    testWidgets('rules are names when the roster is set to names',
+        (tester) async {
+      await openUnit(tester, 'stealth-battlesuits', density: PlayDensity.names);
+
+      expect(find.text('RULES'), findsOneWidget);
+      expect(find.text('Infiltrators'), findsWidgets);
+      expect(find.textContaining('During deployment'), findsNothing);
+    });
+
+    testWidgets('and one tap opens the one you asked for', (tester) async {
+      await openUnit(tester, 'stealth-battlesuits', density: PlayDensity.names);
+
+      await tester.tap(find.text('Infiltrators').last);
+      await settle(tester);
+
+      expect(find.textContaining('During deployment'), findsWidgets);
+    });
+
+    testWidgets('the Warlord switch is absent where it cannot be used',
+        (tester) async {
+      // It used to be drawn greyed with a line saying why, on every
+      // datasheet in the game that is not a Character.
+      await openUnit(tester, 'stealth-battlesuits');
+
+      expect(find.text('Warlord'), findsNothing);
+      expect(find.textContaining('must be a Character'), findsNothing);
+    });
+
+    testWidgets('and present where it can', (tester) async {
+      await openUnit(tester, 'commander-in-enforcer-battlesuit');
+
+      expect(find.text('Warlord'), findsOneWidget);
+      expect(find.text('One per army'), findsOneWidget);
+    });
+
+    testWidgets('the enhancement you took says what it does', (tester) async {
+      await openUnit(tester, 'stealth-battlesuits',
+          detachmentId: 'advanced-acquisition-cadre');
+
+      // Nothing taken: no wall of text for the offers.
+      expect(find.textContaining('Add 1 to the Objective Control'),
+          findsNothing);
+
+      await tester.tap(find.text('Unmasking Suite (Upgrade)'));
+      await settle(tester);
+
+      // Taken: its wording, under the chips.
+      final body = find.descendant(
+        of: find.byType(RuleText),
+        matching: find.byType(RichText),
+      );
+      expect(body, findsWidgets);
+    });
   });
 }
