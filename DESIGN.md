@@ -1019,13 +1019,18 @@ A pistol stays with the ranged weapons, because it is one. Its tint stays too:
 with melee now announced by the heading above it, the tint has exactly one
 thing left to say, which is the thing that is not obvious from where a row sits.
 
-**A data quirk this makes visible, left alone deliberately.** Several T'au
-ranged weapons — Fusion eliminator, Ion scattercannon, XV pulse pistol —
-publish a `Melee` profile alongside their shooting one, so the Twin Lance now
-shows a MELEE section listing weapons a player thinks of as guns. The app is
-reporting what the merged data says and the split did not invent it; whether
-those profiles belong upstream is a question for the source, not something to
-paper over in the renderer (§0).
+**The split is by profile, not by weapon, and that is the point.** Several
+T'au weapons — Fusion eliminator, Ion scattercannon, XV pulse pistol — carry a
+ranged profile *and* a melee one, which is correct: the same gun is swung in
+the Fight phase. Each profile files under the phase it is used in, so the Twin
+Lance appears in both sections, and the row names keep it identifiable —
+`Fusion eliminator: ranged` above, `Fusion eliminator: melee` below, by the
+same rule §7.3 uses for a plasma weapon's two firing modes.
+
+Filing by weapon instead would have put half of a dual-profile gun under the
+wrong heading, which is the arrangement this replaced. (Checked with the
+project owner on 2026-08-30: these profiles are the datasheet, not a merge
+artifact — an earlier version of this section called them a data quirk.)
 
 ### 4.17 Leaving the army page, and taking a unit out of the list
 
