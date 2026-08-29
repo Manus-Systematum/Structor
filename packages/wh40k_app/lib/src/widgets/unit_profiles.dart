@@ -200,105 +200,128 @@ class CarriedWeaponProfiles extends StatelessWidget {
     }
     if (profiles.isEmpty) return const SizedBox.shrink();
 
+    // **Grouped by what you do with them.** Shooting and fighting are
+    // different phases and different decisions, and a table that interleaves
+    // them makes the reader sort it themselves every time. A pistol stays
+    // with the ranged weapons — it is one — and keeps its tint, which is now
+    // the only thing that column of the table has left to say.
+    final ranged = [
+      for (final row in profiles)
+        if (row.$4 != _Kind.melee) row,
+    ];
+    final melee = [
+      for (final row in profiles)
+        if (row.$4 == _Kind.melee) row,
+    ];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _ProfilesHeading('PROFILES'),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 12, 0),
-          child: Row(
-            children: [
-              const Expanded(flex: 5, child: SizedBox()),
-              // **SKILL, not BS.** The column read `BS` and printed whatever
-              // the profile had, so every melee weapon showed its Weapon
-              // Skill under a Ballistic Skill heading — a wrong label on a
-              // right number, which is worse than either.
-              for (final label in ['RNG', 'A', 'SKILL', 'S', 'AP', 'D'])
-                Expanded(
-                  flex: 2,
-                  child: Text(label,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 9,
-                          letterSpacing: 0.6,
-                          color: scheme.onSurfaceVariant)),
-                ),
-            ],
-          ),
-        ),
-        for (final (count, name, profile, kind) in profiles)
-          Container(
-            // The heading cannot say which skill a row is using once it says
-            // both, so the row does: melee sits on its own ground, and a
-            // pistol on its own again — it is a ranged weapon that can be
-            // fired inside engagement range, which is the one thing you are
-            // checking the list for when the enemy is already on you.
-            //
-            // Taken rows carry a bar down the left. The tint is already
-            // saying which kind of weapon a row is, so it cannot also say
-            // whether the unit has one; a bar is a second channel, and it
-            // survives a greyscale screenshot and a colourblind reader.
-            decoration: BoxDecoration(
-              color: kind.tint(scheme),
-              border: count.isEmpty
-                  ? null
-                  : Border(left: BorderSide(color: scheme.primary, width: 3)),
-            ),
-            padding: EdgeInsets.fromLTRB(count.isEmpty ? 20 : 17, 2, 12, 2),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(count.isEmpty ? name : '$count $name',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+        for (final (label, section) in [
+          ('RANGED', ranged),
+          ('MELEE', melee),
+        ])
+          if (section.isNotEmpty) ...[
+            _SectionLabel(label),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 12, 0),
+              child: Row(
+                children: [
+                  const Expanded(flex: 5, child: SizedBox()),
+                  // **SKILL, not BS.** The column read `BS` and printed
+                  // whatever the profile had, so every melee weapon showed
+                  // its Weapon Skill under a Ballistic Skill heading — a
+                  // wrong label on a right number, which is worse than
+                  // either.
+                  for (final column in ['RNG', 'A', 'SKILL', 'S', 'AP', 'D'])
+                    Expanded(
+                      flex: 2,
+                      child: Text(column,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 12,
-                            // Not a colour change: the untaken row is the
-                            // same ink, and what it lacks is the count and
-                            // the bar.
-                            color: scheme.onSurface,
-                          )),
-                      // The keywords, named and not explained. Half of what a
-                      // weapon does is here — TORRENT, DEVASTATING WOUNDS,
-                      // HAZARDOUS — and the table was six numbers with none
-                      // of it, so two guns with identical statlines read as
-                      // interchangeable when one of them auto-hits.
-                      if (profile.keywords.isNotEmpty)
-                        Text(
-                          profile.keywords.map((k) => k.label).join(' · '),
-                          style: TextStyle(
-                            fontSize: 9,
-                            height: 1.3,
-                            color: scheme.onSurfaceVariant,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-                for (final key in ['range', 'A', 'skill', 'S', 'AP', 'D'])
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      switch (key) {
-                        'range' => profile.range ?? '–',
-                        // Through the same formatter the weapon tables use:
-                        // a skill is read as `4+`, and the raw characteristic
-                        // is a bare `4`. Null for Torrent-style weapons,
-                        // which hit without rolling and have no skill.
-                        'skill' => formatSkill(profile.skill) ?? '–',
-                        _ => profile.stats[key] ?? '–',
-                      },
-                      textAlign: TextAlign.center,
-                      style: AppTheme.numeric(context, size: 12),
+                              fontSize: 9,
+                              letterSpacing: 0.6,
+                              color: scheme.onSurfaceVariant)),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
-          ),
+            for (final (count, name, profile, kind) in section)
+              Container(
+                // The heading cannot say which skill a row is using once it says
+                // both, so the row does: melee sits on its own ground, and a
+                // pistol on its own again — it is a ranged weapon that can be
+                // fired inside engagement range, which is the one thing you are
+                // checking the list for when the enemy is already on you.
+                //
+                // Taken rows carry a bar down the left. The tint is already
+                // saying which kind of weapon a row is, so it cannot also say
+                // whether the unit has one; a bar is a second channel, and it
+                // survives a greyscale screenshot and a colourblind reader.
+                decoration: BoxDecoration(
+                  color: kind.tint(scheme),
+                  border: count.isEmpty
+                      ? null
+                      : Border(
+                          left: BorderSide(color: scheme.primary, width: 3)),
+                ),
+                padding: EdgeInsets.fromLTRB(count.isEmpty ? 20 : 17, 2, 12, 2),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(count.isEmpty ? name : '$count $name',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 12,
+                                // Not a colour change: the untaken row is the
+                                // same ink, and what it lacks is the count and
+                                // the bar.
+                                color: scheme.onSurface,
+                              )),
+                          // The keywords, named and not explained. Half of what a
+                          // weapon does is here — TORRENT, DEVASTATING WOUNDS,
+                          // HAZARDOUS — and the table was six numbers with none
+                          // of it, so two guns with identical statlines read as
+                          // interchangeable when one of them auto-hits.
+                          if (profile.keywords.isNotEmpty)
+                            Text(
+                              profile.keywords.map((k) => k.label).join(' · '),
+                              style: TextStyle(
+                                fontSize: 9,
+                                height: 1.3,
+                                color: scheme.onSurfaceVariant,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                    for (final key in ['range', 'A', 'skill', 'S', 'AP', 'D'])
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          switch (key) {
+                            'range' => profile.range ?? '–',
+                            // Through the same formatter the weapon tables use:
+                            // a skill is read as `4+`, and the raw characteristic
+                            // is a bare `4`. Null for Torrent-style weapons,
+                            // which hit without rolling and have no skill.
+                            'skill' => formatSkill(profile.skill) ?? '–',
+                            _ => profile.stats[key] ?? '–',
+                          },
+                          textAlign: TextAlign.center,
+                          style: AppTheme.numeric(context, size: 12),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+          ],
         // **Only the pistol is explained.** A melee row already says so in
         // its own RNG cell, and a key repeating the word beside a swatch is
         // furniture. A pistol's range is a number like any other gun's, so
@@ -332,6 +355,31 @@ class CarriedWeaponProfiles extends StatelessWidget {
     final grantedId = dataset.ability(itemId)?.grantedWeaponId;
     if (grantedId == null) return null;
     return dataset.weaponFor(datasheet, grantedId) ?? dataset.weapon(grantedId);
+  }
+}
+
+/// `RANGED` or `MELEE` over its half of the table.
+///
+/// Lighter than the section heading above it: this is a division inside one
+/// table, not a new part of the sheet.
+class _SectionLabel extends StatelessWidget {
+  final String label;
+
+  const _SectionLabel(this.label);
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 6, 12, 1),
+      child: Text(label,
+          style: TextStyle(
+            fontSize: 9.5,
+            letterSpacing: 0.9,
+            fontWeight: FontWeight.w700,
+            color: scheme.onSurfaceVariant,
+          )),
+    );
   }
 }
 

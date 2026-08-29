@@ -183,6 +183,27 @@ void main() {
     });
   });
 
+  testWidgets('the army screen offers a way back, when there is one',
+      (tester) async {
+    // The page has no app bar — the tabs under it are the navigation — so
+    // leaving was a swipe nobody was told about (§4.17).
+    var left = false;
+    await tester.pumpWidget(host(ArmyScreen(army: army, onBack: () {
+      left = true;
+    })));
+
+    await tester.tap(find.byIcon(Icons.arrow_back));
+    await tester.pump();
+
+    expect(left, isTrue);
+  });
+
+  testWidgets('and none where there is nothing to go back to', (tester) async {
+    await tester.pumpWidget(host(ArmyScreen(army: army)));
+
+    expect(find.byIcon(Icons.arrow_back), findsNothing);
+  });
+
   testWidgets('the army screen shows points, findings and units',
       (tester) async {
     await tester.pumpWidget(host(ArmyScreen(army: army)));

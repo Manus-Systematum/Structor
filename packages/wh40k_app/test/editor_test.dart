@@ -765,4 +765,43 @@ void main() {
       expect(body, findsWidgets);
     });
   });
+
+  group('removing a unit from the list', () {
+    testWidgets('asks first, and the cancel leaves it alone', (tester) async {
+      await open(tester, initial: tau());
+      await tester.tap(find.text('Add unit'));
+      await settle(tester);
+      await tester.enterText(find.byType(SearchBar), 'stealth');
+      await settle(tester);
+      await tester.tap(find.text('Stealth Battlesuits').last);
+      await settle(tester);
+
+      await tester.tap(find.byIcon(Icons.delete_outline).last);
+      await settle(tester);
+      expect(find.text('Remove this unit?'), findsOneWidget);
+
+      await tester.tap(find.text('Cancel'));
+      await settle(tester);
+      expect(find.text('Stealth Battlesuits'), findsOneWidget);
+    });
+
+    testWidgets('and removes it when the answer is yes', (tester) async {
+      await open(tester, initial: tau());
+      await tester.tap(find.text('Add unit'));
+      await settle(tester);
+      await tester.enterText(find.byType(SearchBar), 'stealth');
+      await settle(tester);
+      await tester.tap(find.text('Stealth Battlesuits').last);
+      await settle(tester);
+
+      await tester.tap(find.byIcon(Icons.delete_outline).last);
+      await settle(tester);
+      await tester.tap(find.widgetWithText(FilledButton, 'Remove'));
+      await settle(tester);
+
+      expect(find.text('Stealth Battlesuits'), findsNothing);
+      expect(find.text('No units yet. Add one to get started.'),
+          findsOneWidget);
+    });
+  });
 }

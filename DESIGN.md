@@ -989,6 +989,61 @@ takes one tap. The one chosen is 82–286, and it is the one the points were
 spent on. 159 of 1,623 records publish no text at all, so nothing is drawn for
 those rather than a heading over a blank.
 
+### 4.15 A replacement naming two weapons is one swap
+
+The Ministorum Priest's Zealot's vindictor is replaced with *a holy pistol and
+a power weapon* — both, together. The record says so, and the loadout read the
+list as two independent items, so the editor offered a choice between them and
+let a list take one, which no datasheet allows.
+
+**It is 109 records on 83 datasheets across 20 of the faction bundles**, so it
+was never one datasheet's problem. The shape was already modelled:
+`replacement_choice` builds a group of whole selections, and a multi-item
+`replacement` is the same statement with only one way to satisfy it. It now
+builds one bundle of that kind, while a single-item replacement stays the plain
+counter it was.
+
+It also recovers a number that a set of item ids cannot hold. The Razorwing
+Jetfighter's swap is *two* disintegrator cannons, and
+`{disintegrator-cannon}` collapses that to one; a bundle repeating an item
+means two of it, which §4.5 already said and the counter path could not express.
+
+### 4.16 The profile table is split by ranged and melee
+
+Shooting and fighting are different phases and different decisions, and the
+table interleaved them — so the reader sorted it themselves, every time, on a
+screen whose job is to be read quickly. `RANGED` and `MELEE` each carry their
+own column header; a section with nothing in it draws no heading.
+
+A pistol stays with the ranged weapons, because it is one. Its tint stays too:
+with melee now announced by the heading above it, the tint has exactly one
+thing left to say, which is the thing that is not obvious from where a row sits.
+
+**A data quirk this makes visible, left alone deliberately.** Several T'au
+ranged weapons — Fusion eliminator, Ion scattercannon, XV pulse pistol —
+publish a `Melee` profile alongside their shooting one, so the Twin Lance now
+shows a MELEE section listing weapons a player thinks of as guns. The app is
+reporting what the merged data says and the split did not invent it; whether
+those profiles belong upstream is a question for the source, not something to
+paper over in the renderer (§0).
+
+### 4.17 Leaving the army page, and taking a unit out of the list
+
+**Back.** The army page has no app bar — the four tabs under it are the
+navigation, and a bar over all of them would cost the turn page the height it
+spends on the phase you are in (§7.2). So leaving was a system swipe nobody was
+told about. The control now sits beside the army's name, where the eye already
+is for the pencil, and only when there is something to go back to.
+
+**Remove.** Duplicate was on the list row and remove was four taps away inside
+the sheet, which is backwards: they are the same kind of decision about the same
+row. Both are now on it, and removal asks first — a unit is a loadout, an
+attachment and an enhancement chosen one at a time.
+
+A row is a *combat unit*, so removing a Commander takes the squad it leads. The
+dialog names what goes with it rather than leaving that to be discovered
+afterwards.
+
 ## 5. Open questions
 
 - [ ] ⚠ **Licence on `BSData/wh40k-11e`** — see §0. Blocks §3.4.

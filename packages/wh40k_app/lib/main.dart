@@ -238,7 +238,11 @@ class _ArmyPageState extends State<ArmyPage> {
               child: IndexedStack(
                 index: _tab,
                 children: [
-                  ArmyScreen(army: army, onEdit: () => _editArmy(army)),
+                  ArmyScreen(
+                    army: army,
+                    onEdit: () => _editArmy(army),
+                    onBack: () => Navigator.of(context).pop(),
+                  ),
                   // With no game in progress the tab rests on the record of
                   // past ones rather than a screen that exists to hold a
                   // button (§7.3.12).

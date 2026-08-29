@@ -39,7 +39,8 @@ void main() {
     // a wrong label on a right number, which is worse than either alone.
     await pump(tester, 'commander-in-enforcer-battlesuit');
 
-    expect(find.text('SKILL'), findsOneWidget);
+    // One per section now that the table is split (§4.16).
+    expect(find.text('SKILL'), findsWidgets);
     expect(find.text('BS'), findsNothing);
     // Read as a player reads it. The raw characteristic is a bare `4`.
     expect(find.text('4+'), findsWidgets);
@@ -196,6 +197,60 @@ void main() {
       await pump(tester, 'stealth-battlesuits');
 
       expect(find.text('Fusion blaster'), findsNothing);
+    });
+  });
+
+  group('shooting and fighting are read apart', () {
+    testWidgets('the table is split, and a pistol stays with the shooting',
+        (tester) async {
+      await pump(tester, 'commander-in-enforcer-battlesuit');
+
+      expect(find.text('RANGED'), findsOneWidget);
+      expect(find.text('MELEE'), findsOneWidget);
+
+      final ranged = tester.getTopLeft(find.text('RANGED')).dy;
+      final melee = tester.getTopLeft(find.text('MELEE')).dy;
+      expect(ranged, lessThan(melee), reason: 'shooting first, as a turn goes');
+
+      // Battlesuit fists are the melee weapon, so they sit under it.
+      expect(tester.getTopLeft(find.textContaining('Battlesuit fists')).dy,
+          greaterThan(melee));
+    });
+
+    testWidgets('nothing to divide announces no division', (tester) async {
+      // A loadout of one gun. Every T'au datasheet carries fists of some kind,
+      // so the case is built rather than found.
+      tester.view.physicalSize = const Size(1400, 3000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: CarriedWeaponProfiles(
+            dataset: army.catalogue,
+            datasheet: army.catalogue.unit('stealth-battlesuits')!,
+            carried: const {'burst-cannon': 5},
+          ),
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.text('RANGED'), findsOneWidget);
+      expect(find.text('MELEE'), findsNothing);
+    });
+
+    testWidgets('every row under MELEE is one', (tester) async {
+      await pump(tester, 'commander-in-enforcer-battlesuit');
+
+      final melee = tester.getTopLeft(find.text('MELEE')).dy;
+      final ranges = tester
+          .widgetList<Text>(find.textContaining('Melee'))
+          .where((t) => t.data == 'Melee');
+      expect(ranges, isNotEmpty);
+      for (final finder in find.text('Melee').evaluate()) {
+        final box = finder.renderObject! as RenderBox;
+        expect(box.localToGlobal(Offset.zero).dy, greaterThan(melee));
+      }
     });
   });
 }

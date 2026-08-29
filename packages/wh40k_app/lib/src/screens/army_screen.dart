@@ -27,7 +27,20 @@ class ArmyScreen extends StatelessWidget {
   /// Opens the builder. Null on surfaces where editing makes no sense.
   final VoidCallback? onEdit;
 
-  const ArmyScreen({super.key, required this.army, this.onEdit});
+  /// Leaves for the army list. Null where there is nothing to go back to.
+  ///
+  /// The page has no app bar — the four tabs under it are the navigation, and
+  /// a bar over all of them would cost the turn page height it spends on the
+  /// phase you are in (§7.2). So the control sits where the eye already is,
+  /// beside the army's name.
+  final VoidCallback? onBack;
+
+  const ArmyScreen({
+    super.key,
+    required this.army,
+    this.onEdit,
+    this.onBack,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +58,16 @@ class ArmyScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
+                  if (onBack != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: IconButton(
+                        tooltip: 'Armies',
+                        onPressed: onBack,
+                        visualDensity: VisualDensity.compact,
+                        icon: const Icon(Icons.arrow_back),
+                      ),
+                    ),
                   Expanded(
                     child: Text(roster.name,
                         style: const TextStyle(

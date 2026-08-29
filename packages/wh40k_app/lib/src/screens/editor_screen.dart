@@ -371,12 +371,67 @@ class _EditorScreenState extends State<EditorScreen> {
                         onTap: () => _editUnit(group.first.instanceId),
                         onDuplicate: () => _edit((e) =>
                             e.duplicateUnit(_roster, group.first.instanceId)),
+                        onRemove: () async {
+                          final rest = [
+                            for (final member in group.skip(1))
+                              dataset.unit(member.datasheetId)?.name ??
+                                  member.datasheetId,
+                          ];
+                          if (!await _confirmRemove(context, rest)) return;
+                          if (!mounted) return;
+                          _edit((e) {
+                            var next = _roster;
+                            for (final member in group) {
+                              next = e.removeUnit(next, member.instanceId);
+                            }
+                            return next;
+                          });
+                        },
                       ),
                   ],
                 ),
               ),
       ],
     );
+  }
+
+  /// Asks before a unit goes, from the list row and from the sheet alike.
+  ///
+  /// Asked, like deleting an army is: a unit is a loadout, an attachment and
+  /// an enhancement chosen one at a time, and both buttons sit beside
+  /// Duplicate where a mis-tap costs all of it.
+  ///
+  /// [alsoGoing] names what leaves with it. A row is a combat unit, so
+  /// removing a Commander from the list takes the squad it leads — that has
+  /// to be said before it happens, not discovered after.
+  Future<bool> _confirmRemove(
+    BuildContext context,
+    List<String> alsoGoing,
+  ) async {
+    final go = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Remove this unit?'),
+        content: Text(
+          alsoGoing.isEmpty
+              ? 'Its loadout, enhancement and attachment go with it.'
+              : 'Its loadout, enhancement and attachment go with it, '
+                  'and so ${alsoGoing.length == 1 ? 'does' : 'do'} '
+                  '${alsoGoing.join(' and ')}.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Remove'),
+          ),
+        ],
+      ),
+    );
+    return go == true;
   }
 
   /// Combat units by role, filed under whichever member carries the heading
@@ -462,29 +517,8 @@ class _EditorScreenState extends State<EditorScreen> {
               redrawSheet(() {});
             },
             onRemove: () async {
-              // Asked, like deleting an army is. A unit is a loadout, an
-              // attachment and an enhancement chosen one at a time, and the
-              // button sits beside Duplicate where a mis-tap costs all of it.
-              final go = await showDialog<bool>(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Remove this unit?'),
-                  content: const Text(
-                    'Its loadout, enhancement and attachment go with it.',
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: const Text('Cancel'),
-                    ),
-                    FilledButton(
-                      onPressed: () => Navigator.of(context).pop(true),
-                      child: const Text('Remove'),
-                    ),
-                  ],
-                ),
-              );
-              if (go != true || !mounted) return;
+              if (!await _confirmRemove(context, const [])) return;
+              if (!mounted) return;
               _edit((e) => e.removeUnit(_roster, editing));
               if (context.mounted) Navigator.of(context).pop();
             },
@@ -939,6 +973,7 @@ class _UnitRow extends StatelessWidget {
   final RosterCost cost;
   final VoidCallback onTap;
   final VoidCallback onDuplicate;
+  final VoidCallback onRemove;
 
   const _UnitRow({
     required this.group,
@@ -947,6 +982,7 @@ class _UnitRow extends StatelessWidget {
     required this.cost,
     required this.onTap,
     required this.onDuplicate,
+    required this.onRemove,
   });
 
   @override
@@ -992,6 +1028,12 @@ class _UnitRow extends StatelessWidget {
             tooltip: 'Duplicate',
             visualDensity: VisualDensity.compact,
             icon: const Icon(Icons.copy_all_outlined, size: 18),
+          ),
+          IconButton(
+            onPressed: onRemove,
+            tooltip: 'Remove',
+            visualDensity: VisualDensity.compact,
+            icon: const Icon(Icons.delete_outline, size: 18),
           ),
         ],
       ),
