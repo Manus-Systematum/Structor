@@ -873,6 +873,23 @@ against was answered by scrolling back up. It now sits in the app bar beside
 the bar holds a back arrow, a title, the total and the button only with its
 paddings tightened, which is the width that decided them.
 
+### 4.10 One of Xcode's recommended settings is wrong for this project
+
+Xcode offers two under *Update to recommended settings*. **String Catalog
+Symbol Generation** is on and changes nothing today — every string is in Dart,
+there are no catalogues — and is the right default for when one arrives.
+
+**Quoted Include In Framework Header is off, deliberately.** It warns when a
+framework header imports its own headers with `"quotes"` rather than
+`<angle brackets>`, and the only framework headers in an app like this one
+belong to Flutter: `Flutter.framework/Headers/Flutter.h` imports its
+twenty-odd headers that way, so turning the warning on produced twenty-odd
+warnings per build, in a prebuilt binary shipped by the SDK, that nothing in
+this repository can fix. A warning nobody can act on is worse than no warning,
+because it teaches the reader to scroll past the build log.
+
+If Xcode offers it again, it is offering the same thing: leave it off.
+
 ## 5. Open questions
 
 - [ ] ⚠ **Licence on `BSData/wh40k-11e`** — see §0. Blocks §3.4.
