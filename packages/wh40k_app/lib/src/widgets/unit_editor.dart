@@ -128,6 +128,54 @@ class UnitEditorSheet extends StatelessWidget {
                           fontSize: 11, color: scheme.onSurfaceVariant)),
                 ),
 
+                // **Why this unit may be in this army at all.** An allied
+                // datasheet is offered by the picker like any other — the
+                // dataset ships 361 of them inside host faction bundles — so
+                // without this the only thing saying it is an ally was the
+                // validation finding, and the rule permitting it was on
+                // another screen (§4.18).
+                if (AllyRules.isAlly(datasheet, dataset.factionKeywords)) ...[
+                  _Heading('ALLIED',
+                      trailing: datasheet.factionKeywords.join(' · ')),
+                  if (AllyRules.admitting(datasheet, dataset.factionKeywords)
+                      case final rule?) ...[
+                    if (rule.requiresDetachmentId case final needed?
+                        when !roster.detachments
+                            .any((d) => d.detachmentId == needed))
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 6),
+                        child: Text(
+                          'Needs the '
+                          '${dataset.detachment(needed)?.name ?? needed} '
+                          'detachment.',
+                          style: TextStyle(fontSize: 12, color: scheme.error),
+                        ),
+                      ),
+                    if (dataset.ability(rule.abilityId)?.description
+                        case final body? when body.trim().isNotEmpty)
+                      _RuleFold(
+                        rememberAs: 'ally-rule:${rule.abilityId}',
+                        name: rule.name,
+                        body: body.trim(),
+                        initiallyOpen: rulesOpen,
+                      )
+                    else
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 6),
+                        child: Text(rule.name,
+                            style: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w600)),
+                      ),
+                  ] else
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 6),
+                      child: Text(
+                        'Nothing in this army admits it.',
+                        style: TextStyle(fontSize: 12, color: scheme.error),
+                      ),
+                    ),
+                ],
+
                 // **What it does, before what it carries.** The sheet used to
                 // open on the wargear counters, so the question a unit is
                 // bought to answer — what are its rules — was on a different

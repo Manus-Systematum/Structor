@@ -804,4 +804,77 @@ void main() {
           findsOneWidget);
     });
   });
+
+  group('allied units', () {
+    // The dataset ships 361 allied datasheets inside host faction bundles, so
+    // they could always be added; nothing said they were allies or what
+    // permitted them (§4.18).
+    Future<Roster> cultRoster(WidgetTester tester,
+        {bool withDetachment = false}) async {
+      late Roster roster;
+      await tester.runAsync(() async {
+        final dataset = await datasets.faction('genestealer-cults');
+        final editor = RosterEditor(dataset);
+        roster = RosterEditor.blank(
+            name: 'Cult', factionId: 'genestealer-cults');
+        if (withDetachment) {
+          roster = editor.addDetachment(roster, 'brood-brothers-auxilia');
+        }
+        final guard = dataset.buildableUnits.firstWhere((u) =>
+            u.factionKeywords.contains('Astra Militarum') &&
+            !u.keywords.any((k) => k.toLowerCase() == 'ogryn'));
+        roster = editor.addUnit(roster, guard.id);
+      });
+      return roster;
+    }
+
+    testWidgets('an allied unit is tagged in the army list', (tester) async {
+      await open(tester, initial: await cultRoster(tester));
+
+      expect(find.text('ALLIED'), findsWidgets);
+    });
+
+    testWidgets('and the sheet says which rule admits it', (tester) async {
+      final roster = await cultRoster(tester, withDetachment: true);
+      await open(tester, initial: roster);
+
+      final dataset = await datasets.faction('genestealer-cults');
+      final name = dataset.unit(roster.units.single.datasheetId)!.name;
+      await tester.tap(find.text(name).last);
+      await settle(tester);
+
+      expect(find.text('Brood Brothers'), findsWidgets);
+      // The published wording, not only the rule's name.
+      expect(find.textContaining('combined points cost'), findsWidgets);
+    });
+
+    testWidgets('without the detachment, the sheet says so', (tester) async {
+      final roster = await cultRoster(tester);
+      await open(tester, initial: roster);
+
+      final dataset = await datasets.faction('genestealer-cults');
+      final name = dataset.unit(roster.units.single.datasheetId)!.name;
+      await tester.tap(find.text(name).last);
+      await settle(tester);
+
+      expect(find.textContaining('Needs the Brood Brothers Auxilia'),
+          findsOneWidget);
+    });
+
+    testWidgets('the army own datasheets carry no tag', (tester) async {
+      late Roster roster;
+      await tester.runAsync(() async {
+        final dataset = await datasets.faction('genestealer-cults');
+        final own = dataset.buildableUnits.firstWhere(
+            (u) => u.factionKeywords.contains('Genestealer Cults'));
+        roster = RosterEditor(dataset).addUnit(
+          RosterEditor.blank(name: 'Cult', factionId: 'genestealer-cults'),
+          own.id,
+        );
+      });
+      await open(tester, initial: roster);
+
+      expect(find.text('ALLIED'), findsNothing);
+    });
+  });
 }

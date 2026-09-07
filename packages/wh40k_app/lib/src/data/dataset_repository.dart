@@ -420,6 +420,13 @@ class DatasetRepository {
       // A chapter keeps *its own* — The Red Thirst, not Oath of Moment.
       factionRuleId: self?['faction_rule_id']?.toString(),
       factionName: self?['name']?.toString(),
+      // The army's own keywords, which is what makes a datasheet in this
+      // bundle an ally or one of ours (§4.18). They were in the bundle all
+      // along and simply not read across.
+      factionKeywords: [
+        for (final k in (self?['keywords'] as List<Object?>? ?? const []))
+          '$k',
+      ],
       parentFactionId: parentId,
       units: sheets('units').map(SourceUnit.fromJson).toList(),
       weapons: sheets('weapons').map(SourceWeapon.fromJson).toList(),

@@ -1005,8 +1005,23 @@ class _UnitRow extends StatelessWidget {
     return ListTile(
       dense: true,
       onTap: onTap,
-      title: Text(dataset.labelFor(group),
-          style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700)),
+      title: Row(
+        children: [
+          // A combat unit is allied when any member is: a Guard squad led by a
+          // Cult character is still in the army under Brood Brothers.
+          if (group.any((u) {
+            final sheet = dataset.unit(u.datasheetId);
+            return sheet != null &&
+                AllyRules.isAlly(sheet, dataset.factionKeywords);
+          }))
+            const AlliedTag(),
+          Expanded(
+            child: Text(dataset.labelFor(group),
+                style: const TextStyle(
+                    fontSize: 13.5, fontWeight: FontWeight.w700)),
+          ),
+        ],
+      ),
       subtitle: Text(
         [
           '${group.fold(0, (s, u) => s + u.models)} models',
@@ -1144,11 +1159,45 @@ class _NameFieldState extends State<_NameField> {
 /// stops, so GRENADES looks absent when it is on the datasheet. Keywords are
 /// how a player checks a unit is what they think it is, and a truncated list
 /// is worse than none because it looks complete.
+/// `ALLIED` beside a datasheet from a faction this army does not own.
+///
+/// A word rather than a colour, because the row already uses colour for role
+/// and cost, and because "allied" is a fact about the unit that a person needs
+/// to be able to read aloud (§4.18).
+class AlliedTag extends StatelessWidget {
+  const AlliedTag({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+      margin: const EdgeInsets.only(right: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+      decoration: BoxDecoration(
+        border: Border.all(color: scheme.outline),
+        borderRadius: BorderRadius.circular(3),
+      ),
+      child: Text('ALLIED',
+          style: TextStyle(
+            fontSize: 8.5,
+            letterSpacing: 0.8,
+            fontWeight: FontWeight.w700,
+            color: scheme.onSurfaceVariant,
+          )),
+    );
+  }
+}
+
 class _DatasheetTile extends StatelessWidget {
   final SourceUnit unit;
+  final bool isAllied;
   final VoidCallback onTap;
 
-  const _DatasheetTile({required this.unit, required this.onTap});
+  const _DatasheetTile({
+    required this.unit,
+    required this.onTap,
+    this.isAllied = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1160,10 +1209,22 @@ class _DatasheetTile extends StatelessWidget {
     return ListTile(
       dense: true,
       onTap: onTap,
-      title: Text(unit.name,
-          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+      title: Row(
+        children: [
+          if (isAllied) const AlliedTag(),
+          Expanded(
+            child: Text(unit.name,
+                style: const TextStyle(
+                    fontSize: 13, fontWeight: FontWeight.w600)),
+          ),
+        ],
+      ),
       subtitle: Text(
         [
+          // Whose it is, when it is not this army's. The keyword list already
+          // carries the rest, and on an ally the faction is the first thing
+          // worth knowing about it.
+          if (isAllied) ...unit.factionKeywords,
           if (unit.isLeader) 'Leader',
           ...unit.keywords,
         ].join(' · '),
@@ -1251,6 +1312,8 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
                     for (final unit in units)
                       _DatasheetTile(
                         unit: unit,
+                        isAllied: AllyRules.isAlly(
+                            unit, widget.dataset.factionKeywords),
                         onTap: () => Navigator.of(context).pop(unit.id),
                       )
                   else
@@ -1265,6 +1328,8 @@ class _AddUnitSheetState extends State<AddUnitSheet> {
                               for (final unit in inRole)
                                 _DatasheetTile(
                                   unit: unit,
+                                  isAllied: AllyRules.isAlly(
+                                      unit, widget.dataset.factionKeywords),
                                   onTap: () =>
                                       Navigator.of(context).pop(unit.id),
                                 ),

@@ -1049,6 +1049,87 @@ A row is a *combat unit*, so removing a Commander takes the squad it leads. The
 dialog names what goes with it rather than leaving that to be discovered
 afterwards.
 
+### 4.18 Allied units, and the rule that admits them
+
+**They were already there.** The dataset ships allied datasheets inside the
+host faction's bundle — 361 across eleven factions, measured by taking each
+`factions.json` keyword set and counting the datasheets in that bundle whose
+faction keywords miss it. A Genestealer Cult is shipped 106 Astra Militarum
+datasheets and 18 Tyranids ones, a Chaos Daemons army 30 Heretic Astartes.
+The picker offered every one of them like any other datasheet. Nothing said
+they were allies and nothing said what permitted them, which is the whole of
+what this adds.
+
+**Seven rules, transcribed, not remembered.** Every ability whose text says
+*"you can include"* — 245 of them — read down to the ones that admit another
+faction. The first sweep looked for *"even though they do not have"* and found
+five; a second, looking for *"may include"* and *"included in your army"*,
+found **The Star Children's Blessings** (Tyranids into a Cult) and **Wretched
+Thralls** (DAMNED units), which state the permission without that clause. That
+is why the table has seven and not five, and why the sweep is written down
+here: the next person to check should search the same two ways.
+
+| Rule | Host | Admits | Gate | Limit |
+| --- | --- | --- | --- | --- |
+| Assigned Agents | any all-IMPERIUM army | Agents of the Imperium | — | 1–3 RETINUE / CHARACTER / REQUISITIONED by battle size |
+| Brood Brothers | Genestealer Cults | Astra Militarum | **Brood Brothers Auxilia** detachment | 500 / 1000 / 1500 pts, Cult Warlord, eight excluded keywords |
+| Corsairs and Travelling Players | Drukhari | Harlequins, Anhrathe | — | 250 / 500 / 750 pts, no allied Warlord, no Enhancements |
+| The Star Children's Blessings | Genestealer Cults *(inferred)* | Tyranids | — | 500 / 1000 / 1500 pts, no Tyranid Warlord |
+| Wretched Thralls | Chaos | DAMNED | — | — |
+| Disparate Paths | Asuryani | Harlequins | — | none published |
+| Servants of the Whispering God | Asuryani | Ynnari | — | — |
+
+Each entry names the `abilityId` it came from, and a test asserts the ability
+still exists and still names what it admits — so a withdrawn or reworded rule
+fails a test rather than leaving the app enforcing something nobody publishes
+(§0). **One host is inferred and says so in the table**: nothing references
+The Star Children's Blessings, so the data does not say whose rule it is; the
+name and the Cult bundle shipping the Tyranids datasheets both point one way.
+
+**The check reports and never refuses (§2.3), and the severities say how much
+is known.** Quoting a rule back at the reader is an error: an excluded
+keyword, a points cap, a Warlord the rule forbids, an Enhancement it
+withholds. Finding *no* rule is a **warning**, because absence is not proof —
+the only published permission for Heretic Astartes covers the DAMNED ones, so
+an ordinary Chaos army lands there, and calling that illegal would be the app
+asserting something nobody wrote down. Its wording says so: *"no rule in this
+army says it may be included. Check your codex."*
+
+**Two published modifiers are honoured and one is not.** *Inquisitorial
+Henchmen* and *Navy Bodyguards* are abilities on the datasheets themselves,
+each taking its bearer out of the RETINUE count, so they are checkable and
+checked. *Secret Forces* raises all three Agents caps by one and nothing in
+the data references it, so there is no way to tell whether an army has it —
+which is a second reason the count is reported rather than enforced.
+
+**Keyword folding is shared, and had to be.** `factions.json` writes `T’au
+Empire` with a typographic apostrophe while 66 of that faction's own
+datasheets write `T'au Empire` with a typewriter one, and `Emperor’s Children`
+splits the same way. Compared raw, T'au is its own ally 66 times over. The
+fold that enhancement eligibility already used is now public and used by both.
+
+**Matched on every keyword, not only faction ones.** The rules are written in
+the game's vocabulary — *"HARLEQUINS and ANHRATHE units"* — and `Anhrathe` is
+published as a plain keyword on datasheets whose faction keyword is
+`Asuryani`. Reading only faction keywords refuses every Corsair unit the
+Drukhari rule exists to admit.
+
+**A unit with no faction keywords at all is not called an ally.** Two Corsair
+datasheets publish none. Nothing can be concluded from that, and the
+conservative reading is the one that does not accuse.
+
+**What the screen shows.** An `ALLIED` tag on the row, in the picker and in
+the army list, with the owning faction leading the subtitle; and in the unit
+sheet, an `ALLIED` section naming the faction, the rule that admits it with
+its published text folded like any other rule, and — when the rule is bought
+with detachment points and the detachment is not taken — a line saying which
+one it needs.
+
+**The army's own keywords had to reach three places.** The bundle already
+carried them and the app was not reading them across; the snapshot now carries
+them too, so a saved list keeps the check. Empty means *not known*, and every
+ally check goes quiet rather than treating every datasheet as an ally.
+
 ## 5. Open questions
 
 - [ ] ⚠ **Licence on `BSData/wh40k-11e`** — see §0. Blocks §3.4.

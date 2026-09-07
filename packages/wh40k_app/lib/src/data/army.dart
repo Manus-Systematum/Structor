@@ -31,6 +31,10 @@ class Army {
       {required String id}) {
     final catalogue = MapCatalogue(
       snapshot.units.values.map(SourceUnit.fromJson),
+      // What the army's own faction is called, so the validator can tell a
+      // datasheet this army owns from one it is allied with (§4.18). Empty on
+      // a list saved before that, and the ally checks stay quiet.
+      factionKeywords: snapshot.factionKeywords,
       weapons: snapshot.weapons.values.map(SourceWeapon.fromJson),
       detachments: snapshot.detachments.values.map(SourceDetachment.fromJson),
       // Wargear can be an ability: a Gun Drone resolves to a twin pulse
