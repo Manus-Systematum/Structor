@@ -877,4 +877,42 @@ void main() {
       expect(find.text('ALLIED'), findsNothing);
     });
   });
+
+  group('detachment rules on the units they are written for', () {
+    // A detachment rule is filed army-wide, which is true of what it belongs
+    // to and often false of what it does (§4.19).
+    testWidgets('a rule for BATTLESUITS shows on a battlesuit', (tester) async {
+      late Roster roster;
+      await tester.runAsync(() async {
+        final dataset = await datasets.faction('tau-empire');
+        final editor = RosterEditor(dataset);
+        roster = editor.addDetachment(tau(), 'retaliation-cadre');
+        roster = editor.addUnit(roster, 'crisis-sunforge-battlesuits');
+      });
+      await open(tester, initial: roster);
+      await tester.tap(find.text('Crisis Sunforge Battlesuits').last);
+      await settle(tester);
+
+      expect(find.text('FROM YOUR DETACHMENT'), findsOneWidget);
+      expect(find.text('Bonded Heroes'), findsWidgets);
+      // Its modifiers, named with their condition rather than folded into the
+      // statline.
+      expect(find.textContaining('conditional'), findsWidgets);
+    });
+
+    testWidgets('and not on a unit it is not written for', (tester) async {
+      late Roster roster;
+      await tester.runAsync(() async {
+        final dataset = await datasets.faction('tau-empire');
+        final editor = RosterEditor(dataset);
+        roster = editor.addDetachment(tau(), 'retaliation-cadre');
+        roster = editor.addUnit(roster, 'kroot-carnivores');
+      });
+      await open(tester, initial: roster);
+      await tester.tap(find.text('Kroot Carnivores').last);
+      await settle(tester);
+
+      expect(find.text('FROM YOUR DETACHMENT'), findsNothing);
+    });
+  });
 }

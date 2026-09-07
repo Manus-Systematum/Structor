@@ -1130,6 +1130,75 @@ carried them and the app was not reading them across; the snapshot now carries
 them too, so a saved list keeps the check. Empty means *not known*, and every
 ally check goes quiet rather than treating every datasheet as an ally.
 
+### 4.19 A detachment's rules, on the units they are written for
+
+A detachment rule is filed army-wide (§7.3.9), which is true of what it
+*belongs to* and often false of what it *does*. **Bonded Heroes** is a
+Retaliation Cadre rule that only ever touches T'AU EMPIRE BATTLESUIT models;
+**Hunter's Instincts** is written for KROOT. Read as army-wide, each is a
+paragraph the reader re-scopes by eye at every unit.
+
+**Three ways a rule can say who it is for, and they are not equally
+trustworthy.** Counted over the 246 detachment rules in the dataset:
+
+| How it says so | Rules |
+| --- | --- |
+| `unit_ids` on the ability | **1** |
+| a `unit-has-keyword` condition in the structured effect | **30** |
+| keywords marked in the printed text | **127** |
+
+So the prose is read, and `RuleReach.source` records which of the three
+answered — a rule attributed by reading its sentence is a weaker claim than one
+that named its datasheets, and the model should be able to say which it made.
+
+**The markup does not survive to the phone, and the capitals do.** The merged
+dataset writes `**T'AU EMPIRE BATTLESUIT**`; the bundle the app ships carries
+the same sentence with the bold markers gone and the keyword still in capitals.
+An implementation reading only the bold markers passed every test against
+`data/merged` and found *nothing at all* on a device — which is why both are
+read now, and why the yield below is measured through the shipped bundles
+rather than through the source the tests use.
+
+**What stops it over-matching.** A marked string counts only when some
+datasheet in the faction satisfies it as a keyword and not every datasheet
+does. `[SUSTAINED HITS 1]`, `charge rolls` and `Ld` are marked and are not
+keywords; `T'AU EMPIRE` is one that every unit in a T'au army has, which makes
+the rule army-wide rather than pointed. Compounds — `T'AU EMPIRE BATTLESUIT`,
+`ADEPTA SORORITAS CHARACTER` — are two keywords run together and are satisfied
+the same way enhancement restrictions already are (§4.7), which is why the
+count is of *datasheets satisfied* rather than of keyword lookups.
+
+**Army-wideness is decided against the faction, not the roster.** Measured over
+the list instead, a one-unit army makes every rule look universal, and the rule
+written for BATTLESUITS disappears from the only battlesuit in it — which is
+exactly the shape of the first bug this had.
+
+**Yield, through the bundles the app ships:** 76 of 111 detachment rules attach
+to a strict subset of units — 55 from their wording, 21 from a structured
+condition. Nine carry a stat change; five of those state it unconditionally.
+
+**What it changes is named, not applied to the statline.** Where the effect
+says `stat-modifier`, the change is shown under the rule — `S +1 to ranged
+attacks · conditional` — rather than folded into the profile table. Half of
+these are conditional on a phase, a range or being led, and a number changed
+without its condition is a lie about the unit. The conditions are carried
+unresolved for the same reason: `unit-within-range-of` is answered at the
+table, not by the app.
+
+**One rule states no condition and should.** *Superior Craftsmanship*
+(Experimental Prototype Cadre) is the only range modifier in the game — `R +6`
+to ranged attacks — and it is published with an empty printed text and an
+unconditional effect. The project owner reports the real rule is conditional on
+the unit being led by a Character. Nothing in the dataset says so, so nothing
+here says so either; a test pins the current reading so that a correction
+adding the condition fails visibly rather than passing unnoticed.
+
+**A parsing gap found on the way.** Detachments publish their rules under two
+keys: `detachment_rule_id` for 210 of them and `detachment_rule_ids` for 18,
+ten of which use *only* the plural — Brood Brothers Auxilia among them. Only
+the singular was read, so those ten detachments appeared to have no rules at
+all.
+
 ## 5. Open questions
 
 - [ ] ⚠ **Licence on `BSData/wh40k-11e`** — see §0. Blocks §3.4.

@@ -198,6 +198,59 @@ class UnitEditorSheet extends StatelessWidget {
                     ),
                 ],
 
+                // **The detachment's rules, on the units they are written
+                // for.** They are filed army-wide (§7.3.9), which is true of
+                // what they belong to and often false of what they do: Bonded
+                // Heroes is a Retaliation Cadre rule that only touches
+                // BATTLESUITS, and reading it as army-wide left the reader
+                // re-scoping a paragraph by eye at every unit (§4.19).
+                if (RuleReachIndex.of(dataset, roster)
+                        .where((r) => r.datasheetIds.contains(datasheet.id))
+                        .toList()
+                    case final reaching when reaching.isNotEmpty) ...[
+                  const _Heading('FROM YOUR DETACHMENT'),
+                  for (final reach in reaching) ...[
+                    if (dataset.ability(reach.abilityId)?.description
+                        case final body? when body.trim().isNotEmpty)
+                      _RuleFold(
+                        rememberAs: 'reach:${datasheet.id}:${reach.abilityId}',
+                        name: reach.name,
+                        body: body.trim(),
+                        initiallyOpen: rulesOpen,
+                      )
+                    else
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                        child: Text(reach.name,
+                            style: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w600)),
+                      ),
+                    // What it changes, where the effect says so plainly. Named
+                    // rather than folded into the statline: half of these are
+                    // conditional on a phase, a range or being led, and a
+                    // number changed without its condition is a lie about the
+                    // unit.
+                    for (final change in reach.changes)
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 6),
+                        child: Text(
+                          [
+                            change.summary,
+                            if (change.attackType case final kind?)
+                              'to $kind attacks',
+                            if (!change.isUnconditional) '· conditional',
+                          ].join(' '),
+                          style: TextStyle(
+                            fontSize: 11.5,
+                            color: change.isUnconditional
+                                ? scheme.primary
+                                : scheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ),
+                  ],
+                ],
+
                 _Row(
                   label: 'Models',
                   // The one counter that *is* capped. A unit grown past every
