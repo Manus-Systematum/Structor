@@ -384,6 +384,7 @@ class _BoardPainter extends CustomPainter {
       );
     }
 
+    final captions = <void Function()>[];
     for (final zone in pattern.zones) {
       final mine = zone.isAttacker == iAmAttacker;
       final color = Color(zone.color ?? _fallback(zone.isAttacker));
@@ -399,8 +400,13 @@ class _BoardPainter extends CustomPainter {
           ..style = PaintingStyle.stroke
           ..strokeWidth = _px(mine ? 2 : 1),
       );
-      _label(
-          canvas, _centroid(zone, project), mine ? 'YOU' : 'THEM', color, mine);
+      // **The caption waits for the terrain.** The zone *shading* belongs
+      // under the terrain — that is what the layering below is for — but a
+      // word does not: on Purge vs Assets 02 a ruin sits on the centroid of
+      // both zones, and "THEM" was printed under a wall with CD stamped
+      // across the M. Held and drawn after the pieces instead.
+      captions.add(() => _label(canvas, _centroid(zone, project),
+          mine ? 'YOU' : 'THEM', color, mine));
     }
 
     // Terrain sits above the zones and below the objective markers: it is what
@@ -609,6 +615,10 @@ class _BoardPainter extends CustomPainter {
           );
         }
       }
+    }
+
+    for (final caption in captions) {
+      caption();
     }
 
     for (final objective

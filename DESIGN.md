@@ -894,6 +894,30 @@ whether it moved from 29 and names anything that is not a `points.unpriced`
 finding, since a validation error surviving in an assembled army is a
 different and worse thing.
 
+### 3.35 A caption is not shading
+
+The deployment diagram layers deliberately: territories faintest, then the
+deployment zones, then the terrain, then the objective markers — an objective
+inside a ruin is the one thing on the table you must still be able to find.
+
+The zone *caption* was layered with the zone, and a word is not shading. On
+`Purge vs Assets 02` a ruin sits on the centroid of both zones, so "THEM" was
+printed under a wall with `CD` stamped across the M, and "YOU" was overprinted
+and clipped by a piece edge. The captions are held and drawn after the terrain
+now, still below the objective markers.
+
+Found by the local agent's visual pass (§3.26) rather than by a test, which is
+the case for that pass existing: nothing in either suite looks at a screen.
+
+**The test that pins it records the paint calls itself.** The obvious
+`paints..path()..paragraph()` matcher passes with the bug in place, because it
+matches a *subsequence* and the zone's own fill is a path drawn before the
+caption either way. Counting paths does not work either — the widget subtree
+draws more of them than the diagram does. So the test drives the painter with
+a `Canvas` that notes which methods were called, and asserts the last
+`drawPath` lands before the first `drawParagraph`. It was written the weak way
+first, and only caught the bug once it was written the third way.
+
 ## 4. Army builder
 
 ### 4.1 Screen structure
