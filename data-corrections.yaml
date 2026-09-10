@@ -11,6 +11,167 @@
 # Delete an entry once upstream carries the fix — leaving it means silently
 # overriding data that has since become correct.
 
+# ---------------------------------------------------------------------------
+# Words upstream misspells.
+#
+# **Found, not judged.** Each of these is a token that is in no dictionary, in
+# none of the names the dataset itself publishes, and one keystroke from a word
+# the rules text leans on thousands of times. Nothing here was decided by
+# somebody thinking a word looked wrong (§0), and the entries say what the
+# evidence was so a reader can check it.
+#
+# Two things this deliberately does not touch:
+#
+#   - **Rare spellings that are not errors.** `Hypex` is a combat drug,
+#     `Kine-shielded Guardians` is a rule and `CORV` is a keyword; all three
+#     look like typos to a spell-checker and are correct.
+#   - **Formatting.** Curly against straight apostrophes, a trailing full stop
+#     present in one copy and absent in another, bold markers on a keyword in
+#     one faction's file and not in another's. Those are real inconsistencies
+#     and they are not misspellings; normalising them is a separate decision.
+#
+# Counts are as of 2026-09-11 and will fall as upstream fixes them. An entry
+# whose `wrong` no longer appears anywhere should go — `spellings_test.dart`
+# fails when one stops matching.
+spellings:
+  - wrong: abilty
+    right: ability
+    reason: >
+      68 occurrences against 28,565 of
+      "ability", and "abilty" is in no dictionary and in none of the
+      dataset's own names. First seen in adepta-sororitas/farstryder-node.
+    upstream: not yet reported
+  - wrong: wepon
+    right: weapon
+    reason: >
+      35 occurrences against 8,837 of
+      "weapon", and "wepon" is in no dictionary and in none of the
+      dataset's own names. First seen in adepta-sororitas/temperamental-shokka.
+    upstream: not yet reported
+  - wrong: delcare
+    right: declare
+    reason: >
+      35 occurrences against 3,776 of
+      "declare", and "delcare" is in no dictionary and in none of the
+      dataset's own names. First seen in adepta-sororitas/execute-and-redeploy.
+    upstream: not yet reported
+  - wrong: umodified
+    right: unmodified
+    reason: >
+      35 occurrences against 1,544 of
+      "unmodified", and "umodified" is in no dictionary and in none of the
+      dataset's own names. First seen in adepta-sororitas/forged-in-battle.
+    upstream: not yet reported
+  - wrong: strategem
+    right: stratagem
+    reason: >
+      34 occurrences against 6,721 of
+      "stratagem", and "strategem" is in no dictionary and in none of the
+      dataset's own names. First seen in adepta-sororitas/lord-of-slaughter.
+    upstream: not yet reported
+  - wrong: infanty
+    right: infantry
+    reason: >
+      34 occurrences against 5,160 of
+      "infantry", and "infanty" is in no dictionary and in none of the
+      dataset's own names. First seen in adepta-sororitas/light-of-clarity.
+    upstream: not yet reported
+  - wrong: engagment
+    right: engagement
+    reason: >
+      34 occurrences against 5,678 of
+      "engagement", and "engagment" is in no dictionary and in none of the
+      dataset's own names. First seen in adepta-sororitas/cegorachs-coil.
+    upstream: not yet reported
+  - wrong: armyl
+    right: army
+    reason: >
+      34 occurrences against 21,163 of
+      "army", and "armyl" is in no dictionary and in none of the
+      dataset's own names. First seen in adepta-sororitas/cavalry-aquila.
+    upstream: not yet reported
+  - wrong: crsade
+    right: crusade
+    reason: >
+      34 occurrences against 11,062 of
+      "crusade", and "crsade" is in no dictionary and in none of the
+      dataset's own names. First seen in adepta-sororitas/the-gift-from-beyond.
+    upstream: not yet reported
+  - wrong: chare
+    right: charge
+    reason: >
+      33 occurrences against 10,650 of
+      "charge", and "chare" is in no dictionary and in none of the
+      dataset's own names. First seen in adepta-sororitas/remorseless-persecution.
+    upstream: not yet reported
+  - wrong: subtrsact
+    right: subtract
+    reason: >
+      33 occurrences against 5,080 of
+      "subtract", and "subtrsact" is in no dictionary and in none of the
+      dataset's own names. First seen in adepta-sororitas/binding-tendrils-psychic.
+    upstream: not yet reported
+  - wrong: mdel
+    right: model
+    reason: >
+      2 occurrences against 65,580 of
+      "model", and "mdel" is in no dictionary and in none of the
+      dataset's own names. First seen in adeptus-mechanicus/damaged-1-4-wounds-remaining.
+    upstream: not yet reported
+  - wrong: unmodifed
+    right: unmodified
+    reason: >
+      2 occurrences against 1,544 of
+      "unmodified", and "unmodifed" is in no dictionary and in none of the
+      dataset's own names. First seen in necrons/destroyer-cult.
+    upstream: not yet reported
+  - wrong: mosnter
+    right: monster
+    reason: >
+      1 occurrence against 2,827 of
+      "monster", and "mosnter" is in no dictionary and in none of the
+      dataset's own names. First seen in blood-angels/magna-grapple.
+    upstream: not yet reported
+  - wrong: eligibile
+    right: eligible
+    reason: >
+      1 occurrence against 4,531 of
+      "eligible", and "eligibile" is in no dictionary and in none of the
+      dataset's own names. First seen in adeptus-custodes/assault-dropship.
+    upstream: not yet reported
+  - wrong: eilgible
+    right: eligible
+    reason: >
+      1 occurrence against 4,531 of
+      "eligible", and "eilgible" is in no dictionary and in none of the
+      dataset's own names. First seen in adeptus-custodes/hunt-as-one-talons-of-the-emperor.
+    upstream: not yet reported
+  - wrong: stength
+    right: strength
+    reason: >
+      1 occurrence against 6,945 of
+      "strength", and "stength" is in no dictionary and in none of the
+      dataset's own names. First seen in blood-angels/lost-to-rage-the-lost-brethren.
+    upstream: not yet reported
+  - wrong: Feel Not Pain
+    right: Feel No Pain
+    reason: >
+      35 occurrences against 3,648 of "Feel No Pain". Both words are ordinary
+      English, so this is not caught by spelling: the evidence is that Rites of
+      Feasting contradicts itself, writing "Feel Not Pain 6+" in one sentence
+      and "Feel No Pain" in the next, about the same ability.
+    upstream: not yet reported
+  - wrong: Ride the WInd
+    right: Ride the Wind
+    reason: >
+      A shift-key slip inside a word — the capital I in "WInd" — in the name of
+      the Aeldari Windrider Host detachment rule. Note that correcting the name
+      does not fix that datasheet: BSData publishes two different rules under
+      this one name, and the wrong one's text wins the merge. That is an id
+      collision and is tracked separately.
+    upstream: not yet reported
+
+
 abilities:
   # `faction: "*"` matches the ability in every faction that carries it. Core
   # abilities are transcribed once per faction file, so a mistake in one is

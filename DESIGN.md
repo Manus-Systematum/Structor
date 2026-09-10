@@ -918,6 +918,57 @@ a `Canvas` that notes which methods were called, and asserts the last
 `drawPath` lands before the first `drawParagraph`. It was written the weak way
 first, and only caught the bug once it was written the third way.
 
+### 3.36 Spelling, found rather than judged
+
+The rules text is what a player reads mid-game, and upstream misspells words
+in it: a unit that is not *eligibile* to declare a *chare*, an *abilty*, a
+*strategem*, *umodified* wounds. Because a rule is copied into every faction
+file that can use it, one typo is 33 wrong sentences.
+
+`data-corrections.yaml` gained a `spellings:` channel, applied in the loader's
+own read path so it reaches every file alike — an ability's text, a
+stratagem's, an FAQ answer — rather than being wired into each reader. Case is
+copied from what was there, so `Abilty`, `abilty` and `ABILTY` are one entry
+and none of them is rewritten into a different case than upstream used.
+
+**None of it is judged by knowing English**, which §0 does not allow. A word
+is a candidate when it is in no dictionary, in none of the names the dataset
+itself publishes, and one keystroke from a word the rules text leans on
+thousands of times. That last clause is what keeps `Hypex` (a combat drug),
+`Kine-shielded Guardians` (a rule) and `CORV` (a keyword) out: all three look
+like typos to a spell-checker and all three are correct.
+
+Two false starts are worth recording, because both are the obvious approach:
+
+**Rarity is not error.** A first sweep looked for a rare spelling close to a
+common one and returned 297 pairs, nearly all of them real: `SUSTAINED HITS 3`
+against `SUSTAINED HITS 1`, `Bloodthirst` against `Bloodthirster`, plurals that
+are correct in their own sentence.
+
+**The majority is not right either.** Comparing copies of one rule across
+faction files looked sound until `remorseless-persecution`, where 32 of the 33
+copies read "declare a chare" and the single Black Templars copy is the
+correct one. A vote would have propagated the typo. What settles it is that
+"chare" is not the word — and the dictionary alone would not have caught that
+one, since `chare` is an archaic English word; the corpus does, with 10,650
+uses of `charge` and none of `chare` outside this rule.
+
+The one caught neither way is **Feel Not Pain**, since both words are ordinary
+English. Rites of Feasting contradicts itself — "Feel Not Pain 6+" in one
+sentence and "Feel No Pain" in the next, about the same ability — and the
+dataset uses the correct form 3,648 times.
+
+Nineteen entries. What is deliberately not touched is **formatting**: curly
+against straight apostrophes, a trailing full stop present in one copy and
+absent in another, bold markers on a keyword in one faction's file and not in
+another's. Those are real inconsistencies, they are not misspellings, and
+normalising them is a separate decision about how the app renders rather than
+about what upstream meant.
+
+`spellings_test.dart` fails when an entry stops matching anything, so a typo
+upstream has fixed is deleted rather than left quietly rewriting data that has
+since become correct.
+
 ## 4. Army builder
 
 ### 4.1 Screen structure
