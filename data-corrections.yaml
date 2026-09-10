@@ -233,6 +233,25 @@ units:
     upstream: not yet reported
     add_wargear: [gun-drone]
 
+  - faction: death-guard
+    id: beasts-of-nurgle
+    reason: >
+      Nobody in the pipeline prices this datasheet. 40kdc does not carry the
+      Death Guard copy at all — it came in from BSData, which publishes the
+      sheet with no cost, so it shipped at zero and the builder charged
+      nothing for it. Games Workshop's own points page prices it at 70 for one
+      model and 140 for two; the Chaos Daemons copy of the same datasheet is a
+      different unit at a different price (80 / 150) and is not a substitute.
+      Transcribed here rather than read out of the Munitorum mirror, because
+      the mirror is what judges prices and a price taken from the judge can
+      never be judged wrong by it (DESIGN.md §3.5).
+    upstream: not yet reported
+    points:
+      - models: 1
+        cost: 70
+      - models: 2
+        cost: 140
+
   - faction: adepta-sororitas
     id: dominion-squad
     reason: >
@@ -509,6 +528,17 @@ enhancements:
     restrict_to: [pathfinder-team, stealth-battlesuits]
 
 aliases:
+  - faction: "*"
+    id: slayers-of-tyrants-gilded-blades
+    canonical: slayers-of-tyrants
+    reason: >
+      One rule under two ids, which arrived with the 2026-09 data. Both are
+      named "Slayers of Tyrants"; the detachment-suffixed one carries no text
+      at all, so a unit that has it renders a rule name with nothing under it
+      while the other id holds the wording. Merged rather than corrected
+      upstream-side because the pair is the split, not either half.
+    upstream: not yet reported
+
   - faction: "*"
     id: battlesuit-support-systems
     canonical: battlesuit-support-system

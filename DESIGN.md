@@ -609,6 +609,104 @@ refreshed first, and that a tap is in device pixels rather than in the
 coordinates of a screenshot scaled to fit. It is also told, in as many words,
 not to write a number from its own knowledge of Warhammer (§0).
 
+### 3.27 The Battlemaster re-import, and what a stale id costs
+
+The terrain re-import of 2026-08-27 replaced every template id in
+`terrain-templates.json`, republished the parts as explicit polygons rather
+than `width`/`height` boxes, renamed every layout, and added one part that had
+not been published before. Nothing announced any of this; it arrived as a
+routine fetch, and twelve terrain tests failed at once.
+
+Four separate things had been written against the old shape, and each is worth
+recording because the same class of mistake is available again:
+
+**A polygon is centred the same way a rectangle is.** The centring flag
+reached only the rectangle branch, which was true of the data when it was
+written. When the parts became polygons the flag stopped reaching them and
+every wall sat half its own size away from the base it stands on. Centring is
+not a guess: leaving the polygons as authored fails nine terrain tests,
+centring them fails none.
+
+**A vertex index cannot name a corner.** Which corner of its box a ruin's
+walls stand in was recorded as an index into the footprint, which was safe
+while this file built every footprint itself, always in the same order. The
+export writes whatever winding it likes — the two `AB` templates list their
+vertices in opposite directions — so index 3 is a different corner on each of
+them. It is recorded as a **quadrant** now, `(±1, ±1)` of the part's own box,
+which is the same corner however the points are ordered. The values carried
+across unchanged and still land on the coordinates read off the published
+diagram, which is the evidence the conversion was faithful.
+
+**An id is an export artefact; the letter stamped on the piece is not.** The
+corner table was keyed on template id, and every id changed. It is keyed on
+the label — `AB`, `CD`, `EF`, `GH` — which is what a player matches against
+the printed table and what cannot change without a new physical piece. Two
+tests were pinned to old ids the same way and now look parts up by label.
+
+**`Ruin Part` is a ruin without a letter.** The thirteenth part appears in
+exactly one composite, beside `CD` and `GH`, as the third piece of that ruin;
+it is `dense` like the other ruins and is the only part upstream ships with no
+wall geometry, so it has no corner to pin and keeps the measured tick. The
+test that said "the lettered parts are the ruins, **and only those**" now says
+that every lettered part is a ruin and names the one unlettered exception,
+rather than widening to "anything may be a ruin" — a letter still always means
+a ruin, and nothing new drifts in unnoticed.
+
+### 3.28 A price of nothing is a gap in the reading
+
+`bs_merge.dart` already refused to let an empty field win over a filled one —
+BSData is primary, but a field it failed to produce is a gap in the reading
+and not a statement that the datasheet has none. A points list costing every
+bracket at zero is not empty, so it went straight through: BSData's singular
+`Hellflayer`, matched to 40kdc's `Hellflayers`, replaced 80 points with 0 and
+the builder charged nothing for it. The guard now covers that shape too.
+
+Measuring the rest found 99 datasheets priced at zero, and 97 of them are
+correct — Combat Patrol sheets, which that mode plays without points and which
+`isMatchedPlay` already keeps out of a matched-play army. Exactly two could
+reach a list:
+
+- **Beasts of Nurgle (Death Guard)** — 40kdc does not carry the datasheet at
+  all and BSData publishes it with no cost. Games Workshop's own page prices
+  it at 70 / 140, and the Chaos Daemons copy of the same datasheet is a
+  different unit at a different price. It is transcribed in
+  `data-corrections.yaml` through a new `points:` channel rather than read out
+  of the Munitorum mirror: **the judge is not a source** (§3.5), and a price
+  taken from the judge can never be judged wrong by it.
+- **Seeker Chariot** — a Legends datasheet nobody publishes matched-play
+  points for. Inventing one would be writing a number from memory (§0).
+
+So `PricingProblem` gained `noPublishedPrice`: a matched-play bracket costing
+nothing is reported as unpriced rather than summed as free, which is the rule
+`points.dart` already stated — *a missing price must never read as a cheap
+unit* — applied to the shape it did not cover. Combat Patrol sheets are
+exempt, because for them zero is the published answer.
+
+### 3.29 A scoped copy of a rule is not a duplicate
+
+`data-corrections.yaml` carries aliases for ids upstream split by accident:
+`dark-blessings` and `dark-blessing` are one rule under two spellings, and
+left apart they file the same sentence twice on the rules screen. A test
+guards that no two ids in the shipped data render the same rule twice.
+
+Upstream also publishes **scoped copies on purpose**, and the check could not
+tell the two apart. Armour of Contempt is written once per Dark Angels task
+force, with identical wording and an id suffixed by the detachment; every
+Combat Patrol datasheet carries its own copy of every rule its matched-play
+counterpart has. Measured: 24 such pairs against 10 genuine splits, and the
+count grows with every boxed set published.
+
+The distinction that matters is not how the ids are spelled but whether **one
+army can hold both**. A roster has one detachment, and cannot take a Combat
+Patrol datasheet at all, so a scoped copy is never rendered beside the rule it
+copies. The check now skips a pair when the two carry different
+`detachment_id`s or when one is reachable only through datasheets outside
+matched play — and still fails on a real split, which was verified by removing
+an alias and watching it fire.
+
+Aliasing them instead would have merged rules that were never together and
+needed a new entry every time Games Workshop publishes a box.
+
 ## 4. Army builder
 
 ### 4.1 Screen structure

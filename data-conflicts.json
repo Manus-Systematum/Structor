@@ -274,142 +274,6 @@
     {
       "faction": "adeptus-astartes",
       "kind": "units",
-      "id": "rhino",
-      "field": "points",
-      "bsdata": [
-        {
-          "models": 1,
-          "cost": 65,
-          "unit_count_min": 1,
-          "unit_count_max": 4
-        },
-        {
-          "models": 1,
-          "cost": 75,
-          "unit_count_min": 5
-        }
-      ],
-      "40kdc": [
-        {
-          "models": 1,
-          "cost": 65,
-          "unit_count_min": 1,
-          "unit_count_max": 3
-        },
-        {
-          "models": 1,
-          "cost": 75,
-          "unit_count_min": 4,
-          "unit_count_max": null
-        }
-      ],
-      "resolution": "bsdata"
-    },
-    {
-      "faction": "adeptus-astartes",
-      "kind": "units",
-      "id": "razorback",
-      "field": "points",
-      "bsdata": [
-        {
-          "models": 1,
-          "cost": 85,
-          "unit_count_min": 1,
-          "unit_count_max": 4
-        },
-        {
-          "models": 1,
-          "cost": 95,
-          "unit_count_min": 5
-        }
-      ],
-      "40kdc": [
-        {
-          "models": 1,
-          "cost": 85,
-          "unit_count_min": 1,
-          "unit_count_max": 3
-        },
-        {
-          "models": 1,
-          "cost": 95,
-          "unit_count_min": 4,
-          "unit_count_max": null
-        }
-      ],
-      "resolution": "bsdata"
-    },
-    {
-      "faction": "adeptus-astartes",
-      "kind": "units",
-      "id": "impulsor",
-      "field": "points",
-      "bsdata": [
-        {
-          "models": 1,
-          "cost": 70,
-          "unit_count_min": 1,
-          "unit_count_max": 4
-        },
-        {
-          "models": 1,
-          "cost": 80,
-          "unit_count_min": 5
-        }
-      ],
-      "40kdc": [
-        {
-          "models": 1,
-          "cost": 70,
-          "unit_count_min": 1,
-          "unit_count_max": 3
-        },
-        {
-          "models": 1,
-          "cost": 80,
-          "unit_count_min": 4,
-          "unit_count_max": null
-        }
-      ],
-      "resolution": "bsdata"
-    },
-    {
-      "faction": "adeptus-astartes",
-      "kind": "units",
-      "id": "drop-pod",
-      "field": "points",
-      "bsdata": [
-        {
-          "models": 1,
-          "cost": 60,
-          "unit_count_min": 1,
-          "unit_count_max": 4
-        },
-        {
-          "models": 1,
-          "cost": 70,
-          "unit_count_min": 5
-        }
-      ],
-      "40kdc": [
-        {
-          "models": 1,
-          "cost": 60,
-          "unit_count_min": 1,
-          "unit_count_max": 3
-        },
-        {
-          "models": 1,
-          "cost": 70,
-          "unit_count_min": 4,
-          "unit_count_max": null
-        }
-      ],
-      "resolution": "bsdata"
-    },
-    {
-      "faction": "adeptus-astartes",
-      "kind": "units",
       "id": "venerable-dreadnought",
       "field": "points",
       "bsdata": [
@@ -639,6 +503,46 @@
           "cost": 265,
           "unit_count_min": 3,
           "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "skitarii-rangers",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 10,
+          "models_max": 14,
+          "cost": 85
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 10,
+          "cost": 85
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "skitarii-vanguard",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 10,
+          "models_max": 14,
+          "cost": 85
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 10,
+          "cost": 85
         }
       ],
       "resolution": "bsdata"
@@ -1275,13 +1179,13 @@
         },
         {
           "models": 27,
-          "cost": 75
+          "cost": 70
         }
       ],
       "40kdc": [
         {
           "models": 10,
-          "cost": 75
+          "cost": 70
         },
         {
           "models": 20,
@@ -1299,21 +1203,21 @@
         {
           "models": 11,
           "models_max": 26,
-          "cost": 145
+          "cost": 135
         },
         {
           "models": 27,
-          "cost": 75
+          "cost": 70
         }
       ],
       "40kdc": [
         {
           "models": 10,
-          "cost": 75
+          "cost": 70
         },
         {
           "models": 20,
-          "cost": 145
+          "cost": 135
         }
       ],
       "resolution": "bsdata"
@@ -1327,22 +1231,22 @@
         {
           "models": 11,
           "models_max": 29,
-          "cost": 145
+          "cost": 135
         },
         {
           "models": 30,
           "models_max": 36,
-          "cost": 75
+          "cost": 70
         }
       ],
       "40kdc": [
         {
           "models": 10,
-          "cost": 75
+          "cost": 70
         },
         {
           "models": 20,
-          "cost": 145
+          "cost": 135
         }
       ],
       "resolution": "bsdata"
@@ -1596,33 +1500,6 @@
       "field": "name",
       "bsdata": "Fates in Flux",
       "40kdc": "Fates In Flux",
-      "resolution": "bsdata"
-    },
-    {
-      "faction": "chaos-knights",
-      "kind": "units",
-      "id": "war-dog-moirax",
-      "field": "points",
-      "bsdata": [
-        {
-          "models": 1,
-          "cost": 150
-        }
-      ],
-      "40kdc": [
-        {
-          "models": 1,
-          "cost": 150,
-          "unit_count_min": 1,
-          "unit_count_max": 2
-        },
-        {
-          "models": 1,
-          "cost": 160,
-          "unit_count_min": 3,
-          "unit_count_max": null
-        }
-      ],
       "resolution": "bsdata"
     },
     {
@@ -2225,53 +2102,53 @@
       "bsdata": [
         {
           "models": 5,
-          "cost": 110,
+          "cost": 105,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 5,
-          "cost": 120,
+          "cost": 115,
           "unit_count_min": 3
         },
         {
           "models": 6,
           "models_max": 14,
-          "cost": 220,
+          "cost": 210,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 6,
           "models_max": 14,
-          "cost": 230,
+          "cost": 220,
           "unit_count_min": 3
         }
       ],
       "40kdc": [
         {
           "models": 5,
-          "cost": 110,
+          "cost": 105,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 6,
           "models_max": 10,
-          "cost": 220,
+          "cost": 210,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 5,
-          "cost": 120,
+          "cost": 115,
           "unit_count_min": 3,
           "unit_count_max": null
         },
         {
           "models": 6,
           "models_max": 10,
-          "cost": 230,
+          "cost": 220,
           "unit_count_min": 3,
           "unit_count_max": null
         }
@@ -2421,13 +2298,13 @@
         {
           "models": 10,
           "models_max": 12,
-          "cost": 100
+          "cost": 90
         }
       ],
       "40kdc": [
         {
           "models": 10,
-          "cost": 100
+          "cost": 90
         }
       ],
       "resolution": "bsdata"
@@ -2591,7 +2468,7 @@
         },
         {
           "models": 3,
-          "cost": 160,
+          "cost": 165,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
@@ -2609,7 +2486,7 @@
         },
         {
           "models": 3,
-          "cost": 170,
+          "cost": 175,
           "unit_count_min": 3,
           "unit_count_max": null
         }
@@ -2646,31 +2523,75 @@
     {
       "faction": "orks",
       "kind": "units",
+      "id": "beast-snagga-boyz",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 10,
+          "cost": 85,
+          "unit_count_min": 1,
+          "unit_count_max": 3
+        },
+        {
+          "models": 10,
+          "cost": 95,
+          "unit_count_min": 4
+        },
+        {
+          "models": 11,
+          "models_max": 20,
+          "cost": 170,
+          "unit_count_min": 1,
+          "unit_count_max": 3
+        },
+        {
+          "models": 11,
+          "models_max": 20,
+          "cost": 180,
+          "unit_count_min": 4
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 10,
+          "cost": 90
+        },
+        {
+          "models": 11,
+          "models_max": 20,
+          "cost": 170
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
       "id": "boyz",
       "field": "points",
       "bsdata": [
         {
           "models": 10,
-          "cost": 75,
+          "cost": 90,
           "unit_count_min": 1,
           "unit_count_max": 3
         },
         {
           "models": 10,
-          "cost": 85,
+          "cost": 100,
           "unit_count_min": 4
         },
         {
           "models": 11,
-          "models_max": 21,
-          "cost": 160,
+          "models_max": 23,
+          "cost": 180,
           "unit_count_min": 1,
           "unit_count_max": 3
         },
         {
           "models": 11,
-          "models_max": 21,
-          "cost": 170,
+          "models_max": 23,
+          "cost": 190,
           "unit_count_min": 4
         }
       ],
@@ -2699,93 +2620,6 @@
           "models_max": 20,
           "cost": 170,
           "unit_count_min": 4,
-          "unit_count_max": null
-        }
-      ],
-      "resolution": "bsdata"
-    },
-    {
-      "faction": "orks",
-      "kind": "units",
-      "id": "burna-boyz",
-      "field": "points",
-      "bsdata": [
-        {
-          "models": 1,
-          "models_max": 5,
-          "cost": 60
-        },
-        {
-          "models": 6,
-          "cost": 120
-        }
-      ],
-      "40kdc": [
-        {
-          "models": 5,
-          "cost": 60
-        },
-        {
-          "models": 10,
-          "cost": 120
-        }
-      ],
-      "resolution": "bsdata"
-    },
-    {
-      "faction": "orks",
-      "kind": "units",
-      "id": "flash-gitz",
-      "field": "points",
-      "bsdata": [
-        {
-          "models": 5,
-          "cost": 75,
-          "unit_count_min": 1,
-          "unit_count_max": 2
-        },
-        {
-          "models": 5,
-          "cost": 85,
-          "unit_count_min": 3
-        },
-        {
-          "models": 6,
-          "models_max": 10,
-          "cost": 150,
-          "unit_count_min": 1,
-          "unit_count_max": 2
-        },
-        {
-          "models": 6,
-          "models_max": 10,
-          "cost": 160,
-          "unit_count_min": 3
-        }
-      ],
-      "40kdc": [
-        {
-          "models": 5,
-          "cost": 75,
-          "unit_count_min": 1,
-          "unit_count_max": 2
-        },
-        {
-          "models": 10,
-          "cost": 150,
-          "unit_count_min": 1,
-          "unit_count_max": 2
-        },
-        {
-          "models": 5,
-          "cost": 85,
-          "unit_count_min": 3,
-          "unit_count_max": null
-        },
-        {
-          "models": 10,
-          "cost": 160,
-          "unit_count_min": 3,
           "unit_count_max": null
         }
       ],
@@ -2798,22 +2632,24 @@
       "field": "points",
       "bsdata": [
         {
-          "models": 1,
+          "models": 10,
           "models_max": 11,
           "cost": 45
         },
         {
           "models": 12,
+          "models_max": 20,
           "cost": 80
         }
       ],
       "40kdc": [
         {
-          "models": 11,
+          "models": 10,
           "cost": 45
         },
         {
-          "models": 22,
+          "models": 11,
+          "models_max": 20,
           "cost": 80
         }
       ],
@@ -2822,56 +2658,58 @@
     {
       "faction": "orks",
       "kind": "units",
-      "id": "lootas",
+      "id": "nobz",
       "field": "points",
       "bsdata": [
         {
-          "models": 1,
-          "models_max": 5,
-          "cost": 50,
+          "models": 5,
+          "cost": 125,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
-          "models": 1,
-          "models_max": 5,
-          "cost": 60,
+          "models": 5,
+          "cost": 155,
           "unit_count_min": 3
         },
         {
           "models": 6,
-          "cost": 100,
+          "models_max": 18,
+          "cost": 250,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 6,
-          "cost": 110,
+          "models_max": 18,
+          "cost": 280,
           "unit_count_min": 3
         }
       ],
       "40kdc": [
         {
           "models": 5,
-          "cost": 50,
+          "cost": 105,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
-          "models": 10,
-          "cost": 100,
+          "models": 6,
+          "models_max": 10,
+          "cost": 250,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 5,
-          "cost": 60,
+          "cost": 115,
           "unit_count_min": 3,
           "unit_count_max": null
         },
         {
-          "models": 10,
-          "cost": 110,
+          "models": 6,
+          "models_max": 10,
+          "cost": 220,
           "unit_count_min": 3,
           "unit_count_max": null
         }
@@ -2885,23 +2723,122 @@
       "field": "points",
       "bsdata": [
         {
-          "models": 1,
-          "models_max": 4,
-          "cost": 140
+          "models": 4,
+          "cost": 140,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "cost": 160,
+          "unit_count_min": 3
         },
         {
           "models": 5,
-          "cost": 270
+          "models_max": 8,
+          "cost": 280,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "models_max": 8,
+          "cost": 300,
+          "unit_count_min": 3
         }
       ],
       "40kdc": [
         {
           "models": 4,
-          "cost": 140
+          "cost": 140,
+          "unit_count_min": 1,
+          "unit_count_max": 2
         },
         {
           "models": 8,
-          "cost": 270
+          "cost": 280,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "cost": 160,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 8,
+          "cost": 300,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "tankbustas",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 6,
+          "cost": 145,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "cost": 155,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 6,
+          "cost": 145,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "cost": 135,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "gargantuan-squiggoth",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 500,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 550,
+          "unit_count_min": 2
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 440,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 490,
+          "unit_count_min": 2,
+          "unit_count_max": null
         }
       ],
       "resolution": "bsdata"
@@ -2909,28 +2846,64 @@
     {
       "faction": "orks",
       "kind": "abilities",
-      "id": "big-gunz",
+      "id": "dodge-dis",
       "field": "name",
-      "bsdata": "Big Gunz",
-      "40kdc": "BIG GUNZ",
+      "bsdata": "Dodge Dis!",
+      "40kdc": "Dodge Dis",
       "resolution": "bsdata"
     },
     {
       "faction": "orks",
       "kind": "abilities",
-      "id": "here-be-loot",
+      "id": "deff-from-above",
       "field": "name",
-      "bsdata": "Here Be Loot",
-      "40kdc": "Here be Loot",
+      "bsdata": "Deff from Above",
+      "40kdc": "Deff From Above",
       "resolution": "bsdata"
     },
     {
       "faction": "orks",
       "kind": "abilities",
-      "id": "eager-for-the-fight",
+      "id": "da-bigger-dey-iz",
       "field": "name",
-      "bsdata": "Eager For The Fight",
-      "40kdc": "Eager for the Fight",
+      "bsdata": "Da Bigger Dey Iz…",
+      "40kdc": "Da Bigger Dey Iz...",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "abilities",
+      "id": "runnin-wiv-da-herd",
+      "field": "name",
+      "bsdata": "Runnin' wiv da Herd",
+      "40kdc": "Runnin’ Wiv da Herd",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "abilities",
+      "id": "get-back-in-da-race",
+      "field": "name",
+      "bsdata": "Get Back in Da Race",
+      "40kdc": "Get Back in da Race!",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "abilities",
+      "id": "da-bigger-dey-are-da-better-dey-drop",
+      "field": "name",
+      "bsdata": "Da Bigger Dey Are, Da Better Dey Drop",
+      "40kdc": "Da Bigger Dey Are, da Better Dey Drop",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "abilities",
+      "id": "blitz-dem-gitz",
+      "field": "name",
+      "bsdata": "Blitz Dem Gitz!",
+      "40kdc": "Blitz Dem Gitz",
       "resolution": "bsdata"
     },
     {
@@ -3236,23 +3209,23 @@
       "bsdata": [
         {
           "models": 10,
-          "cost": 170
+          "cost": 160
         },
         {
           "models": 11,
           "models_max": 32,
-          "cost": 330
+          "cost": 320
         }
       ],
       "40kdc": [
         {
           "models": 10,
-          "cost": 170
+          "cost": 160
         },
         {
           "models": 11,
           "models_max": 20,
-          "cost": 330
+          "cost": 320
         }
       ],
       "resolution": "bsdata"

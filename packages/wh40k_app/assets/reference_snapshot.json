@@ -135,6 +135,20 @@
           "per_models": 0
         }
       ],
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "99fa-35-ba6e-5354"
+        },
+        {
+          "namespace": "game-datacards",
+          "id": "efd60099-c354-57d5-8033-85a74ccf7ca0"
+        },
+        {
+          "namespace": "mfm",
+          "id": "ce69c919-6a01-4e21-b1bd-2b768b537657"
+        }
+      ],
       "battlefield_role": "Character",
       "wargear_caps": {
         "battlesuit-fists": 1,
@@ -275,6 +289,20 @@
             "guardian-drone"
           ],
           "count": 1
+        }
+      ],
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "9373-d0b3-94c9-e47"
+        },
+        {
+          "namespace": "game-datacards",
+          "id": "be310bc7-0839-5e09-ae9c-a23f4e0a330c"
+        },
+        {
+          "namespace": "mfm",
+          "id": "8490e2ce-4e1a-49fa-85b4-253b7c333109"
         }
       ],
       "battlefield_role": "Vehicle",
@@ -430,6 +458,20 @@
           "per_models": 0
         }
       ],
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "3a73-7255-c639-e89e"
+        },
+        {
+          "namespace": "game-datacards",
+          "id": "599e050f-97b6-55fa-9b83-a6a575a34f25"
+        },
+        {
+          "namespace": "mfm",
+          "id": "7ddf7559-7584-434a-8f03-95faed97a0d6"
+        }
+      ],
       "battlefield_role": "Character",
       "wargear_caps": {
         "battlesuit-fists": 1,
@@ -490,13 +532,13 @@
       "points": [
         {
           "models": 3,
-          "cost": 90,
+          "cost": 100,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 3,
-          "cost": 100,
+          "cost": 110,
           "unit_count_min": 3
         }
       ],
@@ -573,6 +615,20 @@
           "count": 1
         }
       ],
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "fb32-c683-b38f-d339"
+        },
+        {
+          "namespace": "game-datacards",
+          "id": "176f77e2-76d1-5fd3-928d-48e8f61cdf49"
+        },
+        {
+          "namespace": "mfm",
+          "id": "16e8d229-19ec-4db3-beec-c2e0b14359b9"
+        }
+      ],
       "battlefield_role": "Vehicle",
       "wargear_caps": {
         "drones-0-2": 2,
@@ -616,7 +672,7 @@
       "points": [
         {
           "models": 2,
-          "cost": 220
+          "cost": 230
         }
       ],
       "keywords": [
@@ -660,6 +716,20 @@
       },
       "is_legend": false,
       "points_provisional": false,
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "6623-c2cb-6705-580b"
+        },
+        {
+          "namespace": "game-datacards",
+          "id": "744edc3c-e580-58f8-9583-b9e5852b7a79"
+        },
+        {
+          "namespace": "mfm",
+          "id": "8fdcf599-8c54-4515-a709-46d293cca0b8"
+        }
+      ],
       "battlefield_role": "Epic Hero",
       "wargear_budgets": [
         {
@@ -772,7 +842,6 @@
       "ability_ids": [
         "advanced-armour",
         "for-the-greater-good",
-        "feel-no-pain",
         "missile-drone"
       ],
       "game_version": {
@@ -785,6 +854,20 @@
         {
           "item_id": "high-yield-missile-pods",
           "cost": 5
+        }
+      ],
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "a594-317-b90a-a226"
+        },
+        {
+          "namespace": "game-datacards",
+          "id": "76bc5902-8376-5020-8d89-ccacd932f771"
+        },
+        {
+          "namespace": "mfm",
+          "id": "c2428762-4f6e-418e-8943-28b4abede45f"
         }
       ],
       "battlefield_role": "Vehicle",
@@ -915,6 +998,20 @@
           "cost": 15
         }
       ],
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "5268-6e9-8f5c-c810"
+        },
+        {
+          "namespace": "game-datacards",
+          "id": "bcccf73e-41ec-5d85-9dfb-bbc9e61ff93b"
+        },
+        {
+          "namespace": "mfm",
+          "id": "84bd3398-d127-4dd5-973d-c615f1e904ee"
+        }
+      ],
       "battlefield_role": "Vehicle",
       "wargear_budgets": [
         {
@@ -1006,6 +1103,20 @@
         {
           "item_id": "ion-accelerator",
           "cost": 25
+        }
+      ],
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "5d8f-5530-263d-651b"
+        },
+        {
+          "namespace": "game-datacards",
+          "id": "2daf2e63-9bf4-5d66-bde0-5a85c0f1fe4f"
+        },
+        {
+          "namespace": "mfm",
+          "id": "3dbc2efc-6cfd-4636-8502-d31b190b83ba"
         }
       ],
       "battlefield_role": "Vehicle",
@@ -1150,6 +1261,20 @@
           "per_models": 0
         }
       ],
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "5d3a-803e-7cbc-b2f1"
+        },
+        {
+          "namespace": "game-datacards",
+          "id": "e9255c83-49c4-59dd-a67d-8283e79a582d"
+        },
+        {
+          "namespace": "mfm",
+          "id": "eb4c3561-28e7-4062-b7bb-fd312958d7d5"
+        }
+      ],
       "battlefield_role": "Infantry",
       "wargear_caps": {
         "battlesuit-fists": 1,
@@ -1197,7 +1322,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "2529-ef4c-ea18-5964"
+        },
+        {
+          "namespace": "mfm",
+          "id": "0b4b7580-876e-454e-8b4a-0602a9d7a17e"
+        }
+      ]
     },
     "drone-twin-pulse-carbine": {
       "id": "drone-twin-pulse-carbine",
@@ -1228,6 +1363,24 @@
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "1ad0-be27-ab4c-3459"
+        },
+        {
+          "namespace": "bsdata",
+          "id": "f532-7ffd-02fe-6af8"
+        },
+        {
+          "namespace": "mfm",
+          "id": "52ab3785-4df0-4127-a4c9-f425982eaa77"
+        },
+        {
+          "namespace": "mfm",
+          "id": "547a413a-51e3-418b-b770-0bed1a48c159"
+        }
+      ],
       "corrected": {
         "reason": "The Gun Drone's gun. Pointing the grant at the plain `twin-pulse-carbine` had the drone firing at BS4+, the skill of the battlesuit carrying it, which is a better weapon than the drone has.",
         "upstream": "not yet reported"
@@ -1254,7 +1407,21 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "6132-7ca7-58c5-0f8e"
+        },
+        {
+          "namespace": "bsdata",
+          "id": "e77d-2117-f780-9f73"
+        },
+        {
+          "namespace": "mfm",
+          "id": "3233dfd1-7b40-42ae-b86e-30d18c66a8c4"
+        }
+      ]
     },
     "missile-pod": {
       "id": "missile-pod",
@@ -1277,7 +1444,29 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "3535-5405-3607-1574"
+        },
+        {
+          "namespace": "bsdata",
+          "id": "8290-c852-cce9-d50e"
+        },
+        {
+          "namespace": "bsdata",
+          "id": "e77d-2117-f780-9f73"
+        },
+        {
+          "namespace": "mfm",
+          "id": "09bbc712-774d-4449-b98d-69702854170d"
+        },
+        {
+          "namespace": "mfm",
+          "id": "3320fa1b-f7ac-4f11-8ae3-270e9a001e2f"
+        }
+      ]
     },
     "battlesuit-fists": {
       "id": "battlesuit-fists",
@@ -1300,7 +1489,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "d357-859f-3b61-42f1"
+        },
+        {
+          "namespace": "mfm",
+          "id": "f2da5cec-7188-47db-a5c2-3896a54f4ac0"
+        }
+      ]
     },
     "battlesuit-fists-commander-in-coldstar-battlesuit": {
       "id": "battlesuit-fists-commander-in-coldstar-battlesuit",
@@ -1323,7 +1522,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "2529-ef4c-ea18-5964"
+        },
+        {
+          "namespace": "mfm",
+          "id": "0b4b7580-876e-454e-8b4a-0602a9d7a17e"
+        }
+      ]
     },
     "tau-flamer": {
       "id": "tau-flamer",
@@ -1353,7 +1562,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "6e8-cf2e-cedd-9028"
+        },
+        {
+          "namespace": "mfm",
+          "id": "f08aa7f1-5150-4ec5-965b-c13d82498245"
+        }
+      ]
     },
     "fusion-eliminator": {
       "id": "fusion-eliminator",
@@ -1399,7 +1618,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "ac40-7c6d-2fb1-2568"
+        },
+        {
+          "namespace": "mfm",
+          "id": "8e49a2a7-b045-40ee-9324-06cca0d5bd08"
+        }
+      ]
     },
     "xv-pulse-pistol": {
       "id": "xv-pulse-pistol",
@@ -1441,7 +1670,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "02f8-7b19-7f5e-7b88"
+        },
+        {
+          "namespace": "mfm",
+          "id": "d4aaf216-8d8d-427d-a995-8dbd1ebebb14"
+        }
+      ]
     },
     "shardstorm-burst-system": {
       "id": "shardstorm-burst-system",
@@ -1468,7 +1707,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "2064-6273-141b-2cd6"
+        },
+        {
+          "namespace": "mfm",
+          "id": "7e3c760c-9a0c-496f-a931-0883d2a04cd4"
+        }
+      ]
     },
     "twin-pulse-blaster": {
       "id": "twin-pulse-blaster",
@@ -1566,7 +1815,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "2f96-f83b-6666-197f"
+        },
+        {
+          "namespace": "mfm",
+          "id": "a2f6e9e5-f69b-41ed-8038-1dae64159ccf"
+        }
+      ]
     },
     "crushing-bulk": {
       "id": "crushing-bulk",
@@ -1589,7 +1848,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "659c-0926-9ea4-8983"
+        },
+        {
+          "namespace": "mfm",
+          "id": "3a167a96-1ad8-47ae-9369-f59a5c3166d8"
+        }
+      ]
     },
     "heavy-rail-rifle": {
       "id": "heavy-rail-rifle",
@@ -1619,7 +1888,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "f0e1-43ac-1c85-4430"
+        },
+        {
+          "namespace": "mfm",
+          "id": "46f90e26-ca04-4c3a-8ccd-7e43312c40b8"
+        }
+      ]
     },
     "drone-missile-pod": {
       "id": "drone-missile-pod",
@@ -1643,6 +1922,28 @@
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "3535-5405-3607-1574"
+        },
+        {
+          "namespace": "bsdata",
+          "id": "8290-c852-cce9-d50e"
+        },
+        {
+          "namespace": "bsdata",
+          "id": "e77d-2117-f780-9f73"
+        },
+        {
+          "namespace": "mfm",
+          "id": "09bbc712-774d-4449-b98d-69702854170d"
+        },
+        {
+          "namespace": "mfm",
+          "id": "3320fa1b-f7ac-4f11-8ae3-270e9a001e2f"
+        }
+      ],
       "corrected": {
         "reason": "The Missile Drone's gun: a missile pod at BS5+. Upstream records the drone as granting `{grant_type: ranged-weapon}` with no weapon named and has no record for it either, so Broadsides and Riptides were fielding drones that shot nothing.",
         "upstream": "not yet reported"
@@ -1673,7 +1974,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "3a30-cb51-c88c-255f"
+        },
+        {
+          "namespace": "mfm",
+          "id": "3a1d808d-ead5-46a6-83db-e3b5c5abab83"
+        }
+      ]
     },
     "twin-smart-missile-system-broadside-battlesuits": {
       "id": "twin-smart-missile-system-broadside-battlesuits",
@@ -1703,7 +2014,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "ae18-59e0-feaa-ccf5"
+        },
+        {
+          "namespace": "mfm",
+          "id": "7fa7385c-69fc-45b4-9f31-459aa0cb35c1"
+        }
+      ]
     },
     "fusion-collider": {
       "id": "fusion-collider",
@@ -1733,7 +2054,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "7911-3c42-8875-13d4"
+        },
+        {
+          "namespace": "mfm",
+          "id": "bd754928-9e98-4a27-8517-72988f933e8d"
+        }
+      ]
     },
     "ghostkeel-fists": {
       "id": "ghostkeel-fists",
@@ -1756,7 +2087,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "5804-a3f4-b65a-4e32"
+        },
+        {
+          "namespace": "mfm",
+          "id": "9295b1d1-47cf-435e-bf40-25cf12b1e7c3"
+        }
+      ]
     },
     "twin-fusion-blaster": {
       "id": "twin-fusion-blaster",
@@ -1789,7 +2130,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "c166-1c3f-6109-269f"
+        },
+        {
+          "namespace": "mfm",
+          "id": "ff5bd6ef-a56b-4fc7-abf8-c5bcb30e4f59"
+        }
+      ]
     },
     "ion-accelerator": {
       "id": "ion-accelerator",
@@ -1828,7 +2179,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "fac9-3d5c-53c2-b08c"
+        },
+        {
+          "namespace": "mfm",
+          "id": "dfea1335-7554-4353-8f2f-0f62dde312f7"
+        }
+      ]
     },
     "riptide-fists": {
       "id": "riptide-fists",
@@ -1851,7 +2212,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "d41c-dfc2-1b8d-710c"
+        },
+        {
+          "namespace": "mfm",
+          "id": "d817f2be-e372-4620-854c-c66504cedc4f"
+        }
+      ]
     },
     "twin-smart-missile-system-riptide-battlesuit": {
       "id": "twin-smart-missile-system-riptide-battlesuit",
@@ -1881,7 +2252,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "e1e7-c9cc-715c-3415"
+        },
+        {
+          "namespace": "mfm",
+          "id": "eb322a19-a7c3-4bce-8a39-7cc10f210e85"
+        }
+      ]
     },
     "battlesuit-fists-stealth-battlesuits": {
       "id": "battlesuit-fists-stealth-battlesuits",
@@ -1904,7 +2285,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "6cf1-5611-ba26-a9b1"
+        },
+        {
+          "namespace": "mfm",
+          "id": "d147f5cf-1ca2-4db9-8acb-e5a87dce1d4e"
+        }
+      ]
     },
     "pulse-pistol": {
       "id": "pulse-pistol",
@@ -1931,7 +2322,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "4310-a1ce-dde7-70e3"
+        },
+        {
+          "namespace": "mfm",
+          "id": "d84faf63-0c32-482a-95b7-4611ff16e681"
+        }
+      ]
     },
     "fusion-blaster": {
       "id": "fusion-blaster",
@@ -1961,7 +2362,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "f836-d31-4688-d623"
+        },
+        {
+          "namespace": "mfm",
+          "id": "7d0002ca-a008-47e7-a6dc-53037298fd18"
+        }
+      ]
     },
     "burst-cannon": {
       "id": "burst-cannon",
@@ -1984,7 +2395,17 @@
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
-      }
+      },
+      "external_refs": [
+        {
+          "namespace": "bsdata",
+          "id": "1790-25b7-8264-f6ba"
+        },
+        {
+          "namespace": "mfm",
+          "id": "033e1d5b-6991-4b95-b4ba-11fe54b5977e"
+        }
+      ]
     }
   },
   "detachments": {
@@ -2009,6 +2430,12 @@
       "detachment_points": 1,
       "force_dispositions": [
         "reconnaissance"
+      ],
+      "external_refs": [
+        {
+          "namespace": "mfm",
+          "id": "a45bd323-7d95-41b8-82ff-eba352aba663"
+        }
       ]
     },
     "experimental-prototype-cadre": {
@@ -2039,7 +2466,13 @@
         "priority-assets"
       ],
       "tags": [
-        "retaliation"
+        "battlesuit"
+      ],
+      "external_refs": [
+        {
+          "namespace": "mfm",
+          "id": "c20f90be-bf55-4d26-97af-7bb642836256"
+        }
       ]
     }
   },
@@ -2052,6 +2485,7 @@
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "source_digest": "7fb05a19053dd3fb2e69d8c62f152791a705b75921ae2b33d71acbaffbdf8c97",
       "version": "2025-q3",
       "supersedes": null,
       "unit_ids": [],
@@ -2094,6 +2528,84 @@
       },
       "community_notes": "[APPROX] When a hidden PATHFINDER TEAM or STEALTH BATTLESUITS unit is targeted in your opponent's Shooting phase, it gets +1 to its Save characteristic. The 'hidden' precondition is not gated here. Full rule in raw-text store."
     },
+    "experimental-ammunition-experimental-prototype-cadre": {
+      "ability_id": "experimental-ammunition-experimental-prototype-cadre",
+      "name": "Experimental Ammunition",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "source_digest": "d6b92251ae7265b21fb76e568bddb8794dfbabe940410a087a48017a38e9a795",
+      "version": "2025-q3",
+      "supersedes": null,
+      "unit_ids": [],
+      "faction_id": "tau-empire",
+      "detachment_id": "experimental-prototype-cadre",
+      "ability_type": "stratagem",
+      "behavior": "activated",
+      "effect": {
+        "type": "choice",
+        "choice_label": "Experimental Ammunition",
+        "options": [
+          {
+            "type": "stat-modifier",
+            "target": "unit",
+            "modifier": {
+              "stat": "S",
+              "operation": "add",
+              "value": 1,
+              "weapon_type": "ranged"
+            }
+          },
+          {
+            "type": "sequence",
+            "steps": [
+              {
+                "type": "stat-modifier",
+                "target": "unit",
+                "modifier": {
+                  "stat": "S",
+                  "operation": "add",
+                  "value": 1,
+                  "weapon_type": "ranged"
+                }
+              },
+              {
+                "type": "stat-modifier",
+                "target": "unit",
+                "modifier": {
+                  "stat": "AP",
+                  "operation": "add",
+                  "value": -1,
+                  "weapon_type": "ranged"
+                }
+              },
+              {
+                "type": "keyword-grant",
+                "target": "unit",
+                "modifier": {
+                  "keywords": [
+                    "Hazardous"
+                  ],
+                  "weapon_type": "ranged"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "scope": {
+        "range": "unit",
+        "duration": "phase"
+      },
+      "applies_to": {
+        "required_keywords": [
+          "Battlesuit",
+          "Character"
+        ]
+      }
+    },
     "marker-beacon-advanced-acquisition-cadre": {
       "ability_id": "marker-beacon-advanced-acquisition-cadre",
       "name": "Marker Beacon",
@@ -2102,6 +2614,7 @@
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "source_digest": "6927ccc11960906ac247931799c5ae3307831b72a30a0d9db07d89b2ed2a4486",
       "version": "2025-q3",
       "supersedes": null,
       "unit_ids": [],
@@ -2139,6 +2652,7 @@
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "source_digest": "062b3c1836fa69d001dba5dc2c483b7790d784e2772f0137d998a6b51a96d603",
       "version": "2025-q3",
       "supersedes": null,
       "unit_ids": [],
@@ -2176,6 +2690,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "a4858489ecce57dcaad8fc0d4a1d91c6f68342a4bd204f7580053d3965bbf60f",
       "version": "2025-q3",
       "supersedes": null,
       "unit_ids": [],
@@ -2236,6 +2751,7 @@
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "source_digest": "abc7b8dd89ec79adc1d6d1e50c7f5c0bb09a7ffeb43b207587822e55d16e2dd6",
       "version": "2025-q3",
       "supersedes": null,
       "unit_ids": [],
@@ -2294,6 +2810,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "4c72092715ae0f35d5a0e8213f833092d1f7b393f8f0d3c8829ca2a77020f939",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -2345,6 +2862,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "0f501f6eb8e6288aaf0dab321e97e20625cad30432251611a559069fc750f98d",
       "version": "2025-q3",
       "effect": {
         "type": "ability-grant",
@@ -2376,6 +2894,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "7f180fb5e7f7d43eac9337cc29101f902ebdec6556e154c6785055d0dae9343d",
       "version": "2025-q3",
       "effect": {
         "type": "deep-strike",
@@ -2405,6 +2924,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "11787154416c929b478342d9fae8bfa749c02d597a8165496d3622ec08512f5f",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -2474,6 +2994,7 @@
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "source_digest": "885484dece2e1b90a0c294e7fe43d8e42e4c5aa3de790374882d4288e43e351d",
       "version": "2025-q3",
       "effect": {
         "type": "ability-grant",
@@ -2507,6 +3028,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "1932a9069a89679fec8c06bb0995adab086eddeb56e983cbdfab4519f04a5538",
       "version": "2025-q3",
       "effect": {
         "type": "invulnerable-save",
@@ -2538,6 +3060,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "a22822f9d3bc7e6096e67022875505d28717150f299b8f08a54a9f747b5873fe",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -2579,6 +3102,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "4944d7ed28aedbf4aeaa87b653d2545e0a9fe35cb679dbb16278964068e1192a",
       "version": "2025-q3",
       "effect": {
         "type": "fallback-and-act",
@@ -2608,6 +3132,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "970be47aa820935f773d9e9ed6b279b8cde81a9ac4ff7866751df953bceb022c",
       "version": "2025-q3",
       "effect": {
         "type": "sequence",
@@ -2657,6 +3182,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "0fb6410802dcd62f8478c7c60bbdc32db6f5b78eefdaac4512264ec8bdbba298",
       "version": "2025-q3",
       "effect": {
         "type": "stat-modifier",
@@ -2690,6 +3216,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "1468090ecc765447ac22b2675063602dcb0743871a3153eeddd73ab0c007d7b1",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -2732,6 +3259,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "3141c10174ecc4870a0668a211bc636a1834f3a2fcc181e33ffd74a3c044ab40",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -2796,6 +3324,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "ef5c5e82ed4b309ed231dd1d4b7158bda364d4817daa58281a80da096a9567a2",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -2854,6 +3383,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "22e4886e78fb370e94198a3f618f35755ed8d9ffdbf1d7c68a48da7390ab08da",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -2914,6 +3444,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "ab1597203373a1b78b4a9f696dc461968edc81ccf72707e6e44dac55daa82548",
       "version": "2025-q3",
       "effect": {
         "type": "leadership-modifier",
@@ -2954,6 +3485,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "4839ddd9ff39c66f01c42edc282270c320b224fb77099436d46f643df0b4b587",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -2992,6 +3524,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "2ff78b89dd5912f5a5624fdc4ae8ebcb3f665b86dd5e9949de1d58b7dd8ec138",
       "version": "2025-q3",
       "effect": {
         "type": "movement-modifier",
@@ -3024,6 +3557,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "de5df74fd940435a56094d752810df694bf28ea689449fe2b046910a38a6ba82",
       "version": "2025-q3",
       "effect": {
         "type": "ability-grant",
@@ -3062,6 +3596,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "bd2148c492404685e12f7ff66bc2595ce38d14199fa0b619a94aaa4e2853a144",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -3095,16 +3630,6 @@
         "upstream": "not yet reported"
       }
     },
-    "feel-no-pain": {
-      "ability_id": "feel-no-pain",
-      "name": "Feel No Pain",
-      "description": "This ability always takes the form **Feel No Pain X+**. Each time a model with this ability would lose a wound, roll one D6: on an **X+**, that wound is not lost.",
-      "ability_type": "core",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      }
-    },
     "missile-drone": {
       "ability_id": "missile-drone",
       "name": "Missile Drone",
@@ -3113,6 +3638,7 @@
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "source_digest": "885484dece2e1b90a0c294e7fe43d8e42e4c5aa3de790374882d4288e43e351d",
       "version": "2025-q3",
       "effect": {
         "type": "ability-grant",
@@ -3146,6 +3672,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "446be710c4c0807a888bb11962d1c77d241bdfa6e11d422b75c645f11fe0e831",
       "version": "2025-q3",
       "effect": {
         "type": "damage-reduction",
@@ -3182,6 +3709,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "c0684fec5c22e056a0f6f599e6af4e174ca2f9b6c88ff5b08db5b3ff831574e0",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -3231,6 +3759,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "2eb1b3aa65c0169d2409be3784721358669b3d84f8f704cd9a60b9ea4f58da43",
       "version": "2025-q3",
       "effect": {
         "type": "unit-keyword",
@@ -3262,6 +3791,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "97e888af23148ae67829335b14b9e547038266533f8a93a670de3e06b8f14cf0",
       "version": "2025-q3",
       "effect": {
         "type": "targeting-permission",
@@ -3295,6 +3825,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "259a208f3b74890127346efa737ed1ed0ecf3b6e96f57eb66b7ae867543fdc25",
       "version": "2025-q3",
       "effect": {
         "type": "cover-benefit",
@@ -3327,6 +3858,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "256bfeb0b1fb2217f9fb4799cebe442fa390b42bed1f494428eee60c51469f7b",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -3369,6 +3901,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "c2552b66bc19abc07a84224136cc2673d97b834bde4fe0c9ef391ecde0863aa0",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -3417,6 +3950,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "2e0640a916d57282f74af3022f7557ed581fdf9d3d5b8ffbadff57df4dd5c261",
       "version": "2025-q3",
       "effect": {
         "type": "conditional",
@@ -3489,6 +4023,7 @@
         "edition": "11th",
         "dataslate": "bsdata"
       },
+      "source_digest": "1a8c79f0b21f00a92f01de2ed1986619e1fe8468128fa71630e02ed6617bc869",
       "version": "2025-q3",
       "effect": {
         "type": "cp-refund",
@@ -3531,11 +4066,17 @@
       "player_turn": "either",
       "timing": "once-per-phase",
       "target_restrictions": null,
-      "ability_id": null,
+      "ability_id": "command-re-roll",
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "mfm",
+          "id": "423c91b3-aaa4-4629-bba6-b4ef2355cd1c"
+        }
+      ],
       "text": "**WHEN:** Any phase, just after you make one of the following rolls for a friendly unit or model:\n\n• **Advance roll**\n• **Charge roll**\n• **Damage roll**\n• **Hazard roll**\n• **Hit roll**\n• **Save roll**\n• **Wound roll**\n• A roll to determine the number of attacks generated with a weapon.\n\n**TARGET:** That unit or model.\n\n**EFFECT:** You re-roll that roll. If you are rolling more than one dice together, select one of those dice to re-roll (excluding **charge rolls**, which you must re-roll in full)."
     },
     "counter-offensive": {
@@ -3551,7 +4092,7 @@
       "player_turn": "either",
       "timing": "once-per-phase",
       "target_restrictions": null,
-      "ability_id": null,
+      "ability_id": "counter-offensive",
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
@@ -3575,11 +4116,17 @@
           "Character"
         ]
       },
-      "ability_id": null,
+      "ability_id": "epic-challenge",
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "mfm",
+          "id": "9e84ecda-6e1a-4740-9dbf-e46b609e1d74"
+        }
+      ],
       "text": "**WHEN:** Fight phase, just after a friendly **CHARACTER** unit is **selected to fight**.\n\n**TARGET:** That **CHARACTER** unit.\n\n**EFFECT:** Select one **CHARACTER** model in your unit. Until the end of the phase, that model’s melee weapons have the [PRECISION] ability."
     },
     "insane-bravery": {
@@ -3595,11 +4142,17 @@
       "player_turn": "your-turn",
       "timing": "once-per-battle",
       "target_restrictions": null,
-      "ability_id": null,
+      "ability_id": "insane-bravery",
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "mfm",
+          "id": "ab3c2b39-7af0-4602-bff9-9c218277f9fa"
+        }
+      ],
       "text": "**WHEN:** Battle-shock step of your Command phase, just before you make a **battle-shock roll** for a friendly unit.\n\n**TARGET:** That unit.\n\n**EFFECT:** That **battle-shock roll** is automatically successful.\n\n**RESTRICTIONS:** You cannot use this **stratagem** more than once per battle."
     },
     "explosives": {
@@ -3620,11 +4173,17 @@
           "Grenades"
         ]
       },
-      "ability_id": null,
+      "ability_id": "explosives",
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "mfm",
+          "id": "d57d3583-efec-4344-bd18-10e13bb5ef40"
+        }
+      ],
       "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One friendly **unengaged** **EXPLOSIVES/GRENADES** unit that is **eligible to shoot** and did not make an **advance move** this turn.\n\n**EFFECT:** Resolve the following sequence:\n1. Select one **EXPLOSIVES/GRENADES** model in your unit.\n2. Select one **unengaged** enemy unit within 8\" of and **visible** to that model.\n3. Roll six D6: for each 4+, that enemy unit suffers 1 **mortal wound** (06.02)."
     },
     "crushing-impact": {
@@ -3645,11 +4204,17 @@
           "Vehicle"
         ]
       },
-      "ability_id": null,
+      "ability_id": "crushing-impact",
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "mfm",
+          "id": "67deb45f-23e8-492b-9372-de586c0dfd61"
+        }
+      ],
       "text": "**WHEN:** Your Charge phase, just after a friendly **MONSTER/VEHICLE** unit ends a **charge move**.\n\n**TARGET:** That **MONSTER/VEHICLE** unit.\n\n**EFFECT:** Resolve the following sequence:\n1. Select one enemy unit **engaged** with your unit.\n2. Select one model in your unit **engaged** with that enemy unit.\n3. Roll a number of D6 equal to the T characteristic of that model: for each 1, your unit suffers 1 **mortal wound**; for each 5+, that enemy unit suffers 1 **mortal wound** (to a maximum of 6 **mortal wounds** per unit)."
     },
     "rapid-ingress": {
@@ -3665,11 +4230,17 @@
       "player_turn": "opponent-turn",
       "timing": "once-per-phase",
       "target_restrictions": null,
-      "ability_id": null,
+      "ability_id": "rapid-ingress",
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "mfm",
+          "id": "a5e58471-6de3-4bf7-b91e-b8a0b27f058d"
+        }
+      ],
       "text": "**WHEN:** End of your opponent’s Movement phase.\n\n**TARGET:** One friendly unit that is in **strategic reserves** (excluding AIRCRAFT).\n\n**EFFECT:** Your unit makes an **ingress move** (20.04).\n\n**RESTRICTIONS:** You cannot use this **stratagem** during the first battle round."
     },
     "fire-overwatch": {
@@ -3686,11 +4257,17 @@
       "player_turn": "opponent-turn",
       "timing": "once-per-turn",
       "target_restrictions": null,
-      "ability_id": null,
+      "ability_id": "fire-overwatch",
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "mfm",
+          "id": "5447addb-20a3-48e5-8db9-41b4066a39cd"
+        }
+      ],
       "text": "**WHEN:** End of your opponent’s Movement phase.\n\n**TARGET:** One friendly **unengaged** unit (excluding **TITANIC** units).\n\n**EFFECT:** Your unit shoots using **snap shooting** (see below)."
     },
     "smokescreen": {
@@ -3710,11 +4287,17 @@
           "Smoke"
         ]
       },
-      "ability_id": null,
+      "ability_id": "smokescreen",
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "mfm",
+          "id": "cef0a3bd-a7f0-49d3-8c38-96fc5dcddaca"
+        }
+      ],
       "text": "**WHEN:** Start of your opponent’s Shooting phase.\n\n**TARGET:** One friendly **SMOKE** unit.\n\n**EFFECT:** Until the end of the phase, each time an attack targets either your **SMOKE** unit, or a unit that is not **fully visible** to the attacking model because of one or more models in your **SMOKE** unit, the target has the **benefit of cover** against that attack (13.08)."
     },
     "heroic-intervention": {
@@ -3730,11 +4313,17 @@
       "player_turn": "opponent-turn",
       "timing": "once-per-turn",
       "target_restrictions": null,
-      "ability_id": null,
+      "ability_id": "heroic-intervention",
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "mfm",
+          "id": "ab1efe2c-3ca0-4e83-820c-16d31abea44d"
+        }
+      ],
       "text": "**WHEN:** End of your opponent’s Charge phase.\n\n**TARGET:** One friendly **unengaged** unit within 12\" of one or more enemy units. You can only select a VEHICLE unit if it is a CHARACTER/WALKER unit.\n\n**EFFECT:** **Resolve a charge** with your unit (11.02). While doing so, before making the **charge roll**, you must select one of the following modes:\n\n• Leap to Defend: When selecting **charge targets**, you can only select enemy units that made a **charge move** this phase and are within the **maximum distance**.\n+1CP\n• Into the Fray:\n\n• When making the **charge roll**, if the result is greater than 6 (after modifiers), change it to 6.\n• When selecting **charge targets**, you can select any enemy units that are within 6\" of your unit and within the **maximum distance**."
     },
     "automated-repair-drones-experimental-prototype-cadre": {
@@ -3773,6 +4362,16 @@
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "game-datacards",
+          "id": "6fdd8c91-2a64-59e9-94e1-54aee49e98ce"
+        },
+        {
+          "namespace": "mfm",
+          "id": "f14c3b61-256c-4279-8161-8f663422a056"
+        }
+      ],
       "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly PATHFINDER TEAM/ STEALTH BATTLESUITS unit, if that friendly unit is hidden.\n\n**TARGET:** That PATHFINDER TEAM/STEALTH BATTLESUITS unit.\n\n**EFFECT:** Your unit has +1 **Sv**."
     },
     "experimental-ammunition-experimental-prototype-cadre": {
@@ -3788,11 +4387,21 @@
       "player_turn": "your-turn",
       "timing": "once-per-phase",
       "target_restrictions": null,
-      "ability_id": null,
+      "ability_id": "experimental-ammunition-experimental-prototype-cadre",
       "game_version": {
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "game-datacards",
+          "id": "f0b13fea-6614-58dc-a1bb-4a441e33eccf"
+        },
+        {
+          "namespace": "mfm",
+          "id": "f69888d4-7f69-4346-9092-8f79fb3f0c1e"
+        }
+      ],
       "text": "**WHEN:** Your Shooting phase, when a friendly BATTLESUIT CHARACTER unit is selected to shoot.\n\n**TARGET:** That BATTLESUIT CHARACTER unit.\n\n**EFFECT:** Your unit’s ranged attacks have:\n\n• +1 **S**.\n• **OR:** +1 **S**, **AP** and [HAZARDOUS]."
     },
     "experimental-weaponry-experimental-prototype-cadre": {
@@ -3831,6 +4440,16 @@
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "game-datacards",
+          "id": "57058f2e-5100-55f3-8d52-020ce444af9f"
+        },
+        {
+          "namespace": "mfm",
+          "id": "b492e5a2-0a34-4aed-9d80-c6824c7036b9"
+        }
+      ],
       "text": "**WHEN:** End of your Movement phase.\n\n**TARGET:** One friendly PATHFINDER TEAM/STEALTH BATTLESUITS unit.\n\n**EFFECT:** Select one objective your unit is controlling. That **objective** is secured."
     },
     "microdrone-support-advanced-acquisition-cadre": {
@@ -3850,6 +4469,16 @@
         "edition": "11th",
         "dataslate": "pre-launch-provisional"
       },
+      "external_refs": [
+        {
+          "namespace": "game-datacards",
+          "id": "efc153d3-3281-53f7-9aea-2c55be52f35b"
+        },
+        {
+          "namespace": "mfm",
+          "id": "c9e0a100-3f0b-4154-a6bf-13a748a4ede9"
+        }
+      ],
       "text": "**WHEN:** Your Shooting phase, when a friendly PATHFINDER TEAM/ STEALTH BATTLESUITS unit starts an action.\n\n**TARGET:** That PATHFINDER TEAM/STEALTH BATTLESUITS unit.\n\n**EFFECT:** That **action** does not prevent your unit from being eligible to shoot."
     },
     "neuroweb-system-jammer-experimental-prototype-cadre": {
@@ -3918,6 +4547,7 @@
       "detachment_id": "advanced-acquisition-cadre",
       "cost": 15,
       "keyword_restrictions": [
+        "Stealth Battlesuits",
         "T’au Empire"
       ],
       "ability_id": "negation-emitters",
@@ -3928,16 +4558,23 @@
       },
       "points_provisional": false,
       "upgrade_tag": true,
-      "max_targets": 3
+      "max_targets": 3,
+      "external_refs": [
+        {
+          "namespace": "game-datacards",
+          "id": "43c723a8-44ad-54fc-8c10-77f413b85070"
+        },
+        {
+          "namespace": "mfm",
+          "id": "0add3662-993d-4f60-b3bc-32084767e11b"
+        }
+      ]
     },
     "unmasking-suite-upgrade-advanced-acquisition-cadre": {
       "id": "unmasking-suite-upgrade-advanced-acquisition-cadre",
       "name": "Unmasking Suite (Upgrade)",
       "detachment_id": "advanced-acquisition-cadre",
       "cost": 15,
-      "keyword_restrictions": [
-        "T’au Empire"
-      ],
       "ability_id": "unmasking-suite",
       "is_unique": true,
       "game_version": {
@@ -3946,7 +4583,28 @@
       },
       "points_provisional": false,
       "upgrade_tag": true,
-      "max_targets": 3
+      "max_targets": 3,
+      "keyword_restriction_groups": [
+        [
+          "Ghostkeel"
+        ],
+        [
+          "Pathfinder Team"
+        ],
+        [
+          "Stealth Battlesuits"
+        ]
+      ],
+      "external_refs": [
+        {
+          "namespace": "game-datacards",
+          "id": "684e2efa-cf7e-517c-9080-a1a340f0531e"
+        },
+        {
+          "namespace": "mfm",
+          "id": "ebd0e184-f531-4a41-a7d2-51a7ae9bcd17"
+        }
+      ]
     },
     "supernova-launcher-experimental-prototype-cadre": {
       "id": "supernova-launcher-experimental-prototype-cadre",
@@ -3954,7 +4612,7 @@
       "detachment_id": "experimental-prototype-cadre",
       "cost": 15,
       "keyword_restrictions": [
-        "T’au Empire"
+        "Battlesuit"
       ],
       "ability_id": "supernova-launcher",
       "is_unique": true,
@@ -3964,7 +4622,17 @@
       },
       "points_provisional": false,
       "upgrade_tag": false,
-      "max_targets": 1
+      "max_targets": 1,
+      "external_refs": [
+        {
+          "namespace": "game-datacards",
+          "id": "21ac89ed-99ab-5546-9a18-ea026bb45336"
+        },
+        {
+          "namespace": "mfm",
+          "id": "db116728-4b55-4323-8ed9-60397162dc82"
+        }
+      ]
     },
     "thermoneutronic-projector-experimental-prototype-cadre": {
       "id": "thermoneutronic-projector-experimental-prototype-cadre",
@@ -3972,7 +4640,7 @@
       "detachment_id": "experimental-prototype-cadre",
       "cost": 15,
       "keyword_restrictions": [
-        "T’au Empire"
+        "Battlesuit"
       ],
       "ability_id": "thermoneutronic-projector",
       "is_unique": true,
@@ -3982,7 +4650,17 @@
       },
       "points_provisional": false,
       "upgrade_tag": false,
-      "max_targets": 1
+      "max_targets": 1,
+      "external_refs": [
+        {
+          "namespace": "game-datacards",
+          "id": "018f33eb-508d-581f-a37c-eb1caf4f5a16"
+        },
+        {
+          "namespace": "mfm",
+          "id": "302188cd-822a-40bd-93b3-8ccf7e50e1b7"
+        }
+      ]
     },
     "plasma-accelerator-rifle-experimental-prototype-cadre": {
       "id": "plasma-accelerator-rifle-experimental-prototype-cadre",
@@ -3990,7 +4668,7 @@
       "detachment_id": "experimental-prototype-cadre",
       "cost": 20,
       "keyword_restrictions": [
-        "T’au Empire"
+        "Battlesuit"
       ],
       "ability_id": "plasma-accelerator-rifle",
       "is_unique": true,
@@ -4000,7 +4678,17 @@
       },
       "points_provisional": false,
       "upgrade_tag": false,
-      "max_targets": 1
+      "max_targets": 1,
+      "external_refs": [
+        {
+          "namespace": "game-datacards",
+          "id": "1d05b80c-1e2b-53d0-931a-3b4cdd59cf9a"
+        },
+        {
+          "namespace": "mfm",
+          "id": "bbb5af4d-2fed-4d0e-9e75-7e533cb8d72b"
+        }
+      ]
     },
     "fusion-blades-experimental-prototype-cadre": {
       "id": "fusion-blades-experimental-prototype-cadre",
@@ -4109,6 +4797,9 @@
     ]
   },
   "factionRuleId": "for-the-greater-good",
+  "factionKeywords": [
+    "T’au Empire"
+  ],
   "sharedAbilities": [
     "scouts-7",
     "hover",
@@ -4129,7 +4820,6 @@
     "deadly-demise-d6-2",
     "firing-deck-11",
     "leader",
-    "feel-no-pain",
     "deadly-demise-d6",
     "missile-drone",
     "lone-operative",
