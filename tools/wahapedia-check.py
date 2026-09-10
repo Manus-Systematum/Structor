@@ -40,6 +40,7 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 CACHE = os.path.join(ROOT, 'data', 'wahapedia')
 MERGED = os.path.join(ROOT, 'data', 'merged', 'core')
 MFM = os.path.join(ROOT, 'data', 'mfm-points.json')
+CORRECTIONS = os.path.join(ROOT, 'data-corrections.yaml')
 
 BASE = 'https://wahapedia.ru/wh40k11ed'
 FILES = ['Factions', 'Datasheets', 'Datasheets_models_cost', 'Datasheets_models']
@@ -143,6 +144,43 @@ def load_gw():
     return out
 
 
+def corrected_points():
+    """Unit prices `data-corrections.yaml` transcribes, by (faction, unit id).
+
+    **The merged dataset is not what ships.** Corrections are applied when the
+    bundles are built, so a price this file fixes still reads wrong in
+    `data/merged` — and reporting it would make every correction a permanent
+    finding, which is the opposite of what an entry here means. Read without a
+    YAML parser, since this tool has no dependencies and needs four keys.
+    """
+    if not os.path.exists(CORRECTIONS):
+        return {}
+    out, faction, unit, points, in_units = {}, None, None, None, False
+    for line in open(CORRECTIONS):
+        if re.match(r'^[a-z_]+:', line):
+            in_units = line.startswith('units:')
+            continue
+        if not in_units:
+            continue
+        if re.match(r'^  - ', line):
+            if faction and unit and points:
+                out[(faction, unit)] = points
+            faction = unit = None
+            points = []
+        if match := re.match(r'^\s+(?:- )?faction: "?([\w*-]+)"?', line):
+            faction = match.group(1)
+        elif match := re.match(r'^\s+id: (\S+)', line):
+            unit = match.group(1)
+        elif match := re.match(r'^\s+- models: (\d+)', line):
+            points.append({'models': int(match.group(1))})
+        elif match := re.match(r'^\s+cost: (\d+)', line):
+            if points:
+                points[-1]['cost'] = int(match.group(1))
+    if faction and unit and points:
+        out[(faction, unit)] = points
+    return {k: v for k, v in out.items() if all('cost' in b for b in v)}
+
+
 def our_factions(by_name):
     out = {}
     for entry in sorted(os.listdir(MERGED)):
@@ -175,6 +213,7 @@ def main():
               file=sys.stderr)
         return 2
     mapping = our_factions(by_name)
+    corrected = corrected_points()
 
     wrong, three_way = [], []
     counts = collections.Counter()
@@ -190,6 +229,8 @@ def main():
         if not os.path.isfile(path):
             continue
         for unit in json.load(open(path)):
+            if corrected.get((faction, unit.get('id'))) is not None:
+                unit = {**unit, 'points': corrected[(faction, unit['id'])]}
             key = (waha_id, fold(unit['name']))
             if key in seen:
                 continue

@@ -594,10 +594,15 @@ points update: 175 brackets across 21 factions, led by Orks with 59. Nothing
 about that is a parser bug, and it is not fixed here — it is fixed by 40kdc
 publishing, or by `data-corrections.yaml` if it does not.
 
-Coverage is stated rather than assumed: 272 of our datasheets are not in
+Coverage is stated rather than assumed: 248 of our datasheets are not in
 Wahapedia's export at all (named-character and boxed-set variants, mostly),
-404 brackets have no scope to match against, and 63 differences have no GW row
-to judge them.
+and 18 differences have no GW row to judge them.
+
+**It reads the corrections too.** The merged dataset is not what ships —
+`data-corrections.yaml` is applied when the bundles are built — so a price a
+correction fixes still reads wrong in `data/merged`. Reporting it would make
+every correction a permanent finding, which is the opposite of what an entry
+there means.
 
 ### 3.26 A local agent that tests the app
 
