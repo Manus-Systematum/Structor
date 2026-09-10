@@ -1630,6 +1630,28 @@
     ]
    },
    {
+    "name": "LIONS OF THE EMPEROR",
+    "dp": 3,
+    "enhancements": [
+     {
+      "name": "Admonimortis",
+      "cost": 30
+     },
+     {
+      "name": "Fierce Conqueror",
+      "cost": 15
+     },
+     {
+      "name": "Praesidius",
+      "cost": 25
+     },
+     {
+      "name": "Superior Creation",
+      "cost": 25
+     }
+    ]
+   },
+   {
     "name": "MIGHT OF THE MORITOI",
     "dp": 1,
     "enhancements": [
@@ -1964,6 +1986,37 @@
     ]
    },
    {
+    "name": "KASTELAN ROBOTS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST UNIT COSTS",
+      "tiers": [
+       {
+        "of": "2 models",
+        "cost": 150
+       },
+       {
+        "of": "4 models",
+        "cost": 300
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 2ND + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "2 models",
+        "cost": 180
+       },
+       {
+        "of": "4 models",
+        "cost": 330
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "KATAPHRON BREACHERS",
     "costs": [
      {
@@ -2008,6 +2061,68 @@
        {
         "of": "1 model",
         "cost": 155
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "PTERAXII SKYSTALKERS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 75
+       },
+       {
+        "of": "10 models",
+        "cost": 150
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 85
+       },
+       {
+        "of": "10 models",
+        "cost": 160
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "PTERAXII STERYLIZORS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 75
+       },
+       {
+        "of": "10 models",
+        "cost": 150
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 85
+       },
+       {
+        "of": "10 models",
+        "cost": 160
        }
       ]
      }
@@ -2297,6 +2412,31 @@
      }
     ],
     "support": [
+     "CORPUSCARII ELECTRO-PRIESTS",
+     "FULGURITE ELECTRO-PRIESTS",
+     "HASTARII EXTERMINATORS",
+     "HASTARII FUSILIERS",
+     "KATAPHRON BREACHERS",
+     "KATAPHRON DESTROYERS",
+     "SERVITOR BATTLECLADE",
+     "SKITARII RANGERS",
+     "SKITARII VANGUARD"
+    ]
+   },
+   {
+    "name": "TECH-PRIEST DOMINUS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
+       }
+      ]
+     }
+    ],
+    "leader": [
      "CORPUSCARII ELECTRO-PRIESTS",
      "FULGURITE ELECTRO-PRIESTS",
      "HASTARII EXTERMINATORS",
@@ -2746,6 +2886,24 @@
     ]
    },
    {
+    "name": "DARK REAPERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 95
+       },
+       {
+        "of": "10 models",
+        "cost": 200
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "D-CANNON PLATFORM",
     "costs": [
      {
@@ -2769,6 +2927,24 @@
     ]
    },
    {
+    "name": "DIRE AVENGERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 70
+       },
+       {
+        "of": "10 models",
+        "cost": 140
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "DRAGON KNIGHTS",
     "costs": [
      {
@@ -2784,6 +2960,24 @@
        }
       ]
      }
+    ]
+   },
+   {
+    "name": "ELDRAD ULTHRAN",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 120
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "GUARDIAN DEFENDERS",
+     "STORM GUARDIANS"
     ]
    },
    {
@@ -3165,6 +3359,20 @@
     ]
    },
    {
+    "name": "SPIRITSEER",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 50
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "STARFANGS",
     "costs": [
      {
@@ -3197,6 +3405,20 @@
     ],
     "support": [
      "DRAGON KNIGHTS"
+    ]
+   },
+   {
+    "name": "STORM GUARDIANS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "11 models",
+        "cost": 100
+       }
+      ]
+     }
     ]
    },
    {
@@ -3281,6 +3503,24 @@
     ]
    },
    {
+    "name": "WARLOCK",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 40
+       }
+      ]
+     }
+    ],
+    "support": [
+     "GUARDIAN DEFENDERS",
+     "STORM GUARDIANS"
+    ]
+   },
+   {
     "name": "WARLOCK CONCLAVE",
     "costs": [
      {
@@ -3300,6 +3540,27 @@
     "support": [
      "GUARDIAN DEFENDERS",
      "STORM GUARDIANS"
+    ]
+   },
+   {
+    "name": "WARLOCK SKYRUNNERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 45
+       },
+       {
+        "of": "2 models",
+        "cost": 90
+       }
+      ]
+     }
+    ],
+    "support": [
+     "WINDRIDERS"
     ]
    },
    {
@@ -3328,6 +3589,24 @@
        {
         "of": "10 models",
         "cost": 220
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "WAR WALKERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 80
+       },
+       {
+        "of": "2 models",
+        "cost": 160
        }
       ]
      }
@@ -3609,6 +3888,28 @@
        }
       ]
      }
+    ]
+   },
+   {
+    "name": "THE VISARCH",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 80
+       }
+      ]
+     }
+    ],
+    "support": [
+     "CORSAIR VOIDREAVERS",
+     "CORSAIR VOIDSCARRED",
+     "GUARDIAN DEFENDERS",
+     "STORM GUARDIANS",
+     "YNNARI KABALITE WARRIORS",
+     "YNNARI WYCHES"
     ]
    },
    {
@@ -4388,6 +4689,24 @@
     ]
    },
    {
+    "name": "CADIAN SHOCK TROOPS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 70
+       },
+       {
+        "of": "20 models",
+        "cost": 145
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "CATACHAN COMMAND SQUAD",
     "costs": [
      {
@@ -4413,6 +4732,24 @@
        {
         "of": "3 models",
         "cost": 70
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "CATACHAN JUNGLE FIGHTERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 70
+       },
+       {
+        "of": "20 models",
+        "cost": 135
        }
       ]
      }
@@ -4562,6 +4899,24 @@
        {
         "of": "1 model",
         "cost": 45
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DEATH KORPS OF KRIEG",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 70
+       },
+       {
+        "of": "20 models",
+        "cost": 135
        }
       ]
      }
@@ -4831,6 +5186,306 @@
     "wargear": [
      {
       "of": "per Krieg heavy flamer",
+      "cost": 5
+     }
+    ]
+   },
+   {
+    "name": "LEMAN RUSS BATTLE TANK",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 160
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 175
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Multi-melta",
+      "cost": 5
+     },
+     {
+      "of": "per Lascannon",
+      "cost": 5
+     },
+     {
+      "of": "per Plasma cannon",
+      "cost": 5
+     }
+    ]
+   },
+   {
+    "name": "LEMAN RUSS COMMANDER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 195
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 210
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Demolisher battle cannon",
+      "cost": 15
+     },
+     {
+      "of": "per Multi-melta",
+      "cost": 5
+     },
+     {
+      "of": "per Lascannon",
+      "cost": 5
+     },
+     {
+      "of": "per Plasma cannon",
+      "cost": 5
+     }
+    ]
+   },
+   {
+    "name": "LEMAN RUSS DEMOLISHER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 160
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 175
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Multi-melta",
+      "cost": 5
+     },
+     {
+      "of": "per Lascannon",
+      "cost": 5
+     },
+     {
+      "of": "per Plasma cannon",
+      "cost": 5
+     }
+    ]
+   },
+   {
+    "name": "LEMAN RUSS ERADICATOR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 145
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 160
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Multi-melta",
+      "cost": 5
+     },
+     {
+      "of": "per Lascannon",
+      "cost": 5
+     },
+     {
+      "of": "per Plasma cannon",
+      "cost": 5
+     }
+    ]
+   },
+   {
+    "name": "LEMAN RUSS EXECUTIONER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 145
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 160
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Multi-melta",
+      "cost": 5
+     },
+     {
+      "of": "per Lascannon",
+      "cost": 5
+     },
+     {
+      "of": "per Plasma cannon",
+      "cost": 5
+     }
+    ]
+   },
+   {
+    "name": "LEMAN RUSS EXTERMINATOR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 160
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 175
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Multi-melta",
+      "cost": 5
+     },
+     {
+      "of": "per Lascannon",
+      "cost": 5
+     },
+     {
+      "of": "per Plasma cannon",
+      "cost": 5
+     }
+    ]
+   },
+   {
+    "name": "LEMAN RUSS PUNISHER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 130
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 145
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Multi-melta",
+      "cost": 5
+     },
+     {
+      "of": "per Lascannon",
+      "cost": 5
+     },
+     {
+      "of": "per Plasma cannon",
+      "cost": 5
+     }
+    ]
+   },
+   {
+    "name": "LEMAN RUSS VANQUISHER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 130
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 145
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Multi-melta",
+      "cost": 5
+     },
+     {
+      "of": "per Lascannon",
+      "cost": 5
+     },
+     {
+      "of": "per Plasma cannon",
       "cost": 5
      }
     ]
@@ -5510,6 +6165,28 @@
     ]
    },
    {
+    "name": "RECON ELEMENT",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Guerrilla Honours",
+      "cost": 25
+     },
+     {
+      "name": "Scare Gas Grenades",
+      "cost": 5
+     },
+     {
+      "name": "Survival Gear",
+      "cost": 5
+     },
+     {
+      "name": "Tripwires",
+      "cost": 20
+     }
+    ]
+   },
+   {
     "name": "SIEGE REGIMENT",
     "dp": 2,
     "enhancements": [
@@ -5912,6 +6589,53 @@
     ]
    },
    {
+    "name": "SWORD BRETHREN SQUAD",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "4 models",
+        "cost": 100
+       },
+       {
+        "of": "5 models",
+        "cost": 125
+       },
+       {
+        "of": "9 models",
+        "cost": 225
+       },
+       {
+        "of": "10 models",
+        "cost": 250
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "4 models",
+        "cost": 120
+       },
+       {
+        "of": "5 models",
+        "cost": 145
+       },
+       {
+        "of": "9 models",
+        "cost": 245
+       },
+       {
+        "of": "10 models",
+        "cost": 270
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "TERMINATOR SQUAD",
     "costs": [
      {
@@ -6026,6 +6750,7 @@
     ],
     "support": [
      "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
      "CRUSADER SQUAD",
      "DEATHWATCH VETERANS",
      "DECIMUS KILL TEAM",
@@ -6875,6 +7600,13 @@
      "STERNGUARD VETERAN SQUAD",
      "SWORD BRETHREN SQUAD",
      "TACTICAL SQUAD"
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "INFERNUS SQUAD",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD"
     ]
    },
    {
@@ -8104,6 +8836,37 @@
     ]
    },
    {
+    "name": "DEATH COMPANY MARINES WITH JUMP PACKS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 115
+       },
+       {
+        "of": "10 models",
+        "cost": 230
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 130
+       },
+       {
+        "of": "10 models",
+        "cost": 245
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "LEMARTES",
     "costs": [
      {
@@ -8118,6 +8881,37 @@
     ],
     "leader": [
      "DEATH COMPANY MARINES WITH JUMP PACKS"
+    ]
+   },
+   {
+    "name": "SANGUINARY GUARD",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 120
+       },
+       {
+        "of": "6 models",
+        "cost": 260
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 140
+       },
+       {
+        "of": "6 models",
+        "cost": 280
+       }
+      ]
+     }
     ]
    },
    {
@@ -8152,6 +8946,20 @@
      "INTERCESSOR SQUAD",
      "STERNGUARD VETERAN SQUAD",
      "TACTICAL SQUAD"
+    ]
+   },
+   {
+    "name": "THE SANGUINOR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 120
+       }
+      ]
+     }
     ]
    },
    {
@@ -8251,6 +9059,7 @@
     ],
     "support": [
      "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
      "CRUSADER SQUAD",
      "DEATHWATCH VETERANS",
      "DECIMUS KILL TEAM",
@@ -9192,6 +10001,13 @@
      "STERNGUARD VETERAN SQUAD",
      "SWORD BRETHREN SQUAD",
      "TACTICAL SQUAD"
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "INFERNUS SQUAD",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD"
     ]
    },
    {
@@ -11673,6 +12489,29 @@
     ]
    },
    {
+    "name": "CHAOS CERASTUS KNIGHT ATRAPOS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 385
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 2ND + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 415
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "CHAOS CERASTUS KNIGHT CASTIGATOR",
     "costs": [
      {
@@ -11690,6 +12529,29 @@
        {
         "of": "1 model",
         "cost": 385
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "CHAOS CERASTUS KNIGHT LANCER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 385
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 2ND + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 415
        }
       ]
      }
@@ -11788,6 +12650,62 @@
     ]
    },
    {
+    "name": "KNIGHT DESPOILER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 360
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 2ND + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 390
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Despoiler gatling cannon",
+      "cost": 25
+     },
+     {
+      "of": "per Despoiler battle cannon",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "KNIGHT RAMPAGER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 355
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 370
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "KNIGHT RUINATOR",
     "costs": [
      {
@@ -11834,6 +12752,20 @@
     ]
    },
    {
+    "name": "WAR DOG BRIGAND",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 135
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "WAR DOG EXECUTIONER",
     "costs": [
      {
@@ -11856,6 +12788,20 @@
        {
         "of": "1 model",
         "cost": 135
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "WAR DOG KARNIVORE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 145
        }
       ]
      }
@@ -14036,6 +14982,7 @@
     ],
     "support": [
      "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
      "CRUSADER SQUAD",
      "DEATHWATCH VETERANS",
      "DECIMUS KILL TEAM",
@@ -14977,6 +15924,13 @@
      "STERNGUARD VETERAN SQUAD",
      "SWORD BRETHREN SQUAD",
      "TACTICAL SQUAD"
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "INFERNUS SQUAD",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD"
     ]
    },
    {
@@ -16294,6 +17248,28 @@
     ]
    },
    {
+    "name": "BLIGHTLORD TERMINATORS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 115
+       },
+       {
+        "of": "5 models",
+        "cost": 180
+       },
+       {
+        "of": "10 models",
+        "cost": 360
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "CHAOS LAND RAIDER",
     "costs": [
      {
@@ -16538,6 +17514,23 @@
     ]
    },
    {
+    "name": "FOUL BLIGHTSPAWN",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "PLAGUE MARINES"
+    ]
+   },
+   {
     "name": "HELBRUTE",
     "costs": [
      {
@@ -16648,6 +17641,79 @@
        {
         "of": "1 model",
         "cost": 105
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "MORTARION",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 375
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "MYPHITIC BLIGHT-HAULERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 95
+       },
+       {
+        "of": "2 models",
+        "cost": 190
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "NOXIOUS BLIGHTBRINGER",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 50
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "PLAGUE MARINES",
+     "POXWALKERS"
+    ]
+   },
+   {
+    "name": "PLAGUEBURST CRAWLER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 170
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 2ND + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 200
        }
       ]
      }
@@ -17332,6 +18398,7 @@
     ],
     "support": [
      "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
      "CRUSADER SQUAD",
      "DEATHWATCH VETERANS",
      "DECIMUS KILL TEAM",
@@ -18255,6 +19322,13 @@
      "STERNGUARD VETERAN SQUAD",
      "SWORD BRETHREN SQUAD",
      "TACTICAL SQUAD"
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "INFERNUS SQUAD",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD"
     ]
    },
    {
@@ -21812,6 +22886,43 @@
     ]
    },
    {
+    "name": "PURGATION SQUAD",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 105
+       },
+       {
+        "of": "10 models",
+        "cost": 210
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 115
+       },
+       {
+        "of": "10 models",
+        "cost": 220
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Psycannon",
+      "cost": 5
+     }
+    ]
+   },
+   {
     "name": "PURIFIER SQUAD",
     "costs": [
      {
@@ -23536,6 +24647,38 @@
     ]
    },
    {
+    "name": "CTHONIAN BESERKS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 95
+       },
+       {
+        "of": "10 models",
+        "cost": 190
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "CTHONIAN EARTHSHAKERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "2 models",
+        "cost": 100
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "EINHYR CHAMPION",
     "costs": [
      {
@@ -23598,6 +24741,20 @@
     ],
     "leader": [
      "HEARTHKYN WARRIORS"
+    ]
+   },
+   {
+    "name": "HEARTHKYN WARRIORS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 90
+       }
+      ]
+     }
     ]
    },
    {
@@ -23694,6 +24851,37 @@
        {
         "of": "6 models",
         "cost": 180
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "IRONKIN STEELJACKS WITH MELEE WEAPONS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 75
+       },
+       {
+        "of": "6 models",
+        "cost": 150
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 85
+       },
+       {
+        "of": "6 models",
+        "cost": 160
        }
       ]
      }
@@ -25333,45 +26521,25 @@
  "orks": {
   "units": [
    {
-    "name": "BANNERNOB",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 50
-       }
-      ]
-     }
-    ],
-    "support": [
-     "BOYZ",
-     "BREAKA BOYZ",
-     "BURNA BOYZ",
-     "FLASH GITZ",
-     "LOOTAS",
-     "NOBZ",
-     "TANKBUSTAS"
-    ]
-   },
-   {
     "name": "BATTLEWAGON",
     "costs": [
      {
-      "scope": "YOUR UNIT COSTS",
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
       "tiers": [
        {
         "of": "1 model",
-        "cost": 145
+        "cost": 150
        }
       ]
-     }
-    ],
-    "wargear": [
+     },
      {
-      "of": "per ard case",
-      "cost": 15
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 160
+       }
+      ]
      }
     ]
    },
@@ -25383,7 +26551,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 80
+        "cost": 85
        }
       ]
      }
@@ -25396,54 +26564,23 @@
     "name": "BEASTBOSS ON SQUIGOSAUR",
     "costs": [
      {
-      "scope": "YOUR UNIT COSTS",
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
       "tiers": [
        {
         "of": "1 model",
-        "cost": 95
+        "cost": 140
        }
       ]
-     }
-    ],
-    "leader": [
-     "SQUIGHOG BOYZ"
-    ]
-   },
-   {
-    "name": "BEAST SNAGGA BOYZ",
-    "costs": [
+     },
      {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "10 models",
-        "cost": 90
-       },
-       {
-        "of": "20 models",
-        "cost": 170
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "BIGBOSS",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
+      "scope": "YOUR 3RD + UNIT COSTS",
       "tiers": [
        {
         "of": "1 model",
-        "cost": 55
+        "cost": 155
        }
       ]
      }
-    ],
-    "leader": [
-     "BOYZ",
-     "BREAKA BOYZ",
-     "NOBZ"
     ]
    },
    {
@@ -25464,11 +26601,20 @@
     "name": "BIG MEK",
     "costs": [
      {
-      "scope": "YOUR UNIT COSTS",
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
       "tiers": [
        {
         "of": "1 model",
-        "cost": 70
+        "cost": 85
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 95
        }
       ]
      }
@@ -25476,7 +26622,7 @@
     "leader": [
      "BOYZ",
      "BREAKA BOYZ",
-     "LOOTAS",
+     "FLASH GITZ",
      "MEK GUNZ",
      "NOBZ",
      "TANKBUSTAS"
@@ -25486,11 +26632,20 @@
     "name": "BIG MEK DAKKARIG",
     "costs": [
      {
-      "scope": "YOUR UNIT COSTS",
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
       "tiers": [
        {
         "of": "1 model",
-        "cost": 115
+        "cost": 135
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 145
        }
       ]
      }
@@ -25504,13 +26659,14 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 80
+        "cost": 90
        }
       ]
      }
     ],
     "leader": [
-     "MEGANOBZ"
+     "MEGANOBZ",
+     "MEK GUNZ"
     ]
    },
    {
@@ -25521,7 +26677,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 70
+        "cost": 95
        }
       ]
      },
@@ -25530,15 +26686,13 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 80
+        "cost": 105
        }
       ]
      }
     ],
     "leader": [
      "BOYZ",
-     "BREAKA BOYZ",
-     "LOOTAS",
      "MEK GUNZ",
      "NOBZ",
      "TANKBUSTAS"
@@ -25552,21 +26706,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 105
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "BOOMDAKKA SNAZZWAGON",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 70
+        "cost": 115
        }
       ]
      }
@@ -25580,7 +26720,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 75
+        "cost": 80
        }
       ]
      }
@@ -25597,11 +26737,11 @@
       "tiers": [
        {
         "of": "10 models",
-        "cost": 75
+        "cost": 90
        },
        {
         "of": "20 models",
-        "cost": 160
+        "cost": 180
        }
       ]
      },
@@ -25610,11 +26750,11 @@
       "tiers": [
        {
         "of": "10 models",
-        "cost": 85
+        "cost": 100
        },
        {
         "of": "20 models",
-        "cost": 170
+        "cost": 190
        }
       ]
      }
@@ -25628,7 +26768,7 @@
       "tiers": [
        {
         "of": "6 models",
-        "cost": 125
+        "cost": 135
        }
       ]
      },
@@ -25637,7 +26777,7 @@
       "tiers": [
        {
         "of": "6 models",
-        "cost": 135
+        "cost": 145
        }
       ]
      }
@@ -25651,25 +26791,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 115
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "BURNA BOYZ",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "5 models",
-        "cost": 60
-       },
-       {
-        "of": "10 models",
-        "cost": 120
+        "cost": 125
        }
       ]
      }
@@ -25697,7 +26819,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 110
+        "cost": 130
        }
       ]
      },
@@ -25706,7 +26828,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 120
+        "cost": 140
        }
       ]
      }
@@ -25720,7 +26842,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 70
+        "cost": 80
        }
       ]
      }
@@ -25733,15 +26855,28 @@
     "name": "DEFFKOPTAS",
     "costs": [
      {
-      "scope": "YOUR UNIT COSTS",
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
       "tiers": [
        {
         "of": "3 models",
-        "cost": 75
+        "cost": 80
        },
        {
         "of": "6 models",
-        "cost": 140
+        "cost": 160
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 90
+       },
+       {
+        "of": "6 models",
+        "cost": 170
        }
       ]
      }
@@ -25749,412 +26884,6 @@
    },
    {
     "name": "FLASH GITZ",
-    "costs": [
-     {
-      "scope": "YOUR 1ST TO 2ND UNITS COST",
-      "tiers": [
-       {
-        "of": "5 models",
-        "cost": 75
-       },
-       {
-        "of": "10 models",
-        "cost": 150
-       }
-      ]
-     },
-     {
-      "scope": "YOUR 3RD + UNIT COSTS",
-      "tiers": [
-       {
-        "of": "5 models",
-        "cost": 85
-       },
-       {
-        "of": "10 models",
-        "cost": 160
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "GARGANTUAN SQUIGGOTH",
-    "costs": [
-     {
-      "scope": "YOUR 1ST UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 440
-       }
-      ]
-     },
-     {
-      "scope": "YOUR 2ND + UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 490
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "GHAZGHKULL THRAKA",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "2 models",
-        "cost": 235
-       }
-      ]
-     }
-    ],
-    "leader": [
-     "BOYZ",
-     "BREAKA BOYZ",
-     "MEGANOBZ",
-     "NOBZ"
-    ]
-   },
-   {
-    "name": "GORKANAUT",
-    "costs": [
-     {
-      "scope": "YOUR 1ST TO 2ND UNITS COST",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 255
-       }
-      ]
-     },
-     {
-      "scope": "YOUR 3RD + UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 275
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "GRETCHIN",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "10 Gretchin",
-        "cost": 45
-       },
-       {
-        "of": "1 Runtherd, 10 Gretchin",
-        "cost": 45
-       },
-       {
-        "of": "20 Gretchin",
-        "cost": 80
-       },
-       {
-        "of": "1 Runtherd, 20 Gretchin",
-        "cost": 85
-       },
-       {
-        "of": "2 Runtherd, 20 Gretchin",
-        "cost": 90
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "HUNTA RIG",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 125
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "KILLA KANS",
-    "costs": [
-     {
-      "scope": "YOUR 1ST TO 2ND UNITS COST",
-      "tiers": [
-       {
-        "of": "3 models",
-        "cost": 120
-       },
-       {
-        "of": "6 models",
-        "cost": 240
-       }
-      ]
-     },
-     {
-      "scope": "YOUR 3RD + UNIT COSTS",
-      "tiers": [
-       {
-        "of": "3 models",
-        "cost": 130
-       },
-       {
-        "of": "6 models",
-        "cost": 250
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "KILL RIG",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 145
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "KOMMANDOS",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "10 models",
-        "cost": 120
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "KUSTOM BOOSTA-BLASTA",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 70
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "LOOTAS",
-    "costs": [
-     {
-      "scope": "YOUR 1ST TO 2ND UNITS COST",
-      "tiers": [
-       {
-        "of": "5 models",
-        "cost": 50
-       },
-       {
-        "of": "10 models",
-        "cost": 100
-       }
-      ]
-     },
-     {
-      "scope": "YOUR 3RD + UNIT COSTS",
-      "tiers": [
-       {
-        "of": "5 models",
-        "cost": 60
-       },
-       {
-        "of": "10 models",
-        "cost": 110
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "MEGANOBZ",
-    "costs": [
-     {
-      "scope": "YOUR 1ST TO 2ND UNITS COST",
-      "tiers": [
-       {
-        "of": "2 models",
-        "cost": 60
-       },
-       {
-        "of": "3 models",
-        "cost": 90
-       },
-       {
-        "of": "5 models",
-        "cost": 150
-       },
-       {
-        "of": "6 models",
-        "cost": 180
-       }
-      ]
-     },
-     {
-      "scope": "YOUR 3RD + UNIT COSTS",
-      "tiers": [
-       {
-        "of": "2 models",
-        "cost": 80
-       },
-       {
-        "of": "3 models",
-        "cost": 110
-       },
-       {
-        "of": "5 models",
-        "cost": 170
-       },
-       {
-        "of": "6 models",
-        "cost": 200
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "MEGATRAKK SCRAPJET",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 75
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "MEK",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 55
-       }
-      ]
-     }
-    ],
-    "leader": [
-     "BOYZ",
-     "LOOTAS",
-     "MEK GUNZ",
-     "NOBZ",
-     "TANKBUSTAS"
-    ]
-   },
-   {
-    "name": "MEK GUNZ",
-    "costs": [
-     {
-      "scope": "YOUR 1ST TO 2ND UNITS COST",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 45
-       },
-       {
-        "of": "2 models",
-        "cost": 90
-       },
-       {
-        "of": "3 models",
-        "cost": 135
-       }
-      ]
-     },
-     {
-      "scope": "YOUR 3RD + UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 55
-       },
-       {
-        "of": "2 models",
-        "cost": 100
-       },
-       {
-        "of": "3 models",
-        "cost": 145
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "MORKANAUT",
-    "costs": [
-     {
-      "scope": "YOUR 1ST TO 2ND UNITS COST",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 270
-       }
-      ]
-     },
-     {
-      "scope": "YOUR 3RD + UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 290
-       }
-      ]
-     }
-    ]
-   },
-   {
-    "name": "MOZROG SKRAGBAD",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 125
-       }
-      ]
-     }
-    ],
-    "leader": [
-     "SQUIGHOG BOYZ"
-    ]
-   },
-   {
-    "name": "NOBZ",
     "costs": [
      {
       "scope": "YOUR 1ST TO 2ND UNITS COST",
@@ -26174,57 +26903,403 @@
       "tiers": [
        {
         "of": "5 models",
-        "cost": 115
+        "cost": 135
        },
        {
         "of": "10 models",
-        "cost": 220
+        "cost": 240
        }
       ]
      }
     ]
    },
    {
-    "name": "PAINBOSS",
+    "name": "GARGANTUAN SQUIGGOTH",
+    "costs": [
+     {
+      "scope": "YOUR 1ST UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 500
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 2ND + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 550
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "GHAZGHKULL THRAKA",
     "costs": [
      {
       "scope": "YOUR UNIT COSTS",
       "tiers": [
        {
         "of": "1 model",
-        "cost": 70
+        "cost": 300
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "GORKANAUT",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 325
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 355
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "GRETCHIN",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 Gretchin",
+        "cost": 45
+       },
+       {
+        "of": "20 Gretchin",
+        "cost": 80
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "GUNWAGON",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 150
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 160
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Zzap Gun",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "HUNTA RIG",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 165
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 175
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "KILLA KANS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 130
+       },
+       {
+        "of": "6 models",
+        "cost": 260
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 150
+       },
+       {
+        "of": "6 models",
+        "cost": 280
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "KILL RIG",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 175
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 185
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "KOMMANDOS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 125
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "MEGANOBZ",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "2 models",
+        "cost": 75
+       },
+       {
+        "of": "3 models",
+        "cost": 110
+       },
+       {
+        "of": "5 models",
+        "cost": 185
+       },
+       {
+        "of": "6 models",
+        "cost": 225
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "2 models",
+        "cost": 115
+       },
+       {
+        "of": "3 models",
+        "cost": 150
+       },
+       {
+        "of": "5 models",
+        "cost": 225
+       },
+       {
+        "of": "6 models",
+        "cost": 265
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Twin Killsaws",
+      "cost": 5
+     },
+     {
+      "of": "per Killsaw",
+      "cost": 5
+     }
+    ]
+   },
+   {
+    "name": "MEK GUNZ",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 55
+       },
+       {
+        "of": "2 models",
+        "cost": 110
+       },
+       {
+        "of": "3 models",
+        "cost": 165
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 65
+       },
+       {
+        "of": "2 models",
+        "cost": 120
+       },
+       {
+        "of": "3 models",
+        "cost": 175
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "MORKANAUT",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 345
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 375
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "MOZROG SKRAGBAD",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 170
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "NAZDREG",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 175
        }
       ]
      }
     ],
     "leader": [
-     "BEAST SNAGGA BOYZ"
+     "MEGANOBZ"
     ]
    },
    {
-    "name": "PAINBOY",
+    "name": "NOBZ",
     "costs": [
      {
-      "scope": "YOUR UNIT COSTS",
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
       "tiers": [
        {
-        "of": "1 model",
-        "cost": 90
+        "of": "5 models",
+        "cost": 125
+       },
+       {
+        "of": "10 models",
+        "cost": 250
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 155
+       },
+       {
+        "of": "10 models",
+        "cost": 280
        }
       ]
      }
     ],
-    "support": [
-     "BOYZ",
-     "BREAKA BOYZ",
-     "BURNA BOYZ",
-     "LOOTAS",
-     "NOBZ",
-     "TANKBUSTAS"
+    "wargear": [
+     {
+      "of": "per Paired Krumpas",
+      "cost": 5
+     }
     ]
    },
    {
-    "name": "RUKKATRUKK SQUIGBUGGY",
+    "name": "RUKKATRUKK SQUIGBUGGIES",
     "costs": [
      {
       "scope": "YOUR UNIT COSTS",
@@ -26232,30 +27307,37 @@
        {
         "of": "1 model",
         "cost": 85
+       },
+       {
+        "of": "2 models",
+        "cost": 160
        }
       ]
      }
     ]
    },
    {
-    "name": "SHOKKJUMP DRAGSTA",
+    "name": "RUNTHERD",
     "costs": [
      {
       "scope": "YOUR UNIT COSTS",
       "tiers": [
        {
         "of": "1 model",
-        "cost": 70
+        "cost": 10
        }
       ]
      }
+    ],
+    "support": [
+     "GRETCHIN"
     ]
    },
    {
     "name": "SQUIGHOG BOYZ",
     "costs": [
      {
-      "scope": "YOUR UNIT COSTS",
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
       "tiers": [
        {
         "of": "4 models",
@@ -26263,7 +27345,20 @@
        },
        {
         "of": "8 models",
-        "cost": 270
+        "cost": 280
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "4 models",
+        "cost": 160
+       },
+       {
+        "of": "8 models",
+        "cost": 300
        }
       ]
      }
@@ -26277,7 +27372,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 600
+        "cost": 700
        }
       ]
      },
@@ -26286,7 +27381,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 700
+        "cost": 800
        }
       ]
      }
@@ -26300,11 +27395,11 @@
       "tiers": [
        {
         "of": "5 models",
-        "cost": 65
+        "cost": 70
        },
        {
         "of": "10 models",
-        "cost": 130
+        "cost": 140
        }
       ]
      }
@@ -26318,7 +27413,7 @@
       "tiers": [
        {
         "of": "6 models",
-        "cost": 125
+        "cost": 145
        }
       ]
      },
@@ -26327,7 +27422,7 @@
       "tiers": [
        {
         "of": "6 models",
-        "cost": 135
+        "cost": 155
        }
       ]
      }
@@ -26341,7 +27436,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 55
+        "cost": 60
        }
       ]
      },
@@ -26350,7 +27445,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 65
+        "cost": 70
        }
       ]
      }
@@ -26364,11 +27459,11 @@
       "tiers": [
        {
         "of": "3 models",
-        "cost": 60
+        "cost": 75
        },
        {
         "of": "6 models",
-        "cost": 120
+        "cost": 140
        }
       ]
      }
@@ -26382,7 +27477,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 85
+        "cost": 100
        }
       ]
      }
@@ -26397,11 +27492,20 @@
     "name": "WARBOSS IN MEGA ARMOUR",
     "costs": [
      {
-      "scope": "YOUR UNIT COSTS",
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
       "tiers": [
        {
         "of": "1 model",
-        "cost": 80
+        "cost": 125
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 140
        }
       ]
      }
@@ -26411,14 +27515,36 @@
     ]
    },
    {
-    "name": "WARTRAKK",
+    "name": "WARBUGGIES",
     "costs": [
      {
       "scope": "YOUR UNIT COSTS",
       "tiers": [
        {
         "of": "1 model",
-        "cost": 60
+        "cost": 70
+       },
+       {
+        "of": "2 models",
+        "cost": 130
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "WARTRAKKS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 70
+       },
+       {
+        "of": "2 models",
+        "cost": 130
        }
       ]
      }
@@ -26428,11 +27554,20 @@
     "name": "WAZBOM BLASTAJET",
     "costs": [
      {
-      "scope": "YOUR UNIT COSTS",
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
       "tiers": [
        {
         "of": "1 model",
-        "cost": 165
+        "cost": 215
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 235
        }
       ]
      }
@@ -26446,7 +27581,7 @@
       "tiers": [
        {
         "of": "1 model",
-        "cost": 175
+        "cost": 200
        }
       ]
      }
@@ -26465,302 +27600,13 @@
       ]
      }
     ],
-    "leader": [
-     "BOYZ",
-     "BREAKA BOYZ"
-    ]
-   },
-   {
-    "name": "WURRBOY",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 60
-       }
-      ]
-     }
-    ],
-    "leader": [
-     "BEAST SNAGGA BOYZ"
-    ]
-   },
-   {
-    "name": "ZODGROD WORTSNAGGA",
-    "costs": [
-     {
-      "scope": "YOUR UNIT COSTS",
-      "tiers": [
-       {
-        "of": "1 model",
-        "cost": 80
-       }
-      ]
-     }
-    ],
-    "leader": [
-     "GRETCHIN"
+    "support": [
+     "BEAST SNAGGA BOYZ",
+     "BOYZ"
     ]
    }
   ],
-  "detachments": [
-   {
-    "name": "BLITZ BRIGADE",
-    "dp": 2,
-    "enhancements": [
-     {
-      "name": "Blitzkaptin",
-      "cost": 25
-     },
-     {
-      "name": "Runnin’ Boots",
-      "cost": 10
-     },
-     {
-      "name": "Supercharged Squig Oil",
-      "cost": 10
-     },
-     {
-      "name": "Tuff Git",
-      "cost": 5
-     }
-    ]
-   },
-   {
-    "name": "BULLY BOYZ",
-    "dp": 2,
-    "enhancements": [
-     {
-      "name": "Big Gob",
-      "cost": 20
-     },
-     {
-      "name": "Da Biggest Boss",
-      "cost": 15
-     },
-     {
-      "name": "’Eadstompa",
-      "cost": 10
-     },
-     {
-      "name": "Tellyporta",
-      "cost": 25
-     }
-    ]
-   },
-   {
-    "name": "DA BIG HUNT",
-    "dp": 2,
-    "enhancements": [
-     {
-      "name": "Glory Hog",
-      "cost": 30
-     },
-     {
-      "name": "Proper Killy",
-      "cost": 15
-     },
-     {
-      "name": "Skrag Every Stash!",
-      "cost": 25
-     },
-     {
-      "name": "Surly as a Squiggoth",
-      "cost": 20
-     }
-    ]
-   },
-   {
-    "name": "DREAD MOB",
-    "dp": 2,
-    "enhancements": [
-     {
-      "name": "Gitfinder Gogglez",
-      "cost": 10
-     },
-     {
-      "name": "Press It Fasta!",
-      "cost": 35
-     },
-     {
-      "name": "Smoky Gubbinz",
-      "cost": 15
-     },
-     {
-      "name": "Supa-glowy Fing",
-      "cost": 20
-     }
-    ]
-   },
-   {
-    "name": "EQUATORIAL HORDES",
-    "dp": 1,
-    "enhancements": [
-     {
-      "name": "Kunnin’ Hunta",
-      "cost": 25
-     },
-     {
-      "name": "Unkillable Scourge",
-      "cost": 25
-     }
-    ]
-   },
-   {
-    "name": "FREEBOOTER KREW",
-    "dp": 2,
-    "enhancements": [
-     {
-      "name": "Bionik Workshop",
-      "cost": 15
-     },
-     {
-      "name": "Da Kaptin",
-      "cost": 10
-     },
-     {
-      "name": "Git-Spotter Squig",
-      "cost": 20
-     },
-     {
-      "name": "Razgit’s Magik Map",
-      "cost": 25
-     }
-    ]
-   },
-   {
-    "name": "GREEN TIDE",
-    "dp": 3,
-    "enhancements": [
-     {
-      "name": "Bloodthirsty Belligerence",
-      "cost": 15
-     },
-     {
-      "name": "Brutal But Kunnin’",
-      "cost": 25
-     },
-     {
-      "name": "Ferocious Show Off",
-      "cost": 10
-     },
-     {
-      "name": "Raucous Warcaller",
-      "cost": 20
-     }
-    ]
-   },
-   {
-    "name": "KULT OF SPEED",
-    "dp": 2,
-    "enhancements": [
-     {
-      "name": "Fasta Than Yooz",
-      "cost": 35
-     },
-     {
-      "name": "Speed Makes Right",
-      "cost": 25
-     },
-     {
-      "name": "Squig-hide Tyres",
-      "cost": 15
-     },
-     {
-      "name": "Wazblasta",
-      "cost": 10
-     }
-    ]
-   },
-   {
-    "name": "MORE DAKKA!",
-    "dp": 1,
-    "enhancements": [
-     {
-      "name": "Da Gobshot Thunderbuss",
-      "cost": 15
-     },
-     {
-      "name": "Dead Shiny Shootas (Upgrade)",
-      "cost": 15
-     }
-    ]
-   },
-   {
-    "name": "ROLLIN' DEFF",
-    "dp": 1,
-    "enhancements": [
-     {
-      "name": "Boarding Ramps (Upgrade)",
-      "cost": 10
-     },
-     {
-      "name": "Targetin’ Gizmos (Upgrade)",
-      "cost": 15
-     }
-    ]
-   },
-   {
-    "name": "SPEEDWAAAGH!",
-    "dp": 2,
-    "enhancements": [
-     {
-      "name": "Dakkamek",
-      "cost": 25
-     },
-     {
-      "name": "Kustom Shokk Box",
-      "cost": 10
-     },
-     {
-      "name": "Master Meknologist",
-      "cost": 20
-     },
-     {
-      "name": "Supa-Burny Fuel",
-      "cost": 15
-     }
-    ]
-   },
-   {
-    "name": "TAKTIKAL BRIGADE",
-    "dp": 1,
-    "enhancements": [
-     {
-      "name": "Mork’s Kunnin’",
-      "cost": 20
-     },
-     {
-      "name": "Slippery Git",
-      "cost": 15
-     }
-    ]
-   },
-   {
-    "name": "WAR HORDE",
-    "dp": 3,
-    "enhancements": [
-     {
-      "name": "Follow Me Ladz",
-      "cost": 25
-     },
-     {
-      "name": "Headwoppa’s Killchoppa",
-      "cost": 20
-     },
-     {
-      "name": "Kunnin’ But Brutal",
-      "cost": 15
-     },
-     {
-      "name": "Supa-Cybork Body",
-      "cost": 15
-     }
-    ]
-   }
-  ]
+  "detachments": []
  },
  "space-marines": {
   "units": [
@@ -26861,6 +27707,7 @@
     ],
     "support": [
      "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
      "CRUSADER SQUAD",
      "DEATHWATCH VETERANS",
      "DECIMUS KILL TEAM",
@@ -27802,6 +28649,13 @@
      "STERNGUARD VETERAN SQUAD",
      "SWORD BRETHREN SQUAD",
      "TACTICAL SQUAD"
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "INFERNUS SQUAD",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD"
     ]
    },
    {
@@ -30957,6 +31811,13 @@
      "STERNGUARD VETERAN SQUAD",
      "SWORD BRETHREN SQUAD",
      "TACTICAL SQUAD"
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "INFERNUS SQUAD",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD"
     ]
    },
    {
@@ -34287,6 +35148,29 @@
     ]
    },
    {
+    "name": "EXOCRINE",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 135
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 145
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "GARGOYLES",
     "costs": [
      {
@@ -34539,6 +35423,29 @@
     ]
    },
    {
+    "name": "MALECEPTOR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 180
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 190
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "MAWLOC",
     "costs": [
      {
@@ -34715,6 +35622,45 @@
       "tiers": [
        {
         "of": "1 model",
+        "cost": 110
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "PYROVORES",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 40
+       },
+       {
+        "of": "2 models",
+        "cost": 70
+       },
+       {
+        "of": "3 models",
+        "cost": 100
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 50
+       },
+       {
+        "of": "2 models",
+        "cost": 80
+       },
+       {
+        "of": "3 models",
         "cost": 110
        }
       ]
@@ -34992,6 +35938,39 @@
     ]
    },
    {
+    "name": "TYRANNOFEX",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 170
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 180
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Acid spray",
+      "cost": 10
+     },
+     {
+      "of": "per Rupture cannon",
+      "cost": 20
+     }
+    ]
+   },
+   {
     "name": "TYRANT GUARD",
     "costs": [
      {
@@ -35076,6 +36055,24 @@
      "GARGOYLES",
      "TYRANID WARRIORS WITH MELEE BIO-WEAPONS",
      "TYRANID WARRIORS WITH RANGED BIO-WEAPONS"
+    ]
+   },
+   {
+    "name": "ZOANTHROPES",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 90
+       },
+       {
+        "of": "6 models",
+        "cost": 190
+       }
+      ]
+     }
     ]
    }
   ],
@@ -35658,6 +36655,24 @@
     ],
     "leader": [
      "KHORNE BERZERKERS"
+    ]
+   },
+   {
+    "name": "KHORNE BERZERKERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 160
+       },
+       {
+        "of": "20 models",
+        "cost": 320
+       }
+      ]
+     }
     ]
    },
    {

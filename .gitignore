@@ -14,6 +14,10 @@ data/bsdata/
 # Built by tools/merge — BSData over 40kdc (DESIGN.md §3.10).
 data/merged/
 
+# Wahapedia's data export, cached by tools/wahapedia-check.py. Vendored for
+# the same reasons as the others: large, refetchable, and not ours to publish.
+data/wahapedia/
+
 # macOS
 .DS_Store
 

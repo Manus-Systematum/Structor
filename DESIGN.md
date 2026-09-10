@@ -552,6 +552,63 @@ Output is per-faction JSON bundles plus a signed manifest, gzipped and content-h
 
 ---
 
+### 3.25 A third source, and what it is good for
+
+Wahapedia publishes an export for the 11th edition — datasheets, model
+statlines, wargear and points — under terms that name this use outright: *"The
+export data can be used to research game mechanics and develop related
+interfaces."* `tools/fetch-stratagem-text.py` already reads its stratagem
+table (§3.12); `tools/wahapedia-check.py` reads the rest.
+
+**On its own it is 30% noise.** Compared bracket by bracket against
+`data/merged` it disagreed on 599 of 1,943 unit prices. Reporting that would
+bury everything true in it. So it is used the way §3.5 uses the Munitorum
+mirror: as a way of *finding* candidates, with Games Workshop's own published
+points — `data/mfm-points.json` — as the way of *judging* them. Only a
+difference GW backs is reported; one it does not is Wahapedia being stale, and
+is silent.
+
+**Three joins had to be right before any of it meant anything**, and each was
+wrong first:
+
+- **Faction.** 265 datasheet names appear under more than one faction — a
+  Tech-priest Dominus in both Adeptus Mechanicus and Imperial Knights, a
+  Terrax-pattern Termite in six. Joining on name alone takes whichever row
+  came last. Wahapedia also files one Space Marines faction where this project
+  files a chapter each, so every chapter maps to `SM` through its parent.
+- **Copy scope.** All three sources price a unit differently by how many
+  copies of it the army already has, and all three say so differently:
+  `YOUR 1ST TO 3RD UNITS COST`, `unit_count_min: 4`, a header row with an
+  empty cost. Read flat, Boyz cost 75 and 85 at once and every scoped
+  datasheet looks wrong. This alone was 361 of the 599.
+- **The judge's own age.** `data/mfm-points.json` is a scrape with a date on
+  it. Run against a copy 13 days old, the check called 175 correct prices
+  wrong and 66 wrong ones right; refetched, the same run found **175 brackets
+  where Wahapedia and Games Workshop agree against us and no three-way
+  conflicts at all**. So the judge is refreshed before it judges, and a run
+  that finds `mfm-points.json` has moved reports *that* first — a points
+  update landing upstream is the finding, not a detail of the run.
+
+**What the current answer is.** Our 40kdc snapshot is behind a Games Workshop
+points update: 175 brackets across 21 factions, led by Orks with 59. Nothing
+about that is a parser bug, and it is not fixed here — it is fixed by 40kdc
+publishing, or by `data-corrections.yaml` if it does not.
+
+Coverage is stated rather than assumed: 272 of our datasheets are not in
+Wahapedia's export at all (named-character and boxed-set variants, mostly),
+404 brackets have no scope to match against, and 63 differences have no GW row
+to judge them.
+
+### 3.26 A local agent that tests the app
+
+`.claude/agents/structor-tester.md` runs both suites, the check above, and —
+when a change touches the screen — the app itself on the emulator, and reports
+what is broken without fixing it. It is told the three traps that cost a
+morning to find: that Wahapedia alone is noise, that the judge must be
+refreshed first, and that a tap is in device pixels rather than in the
+coordinates of a screenshot scaled to fit. It is also told, in as many words,
+not to write a number from its own knowledge of Warhammer (§0).
+
 ## 4. Army builder
 
 ### 4.1 Screen structure
