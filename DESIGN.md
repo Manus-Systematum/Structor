@@ -606,9 +606,22 @@ there means.
 
 ### 3.26 A local agent that tests the app
 
-`.claude/agents/structor-tester.md` runs both suites, the check above, and —
-when a change touches the screen — the app itself on the emulator, and reports
-what is broken without fixing it. It is told the three traps that cost a
+`.claude/agents/structor-tester.md` runs both suites, the check above, the
+sample armies of §3.34, and the app itself on **both** an Android emulator and
+an iOS simulator, and reports what is broken without fixing it.
+
+Both devices, because most of Structor is Flutter and behaves the same on the
+two — so the parts that do not are exactly the ones worth a second look: text
+that fits on one and overflows on the other, and the custom-painted map,
+terrain and deployment screens. A screen right on one device and wrong on the
+other is the finding the second device exists to produce.
+
+It is told to read layout overflow out of the logs before judging anything by
+eye, because Flutter names its own layout failures — a "RenderFlex overflowed
+by 23 pixels" line is mechanical evidence and an opinion about a screenshot is
+not — and to check a handful of unit sheets field by field against
+`data/merged`, since a field the app quietly drops is invisible until someone
+plays a game with it. It is told the three traps that cost a
 morning to find: that Wahapedia alone is noise, that the judge must be
 refreshed first, and that a tap is in device pixels rather than in the
 coordinates of a screenshot scaled to fit. It is also told, in as many words,
@@ -804,6 +817,82 @@ tests expect exactly that one error and no other.
 
 **A fresh export would restore the stronger check**, where the computed total
 and the printed total are the same number and any divergence at all is a bug.
+
+### 3.34 Sample armies, because the suites price exactly one
+
+Both suites price a single army end to end: the reference 2,000 point T'au
+list. A faction whose datasheets cannot be assembled at all reads as green in
+both of them, and every dataset regression found so far arrived that way — a
+datasheet with no price, a composition that will not resolve, a detachment
+whose enhancements no character can carry.
+
+`Structor_core/bin/sample_lists.dart` is the other half. Two passes, because
+they fail differently:
+
+- **every matched-play datasheet, alone**, added to an empty army at its own
+  default size — 4,291 of them across the factions, counting the copies a
+  chapter inherits. What this catches is a record the builder cannot make a
+  unit out of, and none of it depends on choosing a good list.
+- **three whole armies per faction**, one per detachment, filled towards the
+  points limit battleline-first and then trimmed back to legal.
+
+Two decisions the generator had to make, both of which changed what it
+reported:
+
+**Fill greedily, then remove what makes it illegal.** A loop that only watches
+the points total puts 530 points of Corsairs in a Drukhari army and the whole
+Astra Militarum catalogue in a Cult one without the detachment that admits
+them, and reports its own greed as 60 findings. Removing the units a finding
+names converges in a few rounds; what survives is structural. Allies are
+skipped outright in the fill, because an over-the-ally-cap finding names no
+single unit to blame — no single unit is to blame — so trimming cannot undo
+it, and §4.18 has coverage of its own.
+
+**A datasheet dearer than a Strike Force is not a broken one.** The Manta
+costs 2,100 and belongs in an Onslaught army; reporting `points.over` on the
+one-at-a-time pass says nothing about the data.
+
+#### What it found
+
+29 findings, all of one code — `points.unpriced` — and two causes:
+
+**15 datasheets no source prices at all.** Attack Bike Squad, Land Speeder
+Storm, Daemonhost, the three Astra Militarum weapon batteries, Myphitic
+Blight-hauler, Starfangs, Hippogriff AFV, Ripper Swarms, Sir Hekhtur, XV9
+Hazard Battlesuits, the Spore Mines and Mucolid Spores.
+
+**14 where the composition and the price brackets disagree about how many
+models the unit has.** The builder reads the composition and pricing reads the
+brackets, and both are being faithful to records that do not agree:
+
+| datasheet | brackets at | composition's smallest |
+| --- | --- | --- |
+| Cadian Shock Troops | 11, 27 | 10 |
+| Death Korps of Krieg | 11, 30 | 10 |
+| Catachan Jungle Fighters | 11, 27 | 10 |
+| Outrider Squad | 4 | 3 |
+| Paladin Squad | 4, 5, 6, 9 | 3 |
+| Brotherhood Terminator Squad | 4, 5, 6, 9 | 3 |
+| Kroot Farstalkers | 13 | 12 |
+| Saint Celestine | 1 | 3 |
+| Aquila Kill Team | 1 | 5 |
+| Victrix Honour Guard | 3, 4 | 1 |
+| Subductor Squad | 10 | 11 |
+| Sanctifiers | 11 | 9 |
+| Canis Rex | 2 | 1 |
+
+Most are off by one and could be read as a sergeant counted in one record and
+not the other, but Saint Celestine is priced alone where her composition
+brings two Geminae Superia, and the Aquila Kill Team is priced at one model
+and built at five — so it is not one mistake repeated, and none of it is
+guessed at here. The app reports these as unpriced rather than charging zero,
+which is §3.28 doing its job; a person still has to decide, per datasheet,
+which of the two records the rulebook agrees with.
+
+The count is the thing to watch. `.claude/agents/structor-tester.md` reports
+whether it moved from 29 and names anything that is not a `points.unpriced`
+finding, since a validation error surviving in an assembled army is a
+different and worse thing.
 
 ## 4. Army builder
 
