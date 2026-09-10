@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Fetch stratagem rules text into data/stratagem-text/.
+"""Fetch printed rules text into data/stratagem-text/.
+
+Stratagems first, and detachment rules since — the directory keeps the name it
+was created with rather than churning every reference to it.
 
 Two sources, because neither alone is both complete and current:
 
@@ -28,6 +31,10 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 OUT = os.path.join(ROOT, 'data', 'stratagem-text')
 
 WAHAPEDIA = 'https://wahapedia.ru/wh40k11ed/Stratagems.csv'
+# A detachment rule is published in its own table, keyed by faction and
+# detachment — which is what lets it settle an id two different rules share
+# in BSData's export (§3.37).
+DETACHMENT_RULES = 'https://wahapedia.ru/wh40k11ed/Detachment_abilities.csv'
 CORE_PDF = ('https://raw.githubusercontent.com/pguetschow/'
             'warhammer-40k-stratagem-card-generator/main/public/data/11/cards.json')
 
@@ -46,6 +53,11 @@ def main():
     with open(os.path.join(OUT, 'wahapedia-stratagems.csv'), 'wb') as f:
         f.write(csv_bytes)
     print('wahapedia: %d KB' % (len(csv_bytes) // 1024))
+
+    rules = fetch(DETACHMENT_RULES)
+    with open(os.path.join(OUT, 'wahapedia-detachment-rules.csv'), 'wb') as f:
+        f.write(rules)
+    print('wahapedia detachment rules: %d KB' % (len(rules) // 1024))
 
     core = fetch(CORE_PDF)
     with open(os.path.join(OUT, 'core-stratagems.json'), 'wb') as f:

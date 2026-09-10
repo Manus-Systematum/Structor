@@ -969,6 +969,59 @@ about what upstream meant.
 upstream has fixed is deleted rather than left quietly rewriting data that has
 since become correct.
 
+### 3.37 Wahapedia settles an id two rules share
+
+BSData publishes the Aeldari **Windrider Host** detachment rule and the
+**Autarch Skyrunner**'s ability under one name, `Ride the Wind`, so both slug
+to `ride-the-wind`. The wrong one wins the merge, and an Aeldari player opening
+their detachment rules reads the Autarch's ability instead. The mapper reports
+no collision, which is its own gap.
+
+An alias cannot fix it: the two are genuinely different rules, and merging them
+is what caused the problem. What settles it is that **Wahapedia keeps
+detachment rules in a table of their own**, keyed by faction and detachment,
+so it can say which of the two the Windrider Host has. `bin/merge.dart` takes
+its text, the same way §3.12 already takes stratagem text from the same
+source.
+
+**This is deliberately not a general override.** Of 236 detachment rules that
+join, 180 already agree word for word and 30 differ only in wording — and
+where they differ ours usually reads better, because BSData keeps the bullets
+that Wahapedia's export runs into one line. Two cases are overridden and only
+two: **ours is empty** (twelve rules the app had nothing to show for) and
+**ours is a different rule**. Fifteen in total.
+
+Three things had to be got right, and each was got wrong first:
+
+**Words shared, not characters.** Character bigrams were the first way of
+asking whether two texts are the same rule, and they cannot tell: any two
+pieces of English rules text share `th`, `he` and `in` in bulk, so the
+Autarch's ability and the Windrider Host's scored as near neighbours and
+nothing was overridden. Words shared as a fraction of words written separates
+them — 178 rules score 1.0, the tail runs down to 0.29, and `ride-the-wind`
+sits alone at 0.11. The threshold is 0.2, drawn in a gap with nothing in it
+rather than at a value that would start deciding cases. The 0.29 is Cogbound
+Alliance, where ours summarises what Wahapedia spells out; it stays ours.
+
+**A table has to keep its grid.** The Windrider Host's reserve limit is an
+HTML table, and stripping the tags alone ran the cells together as
+`**BATTLE SIZE****NUMBER OF UNITS**Incursion**1**`, with the bold markers of
+neighbouring cells colliding into a run the rules screen refuses. Cells are
+separated and rows broken now, which also improves the 2,093 stratagems that
+go through the same conversion.
+
+**Wahapedia has its own damage.** Five of its rows carry a lowercase letter
+inside a keyword — `ADEPTUS ARbITES`, `INqUISITOR`. A keyword is upper case
+throughout, which is what the `kwb` span it sits in means, so the span's
+contents are upper-cased on the way in. Importing them as they stand would
+have traded one faction's wrong rule for another faction's wrong spelling,
+which is the trap in treating any single source as authoritative — the reason
+§3.5 has a judge at all.
+
+**What this does not reach** is the same collision on *unit* abilities, where
+Space Wolves and others carry a different rule under a shared id. Wahapedia
+files those by datasheet, so the join is a different one and is not done here.
+
 ## 4. Army builder
 
 ### 4.1 Screen structure

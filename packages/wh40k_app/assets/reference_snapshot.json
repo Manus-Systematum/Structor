@@ -2834,7 +2834,9 @@
         "range": "unit",
         "duration": "permanent"
       },
-      "community_notes": "community-authored from 10e source (provisional 11e); see #21"
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21",
+      "description": "Friendly BATTLESUIT CHARACTER units’ ranged attacks have +6\" **R**.\n\nThis detachment has the BATTLESUIT tag and cannot be taken with another BATTLESUIT **detachment**.",
+      "description_from": "wahapedia"
     },
     "supernova-launcher-experimental-prototype-cadre": {
       "ability_id": "supernova-launcher-experimental-prototype-cadre",

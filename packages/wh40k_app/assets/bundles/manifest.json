@@ -16,18 +16,18 @@
       "id": "adepta-sororitas",
       "kind": "faction",
       "name": "Adepta Sororitas",
-      "file": "adepta-sororitas.9800a48995f4.json.gz",
-      "sha256": "9800a48995f4d7214038550d51e2d5135e905f68e5959306cf9956fd56e8169f",
-      "bytes": 217225,
+      "file": "adepta-sororitas.f2c05ce657f1.json.gz",
+      "sha256": "f2c05ce657f164da27596b5de55b3884bd5fec1711f1a47e82a89d0a54be1a03",
+      "bytes": 217513,
       "revision": "local"
     },
     {
       "id": "adeptus-astartes",
       "kind": "faction",
       "name": "Adeptus Astartes",
-      "file": "adeptus-astartes.2f33d96e307e.json.gz",
-      "sha256": "2f33d96e307eec4ef0e12e15963e42d32c0537e4b94c1dd7aa334178c7727061",
-      "bytes": 343188,
+      "file": "adeptus-astartes.1fd404d2d4e7.json.gz",
+      "sha256": "1fd404d2d4e74f25975d79c2c0eb9996ce0fbb41ba443cd0f747b8af3371e031",
+      "bytes": 343312,
       "revision": "local",
       "aliases": [
         "Space Marines"
@@ -46,18 +46,18 @@
       "id": "adeptus-mechanicus",
       "kind": "faction",
       "name": "Adeptus Mechanicus",
-      "file": "adeptus-mechanicus.93efa5e043d7.json.gz",
-      "sha256": "93efa5e043d77eaf75cbe0b8a01de2bef025d261b141ccb6676b6e6c40b9b2d6",
-      "bytes": 212664,
+      "file": "adeptus-mechanicus.8fb61ec066a1.json.gz",
+      "sha256": "8fb61ec066a173488a45771b14c6e45dc4c278ac242c6fa22c3a1f57d37c1b3f",
+      "bytes": 212749,
       "revision": "local"
     },
     {
       "id": "aeldari",
       "kind": "faction",
       "name": "Aeldari",
-      "file": "aeldari.aaabf4d93ba5.json.gz",
-      "sha256": "aaabf4d93ba5886640e8787954f5e436aa7d57618d2848e22ddc55c7f425655a",
-      "bytes": 271873,
+      "file": "aeldari.6361da09c93f.json.gz",
+      "sha256": "6361da09c93f8411cc65eb139757322b5d0b222264095409708b7702cbf335eb",
+      "bytes": 272254,
       "revision": "local"
     },
     {
@@ -105,9 +105,9 @@
       "id": "chaos-daemons",
       "kind": "faction",
       "name": "Chaos Daemons",
-      "file": "chaos-daemons.73db3332625d.json.gz",
-      "sha256": "73db3332625d9d9eca285fd39626a852fa6537d3d5c5313456e28117443a9b0f",
-      "bytes": 229272,
+      "file": "chaos-daemons.08eb4232bda1.json.gz",
+      "sha256": "08eb4232bda1c4f27973d57260f06e9697b3c28203b6111a98f05fba31643fe5",
+      "bytes": 230211,
       "revision": "local"
     },
     {
@@ -123,9 +123,9 @@
       "id": "chaos-space-marines",
       "kind": "faction",
       "name": "Chaos Space Marines",
-      "file": "chaos-space-marines.4a586a21408e.json.gz",
-      "sha256": "4a586a21408e4027d3ac65a547313e97da8e44bdceb6708cef6b8d14e97a5b91",
-      "bytes": 258432,
+      "file": "chaos-space-marines.22834efd8113.json.gz",
+      "sha256": "22834efd8113f9d931a0c333739be729eb42de2050e7b0a11e551c82dbd7e3a0",
+      "bytes": 258731,
       "revision": "local"
     },
     {
@@ -254,9 +254,9 @@
       "id": "orks",
       "kind": "faction",
       "name": "Orks",
-      "file": "orks.49d377ce4e49.json.gz",
-      "sha256": "49d377ce4e4962535e9743ac60a888f9559b64abd1f6fadbcb61ea80653a6794",
-      "bytes": 250548,
+      "file": "orks.d22b01e4b124.json.gz",
+      "sha256": "d22b01e4b124ab34da8a1fd55aeb801f7416c0e18630cd32df7c28f8c6715c31",
+      "bytes": 250784,
       "revision": "local"
     },
     {
@@ -293,9 +293,9 @@
       "id": "tau-empire",
       "kind": "faction",
       "name": "T’au Empire",
-      "file": "tau-empire.5237e7f10fdd.json.gz",
-      "sha256": "5237e7f10fdd94e6c5a80ed8621a100b3a37a0b5a07b4933ae77f42ddd2f3f34",
-      "bytes": 228686,
+      "file": "tau-empire.f01f876e02f6.json.gz",
+      "sha256": "f01f876e02f6e009a84028bfd5ae317ff39a2fc06756a8d6c4062b9c1af7308a",
+      "bytes": 228753,
       "revision": "local"
     },
     {
@@ -311,9 +311,9 @@
       "id": "tyranids",
       "kind": "faction",
       "name": "Tyranids",
-      "file": "tyranids.b1faa2bf9807.json.gz",
-      "sha256": "b1faa2bf980745ed3df0e7367c6073860fbd637518428d6661a6feec574898be",
-      "bytes": 214429,
+      "file": "tyranids.1544d531dc3a.json.gz",
+      "sha256": "1544d531dc3acbbade2553d038e4f8e1049c0662aca635305570467f4ee32db8",
+      "bytes": 214701,
       "revision": "local"
     },
     {
