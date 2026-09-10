@@ -5266,208 +5266,23 @@
   {
    "faction": "orks",
    "file": "stratagems",
-   "op": "set",
-   "id": "bash-and-grab-freebooter-krew",
-   "values": {
-    "text": "**WHEN:** The Fight phase.\n\n**TARGET:** One Orks unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack that targets an enemy unit within range of the loot objective, you can re‑roll the Wound roll."
-   },
-   "note": "Freebooter Krew pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "boardin-rush-freebooter-krew",
-   "values": {
-    "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Orks unit from your army that has not been selected to move this phase.\n\n**EFFECT:** Until the end of the phase, each time your unit Advances, do not make an Advance roll. Instead, until the end of the phase, add 6\" to the Move characteristic of models in your unit. 11"
-   },
-   "note": "Freebooter Krew pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "deck-fraggers-freebooter-krew",
-   "values": {
-    "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Orks unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit targets an Infantry unit with a ranged weapon, that weapon has the [BLAST] ability."
-   },
-   "note": "Freebooter Krew pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "grab-and-bash-freebooter-krew",
-   "values": {
-    "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One Orks unit from your army (excluding Gretchin units) that is within range of the loot objective.\n\n**EFFECT:** Until the start of your next Command phase, the Waaagh! is active for your unit, even if you have already called a Waaagh! this battle. Designer’s Note: This means that any abilities that are in effect while the Waaagh! is active for your army will be in effect for your unit."
-   },
-   "note": "Freebooter Krew pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "krump-and-run-freebooter-krew",
-   "values": {
-    "text": "**WHEN:** Your opponent’s Movement phase, just after an enemy unit falls back.\n\n**TARGET:** One Orks unit from your army that was within engagement range of that enemy unit at the start of the phase and is not within range of one or more enemy units.\n\n**EFFECT:** Your unit can make a Normal move of up to 6\"."
-   },
-   "note": "Freebooter Krew pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "rolling-loot-heap-freebooter-krew",
-   "values": {
-    "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Flash Gitz unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, ranged weapons equipped by models in your unit have the [ANTI‑VEHICLE 4+] ability."
-   },
-   "note": "Freebooter Krew pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
    "op": "remove",
-   "id": "get-stuck-in-ladz-more-dakka",
-   "note": "not in the More Dakka! pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "remove",
-   "id": "huge-show-offs-more-dakka",
-   "note": "not in the More Dakka! pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "remove",
-   "id": "orks-is-still-orks-more-dakka",
-   "note": "not in the More Dakka! pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "speshul-shells-more-dakka",
-   "values": {
-    "text": "**WHEN:** Your Shooting phase, when a friendly ORKS INFANTRY unit is selected to shoot.\n\n**TARGET:** That ORKS INFANTRY unit.\n\n**EFFECT:** Your unit’s ranged attacks that target a unit within 9\" have +1 AP."
-   },
-   "note": "More Dakka! pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "brutal-broadside-rollin-deff",
-   "values": {
-    "text": "**WHEN:** Your Shooting phase, when a friendly BATTLEWAGON unit is selected to shoot.\n\n**TARGET:** That BATTLEWAGON unit.\n\n**EFFECT:** Your unit’s ranged attacks (excluding attacks made by weapons selected with Firing Deck) have [RAPID FIRE X], where X is that attack’s A."
-   },
-   "note": "Rollin’ Deff pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "impending-crunch-rollin-deff",
-   "values": {
-    "text": "**WHEN:** Your Charge phase, when a friendly WAGON unit ends a charge move.\n\n**TARGET:** That WAGON unit.\n\n**EFFECT:** Each enemy unit engaged with your unit makes a battle‑shock roll, with -1 to that battle‑shock roll."
-   },
-   "note": "Rollin’ Deff pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "remove",
-   "id": "long-uncontrolled-bursts-rollin-deff",
-   "note": "not in the Rollin’ Deff pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "remove",
-   "id": "speshul-shells-rollin-deff",
-   "note": "not in the Rollin’ Deff pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "dust-trails-speedwaaagh",
-   "values": {
-    "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Orks unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, your unit has the Benefit of Cover."
-   },
-   "note": "Speedwaaagh! pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "mobile-dakkastorm-speedwaaagh",
-   "values": {
-    "text": "**WHEN:** Your Shooting phase, just after a Speed Freeks or Trukk unit from your army has shot.\n\n**TARGET:** That Speed Freeks or Trukk unit.\n\n**EFFECT:** Select one enemy unit hit by one or more of those attacks (excluding attacks made with Indirect Fire weapons). Until the end of the phase, each time a model in a Speed Freeks or Trukk unit from your army makes an attack that targets that unit, improve the Strength characteristic of that attack by 2."
-   },
-   "note": "Speedwaaagh! pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "on-da-move-speedwaaagh",
-   "values": {
-    "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Orks unit from your army that has not been selected to move this phase.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back or Advanced (unless it used its turbo this turn)."
-   },
-   "note": "Speedwaaagh! pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "speshul-ammo-speedwaaagh",
-   "values": {
-    "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Orks unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, ranged weapons equipped by models in your unit (excluding Torrent weapons) have the [ANTI‑MONSTER 4+] and [ANTI‑VEHICLE 4+] abilities. 7"
-   },
-   "note": "Speedwaaagh! pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "remove",
-   "id": "dats-ours-taktikal-brigade",
-   "note": "not in the Taktikal Brigade pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "ded-sneaky-taktikal-brigade",
-   "values": {
-    "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One friendly unengaged KOMMANDOS/STORMBOYZ unit.\n\n**EFFECT:** Place your unit in strategic reserves."
-   },
-   "note": "Taktikal Brigade pack"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "remove",
-   "id": "fight-proppa-taktikal-brigade",
+   "id": "dubious-restraint-taktikal-brigade",
    "note": "not in the Taktikal Brigade pack"
   },
   {
    "faction": "orks",
    "file": "stratagems",
    "op": "remove",
-   "id": "krunchin-descent-taktikal-brigade",
+   "id": "mind-mostly-on-the-mission-taktikal-brigade",
    "note": "not in the Taktikal Brigade pack"
   },
   {
    "faction": "orks",
    "file": "stratagems",
-   "op": "set",
-   "id": "taktikal-retreat-taktikal-brigade",
-   "values": {
-    "text": "**WHEN:** Your Movement phase, when a friendly KOMMANDOS/ STORMBOYZ unit is selected to make a fall-back move.\n\n**TARGET:** That KOMMANDOS/STORMBOYZ unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to declare a charge."
-   },
-   "note": "Taktikal Brigade pack"
+   "op": "remove",
+   "id": "while-their-backs-are-turned-taktikal-brigade",
+   "note": "not in the Taktikal Brigade pack"
   },
   {
    "faction": "raven-guard",
@@ -8462,24 +8277,6 @@
   },
   {
    "faction": "aeldari",
-   "file": "units",
-   "op": "set",
-   "id": "the-visarch",
-   "values": {
-    "ability_ids": [
-     "way-of-the-blade",
-     "yvraines-champion",
-     "support",
-     "servant-of-the-whispering-god",
-     "battle-focus",
-     "disparate-paths",
-     "fights-first"
-    ]
-   },
-   "note": "aeldari pack rules update"
-  },
-  {
-   "faction": "aeldari",
    "file": "abilities",
    "op": "set",
    "id": "inevitable-death",
@@ -8488,22 +8285,6 @@
    },
    "note": "aeldari pack rules update",
    "key": "ability_id"
-  },
-  {
-   "faction": "aeldari",
-   "file": "units",
-   "op": "set",
-   "id": "warlock",
-   "values": {
-    "ability_ids": [
-     "support",
-     "runes-of-fortune-psychic",
-     "psychic-communion-psychic",
-     "support",
-     "battle-focus"
-    ]
-   },
-   "note": "aeldari pack rules update"
   },
   {
    "faction": "aeldari",
@@ -8860,7 +8641,7 @@
    "faction": "dark-angels",
    "file": "abilities",
    "op": "set",
-   "id": "mounted-strategist",
+   "id": "mounted-strategist-company-of-hunters",
    "values": {
     "description": "RAVENWING model only. You can re-roll Advance and Charge rolls made for the bearer’s unit."
    },
@@ -8913,7 +8694,7 @@
    "faction": "dark-angels",
    "file": "abilities",
    "op": "set",
-   "id": "shroud-of-heroes",
+   "id": "shroud-of-heroes-unforgiven-task-force",
    "values": {
     "description": "ADEPTUS ASTARTES model only. (Once per battle, per army) When this model is destroyed, at the end of the phase, roll one D6:\n- \u0007On a 2+, set up this model on the battlefield, unengaged and as close as possible to where it was destroyed. This model is not part of an attached unit and its unit has a starting strength of 1. This model has 3 wounds remaining, or its full wounds remaining if this model was battle-shocked when it was destroyed."
    },
@@ -9096,7 +8877,7 @@
    "faction": "emperors-children",
    "file": "abilities",
    "op": "set",
-   "id": "empyric-suffusion",
+   "id": "empyric-suffusion-carnival-of-excess",
    "values": {
     "description": "EMPEROR’S CHILDREN model only. When you target this unit with the Heroic Intervention stratagem, that use is -1 CP."
    },
@@ -9117,7 +8898,7 @@
    "faction": "emperors-children",
    "file": "abilities",
    "op": "set",
-   "id": "faultless-opportunist",
+   "id": "faultless-opportunist-peerless-bladesmen",
    "values": {
     "description": "You can target this unit with the Heroic Intervention stratagem, regardless of any other uses of that stratagem this phase. If you do:\n- \u0007That use is -1 CP.\n- \u0007That use does not prevent any uses of that stratagem on other units this phase."
    },
@@ -9451,7 +9232,7 @@
    "faction": "orks",
    "file": "abilities",
    "op": "set",
-   "id": "da-boss-is-watchin",
+   "id": "displays-of-savagery-bully-boyz",
    "values": {
     "description": "At the start of your Command phase, in a turn in which you have not called a Waaagh!, if you have one or more WARBOSS models on the battlefield (or embarked within a TRANSPORT that is on the battlefield), you can call a Waaagh! for a second time this battle. When doing so, that second Waaagh! only counts as having been called for WARBOSS, NOBZ and MEGANOBZ units from your army."
    },
@@ -9470,19 +9251,9 @@
   },
   {
    "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "dat-ones-even-bigga-da-big-hunt",
-   "values": {
-    "text": "**WHEN:** Your Charge phase.\n\n**TARGET:** One BEAST SNAGGA unit from your army.\n\n**EFFECT:** Until the end of the phase, your unit is eligible to charge in a turn in which it Advanced or Fell Back. In addition, you can re-roll charge rolls made for your unit. If you do, your unit must end that charge move engaged with your Prey."
-   },
-   "note": "orks pack rules update"
-  },
-  {
-   "faction": "orks",
    "file": "abilities",
    "op": "set",
-   "id": "da-hunt-is-on",
+   "id": "da-hunt-is-on-da-big-hunt",
    "values": {
     "description": "Change first paragraph to: ‘At the start of your Command phase, select one MONSTER, VEHICLE or CHARACTER unit from your opponent’s army. Until the start of your next"
    },
@@ -9491,29 +9262,9 @@
   },
   {
    "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "tide-of-muscle-green-tide",
-   "values": {
-    "text": "**WHEN:** Your Charge phase.\n\n**TARGET:** One Boyz unit from your army that has not declared a charge this phase.\n\n**EFFECT:** Until the end of the phase, each time your unit declares a charge, add 1 to the Charge roll and, if your unit contains 10 or more models, you can re-roll the Charge roll."
-   },
-   "note": "orks pack rules update"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "go-get-em-green-tide",
-   "values": {
-    "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit that targeted a friendly unengaged BOYZ unit this phase has shot. \n\n**TARGET:** That BOYZ unit. \n\n**EFFECT:** Your unit can make a surge move of up to D6\"."
-   },
-   "note": "orks pack rules update"
-  },
-  {
-   "faction": "orks",
    "file": "abilities",
    "op": "set",
-   "id": "mob-mentality",
+   "id": "mob-mentality-green-tide",
    "values": {
     "description": "Each time an attack targets a BOYZ unit from your army, models in that unit have a 6+ invulnerable save against that attack. Each time an attack targets a BOYZ unit from your army that contains 10 or more models, models in that unit have a 5+ invulnerable save against that attack.'"
    },
@@ -9524,22 +9275,12 @@
    "faction": "orks",
    "file": "abilities",
    "op": "set",
-   "id": "adrenaline-junkies",
+   "id": "adrenaline-junkies-kult-of-speed",
    "values": {
     "description": "SPEED FREEKS units from your army are eligible to shoot and declare a charge in a turn in which they Advanced or Fell Back."
    },
    "note": "orks pack rules update",
    "key": "ability_id"
-  },
-  {
-   "faction": "orks",
-   "file": "stratagems",
-   "op": "set",
-   "id": "careen-war-horde",
-   "values": {
-    "text": "**WHEN:** Any phase, just after an Orks Vehicle unit from your army with the Deadly Demise ability is destroyed.\n\n**TARGET:** That destroyed ORKS VEHICLE unit, if you roll a 6 for its Deadly Demise ability. You can use this Stratagem on that unit even though it was just destroyed.\n\n**EFFECT:** Your unit can make a Normal or Fall Back move before its Deadly Demise ability is resolved, and before any embarked units perform an emergency disembark move. When making this move, your unit can move over enemy units (excluding MONSTERS and VEHICLES) as if they were not there."
-   },
-   "note": "orks pack rules update"
   },
   {
    "faction": "orks",
@@ -9699,7 +9440,7 @@
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
-   "id": "stoic-defender",
+   "id": "stoic-defender-anvil-siege-force",
    "values": {
     "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, models in that unit have the Feel No Pain 6+ ability while they are within an objective you control and, while that unit is Battle-shocked, halve the Objective Control characteristic of models in that unit instead of changing it to ‘-’."
    },
@@ -9710,7 +9451,7 @@
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
-   "id": "forged-in-battle",
+   "id": "forged-in-battle-firestorm-assault-force",
    "values": {
     "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, once per turn, after making a Hit roll or a saving throw for a model in that unit, you can change the result of that roll to an unmodified 6.’"
    },
@@ -9731,7 +9472,7 @@
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
-   "id": "fire-discipline",
+   "id": "fire-discipline-gladius-task-force",
    "values": {
     "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, ranged weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability. In addition, while the bearer’s unit is under the effects of the Devastator Doctrine, you can re-roll Advance rolls made for that unit."
    },
@@ -9763,7 +9504,7 @@
    "faction": "adeptus-astartes",
    "file": "abilities",
    "op": "set",
-   "id": "target-augury-web",
+   "id": "target-augury-web-ironstorm-spearhead",
    "values": {
     "description": "Delete ‘Aura’ from this Enhancement and change to: ‘TECHMARINE model only. In your Command phase, select one ADEPTUS ASTARTES VEHICLE model within 6\" of the bearer. Until the start of your next Command phase, weapons equipped by that VEHICLE model have the [LETHAL HITS] ability.’"
    },
@@ -9925,7 +9666,7 @@
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
-   "id": "through-unity-devastation",
+   "id": "through-unity-devastation-kauyon",
    "values": {
     "description": "T’AU EMPIRE model only (excluding KROOT SHAPER models). While the bearer is leading a unit, each time that unit is an Observer unit, until the end of the phase, ranged weapons equipped by models in a Guided unit have the [LETHAL HITS] ability while targeting their Spotted unit."
    },
@@ -9957,7 +9698,7 @@
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
-   "id": "coordinated-exploitation",
+   "id": "coordinated-exploitation-montka",
    "values": {
     "description": "T’AU EMPIRE model only (excluding KROOT SHAPER models). While the bearer is leading a unit, each time that unit is an Observer unit, until the end of the phase, ranged weapons equipped by models in a Guided unit have the [SUSTAINED HITS 1] ability while targeting their Spotted unit."
    },
@@ -9968,7 +9709,7 @@
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
-   "id": "strike-swiftly",
+   "id": "strike-swiftly-montka",
    "values": {
     "description": "In the Resolve Pre-battle Abilities step, you can select up to two friendly T’AU EMPIRE units within 6\" of this model that do not have the Scouts ability. Until the end of the battle, all models in the selected units have the Scouts 6\" ability."
    },
@@ -9990,7 +9731,7 @@
    "faction": "tau-empire",
    "file": "abilities",
    "op": "set",
-   "id": "puretide-engram-neurochip",
+   "id": "puretide-engram-neurochip-retaliation-cadre",
    "values": {
     "description": "T’AU EMPIRE BATTLESUIT model only. Each time you target the bearer’s unit with a Stratagem, roll one D6: on a 4+, you gain 1CP."
    },
@@ -10106,7 +9847,18 @@
    "faction": "thousand-sons",
    "file": "abilities",
    "op": "set",
-   "id": "umbralefic-crystal",
+   "id": "incandaeum-grand-coven",
+   "values": {
+    "description": "EXALTED SORCERER model only. Once per battle, when selecting a Ritual for the bearer to attempt, you can select Doombolt, even if a model from your army have already attempted to manifest that Ritual this phase."
+   },
+   "note": "thousand-sons pack rules update",
+   "key": "ability_id"
+  },
+  {
+   "faction": "thousand-sons",
+   "file": "abilities",
+   "op": "set",
+   "id": "umbralefic-crystal-grand-coven",
    "values": {
     "description": "THOUSAND SONS model only. (Once per battle, per army) In your Command phase, if this unit is unengaged, you can use this ability. If you do:\n- Place this unit in strategic reserves.\n- This unit has Deep Strike until the start of your next Shooting phase.\n- \u0007This unit must make an ingress move in your next Movement phase (including in your first turn)."
    },
@@ -10308,7 +10060,7 @@
    "faction": "world-eaters",
    "file": "abilities",
    "op": "set",
-   "id": "butcher-lord",
+   "id": "butcher-lord-cult-of-blood",
    "values": {
     "description": "WORLD EATERS INFANTRY model only. The bearer has the Infiltrators ability."
    },
@@ -10329,7 +10081,7 @@
    "faction": "world-eaters",
    "file": "abilities",
    "op": "set",
-   "id": "disciple-of-khorne",
+   "id": "disciple-of-khorne-khorne-daemonkin",
    "values": {
     "description": "LORD ON JUGGERNAUT model only. The bearer has the Deep Strike ability, and it has the BLOOD LEGIONS Faction keyword instead of the WORLD EATERS Faction keyword."
    },
@@ -10435,76 +10187,6 @@
    "note": "world-eaters pack rules update"
   },
   {
-   "faction": "adeptus-custodes",
-   "file": "units",
-   "op": "set",
-   "id": "allarus-custodians",
-   "values": {
-    "points": [
-     {
-      "models": 2,
-      "cost": 110
-     },
-     {
-      "models": 2,
-      "cost": 140
-     },
-     {
-      "models": 3,
-      "cost": 165
-     },
-     {
-      "models": 3,
-      "cost": 195
-     },
-     {
-      "models": 5,
-      "cost": 280
-     },
-     {
-      "models": 5,
-      "cost": 310
-     },
-     {
-      "models": 6,
-      "cost": 340
-     },
-     {
-      "models": 6,
-      "cost": 370
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "adeptus-custodes",
-   "file": "units",
-   "op": "set",
-   "id": "vertus-praetors",
-   "values": {
-    "points": [
-     {
-      "models": 2,
-      "cost": 145
-     },
-     {
-      "models": 2,
-      "cost": 170
-     },
-     {
-      "models": 3,
-      "cost": 215
-     },
-     {
-      "models": 3,
-      "cost": 240
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
    "faction": "adeptus-mechanicus",
    "file": "units",
    "op": "set",
@@ -10538,52 +10220,6 @@
     ]
    },
    "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "adeptus-mechanicus",
-   "file": "units",
-   "op": "set",
-   "id": "servitor-battleclade",
-   "values": {
-    "points": [
-     {
-      "models": 9,
-      "cost": 65
-     },
-     {
-      "models": 9,
-      "cost": 75
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "aeldari",
-   "file": "leader-attachments",
-   "op": "add",
-   "id": "clanblade",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "dragon-knights"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "aeldari",
-   "file": "leader-attachments",
-   "op": "set",
-   "id": "farseer",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "guardian-defenders",
-     "storm-guardians"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
   },
   {
    "faction": "aeldari",
@@ -10626,36 +10262,6 @@
      {
       "models": 12,
       "cost": 205
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "astra-militarum",
-   "file": "units",
-   "op": "set",
-   "id": "catachan-heavy-weapons-squad",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 70
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "astra-militarum",
-   "file": "units",
-   "op": "set",
-   "id": "krieg-heavy-weapons-squad",
-   "values": {
-    "points": [
-     {
-      "models": 4,
-      "cost": 70
      }
     ]
    },
@@ -10742,6 +10348,49 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "sword-brethren-squad",
+   "values": {
+    "points": [
+     {
+      "models": 4,
+      "cost": 100
+     },
+     {
+      "models": 4,
+      "cost": 120
+     },
+     {
+      "models": 5,
+      "cost": 125
+     },
+     {
+      "models": 5,
+      "cost": 145
+     },
+     {
+      "models": 9,
+      "cost": 225
+     },
+     {
+      "models": 9,
+      "cost": 245
+     },
+     {
+      "models": 10,
+      "cost": 250
+     },
+     {
+      "models": 10,
+      "cost": 270
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "black-templars",
@@ -10934,25 +10583,6 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "land-raider-redeemer",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 260
-     },
-     {
-      "models": 1,
-      "cost": 280
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -11417,21 +11047,6 @@
    "note": "Munitorum Field Manual, LEADER section"
   },
   {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "librarian-in-terminator-armour",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 85
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
    "faction": "blood-angels",
    "file": "leader-attachments",
    "op": "add",
@@ -11516,271 +11131,17 @@
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "chaos-daemons",
-   "file": "units",
-   "op": "set",
-   "id": "beasts-of-nurgle",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 80
-     },
-     {
-      "models": 2,
-      "cost": 150
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-daemons",
-   "file": "units",
-   "op": "set",
-   "id": "bloodcrushers",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 95
-     },
-     {
-      "models": 3,
-      "cost": 135
-     },
-     {
-      "models": 6,
-      "cost": 200
-     },
-     {
-      "models": 6,
-      "cost": 240
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-daemons",
-   "file": "units",
-   "op": "set",
-   "id": "contorted-epitome",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 115
-     },
-     {
-      "models": 1,
-      "cost": 125
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-daemons",
-   "file": "units",
-   "op": "set",
-   "id": "daemonettes",
-   "values": {
-    "points": [
-     {
-      "models": 10,
-      "cost": 100
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-daemons",
-   "file": "units",
-   "op": "set",
-   "id": "fiends",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 90
-     },
-     {
-      "models": 3,
-      "cost": 105
-     },
-     {
-      "models": 6,
-      "cost": 190
-     },
-     {
-      "models": 6,
-      "cost": 205
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-daemons",
-   "file": "units",
-   "op": "set",
-   "id": "hellflayers",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 80
-     },
-     {
-      "models": 2,
-      "cost": 160
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-daemons",
-   "file": "units",
-   "op": "set",
-   "id": "keeper-of-secrets",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 265
-     },
-     {
-      "models": 1,
-      "cost": 280
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-daemons",
-   "file": "units",
-   "op": "set",
-   "id": "poxbringer",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 60
-     },
-     {
-      "models": 1,
-      "cost": 70
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-daemons",
-   "file": "units",
-   "op": "set",
-   "id": "rendmaster-on-blood-throne",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 160
-     },
-     {
-      "models": 1,
-      "cost": 180
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-daemons",
-   "file": "units",
-   "op": "set",
-   "id": "seekers",
-   "values": {
-    "points": [
-     {
-      "models": 5,
-      "cost": 85
-     },
-     {
-      "models": 10,
-      "cost": 155
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-daemons",
-   "file": "units",
-   "op": "set",
-   "id": "skull-cannon",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 100
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-knights",
-   "file": "units",
-   "op": "set",
-   "id": "war-dog-moirax",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 150
-     },
-     {
-      "models": 1,
-      "cost": 160
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "chaos-space-marines",
-   "file": "units",
-   "op": "set",
-   "id": "defiler",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 300
-     },
-     {
-      "models": 1,
-      "cost": 350
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
    "faction": "chaos-space-marines",
    "file": "leader-attachments",
    "op": "set",
-   "id": "huron-blackheart",
+   "id": "master-of-possession",
    "key": "leader_id",
    "values": {
     "eligible_bodyguard_ids": [
-     "chaos-terminator-squad",
      "chosen",
      "legionaries",
+     "nemesis-claw",
+     "possessed",
      "red-corsairs-raiders"
     ]
    },
@@ -11899,48 +11260,6 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "dark-angels",
-   "file": "units",
-   "op": "set",
-   "id": "ravenwing-black-knights",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 75
-     },
-     {
-      "models": 3,
-      "cost": 85
-     },
-     {
-      "models": 6,
-      "cost": 150
-     },
-     {
-      "models": 6,
-      "cost": 160
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "dark-angels",
-   "file": "units",
-   "op": "set",
-   "id": "sammael",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 105
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
   },
   {
    "faction": "dark-angels",
@@ -12226,54 +11545,6 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "dark-angels",
-   "file": "enhancements",
-   "op": "set",
-   "id": "recon-hunter-company-of-hunters",
-   "values": {
-    "cost": "30"
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "death-guard",
-   "file": "units",
-   "op": "set",
-   "id": "defiler",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 300
-     },
-     {
-      "models": 1,
-      "cost": 350
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "death-guard",
-   "file": "units",
-   "op": "set",
-   "id": "beasts-of-nurgle",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 70
-     },
-     {
-      "models": 2,
-      "cost": 140
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
   },
   {
    "faction": "deathwatch",
@@ -12630,136 +11901,6 @@
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "emperors-children",
-   "file": "units",
-   "op": "set",
-   "id": "defiler",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 300
-     },
-     {
-      "models": 1,
-      "cost": 350
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "emperors-children",
-   "file": "units",
-   "op": "set",
-   "id": "lord-exultant",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 90
-     },
-     {
-      "models": 1,
-      "cost": 100
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "emperors-children",
-   "file": "units",
-   "op": "set",
-   "id": "daemonettes",
-   "values": {
-    "points": [
-     {
-      "models": 10,
-      "cost": 100
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "emperors-children",
-   "file": "units",
-   "op": "set",
-   "id": "fiends",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 90
-     },
-     {
-      "models": 6,
-      "cost": 190
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "emperors-children",
-   "file": "units",
-   "op": "set",
-   "id": "keeper-of-secrets",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 265
-     },
-     {
-      "models": 1,
-      "cost": 280
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "emperors-children",
-   "file": "units",
-   "op": "set",
-   "id": "seekers",
-   "values": {
-    "points": [
-     {
-      "models": 5,
-      "cost": 85
-     },
-     {
-      "models": 10,
-      "cost": 155
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "emperors-children",
-   "file": "enhancements",
-   "op": "set",
-   "id": "possessed-blade-carnival-of-excess",
-   "values": {
-    "cost": "35"
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "emperors-children",
-   "file": "enhancements",
-   "op": "set",
-   "id": "warp-walker-carnival-of-excess",
-   "values": {
-    "cost": "35"
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
    "faction": "genestealer-cults",
    "file": "units",
    "op": "set",
@@ -12789,68 +11930,6 @@
      {
       "models": 9,
       "cost": 170
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "grey-knights",
-   "file": "units",
-   "op": "set",
-   "id": "land-raider-redeemer",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 260
-     },
-     {
-      "models": 1,
-      "cost": 280
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "grey-knights",
-   "file": "units",
-   "op": "set",
-   "id": "paladin-squad",
-   "values": {
-    "points": [
-     {
-      "models": 4,
-      "cost": 170
-     },
-     {
-      "models": 4,
-      "cost": 210
-     },
-     {
-      "models": 5,
-      "cost": 215
-     },
-     {
-      "models": 5,
-      "cost": 255
-     },
-     {
-      "models": 8,
-      "cost": 360
-     },
-     {
-      "models": 8,
-      "cost": 400
-     },
-     {
-      "models": 10,
-      "cost": 460
-     },
-     {
-      "models": 10,
-      "cost": 500
      }
     ]
    },
@@ -12895,130 +11974,6 @@
    "note": "Munitorum Field Manual"
   },
   {
-   "faction": "leagues-of-votann",
-   "file": "units",
-   "op": "set",
-   "id": "brokhyr-thunderkyn",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 80
-     },
-     {
-      "models": 3,
-      "cost": 90
-     },
-     {
-      "models": 6,
-      "cost": 170
-     },
-     {
-      "models": 6,
-      "cost": 180
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "leagues-of-votann",
-   "file": "units",
-   "op": "set",
-   "id": "ironkin-steeljacks-with-heavy-volkanite-disintegrators",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 80
-     },
-     {
-      "models": 3,
-      "cost": 90
-     },
-     {
-      "models": 6,
-      "cost": 170
-     },
-     {
-      "models": 6,
-      "cost": 180
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "leagues-of-votann",
-   "file": "units",
-   "op": "set",
-   "id": "kapricus-defenders",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 70
-     },
-     {
-      "models": 1,
-      "cost": 80
-     },
-     {
-      "models": 2,
-      "cost": 140
-     },
-     {
-      "models": 2,
-      "cost": 150
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "necrons",
-   "file": "units",
-   "op": "set",
-   "id": "lokhust-destroyers",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 40
-     },
-     {
-      "models": 1,
-      "cost": 70
-     },
-     {
-      "models": 2,
-      "cost": 55
-     },
-     {
-      "models": 2,
-      "cost": 85
-     },
-     {
-      "models": 3,
-      "cost": 80
-     },
-     {
-      "models": 3,
-      "cost": 110
-     },
-     {
-      "models": 6,
-      "cost": 175
-     },
-     {
-      "models": 6,
-      "cost": 205
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
    "faction": "necrons",
    "file": "units",
    "op": "set",
@@ -13048,101 +12003,6 @@
      {
       "models": 3,
       "cost": 175
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "necrons",
-   "file": "units",
-   "op": "set",
-   "id": "lokhust-lord",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 80
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "necrons",
-   "file": "units",
-   "op": "set",
-   "id": "necron-warriors",
-   "values": {
-    "points": [
-     {
-      "models": 10,
-      "cost": 85
-     },
-     {
-      "models": 20,
-      "cost": 190
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "necrons",
-   "file": "units",
-   "op": "set",
-   "id": "ophydian-destroyers",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 80
-     },
-     {
-      "models": 3,
-      "cost": 90
-     },
-     {
-      "models": 6,
-      "cost": 150
-     },
-     {
-      "models": 6,
-      "cost": 160
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "necrons",
-   "file": "units",
-   "op": "set",
-   "id": "plasmancer",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 60
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "necrons",
-   "file": "units",
-   "op": "set",
-   "id": "skorpekh-lord",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 95
-     },
-     {
-      "models": 1,
-      "cost": 105
      }
     ]
    },
@@ -13195,6 +12055,23 @@
    "faction": "adeptus-astartes",
    "file": "leader-attachments",
    "op": "set",
+   "id": "captain-in-terminator-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "deathwatch-terminator-squad",
+     "deathwing-knights",
+     "deathwing-terminator-squad",
+     "terminator-assault-squad",
+     "terminator-squad"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "leader-attachments",
+   "op": "set",
    "id": "chaplain",
    "key": "leader_id",
    "values": {
@@ -13214,6 +12091,23 @@
      "sternguard-veteran-squad",
      "sword-brethren-squad",
      "tactical-squad"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "leader-attachments",
+   "op": "set",
+   "id": "chaplain-in-terminator-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "deathwatch-terminator-squad",
+     "deathwing-knights",
+     "deathwing-terminator-squad",
+     "terminator-assault-squad",
+     "terminator-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -13262,6 +12156,23 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "tactical-squad"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "leader-attachments",
+   "op": "set",
+   "id": "librarian-in-terminator-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "deathwatch-terminator-squad",
+     "deathwing-knights",
+     "deathwing-terminator-squad",
+     "terminator-assault-squad",
+     "terminator-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -13330,21 +12241,6 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "vulkan-hestan",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 95
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -13495,33 +12391,6 @@
   },
   {
    "faction": "space-wolves",
-   "file": "units",
-   "op": "set",
-   "id": "thunderwolf-cavalry",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 100
-     },
-     {
-      "models": 3,
-      "cost": 130
-     },
-     {
-      "models": 6,
-      "cost": 200
-     },
-     {
-      "models": 6,
-      "cost": 230
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "space-wolves",
    "file": "leader-attachments",
    "op": "add",
    "id": "ulrik-the-slayer",
@@ -13549,33 +12418,6 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "space-wolves",
-   "file": "units",
-   "op": "set",
-   "id": "wolf-guard-terminators",
-   "values": {
-    "points": [
-     {
-      "models": 5,
-      "cost": 155
-     },
-     {
-      "models": 5,
-      "cost": 195
-     },
-     {
-      "models": 10,
-      "cost": 310
-     },
-     {
-      "models": 10,
-      "cost": 350
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
   },
   {
    "faction": "space-wolves",
@@ -13883,195 +12725,6 @@
    "note": "Munitorum Field Manual, LEADER section"
   },
   {
-   "faction": "tau-empire",
-   "file": "units",
-   "op": "set",
-   "id": "crisis-starscythe-battlesuits",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 100
-     },
-     {
-      "models": 3,
-      "cost": 110
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "tau-empire",
-   "file": "units",
-   "op": "set",
-   "id": "the-twin-lance",
-   "values": {
-    "points": [
-     {
-      "models": 2,
-      "cost": 230
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "tau-empire",
-   "file": "units",
-   "op": "set",
-   "id": "tiger-shark",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 395
-     },
-     {
-      "models": 1,
-      "cost": 445
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "tau-empire",
-   "file": "enhancements",
-   "op": "set",
-   "id": "strike-swiftly-montka",
-   "values": {
-    "cost": "45"
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "thousand-sons",
-   "file": "units",
-   "op": "set",
-   "id": "defiler",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 300
-     },
-     {
-      "models": 1,
-      "cost": 350
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "thousand-sons",
-   "file": "units",
-   "op": "set",
-   "id": "exalted-sorcerer",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 95
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "thousand-sons",
-   "file": "units",
-   "op": "set",
-   "id": "infernal-master",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 100
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "thousand-sons",
-   "file": "units",
-   "op": "set",
-   "id": "sorcerer",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 95
-     },
-     {
-      "models": 1,
-      "cost": 105
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "thousand-sons",
-   "file": "units",
-   "op": "set",
-   "id": "sorcerer-in-terminator-armour",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 100
-     },
-     {
-      "models": 1,
-      "cost": 110
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "thousand-sons",
-   "file": "enhancements",
-   "op": "set",
-   "id": "umbralefic-crystal-grand-coven",
-   "values": {
-    "cost": "30"
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "tyranids",
-   "file": "units",
-   "op": "set",
-   "id": "tyrant-guard",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 80
-     },
-     {
-      "models": 6,
-      "cost": 170
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "tyranids",
-   "file": "enhancements",
-   "op": "set",
-   "id": "synaptoprescience-upgrade-talons-of-the-norn-queen",
-   "values": {
-    "cost": "30"
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
    "faction": "adepta-sororitas",
    "file": "units",
    "op": "set",
@@ -14324,13 +12977,6 @@
       "SV": "3+",
       "LD": "7+"
      }
-    ],
-    "keywords": [
-     "Infantry",
-     "Grenades",
-     "Imperium",
-     "Celestian",
-     "Celestian Insidiants"
     ]
    },
    "note": "adepta-sororitas pack, codex datasheet"
@@ -14662,12 +13308,16 @@
    "values": {
     "profiles": [
      {
+      "name": "Dragon Knight",
       "M": "10\"",
       "T": "5",
-      "SV": "4+",
       "W": "4",
-      "LD": "7+",
-      "OC": "2"
+      "Sv": 4,
+      "invuln_sv": null,
+      "Ld": 7,
+      "OC": "2",
+      "SV": "4+",
+      "LD": "7+"
      }
     ],
     "keywords": [
@@ -14688,10 +13338,10 @@
       "range": "Melee",
       "stats": {
        "A": 3,
-       "WS": 3,
        "S": 5,
        "AP": 5,
-       "D": 1
+       "D": 1,
+       "WS": 3
       },
       "keywords": [
        {
@@ -14767,16 +13417,23 @@
       "range": 24,
       "stats": {
        "A": 3,
-       "BS": 3,
        "S": 4,
        "AP": 4,
-       "D": 3
+       "D": 3,
+       "BS": 3
       },
       "keywords": [
        {
         "keyword_id": "anti",
         "parameters": {
-         "target_keyword": "monster/vehicle",
+         "target_keyword": "Monster",
+         "threshold": 3
+        }
+       },
+       {
+        "keyword_id": "anti",
+        "parameters": {
+         "target_keyword": "Vehicle",
          "threshold": 3
         }
        },
@@ -14801,10 +13458,10 @@
       "range": 18,
       "stats": {
        "A": 2,
-       "BS": 3,
        "S": 4,
        "AP": 4,
-       "D": 1
+       "D": 1,
+       "BS": 3
       },
       "keywords": [
        {
@@ -14831,19 +13488,12 @@
       "range": "Melee",
       "stats": {
        "A": 3,
-       "WS": 3,
        "S": 3,
        "AP": 3,
-       "D": 2
+       "D": 2,
+       "WS": 3
       },
       "keywords": [
-       {
-        "keyword_id": "anti",
-        "parameters": {
-         "target_keyword": "non‑monster/vehicle",
-         "threshold": 2
-        }
-       },
        {
         "keyword_id": "psychic"
        }
@@ -14891,10 +13541,10 @@
       "range": "Melee",
       "stats": {
        "A": 5,
-       "WS": 2,
        "S": 4,
        "AP": 4,
-       "D": 2
+       "D": 2,
+       "WS": 2
       },
       "keywords": [
        {
@@ -15531,13 +14181,6 @@
       "SV": "3+",
       "LD": "6+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Aircraft",
-     "Aeldari",
-     "Phoenix"
     ]
    },
    "note": "aeldari pack, legends datasheet"
@@ -15561,14 +14204,6 @@
       "SV": "3+",
       "LD": "6+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Titanic",
-     "Transport",
-     "Aeldari",
-     "Vampire Raider"
     ]
    },
    "note": "aeldari pack, legends datasheet"
@@ -15618,14 +14253,6 @@
       "SV": "3+",
       "LD": "6+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Aircraft",
-     "Titanic",
-     "Aeldari",
-     "Vampire Hunter"
     ]
    },
    "note": "aeldari pack, legends datasheet"
@@ -15725,12 +14352,6 @@
       "SV": "3+",
       "LD": "6+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Aeldari",
-     "Firestorm"
     ]
    },
    "note": "aeldari pack, legends datasheet"
@@ -15826,13 +14447,6 @@
       "SV": "2+",
       "LD": "6+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Titanic",
-     "Fly",
-     "Aeldari",
-     "Cobra"
     ]
    },
    "note": "aeldari pack, legends datasheet"
@@ -15856,12 +14470,6 @@
       "SV": "3+",
       "LD": "6+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Aeldari",
-     "Hornet"
     ]
    },
    "note": "aeldari pack, legends datasheet"
@@ -15885,12 +14493,6 @@
       "SV": "3+",
       "LD": "6+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Aeldari",
-     "Lynx"
     ]
    },
    "note": "aeldari pack, legends datasheet"
@@ -15944,13 +14546,6 @@
       "SV": "2+",
       "LD": "6+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Titanic",
-     "Fly",
-     "Aeldari",
-     "Scorpion"
     ]
    },
    "note": "aeldari pack, legends datasheet"
@@ -16030,12 +14625,6 @@
       "SV": "3+",
       "LD": "6+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Aeldari",
-     "Warp Hunter"
     ]
    },
    "note": "aeldari pack, legends datasheet"
@@ -16593,13 +15182,6 @@
       "SV": "2+",
       "LD": "7+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Imperium",
-     "Transport",
-     "Valkyrie Sky Talon"
     ]
    },
    "note": "astra-militarum pack, legends datasheet"
@@ -16656,13 +15238,6 @@
       "SV": "3+",
       "LD": "7+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Imperium",
-     "Transport",
-     "Aquila Lander"
     ]
    },
    "note": "astra-militarum pack, legends datasheet"
@@ -17111,13 +15686,6 @@
       "SV": "3+",
       "LD": "7+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Imperium",
-     "Transport",
-     "Arvus Lighter"
     ]
    },
    "note": "astra-militarum pack, legends datasheet"
@@ -17141,13 +15709,6 @@
       "SV": "2+",
       "LD": "7+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Imperium",
-     "Transport",
-     "Vendetta Gunship"
     ]
    },
    "note": "astra-militarum pack, legends datasheet"
@@ -17627,14 +16188,6 @@
       "SV": "2+",
       "LD": "7+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Titanic",
-     "Fly",
-     "Aircraft",
-     "Imperium",
-     "Marauder Bomber"
     ]
    },
    "note": "astra-militarum pack, legends datasheet"
@@ -17658,14 +16211,6 @@
       "SV": "2+",
       "LD": "7+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Titanic",
-     "Fly",
-     "Aircraft",
-     "Imperium",
-     "Marauder Destroyer"
     ]
    },
    "note": "astra-militarum pack, legends datasheet"
@@ -17873,13 +16418,6 @@
       "SV": "3+",
       "LD": "7+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Aircraft",
-     "Imperium",
-     "Voss-pattern Lightning"
     ]
    },
    "note": "astra-militarum pack, legends datasheet"
@@ -17903,12 +16441,6 @@
       "SV": "2+",
       "LD": "7+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Imperium",
-     "Vulture Gunship"
     ]
    },
    "note": "astra-militarum pack, legends datasheet"
@@ -18106,6 +16638,15 @@
       "SV": "2+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Character",
+     "Epic Hero",
+     "Chaos",
+     "Chaos Undivided",
+     "Terminator",
+     "Kravek Morne"
     ]
    },
    "note": "chaos-space-marines pack, codex datasheet"
@@ -18278,6 +16819,14 @@
       "SV": "3+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Character",
+     "Epic Hero",
+     "Chaos",
+     "Chaos Undivided",
+     "Huron Blackheart"
     ]
    },
    "note": "chaos-space-marines pack, codex datasheet"
@@ -18705,6 +17254,14 @@
       "SV": "5+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Chaos",
+     "Damned",
+     "Grenades",
+     "Character",
+     "Renegade Enforcer"
     ]
    },
    "note": "chaos-space-marines pack, legends datasheet"
@@ -18956,6 +17513,14 @@
       "SV": "5+",
       "LD": "7+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Character",
+     "Psyker",
+     "Chaos",
+     "Damned",
+     "Rogue Psyker"
     ]
    },
    "note": "chaos-space-marines pack, legends datasheet"
@@ -19552,29 +18117,6 @@
    "faction": "death-guard",
    "file": "weapons",
    "op": "set",
-   "id": "astartes-chainsword-sorcerer-on-palanquin-of-nurgle",
-   "values": {
-    "profiles": [
-     {
-      "name": "Astartes chainsword",
-      "range": "Melee",
-      "stats": {
-       "A": 7,
-       "WS": 2,
-       "S": 4,
-       "AP": -1,
-       "D": 1
-      },
-      "keywords": []
-     }
-    ]
-   },
-   "note": "death-guard pack datasheet"
-  },
-  {
-   "faction": "death-guard",
-   "file": "weapons",
-   "op": "set",
    "id": "plague-fist-death-guard-sorcerer-in-terminator-armour",
    "values": {
     "profiles": [
@@ -19770,13 +18312,6 @@
       "SV": "4+",
       "LD": "7+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Fly",
-     "Aircraft",
-     "Aeldari",
-     "Raven Strike Fighter"
     ]
    },
    "note": "drukhari pack, legends datasheet"
@@ -19800,13 +18335,6 @@
       "SV": "4+",
       "LD": "7+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Kabal",
-     "Fly",
-     "Aeldari",
-     "Reaper"
     ]
    },
    "note": "drukhari pack, legends datasheet"
@@ -19870,29 +18398,6 @@
     ]
    },
    "note": "drukhari pack, legends datasheet"
-  },
-  {
-   "faction": "drukhari",
-   "file": "weapons",
-   "op": "set",
-   "id": "dire-scythe-blades",
-   "values": {
-    "profiles": [
-     {
-      "name": "Dire Scythe Blades",
-      "range": "Melee",
-      "stats": {
-       "A": 9,
-       "WS": 4,
-       "S": 8,
-       "AP": -1,
-       "D": 2
-      },
-      "keywords": []
-     }
-    ]
-   },
-   "note": "drukhari pack datasheet"
   },
   {
    "faction": "drukhari",
@@ -20466,12 +18971,6 @@
       "SV": "3+",
       "LD": "7+"
      }
-    ],
-    "keywords": [
-     "Vehicle",
-     "Aircraft",
-     "Fly",
-     "Night Shroud"
     ]
    },
    "note": "necrons pack, legends datasheet"
@@ -20748,33 +19247,6 @@
   },
   {
    "faction": "orks",
-   "file": "weapons",
-   "op": "set",
-   "id": "slugga-boss-snikrot",
-   "values": {
-    "profiles": [
-     {
-      "name": "Slugga",
-      "range": 12,
-      "stats": {
-       "A": 1,
-       "S": 4,
-       "AP": 0,
-       "D": 1,
-       "BS": 5
-      },
-      "keywords": [
-       {
-        "keyword_id": "pistol"
-       }
-      ]
-     }
-    ]
-   },
-   "note": "orks pack datasheet"
-  },
-  {
-   "faction": "orks",
    "file": "units",
    "op": "set",
    "id": "bannernob",
@@ -20787,42 +19259,12 @@
   },
   {
    "faction": "orks",
-   "file": "weapons",
-   "op": "set",
-   "id": "shoota-beastboss",
-   "values": {
-    "profiles": [
-     {
-      "name": "Shoota",
-      "range": 18,
-      "stats": {
-       "A": 2,
-       "S": 4,
-       "AP": 0,
-       "D": 1,
-       "BS": 5
-      },
-      "keywords": [
-       {
-        "keyword_id": "rapid-fire",
-        "parameters": {
-         "value": 1
-        }
-       }
-      ]
-     }
-    ]
-   },
-   "note": "orks pack datasheet"
-  },
-  {
-   "faction": "orks",
    "file": "units",
    "op": "set",
-   "id": "wartrakk",
+   "id": "big-mek-dakkarig",
    "values": {
     "keywords": [
-     "MOUNTED; SPEED FREEKS; WARTRAKK"
+     "VEHICLE; WALKER; BIG MEK; DAKKARIG"
     ]
    },
    "note": "orks pack, codex datasheet"
@@ -20831,14 +19273,14 @@
    "faction": "orks",
    "file": "weapons",
    "op": "set",
-   "id": "rokkit-launcha-big-mek-on-warbike",
+   "id": "rokkit-launcha-hordeboss",
    "values": {
     "profiles": [
      {
       "name": "Rokkit launcha",
       "range": 24,
       "stats": {
-       "A": "D3+3",
+       "A": "6",
        "BS": 5,
        "S": 10,
        "AP": -2,
@@ -20853,18 +19295,6 @@
     ]
    },
    "note": "orks pack datasheet"
-  },
-  {
-   "faction": "orks",
-   "file": "units",
-   "op": "set",
-   "id": "big-mek-dakkarig",
-   "values": {
-    "keywords": [
-     "VEHICLE; WALKER; BIG MEK; DAKKARIG"
-    ]
-   },
-   "note": "orks pack, codex datasheet"
   },
   {
    "faction": "orks",
@@ -20897,13 +19327,13 @@
    "values": {
     "profiles": [
      {
-      "name": "Breaka Boyz",
+      "name": "Breaka Boy",
       "M": "6\"",
       "T": "5",
       "W": "2",
-      "Sv": "4+",
+      "Sv": 4,
       "invuln_sv": null,
-      "Ld": "7+",
+      "Ld": 7,
       "OC": "1",
       "SV": "4+",
       "LD": "7+"
@@ -20919,23 +19349,55 @@
   },
   {
    "faction": "orks",
+   "file": "weapons",
+   "op": "set",
+   "id": "rokkit-pistol-breaka-boyz",
+   "values": {
+    "profiles": [
+     {
+      "name": "Rokkit pistol",
+      "range": 12,
+      "stats": {
+       "A": 1,
+       "BS": 5,
+       "S": 9,
+       "AP": -2,
+       "D": 3
+      },
+      "keywords": [
+       {
+        "keyword_id": "close-quarters"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "orks pack datasheet"
+  },
+  {
+   "faction": "orks",
    "file": "units",
    "op": "set",
    "id": "tankbustas",
    "values": {
     "profiles": [
      {
-      "name": "Tankbusta",
+      "name": "Boss Nob",
       "M": "6\"",
       "T": "5",
       "W": "2",
-      "Sv": "4+",
+      "Sv": 4,
       "invuln_sv": null,
-      "Ld": "7+",
+      "Ld": 7,
       "OC": "1",
       "SV": "4+",
       "LD": "7+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Grenades",
+     "Tankbustas"
     ]
    },
    "note": "orks pack, codex datasheet"
@@ -20944,7 +19406,7 @@
    "faction": "orks",
    "file": "weapons",
    "op": "set",
-   "id": "choppa-kaptin-badrukk",
+   "id": "choppa-hordeboss",
    "values": {
     "profiles": [
      {
@@ -20967,7 +19429,7 @@
    "faction": "orks",
    "file": "weapons",
    "op": "set",
-   "id": "close-combat-weapon-hordeboss",
+   "id": "close-combat-weapon-da-red-gobbos-a-bomb-inable-snowman",
    "values": {
     "profiles": [
      {
@@ -21012,76 +19474,49 @@
   {
    "faction": "orks",
    "file": "units",
-   "op": "set",
+   "op": "add",
    "id": "kannonwagon",
    "values": {
+    "name": "Kannonwagon",
+    "faction_id": "orks",
+    "keywords": [
+     "Vehicle",
+     "Transport",
+     "Kannonwagon"
+    ],
+    "faction_keywords": [
+     "Orks"
+    ],
     "profiles": [
      {
       "name": "Kannonwagon",
       "M": "12\"",
       "T": "10",
-      "W": "16",
-      "Sv": "4+",
-      "invuln_sv": "6+",
-      "Ld": "7+",
-      "OC": "4",
       "SV": "4+",
-      "LD": "7+"
+      "W": "16",
+      "LD": "7+",
+      "OC": "4"
      }
-    ]
+    ],
+    "is_legend": true,
+    "sources": [
+     "legends"
+    ],
+    "game_version": {
+     "edition": "11th",
+     "dataslate": "faction-pack-2026-08"
+    }
    },
    "note": "orks pack, legends datasheet"
   },
   {
    "faction": "orks",
-   "file": "weapons",
-   "op": "set",
-   "id": "big-shoota-warboss-in-mega-armour",
-   "values": {
-    "profiles": [
-     {
-      "name": "Big shoota",
-      "range": 36,
-      "stats": {
-       "A": 3,
-       "S": 5,
-       "AP": 0,
-       "D": 1,
-       "BS": 5
-      },
-      "keywords": [
-       {
-        "keyword_id": "rapid-fire",
-        "parameters": {
-         "value": 2
-        }
-       }
-      ]
-     }
-    ]
-   },
-   "note": "orks pack datasheet"
-  },
-  {
-   "faction": "orks",
    "file": "units",
-   "op": "set",
+   "op": "add",
    "id": "da-red-gobbo",
    "values": {
-    "profiles": [
-     {
-      "name": "Da Red Gobbo",
-      "M": "6\"",
-      "T": "2",
-      "W": "3",
-      "Sv": "5+",
-      "invuln_sv": null,
-      "Ld": "7+",
-      "OC": "1",
-      "SV": "5+",
-      "LD": "7+"
-     }
-    ],
+    "name": "Da Red Gobbo",
+    "faction_id": "orks",
     "keywords": [
      "Infantry",
      "Character",
@@ -21089,36 +19524,31 @@
      "Epic Hero",
      "Grots",
      "Da Red Gobbo"
-    ]
-   },
-   "note": "orks pack, legends datasheet"
-  },
-  {
-   "faction": "orks",
-   "file": "weapons",
-   "op": "set",
-   "id": "kustom-grot-blasta",
-   "values": {
+    ],
+    "faction_keywords": [
+     "Orks"
+    ],
     "profiles": [
      {
-      "name": "Kustom grot blasta",
-      "range": 12,
-      "stats": {
-       "A": "D3",
-       "BS": 4,
-       "S": 4,
-       "AP": 0,
-       "D": 1
-      },
-      "keywords": [
-       {
-        "keyword_id": "pistol"
-       }
-      ]
+      "name": "Da Red Gobbo",
+      "M": "6\"",
+      "T": "2",
+      "SV": "5+",
+      "W": "3",
+      "LD": "7+",
+      "OC": "1"
      }
-    ]
+    ],
+    "is_legend": true,
+    "sources": [
+     "legends"
+    ],
+    "game_version": {
+     "edition": "11th",
+     "dataslate": "faction-pack-2026-08"
+    }
    },
-   "note": "orks pack datasheet"
+   "note": "orks pack, legends datasheet"
   },
   {
    "faction": "orks",
@@ -21176,7 +19606,7 @@
    "faction": "orks",
    "file": "weapons",
    "op": "set",
-   "id": "power-klaw-big-mek-on-warbike",
+   "id": "power-klaw-hordeboss",
    "values": {
     "profiles": [
      {
@@ -21197,56 +19627,78 @@
   },
   {
    "faction": "orks",
-   "file": "units",
-   "op": "set",
-   "id": "skorchas",
-   "values": {
-    "profiles": [
-     {
-      "name": "Skorchas",
-      "M": "12\"",
-      "T": "6",
-      "W": "6",
-      "Sv": "4+",
-      "invuln_sv": "6+",
-      "Ld": "7+",
-      "OC": "2",
-      "SV": "4+",
-      "LD": "7+"
-     }
-    ]
-   },
-   "note": "orks pack, legends datasheet"
-  },
-  {
-   "faction": "orks",
    "file": "weapons",
    "op": "set",
-   "id": "skorcha",
+   "id": "urty-syringe-painboy",
    "values": {
     "profiles": [
      {
-      "name": "Skorcha",
-      "range": 12,
+      "name": "’Urty syringe",
+      "range": "Melee",
       "stats": {
-       "A": "D6",
-       "S": 5,
-       "AP": -1,
-       "D": 1,
-       "BS": "N/A"
+       "A": 1,
+       "WS": 3,
+       "S": 2,
+       "AP": 0,
+       "D": "1"
       },
       "keywords": [
        {
-        "keyword_id": "ignores-cover"
+        "keyword_id": "anti",
+        "parameters": {
+         "target_keyword": "infantry",
+         "threshold": 4
+        }
        },
        {
-        "keyword_id": "torrent"
+        "keyword_id": "devastating-wounds-infantry"
+       },
+       {
+        "keyword_id": "extra-attacks"
        }
       ]
      }
     ]
    },
    "note": "orks pack datasheet"
+  },
+  {
+   "faction": "orks",
+   "file": "units",
+   "op": "add",
+   "id": "skorchas",
+   "values": {
+    "name": "Skorchas",
+    "faction_id": "orks",
+    "keywords": [
+     "Mounted",
+     "Speed Freeks",
+     "Skorchas"
+    ],
+    "faction_keywords": [
+     "Orks"
+    ],
+    "profiles": [
+     {
+      "name": "Skorchas",
+      "M": "12\"",
+      "T": "6",
+      "SV": "4+",
+      "W": "6",
+      "LD": "7+",
+      "OC": "2"
+     }
+    ],
+    "is_legend": true,
+    "sources": [
+     "legends"
+    ],
+    "game_version": {
+     "edition": "11th",
+     "dataslate": "faction-pack-2026-08"
+    }
+   },
+   "note": "orks pack, legends datasheet"
   },
   {
    "faction": "orks",
@@ -21256,58 +19708,46 @@
    "values": {
     "profiles": [
      {
+      "name": "Warbuggy",
       "M": "12\"",
       "T": "6",
-      "SV": "4+",
       "W": "6",
-      "LD": "7+",
-      "OC": "2"
+      "Sv": 4,
+      "invuln_sv": null,
+      "Ld": 7,
+      "OC": "2",
+      "SV": "4+",
+      "LD": "7+"
      }
+    ],
+    "keywords": [
+     "Mounted",
+     "Speed Freeks",
+     "Warbuggies"
     ]
    },
    "note": "orks pack, legends datasheet"
   },
   {
    "faction": "orks",
-   "file": "weapons",
-   "op": "set",
-   "id": "twin-big-shoota-grot-mega-tank",
-   "values": {
-    "profiles": [
-     {
-      "name": "Twin big shoota",
-      "range": 18,
-      "stats": {
-       "A": 3,
-       "BS": 5,
-       "S": 5,
-       "AP": 0,
-       "D": 1
-      },
-      "keywords": [
-       {
-        "keyword_id": "rapid-fire",
-        "parameters": {
-         "value": 2
-        }
-       },
-       {
-        "keyword_id": "twin-linked"
-       }
-      ]
-     }
-    ]
-   },
-   "note": "orks pack datasheet"
-  },
-  {
-   "faction": "orks",
    "file": "units",
-   "op": "set",
+   "op": "add",
    "id": "big-gunz",
    "values": {
+    "name": "Big Gunz",
+    "faction_id": "orks",
+    "keywords": [
+     "Vehicle",
+     "Artillery",
+     "Grots",
+     "Big Gunz"
+    ],
+    "faction_keywords": [
+     "Orks"
+    ],
     "profiles": [
      {
+      "name": "Big Gunz",
       "M": "3\"",
       "T": "4",
       "SV": "5+",
@@ -21315,7 +19755,15 @@
       "LD": "8+",
       "OC": "1"
      }
-    ]
+    ],
+    "is_legend": true,
+    "sources": [
+     "legends"
+    ],
+    "game_version": {
+     "edition": "11th",
+     "dataslate": "faction-pack-2026-08"
+    }
    },
    "note": "orks pack, legends datasheet"
   },
@@ -21352,7 +19800,7 @@
    "faction": "orks",
    "file": "weapons",
    "op": "set",
-   "id": "kustom-mega-blasta-grot-tanks",
+   "id": "kustom-mega-blasta-big-mek",
    "values": {
     "profiles": [
      {
@@ -21378,203 +19826,200 @@
   {
    "faction": "orks",
    "file": "units",
-   "op": "set",
+   "op": "add",
    "id": "kill-krusha",
    "values": {
+    "name": "Kill Krusha",
+    "faction_id": "orks",
+    "keywords": [
+     "Vehicle",
+     "Titanic",
+     "Transport",
+     "Kill Krusha"
+    ],
+    "faction_keywords": [
+     "Orks"
+    ],
     "profiles": [
      {
       "name": "Kill Krusha",
       "M": "10\"",
       "T": "12",
-      "W": "22",
-      "Sv": "3+",
-      "invuln_sv": "6+",
-      "Ld": "7+",
-      "OC": "8",
       "SV": "3+",
-      "LD": "7+"
+      "W": "22",
+      "LD": "7+",
+      "OC": "8"
      }
-    ]
+    ],
+    "is_legend": true,
+    "sources": [
+     "legends"
+    ],
+    "game_version": {
+     "edition": "11th",
+     "dataslate": "faction-pack-2026-08"
+    }
    },
    "note": "orks pack, legends datasheet"
   },
   {
    "faction": "orks",
    "file": "units",
-   "op": "set",
+   "op": "add",
    "id": "deff-rolla-battle-fortress",
    "values": {
+    "name": "Deff Rolla Battle Fortress",
+    "faction_id": "orks",
+    "keywords": [
+     "Vehicle",
+     "Titanic",
+     "Transport",
+     "Deff Rolla Battle Fortress"
+    ],
+    "faction_keywords": [
+     "Orks"
+    ],
     "profiles": [
      {
       "name": "Deff Rolla Battle Fortress",
       "M": "10\"",
       "T": "12",
-      "W": "22",
-      "Sv": "3+",
-      "invuln_sv": "6+",
-      "Ld": "7+",
-      "OC": "8",
       "SV": "3+",
-      "LD": "7+"
+      "W": "22",
+      "LD": "7+",
+      "OC": "8"
      }
-    ]
+    ],
+    "is_legend": true,
+    "sources": [
+     "legends"
+    ],
+    "game_version": {
+     "edition": "11th",
+     "dataslate": "faction-pack-2026-08"
+    }
    },
    "note": "orks pack, legends datasheet"
   },
   {
    "faction": "orks",
-   "file": "weapons",
-   "op": "set",
-   "id": "lobba-big-gunz",
-   "values": {
-    "profiles": [
-     {
-      "name": "Lobba",
-      "range": 48,
-      "stats": {
-       "A": "D6",
-       "BS": 5,
-       "S": 5,
-       "AP": 0,
-       "D": 1
-      },
-      "keywords": [
-       {
-        "keyword_id": "blast"
-       },
-       {
-        "keyword_id": "heavy"
-       },
-       {
-        "keyword_id": "indirect-fire"
-       }
-      ]
-     }
-    ]
-   },
-   "note": "orks pack datasheet"
-  },
-  {
-   "faction": "orks",
-   "file": "weapons",
-   "op": "set",
-   "id": "zzap-gun-big-gunz",
-   "values": {
-    "profiles": [
-     {
-      "name": "Zzap gun",
-      "range": 36,
-      "stats": {
-       "A": 1,
-       "BS": 5,
-       "S": "2D6",
-       "AP": -3,
-       "D": 3
-      },
-      "keywords": [
-       {
-        "keyword_id": "devastating-wounds"
-       },
-       {
-        "keyword_id": "heavy"
-       }
-      ]
-     }
-    ]
-   },
-   "note": "orks pack datasheet"
-  },
-  {
-   "faction": "orks",
    "file": "units",
-   "op": "set",
+   "op": "add",
    "id": "chinork-warkopta",
    "values": {
+    "name": "Chinork Warkopta",
+    "faction_id": "orks",
+    "keywords": [
+     "Vehicle",
+     "Fly",
+     "Transport",
+     "Speed Freeks",
+     "Chinork Warkopta"
+    ],
+    "faction_keywords": [
+     "Orks"
+    ],
     "profiles": [
      {
       "name": "Chinork Warkopta",
       "M": "14\"",
       "T": "8",
-      "W": "10",
-      "Sv": "4+",
-      "invuln_sv": "6+",
-      "Ld": "7+",
-      "OC": "2",
       "SV": "4+",
-      "LD": "7+"
+      "W": "10",
+      "LD": "7+",
+      "OC": "2"
      }
-    ]
+    ],
+    "is_legend": true,
+    "sources": [
+     "legends"
+    ],
+    "game_version": {
+     "edition": "11th",
+     "dataslate": "faction-pack-2026-08"
+    }
    },
    "note": "orks pack, legends datasheet"
   },
   {
    "faction": "orks",
    "file": "units",
-   "op": "set",
+   "op": "add",
    "id": "fighta-bommer",
    "values": {
+    "name": "Fighta-Bommer",
+    "faction_id": "orks",
+    "keywords": [
+     "Vehicle",
+     "Fly",
+     "Aircraft",
+     "Speed Freeks",
+     "Fighta-Bommer"
+    ],
+    "faction_keywords": [
+     "Orks"
+    ],
     "profiles": [
      {
       "name": "Fighta-Bommer",
       "M": "20+\"",
       "T": "9",
-      "W": "12",
-      "Sv": "3+",
-      "invuln_sv": "6+",
-      "Ld": "7+",
-      "OC": "0",
       "SV": "3+",
-      "LD": "7+"
+      "W": "12",
+      "LD": "7+",
+      "OC": "0"
      }
-    ]
+    ],
+    "is_legend": true,
+    "sources": [
+     "legends"
+    ],
+    "game_version": {
+     "edition": "11th",
+     "dataslate": "faction-pack-2026-08"
+    }
    },
    "note": "orks pack, legends datasheet"
   },
   {
    "faction": "orks",
    "file": "units",
-   "op": "set",
+   "op": "add",
    "id": "attack-fighta",
    "values": {
+    "name": "Attack Fighta",
+    "faction_id": "orks",
+    "keywords": [
+     "Vehicle",
+     "Fly",
+     "Aircraft",
+     "Speed Freeks",
+     "Attack Fighta"
+    ],
+    "faction_keywords": [
+     "Orks"
+    ],
     "profiles": [
      {
       "name": "Attack Fighta",
       "M": "20+\"",
       "T": "9",
-      "W": "10",
-      "Sv": "3+",
-      "invuln_sv": "6+",
-      "Ld": "7+",
-      "OC": "0",
       "SV": "3+",
-      "LD": "7+"
+      "W": "10",
+      "LD": "7+",
+      "OC": "0"
      }
-    ]
+    ],
+    "is_legend": true,
+    "sources": [
+     "legends"
+    ],
+    "game_version": {
+     "edition": "11th",
+     "dataslate": "faction-pack-2026-08"
+    }
    },
    "note": "orks pack, legends datasheet"
-  },
-  {
-   "faction": "orks",
-   "file": "weapons",
-   "op": "set",
-   "id": "armoured-hull-grot-mega-tank",
-   "values": {
-    "profiles": [
-     {
-      "name": "Armoured hull",
-      "range": "Melee",
-      "stats": {
-       "A": 3,
-       "WS": 4,
-       "S": 6,
-       "AP": 0,
-       "D": 1
-      },
-      "keywords": []
-     }
-    ]
-   },
-   "note": "orks pack datasheet"
   },
   {
    "faction": "orks",
@@ -21595,6 +20040,10 @@
       "SV": "3+",
       "LD": "7+"
      }
+    ],
+    "keywords": [
+     "Vehicle",
+     "Lifta Wagon"
     ]
    },
    "note": "orks pack, legends datasheet"
@@ -21603,20 +20052,30 @@
    "faction": "orks",
    "file": "weapons",
    "op": "set",
-   "id": "tracks-and-wheels-kill-krusha",
+   "id": "wreckin-ball-lifta-wagon",
    "values": {
     "profiles": [
      {
-      "name": "Tracks and wheels",
+      "name": "Wreckin' ball",
       "range": "Melee",
       "stats": {
-       "A": 6,
+       "A": 1,
        "WS": 4,
-       "S": 8,
+       "S": 10,
        "AP": 0,
-       "D": 1
+       "D": "D6"
       },
-      "keywords": []
+      "keywords": [
+       {
+        "keyword_id": "cleave",
+        "parameters": {
+         "value": 2
+        }
+       },
+       {
+        "keyword_id": "extra-attacks"
+       }
+      ]
      }
     ]
    },
@@ -21657,11 +20116,74 @@
    "faction": "orks",
    "file": "weapons",
    "op": "set",
-   "id": "big-choppa-hordeboss",
+   "id": "kustom-mega-slugga-mek",
    "values": {
     "profiles": [
      {
-      "name": "Big choppa",
+      "name": "Kustom Mega-slugga",
+      "range": 12,
+      "stats": {
+       "A": "D3",
+       "BS": 5,
+       "S": 8,
+       "AP": -2,
+       "D": "D6"
+      },
+      "keywords": [
+       {
+        "keyword_id": "close-quarters"
+       },
+       {
+        "keyword_id": "hazardous"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "orks pack datasheet"
+  },
+  {
+   "faction": "orks",
+   "file": "weapons",
+   "op": "set",
+   "id": "shokk-attack-gun-big-mek-with-shokk-attack-gun",
+   "values": {
+    "profiles": [
+     {
+      "name": "Shokk Attack Gun",
+      "range": 60,
+      "stats": {
+       "A": "D6+1",
+       "BS": 5,
+       "S": 9,
+       "AP": -4,
+       "D": "D6"
+      },
+      "keywords": [
+       {
+        "keyword_id": "blast",
+        "parameters": {
+         "value": 1
+        }
+       },
+       {
+        "keyword_id": "heavy"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "orks pack datasheet"
+  },
+  {
+   "faction": "orks",
+   "file": "weapons",
+   "op": "set",
+   "id": "big-choppa-bigboss",
+   "values": {
+    "profiles": [
+     {
+      "name": "Big Choppa",
       "range": "Melee",
       "stats": {
        "A": 4,
@@ -21670,7 +20192,11 @@
        "AP": -1,
        "D": 2
       },
-      "keywords": []
+      "keywords": [
+       {
+        "keyword_id": "precision"
+       }
+      ]
      }
     ]
    },
@@ -21738,6 +20264,33 @@
   },
   {
    "faction": "orks",
+   "file": "weapons",
+   "op": "set",
+   "id": "slugga-hordeboss",
+   "values": {
+    "profiles": [
+     {
+      "name": "Slugga",
+      "range": 12,
+      "stats": {
+       "A": 1,
+       "BS": 4,
+       "S": 4,
+       "AP": 0,
+       "D": 1
+      },
+      "keywords": [
+       {
+        "keyword_id": "close-quarters"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "orks pack datasheet"
+  },
+  {
+   "faction": "orks",
    "file": "units",
    "op": "set",
    "id": "grot-tanks",
@@ -21751,9 +20304,47 @@
       "LD": "8+",
       "OC": "2"
      }
+    ],
+    "keywords": [
+     "Vehicle",
+     "Grots",
+     "Grot Tanks"
     ]
    },
    "note": "orks pack, legends datasheet"
+  },
+  {
+   "faction": "orks",
+   "file": "weapons",
+   "op": "set",
+   "id": "skorcha-stompa",
+   "values": {
+    "profiles": [
+     {
+      "name": "Skorcha",
+      "range": 12,
+      "stats": {
+       "A": "D6",
+       "BS": "N/A",
+       "S": 5,
+       "AP": -1,
+       "D": 1
+      },
+      "keywords": [
+       {
+        "keyword_id": "blast",
+        "parameters": {
+         "value": 2
+        }
+       },
+       {
+        "keyword_id": "torrent"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "orks pack datasheet"
   },
   {
    "faction": "orks",
@@ -21774,30 +20365,83 @@
       "SV": "3+",
       "LD": "8+"
      }
+    ],
+    "keywords": [
+     "Vehicle",
+     "Grots",
+     "Grot Mega-Tank"
     ]
    },
    "note": "orks pack, legends datasheet"
   },
   {
    "faction": "orks",
-   "file": "units",
+   "file": "weapons",
    "op": "set",
+   "id": "twin-big-shoota",
+   "values": {
+    "profiles": [
+     {
+      "name": "Twin big shoota",
+      "range": 36,
+      "stats": {
+       "A": 3,
+       "S": 5,
+       "AP": 0,
+       "D": 1,
+       "BS": 4
+      },
+      "keywords": [
+       {
+        "keyword_id": "rapid-fire",
+        "parameters": {
+         "value": 2
+        }
+       },
+       {
+        "keyword_id": "twin-linked"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "orks pack datasheet"
+  },
+  {
+   "faction": "orks",
+   "file": "units",
+   "op": "add",
    "id": "squiggoth",
    "values": {
+    "name": "Squiggoth",
+    "faction_id": "orks",
+    "keywords": [
+     "Monster",
+     "Transport",
+     "Squiggoth"
+    ],
+    "faction_keywords": [
+     "Orks"
+    ],
     "profiles": [
      {
       "name": "Squiggoth",
       "M": "10\"",
       "T": "10",
-      "W": "18",
-      "Sv": "3+",
-      "invuln_sv": null,
-      "Ld": "7+",
-      "OC": "5",
       "SV": "3+",
-      "LD": "7+"
+      "W": "18",
+      "LD": "7+",
+      "OC": "5"
      }
-    ]
+    ],
+    "is_legend": true,
+    "sources": [
+     "legends"
+    ],
+    "game_version": {
+     "edition": "11th",
+     "dataslate": "faction-pack-2026-08"
+    }
    },
    "note": "orks pack, legends datasheet"
   },
@@ -21820,6 +20464,12 @@
       "SV": "3+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Vehicle",
+     "Titanic",
+     "Transport",
+     "Kill Tank"
     ]
    },
    "note": "orks pack, legends datasheet"
@@ -21827,96 +20477,76 @@
   {
    "faction": "orks",
    "file": "units",
-   "op": "set",
+   "op": "add",
    "id": "mega-dread",
    "values": {
+    "name": "Mega Dread",
+    "faction_id": "orks",
+    "keywords": [
+     "Vehicle",
+     "Walker",
+     "Mega Dread"
+    ],
+    "faction_keywords": [
+     "Orks"
+    ],
     "profiles": [
      {
       "name": "Mega Dread",
       "M": "8\"",
       "T": "10",
-      "W": "16",
-      "Sv": "2+",
-      "invuln_sv": "6+",
-      "Ld": "7+",
-      "OC": "5",
       "SV": "2+",
-      "LD": "7+"
+      "W": "16",
+      "LD": "7+",
+      "OC": "5"
      }
-    ]
+    ],
+    "is_legend": true,
+    "sources": [
+     "legends"
+    ],
+    "game_version": {
+     "edition": "11th",
+     "dataslate": "faction-pack-2026-08"
+    }
    },
    "note": "orks pack, legends datasheet"
   },
   {
    "faction": "orks",
-   "file": "weapons",
-   "op": "set",
-   "id": "boombits",
-   "values": {
-    "profiles": [
-     {
-      "name": "Boombits",
-      "range": 12,
-      "stats": {
-       "A": "D6",
-       "BS": "N/A",
-       "S": 5,
-       "AP": 0,
-       "D": 1
-      },
-      "keywords": [
-       {
-        "keyword_id": "torrent"
-       }
-      ]
-     }
-    ]
-   },
-   "note": "orks pack datasheet"
-  },
-  {
-   "faction": "orks",
-   "file": "weapons",
-   "op": "set",
-   "id": "killkannon-battlewagon",
-   "values": {
-    "profiles": [
-     {
-      "name": "Killkannon",
-      "range": 24,
-      "stats": {
-       "A": "D6+3",
-       "BS": 5,
-       "S": 9,
-       "AP": -2,
-       "D": 2
-      },
-      "keywords": []
-     }
-    ]
-   },
-   "note": "orks pack datasheet"
-  },
-  {
-   "faction": "orks",
    "file": "units",
-   "op": "set",
+   "op": "add",
    "id": "meka-dread",
    "values": {
+    "name": "Meka-Dread",
+    "faction_id": "orks",
+    "keywords": [
+     "Vehicle",
+     "Walker",
+     "Meka-Dread"
+    ],
+    "faction_keywords": [
+     "Orks"
+    ],
     "profiles": [
      {
       "name": "Meka-Dread",
       "M": "8\"",
       "T": "10",
-      "W": "16",
-      "Sv": "2+",
-      "invuln_sv": "6+",
-      "Ld": "7+",
-      "OC": "5",
       "SV": "2+",
-      "LD": "7+"
+      "W": "16",
+      "LD": "7+",
+      "OC": "5"
      }
-    ]
+    ],
+    "is_legend": true,
+    "sources": [
+     "legends"
+    ],
+    "game_version": {
+     "edition": "11th",
+     "dataslate": "faction-pack-2026-08"
+    }
    },
    "note": "orks pack, legends datasheet"
   },
@@ -21939,6 +20569,11 @@
       "SV": "4+",
       "LD": "7+"
      }
+    ],
+    "keywords": [
+     "Vehicle",
+     "Transport",
+     "Big Trakk"
     ]
    },
    "note": "orks pack, legends datasheet"
@@ -21981,13 +20616,13 @@
    "values": {
     "profiles": [
      {
-      "name": "Nobz",
+      "name": "Nob",
       "M": "12\"",
       "T": "6",
       "W": "4",
-      "Sv": "4+",
+      "Sv": 4,
       "invuln_sv": null,
-      "Ld": "7+",
+      "Ld": 7,
       "OC": "2",
       "SV": "4+",
       "LD": "7+"
@@ -22665,7 +21300,7 @@
       "T": "4",
       "W": "5",
       "Sv": "2+",
-      "invuln_sv": null,
+      "invuln_sv": "4+",
       "Ld": "6+",
       "OC": "1",
       "SV": "2+",
@@ -23220,7 +21855,7 @@
    "faction": "adeptus-astartes",
    "file": "weapons",
    "op": "set",
-   "id": "power-fist-ancient-in-terminator-armor",
+   "id": "power-fist-bike-squad",
    "values": {
     "profiles": [
      {
@@ -24231,6 +22866,13 @@
       "SV": "3+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Mounted",
+     "Character",
+     "Epic Hero",
+     "Imperium",
+     "Canis Wolfborn"
     ]
    },
    "note": "space-wolves pack, legends datasheet"
@@ -24248,12 +22890,18 @@
       "T": "4",
       "W": "2",
       "Sv": "6+",
-      "invuln_sv": null,
+      "invuln_sv": "6+",
       "Ld": "7+",
       "OC": "0",
       "SV": "6+",
       "LD": "7+"
      }
+    ],
+    "keywords": [
+     "Beast",
+     "Character",
+     "Imperium",
+     "Cyberwolf"
     ]
    },
    "note": "space-wolves pack, legends datasheet"
@@ -24294,12 +22942,21 @@
       "T": "6",
       "W": "7",
       "Sv": "3+",
-      "invuln_sv": null,
+      "invuln_sv": "4+",
       "Ld": "6+",
       "OC": "2",
       "SV": "3+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Mounted",
+     "Character",
+     "Epic Hero",
+     "Grenades",
+     "Imperium",
+     "Captain",
+     "Harald Deathwolf"
     ]
    },
    "note": "space-wolves pack, legends datasheet"
@@ -24344,7 +23001,7 @@
       "T": "4",
       "W": "2",
       "Sv": "3+",
-      "invuln_sv": null,
+      "invuln_sv": "6+*",
       "Ld": "6+",
       "OC": "1",
       "SV": "3+",
@@ -24367,12 +23024,21 @@
       "T": "4",
       "W": "4",
       "Sv": "3+",
-      "invuln_sv": null,
+      "invuln_sv": "4+",
       "Ld": "6+",
       "OC": "1",
       "SV": "3+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Character",
+     "Epic Hero",
+     "Grenades",
+     "Imperium",
+     "Captain",
+     "Krom Dragongaze"
     ]
    },
    "note": "space-wolves pack, legends datasheet"
@@ -24472,6 +23138,14 @@
       "SV": "3+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Character",
+     "Epic Hero",
+     "Grenades",
+     "Imperium",
+     "Lukas the Trickster"
     ]
    },
    "note": "space-wolves pack, legends datasheet"
@@ -24769,6 +23443,14 @@
       "SV": "3+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Character",
+     "Grenades",
+     "Imperium",
+     "Pack Leader",
+     "Wolf Guard Pack Leader"
     ]
    },
    "note": "space-wolves pack, legends datasheet"
@@ -26141,14 +24823,6 @@
       "SV": "3+",
       "LD": "8+"
      }
-    ],
-    "keywords": [
-     "Monster",
-     "Titanic",
-     "Fly",
-     "Transport",
-     "Great Devourer",
-     "Harridan"
     ]
    },
    "note": "tyranids pack, imperial-armour datasheet"
@@ -28684,12 +27358,24 @@
    "faction": "orks",
    "file": "units",
    "op": "set",
-   "id": "wartrakk",
+   "id": "burna-boyz",
    "values": {
     "base_size_mm": {
-     "shape": "oval",
-     "width": 105,
-     "length": 70
+     "shape": "round",
+     "diameter": 32
+    }
+   },
+   "note": "Warhammer Event Companion base size guide"
+  },
+  {
+   "faction": "orks",
+   "file": "units",
+   "op": "set",
+   "id": "lootas",
+   "values": {
+    "base_size_mm": {
+     "shape": "round",
+     "diameter": 32
     }
    },
    "note": "Warhammer Event Companion base size guide"

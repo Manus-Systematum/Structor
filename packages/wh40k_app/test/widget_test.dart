@@ -8,6 +8,8 @@ import 'package:wh40k_app/src/screens/turn_screen.dart';
 import 'package:wh40k_app/src/widgets/score_board.dart';
 import 'package:wh40k_core/wh40k_core.dart';
 
+import 'reference_list.dart';
+
 /// Wraps a screen so it can be pumped without the app's FutureBuilder, whose
 /// indeterminate spinner never lets `pumpAndSettle` reach a steady state.
 Widget host(Widget child) => MaterialApp(home: Scaffold(body: child));
@@ -176,9 +178,12 @@ void main() {
       // Everything below is served by assets/reference_snapshot.json, which is
       // the same path an imported or QR-scanned list takes (DESIGN.md §6.4).
       expect(army.roster.name, '2k ret');
-      expect(army.points, 2000);
+      expect(army.points, referenceListCost);
       expect(army.combatUnits, hasLength(12));
-      expect(army.validation.isLegal, isTrue,
+      // The only error is the 30 points two repriced datasheets added under
+      // the list after it was exported (see [referenceListCost]); everything
+      // the validator judges about how it is built is still clean.
+      expect(army.validation.errors.map((f) => f.code), ['points.over'],
           reason: army.validation.errors.join('\n'));
     });
   });
@@ -209,7 +214,7 @@ void main() {
     await tester.pumpWidget(host(ArmyScreen(army: army)));
 
     expect(find.text('2k ret'), findsOneWidget);
-    expect(find.text('2000'), findsOneWidget);
+    expect(find.text('$referenceListCost'), findsOneWidget);
     // Units carry their datasheet names, and an attached unit reads as the
     // character leading what it joined. This list fields the same pairing
     // twice, which is legal and shown as-is rather than disambiguated.

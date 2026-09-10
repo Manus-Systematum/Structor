@@ -185,30 +185,33 @@ void main() {
   // only the grey bars and only bare figures, so it skipped precisely the
   // units the update exists to carry — 36 of them, The Twin Lance among them,
   // which stayed at its old 220 while the published price was 230 (§3.15).
+  //
+  // **Read off a datasheet the bundle still lags on.** The Twin Lance was the
+  // case this was found on and is no longer an example of it: 40kdc caught up
+  // in the fetch of 2026-08-31 and publishes 230 itself now, so bundle and
+  // patch agree and the test proved nothing. Thirty-six price operations
+  // still change a cost, and an Assault Intercessor Squad of five is one of
+  // them.
   test('a unit whose points changed carries the new price', () async {
     TestWidgetsFlutterBinding.ensureInitialized();
     final repo = DatasetRepository();
 
     int costOf(List<SourceUnit> units) => units
-        .firstWhere((u) => u.id == 'the-twin-lance')
+        .firstWhere((u) => u.id == 'assault-intercessor-squad')
         .points
-        .single
+        .first
         .cost;
 
-    final shipped = DatasetBundle.decode(
-        (await const AssetBundleSource().fetch(
-            (await repo.manifest()).entry('tau-empire')!.file))!);
+    final shipped = DatasetBundle.decode((await const AssetBundleSource()
+        .fetch((await repo.manifest()).entry('adeptus-astartes')!.file))!);
     expect(
-      costOf(shipped
-          .file('units')
-          .map(SourceUnit.fromJson)
-          .toList()),
-      220,
+      costOf(shipped.file('units').map(SourceUnit.fromJson).toList()),
+      75,
       reason: 'the bundle is what 40kdc published',
     );
 
-    expect(costOf((await repo.faction('tau-empire')).faction.units), 230,
-        reason: 'the patch carries the August price');
+    expect(costOf((await repo.faction('adeptus-astartes')).faction.units), 80,
+        reason: 'the patch carries the published price');
   });
 
   // §3.22. Every saved army is priced and played from its **snapshot**, and
@@ -251,8 +254,16 @@ void main() {
     final repriced = patch.operations
         .where((op) => op.values.containsKey('points'))
         .length;
-    expect(repriced, greaterThan(65),
-        reason: '73 units are repriced by the August manual');
+    // **73 when the manual was fresh, 21 now.** The generator emits an
+    // operation only where the pack and the dataset disagree, and the fetch
+    // of 2026-08-31 brought 40kdc level on fifty-two of them — the patch
+    // shrinking as upstream catches up is the patch working. What a floor
+    // here still catches is the red-bar parser regressing to reading only
+    // grey ones, which took every repricing out at once. If this ever reaches
+    // zero, check which of the two happened before deleting it: the sibling
+    // test above names a datasheet the bundle still lags on.
+    expect(repriced, greaterThan(15),
+        reason: '21 units are still repriced by the August manual');
   });
 
   // §3.19. Every published name carries a hash of the bytes under it, so an

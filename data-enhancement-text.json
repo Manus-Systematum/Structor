@@ -18,16 +18,16 @@
           "text": "Once per battle, at the start of the Fight phase, this model can use this ability. If it does, until the end of the phase, add 3 to the Attacks characteristi…"
         },
         {
+          "ability_id": "divine-aspect-army-of-faith",
+          "name": "Divine Aspect",
+          "score": 0.5,
+          "text": "ADEPTA SORORITAS model only. In your Movement phase, you can select one enemy unit within 12\" of that bearer; that unit must take a Battle-shock test. If tha…"
+        },
+        {
           "ability_id": "divine-authority",
           "name": "Divine Authority",
           "score": 0.5,
           "text": "Each time a model in this unit makes an attack, re-roll a Hit roll of 1."
-        },
-        {
-          "ability_id": "divine-aspect",
-          "name": "Divine Aspect",
-          "score": 0.5,
-          "text": "ADEPTA SORORITAS model only. In your Movement phase, you can select one enemy unit within 12\" of that bearer; that unit must take a Battle-shock test. If tha…"
         }
       ]
     },
@@ -46,10 +46,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "hatreds-disciples",
-          "name": "Hatred's Disciples",
+          "ability_id": "mark-of-the-wulfen",
+          "name": "Mark of the Wulfen",
           "score": 0.0,
-          "text": "Each time this unit ends a Charge move, select one enemy unit within Engagement Range of it, then roll one D6 for each model in this unit that is within Enga…"
+          "text": "Each time the bearer's unit makes a Charge move, until the end of the turn, add 1 to the Attacks characteristic and add 2 to the Strength characteristic of m…"
         },
         {
           "ability_id": "feel-no-pain-5",
@@ -80,10 +80,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "hatreds-disciples",
-          "name": "Hatred's Disciples",
+          "ability_id": "mark-of-the-wulfen",
+          "name": "Mark of the Wulfen",
           "score": 0.0,
-          "text": "Each time this unit ends a Charge move, select one enemy unit within Engagement Range of it, then roll one D6 for each model in this unit that is within Enga…"
+          "text": "Each time the bearer's unit makes a Charge move, until the end of the turn, add 1 to the Attacks characteristic and add 2 to the Strength characteristic of m…"
         }
       ]
     },
@@ -96,10 +96,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "veteran-of-the-kataphraktoi",
-          "name": "Veteran of the Kataphraktoi",
+          "ability_id": "brotherhood-of-veterans",
+          "name": "Brotherhood of Veterans",
           "score": 0.4,
-          "text": "ADEPTUS CUSTODES INFANTRY or ADEPTUS CUSTODES MOUNTED model only. In your Command phase, select one ADEPTUS CUSTODES VEHICLE or ADEPTUS CUSTODES MOUNTED unit…"
+          "text": "At the end of the battle, you can remove one or more Battle Honours that this unit has (except for this one). For each Battle Honour removed, you can immedia…"
         },
         {
           "ability_id": "rites-of-battle",
@@ -124,10 +124,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "master-regenesist",
-          "name": "Master Regenesist",
+          "ability_id": "master-of-the-ravenwing",
+          "name": "Master of the Ravenwing",
           "score": 0.5,
-          "text": "**Haemonculus** model only. Each time the bearer uses its Fleshcraft ability, you can return up to D3+3 destroyed Bodyguard models to the bearer's unit inste…"
+          "text": "**Ravenwing** model only. This model's unit can declare a charge in a turn in which it Advanced, and you can re-roll Charge rolls made for that unit."
         },
         {
           "ability_id": "master-of-deceit",
@@ -248,10 +248,10 @@
           "text": "Ranged weapons equipped by the bearer have the [ANTI-INFANTRY 2+] and [ANTI-MONSTER 4+] abilities."
         },
         {
-          "ability_id": "aurillian-shroud",
-          "name": "Aurillian Shroud",
+          "ability_id": "tannhausers-bones",
+          "name": "Tännhauser's Bones",
           "score": 0.0,
-          "text": "Models in the bearer's unit have the Stealth ability."
+          "text": "Each time an attack is allocated to the bearer, change the Damage characteristic of that attack to 1."
         }
       ]
     },
@@ -298,10 +298,10 @@
           "text": "Ranged weapons equipped by models in the bearer’s unit have the [IGNORES COVER] ability."
         },
         {
-          "ability_id": "aurillian-shroud",
-          "name": "Aurillian Shroud",
+          "ability_id": "tannhausers-bones",
+          "name": "Tännhauser's Bones",
           "score": 0.0,
-          "text": "Models in the bearer's unit have the Stealth ability."
+          "text": "Each time an attack is allocated to the bearer, change the Damage characteristic of that attack to 1."
         },
         {
           "ability_id": "strafing-run",
@@ -360,10 +360,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "aurillian-shroud",
-          "name": "Aurillian Shroud",
+          "ability_id": "tannhausers-bones",
+          "name": "Tännhauser's Bones",
           "score": 0.0,
-          "text": "Models in the bearer's unit have the Stealth ability."
+          "text": "Each time an attack is allocated to the bearer, change the Damage characteristic of that attack to 1."
         }
       ]
     },
@@ -472,10 +472,10 @@
           "text": "Ranged weapons equipped by models in this unit have the **[ASSAULT]** ability."
         },
         {
-          "ability_id": "fulgus-magna",
-          "name": "Fulgus Magna",
+          "ability_id": "to-slay-the-warmaster",
+          "name": "To Slay the Warmaster",
           "score": 0.0,
-          "text": "Deathwing model only. Once per battle, at the end of your opponent’s turn, if the bearer’s unit is not within Engagement Range of one or more enemy units, th…"
+          "text": "Death Company Model only. Once per battle, at the start of the Fight Phase, if the bearer is within Engagement Range of one or more enemy Character units, yo…"
         }
       ]
     },
@@ -668,10 +668,10 @@
           "text": "While a unit in your Crusade army is under the effects of the First Rank Fire! Second Rank Fire! Order, if that unit Remains Stationary, its Rapid Fire weapo…"
         },
         {
-          "ability_id": "shield-of-baal",
-          "name": "Shield of Baal",
+          "ability_id": "vortex-bolt",
+          "name": "Vortex Bolt",
           "score": 0.0,
-          "text": "**Captain** model only. Once per battle, after selecting your Oath of Moment target, you can use this ability. If you do, until the start of your next Comman…"
+          "text": "Select one ranged weapon equipped by the bearer; that weapon is now a Crusade Relic. Once per battle, when the bearer shoots with that weapon, you can choose…"
         }
       ]
     },
@@ -690,16 +690,16 @@
           "text": "**RATLINGS** unit only. When this unit is **selected to shoot**, enemy units have +6\" **detection range** until this unit has shot."
         },
         {
+          "ability_id": "sharp-eyes-light-fingers-abhuman-auxiliaries",
+          "name": "Sharp Eyes, Light Fingers",
+          "score": 0.57,
+          "text": "**RATLINGS** unit only. When this unit is **selected to shoot**, enemy units have +6\" **detection range** until this unit has shot."
+        },
+        {
           "ability_id": "the-ravens-eyes",
           "name": "The Raven's Eyes",
           "score": 0.4,
           "text": "**Ravenwing** model only. The bearer's unit can ignore any or all modifiers to its Move characteristic and to Advance and Charge rolls made for it."
-        },
-        {
-          "ability_id": "eye-of-mars",
-          "name": "Eye of Mars",
-          "score": 0.4,
-          "text": "After both players have deployed their armies, select one unit from your Crusade army and redeploy it. When doing so, you can set that unit up in Strategic R…"
         }
       ]
     },
@@ -914,10 +914,10 @@
           "text": "While a friendly **War Dog** model is within 9” of this model, after that **War Dog** model has shot, you can select one enemy unit hit by one or more of tho…"
         },
         {
-          "ability_id": "consumed-by-rage",
-          "name": "Consumed By Rage",
+          "ability_id": "oath-of-glory",
+          "name": "Oath of Glory",
           "score": 0.0,
-          "text": "- Each time this unit makes a Charge move, until the end of the turn, add 1 to the Attacks characteristic of melee weapons equipped by **Death Company** mode…"
+          "text": "Each time this model's unit makes a Charge move, until the end of the turn, add 2 to the Attacks characteristics and add 1 to the Strength characteristic of …"
         },
         {
           "ability_id": "brigand",
@@ -942,10 +942,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "consumed-by-rage",
-          "name": "Consumed By Rage",
+          "ability_id": "oath-of-glory",
+          "name": "Oath of Glory",
           "score": 0.0,
-          "text": "- Each time this unit makes a Charge move, until the end of the turn, add 1 to the Attacks characteristic of melee weapons equipped by **Death Company** mode…"
+          "text": "Each time this model's unit makes a Charge move, until the end of the turn, add 2 to the Attacks characteristics and add 1 to the Strength characteristic of …"
         },
         {
           "ability_id": "brigand",
@@ -1032,10 +1032,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "cursed-circlet",
-          "name": "Cursed Circlet",
+          "ability_id": "autocratic-avarice",
+          "name": "Autocratic Avarice",
           "score": 0.0,
-          "text": "Each time an enemy unit is selected to shoot, after that unit has shot, if any models from the bearer’s unit were destroyed as a result of those attacks, the…"
+          "text": "At the start of the battle, select one objective marker in No Man's Land. While this model is within range of that objective marker, change its Objective Con…"
         }
       ]
     },
@@ -1060,10 +1060,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "cursed-circlet",
-          "name": "Cursed Circlet",
+          "ability_id": "autocratic-avarice",
+          "name": "Autocratic Avarice",
           "score": 0.0,
-          "text": "Each time an enemy unit is selected to shoot, after that unit has shot, if any models from the bearer’s unit were destroyed as a result of those attacks, the…"
+          "text": "At the start of the battle, select one objective marker in No Man's Land. While this model is within range of that objective marker, change its Objective Con…"
         }
       ]
     },
@@ -1138,10 +1138,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "inured-to-agony",
-          "name": "Inured To Agony",
+          "ability_id": "reliquary-weapon",
+          "name": "Reliquary Weapon",
           "score": 0.0,
-          "text": "- **Death Company** models in this unit have the Feel No Pain 5+ ability."
+          "text": "Select one weapon equipped by the bearer (excluding a weapon that has been replaced by an Enhancement or Crusade Relic, or upgraded with any Battle Traits). …"
         },
         {
           "ability_id": "shroud-of-disease",
@@ -1194,10 +1194,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "inured-to-agony",
-          "name": "Inured To Agony",
+          "ability_id": "reliquary-weapon",
+          "name": "Reliquary Weapon",
           "score": 0.0,
-          "text": "- **Death Company** models in this unit have the Feel No Pain 5+ ability."
+          "text": "Select one weapon equipped by the bearer (excluding a weapon that has been replaced by an Enhancement or Crusade Relic, or upgraded with any Battle Traits). …"
         },
         {
           "ability_id": "shroud-of-disease",
@@ -1278,10 +1278,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "the-chronicle-of-istrouma",
-          "name": "The Chronicle of Istrouma",
+          "ability_id": "vengeful-retribution",
+          "name": "Vengeful Retribution",
           "score": 0.0,
-          "text": "Once per battle, in your Command phase, if your Crusade force is embarked on an Oathsworn Campaign, you can change your Bonus Oathsworn Agenda for a differen…"
+          "text": "Each time a model in this unit makes an attack, add 1 to the Hit roll if this unit is below its Starting Strength, and add 1 to the Wound roll as well if thi…"
         },
         {
           "ability_id": "deep-strike",
@@ -1312,7 +1312,7 @@
           "text": "When a friendly **EMPEROR’S CHILDREN TERMINATOR** unit is set up, that unit has +1 to **charge rolls** until the end of the turn."
         },
         {
-          "ability_id": "eager-to-prove",
+          "ability_id": "eager-to-prove-slaaneshs-chosen",
           "name": "Eager to Prove",
           "score": 0.4,
           "text": "You can re-roll Charge rolls made for the bearer's unit. While the bearer's unit is your army's Favoured Champions, add 2\" to the Move characteristic of mode…"
@@ -1362,10 +1362,10 @@
           "text": "In your Shooting phase, after this model has shot, select one INFANTRY unit hit by one or more of those attacks made with its Agonising Energies. Until the s…"
         },
         {
-          "ability_id": "the-chronicle-of-istrouma",
-          "name": "The Chronicle of Istrouma",
+          "ability_id": "vengeful-retribution",
+          "name": "Vengeful Retribution",
           "score": 0.0,
-          "text": "Once per battle, in your Command phase, if your Crusade force is embarked on an Oathsworn Campaign, you can change your Bonus Oathsworn Agenda for a differen…"
+          "text": "Each time a model in this unit makes an attack, add 1 to the Hit roll if this unit is below its Starting Strength, and add 1 to the Wound roll as well if thi…"
         },
         {
           "ability_id": "deep-strike",
@@ -1390,16 +1390,16 @@
           "text": "At the end of a battle, at least twice as many enemy units were destroyed in that battle than units from your Crusade army."
         },
         {
-          "ability_id": "tactical-perfection",
+          "ability_id": "tactical-perfection-mercurial-host",
           "name": "Tactical Perfection",
           "score": 0.5,
           "text": "After both players have deployed their armies, select up to two **Emperor's Children** units from your army and redeploy them. When doing so, you can set tho…"
         },
         {
-          "ability_id": "flawless-perfection",
-          "name": "Flawless Perfection",
+          "ability_id": "tactical-perfection",
+          "name": "Tactical Perfection",
           "score": 0.5,
-          "text": "While this unit is under the effects of one or more Combat Elixirs, each time a model in this unit makes an attack, you can re-roll the Hit roll."
+          "text": "After both players have deployed their armies, select up to two **Emperor's Children** units from your army and redeploy them. When doing so, you can set tho…"
         }
       ]
     },
@@ -1474,16 +1474,16 @@
           "text": "In your Shooting phase, each time an attack is made with a **[HEAVY]** weapon, add 1 to the **hit roll** if all of the following apply to the attacking unit:"
         },
         {
-          "ability_id": "contraband-munitions",
+          "ability_id": "contraband-munitions-heroes-of-the-uprising",
           "name": "Contraband Munitions",
           "score": 0.5,
           "text": "**KELERMORPH/REDUCTUS SABOTEUR** model only. This unit’s ranged attacks have +2 **S**."
         },
         {
-          "ability_id": "exotic-munitions",
-          "name": "Exotic Munitions",
+          "ability_id": "contraband-munitions",
+          "name": "Contraband Munitions",
           "score": 0.5,
-          "text": "**Anhrathe** unit only. Ranged weapons equipped by models in this unit have the **[ANTI-MONSTER 5+]** and **[ANTI-VEHICLE 5+]** abilities."
+          "text": "**KELERMORPH/REDUCTUS SABOTEUR** model only. This unit’s ranged attacks have +2 **S**."
         }
       ]
     },
@@ -1496,22 +1496,22 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "eye-of-affliction",
-          "name": "Eye of Affliction",
+          "ability_id": "the-ravens-eyes",
+          "name": "The Raven's Eyes",
           "score": 0.5,
-          "text": "Ranged weapons equipped by model's in the bearer's unit have the [Ignores Cover] ability while targeting an Afflicted enemy unit."
+          "text": "**Ravenwing** model only. The bearer's unit can ignore any or all modifiers to its Move characteristic and to Advance and Charge rolls made for it."
+        },
+        {
+          "ability_id": "eyes-of-the-cult-xenocult-masses",
+          "name": "Eyes of the Cult",
+          "score": 0.5,
+          "text": "Models in this unit have the **Crossfire** keyword."
         },
         {
           "ability_id": "eye-of-mars",
           "name": "Eye of Mars",
           "score": 0.5,
           "text": "After both players have deployed their armies, select one unit from your Crusade army and redeploy it. When doing so, you can set that unit up in Strategic R…"
-        },
-        {
-          "ability_id": "eyes-of-the-cult",
-          "name": "Eyes of the Cult",
-          "score": 0.5,
-          "text": "Models in this unit have the **Crossfire** keyword."
         }
       ]
     },
@@ -1670,10 +1670,10 @@
           "text": "While this unit is within 3\" of one or more friendly **Leagues of Votann Vehicle** or **Ironkin Steeljacks** units, if this unit is not an attached unit, it …"
         },
         {
-          "ability_id": "unbreakable-faith",
-          "name": "Unbreakable Faith",
+          "ability_id": "exceptional-mentors",
+          "name": "Exceptional Mentors",
           "score": 0.0,
-          "text": "Each time an attack targets this unit, if this unit is Below Half-strength, subtract 1 from the Damage characteristic of that attack."
+          "text": "At the end of the battle, if this unit is not destroyed and it contains one or more Neophyte models and one or more other models (excluding **Characters**), …"
         },
         {
           "ability_id": "predictive-guidance",
@@ -1704,10 +1704,10 @@
           "text": "**Cthonian Beserks** units from your army have the Deep Strike ability."
         },
         {
-          "ability_id": "unbreakable-faith",
-          "name": "Unbreakable Faith",
+          "ability_id": "exceptional-mentors",
+          "name": "Exceptional Mentors",
           "score": 0.0,
-          "text": "Each time an attack targets this unit, if this unit is Below Half-strength, subtract 1 from the Damage characteristic of that attack."
+          "text": "At the end of the battle, if this unit is not destroyed and it contains one or more Neophyte models and one or more other models (excluding **Characters**), …"
         }
       ]
     },
@@ -2068,10 +2068,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "fated-heroes",
-          "name": "Fated Heroes",
+          "ability_id": "mark-of-the-wulfen",
+          "name": "Mark of the Wulfen",
           "score": 0.0,
-          "text": "Each time this unit is Marked for Greatness, it gains 5XP instead of 3XP."
+          "text": "Each time the bearer's unit makes a Charge move, until the end of the turn, add 1 to the Attacks characteristic and add 2 to the Strength characteristic of m…"
         }
       ]
     },
@@ -2112,10 +2112,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         },
         {
           "ability_id": "leader",
@@ -2124,10 +2124,10 @@
           "text": "This model can be attached to the following unit:"
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy (Psyker level 1)",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "This model has the **psychic abilities** listed in the Psychic Abilities section."
         }
       ]
     },
@@ -2168,10 +2168,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         },
         {
           "ability_id": "leader",
@@ -2180,10 +2180,10 @@
           "text": "This model can be attached to the following unit:"
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy (Psyker level 1)",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "This model has the **psychic abilities** listed in the Psychic Abilities section."
         }
       ]
     },
@@ -2202,16 +2202,16 @@
           "text": "In your Movement phase, when a unit embarked within this unit is selected to make a **disembark move**, that unit is **riled up** until the start of your nex…"
         },
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy (Psyker level 1)",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "This model has the **psychic abilities** listed in the Psychic Abilities section."
         }
       ]
     },
@@ -2308,10 +2308,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         },
         {
           "ability_id": "leader",
@@ -2320,10 +2320,10 @@
           "text": "This model can be attached to the following unit:"
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy (Psyker level 1)",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "This model has the **psychic abilities** listed in the Psychic Abilities section."
         }
       ]
     },
@@ -2336,10 +2336,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         },
         {
           "ability_id": "leader",
@@ -2348,10 +2348,10 @@
           "text": "This model can be attached to the following unit:"
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy (Psyker level 1)",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "This model has the **psychic abilities** listed in the Psychic Abilities section."
         }
       ]
     },
@@ -2426,16 +2426,16 @@
           "text": "**BEASTBOSS ON SQUIGOSAUR** model only. This model has +1 **T**."
         },
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
-          "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "ability_id": "it-came-from-da-drops-da-big-hunt",
+          "name": "It Came From Da Drops",
+          "score": 0.25,
+          "text": "**BEASTBOSS ON SQUIGOSAUR** model only. This model has +1 **T**."
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         }
       ]
     },
@@ -2454,16 +2454,16 @@
           "text": "While this model is within range of your **home objective*, add the **OC** of models embarked within this model to this model's **OC**."
         },
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy (Psyker level 1)",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "This model has the **psychic abilities** listed in the Psychic Abilities section."
         }
       ]
     },
@@ -2482,16 +2482,16 @@
           "text": "While this model is attached to a **MOUNTED** unit, this model:"
         },
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy (Psyker level 1)",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "This model has the **psychic abilities** listed in the Psychic Abilities section."
         }
       ]
     },
@@ -2510,16 +2510,16 @@
           "text": "You can target this unit with the Rapid Ingress Stratagem for 0CP."
         },
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy (Psyker level 1)",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "This model has the **psychic abilities** listed in the Psychic Abilities section."
         }
       ]
     },
@@ -2532,10 +2532,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         },
         {
           "ability_id": "leader",
@@ -2544,10 +2544,10 @@
           "text": "This model can be attached to the following unit:"
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy (Psyker level 1)",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "This model has the **psychic abilities** listed in the Psychic Abilities section."
         }
       ]
     },
@@ -2650,16 +2650,16 @@
           "text": "**FLASH GITZ** unit only. This unit's Snazzgun weapons have **[RAPID FIRE 1]**."
         },
         {
-          "ability_id": "dakka-dakka-dakka",
+          "ability_id": "dakka-dakka-dakka-shoota-boyz",
           "name": "Dakka! Dakka! Dakka!",
           "score": 0.4,
           "text": "Friendly **ORKS INFANTRY** units’ ranged attacks have **[ASSAULT]**."
         },
         {
-          "ability_id": "kustom-dakka",
-          "name": "Kustom Dakka",
-          "score": 0.33,
-          "text": "This unit's ranged attacks have **[IGNORES COVER]**."
+          "ability_id": "dakka-dakka-dakka",
+          "name": "Dakka! Dakka! Dakka!",
+          "score": 0.4,
+          "text": "Friendly **ORKS INFANTRY** units’ ranged attacks have **[ASSAULT]**."
         }
       ]
     },
@@ -2712,10 +2712,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         }
       ]
     },
@@ -2728,10 +2728,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         },
         {
           "ability_id": "leader",
@@ -2740,10 +2740,10 @@
           "text": "This model can be attached to the following unit:"
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy (Psyker level 1)",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "This model has the **psychic abilities** listed in the Psychic Abilities section."
         }
       ]
     },
@@ -2756,10 +2756,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         },
         {
           "ability_id": "leader",
@@ -2768,10 +2768,10 @@
           "text": "This model can be attached to the following unit:"
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy (Psyker level 1)",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "This model has the **psychic abilities** listed in the Psychic Abilities section."
         }
       ]
     },
@@ -2812,10 +2812,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "blessing-of-the-omnissiah",
-          "name": "Blessing of the Omnissiah",
+          "ability_id": "point-blank-strike",
+          "name": "Point-blank Strike",
           "score": 0.0,
-          "text": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until…"
+          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
         },
         {
           "ability_id": "leader",
@@ -2824,10 +2824,10 @@
           "text": "This model can be attached to the following unit:"
         },
         {
-          "ability_id": "deadly-demise-1",
-          "name": "Deadly Demise 1",
+          "ability_id": "waaagh-energy",
+          "name": "Waaagh! Energy (Psyker level 1)",
           "score": 0.0,
-          "text": "This ability always takes the form **Deadly Demise X**. Each time a model in this unit is **destroyed**, after the units embarked within it (if any) have mad…"
+          "text": "This model has the **psychic abilities** listed in the Psychic Abilities section."
         }
       ]
     },
@@ -2992,10 +2992,10 @@
           "text": "**Troupe Master** model only. Add 3 to the Strength and add 1 to the Attacks characteristics of the bearer’s melee weapons."
         },
         {
-          "ability_id": "autodivinator",
-          "name": "Autodivinator",
+          "ability_id": "gravitic-bolas",
+          "name": "Gravitic Bolas",
           "score": 0.0,
-          "text": "CRYPTEK model only. Each time your opponent gains a CP as a result of an ability, roll one D6: on a 2+, you also gain 1CP."
+          "text": "In your Shooting phase, after the bearer has shot, select one enemy unit hit by one or more of those attacks (excluding **Titanic** units); until the start o…"
         }
       ]
     },
@@ -3020,10 +3020,10 @@
           "text": "Each time you target this model with a Stratagem, you must spend three times that Stratagem’s stated CP cost to do so."
         },
         {
-          "ability_id": "vortimaran-incensors",
-          "name": "Vortimaran Incensors",
+          "ability_id": "red-axe",
+          "name": "Red Axe",
           "score": 0.0,
-          "text": "Models in the bearer's unit have a 5+ invulnerable save."
+          "text": "Each time this model would gain 1XP as a result of Dealers of Death, it gains 2XP instead."
         }
       ]
     },
@@ -3036,10 +3036,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "vortimaran-incensors",
-          "name": "Vortimaran Incensors",
+          "ability_id": "red-axe",
+          "name": "Red Axe",
           "score": 0.0,
-          "text": "Models in the bearer's unit have a 5+ invulnerable save."
+          "text": "Each time this model would gain 1XP as a result of Dealers of Death, it gains 2XP instead."
         },
         {
           "ability_id": "kroot-linebreakers",
@@ -3092,10 +3092,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "vortimaran-incensors",
-          "name": "Vortimaran Incensors",
+          "ability_id": "red-axe",
+          "name": "Red Axe",
           "score": 0.0,
-          "text": "Models in the bearer's unit have a 5+ invulnerable save."
+          "text": "Each time this model would gain 1XP as a result of Dealers of Death, it gains 2XP instead."
         },
         {
           "ability_id": "kroot-linebreakers",
@@ -3126,10 +3126,10 @@
           "text": "During the Declare Battle Formations step, if this model is attached a unit, until the end of the battle, that unit has the Deep Strike ability."
         },
         {
-          "ability_id": "vortimaran-incensors",
-          "name": "Vortimaran Incensors",
+          "ability_id": "red-axe",
+          "name": "Red Axe",
           "score": 0.0,
-          "text": "Models in the bearer's unit have a 5+ invulnerable save."
+          "text": "Each time this model would gain 1XP as a result of Dealers of Death, it gains 2XP instead."
         },
         {
           "ability_id": "deadly-demise-3d6",
@@ -3204,10 +3204,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "vengeful-retribution",
-          "name": "Vengeful Retribution",
+          "ability_id": "frost-weapon",
+          "name": "Frost Weapon",
           "score": 0.0,
-          "text": "Each time a model in this unit makes an attack, add 1 to the Hit roll if this unit is below its Starting Strength, and add 1 to the Wound roll as well if thi…"
+          "text": "The bearer's melee weapons have the **[LETHAL HITS]** ability, and improve the Strength and Armour Penetration characteristics of those weapons by 1."
         },
         {
           "ability_id": "devoted-to-destruction",
@@ -3238,16 +3238,16 @@
           "text": "Improve the Strength characteristic of melee weapons equipped by this model by 2. If this model destroys one or more **Monster** models and/or one or more **…"
         },
         {
+          "ability_id": "warp-syphon-warpforged-cabal",
+          "name": "Warp Syphon",
+          "score": 0.4,
+          "text": "While the bearer is within 6\" of one or more friendly **Thousand Sons Vehicle** units, each time the bearer Channels the Warp, after you roll that additional…"
+        },
+        {
           "ability_id": "warp-rifts",
           "name": "Warp Rifts",
           "score": 0.4,
           "text": "Each time a LEGIONES DAEMONICA unit from your army is set up on the battlefield using the Deep Strike ability, if it is set up wholly within your army’s Shad…"
-        },
-        {
-          "ability_id": "warp-hunters",
-          "name": "Warp Hunters",
-          "score": 0.4,
-          "text": "Each time a model in this unit makes an attack that targets the closest eligible target, you can re-roll a Wound roll of 1. If the target of that is an **Unb…"
         }
       ]
     },
@@ -3322,16 +3322,16 @@
           "text": "Friendly **ASTRA MILITARUM** units (excluding **TITANIC** units) have **Stealth**."
         },
         {
+          "ability_id": "cryptophotaic-camouflage-ambush-predators",
+          "name": "Cryptophotaic Camouflage",
+          "score": 0.5,
+          "text": "**VON RYAN’S LEAPERS** unit only. This unit has -3\" **detection range**."
+        },
+        {
           "ability_id": "adaptive-camouflage",
           "name": "Adaptive Camouflage",
           "score": 0.5,
           "text": "This unit has the Stealth ability and if this unit is in Strategic Reserves, it counts the battle round number as one higher than the current battle round nu…"
-        },
-        {
-          "ability_id": "naturalised-camoflage",
-          "name": "Naturalised Camoflage",
-          "score": 0.5,
-          "text": "**Tyranids** model only. At the start of the first battle round, select up to three friendly **Endless Multitude** units within 9\" of the bearer. Until the e…"
         }
       ]
     },
@@ -3344,10 +3344,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "staunch-hunters",
-          "name": "Staunch Hunters",
+          "ability_id": "pack-of-one",
+          "name": "Pack of One",
           "score": 0.0,
-          "text": "At the start of each player's turn, one model in this unit regains 1 lost wound."
+          "text": "- This model has the Infiltrators and Scouts 6\" abilities."
         },
         {
           "ability_id": "subterranean-tunnels",
@@ -3400,10 +3400,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "staunch-hunters",
-          "name": "Staunch Hunters",
+          "ability_id": "pack-of-one",
+          "name": "Pack of One",
           "score": 0.0,
-          "text": "At the start of each player's turn, one model in this unit regains 1 lost wound."
+          "text": "- This model has the Infiltrators and Scouts 6\" abilities."
         },
         {
           "ability_id": "subterranean-tunnels",
@@ -3580,10 +3580,10 @@
           "text": "Once per battle round, one model from your army with this ability can use it when a friendly **World Eaters** unit within 12\" of this model is targeted with …"
         },
         {
-          "ability_id": "lord-of-slaughter",
-          "name": "Lord of Slaughter",
+          "ability_id": "strategic-slaughter-cult-of-blood",
+          "name": "Strategic Slaughter",
           "score": 0.4,
-          "text": "Once per battle round, one unit from your army with this ability can be targeted with a Strategem for 0CP, even if a different unit from your army has alread…"
+          "text": "After both players have deployed their armies, select up to 3 **Jakhals** and/or **Goremongers** units from your army and redeploy them. When doing so, you c…"
         }
       ]
     }

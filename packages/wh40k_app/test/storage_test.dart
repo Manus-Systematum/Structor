@@ -7,6 +7,8 @@ import 'package:wh40k_app/src/data/database.dart';
 import 'package:wh40k_app/src/data/roster_store.dart';
 import 'package:wh40k_core/wh40k_core.dart' as core;
 
+import 'reference_list.dart';
+
 void main() {
   late AppDatabase db;
   late RosterStore store;
@@ -30,10 +32,12 @@ void main() {
     final loaded = await store.load(reference.id);
     expect(loaded, isNotNull);
     expect(loaded!.roster.name, '2k ret');
-    expect(loaded.points, 2000);
+    expect(loaded.points, referenceListCost);
     expect(loaded.combatUnits, hasLength(12));
     expect(loaded.roster.links, hasLength(4));
-    expect(loaded.validation.isLegal, isTrue);
+    // Illegal by exactly the 30 points two repriced datasheets added under
+    // it, and legal in every other way (see [referenceListCost]).
+    expect(loaded.validation.errors.map((f) => f.code), ['points.over']);
   });
 
   test('the list view renders from columns, not from the documents', () async {
@@ -41,7 +45,7 @@ void main() {
     final row = (await store.list()).single;
 
     expect(row.name, '2k ret');
-    expect(row.points, 2000);
+    expect(row.points, referenceListCost);
     expect(row.unitCount, 12);
     expect(row.factionId, 'tau-empire');
     expect(row.battleSizeId, 'strike-force');

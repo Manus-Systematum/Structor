@@ -197,9 +197,20 @@ void main() {
       expect(chapterOnly, contains('liberator-assault-group'));
     });
 
-    test('and so is its army rule', () {
-      expect(bloodAngels.faction.factionRuleId, 'the-red-thirst');
-      expect(astartes.faction.factionRuleId, isNot('the-red-thirst'));
+    test('and so is its army rule, where the chapter has its own', () async {
+      // This asked Blood Angels for `the-red-thirst` until the fetch of
+      // 2026-08-31, when upstream repointed nine of the eleven chapters at
+      // `oath-of-moment`. The Red Thirst is still published as a rule, just no
+      // longer as the chapter's army rule. Black Templars are one of the two
+      // that still differ, and a chapter that differs is the only one that
+      // can show the rule surviving the bundle as the chapter's own rather
+      // than as the parent's.
+      final templars = await repo.faction('black-templars');
+      expect(templars.faction.factionRuleId, 'templar-vows');
+      expect(astartes.faction.factionRuleId, 'oath-of-moment');
+
+      // And one that agrees with its parent reads as agreeing, not as empty.
+      expect(bloodAngels.faction.factionRuleId, 'oath-of-moment');
     });
   });
 
@@ -305,7 +316,8 @@ void main() {
   // (§7.6) rather than filling the gap from memory — and this pins that the
   // gap is only ever a provisional record, so the note never appears on a
   // published stratagem.
-  test('every stratagem without text is a pre-launch one', () async {
+  test('every stratagem without text is one nobody has published text for',
+      () async {
     final withoutText = <SourceStratagem>[];
     for (final entry in await repo.availableFactions()) {
       final dataset = await repo.faction(entry.id);
@@ -314,10 +326,32 @@ void main() {
       }
     }
     expect(withoutText, isNotEmpty, reason: 'otherwise the note is dead code');
+
+    // **A released codex can leave the same gap a provisional record does.**
+    // This read `pre-launch-provisional` alone until the Orks codex landed:
+    // 40kdc publishes twenty of its detachment stratagems as structure with
+    // no wording, and Wahapedia's export — the text source — was older than
+    // the codex. Refetching it filled twelve, and the faction pack behind the
+    // dataset patch filled five of the rest. The three left are ones
+    // Wahapedia dropped when it rewrote its Ork data for the codex and no
+    // pack covers, so no source in the pipeline has them; the app says so on
+    // the card (§7.6) rather than filling the gap from memory (§0).
+    //
+    // The count is pinned rather than the dataslate waved through, so a
+    // *different* codex arriving textless still fails here. If it falls,
+    // Wahapedia has published them and this number should come down with it.
+    final released = withoutText
+        .where((s) => s.gameVersion.dataslate != 'pre-launch-provisional')
+        .toList();
     expect(
-      withoutText
-          .where((s) => s.gameVersion.dataslate != 'pre-launch-provisional'),
-      isEmpty,
+      released.map((s) => s.gameVersion.dataslate).toSet(),
+      {'codex-orks'},
+      reason: released.map((s) => '${s.id} [${s.gameVersion.dataslate}]').join(', '),
     );
+    expect(released.map((s) => s.id).toSet(), {
+      'impervious-blitz-brigade',
+      'clownin-dakka-shoota-boyz',
+      'gooped-into-action-da-big-hunt',
+    });
   });
 }

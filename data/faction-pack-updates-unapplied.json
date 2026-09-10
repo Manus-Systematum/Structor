@@ -480,6 +480,14 @@
   "text": "‘Krushin’ Impact’"
  },
  {
+  "why": "no stratagem of that name",
+  "pack": "orks",
+  "subject": "Dat One's Even Bigga! Stratagem, Effect section",
+  "directive": "Change to:",
+  "category": "DA BIG HUNT DETACHMENT",
+  "text": "'Until the end of the phase, your unit is eligible to charge in a turn in which it Advanced or Fell Back. In addition, you can re-roll charge rolls made for your unit. If you do, your unit must end that charge move engaged with your Prey.'"
+ },
+ {
   "why": "no ability of that name",
   "pack": "orks",
   "subject": "Command phase, that enemy unit is your Prey:'",
@@ -494,6 +502,38 @@
   "directive": "Change to:",
   "category": "DREAD MOB DETACHMENT",
   "text": "'If a weapon equipped by a model from your army has the [HAZARDOUS] ability from multiple sources, each time you take a Hazardous test for that weapon, it is failed on a roll of 1-3.'"
+ },
+ {
+  "why": "no stratagem of that name",
+  "pack": "orks",
+  "subject": "Tide of Muscle Stratagem, Effect Section",
+  "directive": "Change to:",
+  "category": "GREEN TIDE DETACHMENT",
+  "text": "‘Until the end of the phase, each time your unit declares a charge, add 1 to the Charge roll and, if your unit contains 10 or more models, you can re-roll the Charge roll."
+ },
+ {
+  "why": "no stratagem of that name",
+  "pack": "orks",
+  "subject": "Go Get ’Em! Stratagem",
+  "directive": "Change to:",
+  "category": "GREEN TIDE DETACHMENT",
+  "text": "‘WHEN: Your opponent’s Shooting phase, when an enemy unit that targeted a friendly unengaged BOYZ unit this phase has shot. TARGET: That BOYZ unit. EFFECT: Your unit can make a surge move of up to D6\".’"
+ },
+ {
+  "why": "no stratagem of that name",
+  "pack": "orks",
+  "subject": "More Gitz Over 'Ere! Stratagem, Target Section",
+  "directive": "Change 9\" to 8\".",
+  "category": "KULT OF SPEED DETACHMENT",
+  "text": "Change 9\" to 8\"."
+ },
+ {
+  "why": "no stratagem of that name",
+  "pack": "orks",
+  "subject": "Careen! Stratagem, Effect Section",
+  "directive": "Change to:",
+  "category": "WAR HORDE DETACHMENT",
+  "text": "‘Your unit can make a Normal or Fall Back move before its Deadly Demise ability is resolved, and before any embarked units perform an emergency disembark move. When making this move, your unit can move over enemy units (excluding MONSTERS and VEHICLES) as if they were not there.’"
  },
  {
   "why": "no ability of that name",
@@ -854,14 +894,6 @@
   "directive": "Change to:",
   "category": "ARMY RULES",
   "text": "‘Select one enemy unit within 24\" of and visible to the manifesting model. Until the end of the phase, each time a THOUSAND SONS or SCINTILLATING LEGIONS model from your army makes an attack that targets that unit, improve the Armour Penetration characteristic of that attack by 1. If the Psychic test result for this Ritual was 12+, improve the Armour Penetration characteristic of that attack by 2 "
- },
- {
-  "why": "no enhancement of that name",
-  "pack": "thousand-sons",
-  "subject": "Incandaeum Enhancement",
-  "directive": "Change to:",
-  "category": "GRAND COVEN DETACHMENT",
-  "text": "‘EXALTED SORCERER model only. Once per battle, when selecting a Ritual for the bearer to attempt, you can select Doombolt, even if a model from your army have already attempted to manifest that Ritual this phase."
  },
  {
   "why": "no ability of that name",

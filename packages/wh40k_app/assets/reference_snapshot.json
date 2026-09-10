@@ -2725,23 +2725,84 @@
         "40kdc"
       ]
     },
-    "negation-emitters": {
-      "ability_id": "negation-emitters",
+    "negation-emitters-advanced-acquisition-cadre": {
+      "ability_id": "negation-emitters-advanced-acquisition-cadre",
       "name": "Negation Emitters",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "source_digest": "f037a4ff561f2f967bce64f32f9a4d0956af0e3f70092874fe6272f8b027ba7b",
+      "version": "2025-q3",
+      "supersedes": null,
+      "unit_ids": [],
+      "faction_id": "tau-empire",
+      "detachment_id": "advanced-acquisition-cadre",
+      "ability_type": "enhancement",
+      "behavior": "passive",
+      "effect": {
+        "type": "stat-modifier",
+        "target": "self",
+        "modifier": {
+          "stat": "detection-range",
+          "operation": "subtract",
+          "value": 3
+        }
+      },
+      "scope": {
+        "range": "self",
+        "duration": "permanent"
+      },
+      "community_notes": "community-authored from 10e source (provisional 11e); see #21",
       "description": "**STEALTH BATTLESUITS** unit only. This unit has -3\" **detection range**.",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      }
+      "description_from": "negation-emitters"
     },
-    "unmasking-suite": {
-      "ability_id": "unmasking-suite",
+    "unmasking-suite-advanced-acquisition-cadre": {
+      "ability_id": "unmasking-suite-advanced-acquisition-cadre",
       "name": "Unmasking Suite",
-      "description": "**GHOSTKEEL BATTLESUIT/PATHFINDER TEAM/STEALTH BATTLESUITS** unit only. When this unit is **selected to shoot**, you can select one enemy unit within 24\" of this unit. That enemy unit has +9\" **detection range** until this unit has shot.",
+      "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      }
+        "dataslate": "pre-launch-provisional"
+      },
+      "source_digest": "80cbc555a73856debad331aa68bfb1ade0f41940244a283d93fd227560da0a57",
+      "version": "2025-q3",
+      "supersedes": null,
+      "unit_ids": [],
+      "faction_id": "tau-empire",
+      "detachment_id": "advanced-acquisition-cadre",
+      "ability_type": "enhancement",
+      "behavior": "passive",
+      "effect": {
+        "type": "designate-target",
+        "designation": "unmasked",
+        "select": {
+          "scope": "enemy-unit",
+          "count": 1,
+          "timing": "when-this-unit-selected-to-shoot"
+        },
+        "applies": {
+          "to": "target",
+          "effect": {
+            "type": "stat-modifier",
+            "target": "defender",
+            "modifier": {
+              "stat": "detection-range",
+              "operation": "add",
+              "value": 9
+            }
+          }
+        },
+        "duration": "phase"
+      },
+      "scope": {
+        "range": "any-visible",
+        "duration": "phase"
+      },
+      "community_notes": "When the bearer's unit is selected to shoot, mark one enemy unit within 24\"; that enemy unit has +9\" detection range until this unit has shot.",
+      "description": "**GHOSTKEEL BATTLESUIT/PATHFINDER TEAM/STEALTH BATTLESUITS** unit only. When this unit is **selected to shoot**, you can select one enemy unit within 24\" of this unit. That enemy unit has +9\" **detection range** until this unit has shot.",
+      "description_from": "unmasking-suite"
     },
     "superior-craftsmanship": {
       "ability_id": "superior-craftsmanship",
@@ -2775,32 +2836,207 @@
       },
       "community_notes": "community-authored from 10e source (provisional 11e); see #21"
     },
-    "supernova-launcher": {
-      "ability_id": "supernova-launcher",
+    "supernova-launcher-experimental-prototype-cadre": {
+      "ability_id": "supernova-launcher-experimental-prototype-cadre",
       "name": "Supernova Launcher",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "source_digest": "93cd87322b53687e4fc647ad4418a64019ab763536dfb2ccaab6e8bff5eb3444",
+      "version": "2025-q3",
+      "supersedes": null,
+      "unit_ids": [],
+      "faction_id": "tau-empire",
+      "detachment_id": "experimental-prototype-cadre",
+      "ability_type": "enhancement",
+      "behavior": "passive",
+      "effect": {
+        "type": "sequence",
+        "steps": [
+          {
+            "type": "stat-modifier",
+            "target": "bearer",
+            "modifier": {
+              "stat": "S",
+              "operation": "add",
+              "value": 3,
+              "weapon_type": "ranged"
+            }
+          },
+          {
+            "type": "stat-modifier",
+            "target": "bearer",
+            "modifier": {
+              "stat": "AP",
+              "operation": "add",
+              "value": -1,
+              "weapon_type": "ranged"
+            }
+          },
+          {
+            "type": "stat-modifier",
+            "target": "bearer",
+            "modifier": {
+              "stat": "D",
+              "operation": "add",
+              "value": 1,
+              "weapon_type": "ranged"
+            }
+          }
+        ]
+      },
+      "scope": {
+        "range": "self",
+        "duration": "battle"
+      },
+      "applies_to": {
+        "required_keywords": [
+          "Battlesuit"
+        ]
+      },
+      "community_notes": "Applies to one Airbursting Fragmentation Projector selected in the Declare Battle Formations step; the weapon-name scoping is not encoded.",
       "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s Airbursting Fragmentation Projector weapons. That weapon’s attacks have:\n- +3 **S**\n- +1 **AP** and **D**.",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      }
+      "description_from": "supernova-launcher"
     },
-    "thermoneutronic-projector": {
-      "ability_id": "thermoneutronic-projector",
+    "thermoneutronic-projector-experimental-prototype-cadre": {
+      "ability_id": "thermoneutronic-projector-experimental-prototype-cadre",
       "name": "Thermoneutronic Projector",
+      "authored_by": "40kdc-community",
+      "game_version": {
+        "edition": "11th",
+        "dataslate": "pre-launch-provisional"
+      },
+      "source_digest": "de65a4b63f113e59ff8e5206420a5301f3e78cdee768a4e4d453eecaf13f3e01",
+      "version": "2025-q3",
+      "supersedes": null,
+      "unit_ids": [],
+      "faction_id": "tau-empire",
+      "detachment_id": "experimental-prototype-cadre",
+      "ability_type": "enhancement",
+      "behavior": "passive",
+      "effect": {
+        "type": "sequence",
+        "steps": [
+          {
+            "type": "stat-modifier",
+            "target": "bearer",
+            "modifier": {
+              "stat": "S",
+              "operation": "add",
+              "value": 2,
+              "weapon_type": "ranged"
+            }
+          },
+          {
+            "type": "stat-modifier",
+            "target": "bearer",
+            "modifier": {
+              "stat": "AP",
+              "operation": "add",
+              "value": -1,
+              "weapon_type": "ranged"
+            }
+          },
+          {
+            "type": "stat-modifier",
+            "target": "bearer",
+            "modifier": {
+              "stat": "D",
+              "operation": "add",
+              "value": 1,
+              "weapon_type": "ranged"
+            }
+          }
+        ]
+      },
+      "scope": {
+        "range": "self",
+        "duration": "battle"
+      },
+      "applies_to": {
+        "required_keywords": [
+          "Battlesuit"
+        ]
+      },
+      "community_notes": "Applies to one T'au Flamer selected in the Declare Battle Formations step; the weapon-name scoping is not encoded.",
       "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s T’au Flamer weapons. That weapon’s attacks have:\n- +2 **S**\n- +1 **AP** and **D**.",
-      "game_version": {
-        "edition": "11th",
-        "dataslate": "bsdata"
-      }
+      "description_from": "thermoneutronic-projector"
     },
-    "plasma-accelerator-rifle": {
-      "ability_id": "plasma-accelerator-rifle",
+    "plasma-accelerator-rifle-experimental-prototype-cadre": {
+      "ability_id": "plasma-accelerator-rifle-experimental-prototype-cadre",
       "name": "Plasma Accelerator Rifle",
-      "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s Plasma Rifle weapons. That weapon’s attacks have:\n- +2 **S**\n- +1 **A**, **AP** and **D**.",
+      "authored_by": "40kdc-community",
       "game_version": {
         "edition": "11th",
-        "dataslate": "bsdata"
-      }
+        "dataslate": "pre-launch-provisional"
+      },
+      "source_digest": "e8e72055113cc44b927a8e39ab040c1e27e6887bac742faa43c83c69d75b754c",
+      "version": "2025-q3",
+      "supersedes": null,
+      "unit_ids": [],
+      "faction_id": "tau-empire",
+      "detachment_id": "experimental-prototype-cadre",
+      "ability_type": "enhancement",
+      "behavior": "passive",
+      "effect": {
+        "type": "sequence",
+        "steps": [
+          {
+            "type": "stat-modifier",
+            "target": "bearer",
+            "modifier": {
+              "stat": "S",
+              "operation": "add",
+              "value": 2,
+              "weapon_type": "ranged"
+            }
+          },
+          {
+            "type": "stat-modifier",
+            "target": "bearer",
+            "modifier": {
+              "stat": "A",
+              "operation": "add",
+              "value": 1,
+              "weapon_type": "ranged"
+            }
+          },
+          {
+            "type": "stat-modifier",
+            "target": "bearer",
+            "modifier": {
+              "stat": "AP",
+              "operation": "add",
+              "value": -1,
+              "weapon_type": "ranged"
+            }
+          },
+          {
+            "type": "stat-modifier",
+            "target": "bearer",
+            "modifier": {
+              "stat": "D",
+              "operation": "add",
+              "value": 1,
+              "weapon_type": "ranged"
+            }
+          }
+        ]
+      },
+      "scope": {
+        "range": "self",
+        "duration": "battle"
+      },
+      "applies_to": {
+        "required_keywords": [
+          "Battlesuit"
+        ]
+      },
+      "community_notes": "Applies to one Plasma Rifle selected in the Declare Battle Formations step; the weapon-name scoping is not encoded.",
+      "description": "**BATTLESUIT** model only. In the Declare Battle Formations step, select one of this model’s Plasma Rifle weapons. That weapon’s attacks have:\n- +2 **S**\n- +1 **A**, **AP** and **D**.",
+      "description_from": "plasma-accelerator-rifle"
     },
     "enforcer-commander": {
       "ability_id": "enforcer-commander",
@@ -4550,7 +4786,7 @@
         "Stealth Battlesuits",
         "T’au Empire"
       ],
-      "ability_id": "negation-emitters",
+      "ability_id": "negation-emitters-advanced-acquisition-cadre",
       "is_unique": true,
       "game_version": {
         "edition": "11th",
@@ -4575,7 +4811,7 @@
       "name": "Unmasking Suite (Upgrade)",
       "detachment_id": "advanced-acquisition-cadre",
       "cost": 15,
-      "ability_id": "unmasking-suite",
+      "ability_id": "unmasking-suite-advanced-acquisition-cadre",
       "is_unique": true,
       "game_version": {
         "edition": "11th",
@@ -4614,7 +4850,7 @@
       "keyword_restrictions": [
         "Battlesuit"
       ],
-      "ability_id": "supernova-launcher",
+      "ability_id": "supernova-launcher-experimental-prototype-cadre",
       "is_unique": true,
       "game_version": {
         "edition": "11th",
@@ -4642,7 +4878,7 @@
       "keyword_restrictions": [
         "Battlesuit"
       ],
-      "ability_id": "thermoneutronic-projector",
+      "ability_id": "thermoneutronic-projector-experimental-prototype-cadre",
       "is_unique": true,
       "game_version": {
         "edition": "11th",
@@ -4670,7 +4906,7 @@
       "keyword_restrictions": [
         "Battlesuit"
       ],
-      "ability_id": "plasma-accelerator-rifle",
+      "ability_id": "plasma-accelerator-rifle-experimental-prototype-cadre",
       "is_unique": true,
       "game_version": {
         "edition": "11th",
@@ -4711,15 +4947,6 @@
   },
   "phaseMappings": {
     "superior-craftsmanship": [
-      "shooting"
-    ],
-    "supernova-launcher": [
-      "shooting"
-    ],
-    "thermoneutronic-projector": [
-      "shooting"
-    ],
-    "plasma-accelerator-rifle": [
       "shooting"
     ],
     "enforcer-commander": [
