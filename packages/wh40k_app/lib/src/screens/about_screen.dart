@@ -8,6 +8,26 @@ import 'package:wh40k_core/wh40k_core.dart';
 
 import '../data/dataset_repository.dart';
 
+/// A manifest revision (`20260912193942`) as the date it was built, "12 Sep
+/// 2026"; null for a dataset built before revisions existed, which has none.
+///
+/// Shared by the reload report and the Dataset row, which used to read two
+/// different fields — and the row kept showing `generated`, the builder's
+/// placeholder "local", after the report had stopped (§3.38).
+String? dateOfRevision(int? revision) {
+  final digits = '${revision ?? 0}';
+  if (digits.length < 8) return null;
+  final month = int.tryParse(digits.substring(4, 6));
+  final day = int.tryParse(digits.substring(6, 8));
+  if (month == null || day == null || month < 1 || month > 12) return null;
+  const months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+  ];
+  return '$day ${months[month - 1]} ${digits.substring(0, 4)}';
+}
+
+
 /// Credits, attribution and provenance.
 ///
 /// This screen is **required**, not decorative. 40kdc-data's licence obliges
@@ -132,8 +152,12 @@ class _AboutScreenState extends State<AboutScreen> {
             ? 'Update ${stale.keys.single.name}?'
             : 'Update ${stale.length} saved armies?'),
         content: const Text(
+          // "Just downloaded" was false whenever the app kept its own data —
+          // which is exactly when armies saved from an older published
+          // dataset are behind (§3.38). The roster menu's dialog already said
+          // "the current one".
           'A saved army keeps a copy of the data it was built from. Updating '
-          'replaces that copy with the data just downloaded.\n\n'
+          'replaces that copy with the current data.\n\n'
           'The units, loadouts and detachments do not change. Points, rules '
           'and stratagem text may.',
         ),
@@ -298,7 +322,9 @@ class _AboutScreenState extends State<AboutScreen> {
           ),
           if (manifest != null) ...[
             const SizedBox(height: 10),
-            _Row(label: 'Dataset', value: manifest.generated),
+            _Row(
+                label: 'Dataset',
+                value: dateOfRevision(manifest.revision) ?? 'Undated'),
             for (final bundle in manifest.bundles)
               _Row(
                   label: bundle.name,
@@ -465,7 +491,7 @@ class _DataUpdate extends StatelessWidget {
 
     // The date of the data in use, which is the one fact every outcome
     // shares — "Dataset local" said nothing, and was the build's placeholder.
-    final date = _dataDate(result.revision);
+    final date = dateOfRevision(result.revision);
     final dated = date == null ? '' : ' Data from $date.';
 
     final lines = <String>[];
@@ -491,21 +517,6 @@ class _DataUpdate extends StatelessWidget {
           '${_names(result.unavailable)}.');
     }
     return lines.join('\n');
-  }
-
-  /// `20260912193942` as "12 Sep 2026"; null for a dataset built before
-  /// revisions existed, which has no date to give.
-  static String? _dataDate(int? revision) {
-    final digits = '${revision ?? 0}';
-    if (digits.length < 8) return null;
-    final month = int.tryParse(digits.substring(4, 6));
-    final day = int.tryParse(digits.substring(6, 8));
-    if (month == null || day == null || month < 1 || month > 12) return null;
-    const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-    ];
-    return '$day ${months[month - 1]} ${digits.substring(0, 4)}';
   }
 
   static String _names(List<String> ids) => ids.length <= 4

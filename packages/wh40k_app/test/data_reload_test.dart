@@ -283,6 +283,10 @@ void main() {
       expect(find.text('No change. Data from 12 Sep 2026.'), findsOneWidget,
           reason: 'this device already had it');
       expect(find.text('Update Grots?'), findsOneWidget);
+      // Nothing was downloaded just now — this device already had it — so the
+      // dialog must not say it will use "the data just downloaded".
+      expect(find.textContaining('just downloaded'), findsNothing);
+      expect(find.textContaining('with the current data'), findsOneWidget);
 
       await tester.tap(find.text('Update'));
       await tester.pumpAndSettle();
@@ -315,8 +319,24 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('No change. Data from 28 Aug 2026.'), findsOneWidget);
+      // The Dataset row read `generated` — "local" — after the report beside
+      // it had moved to the revision's date, so the screen said both at once.
+      expect(find.text('local'), findsNothing);
+      expect(find.text('28 Aug 2026'), findsOneWidget);
       expect(find.text('Update Grots?'), findsNothing);
       expect((await store.list()).single.points, 5);
+    });
+  });
+
+  group('the date a revision shows as', () {
+    test('reads as a day, a month and a year', () {
+      expect(dateOfRevision(20260912193942), '12 Sep 2026');
+      expect(dateOfRevision(20261201000000), '1 Dec 2026');
+    });
+
+    test('and is absent for data built before revisions existed', () {
+      expect(dateOfRevision(0), isNull);
+      expect(dateOfRevision(null), isNull);
     });
   });
 }

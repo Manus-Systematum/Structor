@@ -1093,6 +1093,16 @@ app — and says which. It also shows the date of the data in use, read from the
 revision, where it used to show `generated`: the builder's placeholder, so the
 screen had been reporting "Dataset local" to every reader.
 
+The first version of that fix changed the report and missed the **Dataset**
+row directly beneath it, which read the same placeholder field on its own, so
+the screen showed "Data from 12 Sep 2026" above "Dataset local". A device run
+caught it in the screenshot that confirmed the report. Both now read the
+revision through one function. The same run showed the dialog that follows
+offering to update armies "with the data just downloaded" when nothing had
+been — the app had kept its own data, which is precisely when armies saved from
+an older published dataset are behind. It says "the current data" now, as the
+roster menu's own dialog already did.
+
 **An army saved before a fix keeps the old wording, by design.** The rerun found
 "chare" still on a Remorseless Persecution sheet, and the build had not one
 occurrence of it: the army had been snapshotted from the published dataset at
