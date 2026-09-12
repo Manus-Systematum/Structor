@@ -463,12 +463,25 @@ class _DataUpdate extends StatelessWidget {
       return 'Could not read the data: $error';
     }
 
+    // The date of the data in use, which is the one fact every outcome
+    // shares — "Dataset local" said nothing, and was the build's placeholder.
+    final date = _dataDate(result.revision);
+    final dated = date == null ? '' : ' Data from $date.';
+
     final lines = <String>[];
     if (!result.fromNetwork) {
-      lines.add('The data server could not be reached. '
-          'Still on the dataset in the app.');
+      // Three causes, and the old single line named only the first: once the
+      // app compared revisions (§3.38) it told a reader whose server had
+      // answered, with older data, that the server was down.
+      lines.add(switch (result.stayedBecause) {
+        StayedOnBuiltIn.serverOlder =>
+          "The app's data is newer than the server's.$dated",
+        StayedOnBuiltIn.serverNeedsNewerApp =>
+          'The server has data this version cannot read. Update the app.',
+        _ => 'Could not reach the data server.$dated',
+      });
     } else if (result.changed.isEmpty) {
-      lines.add('No change. Dataset ${result.revision}.');
+      lines.add('No change.$dated');
     } else {
       lines.add('${result.changed.length} updated: '
           '${_names(result.changed)}.');
@@ -478,6 +491,21 @@ class _DataUpdate extends StatelessWidget {
           '${_names(result.unavailable)}.');
     }
     return lines.join('\n');
+  }
+
+  /// `20260912193942` as "12 Sep 2026"; null for a dataset built before
+  /// revisions existed, which has no date to give.
+  static String? _dataDate(int? revision) {
+    final digits = '${revision ?? 0}';
+    if (digits.length < 8) return null;
+    final month = int.tryParse(digits.substring(4, 6));
+    final day = int.tryParse(digits.substring(6, 8));
+    if (month == null || day == null || month < 1 || month > 12) return null;
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    ];
+    return '$day ${months[month - 1]} ${digits.substring(0, 4)}';
   }
 
   static String _names(List<String> ids) => ids.length <= 4

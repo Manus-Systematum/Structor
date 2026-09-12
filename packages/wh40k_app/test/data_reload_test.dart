@@ -64,7 +64,8 @@ BundleEntry _entry(DatasetBundle bundle, List<int> bytes) => BundleEntry(
     );
 
 /// A source serving a core bundle and an Orks bundle at [cost] a Grot.
-(FakeSource, DatasetManifest) sourceAt(int cost, {String revision = 'r1'}) {
+(FakeSource, DatasetManifest) sourceAt(int cost,
+    {String revision = 'r1', int manifestRevision = 0, int schema = 1}) {
   final source = FakeSource();
   final entries = <BundleEntry>[];
   for (final bundle in [_core(), _orks(cost)]) {
@@ -74,6 +75,8 @@ BundleEntry _entry(DatasetBundle bundle, List<int> bytes) => BundleEntry(
     entries.add(entry);
   }
   final manifest = DatasetManifest(
+    schema: schema,
+    revision: manifestRevision,
     generated: revision,
     source: 'test',
     bundles: entries,
@@ -90,6 +93,48 @@ const _roster = Roster(
 );
 
 void main() {
+  // §3.38. "Not from the network" had three causes and the screen named one:
+  // a server that answered with older data was reported as unreachable.
+  group('why the app stays on its own data', () {
+    test('a server that does not answer is unreachable', () async {
+      final (built, _) = sourceAt(5, manifestRevision: 20260912193942);
+      final result =
+          await DatasetRepository(assets: built, remote: FakeSource()).reload();
+      expect(result.fromNetwork, isFalse);
+      expect(result.stayedBecause, StayedOnBuiltIn.unreachable);
+      expect(result.revision, 20260912193942);
+    });
+
+    test('a server that answers with older data is not unreachable', () async {
+      final (built, _) = sourceAt(8, manifestRevision: 20260912193942);
+      final (published, _) = sourceAt(5, manifestRevision: 20260828000000);
+      final result =
+          await DatasetRepository(assets: built, remote: published).reload();
+      expect(result.fromNetwork, isFalse);
+      expect(result.stayedBecause, StayedOnBuiltIn.serverOlder,
+          reason: 'it answered; its data lost the comparison');
+    });
+
+    test('a server this build cannot read says so', () async {
+      final (built, _) = sourceAt(8, manifestRevision: 20260912193942);
+      final (published, _) =
+          sourceAt(5, manifestRevision: 20270101000000, schema: 99);
+      final result =
+          await DatasetRepository(assets: built, remote: published).reload();
+      expect(result.stayedBecause, StayedOnBuiltIn.serverNeedsNewerApp);
+    });
+
+    test('and a server whose data is taken leaves no reason', () async {
+      final (built, _) = sourceAt(5, manifestRevision: 20260828000000);
+      final (published, _) = sourceAt(8, manifestRevision: 20260912193942);
+      final result =
+          await DatasetRepository(assets: built, remote: published).reload();
+      expect(result.fromNetwork, isTrue);
+      expect(result.stayedBecause, isNull);
+      expect(result.revision, 20260912193942);
+    });
+  });
+
   group('reload', () {
     test('says what changed, and the app is on the new bytes', () async {
       final (remote, _) = sourceAt(5);
@@ -105,7 +150,7 @@ void main() {
 
       final result = await repo.reload();
       expect(result.fromNetwork, isTrue);
-      expect(result.revision, 'r2');
+      expect(result.stayedBecause, isNull);
       expect(result.changed, ['orks'], reason: 'core is byte-identical');
       expect(result.unavailable, isEmpty);
 
@@ -133,14 +178,16 @@ void main() {
     });
 
     test('nothing changed still reports the revision', () async {
-      final (remote, _) = sourceAt(5);
+      final (remote, _) = sourceAt(5, manifestRevision: 20260912193942);
       final repo = DatasetRepository(assets: FakeSource(), remote: remote);
       await repo.manifest();
 
       final result = await repo.reload();
       expect(result.fromNetwork, isTrue);
       expect(result.changed, isEmpty);
-      expect(result.revision, 'r1');
+      // The manifest's ordering revision, not `generated` — which is the
+      // builder's placeholder and read "Dataset local" on the About screen.
+      expect(result.revision, 20260912193942);
     });
   });
 
@@ -155,7 +202,7 @@ void main() {
       db = AppDatabase.memory();
       store = RosterStore(db);
 
-      final (source, _) = sourceAt(5);
+      final (source, _) = sourceAt(5, manifestRevision: 20260828000000);
       remote = source;
       repo = DatasetRepository(assets: FakeSource(), remote: remote);
 
@@ -169,7 +216,8 @@ void main() {
     tearDown(() => db.close());
 
     Future<void> publish(int cost) async {
-      final (updated, _) = sourceAt(cost, revision: 'r2');
+      final (updated, _) =
+          sourceAt(cost, revision: 'r2', manifestRevision: 20260912193942);
       remote
         ..manifestValue = updated.manifestValue
         ..files.addAll(updated.files);
@@ -232,7 +280,7 @@ void main() {
       await tester.tap(find.text('Download the current data'));
       await tester.pumpAndSettle();
 
-      expect(find.text('No change. Dataset r2.'), findsOneWidget,
+      expect(find.text('No change. Data from 12 Sep 2026.'), findsOneWidget,
           reason: 'this device already had it');
       expect(find.text('Update Grots?'), findsOneWidget);
 
@@ -241,13 +289,32 @@ void main() {
       expect((await store.list()).single.points, 8);
     });
 
+    // §3.38. The line that was false: a server that answered, with data older
+    // than the app's, was reported as one that could not be reached.
+    testWidgets('a server with older data is not called unreachable',
+        (tester) async {
+      final (built, _) = sourceAt(5, manifestRevision: 20260912193942);
+      final (published, _) = sourceAt(5, manifestRevision: 20260828000000);
+      repo = DatasetRepository(assets: built, remote: published);
+      await pumpAbout(tester);
+
+      await tester.tap(find.text('Download the current data'));
+      await tester.pumpAndSettle();
+
+      expect(
+          find.text("The app's data is newer than the server's. "
+              'Data from 12 Sep 2026.'),
+          findsOneWidget);
+      expect(find.textContaining('Could not reach'), findsNothing);
+    });
+
     testWidgets('nothing changed asks nothing', (tester) async {
       await pumpAbout(tester);
 
       await tester.tap(find.text('Download the current data'));
       await tester.pumpAndSettle();
 
-      expect(find.text('No change. Dataset r1.'), findsOneWidget);
+      expect(find.text('No change. Data from 28 Aug 2026.'), findsOneWidget);
       expect(find.text('Update Grots?'), findsNothing);
       expect((await store.list()).single.points, 5);
     });

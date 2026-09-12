@@ -112,6 +112,17 @@ void main() {
       lessThan(calls.indexOf('drawParagraph')),
       reason: 'the caption is painted under terrain drawn after it',
     );
+
+    // **And it knocks out what is under it.** Drawn over the terrain shapes,
+    // the word still printed straight through the ruin's own letters at the
+    // inline preview's size — "THEM" and "CD" interleaved on Purge vs Assets
+    // 02. A halo in the board's colour goes down first, then the word, so one
+    // zone caption is two paragraphs, both after the last terrain path.
+    final afterTerrain =
+        calls.skip(calls.lastIndexOf('drawPath') + 1).where((c) => c == 'drawParagraph');
+    expect(afterTerrain, hasLength(2),
+        reason: 'one caption is a halo then the word; one paragraph means '
+            'the word is drawn bare over whatever sits at the zone centre');
   });
 }
 

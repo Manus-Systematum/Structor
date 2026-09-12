@@ -911,6 +911,16 @@ now, still below the objective markers.
 Found by the local agent's visual pass (§3.26) rather than by a test, which is
 the case for that pass existing: nothing in either suite looks at a screen.
 
+**Drawing the caption last was not enough, and the rerun caught it.** It held at
+full-screen size; in the small diagram inside battle setup, a ruin's own letters
+sit at the zone's centre too, so "THEM" and "CD" printed through each other
+letter for letter — the caption now on top, and still unreadable. Each caption
+gets a halo in the board's own colour, drawn under the word, which knocks out
+whatever is beneath it: the ordinary way a map keeps a label legible over
+anything. Where a caption and a terrain letter collide, the zone's name reads
+and the letter is partly covered; the full-screen diagram has room for both
+whole, and that is where a player sets the table out from.
+
 **The test that pins it records the paint calls itself.** The obvious
 `paints..path()..paragraph()` matcher passes with the bug in place, because it
 matches a *subsequence* and the zone's own fill is a path drawn before the
@@ -1072,6 +1082,24 @@ to fall back on it — it is no rival to a usable published one.
 **The trade-off, accepted.** A rollback can no longer be made by publishing an
 older dataset; an app built later ignores it as older. Rebuilding the old data
 gives it a fresh revision, which is the way to roll back.
+
+**The About screen had to learn the difference.** Its reload report said "The
+data server could not be reached" whenever the app stayed on its own data. That
+was true until revisions existed, and false after: a server that answered with
+older data took the same branch, and a tester on a device whose server was
+plainly reachable read that it was down. The reload now carries why —
+unreachable, the server's data is older, or the server's data needs a newer
+app — and says which. It also shows the date of the data in use, read from the
+revision, where it used to show `generated`: the builder's placeholder, so the
+screen had been reporting "Dataset local" to every reader.
+
+**An army saved before a fix keeps the old wording, by design.** The rerun found
+"chare" still on a Remorseless Persecution sheet, and the build had not one
+occurrence of it: the army had been snapshotted from the published dataset at
+18:10 on 12 September, before the republish reached the device, and §2.2 keeps a
+saved army exactly as it was built. "Update to current data" on the roster is
+the way past it — and the row's `updated_at` showed no update had actually been
+saved, which is why the tester saw no change after believing it had pressed it.
 
 The deploy step that was skipped is still a manual one: `deploy/deploy.sh` in
 `structor-landing` after `tools/rebuild-assets.sh`. This makes forgetting it

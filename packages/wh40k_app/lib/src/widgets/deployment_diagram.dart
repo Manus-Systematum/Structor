@@ -787,22 +787,40 @@ class _BoardPainter extends CustomPainter {
 
   void _label(
       Canvas canvas, Offset centre, String text, Color color, bool mine) {
-    final painter = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: TextStyle(
-          fontSize: _px(9),
-          letterSpacing: _px(0.8),
-          fontWeight: FontWeight.w800,
-          color: color.withValues(alpha: mine ? 1 : 0.7),
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    painter.paint(
-      canvas,
-      centre - Offset(painter.width / 2, painter.height / 2),
+    TextPainter layOut(TextStyle style) => TextPainter(
+          text: TextSpan(text: text, style: style),
+          textDirection: TextDirection.ltr,
+        )..layout();
+
+    final base = TextStyle(
+      fontSize: _px(9),
+      letterSpacing: _px(0.8),
+      fontWeight: FontWeight.w800,
     );
+
+    // **A halo in the board's own colour, drawn under the word.** Drawing the
+    // caption after the terrain fixed it being hidden under the pieces, and
+    // at full-screen size that was enough. In the inline preview it was not:
+    // a ruin's own letters sit at the zone's centre too, and on Purge vs
+    // Assets 02 "THEM" and "CD" printed through each other letter for letter.
+    // The halo knocks out whatever is beneath the word, which is how a map
+    // keeps a label legible over anything; where the two collide the zone's
+    // name reads and the terrain letter is partly covered, and the
+    // full-screen diagram has the room to show both whole.
+    final halo = layOut(base.copyWith(
+      foreground: Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = _px(3)
+        ..strokeJoin = StrokeJoin.round
+        ..color = objectiveRing,
+    ));
+    final word = layOut(base.copyWith(
+      color: color.withValues(alpha: mine ? 1 : 0.7),
+    ));
+
+    final at = centre - Offset(word.width / 2, word.height / 2);
+    halo.paint(canvas, at);
+    word.paint(canvas, at);
   }
 
   @override

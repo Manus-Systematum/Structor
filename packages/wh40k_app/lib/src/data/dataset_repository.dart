@@ -149,13 +149,33 @@ class BundleCache {
 ///
 /// Reported rather than acted on: the screen that asked is the one that knows
 /// whether to offer the reader anything next.
-class DatasetReload {
-  /// The manifest's own revision, or null when none could be resolved.
-  final String? revision;
+/// Why the app is on the dataset it was built with, when it is.
+///
+/// A boolean used to carry this, and since §3.38 it lied: "not from the
+/// network" covered a server that could not be reached and a server that
+/// answered with data older than the app's, and the About screen told a reader
+/// in the second case that the server was down.
+enum StayedOnBuiltIn {
+  /// Nothing answered, or no server is configured (§3.4).
+  unreachable,
 
-  /// False when the manifest in force is the one in the binary — the network
-  /// was unreachable, or no base URL is configured (§3.4).
+  /// The server answered with a dataset no newer than the app's own.
+  serverOlder,
+
+  /// The server answered with a manifest this build cannot read.
+  serverNeedsNewerApp,
+}
+
+class DatasetReload {
+  /// The manifest's own [DatasetManifest.revision], or null when none could
+  /// be resolved. Zero for a dataset built before revisions existed.
+  final int? revision;
+
+  /// False when the manifest in force is the one in the binary (§3.4).
   final bool fromNetwork;
+
+  /// Why, when [fromNetwork] is false. Null otherwise.
+  final StayedOnBuiltIn? stayedBecause;
 
   /// Bundle and patch ids whose bytes are not the bytes they had before.
   final List<String> changed;
@@ -169,6 +189,7 @@ class DatasetReload {
   const DatasetReload({
     this.revision,
     this.fromNetwork = false,
+    this.stayedBecause,
     this.changed = const [],
     this.unavailable = const [],
     this.error,
@@ -187,6 +208,7 @@ class DatasetRepository {
   /// binary. Read by [reload], which otherwise cannot tell "already current"
   /// from "could not ask".
   bool _fromNetwork = false;
+  StayedOnBuiltIn? _stayedBecause;
   PatchSet? _patches;
   final Map<String, DatasetBundle> _loaded = {};
   Dataset? _faction;
@@ -235,9 +257,15 @@ class DatasetRepository {
         for (final asset in fromRemote.assets) asset.file,
       });
       _fromNetwork = true;
+      _stayedBecause = null;
       return _manifest = fromRemote;
     }
     _fromNetwork = false;
+    _stayedBecause = fromRemote == null
+        ? StayedOnBuiltIn.unreachable
+        : fromRemote.isFuture
+            ? StayedOnBuiltIn.serverNeedsNewerApp
+            : StayedOnBuiltIn.serverOlder;
 
     if (shipped == null) {
       throw StateError('no dataset manifest in assets or from the network');
@@ -354,8 +382,9 @@ class DatasetRepository {
     }
 
     return DatasetReload(
-      revision: after.generated,
+      revision: after.revision,
       fromNetwork: _fromNetwork,
+      stayedBecause: _stayedBecause,
       changed: changed,
       unavailable: unavailable,
     );
