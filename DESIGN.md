@@ -1022,6 +1022,60 @@ which is the trap in treating any single source as authoritative — the reason
 Space Wolves and others carry a different rule under a shared id. Wahapedia
 files those by datasheet, so the join is a different one and is not done here.
 
+### 3.38 Reachable is not the same as current
+
+The app prefers the dataset published at `structor.systematum.net/data/` over
+the one compiled into it, so a data fix reaches installed apps without a store
+release (§3.4). It took the published one **whenever the network answered** —
+and an out-of-date site answers just as readily. The site was last deployed on
+28 August; for two weeks after, every data fix shipped in every new build was
+invisible on any device that was online. Both simulators showed the old
+Windrider Host rule from a build made that morning, and a tester called it a
+stale build, which it was not.
+
+Nothing could have told the two apart: both manifests read `generated: local`,
+the caller-stamped value that keeps a rebuild byte-identical. So manifests now
+carry a **`revision`** — a number that only goes up — and the app takes the
+published manifest only when its revision is at least the binary's. A tie goes
+to the published one: the same revision names the same files, and a device
+that already downloaded them keeps reading from its cache.
+
+**What the revision is.** The build time as `YYYYMMDDHHMMSS` in UTC, so it
+reads as a date to anyone looking at the site, and never less than the previous
+revision plus one, so a laptop whose clock is behind still produces a newer
+dataset instead of one every installed app refuses. It moves only when the
+files the manifest names change: `tools/rebuild-assets.sh` run twice on the
+same data keeps the revision, so publishing a dataset again is not an update
+and the committed manifest does not churn.
+
+**Where it is not.** Every bundle carries a `revision` of its own, and that one
+stays caller-stamped. Put the clock there and all 36 content-named files are
+renamed on every build — every installed app downloads 7 MB for nothing, and
+the repository commits 36 binaries a rebuild. The ordering number lives in the
+manifest alone, the one file whose name is fixed. Verified: a versioned rebuild
+changed `manifest.json` and not one bundle hash.
+
+**The schema stays at 1**, for the reason it did when patches were added: a
+build that predates the field ignores a key it does not know. Raising it would
+have made every installed app refuse the new manifest as `isFuture` and stop
+receiving updates at all — the opposite of the point. An unversioned manifest
+reads as zero, so the live site as it stood never outranks a versioned build.
+
+**Two edge cases the resolution had to get right.** Refusing a published
+manifest must not prune the download cache against it: pruning against a
+dataset the app has just outranked would delete files a newer publish left. And
+a shipped manifest from a newer builder is refused only if the app would have
+to fall back on it — it is no rival to a usable published one.
+
+**The trade-off, accepted.** A rollback can no longer be made by publishing an
+older dataset; an app built later ignores it as older. Rebuilding the old data
+gives it a fresh revision, which is the way to roll back.
+
+The deploy step that was skipped is still a manual one: `deploy/deploy.sh` in
+`structor-landing` after `tools/rebuild-assets.sh`. This makes forgetting it
+harmless for anyone who updates the app; it does not make it unnecessary for
+anyone who does not.
+
 ## 4. Army builder
 
 ### 4.1 Screen structure

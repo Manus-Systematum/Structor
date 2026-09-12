@@ -198,19 +198,37 @@ class DatasetRepository {
     this.cache,
   });
 
-  /// The manifest in force. Prefers the remote one when reachable, so a
-  /// published update is picked up without shipping a build; falls back to
-  /// what the binary carries.
+  /// The manifest in force: the remote one when it is at least as new as the
+  /// one the binary carries, and the binary's otherwise.
+  ///
+  /// **Reachable is not the same as current** (DESIGN.md §3.38). This used to
+  /// take the remote manifest whenever the network answered, so a published
+  /// update reached installed apps without a store release — and a site that
+  /// had fallen behind won just as readily. `structor.systematum.net` served a
+  /// dataset from 28 August for two weeks after the fixes shipped in every new
+  /// build, and every online device showed the old rules.
+  ///
+  /// So the two are compared by [DatasetManifest.revision], and the remote one
+  /// wins a tie: the same revision names the same files, and taking the remote
+  /// keeps a device that downloaded them reading from its cache.
   Future<DatasetManifest> manifest() async {
     final cached = _manifest;
     if (cached != null) return cached;
 
+    final shipped = await assets.manifest();
+    // One this build cannot read is no rival: it neither outranks a usable
+    // remote nor can be fallen back on — refused below, only if it is needed.
+    final rival = shipped == null || shipped.isFuture ? null : shipped;
+
     final fromRemote = await remote?.manifest();
-    if (fromRemote != null && !fromRemote.isFuture) {
-      // Only against a manifest that came from the network. Falling back to
-      // the shipped one because the network was down is not evidence that a
-      // downloaded update is superseded, and pruning against it would throw
-      // the update away for having started offline.
+    final remoteUsable = fromRemote != null && !fromRemote.isFuture;
+    if (remoteUsable &&
+        (rival == null || fromRemote.revision >= rival.revision)) {
+      // Only against a manifest that came from the network and was chosen.
+      // Falling back to the shipped one because the network was down is not
+      // evidence that a downloaded update is superseded — and neither is a
+      // remote this build already outranks, which would otherwise prune the
+      // cache against a dataset it has just refused.
       cache?.prune({
         for (final entry in fromRemote.bundles) entry.file,
         for (final patch in fromRemote.patches) patch.file,
@@ -221,16 +239,15 @@ class DatasetRepository {
     }
     _fromNetwork = false;
 
-    final fromAssets = await assets.manifest();
-    if (fromAssets == null) {
+    if (shipped == null) {
       throw StateError('no dataset manifest in assets or from the network');
     }
     // A manifest from a newer builder is refused rather than half-read.
-    if (fromAssets.isFuture) {
+    if (shipped.isFuture) {
       throw StateError(
-          'manifest schema ${fromAssets.schema} is newer than this build');
+          'manifest schema ${shipped.schema} is newer than this build');
     }
-    return _manifest = fromAssets;
+    return _manifest = shipped;
   }
 
   Future<List<BundleEntry>> availableFactions() async =>

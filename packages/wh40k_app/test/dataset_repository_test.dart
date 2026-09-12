@@ -38,7 +38,8 @@ DatasetBundle bundleOf(String id, {String revision = 'r1'}) => DatasetBundle(
       },
     );
 
-(FakeSource, DatasetManifest) sourceWith(DatasetBundle bundle) {
+(FakeSource, DatasetManifest) sourceWith(DatasetBundle bundle,
+    {int manifestRevision = 0}) {
   final source = FakeSource();
   final bytes = bundle.encode();
   final entry = BundleEntry(
@@ -52,6 +53,7 @@ DatasetBundle bundleOf(String id, {String revision = 'r1'}) => DatasetBundle(
   );
   source.files[entry.file] = bytes;
   final manifest = DatasetManifest(
+    revision: manifestRevision,
     generated: 'test',
     source: 'test',
     bundles: [entry],
@@ -127,6 +129,67 @@ void main() {
             bundles: []);
       final repo = DatasetRepository(assets: assets);
       expect(repo.manifest(), throwsStateError);
+    });
+
+    // §3.38. Reachable is not the same as current: for two weeks the live
+    // site served a dataset from 28 August over the fixed one in every build.
+    test('a remote older than the binary loses to it', () async {
+      final (remote, _) =
+          sourceWith(bundleOf('orks', revision: 'published'), manifestRevision: 1);
+      final (assets, _) =
+          sourceWith(bundleOf('orks', revision: 'shipped'), manifestRevision: 2);
+
+      final repo = DatasetRepository(assets: assets, remote: remote);
+      expect((await repo.manifest()).revision, 2);
+      expect((await repo.bundle('orks')).revision, 'shipped');
+    });
+
+    test('and a remote newer than the binary still wins', () async {
+      // The reason the remote is consulted at all: a published fix reaches an
+      // installed app without a store release.
+      final (remote, _) =
+          sourceWith(bundleOf('orks', revision: 'published'), manifestRevision: 3);
+      final (assets, _) =
+          sourceWith(bundleOf('orks', revision: 'shipped'), manifestRevision: 2);
+
+      final repo = DatasetRepository(assets: assets, remote: remote);
+      expect((await repo.bundle('orks')).revision, 'published');
+    });
+
+    test('a tie goes to the remote, which names the same files', () async {
+      final (remote, _) =
+          sourceWith(bundleOf('orks', revision: 'published'), manifestRevision: 2);
+      final (assets, _) =
+          sourceWith(bundleOf('orks', revision: 'shipped'), manifestRevision: 2);
+
+      final repo = DatasetRepository(assets: assets, remote: remote);
+      expect((await repo.bundle('orks')).revision, 'published');
+    });
+
+    test('an unversioned remote never outranks a versioned binary', () async {
+      // Every manifest written before revisions existed reads as zero — which
+      // is what the live site was when this landed.
+      final (remote, _) = sourceWith(bundleOf('orks', revision: 'published'));
+      final (assets, _) =
+          sourceWith(bundleOf('orks', revision: 'shipped'), manifestRevision: 1);
+
+      final repo = DatasetRepository(assets: assets, remote: remote);
+      expect((await repo.bundle('orks')).revision, 'shipped');
+    });
+
+    test('a binary whose manifest it cannot read does not block the remote',
+        () async {
+      final (remote, _) = sourceWith(bundleOf('orks', revision: 'published'));
+      final assets = FakeSource()
+        ..manifestValue = const DatasetManifest(
+            schema: bundleSchemaVersion + 1,
+            revision: 99,
+            generated: 'future',
+            source: 'test',
+            bundles: []);
+
+      final repo = DatasetRepository(assets: assets, remote: remote);
+      expect((await repo.bundle('orks')).revision, 'published');
     });
 
     test('an unknown bundle id fails loudly', () async {
@@ -223,6 +286,20 @@ void main() {
           File('${dir.path}/layout-images/old.0000deadbeef.png').existsSync(),
           isFalse);
       expect(manifest.bundles, hasLength(1));
+    });
+
+    // Refusing a remote is not evidence either: pruning against a dataset the
+    // app has just outranked would delete the files a newer publish left.
+    test('a remote the binary outranks prunes nothing', () async {
+      final (remote, _) = sourceWith(bundleOf('orks'), manifestRevision: 1);
+      final (assets, _) = sourceWith(bundleOf('orks'), manifestRevision: 5);
+      cache.write('newer.abcdef123456.json.gz', [1, 2, 3]);
+
+      await DatasetRepository(assets: assets, remote: remote, cache: cache)
+          .manifest();
+
+      expect(
+          File('${dir.path}/newer.abcdef123456.json.gz').existsSync(), isTrue);
     });
 
     // Starting offline is not evidence that a downloaded update is stale.
