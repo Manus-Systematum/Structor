@@ -861,8 +861,10 @@ Storm, Daemonhost, the three Astra Militarum weapon batteries, Myphitic
 Blight-hauler, Starfangs, Hippogriff AFV, Ripper Swarms, Sir Hekhtur, XV9
 Hazard Battlesuits, the Spore Mines and Mucolid Spores.
 
-**14 where the composition and the price brackets disagree about how many
-models the unit has.** The builder reads the composition and pricing reads the
+**13 where the composition and the price brackets disagree about how many
+models the unit has.** The 29th finding is Seeker Chariot, a Legends datasheet
+nobody publishes a price for, which is §3.28's case rather than this one — it
+was counted here once, which made the table's own count one more than its rows. The builder reads the composition and pricing reads the
 brackets, and both are being faithful to records that do not agree:
 
 | datasheet | brackets at | composition's smallest |
