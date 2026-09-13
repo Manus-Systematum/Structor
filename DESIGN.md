@@ -1202,11 +1202,56 @@ value; it now uses Centurion Devastators (350 in 40kdc, 365 in the manual). A
 new test checks the parent keeps its own page's prices with scopes, and that
 every scoped operation is scoped throughout. It failed against the old patch.
 
-**Not yet decided: prices by host army.** The engine never reads
+**Prices by host army** *(settled in §3.41)*. The engine never reads
 `allied_points`. A Blood Angels army taking the parent's Vanguard Veterans is
 priced at 105, not the Blood Angels page's 110. This was already true before
 the patch defect, which had simply moved the error onto every other chapter.
 Pricing by the army's own faction is engine work, not a data fix.
+
+### 3.41 A datasheet costs what the army taking it pays
+
+**Measured before building.** 58 datasheets carry `allied_points`, a
+second price list tagged with a `host_faction`. They fall into three groups:
+Space Marine datasheets priced for Black Templars, Blood Angels, Dark Angels,
+Deathwatch and Space Wolves; Chaos Space Marine and Daemon datasheets priced
+for the four god legions; and 29 Imperial Agents datasheets under the host
+`imperium`. Every entry with a real faction as host was checked against that
+army's own Munitorum page and **all agree**. In all but one case that price
+differs from the datasheet's own page. The engine read none of them.
+
+**Decided.**
+
+- `PointsCalculator` passes the roster's faction to `bracketFor`. Where the
+  datasheet has prices for that army, those are used, copy scope included.
+  An army with no prices of its own — Ultramarines taking Vanguard Veterans
+  — pays the datasheet's own rate.
+- A host page prints exact sizes (`10 models: 220`) where the datasheet's
+  own list has a range (6–10). A host price stands for the own bracket its
+  count falls in, with the same copy scope, so seven Blood Angels Vanguard
+  Veterans cost 220 rather than going unpriced.
+- A host list with no price for a size leaves the unit unpriced. Falling back
+  to the other army's rate would hide the gap.
+- `imperium` is not an army, so no roster ever matches it. Its entries are
+  not host prices anyway: Sanctifiers' "allied" 9 models at 100 is simply
+  the current price, and the dataset patch already corrects the stale
+  11-model record.
+
+**Checked two ways.** A probe over every host datasheet, every size and
+copies 1–3: 378 priced cases, 267 change price in the host army, and none
+that a real faction could price before goes unpriced. The 9 lost are the
+`imperium` ones, which no army selects. Then through the real loader and
+calculator: Vanguard Veterans with Jump Packs, 5 models, cost 105 in an
+Adeptus Astartes army and 110 in a Blood Angels one, as the two pages print.
+The host-army tests fail with the army argument removed.
+
+Saved armies need nothing new. A snapshot keeps each unit record whole, so
+`allied_points` is already in it. An army's total changes the next time it is
+priced, which is the correction itself (§2.2 governs data, not arithmetic).
+
+**Left open.** The Armies list shows the total stored at the last save
+(`roster_store.dart`), not a fresh price. A saved Blood Angels or god-legion
+army that takes host-priced datasheets shows its old total in the list and
+the new one on its own screen until it is saved again.
 
 ## 4. Army builder
 
