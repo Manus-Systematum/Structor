@@ -1116,6 +1116,52 @@ The deploy step that was skipped is still a manual one: `deploy/deploy.sh` in
 harmless for anyone who updates the app; it does not make it unnecessary for
 anyone who does not.
 
+### 3.39 Crusade progression is kept, and shown by nothing
+
+**Decision (user, 2026-09-13):** Crusade upgrades will be added later, so they
+stay in the dataset now and are not displayed. Nothing is removed to be
+recovered later.
+
+The BSData mapper already excluded them. One filter skips every subtree named
+crusade, battle trait, battle scar, relic, specialism, requisition or weapon
+modification, and it earned its place: those trees link out to game-wide
+shared data, and read as a datasheet's own they gave an Enforcer Commander 180
+abilities and made `Precise` a buyable wargear line on 1,113 datasheets. So
+the filter stays exactly as it is for the datasheet. What changed is what
+happens to what it skips: the Crusade part is **recorded instead of
+discarded**, into `core/<faction>/crusade.json`, one record per datasheet.
+
+- **Kept shallow, by BSData id.** Each record names the subtree and what it
+  holds one level down — Skarbrand → `Crusade` → `Mighty Champions`. Resolving
+  further walks into the same shared trees that caused the pollution; the raw
+  snapshot keeps everything beneath, and the ids are how the Crusade work will
+  find it. 1,583 datasheets, 3,161 subtrees, 34 factions.
+- **Not bundled.** The bundler reads a fixed file list and does not name
+  `crusade.json`, so no app downloads bytes it cannot show. Adding it to that
+  list is the first step of building Crusade, and a test fails if a bundle
+  starts carrying it before then.
+- **Only what is certainly Crusade.** `warlord` and `enhancement` are
+  matched-play and stay handled elsewhere. `white dwarf` and `expanding the
+  empire` stay excluded but are not labelled Crusade on a guess; a White Dwarf
+  *battle trait* is still caught by the trait term.
+
+Verified additive: every bundle and the patch rebuilt byte-identical, and the
+manifest revision did not move (§3.38).
+
+**The leak test is on a fixture, and the first version was on the wrong
+thing.** It checked that the kept names — `Crusade`, `Mighty Champions` — were
+not among a real datasheet's abilities, and passed with the filter switched
+off: those are groups with no rule text and never become abilities. The
+pollution is the rules *inside* the trees. The test now builds a datasheet
+with a rule of its own and a Crusade group holding a rule, and asserts the
+first is read, the second reaches neither abilities nor wargear budgets, and
+the group is kept. Checked to fail with the filter off.
+
+**For the BSData wargear-slot mapper still to be built:** the same rule
+applies to slots. A slot named `Crusade`, or an option tied to the Crusade
+Force, is carried into the dataset tagged and hidden from the editor, never
+dropped.
+
 ## 4. Army builder
 
 ### 4.1 Screen structure
