@@ -332,7 +332,9 @@ void main() {
     // 40kdc publishes twenty of its detachment stratagems as structure with
     // no wording, and Wahapedia's export — the text source — was older than
     // the codex. Refetching it filled twelve, and the faction pack behind the
-    // dataset patch filled five of the rest. The three left are ones
+    // dataset patch filled six of the rest — Impervious once the 2026-09-13
+    // re-merge left its bundled text empty for the pack to fill. The two left
+    // are ones
     // Wahapedia dropped when it rewrote its Ork data for the codex and no
     // pack covers, so no source in the pipeline has them; the app says so on
     // the card (§7.6) rather than filling the gap from memory (§0).
@@ -349,7 +351,6 @@ void main() {
       reason: released.map((s) => '${s.id} [${s.gameVersion.dataslate}]').join(', '),
     );
     expect(released.map((s) => s.id).toSet(), {
-      'impervious-blitz-brigade',
       'clownin-dakka-shoota-boyz',
       'gooped-into-action-da-big-hunt',
     });

@@ -196,22 +196,65 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
     final repo = DatasetRepository();
 
+    // Centurion Devastators, 4 to 6 models: 350 in 40kdc, 365 in the manual.
     int costOf(List<SourceUnit> units) => units
-        .firstWhere((u) => u.id == 'assault-intercessor-squad')
+        .firstWhere((u) => u.id == 'centurion-devastator-squad')
         .points
-        .first
+        .firstWhere((p) => p.modelsMax == 6)
         .cost;
 
     final shipped = DatasetBundle.decode((await const AssetBundleSource()
         .fetch((await repo.manifest()).entry('adeptus-astartes')!.file))!);
     expect(
       costOf(shipped.file('units').map(SourceUnit.fromJson).toList()),
-      75,
+      350,
       reason: 'the bundle is what 40kdc published',
     );
 
-    expect(costOf((await repo.faction('adeptus-astartes')).faction.units), 80,
+    expect(costOf((await repo.faction('adeptus-astartes')).faction.units), 365,
         reason: 'the patch carries the published price');
+  });
+
+  // §3.40. A chapter's manual page lists its parent's datasheets at the
+  // chapter's own price. The generator once took the first page it read —
+  // Blood Angels, alphabetically — and wrote those prices over the Space
+  // Marine datasheet itself, so Vanguard Veterans cost 110 in every chapter
+  // and the copy scopes were dropped on the way. Both checked here: the
+  // parent keeps its own page's price, and a scoped price stays scoped.
+  test('a chapter\'s price never lands on its parent\'s datasheet', () async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final units =
+        (await DatasetRepository().faction('adeptus-astartes')).faction.units;
+    List<PointsBracket> pointsOf(String id) =>
+        units.firstWhere((u) => u.id == id).points;
+
+    final vanguard = pointsOf('vanguard-veteran-squad-with-jump-packs');
+    expect(
+      [
+        for (final p in vanguard)
+          (p.models, p.modelsMax, p.unitCountMin, p.unitCountMax, p.cost),
+      ],
+      containsAll([
+        (5, null, 1, 2, 105),
+        (5, null, 3, null, 115),
+        (6, 10, 1, 2, 210),
+        (6, 10, 3, null, 220),
+      ]),
+      reason: 'the Space Marine page, not the Blood Angels one (110 / 220)',
+    );
+    expect(pointsOf('assault-intercessor-squad').first.cost, 75);
+    expect(pointsOf('captain-with-jump-pack').first.cost, 75);
+
+    // Every price the patch sets on a copy-scaled datasheet keeps its scope.
+    final patch = (await DatasetRepository().patches()).patches.single;
+    for (final op in patch.operations) {
+      final points = op.values['points'];
+      if (points is! List) continue;
+      final scoped = points.where((p) => (p as Map).containsKey('unit_count_min'));
+      if (scoped.isEmpty) continue;
+      expect(scoped.length, points.length,
+          reason: '${op.faction}/${op.id}: some brackets lost their copy scope');
+    }
   });
 
   // §3.22. Every saved army is priced and played from its **snapshot**, and
@@ -254,7 +297,9 @@ void main() {
     final repriced = patch.operations
         .where((op) => op.values.containsKey('points'))
         .length;
-    // **73 when the manual was fresh, 21 now.** The generator emits an
+    // **73 when the manual was fresh, 21 after the 2026-08-31 fetch, 14 once
+    // the seven chapter prices stopped landing on the parent (§3.40).** The
+    // generator emits an
     // operation only where the pack and the dataset disagree, and the fetch
     // of 2026-08-31 brought 40kdc level on fifty-two of them — the patch
     // shrinking as upstream catches up is the patch working. What a floor
@@ -262,8 +307,8 @@ void main() {
     // grey ones, which took every repricing out at once. If this ever reaches
     // zero, check which of the two happened before deleting it: the sibling
     // test above names a datasheet the bundle still lags on.
-    expect(repriced, greaterThan(15),
-        reason: '21 units are still repriced by the August manual');
+    expect(repriced, greaterThan(10),
+        reason: '14 units are still repriced by the August manual');
   });
 
   // §3.19. Every published name carries a hash of the bytes under it, so an

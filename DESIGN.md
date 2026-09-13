@@ -1162,6 +1162,52 @@ applies to slots. A slot named `Crusade`, or an option tied to the Crusade
 Force, is carried into the dataset tagged and hidden from the editor, never
 dropped.
 
+### 3.40 A chapter's price is the chapter's, and a price keeps its scope
+
+**What went wrong.** A device check found Vanguard Veterans with Jump Packs at
+110 in a Space Marine army. The Munitorum Field Manual's Space Marine page says
+105, and so did the bundle. The dataset patch set 110 / 120 / 220 / 230:
+the Blood Angels page's prices for the same datasheet. A chapter's page lists
+its parent's datasheets at the chapter's own rate. `tools/make-update.py`
+read pages alphabetically, `blood-angels` before `space-marines`, and wrote
+the first price it found for a record onto the record. Seven Adeptus Astartes
+datasheets were repriced this way in every chapter's army, among them
+Assault Intercessors (80 for 75), Bladeguard Veterans, and Captain and
+Chaplain with Jump Pack.
+
+**A second defect in the same operations.** Each price was rebuilt as
+`{models, cost}`. That dropped `unit_count_min/max`, so a unit priced by
+copy had two prices for the same size and nothing to choose between them. It
+also dropped `models_max`, so a 6–10 model bracket became exactly 10.
+
+**Decided.**
+
+- Only a faction's own page writes to its datasheets' `points`. A chapter's
+  price for a parent datasheet is compared with that record's `allied_points`
+  for the chapter and counted; it is never written into `points`.
+- A printed price replaces the cost of the bracket it matches, by copy scope
+  and model count, and the bracket keeps its other fields. A range bracket is
+  cut short where the card prints a larger count inside it (Ironstrider
+  Ballistarii: one 1–3 bracket at 80 became 1, 2 and 3 models at 80, 160 and
+  250). A bracket is only written new when the record has none for a printed
+  price, and then it carries the card's scope.
+- An operation is still written only where the costs differ. A record that
+  already has the card's costs in a different bracket shape is the merge's
+  reading, not a disagreement.
+
+The patch went from 21 price operations to 14. The seven removed were all
+the Blood Angels prices. The earlier test "a unit whose points changed
+carries the new price" asserted Assault Intercessors at **80**, the bug's
+value; it now uses Centurion Devastators (350 in 40kdc, 365 in the manual). A
+new test checks the parent keeps its own page's prices with scopes, and that
+every scoped operation is scoped throughout. It failed against the old patch.
+
+**Not yet decided: prices by host army.** The engine never reads
+`allied_points`. A Blood Angels army taking the parent's Vanguard Veterans is
+priced at 105, not the Blood Angels page's 110. This was already true before
+the patch defect, which had simply moved the error onto every other chapter.
+Pricing by the army's own faction is engine work, not a data fix.
+
 ## 4. Army builder
 
 ### 4.1 Screen structure

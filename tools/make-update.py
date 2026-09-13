@@ -19,7 +19,7 @@ faction's copy of the same detachment, so the structural fields — phase,
 timing, whose turn — are taken from that sibling and only the id, the text
 and the cost come from the pack.
 """
-import json, re, glob, os, collections
+import json, re, glob, os, collections, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MERGED = f'{ROOT}/data/merged/core'
@@ -760,6 +760,84 @@ MFM_SLUG = {'space-marines': 'adeptus-astartes',
 MODELS = re.compile(r'(\d+)\s*model')
 
 
+def _scope(text):
+    """Which copies of a unit a price block covers, as (first, last).
+
+    `YOUR 1ST UNIT COSTS` -> (1, 1); `YOUR 1ST TO 2ND UNITS COST` -> (1, 2);
+    `YOUR 3RD + UNIT COSTS` -> (3, None); `YOUR UNIT COSTS` -> None.
+    """
+    text = (text or '').upper()
+    found = [int(n) for n in re.findall(r'(\d+)(?:ST|ND|RD|TH)', text)]
+    if not found:
+        return None
+    if '+' in text:
+        return (found[0], None)
+    return (found[0], found[-1])
+
+
+def mfm_points(entry, current):
+    """The card's prices written onto the record's own brackets.
+
+    A record's bracket carries more than the card prints: the range of models
+    it covers (`models_max`) and which copies of the unit it prices
+    (`unit_count_min/max`). The card only says `10 models` and a scope line.
+    So each printed price replaces the cost of the bracket it matches, and
+    that bracket keeps everything else. A bracket matched by range is cut
+    short where the card prints a price for a larger count inside it. Only
+    when the record has no bracket for a printed price is a new one written,
+    with the scope the card gives.
+    """
+    rows = []
+    for block in entry['costs']:
+        scope = _scope(block.get('scope'))
+        for tier in block['tiers']:
+            found = MODELS.search(tier['of'])
+            if found:
+                rows.append((int(found.group(1)), scope, tier['cost']))
+    if not rows:
+        return None
+
+    def scoped(p, scope):
+        if scope is None:
+            return p.get('unit_count_min') is None
+        return (p.get('unit_count_min'), p.get('unit_count_max')) == scope
+
+    def within(p, n):
+        top = p.get('models_max')
+        return top is not None and p['models'] <= n <= top
+
+    out, used = [], set()  # out: (index of the matched bracket or None, bracket)
+    for n, scope, cost in rows:
+        free = [i for i, p in enumerate(current)
+                if i not in used and scoped(p, scope)]
+        match = next((i for i in free if current[i].get('models') == n
+                      and current[i].get('models_max') is None), None)
+        if match is None:
+            match = next((i for i in free if within(current[i], n)), None)
+        if match is None:
+            fresh = {'models': n, 'cost': cost}
+            if scope is not None:
+                fresh['unit_count_min'] = scope[0]
+                if scope[1] is not None:
+                    fresh['unit_count_max'] = scope[1]
+            out.append((None, fresh))
+            continue
+        used.add(match)
+        bracket = {**current[match], 'cost': cost}
+        if bracket.get('models_max') is not None:
+            larger = [m for m, s, _ in rows
+                      if s == scope and n < m <= bracket['models_max']]
+            if larger:
+                bracket['models_max'] = min(larger) - 1
+            if bracket['models_max'] <= bracket['models']:
+                del bracket['models_max']
+        out.append((match, bracket))
+    # Every bracket matched: keep the record's own order.
+    if all(i is not None for i, _ in out) and len(out) == len(current):
+        out.sort(key=lambda row: row[0])
+    return [p for _, p in out]
+
+
 def points_ops():
     if not os.path.exists(MFM):
         return [], collections.Counter()
@@ -820,31 +898,35 @@ def points_ops():
                 continue
             at = owner[key(entry['name'])]
 
-            # Grouped by model count and then by scope, which is the order the
-            # app's own records are in.
-            counts, priced = [], collections.defaultdict(list)
-            for block in entry['costs']:
-                for tier in block['tiers']:
-                    found = MODELS.search(tier['of'])
-                    if not found:
-                        continue
-                    n = int(found.group(1))
-                    if n not in priced:
-                        counts.append(n)
-                    priced[n].append(tier['cost'])
-            wanted = [{'models': n, 'cost': c}
-                      for n in counts for c in priced[n]]
-            if not wanted:
-                stats['no model counts on the card'] += 1
-                continue
-
-            current = record.get('points') or []
-            if sorted(p.get('cost') for p in current) != \
-                    sorted(p['cost'] for p in wanted):
-                if once({'faction': at, 'file': 'units', 'op': 'set',
-                         'id': record['id'], 'values': {'points': wanted},
-                         'note': 'Munitorum Field Manual'}):
-                    stats['points corrected'] += 1
+            # A chapter's page prices its parent's datasheets at the chapter's
+            # own rate, which the bundle keeps apart as `allied_points` for that
+            # host. Written into `points` it would reprice every other chapter.
+            if at != faction:
+                have = sorted(p.get('cost') for p in record.get('allied_points') or []
+                              if p.get('host_faction') == faction)
+                mfm_costs = sorted(t['cost'] for b in entry['costs']
+                                   for t in b['tiers'] if MODELS.search(t['of']))
+                stats['chapter price for a parent datasheet, not written'
+                      if have == mfm_costs or not have
+                      else 'chapter price disagrees with allied_points'] += 1
+                if have and have != mfm_costs:
+                    print('  allied price differs:', faction, record['id'],
+                          have, mfm_costs, file=sys.stderr)
+            else:
+                current = record.get('points') or []
+                wanted = mfm_points(entry, current)
+                if wanted is None:
+                    stats['no model counts on the card'] += 1
+                    continue
+                # Only a price the card contradicts is written. A record that
+                # already carries the card's costs in a different bracket shape
+                # is the merge's reading, not something the card disputes.
+                if sorted(p.get('cost') for p in current) != \
+                        sorted(p['cost'] for p in wanted):
+                    if once({'faction': at, 'file': 'units', 'op': 'set',
+                             'id': record['id'], 'values': {'points': wanted},
+                             'note': 'Munitorum Field Manual'}):
+                        stats['points corrected'] += 1
 
             if entry.get('leader'):
                 targets = [units[key(n)]['id'] for n in entry['leader']

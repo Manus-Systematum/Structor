@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": 20260913222752,
+  "revision": 20260913232623,
   "generated": "local",
   "source": "40kdc-data",
   "bundles": [
@@ -351,9 +351,9 @@
     {
       "id": "2026-08-26",
       "name": "August 2026 rules update",
-      "file": "patch-2026-08-26.8d67911af3d0.json.gz",
-      "sha256": "8d67911af3d00fb9a347beb9d6703fa0c9d9451897b1e08a6a6e9c73d03bf349",
-      "bytes": 77539,
+      "file": "patch-2026-08-26.93d99b9abb98.json.gz",
+      "sha256": "93d99b9abb9888915acfc2c909980d96a25747d7492db12f6dc2beb52b54308d",
+      "bytes": 77551,
       "appliesTo": "pre-launch-provisional"
     }
   ],

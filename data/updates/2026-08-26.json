@@ -5227,6 +5227,16 @@
    "faction": "orks",
    "file": "stratagems",
    "op": "set",
+   "id": "impervious-blitz-brigade",
+   "values": {
+    "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Battlewagon, Kill Rig or Hunta Rig unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets your unit, if the Strength characteristic of that attack is greater than the Toughness characteristic of your unit, subtract 1 from the Wound roll."
+   },
+   "note": "Blitz Brigade pack"
+  },
+  {
+   "faction": "orks",
+   "file": "stratagems",
+   "op": "set",
    "id": "mekanised-brutality-blitz-brigade",
    "values": {
     "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Battlewagon, Kill Rig or Hunta Rig unit from your army that has not been selected to move this phase.\n\n**EFFECT:** When this unit ends a normal move, units embarked within this unit can make an assault disembark move (Core Rules, 18.06)."
@@ -9245,7 +9255,7 @@
    "op": "set",
    "id": "hulking-brutes-bully-boyz",
    "values": {
-    "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Nobz or Meganobz unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
+    "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly Meganobz/Nobz unit.\n\n**TARGET:** That MEGANOBZ/NOBZ unit.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
    },
    "note": "orks pack rules update"
   },
@@ -10195,27 +10205,36 @@
     "points": [
      {
       "models": 1,
-      "cost": 80
+      "cost": 80,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 2,
+      "cost": 160,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 3,
+      "cost": 250,
+      "unit_count_min": 1,
+      "unit_count_max": 2
      },
      {
       "models": 1,
-      "cost": 95
+      "cost": 95,
+      "unit_count_min": 3
      },
      {
       "models": 2,
-      "cost": 160
-     },
-     {
-      "models": 2,
-      "cost": 175
+      "cost": 175,
+      "unit_count_min": 3
      },
      {
       "models": 3,
-      "cost": 250
-     },
-     {
-      "models": 3,
-      "cost": 265
+      "cost": 265,
+      "unit_count_min": 3
      }
     ]
    },
@@ -10230,6 +10249,7 @@
     "points": [
      {
       "models": 3,
+      "models_max": 5,
       "cost": 80
      },
      {
@@ -10253,6 +10273,7 @@
      },
      {
       "models": 6,
+      "models_max": 10,
       "cost": 100
      },
      {
@@ -10358,35 +10379,49 @@
     "points": [
      {
       "models": 4,
-      "cost": 100
+      "cost": 100,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "models_max": 8,
+      "cost": 125,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 9,
+      "cost": 225,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "cost": 250,
+      "unit_count_min": 1,
+      "unit_count_max": 2
      },
      {
       "models": 4,
-      "cost": 120
+      "cost": 120,
+      "unit_count_min": 3
      },
      {
       "models": 5,
-      "cost": 125
-     },
-     {
-      "models": 5,
-      "cost": 145
-     },
-     {
-      "models": 9,
-      "cost": 225
+      "models_max": 8,
+      "cost": 145,
+      "unit_count_min": 3
      },
      {
       "models": 9,
-      "cost": 245
+      "cost": 245,
+      "unit_count_min": 3
      },
      {
       "models": 10,
-      "cost": 250
-     },
-     {
-      "models": 10,
-      "cost": 270
+      "cost": 270,
+      "unit_count_min": 3
      }
     ]
    },
@@ -10583,25 +10618,6 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "outrider-squad",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 70
-     },
-     {
-      "models": 6,
-      "cost": 140
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
   },
   {
    "faction": "black-templars",
@@ -10711,79 +10727,6 @@
    "note": "Munitorum Field Manual, LEADER section"
   },
   {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "assault-intercessor-squad",
-   "values": {
-    "points": [
-     {
-      "models": 5,
-      "cost": 80
-     },
-     {
-      "models": 10,
-      "cost": 150
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "assault-intercessors-with-jump-packs",
-   "values": {
-    "points": [
-     {
-      "models": 5,
-      "cost": 95
-     },
-     {
-      "models": 5,
-      "cost": 105
-     },
-     {
-      "models": 10,
-      "cost": 180
-     },
-     {
-      "models": 10,
-      "cost": 190
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "bladeguard-veteran-squad",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 85
-     },
-     {
-      "models": 3,
-      "cost": 95
-     },
-     {
-      "models": 6,
-      "cost": 170
-     },
-     {
-      "models": 6,
-      "cost": 180
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
    "faction": "blood-angels",
    "file": "leader-attachments",
    "op": "add",
@@ -10862,21 +10805,6 @@
    "note": "Munitorum Field Manual, LEADER section"
   },
   {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "captain-with-jump-pack",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 80
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
    "faction": "blood-angels",
    "file": "leader-attachments",
    "op": "add",
@@ -10949,21 +10877,6 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "chaplain-with-jump-pack",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 80
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
   },
   {
    "faction": "blood-angels",
@@ -11064,25 +10977,6 @@
    "note": "Munitorum Field Manual, LEADER section"
   },
   {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "repulsor-executioner",
-   "values": {
-    "points": [
-     {
-      "models": 1,
-      "cost": 230
-     },
-     {
-      "models": 1,
-      "cost": 250
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
    "faction": "blood-angels",
    "file": "leader-attachments",
    "op": "add",
@@ -11102,33 +10996,6 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "vanguard-veteran-squad-with-jump-packs",
-   "values": {
-    "points": [
-     {
-      "models": 5,
-      "cost": 110
-     },
-     {
-      "models": 5,
-      "cost": 120
-     },
-     {
-      "models": 10,
-      "cost": 220
-     },
-     {
-      "models": 10,
-      "cost": 230
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
   },
   {
    "faction": "chaos-space-marines",
@@ -11156,11 +11023,14 @@
     "points": [
      {
       "models": 2,
-      "cost": 160
+      "cost": 160,
+      "unit_count_min": 1,
+      "unit_count_max": 2
      },
      {
       "models": 2,
-      "cost": 170
+      "cost": 170,
+      "unit_count_min": 3
      }
     ]
    },
@@ -11690,25 +11560,6 @@
    "note": "Munitorum Field Manual, LEADER section"
   },
   {
-   "faction": "adeptus-astartes",
-   "file": "units",
-   "op": "set",
-   "id": "centurion-devastator-squad",
-   "values": {
-    "points": [
-     {
-      "models": 3,
-      "cost": 175
-     },
-     {
-      "models": 6,
-      "cost": 365
-     }
-    ]
-   },
-   "note": "Munitorum Field Manual"
-  },
-  {
    "faction": "deathwatch",
    "file": "leader-attachments",
    "op": "add",
@@ -11909,27 +11760,38 @@
     "points": [
      {
       "models": 5,
-      "cost": 85
+      "models_max": 8,
+      "cost": 85,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "cost": 150,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 9,
+      "cost": 160,
+      "unit_count_min": 1,
+      "unit_count_max": 2
      },
      {
       "models": 5,
-      "cost": 95
+      "models_max": 8,
+      "cost": 95,
+      "unit_count_min": 3
      },
      {
       "models": 10,
-      "cost": 150
-     },
-     {
-      "models": 10,
-      "cost": 160
+      "cost": 160,
+      "unit_count_min": 3
      },
      {
       "models": 9,
-      "cost": 160
-     },
-     {
-      "models": 9,
-      "cost": 170
+      "cost": 170,
+      "unit_count_min": 3
      }
     ]
    },
@@ -11963,6 +11825,7 @@
     "points": [
      {
       "models": 6,
+      "models_max": 11,
       "cost": 50
      },
      {
@@ -11982,27 +11845,36 @@
     "points": [
      {
       "models": 1,
-      "cost": 50
+      "cost": 50,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 2,
+      "cost": 100,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 3,
+      "cost": 165,
+      "unit_count_min": 1,
+      "unit_count_max": 2
      },
      {
       "models": 1,
-      "cost": 60
+      "cost": 60,
+      "unit_count_min": 3
      },
      {
       "models": 2,
-      "cost": 100
-     },
-     {
-      "models": 2,
-      "cost": 110
+      "cost": 110,
+      "unit_count_min": 3
      },
      {
       "models": 3,
-      "cost": 165
-     },
-     {
-      "models": 3,
-      "cost": 175
+      "cost": 175,
+      "unit_count_min": 3
      }
     ]
    },
@@ -12067,6 +11939,26 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "centurion-devastator-squad",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 175
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 365
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -12176,6 +12068,26 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "outrider-squad",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 70
+     },
+     {
+      "models": 4,
+      "models_max": 7,
+      "cost": 140
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -12443,6 +12355,7 @@
     "points": [
      {
       "models": 6,
+      "models_max": 11,
       "cost": 90
      },
      {

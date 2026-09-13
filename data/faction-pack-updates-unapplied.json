@@ -504,6 +504,14 @@
   "text": "'If a weapon equipped by a model from your army has the [HAZARDOUS] ability from multiple sources, each time you take a Hazardous test for that weapon, it is failed on a roll of 1-3.'"
  },
  {
+  "why": "the distance is not in the rule exactly once",
+  "pack": "orks",
+  "subject": "Conniving Runts Stratagem, Target Section",
+  "directive": "Change 9\" to 8\".",
+  "category": "DREAD MOB DETACHMENT",
+  "text": "Change 9\" to 8\"."
+ },
+ {
   "why": "no stratagem of that name",
   "pack": "orks",
   "subject": "Tide of Muscle Stratagem, Effect Section",
