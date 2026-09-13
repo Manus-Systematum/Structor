@@ -274,6 +274,24 @@ class UnitEditorSheet extends StatelessWidget {
                     trailing:
                         loadout.isUnpublished ? 'no options published' : null),
 
+                // Weapon slots and counted swaps, one block per model (§4.20).
+                // The model's name leads every block, even when there is only
+                // one: which model a choice is on is the context the choice
+                // needs.
+                if (loadout.slots.isNotEmpty || loadout.swaps.isNotEmpty)
+                  _SlotsSection(
+                    loadout: loadout,
+                    unit: unit,
+                    composition: dataset.composition(datasheet.id),
+                    carried: carried,
+                    nameOf: (id) => _nameOf(id, datasheet),
+                    costOf: datasheet.costOfWargear,
+                    onChoose: (slot, choices) => onEdit((e) =>
+                        e.chooseInSlot(roster, instanceId, loadout, slot, choices)),
+                    onSwap: (swap, n) => onEdit((e) =>
+                        e.setSwapCount(roster, instanceId, loadout, swap, n)),
+                  ),
+
                 for (final entry in loadout.fixed.entries)
                   _FixedRow(
                     label: _nameOf(entry.key, datasheet),
@@ -343,11 +361,7 @@ class UnitEditorSheet extends StatelessWidget {
                   dataset: dataset,
                   datasheet: datasheet,
                   carried: carried,
-                  takeable: {
-                    ...loadout.fixed.keys,
-                    for (final group in loadout.groups) ...group.items,
-                    for (final counter in loadout.counters) counter.itemId,
-                  },
+                  takeable: loadout.takeable,
                 ),
 
                 if (datasheet.attachesToUnit) ...[
@@ -589,6 +603,301 @@ class _GroupRow extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+/// Weapon slots and counted swaps, grouped by the model they are on (§4.20).
+///
+/// **Arranged from a measurement, not a preference** (§4.20). Across 954
+/// matched-play datasheets, half of all slots offer exactly one alternative,
+/// a third offer two or three, and one in eleven offers four or more — so the
+/// control follows the count: a switch, chips, or a menu. A slot is titled by
+/// the weapon the model starts with, since one in seven slot names says
+/// nothing ("Weapon 1"). A swap is named by the loadout it gives, because the
+/// source's own names wrap on a phone two times in three and repeat the
+/// model's name down every row.
+class _SlotsSection extends StatelessWidget {
+  final UnitLoadout loadout;
+  final RosterUnit unit;
+  final UnitComposition? composition;
+  final Map<String, int> carried;
+  final String Function(String) nameOf;
+  final int Function(String) costOf;
+  final void Function(int slot, List<int> choices) onChoose;
+  final void Function(int swap, int count) onSwap;
+
+  const _SlotsSection({
+    required this.loadout,
+    required this.unit,
+    required this.composition,
+    required this.carried,
+    required this.nameOf,
+    required this.costOf,
+    required this.onChoose,
+    required this.onSwap,
+  });
+
+  /// `Veteran w/ boltgun and power weapon` is a Veteran.
+  static String _modelName(String model) {
+    final at = model.indexOf(' w/ ');
+    return at < 0 ? model : model.substring(0, at);
+  }
+
+  String _items(List<String> items) {
+    if (items.isEmpty) return 'Nothing';
+    final tally = <String, int>{};
+    for (final item in items) {
+      tally[item] = (tally[item] ?? 0) + 1;
+    }
+    final named = [
+      for (final e in tally.entries)
+        e.value > 1 ? '${e.value} × ${nameOf(e.key)}' : nameOf(e.key),
+    ];
+    return named.join(' and ');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final reading = loadout.read(unit, composition);
+
+    // Models in the order the data gives them, each once.
+    final models = <String>[];
+    for (final slot in loadout.slots) {
+      final name = _modelName(slot.model);
+      if (!models.contains(name)) models.add(name);
+    }
+    for (final swap in loadout.swaps) {
+      final name = _modelName(swap.model);
+      if (!models.contains(name)) models.add(name);
+    }
+
+    final over = [
+      for (final e in loadout.itemCaps.entries)
+        if ((carried[e.key] ?? 0) > e.value) e,
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (final model in models) ...[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 2),
+            child: Text(model,
+                style: TextStyle(
+                    fontSize: 11.5,
+                    fontWeight: FontWeight.w700,
+                    color: scheme.onSurfaceVariant)),
+          ),
+          for (final (index, slot) in loadout.slots.indexed)
+            if (_modelName(slot.model) == model)
+              _slot(context, index, slot, reading.slots[index]),
+          ..._swaps(context, model, reading),
+        ],
+        // A limit several controls share is shown once, where it is broken:
+        // a Stealth team's fusion blasters come from a slot and a swap, and
+        // neither control alone can see the total.
+        for (final e in over)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
+            child: Text(
+              '${nameOf(e.key)}: ${carried[e.key]}, limit ${e.value}',
+              style: TextStyle(fontSize: 11, color: scheme.error),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _slot(BuildContext context, int index, LoadoutSlot slot, List<int> taken) {
+    final scheme = Theme.of(context).colorScheme;
+    final title = slot.defaultItems.isEmpty ? slot.name : _items(slot.defaultItems);
+
+    // Several models share the slot: how many took each alternative.
+    if (slot.seats > 1) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 2, 20, 0),
+            child: Text(title, style: const TextStyle(fontSize: 13)),
+          ),
+          for (final (choice, items) in slot.choices.indexed)
+            _Row(
+              label: _items(items),
+              detail: [
+                'instead of ${title[0].toLowerCase()}${title.substring(1)}',
+                if (_cost(items) > 0) '${_cost(items)} pts each',
+              ].join(' · '),
+              child: _Counter(
+                value: taken.where((c) => c == choice).length,
+                min: 0,
+                max: slot.seats - taken.where((c) => c != choice).length,
+                onChange: (n) => onChoose(index, [
+                  ...taken.where((c) => c != choice),
+                  for (var i = 0; i < n; i++) choice,
+                ]),
+              ),
+            ),
+        ],
+      );
+    }
+
+    final current = taken.isEmpty ? -1 : taken.single;
+
+    // One alternative: a switch.
+    if (slot.choices.length == 1) {
+      final alternative = _items(slot.choices.single);
+      final cost = _cost(slot.choices.single);
+      return _Row(
+        label: title,
+        detail: [
+          'Swap for ${alternative[0].toLowerCase()}${alternative.substring(1)}',
+          if (cost > 0) '$cost pts',
+        ].join(' · '),
+        child: Switch(
+          value: current == 0,
+          onChanged: (on) => onChoose(index, on ? const [0] : const []),
+        ),
+      );
+    }
+
+    // Two or three: every option visible.
+    if (slot.choices.length <= 3) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(20, 2, 12, 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title,
+                style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant)),
+            const SizedBox(height: 2),
+            Wrap(
+              spacing: 6,
+              runSpacing: 4,
+              children: [
+                ChoiceChip(
+                  label: Text(title),
+                  selected: current == -1,
+                  onSelected: (_) => onChoose(index, const []),
+                ),
+                for (final (choice, items) in slot.choices.indexed)
+                  ChoiceChip(
+                    label: Text(_items(items)),
+                    selected: current == choice,
+                    onSelected: (_) => onChoose(index, [choice]),
+                  ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
+    // Four or more: a menu, full width, so a long name is not cut short.
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 2, 12, 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant)),
+          DropdownButton<int>(
+            isExpanded: true,
+            value: current,
+            onChanged: (choice) {
+              if (choice == null) return;
+              onChoose(index, choice < 0 ? const [] : [choice]);
+            },
+            items: [
+              DropdownMenuItem(value: -1, child: Text(title)),
+              for (final (choice, items) in slot.choices.indexed)
+                DropdownMenuItem(
+                  value: choice,
+                  child: Text(
+                    _cost(items) > 0
+                        ? '${_items(items)} · ${_cost(items)} pts'
+                        : _items(items),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  int _cost(List<String> items) => items.fold(0, (sum, i) => sum + costOf(i));
+
+  /// Nothing rather than an empty second line.
+  static String? _detail(List<String> parts) =>
+      parts.isEmpty ? null : parts.join(' · ');
+
+  List<Widget> _swaps(BuildContext context, String model, SlotReading reading) {
+    final scheme = Theme.of(context).colorScheme;
+    final mine = [
+      for (final (index, swap) in loadout.swaps.indexed)
+        if (_modelName(swap.model) == model) (index, swap),
+    ];
+    if (mine.isEmpty) return const [];
+
+    final pool = UnitLoadout.modelsOf(unit, composition, mine.first.$2.model);
+    final swapped = mine.fold(0, (sum, s) => sum + reading.swaps[s.$1]);
+
+    // Limits several swaps share, each named by the swaps under it.
+    final shared = <String, List<(int, LoadoutSwap)>>{};
+    for (final entry in mine) {
+      if (entry.$2.sharedCap != null) {
+        (shared[entry.$2.sharedCapName ?? ''] ??= []).add(entry);
+      }
+    }
+
+    return [
+      // **How many of the squad have swapped.** A squad's swaps draw on the
+      // same models: Deathwatch Veterans' eight allow 23 between them against
+      // nine models, so that total is the limit that actually binds.
+      if (mine.length > 1)
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 2, 20, 0),
+          child: Text('Swapped: $swapped of $pool',
+              style: TextStyle(
+                  fontSize: 11,
+                  color: swapped > pool ? scheme.error : scheme.onSurfaceVariant)),
+        ),
+      for (final entry in shared.values)
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: Builder(builder: (context) {
+            final taken = entry.fold(0, (sum, s) => sum + reading.swaps[s.$1]);
+            final cap = entry.first.$2.sharedCap!;
+            final names = [for (final s in entry) s.$2.loadout ?? _items(s.$2.gives)];
+            return Text(
+              '${names.join(', ')}: $taken of $cap between them',
+              style: TextStyle(
+                  fontSize: 11,
+                  color: taken > cap ? scheme.error : scheme.onSurfaceVariant),
+            );
+          }),
+        ),
+      for (final (index, swap) in mine)
+        _Row(
+          label: swap.loadout ?? _items(swap.gives),
+          detail: _detail([
+            if (swap.takes.isNotEmpty)
+              'instead of ${_items(swap.takes).toLowerCase()}',
+            if (_cost(swap.gives) > 0) '${_cost(swap.gives)} pts each',
+          ]),
+          child: _Counter(
+            value: reading.swaps[index],
+            min: 0,
+            max: swap.max,
+            overLimit: swap.gives.any((item) =>
+                loadout.itemCaps[item] != null &&
+                (carried[item] ?? 0) > loadout.itemCaps[item]!),
+            onChange: (n) => onSwap(index, n),
+          ),
+        ),
+    ];
   }
 }
 

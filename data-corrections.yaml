@@ -12,6 +12,38 @@
 # overriding data that has since become correct.
 
 # ---------------------------------------------------------------------------
+# Weapon slots for datasheets BSData does not structure (DESIGN.md §4.20).
+#
+# Where BSData gives a datasheet slots, they replace 40kdc's options — which
+# multiply a model's independent swaps into combined bundles. Where it gives
+# none, 40kdc's options are all there is, bundles included. An entry here
+# states the printed swaps as slots, so the loadout drops the bundle over the
+# same weapons exactly as it does elsewhere. Transcribed from the printed
+# options, never from memory (§0).
+wargear_slots:
+  - faction: "*"
+    id: deathwatch-veterans
+    reason: >
+      Printed: "The Watch Sergeant's power weapon can be replaced with 1
+      xenophase blade" and "The Watch Sergeant's boltgun can be replaced with
+      1 combi-weapon" — two independent swaps. 40kdc publishes them as a
+      single [xenophase blade, combi-weapon] bundle, so the editor offered one
+      selector that took both or neither. BSData structures the squad's
+      loadouts but gives the Sergeant no slots.
+    upstream: not yet reported
+    slots:
+      - model: Watch Sergeant
+        name: Power weapon
+        default: [power-weapon]
+        choices: [[xenophase-blade]]
+        per_models: 1
+      - model: Watch Sergeant
+        name: Boltgun
+        default: [boltgun]
+        choices: [[combi-weapon]]
+        per_models: 1
+
+# ---------------------------------------------------------------------------
 # Words upstream misspells.
 #
 # **Found, not judged.** Each of these is a token that is in no dictionary, in

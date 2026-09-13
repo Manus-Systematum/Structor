@@ -143,11 +143,7 @@ void main() {
                 for (final item in roster.units.single.wargear)
                   item.itemId: item.count,
               },
-              takeable: {
-                ...loadout.fixed.keys,
-                for (final group in loadout.groups) ...group.items,
-                for (final counter in loadout.counters) counter.itemId,
-              },
+              takeable: loadout.takeable,
             ),
           ),
         ),

@@ -1809,6 +1809,123 @@ ten of which use *only* the plural — Brood Brothers Auxilia among them. Only
 the singular was read, so those ten detachments appeared to have no rules at
 all.
 
+### 4.20 Weapon slots, and which model made a swap
+
+**The bug.** Editing an Adeptus Astartes squad showed two selectors for one
+Intercessor Sergeant, and a weapon chosen for one Vanguard Veteran showed up
+on the Sergeant's row too — the rows changed together. It was reported as a
+merge artifact for marines. It was neither: the records come from 40kdc
+untouched, and it reaches 19 factions.
+
+Two causes combined:
+
+- **40kdc multiplies independent swaps.** The printed Intercessor Squad lists
+  the Sergeant's bolt rifle → one of four, and his close combat weapon → one of
+  four, as separate options. 40kdc adds a fifteen-bundle selector that is every
+  pairing of the two, and splits one "any model" swap into a row per model
+  name. 110 of the game's 308 selectors are built this way, 58 entirely.
+- **Every row derived its selection from the unit's weapon counts.** Two rows
+  offering the same guns read the same counts, so they showed the same choice.
+
+#### Where the shape comes from
+
+BSData and the printed datasheets agree, checked by hand on thirteen
+datasheets across eight factions, and BSData uses two structures:
+
+- a **slot** on one model — a group allowing one selection, usually with a
+  default: the Sergeant's `Weapon 1` is a bolt rifle, or one of five;
+- a **counted loadout** — a model entry named for what it carries, `Raptor w/
+  plasma pistol`, with a maximum.
+
+`bin/merge.dart` reads both into `wargear-slots.json`. Three details had to be
+right: a **quantity lives on the weapon inside a choice** (`Two dark lances`
+holds one dark lance constrained to two; read as one, taking the disintegrator
+cannons swapped half the jet); **loadouts can sit a group deeper under a
+shared cap** (Raptors' flamer, meltagun and plasma gun sit under `2 selections
+per 5 models`, max 4); and **items are plain ids**, because BSData shares one
+weapon entry across datasheets and resolving through the variant table named an
+Intercessor's plasma pistol after an Ancient on Bike. Groups allowing several
+selections — a Commander's support systems — are neither shape and stay on the
+per-item caps that already handle them.
+
+A datasheet uses its slots only when every item they name is one it has; the
+rest keep the old path. Wherever slots are used, any 40kdc bundle or counter
+over the same weapons is dropped, so no weapon has two controls.
+
+#### Which model made a swap
+
+Counts cannot say. A Vanguard Veteran and his Sergeant taking a master-crafted
+power weapon produce identical counts, so any rule that derives the choice from
+counts will put some of them on the wrong model. A unit therefore records its
+slot choices (`slotChoices`, by `model|slot`) beside its counts.
+
+- **Counts stay the only thing pricing, the validator, export and import
+  read.** The record is intent, and it is optional in saved JSON, so older
+  saves load unchanged.
+- **A record is used whole, or not at all.** Once a unit has been edited
+  through its slots, a slot the record leaves out is at its default. Filling it
+  from the counts let a Raptor Champion's pistol slot claim one of three plasma
+  pistols the squad took as a counted swap. Every edit therefore writes every
+  slot, empty ones included.
+- **A unit with no record** — an import, an old save — is read from its
+  departures from the default loadout, not from raw counts: a Sergeant who
+  takes a chainsword still carries the squad's bolt rifles, so "is a bolt rifle
+  present" says nothing about his slot. Leader slots are read first.
+
+The attribution test fails with the record ignored; the Intercessor test fails
+with 40kdc's bundles kept.
+
+#### Where the data needed help
+
+- **A datasheet BSData does not structure** keeps 40kdc's bundles. The Watch
+  Sergeant's two printed swaps arrive as one `[xenophase blade, combi-weapon]`
+  bundle, so `data-corrections.yaml` gained a `wargear_slots` channel and states
+  them as slots, transcribed from the printed options.
+- **A limit several controls share.** Printed: "2 models can each have their
+  burst cannon replaced with 1 fusion blaster". BSData offers a Shas'vre slot
+  and a Shas'ui swap of up to two, which allow three between them. The loadout
+  carries the unit-wide cap, and the sheet says when it is broken; it does not
+  refuse the tap (§2.3).
+- **Swap contents are net changes, and they are right.** "Veteran w/ Astartes
+  shield and boltgun" gains a shield and a close combat weapon and gives up a
+  power weapon, which is exactly the printed "1 boltgun, 1 Astartes shield and
+  1 close combat weapon" in place of "boltgun and power weapon". All eight
+  Deathwatch swaps were checked against the print.
+
+#### How the sheet arranges it
+
+Measured across 954 matched-play datasheets before anything was drawn, using
+the design-against-real-data process:
+
+| | |
+|---|---|
+| Datasheets with slots / swaps | 343 / 91 |
+| Alternatives per slot | 1: 51%, 2: 31%, 3: 10%, 4 or more: 9% |
+| Slots on a single model | 87% |
+| Slot names that say nothing ("Weapon 1") | 14% |
+| Labels over a phone row's ~28 characters | swap names 63%, what a swap gives 15% |
+
+**Decision (user, 2026-09-14):**
+
+- **The control follows the count of alternatives** — a switch for one, chips
+  for two or three, a menu for four or more.
+- **A slot is titled by the weapon the model starts with**, not its slot name.
+- **A swap is named by the loadout it gives** — the part of BSData's name after
+  "w/" — rather than by what it adds, which reads as though a kept weapon went
+  too.
+- **A squad's swaps carry a "Swapped: n of N" line**, and swaps sharing a limit
+  carry one for that limit.
+- **The model's name leads every block, always.** The measurement said a
+  heading is redundant on nine datasheets in ten, since one model carries the
+  slots; the user kept it, because which model a choice is on is the context
+  the choice needs. Recorded as the user's call, not the number's.
+
+**Known gaps.** The Adeptus Astartes copy of Deathwatch Veterans — BSData
+structures the datasheet only under Deathwatch — still carries two near-
+identical 40kdc groups, which is the original bug on that one copy. BSData
+states per-five limits at the largest unit size (up to four plasma pistols),
+and the loadout does not scale them down for a smaller squad.
+
 ## 5. Open questions
 
 - [ ] ⚠ **Licence on `BSData/wh40k-11e`** — see §0. Blocks §3.4.
