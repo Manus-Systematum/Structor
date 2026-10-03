@@ -3135,6 +3135,227 @@
       "resolution": "bsdata"
     },
     {
+      "faction": "black-templars",
+      "kind": "units",
+      "id": "crusader-squad",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "models_max": 10,
+          "cost": 150
+        },
+        {
+          "models": 11,
+          "cost": 290
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 10,
+          "cost": 150
+        },
+        {
+          "models": 20,
+          "cost": 290
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "black-templars",
+      "kind": "units",
+      "id": "sword-brethren-squad",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 4,
+          "cost": 100,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "cost": 120,
+          "unit_count_min": 3
+        },
+        {
+          "models": 5,
+          "models_max": 9,
+          "cost": 125,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "models_max": 9,
+          "cost": 145,
+          "unit_count_min": 3
+        },
+        {
+          "models": 10,
+          "cost": 250,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 10,
+          "cost": 270,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 4,
+          "cost": 100,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 125,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 9,
+          "cost": 225,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 10,
+          "cost": 250,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "cost": 120,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 5,
+          "cost": 145,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 6,
+          "models_max": 9,
+          "cost": 245,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 10,
+          "cost": 270,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "black-templars",
+      "kind": "units",
+      "id": "impulsor",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 75,
+          "unit_count_min": 1,
+          "unit_count_max": 3
+        },
+        {
+          "models": 1,
+          "cost": 85,
+          "unit_count_min": 4
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 70,
+          "unit_count_min": 1,
+          "unit_count_max": 3
+        },
+        {
+          "models": 1,
+          "cost": 80,
+          "unit_count_min": 4,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "black-templars",
+      "kind": "units",
+      "id": "repulsor-executioner",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 255,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 275,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 240,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 260,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "black-templars",
+      "kind": "units",
+      "id": "sternguard-veteran-squad",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 85
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 160
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 100
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 200
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
       "faction": "chaos-daemons",
       "kind": "units",
       "id": "skarbrand",
@@ -5229,6 +5450,258 @@
       "field": "name",
       "bsdata": "Diseased icon",
       "40kdc": "Diseased Icon",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "deathwatch",
+      "kind": "units",
+      "id": "fortis-kill-team",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 10,
+          "models_max": 16,
+          "cost": 195,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 10,
+          "models_max": 16,
+          "cost": 210,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 10,
+          "cost": 195,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "models_max": 24,
+          "cost": 195,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 10,
+          "cost": 210,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 3,
+          "models_max": 24,
+          "cost": 210,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "deathwatch",
+      "kind": "units",
+      "id": "indomitor-kill-team",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "models_max": 16,
+          "cost": 275,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "models_max": 16,
+          "cost": 290,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 10,
+          "cost": 275,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "models_max": 16,
+          "cost": 275,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 10,
+          "cost": 290,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 3,
+          "models_max": 16,
+          "cost": 290,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "deathwatch",
+      "kind": "units",
+      "id": "spectrus-kill-team",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "models_max": 17,
+          "cost": 170,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "models_max": 17,
+          "cost": 180,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 10,
+          "cost": 170,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "models_max": 21,
+          "cost": 170,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 10,
+          "cost": 180,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 3,
+          "models_max": 21,
+          "cost": 180,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "deathwatch",
+      "kind": "units",
+      "id": "deathwatch-veterans",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 100
+        },
+        {
+          "models": 6,
+          "models_max": 15,
+          "cost": 190
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 100
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 190
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "deathwatch",
+      "kind": "units",
+      "id": "talonstrike-kill-team",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 10,
+          "models_max": 15,
+          "cost": 265,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 10,
+          "models_max": 15,
+          "cost": 280,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 10,
+          "cost": 265,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "models_max": 15,
+          "cost": 265,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 10,
+          "cost": 280,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 3,
+          "models_max": 15,
+          "cost": 280,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "deathwatch",
+      "kind": "units",
+      "id": "decimus-kill-team",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 190
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 100
+        },
+        {
+          "models": 10,
+          "cost": 190
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -8341,6 +8814,94 @@
       "resolution": "bsdata"
     },
     {
+      "faction": "space-wolves",
+      "kind": "units",
+      "id": "wolf-scouts",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 80
+        },
+        {
+          "models": 6,
+          "models_max": 11,
+          "cost": 160
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 6,
+          "cost": 90
+        },
+        {
+          "models": 12,
+          "cost": 180
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "space-wolves",
+      "kind": "units",
+      "id": "wolf-scouts",
+      "field": "is_legend",
+      "bsdata": true,
+      "40kdc": false,
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "space-wolves",
+      "kind": "units",
+      "id": "wolf-guard-headtakers",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 85,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 95,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 12,
+          "cost": 230,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 12,
+          "cost": 240,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 85
+        },
+        {
+          "models": 6,
+          "cost": 170
+        },
+        {
+          "models": 6,
+          "cost": 110
+        },
+        {
+          "models": 12,
+          "cost": 220
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
       "faction": "tau-empire",
       "kind": "units",
       "id": "breacher-team",
@@ -9087,6 +9648,69 @@
       "field": "name",
       "bsdata": "Terror from the Deep",
       "40kdc": "Terror From The Deep",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "ultramarines",
+      "kind": "units",
+      "id": "victrix-honour-guard",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "models_max": 3,
+          "cost": 110,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "models_max": 3,
+          "cost": 130,
+          "unit_count_min": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 230,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 250,
+          "unit_count_min": 2
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 110,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 230,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 3,
+          "cost": 130,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 250,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
       "resolution": "bsdata"
     },
     {

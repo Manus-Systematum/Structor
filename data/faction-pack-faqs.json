@@ -63,6 +63,16 @@
    "answer": "Yes."
   }
  ],
+ "adeptus-custodes": [
+  {
+   "question": "If I am using the Auric Champions Detachment and an ADEPTUS CUSTODES CHARACTER model that is leading a unit from my army is destroyed (e.g. by an attack with the [PRECISION] ability), does the Assemblage of Might Detachment rule still apply to the remaining models in that unit until the start of my next Command phase?",
+   "answer": "No."
+  },
+  {
+   "question": "If an enemy model is within 12\" of any part of a unit that is led by a CHARACTER with the Radiant Mantle Enhancement when that enemy model selects targets for its attacks, do those attacks suffer from the -1 Hit roll penalty?",
+   "answer": "Yes."
+  }
+ ],
  "adeptus-mechanicus": [
   {
    "question": "If I target a unit with the Auto-divinatory Targeting Stratagem while the Protector Imperative is active for my army, in what order are the Ballistic Skill modifiers applied?",
@@ -110,6 +120,52 @@
   },
   {
    "question": "If a unit becomes affected by the same Order multiple times, do those Orders affect that unit multiple times?",
+   "answer": "No."
+  }
+ ],
+ "chaos-daemons": [
+  {
+   "question": "When using the Pink Horrors Split ability, when adding Blue Horror models to this unit, can this ability take the unit above it's starting strength?",
+   "answer": "Yes"
+  },
+  {
+   "question": "If a Pink Horror or a Blue Horror is destroyed as a result of its own weapon’s [HAZARDOUS] ability, can that model’s unit use its Split ability?",
+   "answer": "Yes."
+  },
+  {
+   "question": "When I return models to a unit of Blue Horrors that began the battle as a unit of Pink Horrors, can I return Pink Horrors to that unit?",
+   "answer": "No."
+  },
+  {
+   "question": "When I return models to a unit of Blue Horrors that began the battle as a unit of Pink Horrors, can I return models to that unit to bring it above the starting strength of that unit of Pink Horrors?",
+   "answer": "No."
+  },
+  {
+   "question": "Do Pink Horrors’ and Blue Horrors’ Split abilities trigger when the damage is dealt by something other than an attack?",
+   "answer": "No."
+  },
+  {
+   "question": "Does Be’lakor’s The Dark Master ability allow it to be set up closer than 9\" to enemy models, in a location that is not otherwise within my army’s Shadow of Chaos, using the Warp Rifts Detachment rule?",
+   "answer": "No."
+  },
+  {
+   "question": "Do the Greater Daemon of Slaanesh, Greater Daemon of Nurgle, Greater Daemon of Khorne or Greater Daemon of Tzeentch abilities allow a unit that has one of those abilities to be set up closer than 9\" to enemy models, in a location that is not otherwise within my army’s Shadow of Chaos, using the Warp Rifts Detachment rule?",
+   "answer": "No."
+  },
+  {
+   "question": "If there are no objective markers within No Man’s Land or within my opponent’s deployment zone, does The Shadow of Chaos affect those areas of the battlefield?",
+   "answer": "No."
+  },
+  {
+   "question": "If a unit of Pink Horrors suffers casualties such that there are no Pink Horror models left, and it then uses the Blue Horrors datasheet, what is the starting strength of that Blue Horrors unit?",
+   "answer": "The starting strength of that Blue Horrors unit is the same as the starting strength of the original Pink Horrors unit when it was added to your army list."
+  },
+  {
+   "question": "Does using the Insane Bravery Stratagem on a LEGIONES DAEMONICA unit mean that unit is considered to have made a battle-shock roll?",
+   "answer": "Yes, it is considered to have made a successful battle-shock roll. designed to improve the gaming experience for all players. highlighted in red."
+  },
+  {
+   "question": "When using the Daemonic Pact rule to add LEGIONES DAEMONICA units to my army, are any of the Shadow of Chaos army rules in effect (including Daemonic Manifestation and Daemonic Terror)?",
    "answer": "No."
   }
  ],
@@ -175,12 +231,6 @@
    "answer": "No."
   }
  ],
- "dark-angels": [
-  {
-   "question": "While using the Wrath of the Rock Detachment, can I use the Charge move from the Leonine Aggression Stratagem to move a unit out of Engagement Range with another unit?",
-   "answer": "No."
-  }
- ],
  "death-guard": [
   {
    "question": "Does the Plagueburst Crawler’s Spore-laced Shock Waves ability inflict mortal wounds every turn to units affected by the ability?",
@@ -204,6 +254,44 @@
   },
   {
    "question": "While using the Carnival of Excess Detachment, for the purposes of the Daemonic Empowerment rule, if my unit already has a weapon with [SUSTAINED HITS] (e.g. Shalaxi Helbane’s Pavane of Slaanesh, which has [SUSTAINED HITS 3]), does an unmodified Hit roll of 5+ for such a weapon score a Critical Hit?",
+   "answer": "Yes."
+  }
+ ],
+ "genestealer-cults": [
+  {
+   "question": "If I include Kasrkin units in my army using the rules for Brood Brothers, can I use their Warrior Elite ability to select an Order for them in my Command phase?",
+   "answer": "Yes."
+  },
+  {
+   "question": "When I set up a unit using the Cult Ambush army rule without using a Cult Ambush marker, can I target that unit with the Tunnel Crawlers Stratagem?",
+   "answer": "Yes."
+  },
+  {
+   "question": "If one of my CHARACTER models is destroyed, do I need to have another GENESTEALER CULTS CHARACTER model on the battlefield or in Reserves to use the Vengeance for the Martyr! Stratagem?",
+   "answer": "Yes."
+  },
+  {
+   "question": "Do I have to remove ‘unused’ Cult Ambush markers from the battlefield at the end of my opponent’s next Movement phase?",
+   "answer": "No."
+  },
+  {
+   "question": "If I have no units in Cult Ambush, do I have to remove any remaining Cult Ambush markers from the battlefield?",
+   "answer": "No."
+  },
+  {
+   "question": "When setting up a unit using the Cult Ambush army rule, if my opponent has an ability that places restrictions on where my Reserves units can be set up (e.g. a Space Marine Infiltrator Squad’s Omni-scramblers ability), do I have to meet those restrictions when setting up my unit (e.g. for Omni-scramblers, not within 12” of that Infiltrator Squad)?",
+   "answer": "Yes."
+  }
+ ],
+ "grey-knights": [
+  {
+   "question": "Can a unit with the Sigil of Exigence enhancement use that ability during my opponent’s first turn?",
+   "answer": "Yes."
+  }
+ ],
+ "imperial-agents": [
+  {
+   "question": "While using the Imperialis Fleet Detachment, if I attach a CHARACTER to a unit selected using the Clandestine Operation or Combat Landers Enhancement, does that CHARACTER also gain the ability conferred by that Enhancement (i.e. Infiltrators or Deep Strike, respectively)?",
    "answer": "Yes."
   }
  ],
@@ -261,90 +349,6 @@
   {
    "question": "Can a unit be affected by a Resurrection Orb (e.g. from a Catacomb Command Barge and an Overlord) more than once per turn?",
    "answer": "No."
-  }
- ],
- "orks": [
-  {
-   "question": "When using the Green Tide Mob Mentaility detachment rule, do I switch to 6+ InSv partway through a unit’s attacks when the number of models in the target unit drops below 10 models?",
-   "answer": "No, the number of models in the unit when it is targeted determines the unit’s InSv until those attacks are resolved."
-  },
-  {
-   "question": "If I attach a Big Mek to a Mek Gunz unit, does the unit now suffer 1 mortal wound for each failed hazard roll, because each model in the unit is now not a MONSTER/VEHICLE model?",
-   "answer": "Yes."
-  },
-  {
-   "question": "If a model has an ability that triggers when you call a Waaagh! and that model is embarked within a TRANSPORT when this happens (e.g. a Warboss’ Da Biggest and da Best ability), does that ability take effect?",
-   "answer": "Yes."
-  },
-  {
-   "question": "When using the Conniving Runts Stratagem, to be able to make the Normal move as part of the Stratagem, do I need to roll a 4+ and have inflicted any mortal wounds?",
-   "answer": "No."
-  },
-  {
-   "question": "Can a unit equipped with multiple Bomb Squigs use its Bomb Squig ability more than once each phase?",
-   "answer": "No."
-  },
-  {
-   "question": "If a unit has an ability that checks if the Waaagh! is active for your army in order for that ability to take effect (e.g. the Meganobz’ Krumpin’ Time ability), does that ability take effect if another rule makes the Waaagh! active for that unit (e.g. the Bully Boyz Detachment rule)?",
-   "answer": "Yes."
-  }
- ],
- "space-marines": [
-  {
-   "question": "While using the Gladius Task Force Detachment, does a Combat Doctrine need to be active for my army in order to use the Adaptive Strategy Stratagem?",
-   "answer": "No."
-  },
-  {
-   "question": "If a Hellblaster is destroyed by anything other than an attack or Hazardous test, can that model use its For the Chapter! ability?",
-   "answer": "No."
-  },
-  {
-   "question": "Can I use a Captain’s Rites of Battle ability to target that Captain’s unit if it is in Reserves or Strategic Reserves?",
-   "answer": "Yes."
-  },
-  {
-   "question": "Does an objective marker that has been Sabotaged by my army using the A Deadly Prize Stratagem remain Sabotaged if my opponent controls it at the start or end of any turn?",
-   "answer": "Yes. However, while your opponent controls that objective marker, its ability to inflict mortal wounds is not active."
-  },
-  {
-   "question": "While an Attached unit is embarked within a TRANSPORT, do weapons that TRANSPORT shoots with using the Firing Deck ability benefit from any abilities the attached Leader has (e.g. a Lieutenant’s Tactical Precision ability, which grants weapons in its unit the [LETHAL HITS] ability)?",
-   "answer": "No. Firing Deck enables a TRANSPORT to be equipped with a number of weapons equipped by its passengers, but the TRANSPORT itself is not part of that Attached unit."
-  },
-  {
-   "question": "Can a unit embarked within a TRANSPORT be selected as the Oath of Moment target?",
-   "answer": "Yes."
-  },
-  {
-   "question": "Can a unit in Reserves be selected as the Oath of Moment target?",
-   "answer": "Yes."
-  },
-  {
-   "question": "Can a unit in Reserves use an Enhancement (following all restrictions outlined by that Enhancement)?",
-   "answer": "Yes."
-  },
-  {
-   "question": "If I have two or more Impulsors within 6\" of a unit I target with a Stratagem, do each of their Orbital Comms Array wargear abilities trigger?",
-   "answer": "No, they are Aura abilities and so do not stack."
-  },
-  {
-   "question": "If I use a Stratagem on a unit within 6\" of an Impulsor with an Orbital Comms Array, but I do not roll high enough to gain as a result of that wargear, if that same unit is within 6\" of a different Impulsor that also has an Orbital Comms Array, can I attempt to roll another D6 to try to gain 1CP?",
-   "answer": "No."
-  },
-  {
-   "question": "Do multiple instances of the Astartes Banner ability stack?",
-   "answer": "Yes."
-  },
-  {
-   "question": "If I select one MONSTER or VEHICLE unit as the target of all of a Stormspeeder Thunderstrike’s ranged weapons, and the first weapon that model makes attacks with scores one or more hits, do I add 1 to the Wound rolls made for attacks with its remaining weapons?",
-   "answer": "No. Only after you have resolved the attacks with all weapons it is shooting with this phase, has that model shot (see ‘Shot’ in the Rules Appendix, 04.03.04)."
-  },
-  {
-   "question": "When making attacks with a unit from my army, I split my attacks between the first Oath of Moment target selected as part of my army rule and the second Oath of Moment target selected using Roboute Guilliman’s Master of Battle Author of the Codex ability. If I destroy the first Oath of Moment target before resolving my attacks against the second Oath of Moment target, will those attacks against the second Oath of Moment target benefit from the re-rolls to hit?",
-   "answer": "No. Only after all of the attacks from that unit have been resolved will the second Oath of Moment selection become active."
-  },
-  {
-   "question": "Which Detachments are considered to be Codex: Space Marines Detachments?",
-   "answer": "Every Detachment printed in Codex: Space Marines and every Detachment included in the Space Marines Faction Pack."
   }
  ],
  "tau-empire": [

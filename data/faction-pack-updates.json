@@ -1,4 +1,253 @@
 {
+ "adepta-sororitas": [
+  {
+   "category": "ARMY RULES",
+   "subject": "Acts of Faith, Gaining Miracle Dice Section",
+   "directive": "Change to:",
+   "text": "‘If your Army Faction is ADEPTA SORORITAS, you gain 1 Miracle dice: ▪ \u0007At the start of each turn. ▪ \u0007Each time an ADEPTA SORORITAS unit from your army is destroyed. Each time you gain a Miracle dice, roll one D6. The number you roll is the value of that Miracle dice. This value cannot be changed or re‑rolled, unless a rule specifically states otherwise. Keep your Miracle dice to one side – this is your Miracle dice pool.’",
+   "page": 13
+  },
+  {
+   "category": "ARMY OF FAITH DETACHMENT",
+   "subject": "Light of the Emperor Stratagem, CP Cost",
+   "directive": "Change to '2CP'.",
+   "text": "'2CP'.",
+   "page": 13
+  },
+  {
+   "category": "ARMY OF FAITH DETACHMENT",
+   "subject": "Blinding Radiance Stratagem, Target and Effect Sections",
+   "directive": "Change to:",
+   "text": "‘TARGET: One ADEPTA SORORITAS INFANTRY unit from your army that was selected as the target of one or more of the attacking unit’s attacks, or one friendly ADEPTA SORORITAS JUMP PACK unit within 3\" of such a unit. EFFECT: Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll. If you targeted an ADEPTA SORORITAS JUMP PACK unit from your army with this Stratagem, then until the end of the phase, while a friendly ADEPTA SORORITAS INFANTRY unit is unit is within 3\" of your unit, each time an attack targets that unit, subtract 1 from the Hit roll.’",
+   "page": 13
+  },
+  {
+   "category": "BRINGERS OF FLAME DETACHMENT",
+   "subject": "Shield of Aversion Stratagem, Effect Section",
+   "directive": "Change to:",
+   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’",
+   "page": 13
+  },
+  {
+   "category": "BRINGERS OF FLAME DETACHMENT",
+   "subject": "Blazing Ire Stratagem, CP Cost",
+   "directive": "Change to ‘2CP’.",
+   "text": "‘2CP’.",
+   "page": 13
+  },
+  {
+   "category": "BRINGERS OF FLAME DETACHMENT",
+   "subject": "Cleansing Flames Stratagem, CP Cost",
+   "directive": "Change to ‘2CP’.",
+   "text": "‘2CP’. designed to improve the gaming experience for all players. highlighted in red.",
+   "page": 13
+  },
+  {
+   "category": "BRINGERS OF FLAME DETACHMENT",
+   "subject": "Rites of Fire Stratagem, Effect Section",
+   "directive": "Change to:",
+   "text": "‘Until the end of the phase, each time a model in your unit makes a ranged attack that targets an enemy unit within 6\" that is also within range of an objective marker, add 1 to the Wound roll. If one or more enemy models are destroyed as the result of those attacks, select one of those destroyed models; that destroyed model’s unit must take a Battle‑shock test.'",
+   "page": 13
+  },
+  {
+   "category": "BRINGERS OF FLAME DETACHMENT",
+   "subject": "Fervent Purgation Detachment Rule",
+   "directive": "Change to:",
+   "text": "'Ranged weapons equipped by ADEPTA SORORITAS models from your army have the [ASSAULT] ability, and each time an attack made with such a weapon targets a unit within 6\", add 1 to the Strength characteristic of that attack.’",
+   "page": 13
+  },
+  {
+   "category": "HALLOWED MARTYRS DETACHMENT",
+   "subject": "Suffering and Sacrifice Stratagem, Effect section",
+   "directive": "Change to:",
+   "text": "'Until the end of the phase, each time an enemy model within Engagement Range of your unit selects its targets, it must select your unit as the target of its attacks.'",
+   "page": 13
+  },
+  {
+   "category": "HALLOWED MARTYRS DETACHMENT",
+   "subject": "Divine Intervention Stratagem, Target and Effect sections",
+   "directive": "Change to:",
+   "text": "'TARGET: One ADEPTA SORORITAS CHARACTER model from your army that was just destroyed. You can use this Stratagem on that model even though it was just destroyed. EFFECT: You can discard 1-3 Miracle dice. At the end of the phase, set up that model on the battlefield, unengaged and as close as possible to where it was destroyed. That model is not part of an attached unit and its unit has a starting strength of 1. Roll one D3, adding 1 to the result for each Miracle dice you discarded. That model has that number of wounds remaining (up to its starting number of wounds).'",
+   "page": 13
+  },
+  {
+   "category": "PENITENT HOST DETACHMENT",
+   "subject": "Catechism of Divine Penitence Enhancement",
+   "directive": "Change to:",
+   "text": "‘CANONESS, PALATINE or MINISTORUM PRIEST model only. The bearer gains the PENITENT keyword.’",
+   "page": 13
+  },
+  {
+   "category": "PENITENT HOST DETACHMENT",
+   "subject": "Devout Fanaticism Stratagem, When and Effect Sections",
+   "directive": "Change to:",
+   "text": "'WHEN: Your opponent’s Shooting phase, just after an enemy unit has shot. EFFECT: Your unit can make a surge move of up to D6\".'",
+   "page": 13
+  },
+  {
+   "category": "PENITENT HOST DETACHMENT",
+   "subject": "Desperate for Redemption Detachment Rule",
+   "directive": "Change first paragraph to:",
+   "text": "Change first paragraph to: ‘At the start of the battle round, you can select one of the following Vows of Atonement to be active for your army until the start of the next battle round. You can only select each Vow of Atonement once per battle.'",
+   "page": 14
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Celestian Sacresants, Keywords section",
+   "directive": "Add ‘CELESTIAN’.",
+   "text": "Add ‘CELESTIAN’.",
+   "page": 14
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Dialogus, Dogmata, Hospitaller, Imagifier – Core Abilities section",
+   "directive": "Remove 'Leader' and add 'Support'.",
+   "text": "Remove 'Leader' and add 'Support'.",
+   "page": 14
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Daemonifuge, Mysterious Saviours Ability",
+   "directive": "Change to:",
+   "text": "'You can target this unit with the Heroic Intervention stratagem, regardless of any other uses of that stratagem this phase. If you do: ▪ \u0007That use is -1 CP. ▪ \u0007That use does not prevent any uses of that stratagem on other units this phase.'",
+   "page": 14
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Dominion Squad, Righteous Awareness Ability",
+   "directive": "Change to:",
+   "text": "'In your opponent's Movement phase, if an enemy unit ends a move within 8” of this unit, if this unit is not within Engagement Range of one or more enemy units it can make a Normal move of up to D6”.'",
+   "page": 14
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Immolator, Transport section, second paragraph",
+   "directive": "Change to:",
+   "text": "‘At the start of the Declare Battle Formations step, you can select one BATTLE SISTERS SQUAD, DOMINION SQUAD or SISTERS NOVITIATE SQUAD from your army. If you do, that unit is split into two units, each containing as equal a number of models as possible (when splitting a unit in this way, make a note of which models form each of the two new units. If you are splitting a unit that has the Cherub ability, only one of the new units can use that ability during the battle – make a note of which of the new units this will be). One of these units must start the battle embarked within this TRANSPORT; the other can start the battle embarked within another TRANSPORT, or it can be deployed as a separate unit.’",
+   "page": 14
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Junith Eruita, The Pulpit of Saint Holline’s Basilica Ability",
+   "directive": "Change to:",
+   "text": "▪ This unit has Stealth. ▪ Melee attacks that target this unit have ‑1 to hit rolls.",
+   "page": 14
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Retributor Squad, Storm of Retribution Ability",
+   "directive": "Change to:",
+   "text": "'Each time a model in this unit makes a ranged attack, that model can re‑roll a Hit roll of 1 and re‑roll a Wound roll of 1. If such an attack targets an enemy unit that has destroyed one or more ADEPTA SORORITAS units from your army during the battle, add 1 to the Hit roll and add 1 to the Wound roll as well.’",
+   "page": 14
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Saint Celestine, Healing Tears Ability",
+   "directive": "Change to:",
+   "text": "‘While this unit contains a Celestine model, in your Command phase, you can return 1 destroyed Geminae Superia model to this unit.’",
+   "page": 14
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Triumph of Saint Katherine, Solemn Procession Ability",
+   "directive": "Change to:",
+   "text": "‘Each time you gain 1 Miracle dice at the start of the battle round, if this model is on the battlefield, do not roll one D6 to determine the value of that Miracle dice; it has a value of 6.’",
+   "page": 14
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Zephyrim Squad, Embodied Prophecy Ability",
+   "directive": "Change to:",
+   "text": "‘Each time this unit is selected to fight, select one of the following abilities to apply to melee weapons equipped by models in this unit until the end of the phase: ▪ [SUSTAINED \u0007 HITS 1] ▪ [LETHAL \u0007 HITS] If this unit made a Charge move this turn, until the end of the phase, select both abilities above to apply to melee weapons equipped by models in this unit instead.’",
+   "page": 14
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Castigator, Exorcist, Immolator, Sororitas Rhino – Keywords section",
+   "directive": "Add the 'FRAME' keyword.",
+   "text": "Add the 'FRAME' keyword.",
+   "page": 14
+  }
+ ],
+ "adeptus-custodes": [
+  {
+   "category": "AURIC CHAMPIONS DETACHMENT",
+   "subject": "Martial Philosopher Enhancement",
+   "directive": "Change third sentence to:",
+   "text": "Change third sentence to: 'Once per battle, in your opponent's Movement phase, when an enemy unit ends a Normal, Advance or Fall Back move within 8\" of the bearer, if the bearer's unit is not within Engagement Range of one or more enemy units, it can make a Normal move of up to 6\".'",
+   "page": 35
+  },
+  {
+   "category": "AURIC CHAMPIONS DETACHMENT",
+   "subject": "Shoulder the Mantle Stratagem",
+   "directive": "Change to:",
+   "text": "'WHEN: Your Movement phase, before the Reinforcements step. TARGET: One ADEPTUS CUSTODES CHARACTER model from your army that is not leading a unit. EFFECT: Select one friendly unit (excluding Battle-shocked and Attached units) within 2\" horizontally and 5\" vertically of your model that it could lead (as described in the Leader section of its datasheet). Your model attaches to that unit as a Leader. Change that unit’s Starting Strength accordingly.'",
+   "page": 35
+  },
+  {
+   "category": "AURIC CHAMPIONS DETACHMENT",
+   "subject": "Assemblage of Might Detachment Rule",
+   "directive": "Change to:",
+   "text": "'At the start of your Command phase, select one unit from your opponent’s army. Until the start of your next Command phase, each time a model in an ADEPTUS CUSTODES CHARACTER unit from your army makes an attack that targets that enemy unit, add 1 to the Wound roll.' SHIELD HOST DETACHMENT SHIELD HOST DETACHMENT,",
+   "page": 35
+  },
+  {
+   "category": "SHIELD HOST DETACHMENT",
+   "subject": "Martial Mastery Detachment Rule",
+   "directive": "Change first paragraph to:",
+   "text": "Change first paragraph to: 'At the start of the battle round, you can select one of the bullet points below. If you do, until the start of the next battle round, that bullet point’s effects apply.'",
+   "page": 35
+  },
+  {
+   "category": "SHIELD HOST DETACHMENT",
+   "subject": "Castellan’s Mark Enhancement",
+   "directive": "Change to:",
+   "text": "'SHIELD-CAPTAIN model only. After both players have deployed their armies, you can select up to two ADEPTUS CUSTODES units from your army (excluding ANATHEMA PSYKANA units) and redeploy all of those units. When doing so, any of those units can be placed into Strategic Reserves, regardless of how many units are already in Strategic Reserves.'",
+   "page": 35
+  },
+  {
+   "category": "TALONS OF THE EMPEROR DETACHMENT",
+   "subject": "Taloned Pincer Stratagem, Target Section",
+   "directive": "Change 9\" to 8\".",
+   "text": "Change 9\" to 8\".",
+   "page": 35
+  },
+  {
+   "category": "TALONS OF THE EMPEROR DETACHMENT",
+   "subject": "Champion of the Imperium Enhancement",
+   "directive": "Change to:",
+   "text": "'ADEPTUS CUSTODES model only. The range of the bearer’s Null Aegis or Deadly Unity ability (see left) is increased to 9\".'",
+   "page": 35
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Ranged Weapons",
+   "directive": "Change profiles to:",
+   "text": "Change profiles to: Salvo Launcher [TWIN-LINKED] RANGE A BS S AP D 24\" 1 2+ 10 -3 D6+1 Vertus Hurricane Bolter [RAPID FIRE 3, TWIN-LINKED] RANGE A BS S AP D 18\" 3 2+ 4 -1 2",
+   "page": 35
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Shield-Captain on Dawneagle Jetbike, Profile",
+   "directive": "Change Toughness characteristic to ‘7’ and Wounds characteristic to ‘8’.",
+   "text": "Change Toughness characteristic to ‘7’ and Wounds characteristic to ‘8’.",
+   "page": 35
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Valerian, Core Abilities",
+   "directive": "Add ‘Deep Strike'.",
+   "text": "Add ‘Deep Strike'.",
+   "page": 35
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Anathema Psykana Rhino, Venerable Land Raider – Keywords section",
+   "directive": "Add the 'FRAME' keyword.",
+   "text": "Add the 'FRAME' keyword.",
+   "page": 36
+  }
+ ],
  "adeptus-mechanicus": [
   {
    "category": "ARMY RULES",
@@ -605,17 +854,24 @@
   },
   {
    "category": "DATASHEETS",
+   "subject": "W 3 Havocs",
+   "directive": "Change the following weapon characteristics:",
+   "text": "Change the following weapon characteristics: WEAPON CHANGES UNITS Chaos Bikers, Chaos Lord, Havocs, Legionaries, Astartes Chainsword S 5 Nemesis Claw, Raptors Chaos Bikers, Chaos Lord with Jump Pack, Chosen, Dark Apostle, Havocs, Legionaries, Lord S 5 Discordant on Helstalker, Master of Executions, Bolt Pistol AP -1 Master of Possession, Masters of the Maelstrom, Nemesis Claw, Raptors, Red Corsairs Raiders, Red Corsairs Reave-Captain, Sorcerer S 5 Chosen, Havocs, Legionaries, Nemesis Claw, Boltgun AP -1 Red Corsairs Raiders Chaos Bikers, Chaos Land Raider, Chaos Lord in S 5 Terminator Armour, Chaos Predator Annihilator, Combi-bolter Chaos Predator Destructor, Chaos Rhino, Chaos AP -1 Terminators, Chaos Vindicator, Helbrute, Kravek Morne, Sorcerer in Terminator Armour Chaos Land Raider, Chaos Lord in Terminator S 5 Armour, Chaos Predator Annihilator, Chaos Combi-weapon Predator Destructor, Chaos Rhino, Chaos AP -1 Terminators, Chaos Vindicator, Chosen, Sorcerer in Terminator Armour Close Combat S 5 Chaos Bikers, Havocs, Legionaries, Raptors Weapon Cypher's Bolt Pistol S 5 Cypher (ranged and melee) Hideous Mutations S 6 Possessed Nostraman S 5 Nemesis Claw Chainblade",
+   "page": 38
+  },
+  {
+   "category": "DATASHEETS",
    "subject": "Master of Executions, Core Abilities Section",
    "directive": "Remove 'Leader', add 'Support'.",
    "text": "Remove 'Leader', add 'Support'.",
-   "page": 37
+   "page": 38
   },
   {
    "category": "DATASHEETS",
    "subject": "Noctilith Crown – Keywords Section",
    "directive": "Add 'FRAME'.",
    "text": "Add 'FRAME'.",
-   "page": 37
+   "page": 38
   },
   {
    "category": "DATASHEETS",
@@ -692,184 +948,28 @@
    "subject": "Warp Talons, Warp Strike Ability",
    "directive": "Change to:",
    "text": "‘At the end of the Fight phase, if this unit destroyed one or more enemy units this phase and is not within Engagement Range of one or more enemy units, you can remove this unit from the battlefield and place it into Strategic Reserves.’",
-   "page": 38
+   "page": 39
   },
   {
    "category": "DATASHEETS",
    "subject": "Chaos Rhino, Transport Section",
    "directive": "Change to:",
    "text": "‘This model has a transport capacity of 12 HERETIC ASTARTES INFANTRY models. It cannot transport TERMINATOR, JUMP PACK, MUTILATORS, OBLITERATORS or POSSESSED models.’",
-   "page": 38
+   "page": 39
   },
   {
    "category": "DATASHEETS",
    "subject": "Chaos Land Raider, Transport Section",
    "directive": "Change to:",
    "text": "‘This model has a transport capacity of 12 HERETIC ASTARTES INFANTRY models (excluding OBLITERATOR and JUMP PACK models). Each POSSESSED, MUTILATORS and TERMINATOR model takes up the space of 2 models.’",
-   "page": 38
+   "page": 39
   },
   {
    "category": "DATASHEETS",
-   "subject": "Traitor Guardsmen Squad, Twisted Defence Force Ability",
+   "subject": "Traitor Guardsmen Squad,Twisted Defence Force Ability",
    "directive": "Change to:",
    "text": "'While this unit is within range of an objective, this unit has +1 Sv against ranged attacks.' FAQS Q: If I use the Cults of the Dark Gods rule to add Plague Marines to my Chaos Space Marines army, does the Plague Marines’ Infused with the Blessings of Nurgle ability have any effect? A: No Q: When using the Soul Link Enhancement, can the bearer use a datasheet ability it gains as a result even if that ability has already been used by another CHARACTER model as many times as its restrictions allow (e.g. ‘once per battle’, ‘once per phase’)? A: Yes. Q: When using the Soul Link Enhancement, can I select a CHARACTER model from my army that is not on the battlefield? A: Yes. Q: Can my CHARACTER with the Soul Link Enhancement use that Enhancement while it is in Strategic Reserves? A: Yes. Q: When replacing the datasheet abilities of the bearer of the Soul Link Enhancement with those of the selected CHARACTER model, does this include Core and Faction abilities? A: Yes. Q: When replacing the datasheet abilities of the bearer of the Soul Link Enhancement with those of the selected CHARACTER model, does this include which units the bearer can be attached to? A: No. Q: If I am using the Veterans of the Long War Detachment, can I select a unit embarked within a TRANSPORT to be my focus of hatred? A: Yes. Q: For the Opportunistic Raiders Stratagem, is a unit that did not fight this phase an eligible target for that Stratagem, provided it was eligible to fight at one point during the phase? A: Yes. Q: Can I use the Opportunistic Raiders Stratagem to Fall Back with a unit of Warp Talons, then use that unit’s Warp Strike ability to place it into Strategic Reserves? A: If that Warp Talons unit destroyed one or more units this phase, yes; otherwise, no. Q:For the Warp Talons’ Warp Strike ability, is a unit that did not fight this phase eligible to use that ability, provided it was eligible to fight at one point during the phase? A: No. Q: When is the model destroyed by the Traitor Enforcer’s Brutal Example ability removed? A: Before resolving the Fire Overwatch Stratagem with that unit. Q: When I target a unit with the Fire Overwatch Stratagem, can that unit make a Dark Pact? A: Yes, as the unit is selected to shoot. Q: Can I select a unit to shoot when there are no eligible targets so that unit can make a Dark Pact? A: No. Q: Does Fabius Bile’s Enhanced Warriors ability apply if Fabius starts the battle as part of an Attached unit inside a transport? A: Yes. Q: When I replace the datasheet abilities of the bearer of the Soul Link Enhancement, do persisting effects that were gained from the replaced abilities continue to apply to the bearer of the Soul Link Enhancement? A: No.",
-   "page": 38
-  }
- ],
- "dark-angels": [
-  {
-   "category": "DETACHMENTS (VARIOUS)",
-   "subject": "Armour of Contempt Stratagem, Effect section",
-   "directive": "Change to:",
-   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’",
-   "page": 9
-  },
-  {
-   "category": "COMPANY OF HUNTERS DETACHMENT",
-   "subject": "Masters of Manoeuvre Detachment Rule",
-   "directive": "Change to:",
-   "text": "‘Friendly ADEPTUS ASTARTES have: ▪ This unit’s ranged attacks have [ASSAULT]. ▪ \u0007When this unit is selected to make a fall‑back move, that fall‑back move does not prevent this unit from being eligible to shoot. Friendly ADEPTUS ASTARTES MOUNTED have: ▪ This unit’s ranged attacks have [ASSAULT]. ▪ \u0007When this unit is selected to make an advance move, that advance move does not prevent this unit from being eligible to declare a charge. ▪ \u0007When this unit is selected to make a fall‑back move, that fall‑back move does not prevent this unit from being eligible to shoot and eligible to declare a charge.’",
-   "page": 9
-  },
-  {
-   "category": "COMPANY OF HUNTERS DETACHMENT",
-   "subject": "Keywords Section",
-   "directive": "Change to 'OUTRIDER SQUAD units from your army gain the",
-   "text": "'OUTRIDER SQUAD units from your army gain the BATTLELINE keyword.’",
-   "page": 9
-  },
-  {
-   "category": "COMPANY OF HUNTERS DETACHMENT",
-   "subject": "Mounted Strategist Enhancement",
-   "directive": "Change to ‘RAVENWING model only. You can re-roll Advance and Charge",
-   "text": "‘RAVENWING model only. You can re-roll Advance and Charge rolls made for the bearer’s unit.’",
-   "page": 9
-  },
-  {
-   "category": "COMPANY OF HUNTERS DETACHMENT",
-   "subject": "Death on the Wind Stratagem",
-   "directive": "Change to:",
-   "text": "‘WHEN: Your Movement phase, when a friendly ADEPTUS ASTARTES unit ends an advance move. TARGET: That ADEPTUS ASTARTES unit. EFFECT: That advance move does not prevent your unit from being eligible to declare a charge.’",
-   "page": 9
-  },
-  {
-   "category": "COMPANY OF HUNTERS DETACHMENT",
-   "subject": "Talon Strike Stratagem",
-   "directive": "Change to:",
-   "text": "‘WHEN: Fight phase, when a friendly ADEPTUS ASTARTES unit is selected to fight. TARGET: That ADEPTUS ASTARTES unit. EFFECT: Your unit’s melee attacks have [LANCE].’ designed to improve the gaming experience for all players. highlighted in red.",
-   "page": 9
-  },
-  {
-   "category": "INNER CIRCLE TASK FORCE DETACHMENT",
-   "subject": "Vowed Target Detachment Rule",
-   "directive": "Change to:",
-   "text": "‘At the start of your Movement phase, select one of the following: ▪ Defensive \u0007 Footing: Select one objective you control. Until the start of your next Movement phase, that objective is your Vowed objective. ▪ Aggressive \u0007 Push: Select one or more objective you do not control. Until the start of your next Movement phase, each of those objectives is one of your Vowed objectives. If a rule refers to a unit or model being within range of your Vowed objective, that rule takes effect if that unit or model is within range of one or more of your Vowed objectives. Each time a DEATHWING INFANTRY unit from your army makes an attack that targets a unit within range of one or more of your Vowed objectives, add 1 to the Wound roll.’",
-   "page": 9
-  },
-  {
-   "category": "INNER CIRCLE TASK FORCE DETACHMENT",
-   "subject": "Relic Teleportarium Stratagem, Effect Section",
-   "directive": "Change 3\" to 6\".",
-   "text": "Change 3\" to 6\".",
-   "page": 9
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Grim Resolve Detachment Rule",
-   "directive": "Change to:",
-   "text": "‘While an ADEPTUS ASTARTES unit from your army is Battle-shocked, change the Objective Control characteristic of models in that unit to 1 instead of '-'. In your Command phase, you can select one ADEPTUS ASTARTES unit from your army. Until the start of your next Command phase, add 1 to the Objective Control characteristic of models in that unit.’",
-   "page": 9
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Shroud of Heroes Enhancement",
-   "directive": "Change to:",
-   "text": "‘ADEPTUS ASTARTES model only. (Once per battle, per army) When this model is destroyed, at the end of the phase, roll one D6: ▪ \u0007On a 2+, set up this model on the battlefield, unengaged and as close as possible to where it was destroyed. This model is not part of an attached unit and its unit has a starting strength of 1. This model has 3 wounds remaining, or its full wounds remaining if this model was battle-shocked when it was destroyed.’ DATASHEETS Nephilim Jetfighter, Ravenwing Dark Talon • Core Abilities: Remove 'Hover'. ▪ Profile: \u0007 Change M and OC to '-'. Deathwing Terminator Squad, Deathwing Knights – Watcher in the",
-   "page": 9
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Dark Ability",
-   "directive": "Change to:",
-   "text": "‘Once per battle, in any phase, just after a mortal wound is allocated to an ADEPTUS ASTARTES model in this unit, this unit can summon a Watcher in the Dark. When it does, until the end of the phase, models in this unit have the Feel No Pain 4+ ability against mortal wounds.’",
-   "page": 9
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Deathwing Terminator Squad, Teleport Homer",
-   "directive": "Change 9\" to 8\".",
-   "text": "Change 9\" to 8\".",
-   "page": 10
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Inner Circle Companions, Braziers of Judgement",
-   "directive": "Change to:",
-   "text": "▪ This unit has Stealth. ▪ Melee attacks that target this unit have ‑1",
-   "page": 10
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Inner Circle Companions, Calibanite Greatsword",
-   "directive": "Change to:",
-   "text": "Calibanite Greatsword - Strike [LETHAL HITS] RANGE A WS S AP Melee 4 3+ 6 -2 Calibanite Greatsword - Sweep [SUSTAINED HITS 2] RANGE A WS S AP Melee 5 3+ 6 -2",
-   "page": 10
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Land Speeder Vengeance, Plasma Storm Battery",
-   "directive": "Change to:",
-   "text": "Plasma Storm Battery - Standard [BLAST, TWIN-LINKED] RANGE A BS S AP 36\" D6+1 3+ 8 -2 Plasma Storm Battery - Supercharge [BLAST, HAZARDOUS, TWIN-LINKED] RANGE A BS S AP 36\" D6+1 3+ 9 -3 Ability and power D 2 D 2 ability to hit rolls. Profiles D 2 D 1 Profiles D 2 D 3 Lion El’Jonson ▪ Keywords section: Add 'MOBILE'.\u0007 ▪ \u0007All Secrets Revealed Ability – Change to: ‘Mist-wreathed Shadow Realms: In your Command phase, if this unit is unengaged, you can use this ability. If you do: weapon ▫ Place this unit in strategic reserves. ▫ \u0007This unit can make an ingress move in your next Movement phase (including in your first turn).’ ▪ \u0007Martial Exemplar (Aura) Ability – Change to: ‘Martial Exemplar (Aura): While a friendly ADEPTUS ASTARTES unit is within 6\" of this model, each time a model in that unit makes a melee attack, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.' ▪ \u0007Primarch of the First Legion Ability – Change to: ‘Primarch of the First Legion: At the start of your Command phase, select two Primarch of the First Legion abilities. Until the start of your next Command phase, this model has those abilities.’ ▪ \u0007The Emperor’s Shield Ability – Change to: ‘Each time an attack targets this model, if the Strength characteristic of that attack is greater than the Toughness characteristic of this model, subtract 1 from the Wound roll.’ ▪ Fealty \u0007 weapon profile: change to: Fealty - Strike [LETHAL HITS] RANGE A WS S AP D Melee 8 2+ 12 -4 4 Fealty - Sweep [SUSTAINED HITS 1] RANGE A WS S AP D Melee 16 2+ 6 -3 2",
-   "page": 10
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Nephilim Jetfighter, Lightning-fast Manoeuvres Ability",
-   "directive": "Change to:",
-   "text": "‘Ranged attacks that target this unit have ‑1 to wound rolls.’ Ravenwing Black Knights, Ravenwing Command Squad – Black Knight Combat Weapon Profile Black Knight Combat Weapon [DEVASTATING WOUNDS] RANGE A WS S AP D Melee 3 3+ 5 -2 1",
-   "page": 10
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Ravenwing Command Squad, Core Abilities Section",
-   "directive": "Remove ‘Leader’, add ‘Support’.",
-   "text": "Remove ‘Leader’, add ‘Support’.",
-   "page": 10
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Ravenwing Command Squad, Honour or Death Ability",
-   "directive": "Change to:",
-   "text": "'While this unit contains a Ravenwing Champion, add 1 to Advance and Charge rolls made for this unit.When you target this unit with the Heroic Intervention stratagem, that use is -1 CP.'",
-   "page": 10
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Ravenwing Darkshroud, Icon of Old Caliban Ability",
-   "directive": "Change to:",
-   "text": "‘Friendly ADEPTUS ASTARTES units within 6\" of this unit have Stealth.’",
-   "page": 10
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Ravenwing Dark Talon, Stasis Bomb Ability",
-   "directive": "Change to:",
-   "text": "‘Stasis Bomb: At the end of your opponent’s Fight phase, select one visible enemy unit (excluding AIRCRAFT/Lone Operative units) within 24\" of this unit. That enemy unit is slowed until the end of your opponent’s next Movement phase: ▪ \u0007While a unit is slowed, in your opponent’s Movement phase, when that unit is selected to move, unless that unit remains stationary, roll one D6: ▫ \u0007On a 1-4, that unit suffers D3 mortal wounds and that unit has -2\" M. ▫ \u0007On a 5-6, that unit suffers 2D3 mortal wounds and that unit has -3\" M.’",
-   "page": 11
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Sammael, Grand Master of the Ravenwing Ability",
-   "directive": "Change to:",
-   "text": "▪ This unit’s ranged attacks have [ASSAULT]. ▪ \u0007When this unit is selected to make an advance move, that advance move does not prevent this unit from being eligible to declare a charge. ▪ This unit has MOBILE. Land Speeder Vengeance, Ravenwing Darkshroud, Sammael –",
-   "page": 11
-  },
-  {
-   "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-   "subject": "Keywords Section",
-   "directive": "Add 'FRAME'.",
-   "text": "Add 'FRAME'.",
-   "page": 11
+   "page": 39
   }
  ],
  "death-guard": [
@@ -905,50 +1005,50 @@
    "category": "VIRULENT VECTORIUM DETACHMENT",
    "subject": "Worldblight Detachment Rule",
    "directive": "Change to:",
-   "text": "‘At the end of your Command phase, if a friendly DEATH GUARD unit is controlling an objective, that objective is secured. Until you lose control of that objective, while an enemy unit is within range of that objective, that enemy unit is Afflicted (pg 71).’ DATASHEETS Chaos Land Raider, Chaos Predator Annihilator, Chaos Predator Destructor, Chaos Rhino, Miasmic Malignifier, Plagueburst Crawler –",
+   "text": "‘At the end of your Command phase, if a friendly DEATH GUARD unit is controlling an objective, that objective is secured. Until you lose control of that objective, while an enemy unit is within range of that objective, that enemy unit is Afflicted (pg 71).’ GUARD designed to improve the gaming experience for all players. highlighted in red.",
    "page": 7
   },
   {
-   "category": "VIRULENT VECTORIUM DETACHMENT",
+   "category": "DATASHEETS",
    "subject": "Keywords section",
    "directive": "Add 'FRAME'.",
    "text": "Add 'FRAME'.",
    "page": 7
   },
   {
-   "category": "VIRULENT VECTORIUM DETACHMENT",
+   "category": "DATASHEETS",
    "subject": "Chaos Predator Destructor, Predator Autocannon",
    "directive": "Change Strength to ‘9’.",
    "text": "Change Strength to ‘9’.",
    "page": 7
   },
   {
-   "category": "VIRULENT VECTORIUM DETACHMENT",
+   "category": "DATASHEETS",
    "subject": "Deathshroud Terminators, Death Approaches ability",
    "directive": "Change to:",
    "text": "'In your Movement phase, each time this unit is set up on the battlefield using the Deep Strike ability, it can be set up anywhere on the battlefield that is more than 6\" horizontally away from all Afflicted enemy units, and more than 8\" horizontally away from all other enemy units.’",
    "page": 7
   },
   {
-   "category": "VIRULENT VECTORIUM DETACHMENT",
+   "category": "DATASHEETS",
    "subject": "Mortarion, Diseased Influence Ability",
    "directive": "Change to:",
    "text": "‘Just after an enemy unit ends a Normal, Advance or Fall Back move within 8\" of a friendly DEATH GUARD unit that is within 6\" of this model, if that DEATH GUARD unit is not within Engagement Range of one or more enemy units, it can make a Normal move of up to 5\".’",
    "page": 7
   },
   {
-   "category": "VIRULENT VECTORIUM DETACHMENT",
+   "category": "DATASHEETS",
    "subject": "Mortarion, Inflamed Reprisal Ability",
    "directive": "Change to:",
    "text": "‘In your opponent’s Shooting phase, when a friendly DEATH GUARD unit within 6\" of this model is selected as the target of an attack, this model can use this ability. If it does, after the attacking unit has finished making its attacks, that DEATH GUARD unit can shoot as if it were your Shooting phase, but when resolving those attacks, worsen the BS characteristic of that attack by 1 and it can only target that enemy unit (and only if it is an eligible target).’",
-   "page": 7
+   "page": 8
   },
   {
-   "category": "VIRULENT VECTORIUM DETACHMENT",
+   "category": "DATASHEETS",
    "subject": "Typhus, Eater Plague Ability",
    "directive": "Change to:",
    "text": "‘In your Shooting phase, you can select one enemy unit within 18” of and visible to this PSYKER (excluding units with the Lone Operative ability that are not part of an Attached unit and are not within 12” of this PSYKER) and roll one D6: on a 1, this PSYKER’s unit suffers D3 mortal wounds; on a 2-5, that enemy unit suffers D6 mortal wounds; on a 6, that enemy unit suffers D3+3 mortal wounds.’ FAQS Q: Does the Plagueburst Crawler’s Spore-laced Shock Waves ability inflict mortal wounds every turn to units affected by the ability? A: No.",
-   "page": 7
+   "page": 8
   }
  ],
  "drukhari": [
@@ -1084,14 +1184,14 @@
    "category": "RAPID EVISCERATION DETACHMENT",
    "subject": "Mechanised Murder Detachment Rule",
    "directive": "Change to:",
-   "text": "‘Each time an EMPEROR’S CHILDREN model from your army makes an attack, if it is a TRANSPORT model or disembarked from a TRANSPORT this turn, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.’",
+   "text": "‘Each time an EMPEROR’S CHILDREN model from your army makes an attack, if it is a TRANSPORT model or disembarked from a TRANSPORT this turn, re-roll a Hit roll of 1 and re-roll a Wound roll of 1.’ CHILDREN designed to improve the gaming experience for all players. highlighted in red.",
    "page": 9
   },
   {
    "category": "SLAANESH’S CHOSEN DETACHMENT",
-   "subject": "Vengeful Surge Stratagem, Effect Section",
+   "subject": "Vengeful Surge Stratagem",
    "directive": "Change to:",
-   "text": "CHILDREN designed to improve the gaming experience for all players. highlighted in red. 'Your unit can make a surge move of up to D6\". If your unit is not your army's Favoured Champions, you can re-roll the dice to determine the distance of that surge move.'",
+   "text": "'WHEN: Your opponent’s Shooting phase, when an enemy unit that targeted a friendly unengaged EMPEROR’S CHILDREN CHARACTER unit this phase has shot. TARGET: That EMPEROR’S CHILDREN CHARACTER unit. EFFECT: Your unit can make a surge move of up to D6\". If your unit is not your army’s Favoured Champions, you can re-roll the dice to determine the distance of that surge move.'",
    "page": 9
   },
   {
@@ -1099,14 +1199,21 @@
    "subject": "Refusal to be Outdone Stratagem",
    "directive": "Change to:",
    "text": "‘WHEN: Your Charge phase, when a friendly EMPEROR’S CHILDREN CHARACTER unit within 12\" of an engaged enemy unit declares a charge. TARGET: That EMPEROR’S CHILDREN CHARACTER unit. EFFECT: ▪ Your unit can re-roll charge rolls. ▪ \u0007Your unit must end that charge move engaged with one or more of those enemy units.’",
-   "page": 10
+   "page": 9
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "W 3 Noise Marines",
+   "directive": "Change the following weapon characteristics:",
+   "text": "Change the following weapon characteristics: WEAPON CHANGES UNITS S 5 Flawless Blades, Infractors, Lord Exultant, Bolt Pistol AP -1 Sorcerer, Tormentors S 5 Boltgun Tormentors AP -1 S 5 Chaos Land Raider, Chaos Rhino, Chaos Combi-bolter AP -1 Terminators S 5 Chaos Land Raider, Chaos Rhino, Chaos Combi-weapon AP -1 Terminators Close Combat Lord Exultant, Lord Kakophanist, Noise Marines, S 5 Weapon Tormentors Duelling Sabre S 5 Infractors",
+   "page": 9
   },
   {
    "category": "DATASHEETS",
    "subject": "Chaos Spawn, Scuttling Horrors Ability",
    "directive": "Change to:",
-   "text": "'In your opponent's Movement phase, if an enemy unit ends a move within 8” of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to 6”.'",
-   "page": 10
+   "text": "'In your opponent's Movement phase, if an enemy unit ends a move within 8” of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to 6\".'",
+   "page": 9
   },
   {
    "category": "DATASHEETS",
@@ -1149,6 +1256,425 @@
    "directive": "Add 'FRAME'.",
    "text": "Add 'FRAME'.",
    "page": 10
+  }
+ ],
+ "genestealer-cults": [
+  {
+   "category": "ARMY RULES",
+   "subject": "Cult Ambush",
+   "directive": "Change to:",
+   "text": "‘If your Army Faction is GENESTEALER CULTS, you start the battle with a number of Resurgence points, depending on the battle size, as shown below. ▪ \u0007Incursion: 6 Resurgence points ▪ \u0007Strike Force: 10 Resurgence points ▪ \u0007Onslaught: 14 Resurgence points Each time a unit from your army is destroyed, if every model (excluding CHARACTER models) in that unit has this ability, you can spend the relevant number of Resurgence points shown below based on that unit’s Starting Strength (not including attached CHARACTER models). Aberrants 5 models\b�����������������������������������������������������������������������������������������������4 Resurgence points 10 models\b���������������������������������������������������������������������������������������������8 Resurgence points Acolyte Hybrids with Autopistols, Acolyte Hybrids with Hand Flamers, Hybrid Metamorphs 5 models\b�����������������������������������������������������������������������������������������������2 Resurgence points 10 models\b���������������������������������������������������������������������������������������������4 Resurgence points Atalan Jackals 5 models\b�����������������������������������������������������������������������������������������������2 Resurgence points 10 models\b���������������������������������������������������������������������������������������������6 Resurgence points Neophyte Hybrids 10 models\b���������������������������������������������������������������������������������������������3 Resurgence points 20 models\b��������������������������������������������������������������������������������������������6 Resurgence points Purestrain Genestealers 5 models\b�����������������������������������������������������������������������������������������������2 Resurgence points 10 models\b���������������������������������������������������������������������������������������������6 Resurgence points If you do: ▪ \u0007Add a new unit to your army identical to that destroyed unit (excluding CHARACTER models), in Cult Ambush, at its Starting Strength, with all of its wounds remaining and any [ONE SHOT] weapons those models are equipped with considered as not having been shot. ▪ \u0007Place one Cult Ambush marker (see below) anywhere on the battlefield that is more than 8\" horizontally away from all enemy units (if this is not possible, no marker is placed). UNITS IN CULT AMBUSH Cult Ambush is a type of Strategic Reserves. Units in Cult Ambush cannot be targeted with the Rapid Ingress Stratagem, but can be set up on the battlefield using a Cult Ambush marker as described below, or by following the rules for Strategic Reserves in a subsequent turn. Units in Cult Ambush are not automically destroyed at the end of the third battle round. CULTS designed to improve the gaming experience for all players. in red. CULT AMBUSH MARKERS Use a circular 32mm diameter marker for Cult Ambush markers. If an enemy model (excluding AIRCRAFT) ends any kind of move within 8\" of a Cult Ambush marker you placed, that Cult Ambush marker is removed from the battlefield. At the end of your opponent’s next Movement phase, for each of your Cult Ambush markers still on the battlefield, you can select one unit from your army that is in Cult Ambush to make aningress move. For that ingress move, set that unit up with at least one model in that unit in base contact with that Cult Ambush marker and all other models placed wholly within 3\" of that Cult Ambush marker (that Cult Ambush marker is then removed from the battlefield). Units in Cult Ambush can make an ingress move in the first battle round using this rule.'",
+   "page": 7
+  },
+  {
+   "category": "BIOSANCTIC BROODSURGE DETACHMENT",
+   "subject": "Evasive Vanguard Stratagem, When and Effect Sections",
+   "directive": "Change 9\" to 8\".",
+   "text": "Change 9\" to 8\".",
+   "page": 7
+  },
+  {
+   "category": "BIOSANCTIC BROODSURGE DETACHMENT",
+   "subject": "Stimulated Bio-surge Stratagem, Effect section",
+   "directive": "Change to:",
+   "text": "'Your unit has +2 to charge rolls.'",
+   "page": 7
+  },
+  {
+   "category": "BIOSANCTIC BROODSURGE DETACHMENT",
+   "subject": "Predatory Instincts Enhancement",
+   "directive": "Change to:",
+   "text": "'ABOMINANT, BIOPHAGUS or PATRIARCH model only. ▪ \u0007Models in the bearer's unit have the Infiltrators ability. ▪ \u0007You can target this unit with the Heroic Intervention stratagem, regardless of any other uses of that stratagem this phase. If you do: ▫ \u0007That use is -1 CP. ▫ \u0007That use does not prevent any uses of that stratagem on other units this phase.'",
+   "page": 7
+  },
+  {
+   "category": "BROOD BROTHERS AUXILIA DETACHMENT",
+   "subject": "Adaptive Reprisal Enhancement",
+   "directive": "Change to:",
+   "text": "'GENESTEALER CULTS INFANTRY model only. When you target this unit with the Heroic Intervention stratagem, that use is -1 CP.'",
+   "page": 7
+  },
+  {
+   "category": "BROOD BROTHERS AUXILIA DETACHMENT",
+   "subject": "In the Shadow of Iron Stratagem, When and Effect Sections",
+   "directive": "Change 9\" to 8\".",
+   "text": "Change 9\" to 8\".",
+   "page": 7
+  },
+  {
+   "category": "BROOD BROTHERS AUXILIA DETACHMENT",
+   "subject": "Regimental Reinforcements Stratagem, Effect Section",
+   "directive": "Change to:",
+   "text": "‘EFFECT: Roll one D6: on a 3+, place one Cult Ambush marker anywhere on the battlefield that is more than 8\" horizontally away from all enemy units (if this is not possible, no marker is placed) and add a new unit to your army identical to your destroyed unit, in Cult Ambush, at its Starting Strength, with all of its wounds remaining and any [ONE SHOT] weapons those models are equipped with considered as not having been shot.",
+   "page": 7
+  },
+  {
+   "category": "BROOD BROTHERS AUXILIA DETACHMENT",
+   "subject": "Integrated Tactics Detachment Rule, Brood Brothers Section",
+   "directive": "Change second paragraph to:",
+   "text": "Change second paragraph to: ‘A GENESTEALER CULTS model must be your WARLORD, and ASTRA MILITARUM models from your army lose the Voice of Command ability if they have it. You cannot include units with any of the following keywords in your army using this rule: AIRCRAFT; COMMISSAR; EPIC HERO; MILITARUM TEMPESTUS; OGRYN; RATLING; TECH-PRIEST ENGINSEER; MINISTORUM PRIEST.",
+   "page": 8
+  },
+  {
+   "category": "HOST OF ASCENSION DETACHMENT",
+   "subject": "Primed and Readied Stratagem, CP cost",
+   "directive": "Change to ‘2CP’.",
+   "text": "‘2CP’.",
+   "page": 8
+  },
+  {
+   "category": "HOST OF ASCENSION DETACHMENT",
+   "subject": "Return to the Shadows Stratagem, When and Target Sections",
+   "directive": "Change to:",
+   "text": "‘WHEN: End of your opponent’s Fight phase. TARGET: One GENESTEALER CULTS INFANTRY unit from your army that is not within Engagement Range of one or more enemy units.’",
+   "page": 8
+  },
+  {
+   "category": "HOST OF ASCENSION DETACHMENT",
+   "subject": "Tunnel Crawlers Stratagem, Effect Section",
+   "directive": "Change to:",
+   "text": "‘Your unit can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units.",
+   "page": 8
+  },
+  {
+   "category": "HOST OF ASCENSION DETACHMENT",
+   "subject": "Prowling Agitant Enhancement",
+   "directive": "Change to:",
+   "text": "'GENESTEALER CULTS model only. In your opponent's Movement phase, if an enemy unit ends a move within 8” of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to D6”.'",
+   "page": 8
+  },
+  {
+   "category": "OUTLANDER CLAW DETACHMENT",
+   "subject": "Along Shadowed Trails Stratagem",
+   "directive": "Change to:",
+   "text": "WHEN: Any phase, just after an enemy unit ends a move within 8\" of one or more of your Cult Ambush markers. ‘ TARGET: Select one of those Cult Ambush markers. EFFECT: You can set up that Cult Ambush marker anywhere on the battlefield that is more than 8\" horizontally away from all enemy units.’",
+   "page": 8
+  },
+  {
+   "category": "OUTLANDER CLAW DETACHMENT",
+   "subject": "Rapid Feint Stratagem, Target Section",
+   "directive": "Change 9\" to 8\".",
+   "text": "Change 9\" to 8\".",
+   "page": 8
+  },
+  {
+   "category": "OUTLANDER CLAW DETACHMENT",
+   "subject": "Rapid Takeover Detachment Rule",
+   "directive": "Change to:",
+   "text": "‘While a GENESTEALER CULTS MOUNTED/VEHICLE model from your army is not Battle-shocked, add 1 to its Objective Control characteristic. In addition, at the end of your Command phase, if one or more ATALAN JACKALS units from your army are within range of an objective you control, that objective remains under your control until your opponent’s Level of Control over that objective marker is greater than yours at the end of a phase.’",
+   "page": 8
+  },
+  {
+   "category": "XENOCREED CONGREGATION DETACHMENT",
+   "subject": "The Downtrodden Rise Stratagem, When and Effect Sections",
+   "directive": "Change to:",
+   "text": "‘WHEN: End of your opponent’s Movement phase. EFFECT: Until the end of the phase, you can set up your unit on the battlefield without using a Cult Ambush marker. When doing so, set up your unit anywhere on the battlefield that is more than 6\" horizontally away from all enemy units.’",
+   "page": 8
+  },
+  {
+   "category": "XENOCREED CONGREGATION DETACHMENT",
+   "subject": "Tireless Fervour Stratagem, Effect Section",
+   "directive": "Change to:",
+   "text": "▪ '\u0007 If your unit made an advance/fall-back move this turn, that advance/fall-back move does not prevent your unit from being eligible to declare a charge. ▪ \u0007When your unit declares a charge, you can use this part of this stratagem. If you do: ▫ \u0007Your unit can re-roll charge rolls. ▫ \u0007Your unit must end that charge moveengaged with an enemy unit engaged with a friendly CHARACTER unit.'",
+   "page": 8
+  },
+  {
+   "category": "XENOCREED CONGREGATION DETACHMENT",
+   "subject": "Deeds That Speak to the Masses Enhancement",
+   "directive": "Change to:",
+   "text": "‘MAGUS, PRIMUS or ACOLYTE ICONWARD model only. You start the battle with 2 additional Resurgence points.’",
+   "page": 8
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Biophagus, Clamavus, Locus, Nexos – Core Abilities Section",
+   "directive": "Remove 'Leader', add 'Support'.",
+   "text": "Remove 'Leader', add 'Support'.",
+   "page": 8
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Biophagus, Unit Composition, Wargear",
+   "directive": "Change to:",
+   "text": "‘This model is equipped with: autopistol; chemical vials; injector goad; alchemicus familiar.’",
+   "page": 8
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Acolyte Hybrids with Hand Flamers, Ranged Weapons",
+   "directive": "Change the Range characteristic of demolition charges to ‘8\"’.",
+   "text": "Change the Range characteristic of demolition charges to ‘8\"’.",
+   "page": 8
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Acolyte Iconward, Summon the Cult Ability",
+   "directive": "Change 9\" to 8\".",
+   "text": "Change 9\" to 8\".",
+   "page": 8
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Goliath Rockgrinder, Ranged Weapons",
+   "directive": "Change the Range characteristic of demolition charge cache to ‘8\"’.",
+   "text": "Change the Range characteristic of demolition charge cache to ‘8\"’.",
+   "page": 8
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Goliath Truck, Ranged Weapons",
+   "directive": "Change the Range characteristic of demolition charge cache to ‘8\"’.",
+   "text": "Change the Range characteristic of demolition charge cache to ‘8\"’.",
+   "page": 8
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Hybrid Metamorphs, Brood Surge Ability",
+   "directive": "Change to:",
+   "text": "'In your opponent’s Shooting phase, when an enemy unit has shot, if a model in this unit was destroyed as a result of those attacks, this unit can make a surge move of up to D6\".'",
+   "page": 8
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Kelermorph, Hypersensory Abilities",
+   "directive": "Change to:",
+   "text": "‘Once per turn, in your opponent’s Movement phase, when an enemy unit ends a Normal, Advance or Fall Back move within 8\" of this model, if this model is not within Engagement Range of one or more enemy units, it can shoot at that unit as if it were your Shooting phase and then make a Normal move of up to D6\" (it cannot embark within a Transport as part of this move).",
+   "page": 8
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Nexos, Abilities, Battlefield Analysis",
+   "directive": "Change to:",
+   "text": "‘Once per battle round, one model from your army with this ability can use it when its unit is targeted with a Stratagem. If it does, reduce the CP cost of that use of that Stratagem by 1CP.’",
+   "page": 8
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Primus, Cult Demagogue Ability",
+   "directive": "Change to:",
+   "text": "‘While this model is leading a unit, each time a model in that unit makes an attack, you can add 1 to the Hit roll.’ Reductus Saboteur ▪ Demolition Charges: Change Range characteristic to ‘8\"’. ▪ Planted Explosives Ability: Change 9\" to 8\".",
+   "page": 8
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Sanctus - \u0007Creeping Shadow Ability",
+   "directive": "Change to:",
+   "text": "'If this model is equipped with a Cult Sniper Rifle, In your opponent's Movement phase, if an enemy unit ends a move within 8” of this unit, if this unit is not within Engagement Range of one or more enemy",
+   "page": 9
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "units, this unit can make a Normal move of up to 6”.' - \u0007Cloaked Assassin Ability, Second Sentence",
+   "directive": "Change to:",
+   "text": "'Enemy units cannot target this unit with snap shooting attacks.'",
+   "page": 9
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Goliath Rockgrinder, Goliath Truck – Keywords Section",
+   "directive": "Add 'FRAME'.",
+   "text": "Add 'FRAME'.",
+   "page": 9
+  }
+ ],
+ "grey-knights": [
+  {
+   "category": "ARMY RULES",
+   "subject": "Gate of Infinity Army Rule, Last Paragraph",
+   "directive": "Change to:",
+   "text": "▪ Place those units in strategic reserves. ▪ \u0007Those units can make an ingress move in your next phase (including in your first turn).",
+   "page": 9
+  },
+  {
+   "category": "AUGURIUM TASK FORCE DETACHMENT",
+   "subject": "One Foot in the Future Enhancement",
+   "directive": "Change to:",
+   "text": "‘GREY KNIGHTS model only. When this unit ends an ingress can use this ability. If you do: ▪ This unit can make a normal move of up to D6\". ▪ Until the end of the turn, this unit is not eligible to declare",
+   "page": 9
+  },
+  {
+   "category": "AUGURIUM TASK FORCE DETACHMENT",
+   "subject": "Aggressive Anticipation Stratagem, Effect Section",
+   "directive": "Change to:",
+   "text": "‘Your unit's attacks can re-roll hit rolls.’",
+   "page": 9
+  },
+  {
+   "category": "BANISHERS DETACHMENT",
+   "subject": "Shadow of Anarch Stratagem, Target Section",
+   "directive": "Change 9\" to 8\".",
+   "text": "Change 9\" to 8\".",
+   "page": 9
+  },
+  {
+   "category": "BROTHERHOOD STRIKE DETACHMENT",
+   "subject": "Combat Manifestation Stratagem, Effect Section",
+   "directive": "Change 3\" to 6\".",
+   "text": "Change 3\" to 6\".",
+   "page": 9
+  },
+  {
+   "category": "HALLOWED CONCLAVE DETACHMENT",
+   "subject": "Precognitive Strategies Stratagem, Target Section",
+   "directive": "Change 9\" to 8\".",
+   "text": "Change 9\" to 8\".",
+   "page": 9
+  },
+  {
+   "category": "HALLOWED CONCLAVE DETACHMENT",
+   "subject": "Eye of the Augurium Enhancement",
+   "directive": "Change to:",
+   "text": "‘GREY KNIGHTS model only. You can target this unit with Intervention stratagem, regardless of any other uses of this phase. If you do: ▪ \u0007That use is -1 CP. ▪ \u0007That use does not prevent any uses of that stratagem this phase.’",
+   "page": 9
+  },
+  {
+   "category": "SANCTIC SPEARHEAD DETACHMENT",
+   "subject": "Sigil of Exigence Enhancement",
+   "directive": "Change 9\" to 8\".",
+   "text": "Change 9\" to 8\".",
+   "page": 9
+  },
+  {
+   "category": "T 5",
+   "subject": "T 9 Grand Master in Nemesis Dreadknight, Nemesis Dreadknight",
+   "directive": "Change the following weapon characteristics:",
+   "text": "Change the following weapon characteristics: WEAPON CHANGES UNITS Close Combat Interceptor Squad, Purgation Squad, Purifier S 5 Weapon Squad, Strike Squad S 5 Combi-weapon Brotherhood Librarian AP -1 S 5 Hurricane Bolter Stormraven Gunship AP -1 Brother Captain, Brotherhood Champion, Brotherhood Chaplain, Brotherhood Librarian, Brotherhood Terminator Squad, Castellan S 5 Crowe, Grand Master, Grand Master Voldus, Storm Bolter Inceptor Squad, Land Raider, Land Raider AP -1 Crusader, Land Raider Redeemer, Paladin Squad, Purgation Squad, Purifier Squad, Razorback, Rhino, Strike Squad, Venerable Dreadnought Land Raider, Land Raider Crusader, Land Raider Redeemer, Razorback,",
+   "page": 9
+  },
+  {
+   "category": "T 5",
+   "subject": "Rhino – Keywords Section",
+   "directive": "Add ‘FRAME’.",
+   "text": "Add ‘FRAME’.",
+   "page": 9
+  },
+  {
+   "category": "T 5",
+   "subject": "Brotherhood Chaplain, Abilities, Core Abilities",
+   "directive": "Add ‘Leader’.",
+   "text": "Add ‘Leader’.",
+   "page": 9
+  },
+  {
+   "category": "T 5",
+   "subject": "Brotherhood Techmarine, Guardians of the Machine Ability",
+   "directive": "Change to:",
+   "text": "‘Each time an enemy unit ends a charge move engaged with one or more friendly GREY KNIGHTS VEHICLE units and within 6\" of this unit, you can target this unit with the Heroic Intervention stratagem, regardless of any other uses of that stratagem this phase. If you do: ▪ \u0007That use is -1 CP. ▪ \u0007That use does not prevent any uses of that stratagem on other units this phase.’",
+   "page": 9
+  },
+  {
+   "category": "T 5",
+   "subject": "Grand Master Voldus, Sanctuary Ability",
+   "directive": "Change to:",
+   "text": "▪ This unit has Stealth. ▪ Melee attacks that target this unit have ‑1 to hit rolls. Stormraven Gunship ▪ Profile: Change M to 14”. ▪ \u0007 Keywords: Remove ‘AIRCRAFT’. FAQS Q: Can a unit with the Sigil of Exigence enhancement use that ability during my opponent’s first turn? A: Yes.",
+   "page": 10
+  }
+ ],
+ "imperial-agents": [
+  {
+   "category": "ALIEN HUNTERS DETACHMENT",
+   "subject": "Armour of Contempt Stratagem, Effect Section",
+   "directive": "Change to:",
+   "text": "‘Until the attacking unit has finished making its attacks, each attack targets your unit, worsen the Armour Penetration of that attack by 1.’",
+   "page": 10
+  },
+  {
+   "category": "ALIEN HUNTERS DETACHMENT",
+   "subject": "Rapid Tactical Relocation Stratagem, Effect Section",
+   "directive": "Change 9\" to 8\".",
+   "text": "Change 9\" to 8\".",
+   "page": 10
+  },
+  {
+   "category": "DAEMON HUNTERS DETACHMENT",
+   "subject": "Gift of the Prescient Enhancement",
+   "directive": "Change 3\" to 6\".",
+   "text": "Change 3\" to 6\".",
+   "page": 10
+  },
+  {
+   "category": "DAEMON HUNTERS DETACHMENT",
+   "subject": "Truesilver Armour Stratagem, Effect Section",
+   "directive": "Change to:",
+   "text": "‘Until the attacking unit has finished making its attacks, each attack targets your unit, worsen the Armour Penetration of that attack by 1.’",
+   "page": 10
+  },
+  {
+   "category": "CHANGES UNITS",
+   "subject": "T 6 Grey Knights Terminator Squad",
+   "directive": "Change the following weapon characteristics:",
+   "text": "Change the following weapon characteristics: WEAPON CHANGES UNITS S 5 Storm Bolter Grey Knights Terminator Squad, AP -1 Imperial Rhino, Inquisitorial Chimera and Sisters of Battle",
+   "page": 10
+  },
+  {
+   "category": "AP -1",
+   "subject": "– Keywords Section",
+   "directive": "Add 'FRAME'.",
+   "text": "Add 'FRAME'.",
+   "page": 10
+  },
+  {
+   "category": "AP -1",
+   "subject": "Culexus Assassin, Etheric Emergence Ability",
+   "directive": "Change to:",
+   "text": "‘In your Movement phase, when this model is set up on the battlefield using the Deep Strike ability, it can perform an etheric emergence. If it does, this model can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units, but until the end of the turn, it is not eligible to declare a charge.’",
+   "page": 10
+  },
+  {
+   "category": "AP -1",
+   "subject": "Imperial Rhino, Transport Section",
+   "directive": "Change to:",
+   "text": "‘This model has a transport capacity of 12 AGENTS OF THE IMPERIUM INFANTRY models. It cannot transport TERMINATOR or OFFICIO ASSASSINORUM models.",
+   "page": 10
+  },
+  {
+   "category": "AP -1",
+   "subject": "Inquisitor, Leader Section",
+   "directive": "Remove ‘DEATHWATCH KILL TEAM'.",
+   "text": "Remove ‘DEATHWATCH KILL TEAM'.",
+   "page": 10
+  },
+  {
+   "category": "AP -1",
+   "subject": "Inquisitorial Agents, Inquisitorial Henchmen Section",
+   "directive": "Change to:",
+   "text": "‘If your Army Faction is not AGENTS OF THE IMPERIUM, then for each INQUISITOR unit you include in your army, you can include one INQUISITORIAL AGENTS unit in your army that does not count towards the number of RETINUE units your army can include (see Assigned Agents, page 75).’",
+   "page": 10
+  },
+  {
+   "category": "AP -1",
+   "subject": "Inquisitor Draxus, Leader Section",
+   "directive": "Remove ‘DEATHWATCH KILL TEAM'.",
+   "text": "Remove ‘DEATHWATCH KILL TEAM'.",
+   "page": 10
+  },
+  {
+   "category": "AP -1",
+   "subject": "Sisters of Battle Immolator, Invulnerable Save",
+   "directive": "Remove asterisk.",
+   "text": "Remove asterisk.",
+   "page": 10
+  },
+  {
+   "category": "AP -1",
+   "subject": "Vindicare Assassin, Dead Shot Ability",
+   "directive": "Change to:'When this unit is selected to shoot, until this unit has shot:",
+   "text": "'When this unit is selected to shoot, until this unit has shot: ▪ \u0007Enemy units do not have Lone Operative. ▪ Hidden \u0007 enemy units have +15\" detection range.'",
+   "page": 10
+  },
+  {
+   "category": "AP -1",
+   "subject": "Voidsmen-at-Arms, Navy Bodyguard Section",
+   "directive": "Change to:",
+   "text": "‘If your Army Faction is not AGENTS OF THE IMPERIUM, then for each VOIDFARERS CHARACTER unit you include in your army, you can include one VOIDSMEN-AT-ARMS unit in your army that does not count towards the number of RETINUE units your army can include (see Assigned Agents, page 75).’",
+   "page": 11
+  },
+  {
+   "category": "AP -1",
+   "subject": "Ministorum Priest, Core Abilities section",
+   "directive": "Remove 'Leader', add 'Support'.",
+   "text": "Remove 'Leader', add 'Support'.",
+   "page": 11
   }
  ],
  "imperial-knights": [
@@ -1214,6 +1740,92 @@
    "directive": "Change OC characteristic to ‘10’.",
    "text": "Change OC characteristic to ‘10’.",
    "page": 27
+  }
+ ],
+ "leagues-of-votann": [
+  {
+   "category": "BRANDFAST OATHBAND DETACHMENT",
+   "subject": "Secure Positions Stratagem",
+   "directive": "Change to:",
+   "text": "‘WHEN: End of any of your phases. TARGET: One LEAGUES OF VOTANN TRANSPORT unit from your army. EFFECT: One LEAGUES OF VOTANN unit embarked within your TRANSPORT can disembark. When doing so, models in that unit can be set up anywhere on the battlefield wholly within 6\" of your TRANSPORT. That unit cannot declare a charge in the same turn, but can otherwise act normally in the remainder of the turn.’",
+   "page": 11
+  },
+  {
+   "category": "DÊLVE ASSAULT SHIFT DETACHMENT",
+   "subject": "Dêlvewerke Navigator Enhancement, Last Sentence",
+   "directive": "Change to:",
+   "text": "‘Return one destroyed model (excluding CHARACTER models) to that unit and then, for every 2YP you just spent, return up to one additional destroyed model (excluding CHARACTER models) to that unit.’",
+   "page": 11
+  },
+  {
+   "category": "NEEDGAÂRD OATHBAND DETACHMENT",
+   "subject": "Reactive Reprisal Stratagem, Effect Section",
+   "directive": "Change to:",
+   "text": "‘Your unit can shoot as if it were your Shooting phase, can only target that enemy unit when doing so, and can only do so if that enemy unit is an eligible target.’",
+   "page": 11
+  },
+  {
+   "category": "NEEDGAÂRD OATHBAND DETACHMENT",
+   "subject": "Void Hardened Stratagem, Effect Section",
+   "directive": "Change to:",
+   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’",
+   "page": 11
+  },
+  {
+   "category": "PERSECUTION PROSPECT DETACHMENT",
+   "subject": "Claimstaker Reflex Stratagem, Target Section",
+   "directive": "Change 9\" to 8\".",
+   "text": "Change 9\" to 8\".",
+   "page": 11
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Buri Aegnirssen, Unhinged Vengeance Ability",
+   "directive": "Change to:",
+   "text": "'In your opponent’s Shooting phase, when an enemy unit has shot, if this model lost one or more wounds as a result of those attacks, this unit can make a surge move of up to D6+2\".'",
+   "page": 11
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Hekaton Land Fortress, Transport Section",
+   "directive": "Change to:",
+   "text": "‘This model has a transport capacity of 14 LEAGUES OF VOTANN INFANTRY models. Each EXOARMOUR, EXOFRAME or IRONKIN STEELJACKS model takes up the space of 2 models. It cannot transport ARTILLERY models.",
+   "page": 11
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Hernkyn Yaegirs, Pragmatic Hunters Ability",
+   "directive": "Change to:",
+   "text": "'In your opponent's Movement phase, if an enemy unit ends a move within 8” of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to D6”.'",
+   "page": 11
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Memnyr Strategist, Predictive Guidance Ability",
+   "directive": "Change to:",
+   "text": "'Once per battle round, when you target this unit with the Fire Overwatch/Heroic Interventionstratagem, you can use this ability. If you do, that use of that stratagem is -1 CP.'",
+   "page": 11
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Sagitaur, Transport Section",
+   "directive": "Change first paragraph to:",
+   "text": "Change first paragraph to: ‘This model has a transport capacity of 6 LEAGUES OF VOTANN INFANTRY models. It cannot transport ARTILLERY, EXOARMOUR, EXOFRAME or IRONKIN STEELJACKS models.'",
+   "page": 11
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Ûthar the Destined, Ancestral Fortune Ability",
+   "directive": "Change to:",
+   "text": "'Once per turn, you can spend 1YP to change one Hit roll, one Wound roll or one saving throw made for this model to an unmodified 6.’",
+   "page": 11
+  },
+  {
+   "category": "DATASHEETS",
+   "subject": "Hekaton Land Fortress, Sagitaur – Keywords Section",
+   "directive": "Add 'FRAME'.",
+   "text": "Add 'FRAME'.",
+   "page": 11
   }
  ],
  "necrons": [
@@ -1363,647 +1975,6 @@
    "directive": "Change to:",
    "text": "‘In your Movement phase, when this unit is selected to make an advance move, you can use this ability. If you do: ▪ That advance move has no maximum distance. ▪ \u0007This unit can move through all types of model (including enemy models and MONSTER/VEHICLE models). ▪ \u0007After moving, this unit must be more than 8\" horizontally from all enemy units.’ FAQS Q: Can a Cryptothrall that has used its Systematic Vigour ability to ‘fight on death’ later fight again if returned to its unit before that unit is selected to fight? A: Yes. Q: When using the Protocol of the Undying Legions Stratagem, are any other rules that are applicable to Reanimation Protocols applied (e.g. Necron Warriors’ Their Number is Legion ability)? A: Yes. Q: If I am using the Canoptek Court Detachment, if there are no objective markers within No Man’s Land or within my opponent’s deployment zone, can those areas be within my army’s Power Matrix? A: No. Q: Can I use the Cosmic Precision Stratagem to set up a unit anywhere on the battlefield instead of only wholly within 6\" of a battlefield edge, even if it doesn't have the Deep Strike ability? A: Yes. Q: When being set up using the Cosmic Precision Stratagem, does a model that is large (e.g. a Tesseract Vault) have to follow the rules for large models in Setting Up Large Models (Rules Appendix, 03.02.02)? A: Yes. Q: When using the Protocol of the Conquering Tyrant Stratagem or Lokhust Destroyers’ Hard-wired for Destruction ability, to be eligible to re-roll the Hit roll, does the unit also need to be eligible to re-roll a Hit roll of 1? A: Yes (see Rules with Multiple Conditions and Effects, Rules Appendix 02.03.01). Q: When I set up a unit using the Monolith’s Eternity Gate ability, do I have to set that unit up wholly within 6\" of one battlefield edge? A: No. Q: When I set up a unit using the Monolith’s Eternity Gate ability, and that unit is not wholly within 6\" of one battlefield edge, is that unit eligible to shoot in my Shooting phase? A: Yes. Q: Does the Canoptek Court Autodivinator Enhancement trigger when army rule effects such as Code Chivalric (Imperial Knights) award a player CP, or when an opponent discards a Secondary Mission card for 1CP? A: No in both cases. It only triggers when your opponent gains CP as the result of an ability (not any other kind of rule). Q: If a unit is removed from the battlefield using the Hypercrypt Legion Hyperphasing Detachment rule and it has the Deep Strike ability, can that unit arrive from Reserves in the first battle round? A: No. Q: If I target a Canoptek Wraiths unit with the Canoptek Court Reactive Subroutines Stratagem, can this trigger that unit’s Wraith Form ability? A: Yes. Q: Can a unit be affected by a Resurrection Orb (e.g. from a Catacomb Command Barge and an Overlord) more than once per turn? A: No.",
    "page": 30
-  }
- ],
- "orks": [
-  {
-   "category": "ARMY RULES",
-   "subject": "Waaagh!",
-   "directive": "Change first paragraph to:",
-   "text": "Change first paragraph to: ‘If your Army Faction is ORKS, once per battle, at the start of your Command phase, you can call a Waaagh!. If you do, until the start of your next Command phase, the Waaagh! is active for your army and:’",
-   "page": 24
-  },
-  {
-   "category": "BULLY BOYZ DETACHMENT",
-   "subject": "Da Boss Is Watchin’ Detachment Rule",
-   "directive": "Change to:",
-   "text": "‘At the start of your Command phase, in a turn in which you have not called a Waaagh!, if you have one or more WARBOSS models on the battlefield (or embarked within a TRANSPORT that is on the battlefield), you can call a Waaagh! for a second time this battle. When doing so, that second Waaagh! only counts as having been called for WARBOSS, NOBZ and MEGANOBZ units from your army.’",
-   "page": 24
-  },
-  {
-   "category": "BULLY BOYZ DETACHMENT",
-   "subject": "Crushing Impact Stratagem, Name",
-   "directive": "Change to:",
-   "text": "‘Krushin’ Impact’",
-   "page": 24
-  },
-  {
-   "category": "BULLY BOYZ DETACHMENT",
-   "subject": "Hulking Brutes Stratagem, Effect Section",
-   "directive": "Change to:",
-   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’",
-   "page": 24
-  },
-  {
-   "category": "DA BIG HUNT DETACHMENT",
-   "subject": "Dat One's Even Bigga! Stratagem, Effect section",
-   "directive": "Change to:",
-   "text": "'Until the end of the phase, your unit is eligible to charge in a turn in which it Advanced or Fell Back. In addition, you can re-roll charge rolls made for your unit. If you do, your unit must end that charge move engaged with your Prey.'",
-   "page": 24
-  },
-  {
-   "category": "DA BIG HUNT DETACHMENT",
-   "subject": "Da Hunt Is On Detachment Rule",
-   "directive": "Change first paragraph to:",
-   "text": "Change first paragraph to: ‘At the start of your Command phase, select one MONSTER, VEHICLE or CHARACTER unit from your opponent’s army. Until the start of your next",
-   "page": 24
-  },
-  {
-   "category": "DA BIG HUNT DETACHMENT",
-   "subject": "Command phase, that enemy unit is your Prey:'",
-   "directive": "Change first bullet point to:",
-   "text": "Change first bullet point to: ▪ \u0007When a friendly BEAST SNAGGA unit declares a charge, If your Prey is within 12\" of that unit, you can use this part of this ability. If you do: ▫ \u0007That BEAST SNAGGA unit can re-roll that charge roll. ▫ \u0007That BEAST SNAGGA unit must end that charge move engaged with your Prey. designed to improve the gaming experience for all players. highlighted in red.",
-   "page": 24
-  },
-  {
-   "category": "DREAD MOB DETACHMENT",
-   "subject": "Try Dat Button! Detachment Rule, Last Paragraph",
-   "directive": "Change to:",
-   "text": "'If a weapon equipped by a model from your army has the [HAZARDOUS] ability from multiple sources, each time you take a Hazardous test for that weapon, it is failed on a roll of 1-3.'",
-   "page": 24
-  },
-  {
-   "category": "DREAD MOB DETACHMENT",
-   "subject": "Conniving Runts Stratagem, Target Section",
-   "directive": "Change 9\" to 8\".",
-   "text": "Change 9\" to 8\".",
-   "page": 24
-  },
-  {
-   "category": "GREEN TIDE DETACHMENT",
-   "subject": "Tide of Muscle Stratagem, Effect Section",
-   "directive": "Change to:",
-   "text": "‘Until the end of the phase, each time your unit declares a charge, add 1 to the Charge roll and, if your unit contains 10 or more models, you can re-roll the Charge roll.",
-   "page": 24
-  },
-  {
-   "category": "GREEN TIDE DETACHMENT",
-   "subject": "Go Get ’Em! Stratagem",
-   "directive": "Change to:",
-   "text": "‘WHEN: Your opponent’s Shooting phase, when an enemy unit that targeted a friendly unengaged BOYZ unit this phase has shot. TARGET: That BOYZ unit. EFFECT: Your unit can make a surge move of up to D6\".’",
-   "page": 24
-  },
-  {
-   "category": "GREEN TIDE DETACHMENT",
-   "subject": "Mob Mentality Detachment Rule",
-   "directive": "Change to:",
-   "text": "‘Each time an attack targets a BOYZ unit from your army, models in that unit have a 6+ invulnerable save against that attack. Each time an attack targets a BOYZ unit from your army that contains 10 or more models, models in that unit have a 5+ invulnerable save against that attack.'",
-   "page": 24
-  },
-  {
-   "category": "KULT OF SPEED DETACHMENT",
-   "subject": "More Gitz Over 'Ere! Stratagem, Target Section",
-   "directive": "Change 9\" to 8\".",
-   "text": "Change 9\" to 8\".",
-   "page": 24
-  },
-  {
-   "category": "KULT OF SPEED DETACHMENT",
-   "subject": "Adrenaline Junkies Detachment Rule",
-   "directive": "Change to:",
-   "text": "‘SPEED FREEKS units from your army are eligible to shoot and declare a charge in a turn in which they Advanced or Fell Back.’",
-   "page": 24
-  },
-  {
-   "category": "WAR HORDE DETACHMENT",
-   "subject": "Careen! Stratagem, Effect Section",
-   "directive": "Change to:",
-   "text": "‘Your unit can make a Normal or Fall Back move before its Deadly Demise ability is resolved, and before any embarked units perform an emergency disembark move. When making this move, your unit can move over enemy units (excluding MONSTERS and VEHICLES) as if they were not there.’",
-   "page": 24
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Battlewagon, Stompa, Trukk – Keywords Section",
-   "directive": "Add 'FRAME'.",
-   "text": "Add 'FRAME'.",
-   "page": 25
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Ability",
-   "directive": "Change to:",
-   "text": "‘Once per battle, for each bomb squig this unit has, after this unit ends a Normal move, you can use one Bomb Squig. If you do, select one enemy unit within 12\" and visible to this unit and roll one D6: on a 3+, that enemy unit suffers D3 mortal wounds.’",
-   "page": 25
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Battlewagon, Transport Section",
-   "directive": "Change to:",
-   "text": "‘This model has a transport capacity of 22 ORKS INFANTRY models. If this model is equipped with a killkannon, it has a transport capacity of 12 ORKS INFANTRY models. Each MEGA ARMOUR or JUMP PACK model takes up the space of 2 models.The GHAZGHKULL THRAKA model takes up the space of 4 models.’",
-   "page": 25
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Beastboss on Squigosaur, Single-Minded Predator Ability",
-   "directive": "Change to:",
-   "text": "'You can target this unit with the Heroic Intervention stratagem, regardless of any other uses of that stratagem this phase. If you do: ▪ \u0007That use is -1 CP. ▪ \u0007That use does not prevent any uses of that stratagem on other units this phase.'",
-   "page": 25
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Big Mek, Shokk-boosta Ability",
-   "directive": "Change to:",
-   "text": "‘You can re‑roll Advance rolls made for this model’s unit. In addition, each time this model’s unit makes a Normal, Advance or Fall Back move, models in that unit can move through models and terrain features. When doing so, they can move within Engagement Range of such models but cannot end that move within Engagement Range of them, and any Desperate Escape test is automatically passed.’",
-   "page": 25
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Blitza-Bommer, Boom Bomb Ability",
-   "directive": "Change to:",
-   "text": "'At the end of your opponent’s Fight phase, select one visible enemy unit (excluding Lone Operative units) within 24\" of this unit, and roll one D6 for that unit: On a 4+, that unit suffers D6 mortal wounds.'",
-   "page": 25
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Boomdakka Snazzwagon, Billowing Fumes Ability",
-   "directive": "Change to:",
-   "text": "‘While an enemy unit (excluding MONSTER/VEHICLE units) is within 6\" of this unit, when that enemy unit is selected to shoot, that unit’s targets have the benefit of cover until that unit has shot.’ Boss Snikrot ▪ \u0007Red Skulls Kommandos Ability: Change to: ‘This unit has +1 Sv against ranged attacks.’ ▪ \u0007Kunnin’ Infiltrator Ability: Change to: ‘Kunnin’ Infiltrator (Once per battle, per army): In your Movement phase, if this unit is unengaged, you can use this ability. If you do: ▫ \u0007Place this unit in strategic reserves. ▫ \u0007This unit has Deep Strike. ▫ \u0007This unit must make an ingress move this phase (including in your first turn).’ Boyz ▪ Weapon Profiles: Add the following: Kombi-rokkit RANGE A BS S AP D 24\" 1 5+ 10 -2 3 Kombi-shoota RANGE A BS S AP D 24\" 2 5+ 4 0 1 Kustom Shoota [RAPID FIRE 2] RANGE A BS S AP D 18\" 4 5+ 4 0 1 ▪ Wargear Options: Change to: ▪ The Boss Nob’s big choppa can be replaced with 1 power klaw. ▪ \u0007The Boss Nob’s big choppa and slugga can be replaced with 1 kombi‑weapon and 1 close combat weapon. ▪ \u0007The Boss Nob can have its big choppa replaced with one of the following: ▫ \u00071 big choppa and 1 kustom shoota (this model’s big choppa cannot be replaced) ▫ \u00071 big choppa, 1 kombi-rokkit and 1 kombi-shoota (this model’s big choppa cannot be replaced) ▪ Any number of Boyz can each be equipped with 1 shoota. ▪ \u0007For every 10 models in this unit, 1 Boy not equipped with 1 shoota can have its choppa and slugga replaced with one of the following: ▫ 1 big shoota and 1 close combat weapon",
-   "page": 25
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "▫ 1 rokkit launcha and 1 close combat weapon - \u0007Bodyguard Section",
-   "directive": "Remove this section.",
-   "text": "Remove this section.",
-   "page": 25
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Burna-Bommer, Burna Bomb Ability",
-   "directive": "Change to:",
-   "text": "'At the end of your opponent’s Fight phase, you can select one visible enemy unit (excluding Lone Operative units) within 24\" of this unit: ▪ \u0007Friendly ORKS units' ranged attacks that target that enemy unit have [IGNORES COVER] until the end of your next turn. ▪ \u0007Roll one D6 for each model in that enemy unit: ▫ \u0007For each 6, that enemy unit suffers 1 mortal wound.'",
-   "page": 25
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Deff Dread, Piston-driven Brutality Ability",
-   "directive": "Change to:",
-   "text": "‘Each time this model ends a Charge move, select one enemy unit within Engagement Range of it and roll one D6: on a 2-5, that enemy unit suffers D3 mortal wounds; on a 6, that enemy unit suffers D3+3 mortal wounds.’",
-   "page": 25
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Ghazghkull Thraka - \u0007Prophet of da Great Waaagh! Ability",
-   "directive": "Change to:",
-   "text": "‘While this unit is leading a unit, each time a model in that unit makes a melee attack, add 1 to the Hit roll and add 1 to the Wound roll and if the Waaagh! is active for your army, a Critical Hit is scored on a",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "successful unmodified Hit roll of 5+. - \u0007Ghazghkull’s Waaagh! Banner (Aura) Ability",
-   "directive": "Change to:",
-   "text": "‘While a friendly ORKS unit is within 12\" of Makari, if the Waaagh! is active for your army, melee weapons equipped by models in that unit",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "‘This unit can be attached to the following units: BOYZ, MEGANOBZ, NOBZ - \u0007Invulnerable Save Section, Footnote",
-   "directive": "Change to:",
-   "text": "‘While a friendly Makari model is on the battlefield, you cannot re-roll save rolls for this unit.’",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Gretchin - \u0007Unit Composition",
-   "directive": "Change to:",
-   "text": "▫ \u00070-1 Runtherd and 10 Gretchin OR",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "▫ 0-2 Runtherds and 20 Gretchin - \u0007Thievin’ Scavengers Ability",
-   "directive": "Change to:",
-   "text": "‘At the start of your Movement phase, roll one D6 for each objective marker you control that has one or more units from your army with this ability within range of it (excluding Battle-shocked units). If one or more of those rolls is a 4+, you gain 1CP.’ Hunta Rig, Kill Rig ▪ Keywords: \u0007 Remove 'VEHICLE', add 'MONSTER'. ▪ Saw Blades weapon: Change AP to '-2'.",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Killa Kans, Shooty Power Trip Ability",
-   "directive": "Change to:",
-   "text": "‘Each time this unit is selected to shoot, you can roll one D6: ▪ \u0007On a 1‑2, this unit suffers D3 mortal wounds. ▪ \u0007On a 3‑4, until the end of the phase, add 1 to the Strength characteristic of ranged weapons equipped by models in this unit. ▪ \u0007On a 5‑6, until the end of the phase, add 1 to the Attacks characteristic of ranged weapons equipped by models in this unit.’",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "'Enemy units cannot target this unit with snap shooting attacks.' - \u0007Patrol Squad Section",
-   "directive": "Add new Patrol Squad section with: ‘At the start of the Declare Battle",
-   "text": "Add new Patrol Squad section with: ‘At the start of the Declare Battle",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Kustom Boosta-blasta, Rivetin’ Dakka Ability",
-   "directive": "Change to:",
-   "text": "‘In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks made with a rivet kannon. Until the start of your next turn, that enemy unit is suppressed. While a unit is suppressed, each time a model in that unit makes a ranged attack, subtract 1 from the Hit roll.’",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Meganobz, Krumpin’ Time Ability",
-   "directive": "Change to:",
-   "text": "‘While the Waaagh! is active for your army, models in this unit have the Feel No Pain 5+ ability.’",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Mek Gunz, Bubblechukka Weapon Ability",
-   "directive": "Change to: ‘Before selecting targets for one or more models equipped",
-   "text": "‘Before selecting targets for one or more models equipped with this weapon, roll one D6 to determine which profile models equipped with this weapon will make attacks with, comparing the result with the numbers shown on the left.’",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Morkanaut, Big an’ Shooty Ability",
-   "directive": "Change to:",
-   "text": "‘Each time this model makes a ranged attack, if the Waaagh! is active for your army, add 1 to the Hit roll.’",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Shokkjump Dragsta, Shokk Tunnel Ability",
-   "directive": "Change to:",
-   "text": "‘In your Movement phase, when this unit is selected to make an advance move, you can use this ability. If you do: ▪ That move has no maximum distance. ▪ \u0007This unit can move through all types of model (including enemy models and MONSTER/VEHICLE models). ▪ \u0007After moving, your unit must be more than 8\" horizontally from all enemy units.’",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Stompa, Transport Section",
-   "directive": "Change to:",
-   "text": "‘This model has a transport capacity of 22 ORKS INFANTRY models. Each MEGA ARMOUR or JUMP PACK model takes up the space of 2 models. The GHAZGHKULL THRAKA model takes up the space of 4 models.’ Warboss ▪ Weapon Profiles: Add the following: Kustom Shoota [RAPID FIRE 2] RANGE A BS S AP D 18\" 4 5+ 4 0 1 Kustom Choppa [CLEAVE 1] RANGE A WS S AP D Melee 6 2+ 8 -2 2 ▪ \u0007Wargear Options: Add the following: ‘This model can have its kombi-weapon, twin sluggas and big choppa",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "replaced with 1 kustom choppa and 1 kustom shoota.’ - \u0007Da Biggest and da Best Ability",
-   "directive": "Change to:",
-   "text": "‘While the Waaagh! is active for your army, add 4 to the Attacks characteristic of this model’s melee weapons.’",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Warboss in Mega Armour, Dead Brutal Ability",
-   "directive": "Change to:",
-   "text": "‘While the Waaagh! is active for your army, this model’s ’uge choppa has a Damage characteristic of 3.’ Wartrakk ▪ Core Abilities: Remove this section. ▪ Support Section: Remove this section.",
-   "page": 26
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Weirdboy, Da Jump Ability",
-   "directive": "Change 9\" to 8\".",
-   "text": "Change 9\" to 8\".",
-   "page": 27
-  },
-  {
-   "category": "DATASHEETS",
-   "subject": "Zodgrod Wortsnagga, Special Dose Ability",
-   "directive": "Change to:",
-   "text": "‘While the Waaagh! is active for your army, add 6\" to the Move characteristic of models in this model’s unit.’ FAQS Q: When using the Green Tide Mob Mentaility detachment rule, do I switch to 6+ InSv partway through a unit’s attacks when the number of models in the target unit drops below 10 models? A: No, the number of models in the unit when it is targeted determines the unit’s InSv until those attacks are resolved. Q: If I attach a Big Mek to a Mek Gunz unit, does the unit now suffer 1 mortal wound for each failed hazard roll, because each model in the unit is now not a MONSTER/VEHICLE model? A: Yes. Q: If a model has an ability that triggers when you call a Waaagh! and that model is embarked within a TRANSPORT when this happens (e.g. a Warboss’ Da Biggest and da Best ability), does that ability take effect? A: Yes. Q: When using the Conniving Runts Stratagem, to be able to make the Normal move as part of the Stratagem, do I need to roll a 4+ and have inflicted any mortal wounds? A: No. Q: Can a unit equipped with multiple Bomb Squigs use its Bomb Squig ability more than once each phase? A: No. Q: If a unit has an ability that checks if the Waaagh! is active for your army in order for that ability to take effect (e.g. the Meganobz’ Krumpin’ Time ability), does that ability take effect if another rule makes the Waaagh! active for that unit (e.g. the Bully Boyz Detachment rule)? A: Yes.",
-   "page": 27
-  }
- ],
- "space-marines": [
-  {
-   "category": "ARMY RULES",
-   "subject": "Oath of Moment",
-   "directive": "Change to:",
-   "text": "‘If your Army Faction is ADEPTUS ASTARTES, at the start of your Command phase, select one unit from your opponent’s army. Until the start of your next Command phase, that enemy unit is your Oath of Moment target. Each time a model with this ability makes an attack that targets your Oath of Moment target: ▪ \u0007You can re-roll the Hit roll. ▪ \u0007If you are using a Codex: Space Marines Detachment and your army does not include one or more units with the BLOOD ANGELS, DARK ANGELS, DEATHWATCH or SPACE WOLVES keywords, or one or more units from those factions’ Munitorum Field Manual sections, add 1 to the Wound roll as well.’",
-   "page": 60
-  },
-  {
-   "category": "ARMY RULES",
-   "subject": "Space Marine Chapters",
-   "directive": "Add the following bullet points:",
-   "text": "Add the following bullet points: ▪ \u0007If your army includes one or more BLACK TEMPLARS units, it cannot include any ADEPTUS ASTARTES PSYKER models, and cannot include any of the following models that do not have the BLACK TEMPLARS keyword: Gladiator Lancer; Gladiator Reaper; Gladiator Valiant; Impulsor; Repulsor; Repulsor Executioner. ▪ \u0007If your army includes one or more SPACE WOLVES units, it cannot include any of the following units: Apothecary; Devastator Squad;",
-   "page": 60
-  },
-  {
-   "category": "ARMY RULES",
-   "subject": "Tactical Squad.’",
-   "directive": "Add new sub-header and bullet points:",
-   "text": "Add new sub-header and bullet points: DEATHWATCH ▪ \u0007Your army can include ADEPTUS ASTARTES DEATHWATCH units, but it cannot include any ADEPTUS ASTARTES units drawn from any other Chapter. ▪ \u0007With the exception of Kill Team Cassius (see Legends: Agents of the Imperium), your army cannot include any AGENTS OF THE IMPERIUM DEATHWATCH units. ▪ \u0007Your army cannot include any of the following units: Assault Squad; Assault Squad with Jump Packs; Attack Bike Squad; Devastator Squad; Land Speeder Storm; Relic Terminator Squad; Scout Bike Squad; Scout Squad; Scout Sniper Squad; Tactical Squad; Terminator Assault Squad; Terminator Squad. DETACHMENTS (VARIOUS) Anvil Siege Force, 1st Company Task Force, Firestorm Assault Force, Gladius Task Force, Ironstorm Spearhead, Stormlance Task Force,",
-   "page": 60
-  },
-  {
-   "category": "ARMY RULES",
-   "subject": "Vanguard Spearhead – Armour of Contempt Stratagem, Effect Section",
-   "directive": "Change to:",
-   "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’ designed to improve the gaming experience for all players. in red.",
-   "page": 60
-  },
-  {
-   "category": "ANVIL SIEGE FORCE DETACHMENT",
-   "subject": "Stoic Defender Enhancement",
-   "directive": "Change to:",
-   "text": "‘ADEPTUS ASTARTES model only. While the bearer is leading a unit, models in that unit have the Feel No Pain 6+ ability while they are within an objective you control and, while that unit is Battle-shocked, halve the Objective Control characteristic of models in that unit instead of changing it to ‘-’.’",
-   "page": 60
-  },
-  {
-   "category": "FIRESTORM ASSAULT FORCE DETACHMENT",
-   "subject": "Forged in Battle Enhancement",
-   "directive": "Change to:",
-   "text": "'ADEPTUS ASTARTES model only. While the bearer is leading a unit, once per turn, after making a Hit roll or a saving throw for a model in that unit, you can change the result of that roll to an unmodified 6.’",
-   "page": 60
-  },
-  {
-   "category": "GLADIUS TASK FORCE DETACHMENT",
-   "subject": "Storm of Fire Stratagem, Target Section",
-   "directive": "Change to:",
-   "text": "'One ADEPTUS ASTARTES unit from your army that has not been selected to shoot this phase.'",
-   "page": 60
-  },
-  {
-   "category": "GLADIUS TASK FORCE DETACHMENT",
-   "subject": "Squad Tactics Stratagem, Target Section",
-   "directive": "Change 9\" to 8\".",
-   "text": "Change 9\" to 8\".",
-   "page": 60
-  },
-  {
-   "category": "GLADIUS TASK FORCE DETACHMENT",
-   "subject": "Fire Discipline Enhancement",
-   "directive": "Change to:",
-   "text": "'ADEPTUS ASTARTES model only. While the bearer is leading a unit, ranged weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability. In addition, while the bearer’s unit is under the effects of the Devastator Doctrine, you can re-roll Advance rolls made for that unit.'",
-   "page": 60
-  },
-  {
-   "category": "IRONSTORM SPEARHEAD DETACHMENT",
-   "subject": "Master of Machine War Enhancement",
-   "directive": "Delete ‘Aura’ from this Enhancement and change to:",
-   "text": "Delete ‘Aura’ from this Enhancement and change to: ‘ADEPTUS ASTARTES model only. In your Command phase, select one ADEPTUS ASTARTES VEHICLE model within 6\" of the bearer. Until the start of your next Command phase, that VEHICLE is eligible to shoot even if it Fell Back or Advanced this turn.’",
-   "page": 60
-  },
-  {
-   "category": "IRONSTORM SPEARHEAD DETACHMENT",
-   "subject": "Mercy is Weakness Stratagem, CP Cost",
-   "directive": "Change to ‘2CP’.",
-   "text": "‘2CP’.",
-   "page": 60
-  },
-  {
-   "category": "IRONSTORM SPEARHEAD DETACHMENT",
-   "subject": "Ancient Fury Stratagem, Effect Section",
-   "directive": "Change to:",
-   "text": "‘Until the start of your next Command phase, improve your model’s Move, Toughness, Leadership and Objective Control characteristics by 1 and each time your model makes an attack, add 1 to the Hit roll.",
-   "page": 60
-  },
-  {
-   "category": "IRONSTORM SPEARHEAD DETACHMENT",
-   "subject": "Target Augury Web Enhancement",
-   "directive": "Delete ‘Aura’ from this Enhancement and change to:",
-   "text": "Delete ‘Aura’ from this Enhancement and change to: ‘TECHMARINE model only. In your Command phase, select one ADEPTUS ASTARTES VEHICLE model within 6\" of the bearer. Until the start of your next Command phase, weapons equipped by that VEHICLE model have the [LETHAL HITS] ability.’",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Shock Assault Stratagem",
-   "directive": "Change to:",
-   "text": "‘WHEN: Fight phase, when a friendly ADEPTUS ASTARTES unit is selected to fight. TARGET: That ADEPTUS ASTARTES unit. EFFECT: Your unit’s melee attacks have [LANCE].’",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Ride Hard, Ride Fast Stratagem, Effect Section",
-   "directive": "Change to:",
-   "text": "‘Until the end of the phase, each time an attack targets your unit, subtract 1 from the Wound roll.’",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Wind-swift Evasion Stratagem, Target Section",
-   "directive": "Change to:",
-   "text": "‘One ADEPTUS ASTARTES INFANTRY or ADEPTUS ASTARTES MOUNTED unit from your army that is within 8\" of that enemy unit.' VANGUARD SPEARHEAD DETACHMENT Vanguard Spearhead Detachment ▪ \u0007Shadow Masters Detachment Rule: Change to 'Each time a ranged attack targets an ADEPTUS ASTARTES unit from your army, unless the attacking model is within 12\", the target has the benefit of cover.' ▪ \u0007Shadow War Veteran Enhancement: Change to 'Once per turn, when your opponent targets a unit from their army within 12” of this model with a stratagem, you can use this ability. If you do increase the CP cost of that use of that stratagem by 1CP.'",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Calculated Feint Stratagem, Target Section",
-   "directive": "Change to:",
-   "text": "‘TARGET: One friendly ADEPTUS ASTARTES INFANTRY unit within 12\" of that enemy unit.’ DATASHEETS Drop Pod, Gladiator Lancer, Gladiator Reaper, Gladiator Valiant, Hammerfall Bunker, Impulsor, Invader ATV, Land Raider, Land Raider Crusader, Land Raider Redeemer, Predator Annihilator, Predator Destructor, Razorback, Repulsor, Repulsor Executioner, Rhino, Storm Speeder Hailstrike, Storm Speeder Hammerstrike, Storm Speeder",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Thunderstrike, Vindicator, Whirlwind – Keywords Section",
-   "directive": "Add 'FRAME'.",
-   "text": "Add 'FRAME'.",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Squad, Scout Squad – Combat Knife weapon",
-   "directive": "Change AP to '-1'.",
-   "text": "Change AP to '-1'.",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Combi-weapon – Paired Combat Blades weapon",
-   "directive": "Change AP to '-1'.",
-   "text": "Change AP to '-1'.",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Abilities Section",
-   "directive": "Remove 'Leader', add 'Support'.",
-   "text": "Remove 'Leader', add 'Support'.",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Bladeguard Veteran Squad, Bladeguard Ability",
-   "directive": "Change to:",
-   "text": "‘(Once per turn, per unit): In the Fight phase, when this unit is selected to fight or when an enemy unit targets this unit, you can select one of the following: ▪ This unit’s melee attacks have +1 to hit rolls. ▪ Or: Attacks that target this unit have ‑1 to hit rolls.’",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Captain, Leader Section",
-   "directive": "Remove the following:",
-   "text": "Remove the following: ‘This model cannot be attached to a BLADEGUARD VETERAN SQUAD unless this model is equipped with a relic shield, and cannot be attached to a HELLBLASTER SQUAD unless this model is equipped with a plasma pistol.’",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Captain in Gravis Armour, Master-crafted heavy bolt rifle profile",
-   "directive": "Change to:",
-   "text": "Heavy Bolt Rifle [ASSAULT, HEAVY] RANGE A BS S AP D 30\" 2 2+ 5 -1 3",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Captain in Phobos Armour, Master of Deceit Ability",
-   "directive": "Change to:",
-   "text": "‘After both players have deployed their armies, if your army includes one or more models with this ability, you can select up to three friendly ADEPTUS ASTARTES INFANTRY units and redeploy all of those units. When doing so, any of those units can be placed into Strategic Reserves, regardless of how many units are already in Strategic Reserves.’",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Captain with Jump Pack, Wargear Options Section",
-   "directive": "Add the following bullet point:",
-   "text": "Add the following bullet point: ‘• \u0007If this model is equipped with a heavy bolt pistol and an Astartes chainsword, it can be equipped with 1 relic shield. This model’s heavy bolt pistol and Astartes chainsword cannot be replaced. Chaplain with Jump Pack Ranged Weapons: Add the following profile: Absolvor Bolt Pistol [CLOSE-QUARTERS] RANGE A BS S AP D 18\" 1 3+ 5 -1 2 Wargear Options Section: Add the following bullet: '• 1 Absolvor Bolt Pistol.' Company Heroes ▪ Company Heroes Rule: Remove this rule.\u0007 ▪ \u0007Keywords: Change to: ‘KEYWORDS – ALL MODELS: INFANTRY, GRENADES, IMPERIUM, TACTICUS, COMPANY HEROES | ANCIENT: ANCIENT’",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Chief Librarian Tigurius, Master of Prescience Ability",
-   "directive": "Change to:",
-   "text": "▪ This unit has Stealth. ▪ Melee attacks that target this unit have ‑1 to hit rolls. ▪ \u0007(Once per battle round, per army) When you target this unit with the Counteroffensive/Fire Overwatch/Heroic Intervention stratagem, that use is ‑1 CP. Desolation Squad ▪ \u0007Targeter Optics Ability: Change to ‘Each time this unit Remains Stationary, until the start of your next Movement phase, ranged weapons equipped by models in this unit have the [IGNORES COVER] ability.’ ▪ \u0007Unit Composition: Change bullet points to: '\u0007• 1 Desolation Sergeant • 4 Desolation Marines' Heavy Intercessor Squad, Ranged Weapons, heavy bolt rifle and",
-   "page": 61
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "heavy bolter profiles",
-   "directive": "Change to:",
-   "text": "Heavy Bolt Rifle [ASSAULT, HEAVY] RANGE A BS S AP D 30\" 2 3+ 5 -1 2 Heavy Bolter [ASSAULT, HEAVY, SUSTAINED HITS 1] RANGE A BS S AP D 36\" 3 3+ 5 -1 2",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Impulsor, Transport Section",
-   "directive": "Change to:",
-   "text": "‘This model has a transport capacity of 7 TACTICUS or PHOBOS INFANTRY models. It cannot transport JUMP PACK models.'",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Infernus Squad, Ranged Weapons, pyreblaster profile",
-   "directive": "Change to:",
-   "text": "Pyreblaster [IGNORES COVER, TORRENT] RANGE A BS S AP D 12\" D6 N/A 5 -1 1 Inceptor Squad",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Meteoric Descent Ability",
-   "directive": "Change to:",
-   "text": "‘In your Movement phase, when this unit is set up on the battlefield using the Deep Strike ability, it can perform a meteoric descent. If it does, this unit can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units, but until the end of the turn, it is not eligible to declare a charge.’",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Infernus Squad, Incendiary Terror Ability",
-   "directive": "Change to:",
-   "text": "‘In your Shooting phase, after this unit has shot, you can select one enemy INFANTRY unit hit by one or more of those attacks made with a pyreblaster. That enemy unit must take a Battle-shock test, subtracting 1 from that test.’",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Intercessor Squad, Abilities Section",
-   "directive": "Replace previously added Target Elimination ability with the following",
-   "text": "Replace previously added Target Elimination ability with the following",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Iron Father Feirros",
-   "directive": "Add new ‘Inspiring Commander’ section:",
-   "text": "Add new ‘Inspiring Commander’ section: ‘If you include this model in your army, until the end of the battle, non-CHARACTER models in HEAVY INTERCESSOR SQUAD units from your army have an Objective Control characteristic of 3 while they are not Battle-shocked.’",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Kayvaan Shrike",
-   "directive": "Add new ‘Inspiring Commander’ section:",
-   "text": "Add new ‘Inspiring Commander’ section: ‘If you include this model in your army, until the end of the battle, non- CHARACTER models in ASSAULT INTERCESSORS WITH JUMP PACKS units from your army have an Objective Control characteristic of 2 while they are not Battle-shocked.’ Kor’sarro Khan ▪ \u0007\u0007Add new ‘Inspiring Commander’ section: ‘If you include this model in your army, until the end of the battle, non-CHARACTER models in OUTRIDER SQUAD units from your army have an Objective Control characteristic of 3 while they are not Battle-shocked.’ ▪ \u0007Leader Section: change to: ‘This model can be attached to the following units: ASSAULT INTERCESSOR SQUAD, BLADEGUARD VETERAN SQUAD, COMPANY HEROES, INTERCESSOR SQUAD, STERNGUARD VETERAN SQUAD, TACTICAL SQUAD’",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Land Raider Crusader, Land Raider Redeemer – Keywords Section",
-   "directive": "Add 'LAND RAIDER'.",
-   "text": "Add 'LAND RAIDER'.",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Lieutenant in Phobos Armour, Strategic Dispersal Ability",
-   "directive": "Change to:",
-   "text": "‘In your Shooting phase, after this model’s unit has shot, if it is not within Engagement Range of one or more enemy units, it can make a Normal move of up to 6\". If it does, until the end of the turn, that unit is not eligible to declare a charge.’",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Lieutenant in Reiver Armour, master-crafted special issue bolt pistol",
-   "directive": "Change AP to ‘-1’.",
-   "text": "Change AP to ‘-1’.",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Lieutenant with Combi-Weapon, Evade and Survive Ability",
-   "directive": "Change to:",
-   "text": "'In your opponent's Movement phase, if an enemy unit ends a move within 8” of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to 6”.'",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Outrider Squad, Abilities Section",
-   "directive": "Remove the Turbo-boost ability and add the following ability:",
-   "text": "Remove the Turbo-boost ability and add the following ability: ‘Thunderous Impact: Each time a model in this unit makes a melee attack, if this unit made a Charge move this turn, improve the Strength and Damage characteristics of that attack by 1.’",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Pedro Kantor",
-   "directive": "Add new ‘Inspiring Commander’ section:",
-   "text": "Add new ‘Inspiring Commander’ section: ‘If you include this model in your army, until the end of the battle, non-CHARACTER models in STERNGUARD VETERAN SQUAD units from your army have an Objective Control characteristic of 2 while they are not Battle-shocked.’",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Predator Annihilator, Annihilator Ability",
-   "directive": "Change to:",
-   "text": "‘Each time a ranged attack made by this model is allocated to a MONSTER or VEHICLE model, you can re‑roll the Damage roll.’",
-   "page": 62
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Reiver Squad - \u0007Fearsome Assault Ability",
-   "directive": "Change to:",
-   "text": "‘At the start of the Fight phase, each enemy unit within Engagement Range of one or more units with this ability must take a Battle-shock",
-   "page": 63
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "test, subtracting 1 from that test.’ - \u0007Terror Troops Ability",
-   "directive": "Change to:",
-   "text": "‘While an enemy unit (excluding MONSTERS and VEHICLES) is within 3\" of one or more units with this ability, subtract 1 from the Objective Control characteristic of models in that enemy unit.",
-   "page": 63
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Repulsor, Transport Section",
-   "directive": "Change to:",
-   "text": "‘This model has a transport capacity of 14 ADEPTUS ASTARTES INFANTRY models. Each JUMP PACK, WULFEN, GRAVIS or TERMINATOR model takes up the space of 2 models and each CENTURION model takes up the space of 3 models.’",
-   "page": 63
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Repulsor Executioner, Transport Section",
-   "directive": "Change to:",
-   "text": "‘This model has a transport capacity of 7 ADEPTUS ASTARTES INFANTRYmodels. Each JUMP PACK, WULFEN, GRAVIS or TERMINATOR model takes up the space of 2 models and each CENTURION model takes up the space of 3 models.’ Roboute Guilliman ▪ Keywords – Add ‘MOBILE’. ▪ \u0007Author of the Codex Ability – Change to: ‘At the Start of your Command phase, select two Author of the Codex abilities (see left). Until the start of your next Command phase, this model has those abilities.’ ▪ \u0007Supreme Strategist Ability – Change to: ‘Once per battle round, one model from your army with this ability can use it when a friendly ADEPTUS ASTARTES unit within 12\" of that model is targeted with a Stratagem. If it does, reduce the CP cost of that use of that Stratagem by 1CP.’",
-   "page": 63
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Sternguard Veteran Squad, Sternguard Focus Ability",
-   "directive": "Change to:",
-   "text": "‘Each time a model in this unit makes an attack that targets your Oath of Moment target, you can re-roll the Wound roll.’ Stormhawk Interceptor, Stormtalon Gunship ▪ Core Abilities: Remove ‘Hover’. ▪ Profile: Change M and OC to ‘-’. Stormraven Gunship ▪ Profile: Change M to 14”. ▪ Keywords: Remove ‘AIRCRAFT’.",
-   "page": 63
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Terminator Assault Squad, Teleport Homer Ability",
-   "directive": "Change 9\" to 8\".",
-   "text": "Change 9\" to 8\".",
-   "page": 63
-  },
-  {
-   "category": "STORMLANCE TASK FORCE DETACHMENT",
-   "subject": "Terminator Squad, Teleport Homer Ability",
-   "directive": "Change 9\" to 8\".",
-   "text": "Change 9\" to 8\".",
-   "page": 63
   }
  ],
  "tau-empire": [
@@ -2195,7 +2166,14 @@
    "category": "GRAND COVEN DETACHMENT",
    "subject": "Umbralefic Crystal Enhancement",
    "directive": "Change to:",
-   "text": "‘THOUSAND SONS model only. (Once per battle, per army) In your Command phase, if this unit is unengaged, you can use this ability. If you do: ▪ Place this unit in strategic reserves. ▪ This unit has Deep Strike until the start of your next Shooting phase. ▪ \u0007This unit must make an ingress move in your next Movement phase (including in your first turn).’",
+   "text": "‘THOUSAND SONS model only. (Once per battle, per army) In your Command phase, if this unit is unengaged, you can use this ability. If you do: ▪ Place this unit in strategic reserves. ▪ This unit has Deep Strike until the start of your next Shooting phase. ▪ \u0007This unit must make an ingress move in your next Movement phase (including in your first turn).’ RUBRICAE PHALANX DETACHMENT Infernal Fusillade Stratagem ▪ CP Cost: Change to ‘1CP’. ▪ Effect \u0007 Section: Change to ‘Until the end of the phase, all inferno bolt pistols, inferno boltguns, inferno combi‑bolters and inferno combi‑weapons equipped by models in your unit have the [PSYCHIC] ability and a Strength characteristic of 5.’",
+   "page": 9
+  },
+  {
+   "category": "GRAND COVEN DETACHMENT",
+   "subject": "Unwavering Phalanx Stratagem, Effect Section",
+   "directive": "Change to:",
+   "text": "‘Until the end of the turn, attacks that target your unit with a S greater than your unit’s T have -1 to wound rolls.’",
    "page": 9
   },
   {
@@ -2210,115 +2188,122 @@
    "subject": "Ensorcelled Infusion Stratagem, Target Section",
    "directive": "Change to:",
    "text": "‘One THOUSAND SONS VEHICLE unit from your army that has not been selected to shoot this phase, that is within 6\" of one or more friendly THOUSAND SONS PSYKER units.’",
-   "page": 9
+   "page": 10
   },
   {
    "category": "WARPFORGED CABAL DETACHMENT",
    "subject": "Ensorcelled Infusion Stratagem, CP Cost",
    "directive": "Change to '2CP'.",
    "text": "'2CP'. WARPMELD PACT DETACHMENT Bray Lord Enhancement SORCERER or INFERNAL MASTER model only. The bearer has the Scouts 6\" ability. Twisted Mirage Stratagem, Effect Section ▪ Change 3\" to 6\". ▪ Change 9\" to 8\".",
-   "page": 9
+   "page": 10
   },
   {
    "category": "WARPFORGED CABAL DETACHMENT",
    "subject": "Warpmeld Sacrifice Detachment Rule",
    "directive": "Change to:",
-   "text": "‘Each time an enemy unit is selected to shoot or fight and one or more TZEENTCH MUTANT INFANTRY or TZEENTCH MUTANT MOUNTED units from your army are selected as a target of one or more of those attacks, each of those TZEENTCH MUTANT units can make a Warpmeld Sacrifice. If it does, until the end of the phase, each time an attack targets that unit, subtract 1 from the Wound roll. At the end of the phase, that TZEENTCH MUTANT unit suffers D3 mortal wounds. Each time a TZEENTCH MUTANT INFANTRY or TZEENTCH MUTANT MOUNTED unit from your army is selected to shoot or fight, before selecting its targets, that unit can make a Warpmeld Sacrifice. If it does, until the end of the phase, each time a model in that unit makes an attack, add 1 to the Wound roll. At the end of the phase, that TZEENTCH MUTANT unit suffers D3 mortal wounds.’ DATASHEETS Chaos Land Raider, Chaos Predator Annihilator, Chaos Predator",
+   "text": "‘Each time an enemy unit is selected to shoot or fight and one or more TZEENTCH MUTANT INFANTRY or TZEENTCH MUTANT MOUNTED units from your army are selected as a target of one or more of those attacks, each of those TZEENTCH MUTANT units can make a Warpmeld Sacrifice. If it does, until the end of the phase, each time an attack targets that unit, subtract 1 from the Wound roll. At the end of the phase, that TZEENTCH MUTANT unit suffers D3 mortal wounds. Each time a TZEENTCH MUTANT INFANTRY or TZEENTCH MUTANT MOUNTED unit from your army is selected to shoot or fight, before selecting its targets, that unit can make a Warpmeld Sacrifice. If it does, until the end of the phase, each time a model in that unit makes an attack, add 1 to the Wound roll. At the end of the phase, that TZEENTCH MUTANT unit suffers D3 mortal wounds.’",
    "page": 10
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
+   "subject": "Infernal Master, Rubric Marines, Sorcerer",
+   "directive": "Change the following weapon characteristics:",
+   "text": "Change the following weapon characteristics: WEAPON CHANGES UNITS Close Combat S 5 Rubric Marines Weapon S 5 Ahriman, Exalted Sorcerer, Exalted Sorcerer Inferno Bolt Pistol on Disc of Tzeentch, Infernal Master, Rubric AP -2 Marines, Sorcerer Inferno Boltgun S 5 Rubric Marines Chaos Land Raider, Chaos Predator Annihilator, Chaos Predator Destructor, Chaos Rhino, Chaos Inferno Combi-bolter S 5 Vindicator, Helbrute, Scarab Occult Terminators, Sorcerer in Terminator Armour Chaos Land Raider, Chaos Predator Annihilator, Inferno S 5 Chaos Predator Destructor, Chaos Rhino, Chaos Combi-weapon Vindicator, Sorcerer in Terminator Armour Chaos Land Raider, Chaos Predator Annihilator, Chaos Predator",
+   "page": 10
+  },
+  {
+   "category": "T 5",
    "subject": "Destructor, Chaos Rhino and Chaos Vindicator – Keywords Section",
    "directive": "Add ‘FRAME’.",
    "text": "Add ‘FRAME’.",
    "page": 10
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Chaos Rhino, Core Abilities",
    "directive": "Add ‘Firing Deck 2’.",
    "text": "Add ‘Firing Deck 2’.",
    "page": 10
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Chaos Vindicator, Profile",
    "directive": "Change M to 9\".",
    "text": "Change M to 9\".",
    "page": 10
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Daemon Prince of Tzeentch with Wings, Aetherstride Ability",
    "directive": "Change to:",
    "text": "‘In your Movement phase, when this model is set up on the battlefield using the Deep Strike ability, it can perform an aetherstride. If it does: ▪ \u0007It can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units. ▪ \u0007Until the end of the turn, its Dark Blessing has the [SUSTAINED HITS D3] ability. ▪ \u0007Until the end of the turn, it is not eligible to declare a charge.’",
    "page": 10
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Flamers, Profile",
    "directive": "Change Ld to 7+.",
    "text": "Change Ld to 7+.",
    "page": 10
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Infernal Master, Ranged Weapons, inferno bolt pistol",
    "directive": "Add ‘[PISTOL]’.",
    "text": "Add ‘[PISTOL]’.",
    "page": 10
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Kairos Fateweaver, One Head Looks Back Ability",
    "directive": "Change to:",
    "text": "‘Once per turn, when your opponent targets a unit from their army within 12\" of this model with a stratagem, you can use this ability. If you do, increase the CP cost of that use of that stratagem by 1CP.’",
    "page": 10
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Kairos Fateweaver, Ranged Weapons, Infernal Gateway",
    "directive": "Change profiles to:",
    "text": "Change profiles to: Infernal Gateway - Witchfire [BLAST, INDIRECT FIRE, PSYCHIC] RANGE A BS S AP D 24\" D6+3 2+ 9 -2 D3 Infernal Gateway - Focused Witchfire [BLAST, INDIRECT FIRE, HAZARDOUS, PSYCHIC] RANGE A BS S AP D 24\" D3+6 2+ 9 -2 3",
    "page": 10
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Mutalith Vortex Beast, Immaterial Flare Ability",
    "directive": "Change to:",
    "text": "‘While a friendly THOUSAND SONS PSYKER model is within 6\" of this model, each time that model Channels the Warp (pg 67), add 1 to the Psychic test result. This is not cumulative with any other modifiers to the Psychic test result. Lord of Change, Ranged Weapons ▪ \u0007Change the Bolt of Change profiles to: Bolt of Change - Witchfire [PSYCHIC] RANGE A BS S AP D 18\" 9 2+ 9 -1 1 Bolt of Change - Focused Witchfire [HAZARDOUS, PSYCHIC] RANGE A BS S AP D 18\" 9 2+ 9 -2 3 ▪ \u0007Change the rod of sorcery profile to: Rod of Sorcery [PSYCHIC] RANGE A BS S AP D 18\" 6 2+ 8 -1 2",
    "page": 10
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Maulerfiend, Snarling Protector Ability",
    "directive": "Change to:",
    "text": "▪ '\u0007You can target this unit with the Heroic Intervention stratagem, regardless of any other uses of that stratagem this phase. If you do: ▫ \u0007That use is -1 CP. ▫ \u0007That use does not prevent any uses of that stratagem on other units this phase. ▫ \u0007When this unit declares a charge, If a friendly engaged PSYKER unit is within 12\" of this unit, you can use this part of this ability. If you do: • \u0007This unit can re-roll that charge roll. • \u0007This unit must end that charge move engaged with an enemy unit engaged with that friendly PSYKER unit.",
-   "page": 10
+   "page": 11
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Screamers, Profile",
    "directive": "Change Ld to 7+.",
    "text": "Change Ld to 7+.",
-   "page": 10
+   "page": 11
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Sekhetar Robots, Prophetic Sentinels Ability",
    "directive": "Change to:",
    "text": "'Once per turn, when you target this unit with the Fire Overwatch/ Heroic Intervention stratagem, that use is -1 CP.'",
-   "page": 10
+   "page": 11
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Sorcerer in Terminator Armour, Marked by Fate Ability",
    "directive": "Change to:",
    "text": "‘At the start of your Shooting phase, select one enemy unit that is visible to this PSYKER model. Until the end of the phase, each time a model in this unit makes an attack that targets that enemy unit, add 1 to the Hit roll.’ Tzaangor Enlightened with Fatecaster Greatbows,",
-   "page": 10
+   "page": 11
   },
   {
-   "category": "DATASHEETS",
+   "category": "T 5",
    "subject": "Malign Trickery Ability",
    "directive": "Change to:",
    "text": "'In your opponent's Movement phase, if an enemy unit ends a move within 8\" of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to D6\".' FAQS Q: When using the Touched by Tzeentch Stratagem in the Warpmeld Pact Detachment, do I have to declare if my unit will shoot or charge after Advancing as soon as I use the Stratagem? A: No, you may decide later in the turn. Q: When going second, can a Tzaangor unit that started the game on the battlefield and was placed into Strategic Reserves by its Ambushing Hunters ability then arrive during my first turn using the Twisted Mirage Stratagem? A: No. Q: Can the Exalted Sorcerer on Disk of Tzeentch and the Tzaangor Shaman lead Tzaangor Enlightened with fatecaster greatbows? A: Yes. Q: While using the Rubricae Phalanx Detachment, if I attach a CHARACTER to a unit selected using the Risen Rubricae Enhancement, does that CHARACTER also gain the Infiltrators ability? A: Yes. Q: When using the Cabal of Sorcerers army rule, do I have to choose whether to Channel the Warp before rolling any dice? A: No. Q: When using the Cabal of Sorcerers army rule, if I roll one or more doubles or triples, does my model only suffer D3 mortal wounds if I chose to Channel the Warp? A: Yes. Q: Do I need to sequence all of my Cabal of Sorcerers Rituals at the start of my Shooting phase? A: No, you just pick a model with the Cabal of Sorcerers rule, pick a Ritual to manifest, and attempt it, then repeat the process until you have run out of models or Rituals or both.",
@@ -2407,6 +2392,13 @@
   },
   {
    "category": "BERZERKER WARBAND DETACHMENT",
+   "subject": "Relentless Rage Detachment Rule",
+   "directive": "Change to:",
+   "text": "‘Friendly WORLD EATERS units’ melee attacks have +1 A.’",
+   "page": 7
+  },
+  {
+   "category": "BERZERKER WARBAND DETACHMENT",
    "subject": "Berzerker's Wrath Stratagem, Target and Effect Sections",
    "directive": "Change to:",
    "text": "'TARGET: One KHORNE BERZERKERS unit from your army that can make a surge move as a result of those attacks. EFFECT: Do not roll a D6 to determine how far models in your unit can move when they make a surge move. Instead, when making a surge move, those models can move up to 8\".'",
@@ -2458,81 +2450,102 @@
    "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
    "subject": "Brazen Fury Detachment Rule",
    "directive": "Change to:",
-   "text": "'In your opponent’s Shooting phase, when an enemy unit has shot, if a model in this unit was destroyed as a result of those attacks, this unit can make a surge move of up to D6\". That surge move is a Brazen Fury move.' DATASHEETS Heldrake ▪ Profile: Change M to 12\" and OC to '0'. ▪ Keywords: \u0007 Remove 'AIRCRAFT'.",
+   "text": "'In your opponent’s Shooting phase, when an enemy unit has shot, if a model in this unit was destroyed as a result of those attacks, this unit can make a surge move of up to D6\". That surge move is a Brazen Fury move.'",
    "page": 7
   },
   {
-   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+   "category": "CHANGES UNITS",
+   "subject": "T 5 Khârn the Betrayer, Khorne Berzerkers, Master of Executions",
+   "directive": "Change the following weapon characteristics:",
+   "text": "Change the following weapon characteristics: WEAPON CHANGES UNITS S 5 Khorne Berzerkers, Lord Invocatus, Master of Bolt Pistol AP -1 Executions Chainblade S 5 Khorne Berzerkers S 5 Chaos Land Raider, Chaos Predator Annihilator, Combi-bolter Chaos Predator Destructor, Chaos Rhino, AP -1 Chaos Terminators, Helbrute S 5 Chaos Land Raider, Chaos Predator Annihilator, Combi-weapon Chaos Predator Destructor, Chaos Rhino, AP -1 Chaos Terminators",
+   "page": 7
+  },
+  {
+   "category": "CHANGES UNITS",
+   "subject": "Angron, Driven by Ultimate Rage Ability",
+   "directive": "Change to:",
+   "text": "‘While a friendly WORLD EATERS unit is within 6\" of this unit, that unit’s melee attacks can: ▪ Re‑roll hit rolls of 1. ▪ Re‑roll wound rolls of 1.’",
+   "page": 7
+  },
+  {
+   "category": "CHANGES UNITS",
    "subject": "Chaos Rhino, Meet Any Challenge Ability",
    "directive": "Change 9\" to 8\".",
    "text": "Change 9\" to 8\".",
    "page": 7
   },
   {
-   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+   "category": "CHANGES UNITS",
    "subject": "Chaos Terminators, Blood Fury Ability",
    "directive": "Change to:",
    "text": "▪ '\u0007This unit’s ranged attacks that target the closest eligible target can re-roll hit rolls. ▪ \u0007When this unit declares a charge, you can use this part of this ability. If you do: ▫ \u0007This unit can re-roll that charge roll. ▫ \u0007This unit must end that charge move engaged with the closest charge target.'",
-   "page": 7
+   "page": 8
   },
   {
-   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+   "category": "CHANGES UNITS",
    "subject": "Exalted Eightbound, Rend and Tear Ability",
    "directive": "Change to:",
    "text": "‘Each time a model in this unit makes a melee attack that targets a MONSTER or VEHICLE unit, until the end of the phase, improve the Damage characteristic of that attack by 1.'",
-   "page": 7
+   "page": 8
   },
   {
-   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+   "category": "CHANGES UNITS",
    "subject": "Goremongers, Loping Speed Ability",
    "directive": "Change to:",
-   "text": "'In your opponent's Movement phase, if an enemy unit ends a move within 8\" of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to D6\".'",
-   "page": 7
+   "text": "'In your opponent's Movement phase, if an enemy unit ends a move within 8\" of this unit, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move of up to D6\".' Heldrake ▪ Profile: Change M to 12” and OC to ‘0’. ▪ Keywords: \u0007 Remove ‘AIRCRAFT’.",
+   "page": 8
   },
   {
-   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+   "category": "CHANGES UNITS",
+   "subject": "Khorne Berzerkers, Abilities Section",
+   "directive": "Add new ability:",
+   "text": "Add new ability: ‘Murderous Charge: If this unit made a charge move this turn, this unit’s melee attacks have +1 S.’",
+   "page": 8
+  },
+  {
+   "category": "CHANGES UNITS",
    "subject": "Khorne Berzerkers, Jakhals – Icon of Khorne Wargear Ability",
    "directive": "Change to:",
    "text": "‘If the bearer’s unit contains one or more Icons of Khorne, each time the bearer’s unit destroys an enemy unit, you gain 1 Bloodshed point. Each time you make a Blessings of Khorne roll, roll one additional D6 for each Bloodshed point you have, after which, all your Bloodshed points are lost.'",
    "page": 8
   },
   {
-   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+   "category": "CHANGES UNITS",
    "subject": "Khârn the Betrayer, The Betrayer Ability",
    "directive": "Change to:",
    "text": "‘At the end of your Charge phase, if this unit is on the battlefield, is unengaged, and contains a bodyguard model, this unit makes a leadership roll: ▪ \u0007If that leadership roll is failed, one bodyguard model in this unit is destroyed.’",
    "page": 8
   },
   {
-   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+   "category": "CHANGES UNITS",
    "subject": "Khorne Berzerkers, Blood Surge Ability",
    "directive": "Change to:",
    "text": "'In your opponent’s Shooting phase, when an enemy unit has shot, if a model in this unit was destroyed as a result of those attacks, this unit can make a surge move of up to D6+2\".'",
    "page": 8
   },
   {
-   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+   "category": "CHANGES UNITS",
    "subject": "Helbrute, Frenzy Ability",
    "directive": "Change to:",
    "text": "'(Once per turn, per unit) In the Fight phase, when an enemy unit targets this unit, after that unit has resolved its attacks, you can use this ability. If you do, this unit is eligible to fight (even if it has already fought this phase) and must be selected to fight next.'",
    "page": 8
   },
   {
-   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+   "category": "CHANGES UNITS",
    "subject": "Maulerfiend, Scent Of Blood Ability",
    "directive": "Change to:",
    "text": "'In the Charge phase, when this unit declares a charge: ▪ \u0007If an enemy unit below starting strength is within 9\" of this unit, this unit has +1 to charge rolls. ▪ \u0007Or: If an enemy unit below half strength is within 9\" of this unit, this unit has +2 to charge rolls.'",
    "page": 8
   },
   {
-   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+   "category": "CHANGES UNITS",
    "subject": "Slaughterbound, Melee Weapons,Lacerator and Daemonic Claw",
    "directive": "Change S to '10'.",
    "text": "Change S to '10'.",
    "page": 8
   },
   {
-   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+   "category": "CHANGES UNITS",
    "subject": "Destructor, Chaos Rhino, Khorne Lord of Skulls – Keywords Section",
    "directive": "Add 'FRAME'.",
    "text": "Add 'FRAME'.",

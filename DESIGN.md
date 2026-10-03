@@ -1334,9 +1334,14 @@ Three effects are visible:
 
 | datasheet | 40kdc 1.4.5 | BSData / Wahapedia | state |
 | --- | --- | --- | --- |
-| Ballistus Dreadnought | Storm Bolters, A4 S5 AP-1, Rapid Fire 4 | Twin storm bolter, A2 S4, twin-linked | open |
-| Vanguard Veterans with Jump Packs | relic blade, no pistol; power fist and thunder hammer listed | bolt pistol + Vanguard Veteran weapon, pistol options | corrected |
+| Ballistus Dreadnought | Storm Bolters, A4 S5 AP-1, Rapid Fire 4 | Twin storm bolter, A2 S4, twin-linked | 40kdc is the codex (§3.43) |
+| Vanguard Veterans with Jump Packs | relic blade, no pistol; power fist and thunder hammer listed | bolt pistol + Vanguard Veteran weapon, pistol options | 40kdc is the codex (§3.43) |
 | Intercessor Squad | `Power Weapon` | `Power weapon` | cosmetic |
+
+*Superseded the same day by §3.43: the premise below was wrong. Wahapedia's
+Vanguard page carried September's prices, not the codex's, so the two
+"current" sources were both the index. The correction it describes was
+withdrawn.*
 
 Wahapedia's Vanguard page already carries the codex-era points (110 / 220)
 and still prints a bolt pistol and a Vanguard Veteran weapon. With BSData
@@ -1363,6 +1368,103 @@ left the manual. Assault Intercessors cost 85 and a Captain with Jump Pack
 90.
 
 Both suites pass with nothing skipped: 623 in the engine and 335 in the app.
+
+### 3.43 The September packs, and the Space Marine codex leading the merge
+
+Checked 2026-10-04 against Games Workshop's latest publications.
+
+**The packs.** GW republished sixteen Faction Packs, legal from 30 September,
+and withdrew two. The Space Marines and Orks packs are gone because both
+factions' rules are now in their codexes. The Dark Angels, Space Wolves and
+Blood Angels packs now carry Legends datasheets only, and say that the rules
+are in "the Warhammer 40,000 app". `tools/faction-packs.tsv` now lists the
+current packs, including seven never captured before: Custodes, Grey
+Knights, Chaos Daemons, Imperial Agents, Blood Angels, Genestealer Cults and
+Votann. The patch is regenerated from them: 1,348 operations.
+
+The withdrawn packs are kept in `data/faction-packs-superseded.json` for one
+purpose only. Their wording is still Games Workshop's, and for 19 stratagems
+it is the only wording any source here has: the six Ork Blitz Brigade
+stratagems, and Angels Defiant in thirteen chapters. They fill a record that
+has no text, and do nothing else: no removals, additions, costs or errata,
+so nothing pre-codex is written over the codex.
+
+Three tests depended on the withdrawn packs. The FRAME-keyword errata test
+now uses the T'au Tidewall Shieldline. The test that a chapter gains a
+stratagem its copy of a shared detachment missed has no current data at
+all: only the Space Marine pack ever produced one. It is removed and the
+reason recorded in its place.
+
+Chaos Daemons' new pack is a full 120-page index. Its two index detachments
+are not on the contents page, and six of its stratagem costs sit in a
+right-hand column the badge reader misplaces. With no cost read, the app's
+existing cost stands, so nothing wrong ships, but the gate reports it.
+
+**Two parser faults, found on the way.** GW's letter-spaced
+"WARHAMMER LEGENDS" banner shares a line with the datasheet name, and the
+datasheet parser took it as the name. Since August the patch had been adding
+a unit called `wa-r-ha-m-m-e-r-l-e-g-e-n-d-s` to the Astra Militarum. It is
+Ciaphas Cain, and the patch now updates his existing record. Two "Legends
+Armoury" pages were read as datasheets; a page with no statline, no
+keywords and no faction keywords is no longer one.
+
+**The Space Marine codex.** GW no longer publishes Space Marine datasheets in
+any free document. The only sources are the codex and GW's app.
+
+- 40kdc 1.4.5 ingested *"the reviewed Codex data for all 85 datasheets"*.
+  Its follow-up was reviewed *"against the MFM dump and the rendered
+  cards"*, the data GW's app renders from.
+- BSData's Space Marine catalogue last changed on 8 September, before the
+  codex, and has an open issue saying so (BSData/wh40k-11e#1968, Space
+  Marine toughness in 11th edition).
+- Wahapedia's datasheet pages still carry September's prices, so they are
+  the index too. That is what made §3.42's Vanguard correction wrong.
+- Independently, reviews and news coverage of the codex report the toughness
+  rise: Intercessors at T5, Tacticus armour at T5.
+
+Merged BSData-over-40kdc, the app was showing the index for 61 Space Marine
+statlines: Intercessors at T4, Terminators at T5. It was worse in chapters.
+A chapter publishes no datasheets in 40kdc, so BSData's copy of a parent
+datasheet was written whole and won over the parent's codex record in that
+chapter's armies. Ultramarines' Guilliman was T9 W10 where the codex prints
+T10 W16.
+
+So `bin/merge.dart` names the factions whose codex is in 40kdc and not
+BSData: `_codexIn40kdc`, currently Space Marines only. For that faction and
+its chapters:
+
+- a datasheet takes its profiles, keywords, faction keywords, weapons and
+  abilities from 40kdc. Points and the Legends flag stay with BSData and the
+  patch, which carries GW's current manual;
+- a chapter's copy of a parent datasheet is merged over the parent's 40kdc
+  record, so it keeps its own points and takes the codex content. Weapons
+  and compositions likewise;
+- BSData's weapon slots are dropped for any datasheet whose slot default the
+  codex model does not carry. This applied to the 12 measured, Vanguard
+  Veterans and the Redemptor among them. Those datasheets use 40kdc's own
+  wargear options, taken from the same app data. Slots the codex agrees
+  with, Intercessors' for one, are kept.
+
+The Ballistus's storm bolters and the twelve default loadouts are therefore
+40kdc's, and none is open any more. Rule wording still comes from BSData and
+Wahapedia, which are pre-codex for Space Marines; that is the remaining
+codex gap, and nothing free carries the codex wording.
+
+**One rule for Legends.** BSData marked Captain on Bike and Wolf Scouts
+Legends, but GW's current manual prices both. The patch generator now clears
+the flag on any datasheet the manual prices. Only that direction is safe: a
+datasheet missing from a page may be a Combat Patrol one, or a page the
+parser read short.
+
+**Remove the `_codexIn40kdc` entry when BSData publishes the codex**, and
+regenerate. The same applies to Orks, if BSData ever falls behind a codex
+40kdc has.
+
+The two slot tests that used Vanguard Veterans now use Paragon Warsuits and
+Cthonian Earthshakers, where BSData is current. New tests check that the
+codex ships in the parent and in a chapter's copy, that a codex datasheet
+does not take the index's slots, and that a manual-priced datasheet is not
+Legends. Both suites pass: 624 in the engine and 337 in the app.
 
 ## 4. Army builder
 
@@ -4012,6 +4114,11 @@ Verified on the simulator: Blood Angels lists *Angelic Inheritors*, *Encarmine S
 **Next:** QR (§6.4), which also unlocks the opponent page, and reporting upstream: the stale Adeptus Astartes points, the local corrections, and the four factions' dangling `detachment_id` references (§3.9).
 
 ### 3.10 Source decision, revisited — BattleScribe primary
+
+*Excepted in part on 2026-10-04 (§3.43): for the Space Marine family only,
+40kdc's datasheet content leads, because 40kdc carries the codex and BSData
+does not yet. Everything below still holds for every other faction, and for
+Space Marine rule wording and points.*
 
 **Superseding §3.0.** The user asked for the real BattleScribe files rather
 than 40kdc's scrape, with 40kdc retained wherever BSData has nothing, BSData

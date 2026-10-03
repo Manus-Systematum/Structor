@@ -41,6 +41,10 @@ WEAPON_HEADS = ('RANGE', 'A', 'BS', 'WS', 'S', 'AP', 'D')
 Y = 2.5  # points; lines this close share a baseline
 
 
+
+# The banner a Legends datasheet carries, however it is spaced.
+BANNER = re.compile(r'WARHAMMERLEGENDS')
+
 def contents(raw):
     """`[(name, page)]` from the pack's contents page."""
     at = pdf_columns.word_x(raw[0], 'CONTENTS')
@@ -176,7 +180,15 @@ def parse_page(page):
     if 'RANGED WEAPONS' not in heads and 'MELEE WEAPONS' not in heads:
         return None
 
-    name = rows[0][2]
+    # The name is the leftmost cell of the top line. A Legends datasheet sets
+    # its banner on that same line, letter-spaced — `WA R HA M M E R L E G E N
+    # D S` — and taking the first cell made Ciaphas Cain a datasheet called
+    # that, which the patch then added to the Astra Militarum as a unit.
+    top = [r for r in rows if abs(r[0] - rows[0][0]) < Y and not BANNER.fullmatch(
+        re.sub(r'\s+', '', r[2]).upper())]
+    if not top:
+        return None
+    name = min(top, key=lambda r: r[1])[2]
     if not name or len(name) > 70:
         return None
 
@@ -270,6 +282,14 @@ def parse_page(page):
 
     keywords = footer('KEYWORDS:', right=False)
     faction_keywords = footer('FACTION KEYWORDS:', right=True)
+
+    # A page with weapon tables and no statline and no keywords of either kind
+    # is not a datasheet: the `Legends Armoury` pages are such. Faction
+    # keywords alone are enough to keep a page — Servitor Battleclade and Kill
+    # Team Cassius stack several model profiles, so their statline reads
+    # empty, and they are datasheets all the same.
+    if not profile and not keywords and not faction_keywords:
+        return None
 
     return {
         'name': name,

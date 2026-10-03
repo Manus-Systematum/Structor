@@ -238,17 +238,44 @@ void main() {
         ['for-the-greater-good']);
   });
 
-  test('a corrected default loadout ships baked into the bundle', () async {
-    // 40kdc 1.4.5 gives Vanguard Veterans a relic blade and no pistol;
-    // data-corrections.yaml restores what BSData and Wahapedia print (§3.42).
-    final astartes = await repo.faction('adeptus-astartes');
-    final squad = astartes.composition('vanguard-veteran-squad-with-jump-packs');
-    expect(squad, isNotNull);
-    for (final model in squad!.models) {
-      expect(model.defaultWeaponIds,
-          containsAll(['bolt-pistol', 'vanguard-veteran-weapon']),
-          reason: model.name);
-    }
+  // The Space Marine codex reached 40kdc and not BSData, so for that family
+  // 40kdc leads the merge (§3.42). Each value below is the codex's, where
+  // BSData still prints the index's.
+  group('the Space Marine codex ships', () {
+    String? toughness(Dataset d, String id) =>
+        d.unit(id)?.profiles.first.t?.replaceAll(RegExp(r'[^0-9]'), '');
+
+    test('in the parent faction', () async {
+      final astartes = await repo.faction('adeptus-astartes');
+      expect(toughness(astartes, 'intercessor-squad'), '5',
+          reason: 'T4 is the index');
+      expect(toughness(astartes, 'terminator-squad'), '6');
+    });
+
+    test('and in a chapter\'s own copy of a datasheet', () async {
+      // A chapter's copy wins over the parent in that chapter's armies, and
+      // BSData's copy was the index's.
+      final ultramarines = await repo.faction('ultramarines');
+      expect(toughness(ultramarines, 'roboute-guilliman'), '10');
+      final templars = await repo.faction('black-templars');
+      expect(toughness(templars, 'sternguard-veteran-squad'), '5');
+    });
+
+    test('with the codex loadout, not the index\'s', () async {
+      final astartes = await repo.faction('adeptus-astartes');
+      final vanguard =
+          astartes.composition('vanguard-veteran-squad-with-jump-packs');
+      expect(vanguard!.models.first.defaultWeaponIds,
+          isNot(contains('bolt-pistol')));
+      expect(astartes.wargearSlots('vanguard-veteran-squad-with-jump-packs'),
+          isNull, reason: 'BSData\'s slots for it are the index\'s');
+    });
+
+    test('and a datasheet the manual prices is not Legends', () async {
+      // BSData marks the Captain on Bike Legends; the manual prices it.
+      final astartes = await repo.faction('adeptus-astartes');
+      expect(astartes.unit('captain-on-bike')?.isLegend, isFalse);
+    });
   });
 
   test('a faction with two army rules ships both', () async {
@@ -304,16 +331,11 @@ void main() {
       );
     });
 
-    test('a chapter gains the one its copy of a shared detachment missed',
-        () async {
-      // Every chapter carries its own partial copy of Armoured Speartip;
-      // Black Templars' was missing Armour of Contempt, which the pack lists.
-      final templars = await repo.faction('black-templars');
-      final speartip = templars.faction.stratagems
-          .where((s) => s.detachmentId == 'armoured-speartip')
-          .map((s) => s.name.toUpperCase());
-      expect(speartip, contains('ARMOUR OF CONTEMPT'));
-    });
+    // A chapter gaining a stratagem its copy of a shared detachment missed
+    // was tested here on Black Templars' Armoured Speartip. Only the Space
+    // Marine pack ever produced such an addition, and Games Workshop withdrew
+    // it for the codex on 30 September, so no current data exercises it
+    // (§3.42).
 
     test('an errata to an army rule reaches the ability it edits', () async {
       // Enhancements and detachments carry no wording of their own — theirs
@@ -334,8 +356,8 @@ void main() {
 
     test('a keyword the update adds reaches the datasheet', () async {
       // `Add 'FRAME'.` edits a list, not prose, so it is applied as a list.
-      final marines = await repo.faction('adeptus-astartes');
-      expect(marines.unit('vindicator')?.keywords, contains('Frame'));
+      // This was the Vindicator until the Space Marine pack was withdrawn.
+      expect(tau.unit('tidewall-shieldline')?.keywords, contains('Frame'));
     });
 
     test('a rewritten stratagem keeps its sections', () async {

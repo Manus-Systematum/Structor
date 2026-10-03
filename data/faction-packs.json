@@ -1,174 +1,7 @@
 {
- "dark-angels": [
-  {
-   "name": "SEARING BURSTS",
-   "cp": 1,
-   "detachment": "DARK AGE ARSENAL",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Shooting phase, when a friendly HELLBLASTER SQUAD unit has shot.\n\n**TARGET:** That HELLBLASTER SQUAD unit.\n\n**EFFECT:** Select one enemy unit hit by your unit’s plasma ranged attacks. That enemy unit is seared until the start of your next turn: ▪ While a unit is seared, that unit has ‑2\" M."
-  },
-  {
-   "name": "NO SACRIFICE TOO GREAT",
-   "cp": 1,
-   "detachment": "DARK AGE ARSENAL",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Shooting phase, when a friendly ADEPTUS ASTARTES unit is selected to shoot.\n\n**TARGET:** That ADEPTUS ASTARTES unit.\n\n**EFFECT:** Your unit’s [HAZARDOUS] plasma ranged attacks have +1 S."
-  },
-  {
-   "name": "REVELATION OF GUILT",
-   "cp": 1,
-   "detachment": "DARK AGE ARSENAL",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Shooting phase, when a friendly ADEPTUS ASTARTES unit is selected to shoot.\n\n**TARGET:** That ADEPTUS ASTARTES unit.\n\n**EFFECT:** Your unit’s plasma ranged attacks have +1 to hit rolls."
-  },
-  {
-   "name": "SKYBORNE SURVEILLANCE",
-   "cp": 1,
-   "detachment": "DARKFLIGHT PURSUIT",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Shooting phase, when a friendly RAVENWING FLY unit has shot.\n\n**TARGET:** That RAVENWING FLY unit.\n\n**EFFECT:** Visible enemy units within 6\" of your unit have +3\" detection range."
-  },
-  {
-   "name": "WINGS OF SHADOW",
-   "cp": 1,
-   "detachment": "DARKFLIGHT PURSUIT",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly RAVENWING FLY unit.\n\n**TARGET:** That RAVENWING FLY unit.\n\n**EFFECT:** Your unit has Stealth."
-  },
-  {
-   "name": "WE ARE VENGEANCE",
-   "cp": 1,
-   "detachment": "DARKFLIGHT PURSUIT",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit that targeted a friendly unengaged RAVENWING FLY unit has shot.\n\n**TARGET:** That RAVENWING FLY unit.\n\n**EFFECT:** Your unit can make a normal move of up to D3+3\"."
-  },
-  {
-   "name": "EXACTING PUNISHMENT",
-   "cp": 1,
-   "detachment": "INTERROGATION CONCLAVE",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase, when a friendly CHAPLAIN unit is selected to attack.\n\n**TARGET:** That CHAPLAIN unit.\n\n**EFFECT:** Your unit’s attacks have [PRECISION]."
-  },
-  {
-   "name": "TERRIFYING ZEAL",
-   "cp": 1,
-   "detachment": "INTERROGATION CONCLAVE",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Your Charge phase, when a friendly CHAPLAIN unit ends a charge move.\n\n**TARGET:** That CHAPLAIN unit.\n\n**EFFECT:** Select one enemy unit (excluding MONSTER/VEHICLE units) engaged with your unit. That enemy unit makes a leadership roll: ▪ \u0007If that leadership roll fails, that enemy unit’s attacks have -1 to hit rolls until the end of the turn."
-  },
-  {
-   "name": "WAGES OF COWARDICE",
-   "cp": 1,
-   "detachment": "INTERROGATION CONCLAVE",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Your opponent’s Movement phase, when an enemy unit that was engaged with a friendly CHAPLAIN unit ends a fall‑back move, if that CHAPLAIN unit is unengaged.\n\n**TARGET:** That CHAPLAIN unit.\n\n**EFFECT:** Your unit can make a normal move of up to D3+3\"."
-  },
-  {
-   "name": "OVERPOWERING EXACTION",
-   "cp": 1,
-   "detachment": "LION’S BLADE TASK FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** Command phase or the start of the Fight phase.\n\n**TARGET:** One Adeptus Astartes unit from your army.\n\n**EFFECT:** Select one enemy unit within Engagement Range of your unit. That enemy unit must take a Battle‑shock test. When doing so, if your unit has the Deathwing or Ravenwing keyword, subtract 1 from the result.\n\n**RESTRICTIONS:** You can only use this Stratagem once per battle round."
-  },
-  {
-   "name": "ARMOUR OF CONTEMPT",
-   "cp": 1,
-   "detachment": "LION’S BLADE TASK FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 6,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
-  },
-  {
-   "name": "STRENGTH IN UNITY",
-   "cp": 1,
-   "detachment": "LION’S BLADE TASK FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 6,
-   "text": "**WHEN:** Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** If that enemy unit is within Engagement Range of one or more Ravenwing units from your army, until the end of the phase, each time a model in that enemy unit makes an attack, subtract 1 from the Hit roll. If that enemy unit is within Engagement Range of one or more Deathwing units from your army, until the end of the phase, each time a model in that enemy unit makes an attack, if the Strength characteristic of that attack is greater than the Toughness characteristic of the target, subtract 1 from the Wound roll.\n\n**RESTRICTIONS:** A unit cannot be targeted by this and the Armour of Contempt Stratagem in the same phase. 6"
-  },
-  {
-   "name": "KNIGHTS OF IRON",
-   "cp": 1,
-   "detachment": "LION’S BLADE TASK FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** Your Movement phase or your Charge phase.\n\n**TARGET:** One Ravenwing unit from your army.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a Normal, Advance or Charge move, it can move horizontally through terrain features."
-  },
-  {
-   "name": "ILLUMINATING FIRE",
-   "cp": 1,
-   "detachment": "LION’S BLADE TASK FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 6,
-   "text": "**WHEN:** Your Shooting phase, just after a Ravenwing unit from your army has selected its targets.\n\n**TARGET:** That Ravenwing unit.\n\n**EFFECT:** Select one enemy unit within 12\" of your unit that was selected as the target of one or more of the attacking unit’s attacks. Until the end of the phase, each time a friendly Deathwing unit makes an attack that targets that enemy unit, add 1 to the Wound roll."
-  },
-  {
-   "name": "INESCAPABLE WRATH",
-   "cp": 2,
-   "detachment": "LION’S BLADE TASK FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** End of your opponent’s Charge phase.\n\n**TARGET:** One Deathwing Infantry or Deathwing Walker unit from your army that is within 6\" of one or more enemy units and would be eligible to declare a charge against one or more of those enemy units if it were your Charge phase.\n\n**EFFECT:** Your unit now declares a charge that only targets one or more of those enemy units, and you resolve that charge.\n\n**RESTRICTIONS:** Note that even if this charge is successful, your unit does not receive any Charge bonus this turn."
-  },
-  {
-   "name": "INESCAPABLE JUSTICE",
-   "cp": 2,
-   "detachment": "WRATH OF THE ROCK",
-   "type": "BATTLE TACTIC",
-   "page": 8,
-   "text": "**WHEN:** Any phase, just after your Oath of Moment target is destroyed.\n\n**TARGET:** One Adeptus Astartes Character unit that is on the battlefield.\n\n**EFFECT:** Select one enemy unit within 12\" and visible to your unit. That enemy unit becomes your Oath of Moment target until the start of your next Command phase."
-  },
-  {
-   "name": "LION’S WILL",
-   "cp": 1,
-   "detachment": "WRATH OF THE ROCK",
-   "type": "STRATEGIC PLOY",
-   "page": 8,
-   "text": "**WHEN:** Command phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that is within Engagement Range of one or more enemy units.\n\n**EFFECT:** Until the start of your next Command phase, add 1 to the Objective Control characteristic of models in your unit. In addition, until the end of the turn, if your unit does not have the Deathwing, Ravenwing or Vehicle keyword, each time a model in your unit makes an attack, add 1 to the Hit roll."
-  },
-  {
-   "name": "ARMOUR OF CONTEMPT",
-   "cp": 1,
-   "detachment": "WRATH OF THE ROCK",
-   "type": "BATTLE TACTIC",
-   "page": 8,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1. 8"
-  },
-  {
-   "name": "TACTICAL MASTERY",
-   "cp": 1,
-   "detachment": "WRATH OF THE ROCK",
-   "type": "BATTLE TACTIC",
-   "page": 8,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Adeptus Astartes unit from your army.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Advanced. If your unit has the Ravenwing keyword, it is also eligible to shoot and declare a charge in a turn in which it Fell Back."
-  },
-  {
-   "name": "RELICS OF THE DARK AGE",
-   "cp": 1,
-   "detachment": "WRATH OF THE ROCK",
-   "type": "STRATEGIC PLOY",
-   "page": 8,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Adeptus Astartes Infantry or Adeptus Astartes Mounted unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, add 2 to the Strength characteristic of ranged weapons equipped by models in your unit."
-  },
-  {
-   "name": "LEONINE AGGRESSION",
-   "cp": 1,
-   "detachment": "WRATH OF THE ROCK",
-   "type": "STRATEGIC PLOY",
-   "page": 8,
-   "text": "**WHEN:** End of your opponent’s Charge phase.\n\n**TARGET:** One Adeptus Astartes unit from your army within 3\" of one or more enemy units, or one Deathwing unit from your army within 6\" of one or more enemy units.\n\n**EFFECT:** Your unit now declares a charge that only targets one or more of those enemy units, and you resolve that charge.\n\n**RESTRICTIONS:** Note that even if this charge is successful, your unit does not receive any Charge bonus this turn."
-  }
- ],
+ "dark-angels": [],
+ "space-wolves": [],
+ "blood-angels": [],
  "death-guard": [
   {
    "name": "FRESH VECTORS",
@@ -633,248 +466,54 @@
    "text": "**WHEN:** Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.\n\n**TARGET:** One Adeptus Mechanicus Infantry unit (excluding Kataphron units) from your army that is within 8\" of that enemy unit and not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Your unit can make a Normal move of up to D6\", or up to 6\" instead if it is a Halo Override unit."
   }
  ],
- "space-wolves": [
+ "imperial-agents": [
   {
-   "name": "WOLF TOTEMS",
+   "name": "PRIME TARGET",
    "cp": 1,
-   "detachment": "CHAMPIONS OF FENRIS",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Any phase, when a friendly ADEPTUS ASTARTES INFANTRY CHARACTER unit suffers a mortal wound.\n\n**TARGET:** That ADEPTUS ASTARTES INFANTRY CHARACTER unit.\n\n**EFFECT:** Your unit has Feel No Pain 5+ against mortal wounds."
-  },
-  {
-   "name": "RUNES OF CLAIMING",
-   "cp": 1,
-   "detachment": "CHAMPIONS OF FENRIS",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** End of your Movement phase.\n\n**TARGET:** One friendly ADEPTUS ASTARTES INFANTRY CHARACTER unit.\n\n**EFFECT:** Select one objective your unit is controlling. That objective is secured."
-  },
-  {
-   "name": "STALK BETWEEN WORLDS",
-   "cp": 1,
-   "detachment": "CHAMPIONS OF FENRIS",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly ADEPTUS ASTARTES INFANTRY CHARACTER unit.\n\n**TARGET:** That ADEPTUS ASTARTES INFANTRY CHARACTER unit.\n\n**EFFECT:** Your unit has Stealth."
-  },
-  {
-   "name": "FANGS OF THE PACK",
-   "cp": 1,
-   "detachment": "LEGENDS OF SAGA AND SONG",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Fight phase, when a friendly ADEPTUS ASTARTES TERMINATOR unit is selected to fight.\n\n**TARGET:** That ADEPTUS ASTARTES TERMINATOR unit.\n\n**EFFECT:** Your unit’s melee attacks have [PRECISION]."
-  },
-  {
-   "name": "CHILLING HOWL",
-   "cp": 1,
-   "detachment": "LEGENDS OF SAGA AND SONG",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your opponent’s Command phase.\n\n**TARGET:** One friendly WOLF GUARD TERMINATORS unit.\n\n**EFFECT:** Select one enemy unit within 6\" of your unit. That enemy unit makes a battle‑shock roll, with ‑1 to that battle‑shock roll if that enemy unit is at or below half‑strength."
-  },
-  {
-   "name": "WINGS OF THE BLIZZARD",
-   "cp": 1,
-   "detachment": "LEGENDS OF SAGA AND SONG",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One friendly unengaged ADEPTUS ASTARTES TERMINATOR unit.\n\n**EFFECT:** Place your unit in strategic reserves."
-  },
-  {
-   "name": "GRIZZLED KILLERS",
-   "cp": 1,
-   "detachment": "VETERANS OF THE FANG",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Fight phase, when a friendly GREY HUNTERS unit is selected to fight.\n\n**TARGET:** That GREY HUNTERS unit.\n\n**EFFECT:** Your unit's melee attacks have: ▪ [SUSTAINED HITS 1]. ▪ OR: [LETHAL HITS]."
-  },
-  {
-   "name": "ICY CALM",
-   "cp": 1,
-   "detachment": "VETERANS OF THE FANG",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Your Movement phase, when a friendly GREY HUNTERS unit is selected to make an advance/fall-back move.\n\n**TARGET:** That GREY HUNTERS unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to start an action."
-  },
-  {
-   "name": "BLADE-KEEN SENSES",
-   "cp": 1,
-   "detachment": "VETERANS OF THE FANG",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Start of your Shooting phase.\n\n**TARGET:** One friendly unengaged GREY HUNTERS unit.\n\n**EFFECT:** Select one visible enemy unit within 24\" of your unit. That enemy unit has +6\" detection range."
-  },
-  {
-   "name": "THE FOE FORESEEN",
-   "cp": 1,
-   "detachment": "SAGA OF THE GREAT WOLF",
-   "type": "",
-   "page": 6,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
-  },
-  {
-   "name": "GRIMNAR’S COMMAND",
-   "cp": 1,
-   "detachment": "SAGA OF THE GREAT WOLF",
-   "type": "",
-   "page": 6,
-   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One Adeptus Astartes unit from your army.\n\n**EFFECT:** Select one Hunting Pack from the Master of Wolves Detachment rule. Until the start of your next Command phase, that Hunting Pack is active for your unit instead of any other Hunting Pack that is active, even if you have already selected that Hunting Pack this battle."
-  },
-  {
-   "name": "FENRISIAN FEROCITY",
-   "cp": 1,
-   "detachment": "SAGA OF THE GREAT WOLF",
-   "type": "",
-   "page": 6,
-   "text": "**WHEN:** Your Movement phase or your Charge phase.\n\n**TARGET:** One Adeptus Astartes Mounted or Adeptus Astartes Walker unit from your army that has not been selected to move or charge this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a Normal, Advance, Fall Back or Charge move, it can move horizontally through models (excluding Titanic models) and terrain features. When doing so, it can move within Engagement Range of enemy models, but cannot end a Normal, Advance or Fall Back move within Engagement Range of them. 6"
-  },
-  {
-   "name": "UNRELENTING HUNTERS",
-   "cp": 1,
-   "detachment": "SAGA OF THE GREAT WOLF",
-   "type": "",
-   "page": 6,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to move this phase.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to declare a charge in a turn in which it Fell Back. If your unit is a Space Wolves unit, until the end of the turn, it is eligible to declare a charge in a turn in which it Advanced or Fell Back."
-  },
-  {
-   "name": "EYE OF THE PACK",
-   "cp": 1,
-   "detachment": "SAGA OF THE GREAT WOLF",
-   "type": "",
-   "page": 6,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack, you can add 1 to the Wound roll."
-  },
-  {
-   "name": "BATTLE INSTINCTS",
-   "cp": 1,
-   "detachment": "SAGA OF THE GREAT WOLF",
-   "type": "",
-   "page": 6,
-   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One Space Wolves unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Your unit can make a Normal move of up to D6\"."
-  }
- ],
- "chaos-knights": [
-  {
-   "name": "RUNE-CURSED STRONGHOLD",
-   "cp": 1,
-   "detachment": "BASTIONS OF TYRANNY",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Any phase, when a friendly KNIGHT TYRANT unit suffers a mortal wound.\n\n**TARGET:** That KNIGHT TYRANT unit.\n\n**EFFECT:** Your unit has Feel No Pain 5+ against mortal wounds."
-  },
-  {
-   "name": "PITILESS FOCUS",
-   "cp": 1,
-   "detachment": "BASTIONS OF TYRANNY",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Movement phase, when a friendly KNIGHT TYRANT unit is selected to make a fall-back move.\n\n**TARGET:** That KNIGHT TYRANT unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to shoot."
-  },
-  {
-   "name": "INTIMIDATING REMINDER",
-   "cp": 1,
-   "detachment": "BASTIONS OF TYRANNY",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Shooting phase, when a friendly KNIGHT TYRANT unit has shot.\n\n**TARGET:** That KNIGHT TYRANT unit.\n\n**EFFECT:** Select one enemy unit hit by those attacks. That enemy unit is suppressed until the start of your next Command phase: ▪ While a unit is suppressed, that unit’s attacks have -1 to hit rolls."
-  },
-  {
-   "name": "INSENSATE BLOODTHIRST",
-   "cp": 1,
-   "detachment": "HUNTING WARPACK",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Fight phase, when an enemy unit targets a friendly WAR DOG unit.\n\n**TARGET:** That WAR DOG unit.\n\n**EFFECT:** Your unit has Feel No Pain 5+."
-  },
-  {
-   "name": "LEASH OF THE MASTERS",
-   "cp": 1,
-   "detachment": "HUNTING WARPACK",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Shooting phase, when a friendly WAR DOG unit has shot.\n\n**TARGET:** That WAR DOG unit.\n\n**EFFECT:** Those attacks do not prevent your unit from being eligible to start an action."
-  },
-  {
-   "name": "STALKING FOCUS",
-   "cp": 1,
-   "detachment": "HUNTING WARPACK",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly WAR DOG unit within range of an objective.\n\n**TARGET:** That WAR DOG unit.\n\n**EFFECT:** Ranged attacks that target your unit have ‑1 AP until that enemy unit has attacked."
-  },
-  {
-   "name": "AVENGE THE MASTERS!",
-   "cp": 1,
-   "detachment": "ICONOCLAST FIEFDOM",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Any phase, when a friendly CHAOS KNIGHTS unit is destroyed by an enemy unit.\n\n**TARGET:** That enemy unit.\n\n**EFFECT:** That enemy unit is marked until the end of the battle. ▪ \u0007Friendly DAMNED units’ attacks that target a marked unit have [LETHAL HITS]."
-  },
-  {
-   "name": "DARK SACRIFICE",
-   "cp": 1,
-   "detachment": "ICONOCLAST FIEFDOM",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One friendly DAMNED unit (excluding ACCURSED CULTISTS units) within 9\" of a friendly CHAOS KNIGHTS model.\n\n**EFFECT:** Select one CHAOS KNIGHTS model within 9\" of your unit and roll D3+3: ▪ \u0007Your DAMNED unit suffers that number of mortal wounds. ▪ \u0007That CHAOS KNIGHTS model heals that number of wounds."
-  },
-  {
-   "name": "COURSING THRALLS",
-   "cp": 1,
-   "detachment": "ICONOCLAST FIEFDOM",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Start of your Shooting phase.\n\n**TARGET:** One friendly DAMNED unit.\n\n**EFFECT:** Select one visible enemy unit within 12\" of your unit. That enemy unit is hunted: ▪ While a unit is hunted, that unit has +6\" detection range."
-  },
-  {
-   "name": "FERAL ARROGANCE",
-   "cp": 1,
-   "detachment": "HELHUNT LANCE",
-   "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** Any phase, just after a mortal wound is allocated to a Chaos Knights unit from your army.\n\n**TARGET:** That Chaos Knights unit.\n\n**EFFECT:** Until the end of the phase, models in your unit have the Feel No Pain 5+ ability against mortal wounds."
-  },
-  {
-   "name": "MERCILESS FUSILLADE",
-   "cp": 1,
-   "detachment": "HELHUNT LANCE",
+   "detachment": "VEILED BLADE ELIMINATION FORCE",
    "type": "BATTLE TACTIC",
-   "page": 6,
-   "text": "**WHEN:** Start of your Shooting phase or the start of the Fight phase.\n\n**TARGET:** One Titanic Chaos Knights unit from your army, and up to two friendly War Dog units, that have not been selected to shoot or fight this phase.\n\n**EFFECT:** Select one enemy unit that is an eligible target for each of those Chaos Knights units. Until the end of the phase, each time one of those Chaos Knights units is selected to shoot or fight, if that enemy unit is an eligible target, you can only select that enemy unit as the target for all of those attacks and those attacks have the [SUSTAINED HITS 1] ability."
+   "page": 3,
+   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Agents of the Imperium unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack that targets a Character unit, re‑roll a Wound roll of 1. If that attack is made by an Officio Assassinorum model and it targets the enemy Warlord, you can re‑roll the Wound roll instead."
   },
   {
-   "name": "BEASTHIDE MANIFESTATION",
-   "cp": 1,
-   "detachment": "HELHUNT LANCE",
+   "name": "HYPERSTIMMS",
+   "cp": 2,
+   "detachment": "VEILED BLADE ELIMINATION FORCE",
    "type": "BATTLE TACTIC",
-   "page": 6,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Chaos Knights unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1. 6"
+   "page": 3,
+   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Agents of the Imperium Character unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, add 1 to the Toughness characteristic of models in your unit. In addition, if it is an Eversor Assassin unit, until the end of the phase, it has the Feel No Pain 4+ ability."
   },
   {
-   "name": "FLUSH THE QUARRY",
+   "name": "WILL‑SAPPING SALVO",
    "cp": 1,
-   "detachment": "HELHUNT LANCE",
-   "type": "BATTLE TACTIC",
-   "page": 6,
-   "text": "**WHEN:** Start of your Movement phase.\n\n**TARGET:** One Titanic Chaos Knights unit from your army and up to three friendly War Dog units within 6\" of that Titanic Chaos Knights unit.\n\n**EFFECT:** Until the end of the phase, each time one of those War Dog units makes a Normal, Advance or Fall Back move, its models can move through models and terrain features. When doing so, they can move within Engagement Range of such models but cannot end that move within Engagement Range of them, and any Desperate Escape test is automatically passed."
-  },
-  {
-   "name": "CONTEMPTUOUS VOLLEYS",
-   "cp": 1,
-   "detachment": "HELHUNT LANCE",
+   "detachment": "VEILED BLADE ELIMINATION FORCE",
    "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** Your Movement phase, just after a Chaos Knights unit from your army Falls Back.\n\n**TARGET:** That Chaos Knights unit.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back."
+   "page": 3,
+   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Agents of the Imperium Infantry unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, ranged weapons equipped by models in your unit have the [SUSTAINED HITS 1] ability. In addition, if it is a Culexus Assassin unit, until the end of the phase, change the Damage characteristic of ranged weapons equipped by models in your unit to 3. 3"
   },
   {
-   "name": "GOADED BEAST",
+   "name": "ORBITAL OVERSIGHT",
    "cp": 1,
-   "detachment": "HELHUNT LANCE",
+   "detachment": "VEILED BLADE ELIMINATION FORCE",
    "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One Chaos Knights unit from your army that lost one or more wounds as a result of those attacks.\n\n**EFFECT:** Your unit can make a surge move of up to D6\"."
+   "page": 3,
+   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Agents of the Imperium Infantry unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, your unit can only be selected as the target of a ranged attack if the attacking model is within 18\", or, if your unit has the Lone Operative ability, if the attacking model is within 6\"."
+  },
+  {
+   "name": "BLIND GRENADES",
+   "cp": 1,
+   "detachment": "VEILED BLADE ELIMINATION FORCE",
+   "type": "STRATEGIC PLOY",
+   "page": 3,
+   "text": "**WHEN:** Your opponent’s Charge phase, just after an enemy unit has declared a charge.\n\n**TARGET:** One Agents of the Imperium Grenades or Vindicare Assassin unit from your army that was selected as one of the targets of that charge and is not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Until the end of the phase, subtract 1 from Charge rolls made for that enemy unit, or, if your unit is a Vindicare Assassin, subtract 2 from Charge rolls made for that enemy unit instead."
+  },
+  {
+   "name": "ENSNARING TRAP",
+   "cp": 1,
+   "detachment": "VEILED BLADE ELIMINATION FORCE",
+   "type": "STRATEGIC PLOY",
+   "page": 3,
+   "text": "**WHEN:** End of your opponent’s Charge phase.\n\n**TARGET:** One Agents of the Imperium Infantry unit from your army that is within 6\" of one or more enemy units and would be eligible to declare a charge against one or more of those enemy units.\n\n**EFFECT:** Your unit can declare a charge. When doing so, you must select one or more of those enemy units as the targets of that charge. In addition, if it is a Callidus Assassin unit and it makes a Charge move as a result of this Stratagem, until the end of the turn, each time a model in your unit makes a melee attack, add 1 to the Wound roll."
   }
  ],
  "astra-militarum": [
@@ -1095,776 +734,374 @@
    "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Astra Militarum unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
   }
  ],
- "drukhari": [
+ "chaos-daemons": [
   {
-   "name": "PLANNED STRIKES",
+   "name": "CORRUPT REALSPACE",
    "cp": 1,
-   "detachment": "EXHIBITION OF SLAUGHTER",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Fight phase, when a friendly WYCH CULT unit is selected to fight.\n\n**TARGET:** That WYCH CULT unit.\n\n**EFFECT:** Your unit’s melee attacks have [LETHAL HITS]."
+   "detachment": "DAEMONIC INCURSION",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Start of any Command phase.\n\n**TARGET:** One Legiones Daemonica unit from your army that is within range of an objective marker you control.\n\n**EFFECT:** That objective marker is said to be Corrupted and remains under your control, even if you have no models within range of it, until your opponent controls it at the start or end of any turn. In addition, while an objective marker is Corrupted and under your control, the area of the battlefield within 6\" of that objective marker is considered to be within your army’s Shadow of Chaos."
   },
   {
-   "name": "SCULPTING THE STAGE",
+   "name": "WARP SURGE",
    "cp": 1,
-   "detachment": "EXHIBITION OF SLAUGHTER",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Movement phase, when a friendly WYCH CULT unit is selected to make an advance/fall-back move.\n\n**TARGET:** That WYCH CULT unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to start an action."
+   "detachment": "DAEMONIC INCURSION",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your Charge phase.\n\n**TARGET:** One Legiones Daemonica unit from your army that is within your army’s Shadow of Chaos.\n\n**EFFECT:** Until the end of the phase, your unit is eligible to declare a charge in a turn in which it Advanced."
   },
   {
-   "name": "ACROBATIC DISPLAY",
-   "cp": 1,
-   "detachment": "EXHIBITION OF SLAUGHTER",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly WYCH CULT unit.\n\n**TARGET:** That WYCH CULT unit.\n\n**EFFECT:** Your unit has 5+ InSv."
-  },
-  {
-   "name": "PRIORITISED VICTIM",
-   "cp": 1,
-   "detachment": "KABALITE AGONYSTS",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase, when a friendly BLADES FOR HIRE/KABAL unit targets a CHARACTER unit.\n\n**TARGET:** That BLADES FOR HIRE/KABAL unit.\n\n**EFFECT:** Your unit’s attacks that target a CHARACTER unit can: ▪ Re‑roll hit rolls of 1. ▪ Re‑roll wound rolls of 1."
-  },
-  {
-   "name": "SHADOWS’ REACH",
-   "cp": 1,
-   "detachment": "KABALITE AGONYSTS",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Shooting phase, when a friendly BLADES FOR HIRE/ KABAL unit has shot.\n\n**TARGET:** That BLADES FOR HIRE/KABAL unit.\n\n**EFFECT:** Those attacks do not prevent your unit from being hidden."
-  },
-  {
-   "name": "KILLERS FROM THE DARK SPIRES",
-   "cp": 1,
-   "detachment": "KABALITE AGONYSTS",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Shooting phase, when a friendly KABALITE WARRIORS unit is selected to shoot.\n\n**TARGET:** That KABALITE WARRIORS unit.\n\n**EFFECT:** Your unit’s ranged attacks have [IGNORES COVER]."
-  },
-  {
-   "name": "SALTING THE WOUND",
-   "cp": 1,
-   "detachment": "TOOLS OF TORMENT",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Fight phase, when a friendly CRONOS/TALOS unit is selected to fight.\n\n**TARGET:** That CRONOS/TALOS unit.\n\n**EFFECT:** Your unit’s attacks that target a battle‑shocked unit have [DEVASTATING WOUNDS]."
-  },
-  {
-   "name": "DIVIDENDS OF AGONY",
-   "cp": 1,
-   "detachment": "TOOLS OF TORMENT",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Fight phase, when a friendly HAEMONCULUS COVENS unit destroys an enemy unit.\n\n**TARGET:** That HAEMONCULUS COVENS unit.\n\n**EFFECT:** Select one visible enemy unit within 12\" of your unit. That enemy unit makes a battle‑shock roll, with -1 to that battle‑shock roll."
-  },
-  {
-   "name": "URGENT METAMORPHOSIS",
-   "cp": 1,
-   "detachment": "TOOLS OF TORMENT",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Your Movement phase, when a friendly HAEMONCULUS COVENS unit is selected to make a fall‑back move.\n\n**TARGET:** That HAEMONCULUS COVENS unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to declare a charge."
-  },
-  {
-   "name": "MALICIOUS FRENZY",
-   "cp": 1,
-   "detachment": "REAPER’S WAGER",
+   "name": "DRAUGHT OF TERROR",
+   "cp": null,
+   "detachment": "DAEMONIC INCURSION",
    "type": "BATTLE TACTIC",
    "page": 6,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Drukhari or Harlequins unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Select [LETHAL HITS] or [SUSTAINED HITS 1] . Until the end of the phase, weapons equipped by models in your unit have the selected ability."
+   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Legiones Daemonica unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Until the end of the phase, improve the Armour Penetration characteristic of weapons equipped by models in that unit by 1. In addition, until the end of the phase, each time such a weapon targets a unit that is Battle-shocked, you can re-roll the Wound roll."
   },
   {
-   "name": "FATEFUL ROLE",
-   "cp": 1,
-   "detachment": "REAPER’S WAGER",
+   "name": "DENIZENS OF THE WARP",
+   "cp": null,
+   "detachment": "DAEMONIC INCURSION",
    "type": "STRATEGIC PLOY",
    "page": 6,
-   "text": "**WHEN:** Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Drukhari or Harlequins unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6, adding 1 to the result if that unit is losing the wager: on a 4+, do not remove it from play. That destroyed model can fight after the attacking model’s unit has finished making its attacks, and is then removed from play."
+   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Legiones Daemonica unit from your army that is arriving using the Deep Strike ability this phase.\n\n**EFFECT:** Your unit can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy models."
   },
   {
-   "name": "MURDERER’S CIRCUS",
+   "name": "THE REALM OF CHAOS",
    "cp": 1,
-   "detachment": "REAPER’S WAGER",
+   "detachment": "DAEMONIC INCURSION",
    "type": "BATTLE TACTIC",
-   "page": 6,
-   "text": "**WHEN:** Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Drukhari or Harlequins unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll. 6"
+   "page": 7,
+   "text": "**WHEN:** End of your opponent’s turn.\n\n**TARGET:** Up to two Legiones Daemonica units from your army that are within your army’s Shadow of Chaos, or one other Legiones Daemonica unit from your army.\n\n**EFFECT:** • Place your unit in strategic reserves • \u0007Your unit must make an ingress move in your next Movement phase (including in your first turn).\n\n**RESTRICTIONS:** You cannot target units that are within Engagement Range of one or more enemy units with this Stratagem."
   },
   {
-   "name": "SHORTEN THE ODDS",
+   "name": "DAEMONIC INVULNERABILITY",
+   "cp": null,
+   "detachment": "DAEMONIC INCURSION",
+   "type": "BATTLE TACTIC",
+   "page": 7,
+   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Legiones Daemonica unit from your army that was selected as the target of one or more of that enemy unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an invulnerable saving throw is made for a model in your unit, re-roll a saving throw of 1."
+  },
+  {
+   "name": "SPITEFUL DEMISE",
    "cp": 1,
-   "detachment": "REAPER’S WAGER",
+   "detachment": "SHADOW LEGION",
    "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** Your Movement phase, just after a Drukhari or Harlequins unit from your army has Advanced.\n\n**TARGET:** That unit.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Advanced."
+   "page": 11,
+   "text": "**WHEN:** Any phase, just after a Shadow Legion unit from your army is destroyed, before removing the last model in that unit from the battlefield and before rolling any dice for the Deadly Demise ability.\n\n**TARGET:** That Shadow Legion unit. You can use this Stratagem on that unit even though it was just destroyed.\n\n**EFFECT:** Roll one D6 for each enemy unit that is within Engagement Range of the last model in your unit, adding 2 to the result if your unit has the Slaanesh keyword: on a 4‑5, that enemy unit suffers D3 mortal wounds; on a 6+, that enemy unit suffers 3 mortal wounds."
   },
   {
-   "name": "SCINTILLATING TEMPO",
+   "name": "CHANNELLED WRATH",
+   "cp": null,
+   "detachment": "SHADOW LEGION",
+   "type": "STRATEGIC PLOY",
+   "page": 11,
+   "text": "**WHEN:** Fight phase.\n\n**TARGET:** One Shadow Legion unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, melee weapons equipped by models in your unit have the [LANCE] ability. If your unit has the Khorne keyword, until the end of the phase, improve the Armour Penetration characteristic of those weapons by 1 as well."
+  },
+  {
+   "name": "DEATH DENIED",
+   "cp": null,
+   "detachment": "SHADOW LEGION",
+   "type": "BATTLE TACTIC",
+   "page": 11,
+   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One Shadow Legion unit from your army.\n\n**EFFECT:** One model in your unit regains up to 3 lost wounds. In addition, If your unit has the Tzeentch keyword, return up to one destroyed model (excluding Character models) to your unit with its full wounds remaining."
+  },
+  {
+   "name": "ENCROACHING DARKNESS",
    "cp": 1,
-   "detachment": "REAPER’S WAGER",
-   "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** Your Movement phase or your Charge phase, just after a Drukhari or Harlequins unit from your army is selected to make a Normal, Advance or Fall Back move, is set up on the battlefield, or declares a charge.\n\n**TARGET:** That unit.\n\n**EFFECT:** Until the end of the turn, enemy units cannot use the Fire Overwatch Stratagem to shoot at your unit."
+   "detachment": "SHADOW LEGION",
+   "type": "BATTLE TACTIC",
+   "page": 12,
+   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** Up to one Shadow Legion Heretic Astartes unit from your army and up to one Shadow Legion Legiones Daemonica unit from your army. You can only select units that arrived from Reserves this turn.\n\n**EFFECT:** Until the end of the phase, weapons equipped by models in your selected units have the [IGNORES COVER] ability."
   },
   {
-   "name": "DANCE MACABRE",
+   "name": "SHADE PATH",
    "cp": 2,
-   "detachment": "REAPER’S WAGER",
-   "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.\n\n**TARGET:** One Drukhari Infantry or Harlequins Infantry unit from your army that is within 8\" of that enemy unit.\n\n**EFFECT:** Your unit can make a Normal move of up to D6\". If your unit is currently losing the wager, it can make a Normal move of up to 6\" instead."
-  }
- ],
- "space-marines": [
-  {
-   "name": "METEORIC ONSLAUGHT",
-   "cp": 1,
-   "detachment": "VENGEFUL HOSTS",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Fight phase, when a friendly ADEPTUS ASTARTES FLY INFANTRY unit that made a charge move this turn is selected to attack.\n\n**TARGET:** That friendly ADEPTUS ASTARTES FLY INFANTRY unit.\n\n**EFFECT:** Your unit’s melee attacks have +1 S."
-  },
-  {
-   "name": "PURGE BY SECTORS",
-   "cp": 1,
-   "detachment": "VENGEFUL HOSTS",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** End of the Fight phase.\n\n**TARGET:** One friendly unengaged ADEPTUS ASTARTES FLY INFANTRY unit that was eligible to fight this phase.\n\n**EFFECT:** Your unit can make a normal move of up to D3+3\"."
-  },
-  {
-   "name": "KNOW NO FEAR",
-   "cp": 1,
-   "detachment": "VENGEFUL HOSTS",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One friendly battle-shocked ADEPTUS ASTARTES unit. You can target that unit with this stratagem even though it is battle-shocked.\n\n**EFFECT:** Your unit is no longer battle-shocked."
-  },
-  {
-   "name": "DATA-LINK AUGURY",
-   "cp": 1,
-   "detachment": "FULGURIS TASK FORCE",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Shooting phase, when a friendly SPEEDER unit is selected to shoot.\n\n**TARGET:** That SPEEDER unit.\n\n**EFFECT:** Select one enemy unit within 24\" of your unit. That enemy unit has +6\" detection range until your unit has shot."
-  },
-  {
-   "name": "REACTIVE EVASION",
-   "cp": 1,
-   "detachment": "FULGURIS TASK FORCE",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your opponent’s Movement phase, when an enemy unit ends a move within 8\" of a friendly unengaged SPEEDER unit.\n\n**TARGET:** That SPEEDER unit.\n\n**EFFECT:** Your unit can make a normal move of up to D3+3\"."
-  },
-  {
-   "name": "ANTI-GRAV SURGE",
-   "cp": 1,
-   "detachment": "FULGURIS TASK FORCE",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One friendly unengaged SPEEDER unit.\n\n**EFFECT:** Place your unit in strategic reserves."
-  },
-  {
-   "name": "ADAPTIVE OPERATIONS",
-   "cp": 1,
-   "detachment": "SUBVERSION ASSETS",
-   "type": null,
-   "page": 5,
-   "text": "**WHEN:** Your Shooting phase, when a friendly PHOBOS/SCOUT SQUAD unit starts an action.\n\n**TARGET:** That PHOBOS/SCOUT SQUAD unit.\n\n**EFFECT:** That action does not prevent your unit from being eligible to shoot."
-  },
-  {
-   "name": "STRIKE FROM THE SHADOWS",
-   "cp": 1,
-   "detachment": "SUBVERSION ASSETS",
-   "type": null,
-   "page": 5,
-   "text": "**WHEN:** Your Shooting phase, when a friendly PHOBOS/SCOUT SQUAD unit has shot.\n\n**TARGET:** That PHOBOS/SCOUT SQUAD unit.\n\n**EFFECT:** Those ranged attacks do not prevent your unit from being hidden."
-  },
-  {
-   "name": "CLOAKED POSITION",
-   "cp": 1,
-   "detachment": "SUBVERSION ASSETS",
-   "type": null,
-   "page": 5,
-   "text": "**WHEN:** Start of your opponent’s Movement phase.\n\n**TARGET:** One friendly unengaged PHOBOS/SCOUT SQUAD unit.\n\n**EFFECT:** Your unit has -3\" detection range until the end of the turn."
-  },
-  {
-   "name": "MACHINE WRATH",
-   "cp": 1,
-   "detachment": "ARMOURED SPEARTIP",
-   "type": "EPIC DEED",
-   "page": 7,
-   "text": "**WHEN:** Any phase, just after a Heavy Transport unit from your army with the Deadly Demise ability is destroyed.\n\n**TARGET:** That Heavy Transport unit, if you rolled a 6 for its Deadly Demise ability. You can use this Stratagem on that unit even though it was just destroyed.\n\n**EFFECT:** Your unit can make a Normal or Fall Back move before its Deadly Demise ability is resolved, and before any embarked units perform an Emergency Disembarkation. When making this move, your unit can move through enemy models (excluding Monsters and Vehicles) and can move within Engagement Range of such models, but cannot end that move within Engagement Range of them, and any Desperate Escape test is automatically passed."
-  },
-  {
-   "name": "ARMOUR OF CONTEMPT",
-   "cp": 1,
-   "detachment": "ARMOURED SPEARTIP",
-   "type": "STRATEGIC PLOY",
-   "page": 7,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
-  },
-  {
-   "name": "RAPID EMBARKATION",
-   "cp": 1,
-   "detachment": "ARMOURED SPEARTIP",
-   "type": "WARGEAR",
-   "page": 7,
-   "text": "**WHEN:** End of the Fight phase.\n\n**TARGET:** One Adeptus Astartes Infantry unit from your army that is not within Engagement Range of one or more enemy units, and one friendly Heavy Transport it is able to embark within.\n\n**EFFECT:** If your Adeptus Astartes Infantry unit is wholly within 6\" of that Heavy Transport, it can embark within it. Your unit can embark within that Transport in a turn it disembarked from a Transport. 7"
-  },
-  {
-   "name": "CERAMITE SLEDGEHAMMER",
-   "cp": 1,
-   "detachment": "ARMOURED SPEARTIP",
-   "type": "STRATEGIC PLOY",
-   "page": 7,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Adeptus Astartes Transport unit from your army that has not been selected to move this phase.\n\n**EFFECT:** Until the end of the phase, each time your unit makes a Normal or Advance move, it can move horizontally through terrain features. In addition, if your unit is a Heavy Transport, when making this move, your unit can move through enemy models (excluding Monsters and Vehicles) and can move within Engagement Range of such models, but cannot end that move within Engagement Range of them, and any Desperate Escape test is automatically passed."
-  },
-  {
-   "name": "ADVANCED DEPLOYMENT",
-   "cp": 1,
-   "detachment": "ARMOURED SPEARTIP",
-   "type": "STRATEGIC PLOY",
-   "page": 7,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Adeptus Astartes Transport unit from your army that has not been selected to move this phase.\n\n**EFFECT:** Until the end of the phase, units can disembark from your Transport after it has Advanced. Units that do so count as having made a Normal move this phase, and cannot declare a charge in the same turn (unless your Transport has the Assault Ramp ability), but can otherwise act normally."
-  },
-  {
-   "name": "PURGATION DOCTRINE",
-   "cp": 1,
-   "detachment": "ARMOURED SPEARTIP",
+   "detachment": "SHADOW LEGION",
    "type": "BATTLE TACTIC",
-   "page": 7,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack, add 1 to the Hit roll (if your unit disembarked from a Heavy Transport this turn, add 1 to the Wound roll as well)."
+   "page": 12,
+   "text": "**WHEN:** Start of your opponent’s Charge phase.\n\n**TARGET:** One friendly Shadow Legion unit.\n\n**EFFECT:** Select one visible enemy unit within 12\" of your unit. When that enemy unit declares a charge, that enemy unit has -1 to charge rolls. If your unit has Nurgle, that enemy unit must make a battle-shock roll.’"
   },
   {
-   "name": "ARMOUR OF CONTEMPT",
-   "cp": 1,
-   "detachment": "HEADHUNTER TASK FORCE",
+   "name": "BINDING SHADOW",
+   "cp": null,
+   "detachment": "SHADOW LEGION",
    "type": "STRATEGIC PLOY",
-   "page": 9,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
+   "page": 12,
+   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** Up to one Shadow Legion Heretic Astartes unit from your army and up to one Shadow Legion Legiones Daemonica unit from your army. You can only select units that are not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove those selected units from the battlefield and place them into Strategic Reserves."
   },
   {
-   "name": "TARGET WEAK POINT",
-   "cp": 1,
-   "detachment": "HEADHUNTER TASK FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 9,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Tank Ace unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a ranged attack that targets a Monster or Vehicle unit, improve the Armour Penetration characteristic of that attack by 1.\n\n**RESTRICTIONS:** A unit cannot be targeted with this and the Kill Shot Stratagem in the same phase."
-  },
-  {
-   "name": "KILL SHOT",
-   "cp": 1,
-   "detachment": "HEADHUNTER TASK FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 9,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Tank Ace unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack that targets a Monster or Vehicle unit, re‑roll a Wound roll of 1. If the target unit is below its Starting Strength, you can re‑roll the Wound roll instead.\n\n**RESTRICTIONS:** A unit cannot be targeted with this and the Target Weak Point Stratagem in the same phase. 9"
-  },
-  {
-   "name": "RAPID GUNNERY",
-   "cp": 1,
-   "detachment": "HEADHUNTER TASK FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 9,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, your unit is eligible to shoot in a turn in which it Fell Back."
-  },
-  {
-   "name": "REACTIVE REPOSITIONING",
-   "cp": 1,
-   "detachment": "HEADHUNTER TASK FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 9,
-   "text": "**WHEN:** Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.\n\n**TARGET:** One Tank Ace unit from your army (excluding units containing one or more models with a Wounds characteristic of 16+) that is within 8\" of that enemy unit.\n\n**EFFECT:** Your unit can make a Normal move of up to D6\"."
-  },
-  {
-   "name": "MACHINE VENGEANCE",
-   "cp": 1,
-   "detachment": "HEADHUNTER TASK FORCE",
-   "type": "EPIC DEED",
-   "page": 9,
-   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One Tank Ace unit from your army (excluding units containing one or more models with a Wounds characteristic of 16+) that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Your unit can shoot as if it were your Shooting phase, but must target only that enemy unit when doing so, and can only do so if that enemy unit is visible and an eligible target."
-  },
-  {
-   "name": "UNYIELDING MIGHT",
-   "cp": 1,
-   "detachment": "CERAMITE SENTINELS",
-   "type": "BATTLE TACTIC",
-   "page": 11,
-   "text": "**WHEN:** Command phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that is within Engagement Range of one or more enemy units.\n\n**EFFECT:** Until the start of your next Command phase, add 1 to the Objective Control characteristics of models in your unit."
-  },
-  {
-   "name": "PRIORITY STRIKE",
+   "name": "FROM BEYOND THE VEIL",
    "cp": 2,
-   "detachment": "CERAMITE SENTINELS",
-   "type": "BATTLE TACTIC",
-   "page": 11,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Adeptus Astartes Infantry or Adeptus Astartes Mounted unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack that targets a Character, Monster or Vehicle unit, you can re‑roll the Wound roll."
+   "detachment": "CAVALCADE OF CHAOS",
+   "type": null,
+   "page": 120,
+   "text": "**WHEN:** End of the Movement phase, from the start of the battle.\n\n**TARGET:** One friendly LEGIONES DAEMONICA MOUNTED unit in strategic reserves.\n\n**EFFECT:** Your unit can make an ingress move."
   },
   {
-   "name": "ARMOUR OF CONTEMPT",
+   "name": "WARP-RIDERS",
    "cp": 1,
-   "detachment": "CERAMITE SENTINELS",
-   "type": "BATTLE TACTIC",
-   "page": 11,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1. 11"
+   "detachment": "CAVALCADE OF CHAOS",
+   "type": null,
+   "page": 120,
+   "text": "**WHEN:** Your Movement phase, when a friendly LEGIONES DAEMONICA MOUNTED unit is selected to move.\n\n**TARGET:** That LEGIONES DAEMONICA MOUNTED unit.\n\n**EFFECT:** Your unit has MOBILE."
   },
   {
-   "name": "STAND TO THE END",
+   "name": "INESCAPABLE MANIFESTATIONS",
    "cp": 1,
-   "detachment": "CERAMITE SENTINELS",
-   "type": "EPIC DEED",
-   "page": 11,
-   "text": "**WHEN:** Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6, adding 1 to the result if it is an Entrenched unit: on a 4+, do not remove it from play. That destroyed model can fight after the attacking unit has finished making its attacks, and is then removed from play."
+   "detachment": "CAVALCADE OF CHAOS",
+   "type": null,
+   "page": 120,
+   "text": "**WHEN:** Your opponent’s Movement phase, when a unit is selected to make a fall‑back move, if that unit is engaged with a friendly LEGIONES DAEMONICA MOUNTED unit.\n\n**TARGET:** That LEGIONES DAEMONICA MOUNTED unit.\n\n**EFFECT:** When an enemy unit engaged with your unit is selected to make a fall‑back move, that enemy unit must use the desperate escape mode. If that enemy unit is battle‑shocked, -1 from those hazard rolls."
   },
   {
-   "name": "AUGMENTED TARGETING",
+   "name": "CARNIVAL OF EXCESS",
    "cp": 1,
-   "detachment": "CERAMITE SENTINELS",
-   "type": "BATTLE TACTIC",
-   "page": 11,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Select either the [SUSTAINED HITS 1] or [LETHAL HITS] abilities. Until the end of the phase, ranged weapons equipped by models in your unit have the selected ability. If your unit is Entrenched, until the end of the phase, ranged weapons equipped by models in your unit have the [SUSTAINED HITS 1] and [LETHAL HITS] abilities instead."
+   "detachment": "LORDS OF THE WARP",
+   "type": null,
+   "page": 121,
+   "text": "**WHEN:** Fight phase, when an enemy unit has fought.\n\n**TARGET:** One friendly LEGIONES DAEMONICA CHARACTER SLAANESH unit (excluding MONSTER units) that has not been selected to fight this phase.\n\n**EFFECT:** Your unit has Fights First and must be the next unit you select to fight."
   },
   {
-   "name": "EVASIVE REPOSITIONING",
+   "name": "CALL TO MURDER",
    "cp": 1,
-   "detachment": "CERAMITE SENTINELS",
+   "detachment": "LORDS OF THE WARP",
+   "type": null,
+   "page": 121,
+   "text": "**WHEN:** Fight phase, when a friendly LEGIONES DAEMONICA KHORNE CHARACTER unit (excluding MONSTER units) that made a charge move this turn is selected to fight.\n\n**TARGET:** That LEGIONES DAEMONICA CHARACTER KHORNE unit.\n\n**EFFECT:** Your unit’s melee attacks have +1 A."
+  },
+  {
+   "name": "BILIOUS BLESSING",
+   "cp": 1,
+   "detachment": "LORDS OF THE WARP",
+   "type": null,
+   "page": 121,
+   "text": "**WHEN:** Start of your Shooting phase.\n\n**TARGET:** One friendly LEGIONES DAEMONICA CHARACTER NURGLE unit (excluding MONSTER units).\n\n**EFFECT:** Select one visible enemy unit within 8\" of your unit and roll seven D6: ▪ For each 4+, that enemy unit suffers 1 mortal wound."
+  },
+  {
+   "name": "SKIRLING MAGICKS",
+   "cp": 1,
+   "detachment": "LORDS OF THE WARP",
+   "type": null,
+   "page": 121,
+   "text": "**WHEN:** Your Shooting phase, when a friendly LEGIONES DAEMONICA CHARACTER TZEENTCH unit (excluding MONSTER units) is selected to shoot.\n\n**TARGET:** That LEGIONES DAEMONICA CHARACTER TZEENTCH unit.\n\n**EFFECT:** Your unit’s ranged attacks have [LETHAL HITS]."
+  },
+  {
+   "name": "DAEMONIC INFESTATION",
+   "cp": 1,
+   "detachment": "WARPTIDE",
+   "type": null,
+   "page": 122,
+   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One friendly LEGIONES DAEMONICA BATTLELINE unit (excluding PINK HORRORS units).\n\n**EFFECT:** Your unit heals 3 wounds."
+  },
+  {
+   "name": "SOULSEEING",
+   "cp": 1,
+   "detachment": "WARPTIDE",
+   "type": null,
+   "page": 122,
+   "text": "**WHEN:** Start of your Shooting phase.\n\n**TARGET:** One friendly LEGIONES DAEMONICA BATTLELINE unit.\n\n**EFFECT:** Select one visible enemy unit within 12\" of your unit. That enemy unit has +6\" detection range."
+  },
+  {
+   "name": "INCORPOREAL ENTITIES",
+   "cp": 1,
+   "detachment": "WARPTIDE",
+   "type": null,
+   "page": 122,
+   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly LEGIONES DAEMONICA BATTLELINE unit.\n\n**TARGET:** That LEGIONES DAEMONICA BATTLELINE unit.\n\n**EFFECT:** Ranged attacks that target your unit with a S greater than your unit’s T have ‑1 to wound rolls."
+  },
+  {
+   "name": "WRATH UNDENIABLE",
+   "cp": 1,
+   "detachment": "BLOOD LEGION",
    "type": "STRATEGIC PLOY",
-   "page": 11,
-   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One Adeptus Astartes Infantry or Adeptus Astartes Mounted unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Your unit can make a Normal move of up to D6\". If your unit is Entrenched, you can re‑roll the D6 to determine how far your unit can move."
+   "page": 124,
+   "text": "**WHEN:** Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Legiones Daemonica Khorne unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit is destroyed by a melee attack, if that model has not fought this phase, roll one D6: on a 4+, do not remove the destroyed model from play; it can fight after the attacking unit has finished making its attacks, and is then removed from play."
   },
   {
-   "name": "ARMOUR OF CONTEMPT",
+   "name": "GORE‑HUNGRY ONSLAUGHT",
    "cp": 1,
-   "detachment": "BLADE OF ULTRAMAR",
-   "type": "BATTLE TACTIC",
-   "page": 13,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
-  },
-  {
-   "name": "TACTICAL FORESIGHT",
-   "cp": 1,
-   "detachment": "BLADE OF ULTRAMAR",
-   "type": "EPIC DEED",
-   "page": 13,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets your unit, if the Strength characteristic of that attack is greater than or equal to the Toughness characteristic of that unit, subtract 1 from the Wound roll."
-  },
-  {
-   "name": "COURAGE AND HONOUR!",
-   "cp": 1,
-   "detachment": "BLADE OF ULTRAMAR",
-   "type": "BATTLE TACTIC",
-   "page": 13,
-   "text": "**WHEN:** Fight phase.\n\n**TARGET:** One Adeptus Astartes unit from your army.\n\n**EFFECT:** Until the end of the phase, melee weapons equipped by models in your unit have the [LANCE] ability. If your unit is under the effects of the Assault Doctrine, until the end of the phase, improve the Armour Penetration characteristic of such weapons by 1 as well. 13"
-  },
-  {
-   "name": "ULTRAMARIAN ADAPTIVITY",
-   "cp": 1,
-   "detachment": "BLADE OF ULTRAMAR",
+   "detachment": "BLOOD LEGION",
    "type": "STRATEGIC PLOY",
-   "page": 13,
-   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One Adeptus Astartes unit from your army.\n\n**EFFECT:** Select the Devastator Doctrine, Tactical Doctrine or Assault Doctrine. Until the start of your next Command phase, that Combat Doctrine is active for your unit instead of any other Combat Doctrine that is active for your army, even if you have already selected that Combat Doctrine this battle."
+   "page": 124,
+   "text": "**WHEN:** Your Movement phase or your Charge phase.\n\n**TARGET:** One Legiones Daemonica Khorne unit from your army.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a move, it can move through terrain features."
   },
   {
-   "name": "EXEMPLARY VIGILANCE",
+   "name": "SKULLS BEGET BLOOD",
    "cp": 1,
-   "detachment": "BLADE OF ULTRAMAR",
-   "type": "BATTLE TACTIC",
-   "page": 13,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, ranged weapons equipped by models in your unit have the [IGNORES COVER] ability. If your unit is under the effects of the Devastator Doctrine, until the end of the phase, improve the Armour Penetration characteristic of such weapons by 1 as well."
-  },
-  {
-   "name": "PRACTICAL TACTICS",
-   "cp": 1,
-   "detachment": "BLADE OF ULTRAMAR",
+   "detachment": "BLOOD LEGION",
    "type": "STRATEGIC PLOY",
-   "page": 13,
-   "text": "**WHEN:** Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.\n\n**TARGET:** One Adeptus Astartes Infantry or Adeptus Astartes Mounted unit from your army that is not within Engagement Range of one or more enemy units and is within 8\" of the enemy unit that just ended that move.\n\n**EFFECT:** Your unit can make a Normal move of up to D6\", or a Normal move of up to 6\" instead if it is under the effects of the Tactical Doctrine."
+   "page": 124,
+   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Legiones Daemonica Khorne Infantry or Legiones Daemonica Khorne Mounted unit from your army (excluding units that Fell Back this turn) that is not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Select one enemy unit that is not within Engagement Range of one or more units from your army and is within 8\" of and visible to your unit. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound. 124"
   },
   {
-   "name": "ARMOUR OF CONTEMPT",
+   "name": "BLOOD BEGETS SKULLS",
    "cp": 1,
-   "detachment": "HAMMER OF AVERNII",
-   "type": "BATTLE TACTIC",
-   "page": 15,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
-  },
-  {
-   "name": "RUTHLESS BUTCHERY",
-   "cp": 1,
-   "detachment": "HAMMER OF AVERNII",
-   "type": "BATTLE TACTIC",
-   "page": 15,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Adeptus Astartes Dreadnought, Terminator, Bladeguard Veteran Squad, Sternguard Veteran Squad or Vanguard Veteran Squad unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack, add 1 to the Hit roll. If your unit is below Starting Strength, add 1 to the Wound roll as well."
-  },
-  {
-   "name": "DOMINATOR BEACON",
-   "cp": 1,
-   "detachment": "HAMMER OF AVERNII",
+   "detachment": "BLOOD LEGION",
    "type": "STRATEGIC PLOY",
-   "page": 15,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Adeptus Astartes Dreadnought, Terminator, Bladeguard Veteran Squad, Sternguard Veteran Squad or Vanguard Veteran Squad unit from your army within range of an objective marker you control.\n\n**EFFECT:** That objective marker remains under your control, even if you have no models within range of it, until your opponent controls it at the end of a phase. 15"
+   "page": 124,
+   "text": "**WHEN:** Your Charge phase.\n\n**TARGET:** One Legiones Daemonica Khorne unit from your army that has not been selected to charge this phase.\n\n**EFFECT:** Until the end of the phase, your unit is eligible to declare a charge in a turn in which it Advanced."
   },
   {
-   "name": "COGITATED FEROCITY",
-   "cp": 1,
-   "detachment": "HAMMER OF AVERNII",
-   "type": "STRATEGIC PLOY",
-   "page": 15,
-   "text": "**WHEN:** Your Fight phase.\n\n**TARGET:** One Adeptus Astartes Dreadnought, Terminator, Bladeguard Veteran Squad, Sternguard Veteran Squad or Vanguard Veteran Squad unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Select either the [SUSTAINED HITS 1] or [LETHAL HITS] abilities. Until the end of the phase, melee weapons equipped by models in your unit have the selected ability."
-  },
-  {
-   "name": "AUGMETIC FORTITUDE",
-   "cp": 1,
-   "detachment": "HAMMER OF AVERNII",
-   "type": "BATTLE TACTIC",
-   "page": 15,
-   "text": "**WHEN:** Your opponent’s Charge phase, just after an enemy unit ends a Charge move.\n\n**TARGET:** One Adeptus Astartes Terminator, Bladeguard Veteran Squad, Sternguard Veteran Squad or Vanguard Veteran Squad unit from your army within Engagement Range of that enemy unit.\n\n**EFFECT:** Until the end of the turn, each time an attack is allocated to a model in your unit, subtract 1 from the Damage characteristic of that attack."
-  },
-  {
-   "name": "DROPSHIP EXTRACTION",
-   "cp": 1,
-   "detachment": "HAMMER OF AVERNII",
-   "type": "STRATEGIC PLOY",
-   "page": 15,
-   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Adeptus Astartes Terminator unit from your army. You cannot target a unit that is within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove your unit from the battlefield and place it into Strategic Reserves."
-  },
-  {
-   "name": "ARMOUR OF CONTEMPT",
-   "cp": 1,
-   "detachment": "SPEARPOINT TASK FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 17,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
-  },
-  {
-   "name": "SPEAR THRUST AND SABRE SWING",
-   "cp": 1,
-   "detachment": "SPEARPOINT TASK FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 17,
-   "text": "**WHEN:** Fight phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Select either the [LANCE] or [LETHAL HITS] ability. Until the end of the phase, melee weapons equipped by models in your unit have the selected ability. If it is a Mounted unit, until the end of the phase, melee weapons equipped by models in your unit have the [LANCE] and [LETHAL HITS] abilities instead."
-  },
-  {
-   "name": "MOBILE LETHALITY",
-   "cp": 1,
-   "detachment": "SPEARPOINT TASK FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 17,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Adeptus Astartes unit from your army.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot in a turn in which it Advanced or Fell Back. 17"
-  },
-  {
-   "name": "HUNTER’S INSTINCTS",
-   "cp": 1,
-   "detachment": "SPEARPOINT TASK FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 17,
-   "text": "**WHEN:** Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.\n\n**TARGET:** One Adeptus Astartes Infantry unit or Adeptus Astartes Mounted unit from your army that is within 8\" of that enemy unit. You cannot target a unit that is within Engagement Range of one or more enemy units.\n\n**EFFECT:** Your unit can make a Normal move of up to 6\"."
-  },
-  {
-   "name": "EVASIVE MANOEUVRES",
-   "cp": 1,
-   "detachment": "SPEARPOINT TASK FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 17,
-   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes Mounted or Adeptus Astartes Fly Vehicle unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets your unit, subtract 1 from the Wound roll."
-  },
-  {
-   "name": "WITHDRAW AND REGROUP",
-   "cp": 1,
-   "detachment": "SPEARPOINT TASK FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 17,
-   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Adeptus Astartes Mounted or Adeptus Astartes Fly Vehicle unit from your army that is not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove your unit from the battlefield and place it into Strategic Reserves."
-  },
-  {
-   "name": "ARMOUR OF CONTEMPT",
-   "cp": 1,
-   "detachment": "FORGEFATHER’S SEEKERS",
-   "type": "BATTLE TACTIC",
-   "page": 19,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
-  },
-  {
-   "name": "CRUCIBLE OF BATTLE",
-   "cp": 1,
-   "detachment": "FORGEFATHER’S SEEKERS",
-   "type": "BATTLE TACTIC",
-   "page": 19,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Adeptus Astartes Infantry unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack that targets the closest eligible target within 6\", add 1 to the Wound roll."
-  },
-  {
-   "name": "WRATHFUL INFERNO",
-   "cp": 1,
-   "detachment": "FORGEFATHER’S SEEKERS",
-   "type": "STRATEGIC PLOY",
-   "page": 19,
-   "text": "**WHEN:** Your Movement phase, just after an Adeptus Astartes Infantry unit from your army Falls Back.\n\n**TARGET:** That unit.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot in a turn in which it Fell Back. 19"
-  },
-  {
-   "name": "IMMOLATION PROTOCOLS",
+   "name": "FOOLS’ FLIGHT",
    "cp": 2,
-   "detachment": "FORGEFATHER’S SEEKERS",
-   "type": "BATTLE TACTIC",
-   "page": 19,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, Torrent weapons equipped by models in your unit have the [DEVASTATING WOUNDS] ability."
-  },
-  {
-   "name": "BURNING VENGEANCE",
-   "cp": 1,
-   "detachment": "FORGEFATHER’S SEEKERS",
-   "type": "BATTLE TACTIC",
-   "page": 19,
-   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One Adeptus Astartes Transport unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** One unit embarked within that Transport can disembark as if it were your Movement phase, and can then shoot as if it were your Shooting phase, but must target only that enemy unit when doing so, and can only do so if that enemy unit is an eligible target."
-  },
-  {
-   "name": "BLAZING EARTH",
-   "cp": 1,
-   "detachment": "FORGEFATHER’S SEEKERS",
+   "detachment": "BLOOD LEGION",
    "type": "STRATEGIC PLOY",
-   "page": 19,
-   "text": "**WHEN:** Start of your opponent’s Charge phase.\n\n**TARGET:** One Adeptus Astartes unit from your army equipped with one or more Torrent weapons.\n\n**EFFECT:** Select one enemy unit (excluding Monsters and Vehicles and units with the Fly keyword) within 12\" of and visible to your unit. Until the end of the phase, each time that enemy unit declares a charge, subtract 2 from the Charge roll (this is not cumulative with any other negative modifiers to that Charge roll)."
+   "page": 124,
+   "text": "**WHEN:** Your opponent’s Movement phase, when an enemy unit ends a fall‑back move.\n\n**TARGET:** One friendly unengaged Legiones Daemonica Khorne unit that is within 6\" of that enemy unit.\n\n**EFFECT:** Declare a charge with your unit. When selecting charge targets, you can only select enemy units that made a fall‑back move this phase and are within the maximum distance."
   },
   {
-   "name": "ARMOUR OF CONTEMPT",
+   "name": "SHEATHED IN BRASS",
    "cp": 1,
-   "detachment": "EMPEROR’S SHIELD",
+   "detachment": "BLOOD LEGION",
    "type": "BATTLE TACTIC",
-   "page": 21,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
+   "page": 124,
+   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Legiones Daemonica Khorne unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, models in your unit have a Save characteristic of 3+."
   },
   {
-   "name": "FURY OF THE FIRST",
+   "name": "IMPOSSIBLE ECLIPSE",
    "cp": 1,
-   "detachment": "EMPEROR’S SHIELD",
-   "type": "BATTLE TACTIC",
-   "page": 21,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Adeptus Astartes Terminator, Bladeguard Veteran Squad, Sternguard Veteran Squad or Vanguard Veteran Squad unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack, add 1 to the Hit roll. If your unit is below its Starting Strength, add 1 to the Wound roll as well."
-  },
-  {
-   "name": "OBDURATE VENGEANCE",
-   "cp": 1,
-   "detachment": "EMPEROR’S SHIELD",
-   "type": "BATTLE TACTIC",
-   "page": 21,
-   "text": "**WHEN:** Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes Terminator, Bladeguard Veteran Squad, Sternguard Veteran Squad or Vanguard Veteran Squad unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6: on a 3+, do not remove it from play. The destroyed model can fight after the attacking unit has finished making its attacks, and is then removed from play. 21"
-  },
-  {
-   "name": "WRATHFUL CONQUERORS",
-   "cp": 1,
-   "detachment": "EMPEROR’S SHIELD",
+   "detachment": "SCINTILLATING LEGION",
    "type": "STRATEGIC PLOY",
-   "page": 21,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Adeptus Astartes Terminator, Bladeguard Veteran Squad, Sternguard Veteran Squad or Vanguard Veteran Squad unit from your army within range of an objective marker you control.\n\n**EFFECT:** That objective marker remains under your control, even if you have no models within range of it, until your opponent controls it at the start or end of any phase."
+   "page": 126,
+   "text": "**WHEN:** Any phase.\n\n**TARGET:** One Legiones Daemonica Tzeentch Monster unit from your army that is on the battlefield.\n\n**EFFECT:** Select No Man’s Land or your opponent’s deployment zone, or spend one Flux token and select both. Until the end of the phase, the selected areas of the battlefield are within your army’s Shadow of Chaos."
   },
   {
-   "name": "DISCIPLINED EXTERMINATION",
+   "name": "PYROGENESIS",
    "cp": 1,
-   "detachment": "EMPEROR’S SHIELD",
+   "detachment": "SCINTILLATING LEGION",
    "type": "BATTLE TACTIC",
-   "page": 21,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Adeptus Astartes Terminator, Bladeguard Veteran Squad, Sternguard Veteran Squad or Vanguard Veteran Squad unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, ranged weapons equipped by models in your unit have the [IGNORES COVER] ability and improve the Armour Penetration characteristic of such weapons by 1."
+   "page": 126,
+   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Legiones Daemonica Tzeentch unit from your army that has not been selected to shoot or fight that phase.\n\n**EFFECT:** Until the end of the phase, add 2 to the Strength characteristic of weapons equipped by models in your unit, or spend one Flux token and add 3 to the Strength characteristic of those weapons and improve the Armour Penetration characteristic of those weapons by 1 instead."
   },
   {
-   "name": "DROPSHIP EXTRACTION",
+   "name": "FLICKERING REALITY",
    "cp": 1,
-   "detachment": "EMPEROR’S SHIELD",
+   "detachment": "SCINTILLATING LEGION",
+   "type": "STRATEGIC PLOY",
+   "page": 126,
+   "text": "**WHEN:** Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Legiones Daemonica Tzeentch unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Roll one D6, then you can spend one Flux token to re‑roll the result: until the end of the phase, each time an attack targets your unit, on an unmodified Hit roll (after any re‑roll) of that result, the attack sequence ends, even if the original Hit roll would have been a Critical Hit. Example: If you roll a 2 and choose to spend one Flux token to re‑roll the result, and the re‑roll is a 6, then until the end of the phase, each time an attack targets your unit, on an unmodified Hit roll of 6 the attack sequence ends, that attack fails to hit and no Critical Hit effects (e.g. Lethal Hits) are resolved. 126"
+  },
+  {
+   "name": "FATEBORNE NIGHTMARES",
+   "cp": 1,
+   "detachment": "SCINTILLATING LEGION",
+   "type": "STRATEGIC PLOY",
+   "page": 126,
+   "text": "**WHEN:** Your Movement phase or your Charge phase.\n\n**TARGET:** One Legiones Daemonica Tzeentch unit from your army.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a move, it can move through terrain features."
+  },
+  {
+   "name": "FICKLEFIRE",
+   "cp": 1,
+   "detachment": "SCINTILLATING LEGION",
+   "type": "STRATEGIC PLOY",
+   "page": 126,
+   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Legiones Daemonica Tzeentch unit from your army that is within Engagement Range of one or more enemy units.\n\n**EFFECT:** Until the end of the phase, enemy units are not considered to be within Engagement Range of your unit for the purposes of selecting targets for, and resolving attacks with, ranged weapons. Until the end of the phase, each time an enemy model is destroyed while its unit is within Engagement Range of your unit, roll one D6: on a 5+, your unit suffers 1 mortal wound after the attacking unit has finished making its attacks."
+  },
+  {
+   "name": "DELIRIUM UNMADE",
+   "cp": 1,
+   "detachment": "SCINTILLATING LEGION",
+   "type": "STRATEGIC PLOY",
+   "page": 126,
+   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Legiones Daemonica Tzeentch unit from your army that is not within Engagement Range of one or more enemy units. Alternatively, you can spend one Flux token when you use this Stratagem and target up to two Legiones Daemonica Tzeentch units from your army instead (including those within Engagement Range of one or more enemy units).\n\n**EFFECT:** Remove your units from the battlefield and place them into Strategic Reserves."
+  },
+  {
+   "name": "SEEPING VIRULENCE",
+   "cp": 1,
+   "detachment": "PLAGUE LEGION",
    "type": "BATTLE TACTIC",
-   "page": 21,
-   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Adeptus Astartes Terminator unit from your army. You cannot target a unit that is within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove your unit from the battlefield and place it into Strategic Reserves."
+   "page": 128,
+   "text": "**WHEN:** Fight phase.\n\n**TARGET:** One Legiones Daemonica Nurgle unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in that unit makes an attack, an unmodified Hit roll of 5+ scores a Critical Hit."
   },
   {
-   "name": "ARMOUR OF CONTEMPT",
+   "name": "FEVER VISIONS",
    "cp": 1,
-   "detachment": "SHADOWMARK TALON",
+   "detachment": "PLAGUE LEGION",
    "type": "BATTLE TACTIC",
-   "page": 23,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
+   "page": 128,
+   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Legiones Daemonica Nurgle unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack, add 1 to the Hit roll. After your unit has finished making its attacks, select one enemy unit hit by one or more of those attacks; that enemy unit must take a Battle‑shock test."
   },
   {
-   "name": "LAY LOW THE TYRANTS",
+   "name": "FOETID RESURGENCE",
+   "cp": 2,
+   "detachment": "PLAGUE LEGION",
+   "type": "STRATEGIC PLOY",
+   "page": 128,
+   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One Legiones Daemonica Nurgle unit from your army that is on the battlefield.\n\n**EFFECT:** Return up to 1 destroyed model to your unit (excluding Character models) or up to D3 destroyed models instead (excluding Character models) if your unit is a Battleline unit, with their full wounds remaining. If your unit is a Monster unit, one model in your unit regains up to D3+1 lost wounds instead. 128"
+  },
+  {
+   "name": "ROT AND RENEWAL",
    "cp": 1,
-   "detachment": "SHADOWMARK TALON",
+   "detachment": "PLAGUE LEGION",
+   "type": "STRATEGIC PLOY",
+   "page": 128,
+   "text": "**WHEN:** Your Movement phase or your Charge phase.\n\n**TARGET:** One Legiones Daemonica Nurgle unit from your army.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a move, it can move through terrain features."
+  },
+  {
+   "name": "MURKSHADOWS",
+   "cp": 1,
+   "detachment": "PLAGUE LEGION",
    "type": "BATTLE TACTIC",
-   "page": 23,
-   "text": "**WHEN:** Fight phase.\n\n**TARGET:** One Adeptus Astartes Infantry unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, melee weapons equipped by models in your unit have the [PRECISION] ability."
+   "page": 128,
+   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Legiones Daemonica Nurgle Infantry unit from your army.\n\n**EFFECT:** Until the end of the phase, each time your unit makes a Normal move, add 5\" to the Move characteristic of models in your unit."
   },
   {
-   "name": "FEINT AND THRUST",
+   "name": "PLAGUE OF WOES",
    "cp": 1,
-   "detachment": "SHADOWMARK TALON",
+   "detachment": "PLAGUE LEGION",
    "type": "STRATEGIC PLOY",
-   "page": 23,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Adeptus Astartes unit from your army.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back. If it is a Phobos or Scout Squad unit, it is also eligible to shoot and declare a charge in a turn in which it Advanced. 23"
+   "page": 128,
+   "text": "**WHEN:** Your opponent’s Command phase, before selecting any targets for the Melancholic Miasma Detachment rule.\n\n**TARGET:** One Legiones Daemonica Nurgle unit from your army.\n\n**EFFECT:** Until the end of the phase, after an enemy unit takes a Battle‑shock test as a result of the Melancholic Miasma Detachment rule, select one other enemy unit within 9\" of your unit; that enemy unit must take a Battle‑shock test."
   },
   {
-   "name": "STUNNING FUSILLADE",
+   "name": "RAPTUROUS AGONY",
    "cp": 1,
-   "detachment": "SHADOWMARK TALON",
+   "detachment": "LEGION OF EXCESS",
+   "type": "STRATEGIC PLOY",
+   "page": 130,
+   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, when an enemy unit targets a friendly Legiones Daemonica Slaanesh unit (excluding Monster/Vehicle units).\n\n**TARGET:** That Legiones Daemonica Slaanesh unit.\n\n**EFFECT:** Attacks that target your unit with a S greater than your unit’s T have -1 to wound rolls."
+  },
+  {
+   "name": "OVERWHELMING EXCESS",
+   "cp": 1,
+   "detachment": "LEGION OF EXCESS",
    "type": "BATTLE TACTIC",
-   "page": 23,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Adeptus Astartes Infantry unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a ranged attack that targets an enemy unit that is more than 12\" away, improve the Ballistic Skill and Armour Penetration characteristics of that attack by 1. If one or more enemy models are destroyed as a result of those attacks, select one of those destroyed models; that destroyed model’s unit must take a Battle-shock test."
+   "page": 130,
+   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Legiones Daemonica Slaanesh unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll."
   },
   {
-   "name": "RAPTORIAL VIGILANCE",
-   "cp": 1,
-   "detachment": "SHADOWMARK TALON",
+   "name": "ARCHAGONISTS",
+   "cp": 2,
+   "detachment": "LEGION OF EXCESS",
    "type": "BATTLE TACTIC",
-   "page": 23,
-   "text": "**WHEN:** Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.\n\n**TARGET:** One Adeptus Astartes Infantry or Adeptus Astartes Mounted unit from your army that is within 9\" of the enemy unit that just ended that move. You cannot target a unit that is within Engagement Range of one or more enemy units.\n\n**EFFECT:** Your unit can make a Normal move of up to D6\", or up to 6\" instead if it is a Phobos or Scout Squad unit."
+   "page": 130,
+   "text": "**WHEN:** Fight phase.\n\n**TARGET:** One Legiones Daemonica Slaanesh Monster unit or up to two Legiones Daemonica Slaanesh units (excluding Monsters) from your army that have not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in one of those units makes an attack, add 1 to the Wound roll. 130"
   },
   {
-   "name": "INTO DARKNESS",
+   "name": "SENSORY EXCRUCIATION",
    "cp": 1,
-   "detachment": "SHADOWMARK TALON",
+   "detachment": "LEGION OF EXCESS",
    "type": "STRATEGIC PLOY",
-   "page": 23,
-   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** Up to two Phobos and/or Scout Squad units from your army, or one other Adeptus Astartes Infantry unit from your army. You cannot target a unit that is within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove those units from the battlefield and place them into Strategic Reserves."
+   "page": 130,
+   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One Legiones Daemonica Slaanesh Monster unit from your army that is on the battlefield.\n\n**EFFECT:** Each unit on the battlefield that is within your army’s Shadow of Chaos must take a Battle‑shock test, subtracting 1 from that test if they are Below Half‑strength. Designer’s Note: This Stratagem forces all friendly and enemy units alike within your army’s Shadow of Chaos to take a Battle‑shock test. This can allow a Chaos Daemons player to heal units from their army through the Daemonic Manifestation army rule, at the risk of causing some of their own units to become Battle‑shocked."
   },
   {
-   "name": "CODEX DISCIPLINE",
+   "name": "PHANTASMAL LONGING",
    "cp": 1,
-   "detachment": "BASTION TASK FORCE",
+   "detachment": "LEGION OF EXCESS",
+   "type": "STRATEGIC PLOY",
+   "page": 130,
+   "text": "**WHEN:** Your Movement phase or your Charge phase.\n\n**TARGET:** One Legiones Daemonica Slaanesh unit from your army.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a move, it can move through terrain features."
+  },
+  {
+   "name": "CAVALCADE OF BLADES",
+   "cp": 1,
+   "detachment": "LEGION OF EXCESS",
    "type": "BATTLE TACTIC",
-   "page": 25,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack that targets an enemy unit, re‑roll a Hit roll of 1. If that target is auspex scanned, re‑roll a Wound roll of 1 as well."
-  },
-  {
-   "name": "GUIDED DISRUPTION",
-   "cp": 1,
-   "detachment": "BASTION TASK FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 25,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase, just after an Adeptus Astartes Battleline unit from your army has finished making its attacks.\n\n**TARGET:** That Adeptus Astartes Battleline unit.\n\n**EFFECT:** When an enemy unit is auspex scanned as a result of those attacks this turn, if that enemy unit does not have the Monster or Vehicle keywords, until the start of your next turn, it is pinned. While a unit is pinned, subtract 2 from that unit’s Move characteristic and subtract 2 from Charge rolls made for that unit."
-  },
-  {
-   "name": "LIGHT OF VENGEANCE",
-   "cp": 1,
-   "detachment": "BASTION TASK FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 25,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Select the [LETHAL HITS] or [SUSTAINED HITS 1] ability. Until the end of the phase, weapons equipped by models in your unit have that ability while targeting an auspex scanned unit or if the bearer has the Battleline keyword. 25"
-  },
-  {
-   "name": "SHOCK BOMBARDMENT",
-   "cp": 1,
-   "detachment": "BASTION TASK FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 25,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase, just after an Adeptus Astartes Battleline unit from your army finished making its attacks.\n\n**TARGET:** That Adeptus Astartes Battleline unit.\n\n**EFFECT:** When an enemy unit is auspex scanned as a result of those attacks this turn, until the start of your next turn, it is suppressed. While a unit is suppressed, each time a model in that unit makes an attack, subtract 1 from the Hit roll."
-  },
-  {
-   "name": "ANGELS DEFIANT",
-   "cp": 1,
-   "detachment": "BASTION TASK FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 25,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes Battleline unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets your unit, if the Strength characteristic of that attack is greater than the Toughness characteristic of your unit, subtract 1 from the Wound roll."
-  },
-  {
-   "name": "HERESY UNDONE",
-   "cp": 1,
-   "detachment": "BASTION TASK FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 25,
-   "text": "**WHEN:** Your Shooting phase or your Charge phase.\n\n**TARGET:** One Adeptus Astartes unit (excluding Battleline units) from your army.\n\n**EFFECT:** Until the end of the phase, your unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back. If it does, every target of that charge and every target of those attacks must be an auspex scanned unit."
-  },
-  {
-   "name": "SUPPRESSION STRAFING",
-   "cp": 1,
-   "detachment": "ORBITAL ASSAULT FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 27,
-   "text": "**WHEN:** Command phase.\n\n**TARGET:** One Adeptus Astartes unit from your army.\n\n**EFFECT:** Select one enemy unit visible to and within 18\" of your unit. That enemy unit takes a Battle‑shock test. When doing so, subtract 1 from that test and, if that test is failed, until the start of your next turn, that enemy unit is suppressed. While a unit is suppressed, each time a model in that unit makes an attack, subtract 1 from the Hit roll.\n\n**RESTRICTIONS:** You cannot use this Stratagem more than once per battle round."
-  },
-  {
-   "name": "TACTICAL DECAPITATION",
-   "cp": 1,
-   "detachment": "ORBITAL ASSAULT FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 27,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Until the end of the phase, weapons equipped by models in your unit have the [PRECISION] ability and each time a model in your unit makes an attack that targets a Character unit, add 1 to the Hit roll."
-  },
-  {
-   "name": "SHOCK ONSLAUGHT",
-   "cp": 1,
-   "detachment": "ORBITAL ASSAULT FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 27,
-   "text": "**WHEN:** Fight phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a Pile‑in or Consolidation move, it can move up to 6\" instead of up to 3\". 27"
-  },
-  {
-   "name": "AUTO‑SENSE COORDINATION",
-   "cp": 1,
-   "detachment": "ORBITAL ASSAULT FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 27,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Select the [LETHAL HITS] or [SUSTAINED HITS 1] ability. Until the end of the phase, weapons equipped by models in your unit have this ability in a turn in which they disembarked from a Drop Pod or while targeting an enemy unit within 12\"."
-  },
-  {
-   "name": "BLIND SCREEN",
-   "cp": 1,
-   "detachment": "ORBITAL ASSAULT FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 27,
-   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit (excluding Titanic units) from your army that was selected as the target of one or more of the attacking unit’s attacks and one friendly Adeptus Astartes Smoke Vehicle or Drop Pod unit within 9\" of it.\n\n**EFFECT:** Until the end of the phase, models in your units have the Stealth ability and each time a ranged attack targets one of your units, models in that unit have the Benefit of Cover against that attack."
-  },
-  {
-   "name": "ONWARD FOR THE EMPEROR",
-   "cp": 1,
-   "detachment": "ORBITAL ASSAULT FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 27,
-   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Adeptus Astartes Infantry unit from your army that was not set up on the battlefield this turn and one friendly Transport it is able to embark within.\n\n**EFFECT:** If your Adeptus Astartes unit is wholly within 6\" of that Transport, it can embark within it."
-  },
-  {
-   "name": "CRUSADING CONQUERORS",
-   "cp": 1,
-   "detachment": "RECLAMATION FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 29,
-   "text": "**WHEN:** End of the Command phase.\n\n**TARGET:** One Adeptus Astartes unit from your army.\n\n**EFFECT:** Until the start of the next Command phase, add 1 to the Objective Control characteristic of models in your unit."
-  },
-  {
-   "name": "FURIOUS DEDICATION",
-   "cp": 1,
-   "detachment": "RECLAMATION FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 29,
-   "text": "**WHEN:** Your Charge phase or the Fight phase.\n\n**TARGET:** One Adeptus Astartes unit from your army that has not declared a charge or been selected to fight this phase.\n\n**EFFECT:** Until the end of the turn, add 2 to Charge rolls made for your unit and add 1 to the Attacks characteristic of melee weapons equipped by models in your unit.\n\n**RESTRICTIONS:** You cannot use this Stratagem more than once per turn."
-  },
-  {
-   "name": "FIGHT TO THE END",
-   "cp": 1,
-   "detachment": "RECLAMATION FORCE",
-   "type": "BATTLE TACTIC",
-   "page": 29,
-   "text": "**WHEN:** Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Astartes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6: on a 4+, do not remove the destroyed model from play; it can fight after the attacking unit has finished making its attacks, and is then removed from play. 29"
-  },
-  {
-   "name": "SCIONS OF GUILLIMAN",
-   "cp": 1,
-   "detachment": "RECLAMATION FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 29,
-   "text": "**WHEN:** Your Movement phase, just after an Adeptus Astartes unit from your army ends a Fall Back move.\n\n**TARGET:** That Adeptus Astartes unit.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back."
-  },
-  {
-   "name": "ULTRAMARIAN DESTINY",
-   "cp": 1,
-   "detachment": "RECLAMATION FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 29,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Adeptus Astartes unit from your army.\n\n**EFFECT:** Select one objective marker you control that your unit is within range of. That objective marker remains under your control until your opponent’s Level of Control over that objective marker is greater than yours at the end of a phase."
-  },
-  {
-   "name": "MARCHING EVER ON",
-   "cp": 1,
-   "detachment": "RECLAMATION FORCE",
-   "type": "STRATEGIC PLOY",
-   "page": 29,
-   "text": "**WHEN:** Your opponent’s Movement phase, just after an enemy unit Falls Back.\n\n**TARGET:** One Adeptus Astartes unit from your army that was within Engagement Range of that enemy unit at the start of the phase.\n\n**EFFECT:** Your unit can make a Normal move of up to D6\"+1."
+   "page": 130,
+   "text": "**WHEN:** Your Charge phase, just after a Legiones Daemonica Slaanesh unit from your army ends a Charge move.\n\n**TARGET:** That Legiones Daemonica Slaanesh unit.\n\n**EFFECT:** Select one enemy unit within Engagement Range of your unit, then roll one D6 for each model in your unit that is within Engagement Range of that enemy unit, or roll six D6 instead if your unit is a Monster unit: for each 4+, that enemy unit suffers 1 mortal wound."
   }
  ],
  "world-eaters": [
@@ -1939,6 +1176,176 @@
    "type": null,
    "page": 4,
    "text": "**WHEN:** Your opponent's Movement phase, when a unit is selected to make a fall-back move, if that unit is engaged with a friendly WORLD EATERS CHARACTER unit.\n\n**TARGET:** That WORLD EATERS CHARACTER unit.\n\n**EFFECT:** When an enemy unit engaged with your unit is selected to make a fall-back move, that enemy unit must use the desperate escape mode. If that enemy unit is battle-shocked, -1 from those hazard rolls."
+  }
+ ],
+ "adeptus-custodes": [
+  {
+   "name": "FLAWLESS CONSTRUCTION",
+   "cp": 1,
+   "detachment": "MIGHT OF THE MORITOI",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, when an enemy unit targets a friendly ADEPTUS CUSTODES WALKER unit.\n\n**TARGET:** That ADEPTUS CUSTODES WALKER unit.\n\n**EFFECT:** Attacks that target your unit with a S greater than your unit’s T have -1 to wound rolls."
+  },
+  {
+   "name": "UNSTOPPABLE ADVANCE",
+   "cp": 1,
+   "detachment": "MIGHT OF THE MORITOI",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your Movement phase, when a friendly ADEPTUS CUSTODES WALKER unit is selected to move.\n\n**TARGET:** That ADEPTUS CUSTODES WALKER unit.\n\n**EFFECT:** Your unit has MOBILE."
+  },
+  {
+   "name": "PRIORITISED ERADICATION",
+   "cp": 1,
+   "detachment": "MIGHT OF THE MORITOI",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your Shooting phase, when a friendly TELEMON HEAVY DREADNOUGHT unit is selected to shoot.\n\n**TARGET:** That TELEMON HEAVY DREADNOUGHT unit.\n\n**EFFECT:** Your unit’s: ▪ Arachnus Storm Cannon weapons have [RAPID FIRE 6]. ▪ Iliastus Accelerator Culverin weapons have [RAPID FIRE 2]."
+  },
+  {
+   "name": "DEATHSONG SCYTHES",
+   "cp": 1,
+   "detachment": "SILENT HUNTERS",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Fight phase, when a friendly VIGILATORS unit is selected to fight.\n\n**TARGET:** That VIGILATORS unit.\n\n**EFFECT:** ▪ Your unit’s melee attacks have [LANCE]. ▪ Your unit’s melee attacks that target a PSYKER unit have +1 A."
+  },
+  {
+   "name": "UMBRAL PROSECUTION",
+   "cp": 1,
+   "detachment": "SILENT HUNTERS",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Shooting phase, when a friendly PROSECUTORS unit is selected to shoot.\n\n**TARGET:** That PROSECUTORS unit.\n\n**EFFECT:** Your unit’s Boltgun weapons have: ▪ [RAPID FIRE 2]. ▪ +1 AP."
+  },
+  {
+   "name": "SYNCHRONISED INFERNO",
+   "cp": 1,
+   "detachment": "SILENT HUNTERS",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Shooting phase, when a friendly WITCHSEEKERS unit is selected to shoot.\n\n**TARGET:** That WITCHSEEKERS unit.\n\n**EFFECT:** Your unit’s [TORRENT] ranged attacks have [BLAST 1]."
+  },
+  {
+   "name": "HARDENED RESOLVE",
+   "cp": 1,
+   "detachment": "THARANATOI HAMMERBLOW",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, when an enemy unit targets a friendly ADEPTUS CUSTODES TERMINATOR unit.\n\n**TARGET:** That ADEPTUS CUSTODES TERMINATOR unit.\n\n**EFFECT:** Your unit has +1 T."
+  },
+  {
+   "name": "UNLEASH THE LIONS",
+   "cp": 1,
+   "detachment": "THARANATOI HAMMERBLOW",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One friendly ALLARUS CUSTODIANS/AQUILON CUSTODIANS unit that is on the battlefield.\n\n**EFFECT:** Your unit is split into separate units, each containing one model. These new units each have a starting strength of 1."
+  },
+  {
+   "name": "ELECTROEXORCIST SATURATION",
+   "cp": 1,
+   "detachment": "THARANATOI HAMMERBLOW",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your Shooting phase, when a friendly ADEPTUS CUSTODES TERMINATOR unit is selected to shoot.\n\n**TARGET:** That ADEPTUS CUSTODES TERMINATOR unit.\n\n**EFFECT:** Your unit’s Ballistus Grenade Launcher weapons have D3+3 A."
+  },
+  {
+   "name": "GILDED CHAMPION",
+   "cp": 1,
+   "detachment": "LIONS OF THE EMPEROR",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Any phase, just after an Adeptus Custodes Character model from your army has used an ability on its datasheet that states it can only be used ‘once per battle’.\n\n**TARGET:** That Adeptus Custodes Character model.\n\n**EFFECT:** Your model can use that ‘once per battle’ ability one additional time during the battle (but not in the same phase).\n\n**RESTRICTIONS:** You cannot use this Stratagem on the same Adeptus Custodes Character model more than once per battle."
+  },
+  {
+   "name": "DEFIANT TO THE LAST",
+   "cp": 1,
+   "detachment": "LIONS OF THE EMPEROR",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Custodes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6, adding 2 to the result if that model has the Character keyword. On a 4+, do not remove it from play; the destroyed model can fight after the attacking unit has finished making its attacks (when doing so, it is treated as having 1 wound remaining), and is then removed from play."
+  },
+  {
+   "name": "PEERLESS WARRIOR",
+   "cp": 1,
+   "detachment": "LIONS OF THE EMPEROR",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Fight phase.\n\n**TARGET:** One Adeptus Custodes unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, melee weapons equipped by models in your unit have the [PRECISION] ability. 6"
+  },
+  {
+   "name": "UNLEASH THE LIONS",
+   "cp": 1,
+   "detachment": "LIONS OF THE EMPEROR",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One Allarus Custodians or Aquilon Custodians unit from your army that is on the battlefield.\n\n**EFFECT:** That unit is split into separate units, each containing one model. These new units each have a Starting Strength of 1."
+  },
+  {
+   "name": "MANOEUVRE AND FIRE",
+   "cp": 1,
+   "detachment": "LIONS OF THE EMPEROR",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your Movement phase, just after an Adeptus Custodes unit from your army Falls Back.\n\n**TARGET:** That Adeptus Custodes unit.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back."
+  },
+  {
+   "name": "SWIFT AS THE EAGLE",
+   "cp": 1,
+   "detachment": "LIONS OF THE EMPEROR",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One Adeptus Custodes unit from your army (excluding VEHICLE units) that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Your unit can make a Normal move of up to D6\"."
+  },
+  {
+   "name": "FLAWLESS CONSTRUCTION",
+   "cp": 1,
+   "detachment": "SOLAR SPEARHEAD",
+   "type": "BATTLE TACTIC",
+   "page": 8,
+   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Custodes Vehicle unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets a model in your unit, if the Strength characteristic of that attack is greater than the Toughness characteristic of your unit, subtract 1 from the Wound roll."
+  },
+  {
+   "name": "EMPEROR’S VENGEANCE",
+   "cp": 1,
+   "detachment": "SOLAR SPEARHEAD",
+   "type": "BATTLE TACTIC",
+   "page": 8,
+   "text": "**WHEN:** Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Adeptus Custodes unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6, adding 1 to the result if your unit has the Walker keyword. On a 4+, do not remove it from play; The destroyed model can fight after the attacking unit has finished making its attacks (when doing so, it is assumed to have 1 wound remaining), and is then removed from play."
+  },
+  {
+   "name": "WRATHFUL ADVANCE",
+   "cp": 1,
+   "detachment": "SOLAR SPEARHEAD",
+   "type": "BATTLE TACTIC",
+   "page": 8,
+   "text": "**WHEN:** Fight phase, just before an Adeptus Custodes unit from your army Piles In.\n\n**TARGET:** That Adeptus Custodes unit.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a Pile‑in move, it can move up to D3+3\" instead of up to 3\". 8"
+  },
+  {
+   "name": "UNSTOPPABLE",
+   "cp": 1,
+   "detachment": "SOLAR SPEARHEAD",
+   "type": "STRATEGIC PLOY",
+   "page": 8,
+   "text": "**WHEN:** Your Movement phase or your Charge phase.\n\n**TARGET:** One Adeptus Custodes Vehicle or Adeptus Custodes Mounted unit from your army.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a move, it can move through terrain features."
+  },
+  {
+   "name": "RELENTLESS PERSECUTION",
+   "cp": 1,
+   "detachment": "SOLAR SPEARHEAD",
+   "type": "STRATEGIC PLOY",
+   "page": 8,
+   "text": "**WHEN:** Your Movement phase, just after an Adeptus Custodes Vehicle unit from your army Advances.\n\n**TARGET:** That Adeptus Custodes Vehicle unit.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot in a turn in which it Advanced. If your unit has the Walker keyword, until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Advanced instead."
+  },
+  {
+   "name": "PUNISHMENT INESCAPABLE",
+   "cp": 1,
+   "detachment": "SOLAR SPEARHEAD",
+   "type": "STRATEGIC PLOY",
+   "page": 8,
+   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Adeptus Custodes unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, ranged weapons equipped by models in your unit have the [IGNORES COVER] ability, and until the end of the phase, each time a model in your unit makes an attack, you can ignore any or all modifiers to that attack’s Ballistic Skill characteristic and/or any or all modifiers to the Hit roll."
   }
  ],
  "necrons": [
@@ -2207,368 +1614,126 @@
    "text": "**WHEN:** Your opponent’s Movement phase, when an unravelling enemy unit is selected to Fall Back.\n\n**TARGET:** One Necrons unit from your army that is within Engagement Range of that enemy unit.\n\n**EFFECT:** When that enemy unit Falls Back, all models in that enemy unit must take a Desperate Escape test. When doing so, if that enemy unit is Battle‑shocked, subtract 1 from each of those tests."
   }
  ],
- "tyranids": [
+ "grey-knights": [
   {
-   "name": "COUNTERPREDATION",
+   "name": "TRUESILVER AEGIS",
    "cp": 1,
-   "detachment": "AMBUSH PREDATORS",
+   "detachment": "ARGENT ASSAULT",
    "type": null,
    "page": 2,
-   "text": "**WHEN:** Fight phase, when a friendly DEATHLEAPER/LICTOR/ NEUROLICTOR/VON RYAN’S LEAPERS unit is selected to fight.\n\n**TARGET:** That DEATHLEAPER/LICTOR/NEUROLICTOR/VON RYAN’S LEAPERS unit.\n\n**EFFECT:** Your unit’s attacks that target a hidden unit have +1 S and AP."
+   "text": "**WHEN:** Any phase, when a friendly PALADIN SQUAD unit suffers a mortal wound.\n\n**TARGET:** That PALADIN SQUAD unit.\n\n**EFFECT:** Your unit has Feel No Pain 4+ against mortal wounds."
   },
   {
-   "name": "HYPERSENSORY ADAPTATIONS",
+   "name": "A THREAT ENDED",
    "cp": 1,
-   "detachment": "AMBUSH PREDATORS",
+   "detachment": "ARGENT ASSAULT",
    "type": null,
    "page": 2,
-   "text": "**WHEN:** Start of your Shooting phase.\n\n**TARGET:** One friendly DEATHLEAPER/LICTOR/NEUROLICTOR/VON RYAN’S LEAPERS unit.\n\n**EFFECT:** Select one visible enemy unit within 12\" of your unit. That enemy unit has +6\" detection range."
+   "text": "**WHEN:** Fight phase, when a friendly PALADIN SQUAD unit is selected to fight.\n\n**TARGET:** That PALADIN SQUAD unit.\n\n**EFFECT:** Your unit’s melee attacks have [PRECISION]."
   },
   {
-   "name": "SCANNER GHEIST",
+   "name": "AURA OF VENGEANCE",
    "cp": 1,
-   "detachment": "AMBUSH PREDATORS",
+   "detachment": "ARGENT ASSAULT",
    "type": null,
    "page": 2,
-   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One friendly unengaged DEATHLEAPER/LICTOR/ NEUROLICTOR unit.\n\n**EFFECT:** Place your unit in strategic reserves."
+   "text": "**WHEN:** Fight phase, when an enemy unit targets a friendly PALADIN SQUAD unit.\n\n**TARGET:** That PALADIN SQUAD unit.\n\n**EFFECT:** That enemy unit’s melee attacks have [HAZARDOUS]."
   },
   {
-   "name": "CATALYTIC BIOFORTIFICATION",
+   "name": "SOUL-LOCKED",
    "cp": 1,
-   "detachment": "TALONS OF THE NORN QUEEN",
+   "detachment": "FIRES OF PURGATION",
    "type": null,
    "page": 3,
-   "text": "**WHEN:** Any phase, when a friendly NORN ASSIMILATOR unit suffers a mortal wound.\n\n**TARGET:** That NORN ASSIMILATOR unit.\n\n**EFFECT:** Your unit has Feel No Pain 4+ against mortal wounds."
+   "text": "**WHEN:** Your Movement phase, when a friendly PURGATION SQUAD unit is selected to make a fall‑back move.\n\n**TARGET:** That PURGATION SQUAD unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to shoot."
   },
   {
-   "name": "LESSER PREY",
+   "name": "FOCUSED IMMOLATION",
    "cp": 1,
-   "detachment": "TALONS OF THE NORN QUEEN",
+   "detachment": "FIRES OF PURGATION",
    "type": null,
    "page": 3,
-   "text": "**WHEN:** Fight phase, when a friendly NORN ASSIMILATOR/NORN EMISSARY unit is selected to fight.\n\n**TARGET:** That NORN ASSIMILATOR/NORN EMISSARY unit.\n\n**EFFECT:** Your unit’s melee attacks have +2 S."
+   "text": "**WHEN:** Your Shooting phase, when a friendly PURGATION SQUAD unit is selected to shoot.\n\n**TARGET:** That PURGATION SQUAD unit.\n\n**EFFECT:** Select one enemy unit. Your unit’s ranged attacks that target that unit have: ▪ [DEVASTATING WOUNDS]. ▪ [SUSTAINED HITS 1]."
   },
   {
-   "name": "TANGLESTRIKE ROUNDS",
+   "name": "SPIRITSEAR",
    "cp": 1,
-   "detachment": "TALONS OF THE NORN QUEEN",
+   "detachment": "FIRES OF PURGATION",
    "type": null,
    "page": 3,
-   "text": "**WHEN:** Your Shooting phase, when a friendly NORN ASSIMILATOR unit has shot.\n\n**TARGET:** That NORN ASSIMILATOR unit.\n\n**EFFECT:** Select one enemy unit hit by those attacks. That enemy unit is tethered until the start of your next Command phase: ▪ While a unit is tethered, that unit has ‑2\" M."
+   "text": "**WHEN:** Your Shooting phase, when a friendly PURGATION SQUAD unit has shot.\n\n**TARGET:** That PURGATION SQUAD unit.\n\n**EFFECT:** Select one battle‑shocked enemy unit hit by those attacks. That enemy unit suffers D3+1 mortal wounds."
   },
   {
-   "name": "ALIEN PHYSIOLOGY",
+   "name": "BLADES FROM THE BEYOND",
    "cp": 1,
-   "detachment": "WARRIOR BIOFORM ONSLAUGHT",
+   "detachment": "IMMATERIAL INTERDICTION",
    "type": null,
    "page": 4,
-   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, when an enemy unit targets a friendly TYRANID WARRIORS unit.\n\n**TARGET:** That TYRANID WARRIORS unit.\n\n**EFFECT:** Attacks that target your unit with a S greater than your unit’s T have -1 to wound rolls."
+   "text": "**WHEN:** Fight phase, when a friendly INTERCEPTOR SQUAD unit that made a charge move this turn is selected to fight.\n\n**TARGET:** That INTERCEPTOR SQUAD unit.\n\n**EFFECT:** Your unit’s melee attacks have [LANCE]."
   },
   {
-   "name": "SYNAPTIC MICRONODES",
+   "name": "BY THOUGHT ALONE",
    "cp": 1,
-   "detachment": "WARRIOR BIOFORM ONSLAUGHT",
+   "detachment": "IMMATERIAL INTERDICTION",
    "type": null,
    "page": 4,
-   "text": "**WHEN:** End of your Movement phase.\n\n**TARGET:** One friendly TYRANID WARRIORS unit.\n\n**EFFECT:** Select one objective your unit is controlling. That objective is secured."
+   "text": "**WHEN:** Your Shooting phase, when a friendly INTERCEPTOR SQUAD unit starts an action.\n\n**TARGET:** That INTERCEPTOR SQUAD unit.\n\n**EFFECT:** That action does not prevent your unit from being eligible to shoot."
   },
   {
-   "name": "PARASITIC PAYLOAD",
+   "name": "RESPONSIVE DISPLACEMENT",
    "cp": 1,
-   "detachment": "WARRIOR BIOFORM ONSLAUGHT",
+   "detachment": "IMMATERIAL INTERDICTION",
    "type": null,
    "page": 4,
-   "text": "**WHEN:** Your Shooting phase, when a friendly TYRANID WARRIORS unit is selected to shoot.\n\n**TARGET:** That TYRANID WARRIORS unit.\n\n**EFFECT:** Your unit’s ranged attacks have [IGNORE COVER]."
+   "text": "**WHEN:** Your opponent’s Movement phase, when an enemy unit that was engaged with a friendly INTERCEPTOR SQUAD unit ends a fall‑back move, if that INTERCEPTOR SQUAD unit is unengaged.\n\n**TARGET:** That INTERCEPTOR SQUAD unit.\n\n**EFFECT:** Your unit can make a normal move of up to D3+3\"."
   },
   {
-   "name": "ADAPTIVE OPTIMISATION",
+   "name": "SANCTIFIED KILL ZONE",
    "cp": 1,
-   "detachment": "SUBTERRANEAN ASSAULT",
-   "type": "WARGEAR",
-   "page": 6,
-   "text": "**WHEN:** Command phase.\n\n**TARGET:** One Mawloc or Trygon unit from your army.\n\n**EFFECT:** Until the start of your next Command phase, your unit has the Synapse keyword."
-  },
-  {
-   "name": "REPLENISHING SWARMS",
-   "cp": 1,
-   "detachment": "SUBTERRANEAN ASSAULT",
-   "type": "WARGEAR",
-   "page": 6,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Tyranids unit from your army, wholly within 9\" of one or more Tunnel Markers you placed.\n\n**EFFECT:** One model in your unit regains up to D3+1 lost wounds, or you can return up to D3+1 destroyed models with a Wounds characteristic of 1 to your unit, with their full wounds remaining, instead."
-  },
-  {
-   "name": "ENFILADING EMERGENCE",
-   "cp": 1,
-   "detachment": "SUBTERRANEAN ASSAULT",
-   "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** End of your Movement phase.\n\n**TARGET:** One Tyranids unit from your army that was set up as Reinforcements this turn.\n\n**EFFECT:** Until the end of your next Fight phase, weapons equipped by models in your unit have the [SUSTAINED HITS 1] and [IGNORES COVER] abilities. 6"
-  },
-  {
-   "name": "TUNNEL NETWORK",
-   "cp": 1,
-   "detachment": "SUBTERRANEAN ASSAULT",
-   "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** End of your Movement phase.\n\n**TARGET:** One Tyranids unit from your army that is wholly within 9\" of one or more of your Tunnel Markers and not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove your unit from the battlefield and set it up again, wholly within 9\" of another Tunnel Marker you placed, and more than 6\" horizontally away from all enemy units."
-  },
-  {
-   "name": "SWARMING ASSAULT",
-   "cp": 1,
-   "detachment": "SUBTERRANEAN ASSAULT",
-   "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** Your Charge phase.\n\n**TARGET:** One Tyranids Monster unit from your army that was set up as Reinforcements this turn.\n\n**EFFECT:** Until the end of the phase, friendly Tyranids units within 6\" of your unit can re-roll Charge rolls."
-  },
-  {
-   "name": "RETREAT BELOW",
-   "cp": 1,
-   "detachment": "SUBTERRANEAN ASSAULT",
-   "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Tyranids unit or up to two Burrower units from your army that are not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove your unit from the battlefield and place it into Strategic Reserves."
-  }
- ],
- "orks": [
-  {
-   "name": "CONCEALED KRUMPIN’",
-   "cp": 1,
-   "detachment": "EQUATORIAL HORDES",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase, when a friendly hidden MOB unit is selected to attack.\n\n**TARGET:** That MOB unit.\n\n**EFFECT:** Your unit’s attacks have [LETHAL HITS]."
-  },
-  {
-   "name": "STRAGGLERZ",
-   "cp": 1,
-   "detachment": "EQUATORIAL HORDES",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One friendly MOB/KOMMANDOS unit.\n\n**EFFECT:** Your unit heals 2D3 wounds."
-  },
-  {
-   "name": "DEY’RE OVER ‘ERE",
-   "cp": 1,
-   "detachment": "EQUATORIAL HORDES",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Start of your Shooting phase.\n\n**TARGET:** One friendly MOB/KOMMANDOS unit.\n\n**EFFECT:** While a visible enemy unit is within 6\" of your unit, that unit has +3\" detection range."
-  },
-  {
-   "name": "BRUTAL BROADSIDE",
-   "cp": 1,
-   "detachment": "ROLLIN’ DEFF",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Shooting phase, when a friendly BATTLEWAGON unit is selected to shoot.\n\n**TARGET:** That BATTLEWAGON unit.\n\n**EFFECT:** Your unit’s ranged attacks (excluding attacks made by weapons selected with Firing Deck) have [RAPID FIRE X], where X is that attack’s A."
-  },
-  {
-   "name": "IMPENDING CRUNCH",
-   "cp": 1,
-   "detachment": "ROLLIN’ DEFF",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Charge phase, when a friendly WAGON unit ends a charge move.\n\n**TARGET:** That WAGON unit.\n\n**EFFECT:** Each enemy unit engaged with your unit makes a battle‑shock roll, with -1 to that battle‑shock roll."
-  },
-  {
-   "name": "DEVASTATING DRIFT",
-   "cp": 1,
-   "detachment": "ROLLIN’ DEFF",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Fight phase, when a friendly WAGON unit that made a charge move this turn is selected to fight.\n\n**TARGET:** That WAGON unit.\n\n**EFFECT:** Your unit’s melee attacks have [CLEAVE 1]."
-  },
-  {
-   "name": "LONG, UNCONTROLLED BURSTS",
-   "cp": 1,
-   "detachment": "MORE DAKKA!",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Your Shooting phase, when a friendly ORKS INFANTRY unit is selected to shoot.\n\n**TARGET:** That ORKS INFANTRY unit.\n\n**EFFECT:** Your unit’s ranged attacks have [IGNORES COVER]."
-  },
-  {
-   "name": "SPESHUL SHELLS",
-   "cp": 1,
-   "detachment": "MORE DAKKA!",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Your Shooting phase, when a friendly ORKS INFANTRY unit is selected to shoot.\n\n**TARGET:** That ORKS INFANTRY unit.\n\n**EFFECT:** Your unit’s ranged attacks that target a unit within 9\" have +1 AP."
-  },
-  {
-   "name": "CALL DAT DAKKA?",
-   "cp": 1,
-   "detachment": "MORE DAKKA!",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit that targeted a friendly ORKS INFANTRY unit has shot.\n\n**TARGET:** That ORKS INFANTRY unit.\n\n**EFFECT:** Your unit shoots using snap shooting, but while doing so your unit can only target that enemy unit."
-  },
-  {
-   "name": "TAKTIKAL RETREAT",
-   "cp": 1,
-   "detachment": "TAKTIKAL BRIGADE",
-   "type": null,
-   "page": 5,
-   "text": "**WHEN:** Your Movement phase, when a friendly KOMMANDOS/ STORMBOYZ unit is selected to make a fall-back move.\n\n**TARGET:** That KOMMANDOS/STORMBOYZ unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to declare a charge."
-  },
-  {
-   "name": "ON TO DA NEXT",
-   "cp": 1,
-   "detachment": "TAKTIKAL BRIGADE",
-   "type": null,
-   "page": 5,
-   "text": "**WHEN:** End of your opponent’s Movement phase.\n\n**TARGET:** One friendly unengaged BOYZ/KOMMANDOS/STORMBOYZ unit that was engaged at the start of the phase.\n\n**EFFECT:** Your unit can make a normal move of up to 6\"."
-  },
-  {
-   "name": "DED SNEAKY",
-   "cp": 1,
-   "detachment": "TAKTIKAL BRIGADE",
-   "type": null,
-   "page": 5,
-   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One friendly unengaged KOMMANDOS/STORMBOYZ unit.\n\n**EFFECT:** Place your unit in strategic reserves."
-  },
-  {
-   "name": "ON DA MOVE",
-   "cp": 1,
-   "detachment": "SPEEDWAAAGH!",
-   "type": "STRATEGIC PLOY",
-   "page": 7,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Orks unit from your army that has not been selected to move this phase.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back or Advanced (unless it used its turbo this turn)."
-  },
-  {
-   "name": "MOBILE DAKKASTORM",
-   "cp": 1,
-   "detachment": "SPEEDWAAAGH!",
-   "type": "STRATEGIC PLOY",
-   "page": 7,
-   "text": "**WHEN:** Your Shooting phase, just after a Speed Freeks or Trukk unit from your army has shot.\n\n**TARGET:** That Speed Freeks or Trukk unit.\n\n**EFFECT:** Select one enemy unit hit by one or more of those attacks (excluding attacks made with Indirect Fire weapons). Until the end of the phase, each time a model in a Speed Freeks or Trukk unit from your army makes an attack that targets that unit, improve the Strength characteristic of that attack by 2."
-  },
-  {
-   "name": "SPESHUL AMMO",
-   "cp": 1,
-   "detachment": "SPEEDWAAAGH!",
-   "type": "WARGEAR",
-   "page": 7,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Orks unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, ranged weapons equipped by models in your unit (excluding Torrent weapons) have the [ANTI‑MONSTER 4+] and [ANTI‑VEHICLE 4+] abilities. 7"
-  },
-  {
-   "name": "DED KILLY CONSTRUCTION",
-   "cp": 1,
-   "detachment": "SPEEDWAAAGH!",
-   "type": "STRATEGIC PLOY",
-   "page": 7,
-   "text": "**WHEN:** Your Fight phase.\n\n**TARGET:** One Speed Freeks or Trukk unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, melee weapons equipped by models in your unit have the [LANCE] ability and, if your unit made a Charge move this turn, until the end of the phase, add 1 to the Damage characteristic of those weapons."
-  },
-  {
-   "name": "DUST TRAILS",
-   "cp": 1,
-   "detachment": "SPEEDWAAAGH!",
-   "type": "STRATEGIC PLOY",
-   "page": 7,
-   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Orks unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, your unit has the Benefit of Cover."
-  },
-  {
-   "name": "EVASIVE MANOOVA",
-   "cp": 1,
-   "detachment": "SPEEDWAAAGH!",
-   "type": "STRATEGIC PLOY",
-   "page": 7,
-   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Speed Freeks or Trukk unit from your army that is not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove your unit from the battlefield and place it into Strategic Reserves."
-  },
-  {
-   "name": "MOUNT UP, LADZ",
-   "cp": 1,
-   "detachment": "BLITZ BRIGADE",
-   "type": "STRATEGIC PLOY",
-   "page": 9,
-   "text": "**WHEN:** End of the Fight phase.\n\n**TARGET:** One Orks Infantry unit from your army that is not within Engagement Range of one or more enemy units, and one friendly Transport it is able to embark within.\n\n**EFFECT:** If your Orks Infantry unit is wholly within 6\" of that Transport, it can embark within it."
-  },
-  {
-   "name": "MEKANISED BRUTALITY",
-   "cp": 1,
-   "detachment": "BLITZ BRIGADE",
-   "type": "STRATEGIC PLOY",
-   "page": 9,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Battlewagon, Kill Rig or Hunta Rig unit from your army that has not been selected to move this phase.\n\n**EFFECT:** When this unit ends a normal move, units embarked within this unit can make an assault disembark move (Core Rules, 18.06)."
-  },
-  {
-   "name": "RUN ’EM DOWN",
-   "cp": 1,
-   "detachment": "BLITZ BRIGADE",
-   "type": "STRATEGIC PLOY",
-   "page": 9,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Battlewagon, Kill Rig or Hunta Rig unit from your army that has not been selected to move this phase.\n\n**EFFECT:** Select up to two other friendly Orks Vehicle or Orks Monster units within 6\" of your unit. Until the end of the turn, your unit and each unit you selected are eligible to declare a charge in a turn in which they Advanced. 9"
-  },
-  {
-   "name": "ARMOURED DUELLISTS",
-   "cp": 1,
-   "detachment": "BLITZ BRIGADE",
+   "detachment": "WARPBANE TASK FORCE",
    "type": "BATTLE TACTIC",
-   "page": 9,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Orks Vehicle unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, each time your unit makes an attack that targets a Monster or Vehicle unit, add 1 to the Hit roll and add 1 to the Wound roll."
+   "page": 6,
+   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Grey Knights unit from your army that has not been selected to shoot or fight this phase and that is wholly within your army’s Hallowed Ground.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack, re‑roll a Wound roll of 1, or, re‑roll the Wound roll instead if your unit is a Purifier Squad."
   },
   {
-   "name": "IMPERVIOUS",
+   "name": "FLAMES OF SANCTITY",
    "cp": 1,
-   "detachment": "BLITZ BRIGADE",
+   "detachment": "WARPBANE TASK FORCE",
    "type": "STRATEGIC PLOY",
-   "page": 9,
-   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Battlewagon, Kill Rig or Hunta Rig unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets your unit, if the Strength characteristic of that attack is greater than the Toughness characteristic of your unit, subtract 1 from the Wound roll."
+   "page": 6,
+   "text": "**WHEN:** End of the Fight phase.\n\n**TARGET:** One Purifier Squad unit from your army that was eligible to fight this phase.\n\n**EFFECT:** Roll one D6 for each enemy unit within 6\" of your unit, adding 1 to the result if your unit includes Castellan Crowe: on a 4+, that enemy unit suffers D3 mortal wounds."
   },
   {
-   "name": "YOOZ IN TROUBLE NOW",
+   "name": "HALLOWED BEACON",
    "cp": 1,
-   "detachment": "BLITZ BRIGADE",
-   "type": "STRATEGIC PLOY",
-   "page": 9,
-   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One Battlewagon, Hunta Rig or Kill Rig model from your army that was hit by one or more of the attacking unit’s attacks.\n\n**EFFECT:** One Orks Infantry unit embarked within your model makes a disembark move, then makes a surge move of up to D6\"."
-  },
-  {
-   "name": "BASH AND GRAB",
-   "cp": 1,
-   "detachment": "FREEBOOTER KREW",
+   "detachment": "WARPBANE TASK FORCE",
    "type": "BATTLE TACTIC",
-   "page": 11,
-   "text": "**WHEN:** The Fight phase.\n\n**TARGET:** One Orks unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack that targets an enemy unit within range of the loot objective, you can re‑roll the Wound roll."
+   "page": 6,
+   "text": "**WHEN:** Reinforcements step of your Movement phase.\n\n**TARGET:** One Grey Knights Infantry unit (excluding Terminator units) that is arriving using the Deep Strike ability this phase.\n\n**EFFECT:** Set up your unit wholly within your army’s Hallowed Ground and more than 6\" horizontally away from all enemy units. 6"
   },
   {
-   "name": "GRAB AND BASH",
+   "name": "FIRES OF COVENANT",
    "cp": 1,
-   "detachment": "FREEBOOTER KREW",
-   "type": "STRATEGIC PLOY",
-   "page": 11,
-   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One Orks unit from your army (excluding Gretchin units) that is within range of the loot objective.\n\n**EFFECT:** Until the start of your next Command phase, the Waaagh! is active for your unit, even if you have already called a Waaagh! this battle. Designer’s Note: This means that any abilities that are in effect while the Waaagh! is active for your army will be in effect for your unit."
-  },
-  {
-   "name": "BOARDIN’ RUSH",
-   "cp": 1,
-   "detachment": "FREEBOOTER KREW",
+   "detachment": "WARPBANE TASK FORCE",
    "type": "BATTLE TACTIC",
-   "page": 11,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Orks unit from your army that has not been selected to move this phase.\n\n**EFFECT:** Until the end of the phase, each time your unit Advances, do not make an Advance roll. Instead, until the end of the phase, add 6\" to the Move characteristic of models in your unit. 11"
+   "page": 6,
+   "text": "**WHEN:** Start of your opponent’s Movement phase.\n\n**TARGET:** One Grey Knights Infantry unit from your army.\n\n**EFFECT:** Until the end of the phase, each time an enemy unit is set up or ends a Normal, Advance or Fall Back move within 6\" of your unit, roll one D6, adding 2 to the result if your unit is wholly within your army’s Hallowed Ground: on a 4+, that enemy unit suffers D3 mortal wounds."
   },
   {
-   "name": "DECK FRAGGERS",
+   "name": "AEGIS ETERNAL",
    "cp": 1,
-   "detachment": "FREEBOOTER KREW",
-   "type": "STRATEGIC PLOY",
-   "page": 11,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Orks unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit targets an Infantry unit with a ranged weapon, that weapon has the [BLAST] ability."
+   "detachment": "WARPBANE TASK FORCE",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Grey Knights Infantry unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, models in your unit that are wholly within your Hallowed Ground have a 4+ invulnerable save."
   },
   {
-   "name": "ROLLING LOOT‑HEAP",
+   "name": "REPELLING SPHERE",
    "cp": 1,
-   "detachment": "FREEBOOTER KREW",
-   "type": "STRATEGIC PLOY",
-   "page": 11,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Flash Gitz unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, ranged weapons equipped by models in your unit have the [ANTI‑VEHICLE 4+] ability."
-  },
-  {
-   "name": "KRUMP AND RUN",
-   "cp": 1,
-   "detachment": "FREEBOOTER KREW",
-   "type": "STRATEGIC PLOY",
-   "page": 11,
-   "text": "**WHEN:** Your opponent’s Movement phase, just after an enemy unit falls back.\n\n**TARGET:** One Orks unit from your army that was within engagement range of that enemy unit at the start of the phase and is not within range of one or more enemy units.\n\n**EFFECT:** Your unit can make a Normal move of up to 6\"."
+   "detachment": "WARPBANE TASK FORCE",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Start of your opponent’s Charge phase.\n\n**TARGET:** One Grey Knights Infantry unit from your army.\n\n**EFFECT:** Until the end of the phase, each time an enemy unit declares a charge and your unit is one of the targets of that charge, subtract 1 from the Charge roll, or subtract 2 instead if your unit is wholly within your army’s Hallowed Ground."
   }
  ],
  "emperors-children": [
@@ -2691,186 +1856,6 @@
    "type": "",
    "page": 6,
    "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One Emperor’s Children unit from your army that lost one or more wounds as a result of those attacks.\n\n**EFFECT:** Your unit can make a surge move of up to D6\"."
-  }
- ],
- "imperial-knights": [
-  {
-   "name": "GROUND-SHAKING STRIDES",
-   "cp": 1,
-   "detachment": "DOMINUS FOEBREAKERS",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Movement phase, when a friendly IMPERIAL KNIGHTS DOMINUS unit is selected to move.\n\n**TARGET:** That IMPERIAL KNIGHTS DOMINUS unit.\n\n**EFFECT:** Your unit has +2\" M."
-  },
-  {
-   "name": "FOEBREAKER FIRESTORM",
-   "cp": 1,
-   "detachment": "DOMINUS FOEBREAKERS",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Shooting phase, when a friendly engaged IMPERIAL KNIGHTS DOMINUS unit is selected to shoot.\n\n**TARGET:** That IMPERIAL KNIGHTS DOMINUS unit.\n\n**EFFECT:** Your unit’s [BLAST] ranged attacks: ▪ Do not have [BLAST]. ▪ Have +1 A."
-  },
-  {
-   "name": "FIRE SHOCKED",
-   "cp": 1,
-   "detachment": "DOMINUS FOEBREAKERS",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Shooting phase, when a friendly IMPERIAL KNIGHTS DOMINUS unit has shot.\n\n**TARGET:** That IMPERIAL KNIGHTS DOMINUS unit.\n\n**EFFECT:** Select one enemy unit hit by those attacks. That enemy unit makes a battle‑shock roll, with ‑1 to that battle‑shock roll."
-  },
-  {
-   "name": "OMNISSIAH’S GRACE",
-   "cp": 1,
-   "detachment": "QUESTOR FORGEPACT",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Any phase, when a friendly IMPERIAL KNIGHTS unit suffers a mortal wound.\n\n**TARGET:** That IMPERIAL KNIGHTS unit.\n\n**EFFECT:** Your unit has Feel No Pain 5+ against mortal wounds."
-  },
-  {
-   "name": "VENGEANCE OF THE MACHINE CULT",
-   "cp": 1,
-   "detachment": "QUESTOR FORGEPACT",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Any phase, when a friendly IMPERIAL KNIGHTS TITANIC unit is destroyed by an enemy unit.\n\n**TARGET:** One friendly ADEPTUS MECHANICUS unit.\n\n**EFFECT:** That enemy unit is marked until the end of the battle: ▪ \u0007While a unit is marked, friendly ADEPTUS MECHANICUS units’ attacks that target that unit can re‑roll wound rolls."
-  },
-  {
-   "name": "IN THE SHADOW OF GIANTS",
-   "cp": 1,
-   "detachment": "QUESTOR FORGEPACT",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Movement phase, when a friendly ADEPTUS MECHANICUS unit is selected to make an advance/fall‑back move.\n\n**TARGET:** That ADEPTUS MECHANICUS unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to start an action."
-  },
-  {
-   "name": "NEURAL LASH",
-   "cp": 1,
-   "detachment": "THRONE-BONDED OUTRIDERS",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Command phase.\n\n**TARGET:** One friendly IMPERIAL KNIGHTS TITANIC unit.\n\n**EFFECT:** Select one friendly battle‑shocked ARMIGER unit within 12\" of your unit. That ARMIGER unit is no longer battle‑shocked."
-  },
-  {
-   "name": "HELM CONDITIONING",
-   "cp": 1,
-   "detachment": "THRONE-BONDED OUTRIDERS",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Your Command phase, when a friendly IMPERIAL KNIGHTS unit uses a Bondsman ability.\n\n**TARGET:** That IMPERIAL KNIGHTS unit.\n\n**EFFECT:** When selecting an ARMIGER model for that Bondsman ability, you can select one within 18\" of your unit (excluding models already affected by a Bondsman ability)."
-  },
-  {
-   "name": "HONOURED TO SERVE",
-   "cp": 1,
-   "detachment": "THRONE-BONDED OUTRIDERS",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Your Shooting phase, when a friendly ARMIGER unit has shot.\n\n**TARGET:** That ARMIGER unit.\n\n**EFFECT:** Those attacks do not prevent your unit from being eligible to start an action."
-  },
-  {
-   "name": "NOBLE SACRIFICE",
-   "cp": 1,
-   "detachment": "FREEBLADE COMPANY",
-   "type": "EPIC DEED",
-   "page": 6,
-   "text": "**WHEN:** Any phase.\n\n**TARGET:** One Imperial Knights unit from your army that was just destroyed. You can target that unit with this Stratagem even though it was just destroyed.\n\n**EFFECT:** Your unit’s Deadly Demise ability inflicts mortal wounds on a D6 roll of 4+, adding 1 to the result if it is an Armiger unit, instead of only a 6."
-  },
-  {
-   "name": "STRENGTH FROM EXILE",
-   "cp": 1,
-   "detachment": "FREEBLADE COMPANY",
-   "type": "BATTLE TACTIC",
-   "page": 6,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Imperial Knights unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack, if there are no other friendly units within 9\" of your unit, re‑roll a Hit roll of 1 and re‑roll a Wound roll of 1."
-  },
-  {
-   "name": "FULL TILT",
-   "cp": 1,
-   "detachment": "FREEBLADE COMPANY",
-   "type": "WARGEAR",
-   "page": 6,
-   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Imperial Knights unit from your army.\n\n**EFFECT:** Until the end of the phase, if your unit Advances, do not make an Advance roll for it. Instead, until the end of the phase, add 6\" to the Move characteristic of models in your unit, or 9\" instead if your unit is an Armiger or Destrier unit. 6"
-  },
-  {
-   "name": "POINT‑BLANK BARRAGE",
-   "cp": 1,
-   "detachment": "FREEBLADE COMPANY",
-   "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Imperial Knights unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, when making ranged attacks with Blast weapons, models in your unit can target enemy units within Engagement Range of your unit (provided no other friendly units are also within Engagement Range of that enemy unit). In addition, until the end of the phase, your unit does not suffer the penalty to its Hit rolls for being within Engagement Range of one or more enemy units, but each time a model in your unit makes an attack with a Blast weapon that targets a unit within Engagement Range of your unit, on an unmodified Hit roll of 1, your unit suffers 1 mortal wound after all of its attacks have been resolved."
-  },
-  {
-   "name": "SURVIVOR OF STRIFE",
-   "cp": 1,
-   "detachment": "FREEBLADE COMPANY",
-   "type": "EPIC DEED",
-   "page": 6,
-   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Imperial Knights unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets your unit, if the Strength characteristic of that attack is greater than the Toughness characteristic of your unit, subtract 1 from the Wound roll."
-  },
-  {
-   "name": "FLANKING MANOEUVRES",
-   "cp": 1,
-   "detachment": "FREEBLADE COMPANY",
-   "type": "STRATEGIC PLOY",
-   "page": 6,
-   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Armiger unit from your army that is within 9\" of one or more battlefield edges and not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove your unit from the battlefield and place it into Strategic Reserves."
-  }
- ],
- "tau-empire": [
-  {
-   "name": "MARKER BEACON",
-   "cp": 1,
-   "detachment": "ADVANCED ACQUISITION CADRE",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** End of your Movement phase.\n\n**TARGET:** One friendly PATHFINDER TEAM/STEALTH BATTLESUITS unit.\n\n**EFFECT:** Select one objective your unit is controlling. That objective is secured."
-  },
-  {
-   "name": "MICRODRONE SUPPORT",
-   "cp": 1,
-   "detachment": "ADVANCED ACQUISITION CADRE",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your Shooting phase, when a friendly PATHFINDER TEAM/ STEALTH BATTLESUITS unit starts an action.\n\n**TARGET:** That PATHFINDER TEAM/STEALTH BATTLESUITS unit.\n\n**EFFECT:** That action does not prevent your unit from being eligible to shoot."
-  },
-  {
-   "name": "AUTOREACTIVE CAMOUFLAGE",
-   "cp": 1,
-   "detachment": "ADVANCED ACQUISITION CADRE",
-   "type": null,
-   "page": 2,
-   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly PATHFINDER TEAM/ STEALTH BATTLESUITS unit, if that friendly unit is hidden.\n\n**TARGET:** That PATHFINDER TEAM/STEALTH BATTLESUITS unit.\n\n**EFFECT:** Your unit has +1 Sv."
-  },
-  {
-   "name": "EXPERIMENTAL MODIFICATIONS",
-   "cp": 1,
-   "detachment": "AUXILIARY CADRE",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Shooting phase or the Fight phase, when a friendly KROOT/VESPID STINGWINGS unit is selected to attack.\n\n**TARGET:** That KROOT/VESPID STINGWINGS unit.\n\n**EFFECT:** Your unit’s attacks have +1 AP."
-  },
-  {
-   "name": "ALIEN EXPERTISE",
-   "cp": 1,
-   "detachment": "AUXILIARY CADRE",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Movement phase, when a friendly KROOT/VESPID STINGWINGS unit is selected to make an advance move.\n\n**TARGET:** That KROOT/VESPID STINGWINGS unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to declare a charge."
-  },
-  {
-   "name": "GUIDED BY UNITY",
-   "cp": 1,
-   "detachment": "AUXILIARY CADRE",
-   "type": null,
-   "page": 3,
-   "text": "**WHEN:** Your Shooting phase, when a friendly T’AU EMPIRE unit (excluding KROOT/VESPID STINGWINGS units) is selected to shoot.\n\n**TARGET:** That T’AU EMPIRE unit.\n\n**EFFECT:** Your unit’s ranged attacks that target a unit within 9\" of a friendly KROOT/VESPID STINGWINGS unit have [LETHAL HITS]."
-  },
-  {
-   "name": "EXPERIMENTAL AMMUNITION",
-   "cp": 1,
-   "detachment": "EXPERIMENTAL PROTOTYPE CADRE",
-   "type": null,
-   "page": 4,
-   "text": "**WHEN:** Your Shooting phase, when a friendly BATTLESUIT CHARACTER unit is selected to shoot.\n\n**TARGET:** That BATTLESUIT CHARACTER unit.\n\n**EFFECT:** Your unit’s ranged attacks have: ▪ +1 S. ▪ OR: +1 S, AP and [HAZARDOUS]."
   }
  ],
  "chaos-space-marines": [
@@ -3235,6 +2220,552 @@
    "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One Heretic Astartes unit (excluding Monsters and Vehicles) from your army that was hit by one or more of those attacks.\n\n**EFFECT:** Your unit can make a Normal move of up to D6\"."
   }
  ],
+ "chaos-knights": [
+  {
+   "name": "RUNE-CURSED STRONGHOLD",
+   "cp": 1,
+   "detachment": "BASTIONS OF TYRANNY",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Any phase, when a friendly KNIGHT TYRANT unit suffers a mortal wound.\n\n**TARGET:** That KNIGHT TYRANT unit.\n\n**EFFECT:** Your unit has Feel No Pain 5+ against mortal wounds."
+  },
+  {
+   "name": "PITILESS FOCUS",
+   "cp": 1,
+   "detachment": "BASTIONS OF TYRANNY",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your Movement phase, when a friendly KNIGHT TYRANT unit is selected to make a fall-back move.\n\n**TARGET:** That KNIGHT TYRANT unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to shoot."
+  },
+  {
+   "name": "INTIMIDATING REMINDER",
+   "cp": 1,
+   "detachment": "BASTIONS OF TYRANNY",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your Shooting phase, when a friendly KNIGHT TYRANT unit has shot.\n\n**TARGET:** That KNIGHT TYRANT unit.\n\n**EFFECT:** Select one enemy unit hit by those attacks. That enemy unit is suppressed until the start of your next Command phase: ▪ While a unit is suppressed, that unit’s attacks have -1 to hit rolls."
+  },
+  {
+   "name": "INSENSATE BLOODTHIRST",
+   "cp": 1,
+   "detachment": "HUNTING WARPACK",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Fight phase, when an enemy unit targets a friendly WAR DOG unit.\n\n**TARGET:** That WAR DOG unit.\n\n**EFFECT:** Your unit has Feel No Pain 5+."
+  },
+  {
+   "name": "LEASH OF THE MASTERS",
+   "cp": 1,
+   "detachment": "HUNTING WARPACK",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Shooting phase, when a friendly WAR DOG unit has shot.\n\n**TARGET:** That WAR DOG unit.\n\n**EFFECT:** Those attacks do not prevent your unit from being eligible to start an action."
+  },
+  {
+   "name": "STALKING FOCUS",
+   "cp": 1,
+   "detachment": "HUNTING WARPACK",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly WAR DOG unit within range of an objective.\n\n**TARGET:** That WAR DOG unit.\n\n**EFFECT:** Ranged attacks that target your unit have ‑1 AP until that enemy unit has attacked."
+  },
+  {
+   "name": "AVENGE THE MASTERS!",
+   "cp": 1,
+   "detachment": "ICONOCLAST FIEFDOM",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Any phase, when a friendly CHAOS KNIGHTS unit is destroyed by an enemy unit.\n\n**TARGET:** That enemy unit.\n\n**EFFECT:** That enemy unit is marked until the end of the battle. ▪ \u0007Friendly DAMNED units’ attacks that target a marked unit have [LETHAL HITS]."
+  },
+  {
+   "name": "DARK SACRIFICE",
+   "cp": 1,
+   "detachment": "ICONOCLAST FIEFDOM",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your Command phase.\n\n**TARGET:** One friendly DAMNED unit (excluding ACCURSED CULTISTS units) within 9\" of a friendly CHAOS KNIGHTS model.\n\n**EFFECT:** Select one CHAOS KNIGHTS model within 9\" of your unit and roll D3+3: ▪ \u0007Your DAMNED unit suffers that number of mortal wounds. ▪ \u0007That CHAOS KNIGHTS model heals that number of wounds."
+  },
+  {
+   "name": "COURSING THRALLS",
+   "cp": 1,
+   "detachment": "ICONOCLAST FIEFDOM",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Start of your Shooting phase.\n\n**TARGET:** One friendly DAMNED unit.\n\n**EFFECT:** Select one visible enemy unit within 12\" of your unit. That enemy unit is hunted: ▪ While a unit is hunted, that unit has +6\" detection range."
+  },
+  {
+   "name": "FERAL ARROGANCE",
+   "cp": 1,
+   "detachment": "HELHUNT LANCE",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Any phase, just after a mortal wound is allocated to a Chaos Knights unit from your army.\n\n**TARGET:** That Chaos Knights unit.\n\n**EFFECT:** Until the end of the phase, models in your unit have the Feel No Pain 5+ ability against mortal wounds."
+  },
+  {
+   "name": "MERCILESS FUSILLADE",
+   "cp": 1,
+   "detachment": "HELHUNT LANCE",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Start of your Shooting phase or the start of the Fight phase.\n\n**TARGET:** One Titanic Chaos Knights unit from your army, and up to two friendly War Dog units, that have not been selected to shoot or fight this phase.\n\n**EFFECT:** Select one enemy unit that is an eligible target for each of those Chaos Knights units. Until the end of the phase, each time one of those Chaos Knights units is selected to shoot or fight, if that enemy unit is an eligible target, you can only select that enemy unit as the target for all of those attacks and those attacks have the [SUSTAINED HITS 1] ability."
+  },
+  {
+   "name": "BEASTHIDE MANIFESTATION",
+   "cp": 1,
+   "detachment": "HELHUNT LANCE",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Chaos Knights unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1. 6"
+  },
+  {
+   "name": "FLUSH THE QUARRY",
+   "cp": 1,
+   "detachment": "HELHUNT LANCE",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Start of your Movement phase.\n\n**TARGET:** One Titanic Chaos Knights unit from your army and up to three friendly War Dog units within 6\" of that Titanic Chaos Knights unit.\n\n**EFFECT:** Until the end of the phase, each time one of those War Dog units makes a Normal, Advance or Fall Back move, its models can move through models and terrain features. When doing so, they can move within Engagement Range of such models but cannot end that move within Engagement Range of them, and any Desperate Escape test is automatically passed."
+  },
+  {
+   "name": "CONTEMPTUOUS VOLLEYS",
+   "cp": 1,
+   "detachment": "HELHUNT LANCE",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your Movement phase, just after a Chaos Knights unit from your army Falls Back.\n\n**TARGET:** That Chaos Knights unit.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back."
+  },
+  {
+   "name": "GOADED BEAST",
+   "cp": 1,
+   "detachment": "HELHUNT LANCE",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One Chaos Knights unit from your army that lost one or more wounds as a result of those attacks.\n\n**EFFECT:** Your unit can make a surge move of up to D6\"."
+  }
+ ],
+ "drukhari": [
+  {
+   "name": "PLANNED STRIKES",
+   "cp": 1,
+   "detachment": "EXHIBITION OF SLAUGHTER",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Fight phase, when a friendly WYCH CULT unit is selected to fight.\n\n**TARGET:** That WYCH CULT unit.\n\n**EFFECT:** Your unit’s melee attacks have [LETHAL HITS]."
+  },
+  {
+   "name": "SCULPTING THE STAGE",
+   "cp": 1,
+   "detachment": "EXHIBITION OF SLAUGHTER",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your Movement phase, when a friendly WYCH CULT unit is selected to make an advance/fall-back move.\n\n**TARGET:** That WYCH CULT unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to start an action."
+  },
+  {
+   "name": "ACROBATIC DISPLAY",
+   "cp": 1,
+   "detachment": "EXHIBITION OF SLAUGHTER",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly WYCH CULT unit.\n\n**TARGET:** That WYCH CULT unit.\n\n**EFFECT:** Your unit has 5+ InSv."
+  },
+  {
+   "name": "PRIORITISED VICTIM",
+   "cp": 1,
+   "detachment": "KABALITE AGONYSTS",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Shooting phase or the Fight phase, when a friendly BLADES FOR HIRE/KABAL unit targets a CHARACTER unit.\n\n**TARGET:** That BLADES FOR HIRE/KABAL unit.\n\n**EFFECT:** Your unit’s attacks that target a CHARACTER unit can: ▪ Re‑roll hit rolls of 1. ▪ Re‑roll wound rolls of 1."
+  },
+  {
+   "name": "SHADOWS’ REACH",
+   "cp": 1,
+   "detachment": "KABALITE AGONYSTS",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Shooting phase, when a friendly BLADES FOR HIRE/ KABAL unit has shot.\n\n**TARGET:** That BLADES FOR HIRE/KABAL unit.\n\n**EFFECT:** Those attacks do not prevent your unit from being hidden."
+  },
+  {
+   "name": "KILLERS FROM THE DARK SPIRES",
+   "cp": 1,
+   "detachment": "KABALITE AGONYSTS",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Shooting phase, when a friendly KABALITE WARRIORS unit is selected to shoot.\n\n**TARGET:** That KABALITE WARRIORS unit.\n\n**EFFECT:** Your unit’s ranged attacks have [IGNORES COVER]."
+  },
+  {
+   "name": "SALTING THE WOUND",
+   "cp": 1,
+   "detachment": "TOOLS OF TORMENT",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Fight phase, when a friendly CRONOS/TALOS unit is selected to fight.\n\n**TARGET:** That CRONOS/TALOS unit.\n\n**EFFECT:** Your unit’s attacks that target a battle‑shocked unit have [DEVASTATING WOUNDS]."
+  },
+  {
+   "name": "DIVIDENDS OF AGONY",
+   "cp": 1,
+   "detachment": "TOOLS OF TORMENT",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Fight phase, when a friendly HAEMONCULUS COVENS unit destroys an enemy unit.\n\n**TARGET:** That HAEMONCULUS COVENS unit.\n\n**EFFECT:** Select one visible enemy unit within 12\" of your unit. That enemy unit makes a battle‑shock roll, with -1 to that battle‑shock roll."
+  },
+  {
+   "name": "URGENT METAMORPHOSIS",
+   "cp": 1,
+   "detachment": "TOOLS OF TORMENT",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your Movement phase, when a friendly HAEMONCULUS COVENS unit is selected to make a fall‑back move.\n\n**TARGET:** That HAEMONCULUS COVENS unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to declare a charge."
+  },
+  {
+   "name": "MALICIOUS FRENZY",
+   "cp": 1,
+   "detachment": "REAPER’S WAGER",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Drukhari or Harlequins unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Select [LETHAL HITS] or [SUSTAINED HITS 1] . Until the end of the phase, weapons equipped by models in your unit have the selected ability."
+  },
+  {
+   "name": "FATEFUL ROLE",
+   "cp": 1,
+   "detachment": "REAPER’S WAGER",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Drukhari or Harlequins unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6, adding 1 to the result if that unit is losing the wager: on a 4+, do not remove it from play. That destroyed model can fight after the attacking model’s unit has finished making its attacks, and is then removed from play."
+  },
+  {
+   "name": "MURDERER’S CIRCUS",
+   "cp": 1,
+   "detachment": "REAPER’S WAGER",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Drukhari or Harlequins unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll. 6"
+  },
+  {
+   "name": "SHORTEN THE ODDS",
+   "cp": 1,
+   "detachment": "REAPER’S WAGER",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your Movement phase, just after a Drukhari or Harlequins unit from your army has Advanced.\n\n**TARGET:** That unit.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Advanced."
+  },
+  {
+   "name": "SCINTILLATING TEMPO",
+   "cp": 1,
+   "detachment": "REAPER’S WAGER",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your Movement phase or your Charge phase, just after a Drukhari or Harlequins unit from your army is selected to make a Normal, Advance or Fall Back move, is set up on the battlefield, or declares a charge.\n\n**TARGET:** That unit.\n\n**EFFECT:** Until the end of the turn, enemy units cannot use the Fire Overwatch Stratagem to shoot at your unit."
+  },
+  {
+   "name": "DANCE MACABRE",
+   "cp": 2,
+   "detachment": "REAPER’S WAGER",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your opponent’s Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move.\n\n**TARGET:** One Drukhari Infantry or Harlequins Infantry unit from your army that is within 8\" of that enemy unit.\n\n**EFFECT:** Your unit can make a Normal move of up to D6\". If your unit is currently losing the wager, it can make a Normal move of up to 6\" instead."
+  }
+ ],
+ "tyranids": [
+  {
+   "name": "COUNTERPREDATION",
+   "cp": 1,
+   "detachment": "AMBUSH PREDATORS",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Fight phase, when a friendly DEATHLEAPER/LICTOR/ NEUROLICTOR/VON RYAN’S LEAPERS unit is selected to fight.\n\n**TARGET:** That DEATHLEAPER/LICTOR/NEUROLICTOR/VON RYAN’S LEAPERS unit.\n\n**EFFECT:** Your unit’s attacks that target a hidden unit have +1 S and AP."
+  },
+  {
+   "name": "HYPERSENSORY ADAPTATIONS",
+   "cp": 1,
+   "detachment": "AMBUSH PREDATORS",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Start of your Shooting phase.\n\n**TARGET:** One friendly DEATHLEAPER/LICTOR/NEUROLICTOR/VON RYAN’S LEAPERS unit.\n\n**EFFECT:** Select one visible enemy unit within 12\" of your unit. That enemy unit has +6\" detection range."
+  },
+  {
+   "name": "SCANNER GHEIST",
+   "cp": 1,
+   "detachment": "AMBUSH PREDATORS",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One friendly unengaged DEATHLEAPER/LICTOR/ NEUROLICTOR unit.\n\n**EFFECT:** Place your unit in strategic reserves."
+  },
+  {
+   "name": "CATALYTIC BIOFORTIFICATION",
+   "cp": 1,
+   "detachment": "TALONS OF THE NORN QUEEN",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Any phase, when a friendly NORN ASSIMILATOR unit suffers a mortal wound.\n\n**TARGET:** That NORN ASSIMILATOR unit.\n\n**EFFECT:** Your unit has Feel No Pain 4+ against mortal wounds."
+  },
+  {
+   "name": "LESSER PREY",
+   "cp": 1,
+   "detachment": "TALONS OF THE NORN QUEEN",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Fight phase, when a friendly NORN ASSIMILATOR/NORN EMISSARY unit is selected to fight.\n\n**TARGET:** That NORN ASSIMILATOR/NORN EMISSARY unit.\n\n**EFFECT:** Your unit’s melee attacks have +2 S."
+  },
+  {
+   "name": "TANGLESTRIKE ROUNDS",
+   "cp": 1,
+   "detachment": "TALONS OF THE NORN QUEEN",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Shooting phase, when a friendly NORN ASSIMILATOR unit has shot.\n\n**TARGET:** That NORN ASSIMILATOR unit.\n\n**EFFECT:** Select one enemy unit hit by those attacks. That enemy unit is tethered until the start of your next Command phase: ▪ While a unit is tethered, that unit has ‑2\" M."
+  },
+  {
+   "name": "ALIEN PHYSIOLOGY",
+   "cp": 1,
+   "detachment": "WARRIOR BIOFORM ONSLAUGHT",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, when an enemy unit targets a friendly TYRANID WARRIORS unit.\n\n**TARGET:** That TYRANID WARRIORS unit.\n\n**EFFECT:** Attacks that target your unit with a S greater than your unit’s T have -1 to wound rolls."
+  },
+  {
+   "name": "SYNAPTIC MICRONODES",
+   "cp": 1,
+   "detachment": "WARRIOR BIOFORM ONSLAUGHT",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** End of your Movement phase.\n\n**TARGET:** One friendly TYRANID WARRIORS unit.\n\n**EFFECT:** Select one objective your unit is controlling. That objective is secured."
+  },
+  {
+   "name": "PARASITIC PAYLOAD",
+   "cp": 1,
+   "detachment": "WARRIOR BIOFORM ONSLAUGHT",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your Shooting phase, when a friendly TYRANID WARRIORS unit is selected to shoot.\n\n**TARGET:** That TYRANID WARRIORS unit.\n\n**EFFECT:** Your unit’s ranged attacks have [IGNORE COVER]."
+  },
+  {
+   "name": "ADAPTIVE OPTIMISATION",
+   "cp": 1,
+   "detachment": "SUBTERRANEAN ASSAULT",
+   "type": "WARGEAR",
+   "page": 6,
+   "text": "**WHEN:** Command phase.\n\n**TARGET:** One Mawloc or Trygon unit from your army.\n\n**EFFECT:** Until the start of your next Command phase, your unit has the Synapse keyword."
+  },
+  {
+   "name": "REPLENISHING SWARMS",
+   "cp": 1,
+   "detachment": "SUBTERRANEAN ASSAULT",
+   "type": "WARGEAR",
+   "page": 6,
+   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Tyranids unit from your army, wholly within 9\" of one or more Tunnel Markers you placed.\n\n**EFFECT:** One model in your unit regains up to D3+1 lost wounds, or you can return up to D3+1 destroyed models with a Wounds characteristic of 1 to your unit, with their full wounds remaining, instead."
+  },
+  {
+   "name": "ENFILADING EMERGENCE",
+   "cp": 1,
+   "detachment": "SUBTERRANEAN ASSAULT",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** End of your Movement phase.\n\n**TARGET:** One Tyranids unit from your army that was set up as Reinforcements this turn.\n\n**EFFECT:** Until the end of your next Fight phase, weapons equipped by models in your unit have the [SUSTAINED HITS 1] and [IGNORES COVER] abilities. 6"
+  },
+  {
+   "name": "TUNNEL NETWORK",
+   "cp": 1,
+   "detachment": "SUBTERRANEAN ASSAULT",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** End of your Movement phase.\n\n**TARGET:** One Tyranids unit from your army that is wholly within 9\" of one or more of your Tunnel Markers and not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove your unit from the battlefield and set it up again, wholly within 9\" of another Tunnel Marker you placed, and more than 6\" horizontally away from all enemy units."
+  },
+  {
+   "name": "SWARMING ASSAULT",
+   "cp": 1,
+   "detachment": "SUBTERRANEAN ASSAULT",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your Charge phase.\n\n**TARGET:** One Tyranids Monster unit from your army that was set up as Reinforcements this turn.\n\n**EFFECT:** Until the end of the phase, friendly Tyranids units within 6\" of your unit can re-roll Charge rolls."
+  },
+  {
+   "name": "RETREAT BELOW",
+   "cp": 1,
+   "detachment": "SUBTERRANEAN ASSAULT",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Tyranids unit or up to two Burrower units from your army that are not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove your unit from the battlefield and place it into Strategic Reserves."
+  }
+ ],
+ "imperial-knights": [
+  {
+   "name": "GROUND-SHAKING STRIDES",
+   "cp": 1,
+   "detachment": "DOMINUS FOEBREAKERS",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your Movement phase, when a friendly IMPERIAL KNIGHTS DOMINUS unit is selected to move.\n\n**TARGET:** That IMPERIAL KNIGHTS DOMINUS unit.\n\n**EFFECT:** Your unit has +2\" M."
+  },
+  {
+   "name": "FOEBREAKER FIRESTORM",
+   "cp": 1,
+   "detachment": "DOMINUS FOEBREAKERS",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your Shooting phase, when a friendly engaged IMPERIAL KNIGHTS DOMINUS unit is selected to shoot.\n\n**TARGET:** That IMPERIAL KNIGHTS DOMINUS unit.\n\n**EFFECT:** Your unit’s [BLAST] ranged attacks: ▪ Do not have [BLAST]. ▪ Have +1 A."
+  },
+  {
+   "name": "FIRE SHOCKED",
+   "cp": 1,
+   "detachment": "DOMINUS FOEBREAKERS",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your Shooting phase, when a friendly IMPERIAL KNIGHTS DOMINUS unit has shot.\n\n**TARGET:** That IMPERIAL KNIGHTS DOMINUS unit.\n\n**EFFECT:** Select one enemy unit hit by those attacks. That enemy unit makes a battle‑shock roll, with ‑1 to that battle‑shock roll."
+  },
+  {
+   "name": "OMNISSIAH’S GRACE",
+   "cp": 1,
+   "detachment": "QUESTOR FORGEPACT",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Any phase, when a friendly IMPERIAL KNIGHTS unit suffers a mortal wound.\n\n**TARGET:** That IMPERIAL KNIGHTS unit.\n\n**EFFECT:** Your unit has Feel No Pain 5+ against mortal wounds."
+  },
+  {
+   "name": "VENGEANCE OF THE MACHINE CULT",
+   "cp": 1,
+   "detachment": "QUESTOR FORGEPACT",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Any phase, when a friendly IMPERIAL KNIGHTS TITANIC unit is destroyed by an enemy unit.\n\n**TARGET:** One friendly ADEPTUS MECHANICUS unit.\n\n**EFFECT:** That enemy unit is marked until the end of the battle: ▪ \u0007While a unit is marked, friendly ADEPTUS MECHANICUS units’ attacks that target that unit can re‑roll wound rolls."
+  },
+  {
+   "name": "IN THE SHADOW OF GIANTS",
+   "cp": 1,
+   "detachment": "QUESTOR FORGEPACT",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Movement phase, when a friendly ADEPTUS MECHANICUS unit is selected to make an advance/fall‑back move.\n\n**TARGET:** That ADEPTUS MECHANICUS unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to start an action."
+  },
+  {
+   "name": "NEURAL LASH",
+   "cp": 1,
+   "detachment": "THRONE-BONDED OUTRIDERS",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Command phase.\n\n**TARGET:** One friendly IMPERIAL KNIGHTS TITANIC unit.\n\n**EFFECT:** Select one friendly battle‑shocked ARMIGER unit within 12\" of your unit. That ARMIGER unit is no longer battle‑shocked."
+  },
+  {
+   "name": "HELM CONDITIONING",
+   "cp": 1,
+   "detachment": "THRONE-BONDED OUTRIDERS",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your Command phase, when a friendly IMPERIAL KNIGHTS unit uses a Bondsman ability.\n\n**TARGET:** That IMPERIAL KNIGHTS unit.\n\n**EFFECT:** When selecting an ARMIGER model for that Bondsman ability, you can select one within 18\" of your unit (excluding models already affected by a Bondsman ability)."
+  },
+  {
+   "name": "HONOURED TO SERVE",
+   "cp": 1,
+   "detachment": "THRONE-BONDED OUTRIDERS",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your Shooting phase, when a friendly ARMIGER unit has shot.\n\n**TARGET:** That ARMIGER unit.\n\n**EFFECT:** Those attacks do not prevent your unit from being eligible to start an action."
+  },
+  {
+   "name": "NOBLE SACRIFICE",
+   "cp": 1,
+   "detachment": "FREEBLADE COMPANY",
+   "type": "EPIC DEED",
+   "page": 6,
+   "text": "**WHEN:** Any phase.\n\n**TARGET:** One Imperial Knights unit from your army that was just destroyed. You can target that unit with this Stratagem even though it was just destroyed.\n\n**EFFECT:** Your unit’s Deadly Demise ability inflicts mortal wounds on a D6 roll of 4+, adding 1 to the result if it is an Armiger unit, instead of only a 6."
+  },
+  {
+   "name": "STRENGTH FROM EXILE",
+   "cp": 1,
+   "detachment": "FREEBLADE COMPANY",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Imperial Knights unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack, if there are no other friendly units within 9\" of your unit, re‑roll a Hit roll of 1 and re‑roll a Wound roll of 1."
+  },
+  {
+   "name": "FULL TILT",
+   "cp": 1,
+   "detachment": "FREEBLADE COMPANY",
+   "type": "WARGEAR",
+   "page": 6,
+   "text": "**WHEN:** Your Movement phase.\n\n**TARGET:** One Imperial Knights unit from your army.\n\n**EFFECT:** Until the end of the phase, if your unit Advances, do not make an Advance roll for it. Instead, until the end of the phase, add 6\" to the Move characteristic of models in your unit, or 9\" instead if your unit is an Armiger or Destrier unit. 6"
+  },
+  {
+   "name": "POINT‑BLANK BARRAGE",
+   "cp": 1,
+   "detachment": "FREEBLADE COMPANY",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Imperial Knights unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, when making ranged attacks with Blast weapons, models in your unit can target enemy units within Engagement Range of your unit (provided no other friendly units are also within Engagement Range of that enemy unit). In addition, until the end of the phase, your unit does not suffer the penalty to its Hit rolls for being within Engagement Range of one or more enemy units, but each time a model in your unit makes an attack with a Blast weapon that targets a unit within Engagement Range of your unit, on an unmodified Hit roll of 1, your unit suffers 1 mortal wound after all of its attacks have been resolved."
+  },
+  {
+   "name": "SURVIVOR OF STRIFE",
+   "cp": 1,
+   "detachment": "FREEBLADE COMPANY",
+   "type": "EPIC DEED",
+   "page": 6,
+   "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Imperial Knights unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, each time an attack targets your unit, if the Strength characteristic of that attack is greater than the Toughness characteristic of your unit, subtract 1 from the Wound roll."
+  },
+  {
+   "name": "FLANKING MANOEUVRES",
+   "cp": 1,
+   "detachment": "FREEBLADE COMPANY",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Armiger unit from your army that is within 9\" of one or more battlefield edges and not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove your unit from the battlefield and place it into Strategic Reserves."
+  }
+ ],
+ "tau-empire": [
+  {
+   "name": "MARKER BEACON",
+   "cp": 1,
+   "detachment": "ADVANCED ACQUISITION CADRE",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** End of your Movement phase.\n\n**TARGET:** One friendly PATHFINDER TEAM/STEALTH BATTLESUITS unit.\n\n**EFFECT:** Select one objective your unit is controlling. That objective is secured."
+  },
+  {
+   "name": "MICRODRONE SUPPORT",
+   "cp": 1,
+   "detachment": "ADVANCED ACQUISITION CADRE",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your Shooting phase, when a friendly PATHFINDER TEAM/ STEALTH BATTLESUITS unit starts an action.\n\n**TARGET:** That PATHFINDER TEAM/STEALTH BATTLESUITS unit.\n\n**EFFECT:** That action does not prevent your unit from being eligible to shoot."
+  },
+  {
+   "name": "AUTOREACTIVE CAMOUFLAGE",
+   "cp": 1,
+   "detachment": "ADVANCED ACQUISITION CADRE",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly PATHFINDER TEAM/ STEALTH BATTLESUITS unit, if that friendly unit is hidden.\n\n**TARGET:** That PATHFINDER TEAM/STEALTH BATTLESUITS unit.\n\n**EFFECT:** Your unit has +1 Sv."
+  },
+  {
+   "name": "EXPERIMENTAL MODIFICATIONS",
+   "cp": 1,
+   "detachment": "AUXILIARY CADRE",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Shooting phase or the Fight phase, when a friendly KROOT/VESPID STINGWINGS unit is selected to attack.\n\n**TARGET:** That KROOT/VESPID STINGWINGS unit.\n\n**EFFECT:** Your unit’s attacks have +1 AP."
+  },
+  {
+   "name": "ALIEN EXPERTISE",
+   "cp": 1,
+   "detachment": "AUXILIARY CADRE",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Movement phase, when a friendly KROOT/VESPID STINGWINGS unit is selected to make an advance move.\n\n**TARGET:** That KROOT/VESPID STINGWINGS unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to declare a charge."
+  },
+  {
+   "name": "GUIDED BY UNITY",
+   "cp": 1,
+   "detachment": "AUXILIARY CADRE",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Shooting phase, when a friendly T’AU EMPIRE unit (excluding KROOT/VESPID STINGWINGS units) is selected to shoot.\n\n**TARGET:** That T’AU EMPIRE unit.\n\n**EFFECT:** Your unit’s ranged attacks that target a unit within 9\" of a friendly KROOT/VESPID STINGWINGS unit have [LETHAL HITS]."
+  },
+  {
+   "name": "EXPERIMENTAL AMMUNITION",
+   "cp": 1,
+   "detachment": "EXPERIMENTAL PROTOTYPE CADRE",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your Shooting phase, when a friendly BATTLESUIT CHARACTER unit is selected to shoot.\n\n**TARGET:** That BATTLESUIT CHARACTER unit.\n\n**EFFECT:** Your unit’s ranged attacks have: ▪ +1 S. ▪ OR: +1 S, AP and [HAZARDOUS]."
+  }
+ ],
  "aeldari": [
   {
    "name": "LAYERED WARDS",
@@ -3475,6 +3006,298 @@
    "type": "STRATEGIC PLOY",
    "page": 11,
    "text": "**WHEN:** Your opponent’s Shooting phase, just after an enemy unit has shot.\n\n**TARGET:** One Aeldari Infantry unit from your army, if one or more models in that unit were destroyed as a result of those attacks, and if that Aeldari unit is neither Battle‑shocked nor within Engagement Range of one or more enemy units.\n\n**EFFECT:** Your unit can make a surge move of up to D6+1\"."
+  }
+ ],
+ "genestealer-cults": [
+  {
+   "name": "LIVING UP TO LEGEND",
+   "cp": 1,
+   "detachment": "HEROES OF THE UPRISING",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your Shooting phase or the Fight phase, when a friendly KILLER unit has attacked, if those attacks destroyed an enemy unit or an enemy CHARACTER model.\n\n**TARGET:** That KILLER unit.\n\n**EFFECT:** Each visible friendly battle-shocked GENESTEALER CULTS unit within 12\" of your unit is no longer battle-shocked."
+  },
+  {
+   "name": "SURGING BROODWORSHIP",
+   "cp": 1,
+   "detachment": "HEROES OF THE UPRISING",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your Shooting phase or the Fight phase, when a friendly KILLER unit is selected to attack.\n\n**TARGET:** That KILLER unit.\n\n**EFFECT:** Attacks made by KILLER models in your unit have [DEVASTATING WOUNDS]."
+  },
+  {
+   "name": "LOYAL TO THE END",
+   "cp": 1,
+   "detachment": "HEROES OF THE UPRISING",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Fight phase, when an enemy unit targets a friendly KILLER unit.\n\n**TARGET:** That KILLER unit.\n\n**EFFECT:** When a KILLER model in your unit is destroyed, if your unit has not been selected to fight this phase, roll one D6: ▪ On a 1, that enemy unit suffers 1 mortal wound. ▪ \u0007On a 2+, do not remove that model from the battlefield. When your unit has fought, or at the end of the phase (whichever comes first), that model is removed from the battlefield."
+  },
+  {
+   "name": "LURK AND STRIKE",
+   "cp": 1,
+   "detachment": "PURESTRAIN BROODSWARM",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Movement phase, when a friendly PURESTRAIN GENESTEALERS unit is selected to make a fall‑back move.\n\n**TARGET:** That PURESTRAIN GENESTEALERS unit.\n\n**EFFECT:** That move does not prevent your unit from being eligible to declare a charge."
+  },
+  {
+   "name": "CRAWLING HORROR",
+   "cp": 1,
+   "detachment": "PURESTRAIN BROODSWARM",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Start of your opponent’s Movement phase.\n\n**TARGET:** One friendly PURESTRAIN GENESTEALERS unit.\n\n**EFFECT:** Your unit has ‑6\" detection range until the end of the turn."
+  },
+  {
+   "name": "INHUMAN REACTIONS",
+   "cp": 1,
+   "detachment": "PURESTRAIN BROODSWARM",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your opponent’s Movement phase, when an enemy unit ends a move within 8\" of a friendly unengaged PURESTRAIN GENESTEALERS unit.\n\n**TARGET:** That PURESTRAIN GENESTEALERS unit.\n\n**EFFECT:** Your unit can make a normal move of up to D3+3\"."
+  },
+  {
+   "name": "EYES OF THE CULT",
+   "cp": 1,
+   "detachment": "XENOCULT MASSES",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Start of your Shooting phase.\n\n**TARGET:** One friendly NEOPHYTE HYBRIDS unit within a terrain area.\n\n**EFFECT:** Enemy units within that terrain area have +6\" detection range."
+  },
+  {
+   "name": "FANATICAL HAIL",
+   "cp": 1,
+   "detachment": "XENOCULT MASSES",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your Shooting phase, when a friendly NEOPHYTE HYBRIDS unit is selected to shoot.\n\n**TARGET:** That NEOPHYTE HYBRIDS unit.\n\n**EFFECT:** Select one enemy unit. Your unit’s ranged attacks that target that enemy unit can re‑roll hit rolls."
+  },
+  {
+   "name": "SLUNK FROM THE UNDERBELLY",
+   "cp": 1,
+   "detachment": "XENOCULT MASSES",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly NEOPHYTE HYBRIDS unit with every model within a terrain area.\n\n**TARGET:** That NEOPHYTE HYBRIDS unit.\n\n**EFFECT:** Ranged attacks that target your unit have -1 AP until that unit has attacked."
+  },
+  {
+   "name": "HYPERFEROCITY",
+   "cp": 1,
+   "detachment": "FINAL DAY",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Fight phase.\n\n**TARGET:** One Genestealer Cults unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack that targets an enemy unit, re‑roll a Wound roll of 1. If one or more friendly Tyranids units are within 6\" of that enemy unit, you can re‑roll the Wound roll instead."
+  },
+  {
+   "name": "PSI SURGE",
+   "cp": 1,
+   "detachment": "FINAL DAY",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Start of any phase.\n\n**TARGET:** One Tyranids unit from your army.\n\n**EFFECT:** Until the start of your next Command phase, increase the range of your unit’s Catalyst ability by 3\".\n\n**RESTRICTIONS:** Each time you use this Stratagem, until the end of your next Command phase, you cannot use this Stratagem again."
+  },
+  {
+   "name": "AVENGE THE STAR CHILDREN",
+   "cp": 1,
+   "detachment": "FINAL DAY",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has shot or fought.\n\n**TARGET:** One Tyranids Character unit from your army that was destroyed by that enemy unit this phase. You can use this Stratagem on that unit even though it was just destroyed.\n\n**EFFECT:** Until the end of the battle, each time a Genestealer Cults model from your army makes an attack that targets that enemy unit, add 1 to the Hit roll and add 1 to the Wound roll. 6"
+  },
+  {
+   "name": "DIVINE IMPERATIVE",
+   "cp": 1,
+   "detachment": "FINAL DAY",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Your Charge phase, when a friendly Genestealer Cults unit within 12\" of a friendly engaged Tyranids unit declares a charge.\n\n**TARGET:** That Genestealer Cults unit.\n\n**EFFECT:** • Your unit has +1 to charge rolls. • You can use this part of this stratagem. If you do: • Your unit can re-roll charge rolls. • \u0007Your unit must end that charge move engaged with an enemy unit engaged with that friendly Tyranids unit."
+  },
+  {
+   "name": "DARTING ATTACKS",
+   "cp": 1,
+   "detachment": "FINAL DAY",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your Shooting phase or your Charge phase.\n\n**TARGET:** One Tyranids unit from your army.\n\n**EFFECT:** Until the end of the phase, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back."
+  },
+  {
+   "name": "RESISTANCE TUNNELS",
+   "cp": 1,
+   "detachment": "FINAL DAY",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Genestealer Cults or Tyranids unit from your army that is not within Engagement Range of one or more enemy units.\n\n**EFFECT:** Remove your unit from the battlefield and place it into Strategic Reserves."
+  }
+ ],
+ "leagues-of-votann": [
+  {
+   "name": "COORDINATED CROSSFIRE",
+   "cp": 1,
+   "detachment": "ARMOURED TRAILBLAZERS",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Start of your Shooting phase.\n\n**TARGET:** Up to two friendly SAGITAUR units.\n\n**EFFECT:** Select one enemy unit. Your units’ ranged attacks that target that enemy unit can: ▪ Re‑roll hit rolls of 1. ▪ Re-roll wound rolls of 1."
+  },
+  {
+   "name": "OUTFLANKING ARMOUR",
+   "cp": 1,
+   "detachment": "ARMOURED TRAILBLAZERS",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** End of your opponent’s Movement phase, from the second battle round onwards.\n\n**TARGET:** Up to two friendly SAGITAUR units in strategic reserves.\n\n**EFFECT:** Your units each make an ingress move."
+  },
+  {
+   "name": "BUILT TO LAST",
+   "cp": 1,
+   "detachment": "ARMOURED TRAILBLAZERS",
+   "type": null,
+   "page": 2,
+   "text": "**WHEN:** Your opponent’s Shooting phase, when an enemy unit targets a friendly SAGITAUR unit.\n\n**TARGET:** That SAGITAUR unit.\n\n**EFFECT:** Ranged attacks that target your unit with a S greater than your unit’s T have -1 to wound rolls."
+  },
+  {
+   "name": "SCORNFUL ANALYSIS",
+   "cp": 1,
+   "detachment": "FARSEEKERS",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Start of your Shooting phase.\n\n**TARGET:** One friendly HERNKYN unit.\n\n**EFFECT:** Select one visible enemy unit within 12\" of your unit. Friendly LEAGUES OF VOTANN units’ attacks that target that enemy unit have [IGNORES COVER]."
+  },
+  {
+   "name": "NO SHOT WASTED",
+   "cp": 1,
+   "detachment": "FARSEEKERS",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your Shooting phase, when a friendly HERNKYN unit is selected to shoot.\n\n**TARGET:** That HERNKYN unit.\n\n**EFFECT:** Your unit’s ranged attacks have [LETHAL HITS]."
+  },
+  {
+   "name": "ECONOMY OF MOTION",
+   "cp": 1,
+   "detachment": "FARSEEKERS",
+   "type": null,
+   "page": 3,
+   "text": "**WHEN:** Your opponent’s Movement phase, when an enemy unit ends a move within 8\" of a friendly unengaged PIONEERS unit.\n\n**TARGET:** That PIONEERS unit.\n\n**EFFECT:** Your unit can make a normal move of up to D3+3\"."
+  },
+  {
+   "name": "BRËKKEKNOTS",
+   "cp": 1,
+   "detachment": "HEARTHGUARD COVENANT",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, when an enemy unit targets a friendly EINHYR HEARTHGUARD unit.\n\n**TARGET:** That EINHYR HEARTHGUARD unit.\n\n**EFFECT:** Your unit has 4+ InSv."
+  },
+  {
+   "name": "FURY OF THE HEARTH",
+   "cp": 1,
+   "detachment": "HEARTHGUARD COVENANT",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your Shooting phase, when a friendly EINHYR HEARTHGUARD unit is selected to shoot.\n\n**TARGET:** That EINHYR HEARTHGUARD unit.\n\n**EFFECT:** Your unit’s ranged attacks have: ▪ +1 S. ▪ If you spend 1 YP, [SUSTAINED HITS 1]."
+  },
+  {
+   "name": "MATERIALISATION MATRICES",
+   "cp": 1,
+   "detachment": "HEARTHGUARD COVENANT",
+   "type": null,
+   "page": 4,
+   "text": "**WHEN:** Your Movement phase, when a friendly EINHYR HEARTHGUARD unit with Deep Strike is selected to make an ingress move.\n\n**TARGET:** That EINHYR HEARTHGUARD unit.\n\n**EFFECT:** ▪ \u0007Your unit can be set up anywhere on the battlefield that is more than 6\" horizontally from all enemy units, even if that is within your opponent’s deployment zone. ▪ \u0007Your unit is not eligible to declare a charge until the end of the turn."
+  },
+  {
+   "name": "BRËKKEKNOTS",
+   "cp": 1,
+   "detachment": "HEARTHBAND",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Your opponent’s Shooting phase or the Fight phase, just after an enemy unit has selected its targets.\n\n**TARGET:** One Kâhl, Ûthar the Destined or Einhyr Hearthguard unit from your army that was selected as the target of one or more of the attacking unit’s attacks.\n\n**EFFECT:** Until the end of the phase, models in your unit have a 4+ invulnerable save."
+  },
+  {
+   "name": "SURE OF PURPOSE",
+   "cp": 1,
+   "detachment": "HEARTHBAND",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Fight phase.\n\n**TARGET:** One Leagues of Votann unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes a Pile‑in or Consolidation move, it can move up to 6\" instead of up to 3\"."
+  },
+  {
+   "name": "SUPERIOR CRAFTSMANSHIP",
+   "cp": 2,
+   "detachment": "HEARTHBAND",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Fight phase.\n\n**TARGET:** One Leagues of Votann unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Until the end of the phase, each time a model in your unit makes an attack that targets a Monster or Vehicle unit, add 1 to the Damage characteristic of that attack. 6"
+  },
+  {
+   "name": "UNYIELDING AGGRESSION",
+   "cp": 1,
+   "detachment": "HEARTHBAND",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** Your Movement phase, just after a Leagues of Votann Infantry unit from your army Falls Back.\n\n**TARGET:** That Leagues of Votann Infantry unit.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back."
+  },
+  {
+   "name": "MATERIALISATION MATRICES",
+   "cp": 1,
+   "detachment": "HEARTHBAND",
+   "type": "STRATEGIC PLOY",
+   "page": 6,
+   "text": "**WHEN:** The Reinforcements step of your Movement phase.\n\n**TARGET:** One Leagues of Votann unit from your army that is in Reserves and has the Deep Strike ability.\n\n**EFFECT:** Until the end of the phase, when your unit is set up on the battlefield using the Deep Strike ability, it can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units.\n\n**RESTRICTIONS:** Until the end of the turn, your unit is not eligible to declare a charge."
+  },
+  {
+   "name": "FURY OF THE HEARTH",
+   "cp": 1,
+   "detachment": "HEARTHBAND",
+   "type": "BATTLE TACTIC",
+   "page": 6,
+   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Einhyr Hearthguard unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Until the end of the phase, improve the Strength characteristic of ranged weapons equipped by models in your unit by 1. If you spend 1YP, until the end of the phase, ranged weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability as well."
+  },
+  {
+   "name": "AUXILIARY CONTRACT",
+   "cp": 1,
+   "detachment": "MERCENARY OATHBAND",
+   "type": "STRATEGIC PLOY",
+   "page": 8,
+   "text": "**WHEN:** Your Shooting phase or the Fight phase.\n\n**TARGET:** One Leagues of Votann Infantry or Leagues of Votann Mounted unit from your army that has not been selected to shoot or fight this phase.\n\n**EFFECT:** Until the end of the phase, weapons equipped by models in your unit have the [PRECISION] ability."
+  },
+  {
+   "name": "OPTIMAL EXPENDITURE",
+   "cp": 1,
+   "detachment": "MERCENARY OATHBAND",
+   "type": "WARGEAR",
+   "page": 8,
+   "text": "**WHEN:** The Fight phase.\n\n**TARGET:** One Leagues of Votann Infantry unit from your army that has not been selected to fight this phase.\n\n**EFFECT:** Each time you use this Stratagem, you can spend 3YP. Until the end of the phase, each time a model in your unit makes an attack, re‑roll a Hit roll of 1 and re‑roll a Wound roll of 1. If you spent YP during this usage of this Stratagem, you can re‑roll a Hit roll of 1 and re‑roll the Wound roll instead."
+  },
+  {
+   "name": "GRAND ARTIFICE",
+   "cp": 1,
+   "detachment": "MERCENARY OATHBAND",
+   "type": "STRATEGIC PLOY",
+   "page": 8,
+   "text": "**WHEN:** Your Movement phase, just after a Leagues of Votann unit from your army Falls Back.\n\n**TARGET:** That Leagues of Votann unit.\n\n**EFFECT:** Until the end of the turn, your unit is eligible to shoot and declare a charge in a turn in which it Fell Back. 8"
+  },
+  {
+   "name": "PRIVATEER ARSENAL",
+   "cp": 1,
+   "detachment": "MERCENARY OATHBAND",
+   "type": "WARGEAR",
+   "page": 8,
+   "text": "**WHEN:** Your Shooting phase.\n\n**TARGET:** One Leagues of Votann Infantry unit from your army that has not been selected to shoot this phase.\n\n**EFFECT:** Each time you use this Stratagem, you can spend 3YP. Until the end of the phase, each time a model in your unit makes an attack, re‑roll a Hit roll of 1 and re‑roll a Wound roll of 1. If you spent YP during this usage of this Stratagem, you can re‑roll the Hit roll and re‑roll a Wound roll of 1 instead."
+  },
+  {
+   "name": "NEW HORIZONS",
+   "cp": 1,
+   "detachment": "MERCENARY OATHBAND",
+   "type": "STRATEGIC PLOY",
+   "page": 8,
+   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Leagues of Votann Infantry unit from your army that is not within Engagement range of one or more enemy units and one friendly Transport it is able to embark within.\n\n**EFFECT:** If your Leagues of Votann unit is wholly within 6\" of that Transport, it can embark within it."
+  },
+  {
+   "name": "MOBILE EXPLOITATION",
+   "cp": 1,
+   "detachment": "MERCENARY OATHBAND",
+   "type": "STRATEGIC PLOY",
+   "page": 8,
+   "text": "**WHEN:** End of your opponent’s Fight phase.\n\n**TARGET:** One Hernkyn unit from your army that is not within Engagement Range of one or more enemy units. Alternatively, you can spend 2YP and target up to two Hernkyn units from your army that are not within Engagement Range of one or more enemy units instead.\n\n**EFFECT:** Remove your units from the battlefield and place them into Strategic Reserves."
   }
  ]
 }

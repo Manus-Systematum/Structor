@@ -133,7 +133,41 @@ for path in sorted(glob.glob(f'{MERGED}/*/stratagems.json')):
             })
             stats['add'] += 1
 
-PACK_TO_FACTION = {'space-marines': 'adeptus-astartes'}
+# Packs Games Workshop has withdrawn because the faction's rules moved into a
+# codex: Space Marines and Orks, on 30 September 2026. Their wording is still
+# Games Workshop's, and for a few stratagems it is the only wording any source
+# here has. So it fills a record with no text and does nothing else: no
+# removal, no addition, no cost, nothing that could put a pre-codex rule back
+# over the codex (§3.42).
+SUPERSEDED = f'{ROOT}/data/faction-packs-superseded.json'
+if os.path.exists(SUPERSEDED):
+    old = {k: v for k, v in json.load(open(SUPERSEDED)).items()
+           if not k.startswith('_')}
+    wording = {}
+    for strats in old.values():
+        for s_ in strats:
+            wording.setdefault((key(s_['detachment']), key(s_['name'])),
+                               s_['text'])
+    already = {(o['faction'], o['id']) for o in ops
+               if o['file'] == 'stratagems' and 'text' in o.get('values', {})}
+    for path in sorted(glob.glob(f'{MERGED}/*/stratagems.json')):
+        faction = os.path.basename(os.path.dirname(path))
+        for r in json.load(open(path)):
+            if (r.get('text') or '').strip() or (faction, r['id']) in already:
+                continue
+            det = key((r.get('detachment_id') or '').replace('-', ' '))
+            text = wording.get((det, key(r['name'])))
+            if text:
+                ops.append({
+                    'faction': faction, 'file': 'stratagems', 'op': 'set',
+                    'id': r['id'], 'values': {'text': text},
+                    'note': 'withdrawn faction pack, wording only',
+                })
+                stats['wording from a withdrawn pack'] += 1
+
+
+PACK_TO_FACTION = {'space-marines': 'adeptus-astartes',
+                   'imperial-agents': 'agents-of-the-imperium'}
 
 
 # --------------------------------------------------------------- rules updates
@@ -897,6 +931,17 @@ def points_ops():
                 stats['no datasheet of that name'] += 1
                 continue
             at = owner[key(entry['name'])]
+
+            # A datasheet Games Workshop prices in the current manual is a
+            # matched-play datasheet, whatever a source says. BSData marked
+            # the Captain on Bike Legends; the manual prices it at 110. The
+            # other direction is not safe — a datasheet missing from a page
+            # can be a Combat Patrol one, or a page the parser read short.
+            if record.get('is_legend') and once({
+                    'faction': at, 'file': 'units', 'op': 'set',
+                    'id': record['id'], 'values': {'is_legend': False},
+                    'note': 'priced in the Munitorum Field Manual'}):
+                stats['Legends flag cleared, the manual prices it'] += 1
 
             # A chapter's page prices its parent's datasheets at the chapter's
             # own rate, which the bundle keeps apart as `allied_points` for that

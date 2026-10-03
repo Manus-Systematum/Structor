@@ -1,26 +1,34 @@
 # Faction Packs and rules documents, from the Recently added section of
 # https://www.warhammer-community.com/en-gb/downloads/warhammer-40000/
-# Captured 2026-08-27. A leading underscore marks a document that is not
+# Captured 2026-08-27; replaced 2026-10-04 by the packs
+# legal from 30 September. Space Marines and Orks are absent because Games
+# Workshop withdrew both packs for their codexes; the Dark Angels, Space
+# Wolves and Blood Angels packs now carry Legends datasheets only. A leading underscore marks a document that is not
 # a faction pack and is not parsed for stratagems.
-dark-angels	https://assets.warhammer-community.com/eng_wh40k_faction_pack_dark_angels-r9vgghuhil-tzntq05hcx.pdf
-death-guard	https://assets.warhammer-community.com/eng_wh40k_faction_pack_death_guard-etfwxynh2n-uxtkih85rs.pdf
-adepta-sororitas	https://assets.warhammer-community.com/eng_wh40k_faction_pack_adepta_sororitas-zs0bbbnpdp-ey2x8mavkr.pdf
-thousand-sons	https://assets.warhammer-community.com/eng_wh40k_faction_pack_thousand_sons-zha93omuus-lqi5vkrcpq.pdf
-adeptus-mechanicus	https://assets.warhammer-community.com/eng_wh40k_faction_pack_adeptus_mechanicus-nnsofctxvp-ed7amkvryu.pdf
-_universal-rules-updates	https://assets.warhammer-community.com/eng_wh40k_core&key_universal_rules_updates-lu3grocned-rphh78bl6k.pdf
-space-wolves	https://assets.warhammer-community.com/eng_wh40k_faction_pack_space_wolves-pbtnrlz7q6-f0pvbqyejr.pdf
-_doubles-event-companion	https://assets.warhammer-community.com/eng_wh40k_doubles_event_companion-x8bakj0hba-chdctfbcoc.pdf
+dark-angels	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_dark_angels-grkkeaxdr3-zkavqgpgvq.pdf
+space-wolves	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_space_wolves-zb02n7jqrg-4gggpsmndk.pdf
+blood-angels	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_blood_angels-klcdcz9zip-wgf7iqk1vd.pdf
+death-guard	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_death_guard-bp5c8lcjq6-i4ew7urwyk.pdf
+adepta-sororitas	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_adepta_sororitas-zdvzxpr2rq-aljwir7fcg.pdf
+thousand-sons	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_thousand_sons-4lioijwxdj-otjrinzt8c.pdf
+adeptus-mechanicus	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_adeptus_mechanicus-7p0fj05rj2-fvax3wckco.pdf
+imperial-agents	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_imperial_agents-130cvumlo4-kczf5knry6.pdf
+astra-militarum	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_astra_militarum-1hevkhdpmv-stfkch2tsz.pdf
+chaos-daemons	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_chaos_daemons-e67vyzvv3x-mownb49uc3.pdf
+world-eaters	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_world_eaters-rxxj1fzeoh-kfx1cectxb.pdf
+adeptus-custodes	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_adeptus_custodes-xlscee8b1b-b1evo9u920.pdf
+necrons	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_necrons-1urphgbmpy-wbhocjbaba.pdf
+grey-knights	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_grey_knights-jnrahwb1qf-ubjtmdlivm.pdf
+emperors-children	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_emperors_children-xp2mhzppxs-1cvykicdxu.pdf
+chaos-space-marines	https://assets.warhammer-community.com/eng_30-09_wh40k_faction_pack_chaos_space_marines-xlmrglqa2b-zd2fzntrqu.pdf
 chaos-knights	https://assets.warhammer-community.com/eng_wh40k_faction_pack_chaos_knights-87ywk2jovh-xk68yzyb18.pdf
-astra-militarum	https://assets.warhammer-community.com/eng_wh40k_faction_pack_astra_militarum-o51zhqvsvy-wdobxbf6t0.pdf
 drukhari	https://assets.warhammer-community.com/eng_wh40k_faction_pack_drukhari-p7mpvgnmnn-clii96hzh6.pdf
-space-marines	https://assets.warhammer-community.com/eng_wh40k_faction_pack_space_marines-kxoxqpsahz-u0lzirv0zl.pdf
-world-eaters	https://assets.warhammer-community.com/eng_wh40k_faction_pack_world_eaters-5cgvc5tjcb-nipfvwkpo5.pdf
-necrons	https://assets.warhammer-community.com/eng_wh40k_faction_pack_necrons-eweoek106p-nqomxds3qr.pdf
 tyranids	https://assets.warhammer-community.com/eng_wh40k_faction_pack_tyranids-kbkk66qiwc-nh0khbkupv.pdf
-orks	https://assets.warhammer-community.com/eng_wh40k_faction_pack_orks-bk9eqvzbeq-rkrvgfwe8b.pdf
-emperors-children	https://assets.warhammer-community.com/eng_wh40k_faction_pack_emperors_children-s7cvl3p8e4-ddwa1akamk.pdf
 imperial-knights	https://assets.warhammer-community.com/eng_wh40k_faction_pack_imperial_knights-n1irjnjygs-w8jfnk8kdn.pdf
 tau-empire	https://assets.warhammer-community.com/eng_wh40k_faction_pack_tau_empire-sxhzmfrlud-mpzjzuhupn.pdf
-_event-companion	https://assets.warhammer-community.com/eng_wh40k_event_companion-pl87i44rzn-a7ieny8i9x.pdf
-chaos-space-marines	https://assets.warhammer-community.com/eng_wh40k_faction_pack_chaos_space_marines-vs0xkzuia9-omgej8huqu.pdf
 aeldari	https://assets.warhammer-community.com/eng_wh40k_faction_pack_aeldari-r7ubocxyoz-nhd972kesl.pdf
+genestealer-cults	https://assets.warhammer-community.com/eng_22-07_warhammer_40,000_faction_pack_genestealer_cults-vmkwgeydbr-sh7picbeqo.pdf
+leagues-of-votann	https://assets.warhammer-community.com/eng_22-07_warhammer_40,000_faction_pack_leagues-of-votann-kpfosalfyb-sbqk309w4w.pdf
+_universal-rules-updates	https://assets.warhammer-community.com/eng_wh40k_core&key_universal_rules_updates-lu3grocned-rphh78bl6k.pdf
+_event-companion	https://assets.warhammer-community.com/eng_wh40k_event_companion-pl87i44rzn-a7ieny8i9x.pdf
+_doubles-event-companion	https://assets.warhammer-community.com/eng_wh40k_doubles_event_companion-x8bakj0hba-chdctfbcoc.pdf

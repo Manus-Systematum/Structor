@@ -1,5 +1,77 @@
 [
  {
+  "why": "names a part of a datasheet, not of a rule",
+  "pack": "adepta-sororitas",
+  "subject": "Acts of Faith, Gaining Miracle Dice Section",
+  "directive": "Change to:",
+  "category": "ARMY RULES",
+  "text": "‘If your Army Faction is ADEPTA SORORITAS, you gain 1 Miracle dice: ▪ \u0007At the start of each turn. ▪ \u0007Each time an ADEPTA SORORITAS unit from your army is destroyed. Each time you gain a Miracle dice, roll one D6. The number you roll is the value of that Miracle dice. This value cannot be changed or re‑rolled, unless a rule specifically states otherwise. Keep your Miracle dice to one side – this is"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "adepta-sororitas",
+  "subject": "Light of the Emperor Stratagem, CP Cost",
+  "directive": "Change to '2CP'.",
+  "category": "ARMY OF FAITH DETACHMENT",
+  "text": "'2CP'."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "adepta-sororitas",
+  "subject": "Blazing Ire Stratagem, CP Cost",
+  "directive": "Change to ‘2CP’.",
+  "category": "BRINGERS OF FLAME DETACHMENT",
+  "text": "‘2CP’."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "adepta-sororitas",
+  "subject": "Cleansing Flames Stratagem, CP Cost",
+  "directive": "Change to ‘2CP’.",
+  "category": "BRINGERS OF FLAME DETACHMENT",
+  "text": "‘2CP’. designed to improve the gaming experience for all players. highlighted in red."
+ },
+ {
+  "why": "a keyword edit that is neither add nor swap",
+  "pack": "adepta-sororitas",
+  "subject": "Dialogus, Dogmata, Hospitaller, Imagifier – Core Abilities section",
+  "directive": "Remove 'Leader' and add 'Support'.",
+  "category": "DATASHEETS",
+  "text": "Remove 'Leader' and add 'Support'."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "adepta-sororitas",
+  "subject": "Immolator, Transport section, second paragraph",
+  "directive": "Change to:",
+  "category": "DATASHEETS",
+  "text": "‘At the start of the Declare Battle Formations step, you can select one BATTLE SISTERS SQUAD, DOMINION SQUAD or SISTERS NOVITIATE SQUAD from your army. If you do, that unit is split into two units, each containing as equal a number of models as possible (when splitting a unit in this way, make a note of which models form each of the two new units. If you are splitting a unit that has the Cherub ab"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "adeptus-custodes",
+  "subject": "Ranged Weapons",
+  "directive": "Change profiles to:",
+  "category": "DATASHEETS",
+  "text": "Change profiles to: Salvo Launcher [TWIN-LINKED] RANGE A BS S AP D 24\" 1 2+ 10 -3 D6+1 Vertus Hurricane Bolter [RAPID FIRE 3, TWIN-LINKED] RANGE A BS S AP D 18\" 3 2+ 4 -1 2"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "adeptus-custodes",
+  "subject": "Shield-Captain on Dawneagle Jetbike, Profile",
+  "directive": "Change Toughness characteristic to ‘7’ and Wounds characteristic to ‘8’.",
+  "category": "DATASHEETS",
+  "text": "Change Toughness characteristic to ‘7’ and Wounds characteristic to ‘8’."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "adeptus-custodes",
+  "subject": "Valerian, Core Abilities",
+  "directive": "Add ‘Deep Strike'.",
+  "category": "DATASHEETS",
+  "text": "Add ‘Deep Strike'."
+ },
+ {
   "why": "no ability of that name",
   "pack": "adeptus-mechanicus",
   "subject": "ADEPTUS MECHANICUS BATTLELINE units, subtract 1 from the Hit roll.'",
@@ -226,6 +298,14 @@
  {
   "why": "no ability of that name",
   "pack": "chaos-space-marines",
+  "subject": "W 3 Havocs",
+  "directive": "Change the following weapon characteristics:",
+  "category": "DATASHEETS",
+  "text": "Change the following weapon characteristics: WEAPON CHANGES UNITS Chaos Bikers, Chaos Lord, Havocs, Legionaries, Astartes Chainsword S 5 Nemesis Claw, Raptors Chaos Bikers, Chaos Lord with Jump Pack, Chosen, Dark Apostle, Havocs, Legionaries, Lord S 5 Discordant on Helstalker, Master of Executions, Bolt Pistol AP -1 Master of Possession, Masters of the Maelstrom, Nemesis Claw, Raptors, Red Corsair"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "chaos-space-marines",
   "subject": "Cypher, Agent of Discord Ability",
   "directive": "Change to:",
   "category": "DATASHEETS",
@@ -264,62 +344,6 @@
   "text": "‘This model has a transport capacity of 12 HERETIC ASTARTES INFANTRY models (excluding OBLITERATOR and JUMP PACK models). Each POSSESSED, MUTILATORS and TERMINATOR model takes up the space of 2 models.’"
  },
  {
-  "why": "no detachment heading to scope it",
-  "pack": "dark-angels",
-  "subject": "Armour of Contempt Stratagem, Effect section",
-  "directive": "Change to:",
-  "category": "DETACHMENTS (VARIOUS)",
-  "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’"
- },
- {
-  "why": "a keyword edit that is neither add nor swap",
-  "pack": "dark-angels",
-  "subject": "Keywords Section",
-  "directive": "Change to 'OUTRIDER SQUAD units from your army gain the",
-  "category": "COMPANY OF HUNTERS DETACHMENT",
-  "text": "'OUTRIDER SQUAD units from your army gain the BATTLELINE keyword.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "dark-angels",
-  "subject": "Dark Ability",
-  "directive": "Change to:",
-  "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-  "text": "‘Once per battle, in any phase, just after a mortal wound is allocated to an ADEPTUS ASTARTES model in this unit, this unit can summon a Watcher in the Dark. When it does, until the end of the phase, models in this unit have the Feel No Pain 4+ ability against mortal wounds.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "dark-angels",
-  "subject": "Inner Circle Companions, Calibanite Greatsword",
-  "directive": "Change to:",
-  "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-  "text": "Calibanite Greatsword - Strike [LETHAL HITS] RANGE A WS S AP Melee 4 3+ 6 -2 Calibanite Greatsword - Sweep [SUSTAINED HITS 2] RANGE A WS S AP Melee 5 3+ 6 -2"
- },
- {
-  "why": "no ability of that name",
-  "pack": "dark-angels",
-  "subject": "Land Speeder Vengeance, Plasma Storm Battery",
-  "directive": "Change to:",
-  "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-  "text": "Plasma Storm Battery - Standard [BLAST, TWIN-LINKED] RANGE A BS S AP 36\" D6+1 3+ 8 -2 Plasma Storm Battery - Supercharge [BLAST, HAZARDOUS, TWIN-LINKED] RANGE A BS S AP 36\" D6+1 3+ 9 -3 Ability and power D 2 D 2 ability to hit rolls. Profiles D 2 D 1 Profiles D 2 D 3 Lion El’Jonson ▪ Keywords section: Add 'MOBILE'.\u0007 ▪ \u0007All Secrets Revealed Ability – Change to: ‘Mist-wreathed Shadow Realms: In your"
- },
- {
-  "why": "no ability of that name",
-  "pack": "dark-angels",
-  "subject": "Ravenwing Darkshroud, Icon of Old Caliban Ability",
-  "directive": "Change to:",
-  "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-  "text": "‘Friendly ADEPTUS ASTARTES units within 6\" of this unit have Stealth.’"
- },
- {
-  "why": "no datasheet of that name",
-  "pack": "dark-angels",
-  "subject": "Keywords Section",
-  "directive": "Add 'FRAME'.",
-  "category": "UNFORGIVEN TASK FORCE DETACHMENT",
-  "text": "Add 'FRAME'."
- },
- {
   "why": "no ability of that name",
   "pack": "death-guard",
   "subject": "Nurgle's Gift, Contagion Range Section",
@@ -340,7 +364,7 @@
   "pack": "death-guard",
   "subject": "Keywords section",
   "directive": "Add 'FRAME'.",
-  "category": "VIRULENT VECTORIUM DETACHMENT",
+  "category": "DATASHEETS",
   "text": "Add 'FRAME'."
  },
  {
@@ -348,7 +372,7 @@
   "pack": "death-guard",
   "subject": "Chaos Predator Destructor, Predator Autocannon",
   "directive": "Change Strength to ‘9’.",
-  "category": "VIRULENT VECTORIUM DETACHMENT",
+  "category": "DATASHEETS",
   "text": "Change Strength to ‘9’."
  },
  {
@@ -356,7 +380,7 @@
   "pack": "death-guard",
   "subject": "Mortarion, Diseased Influence Ability",
   "directive": "Change to:",
-  "category": "VIRULENT VECTORIUM DETACHMENT",
+  "category": "DATASHEETS",
   "text": "‘Just after an enemy unit ends a Normal, Advance or Fall Back move within 8\" of a friendly DEATH GUARD unit that is within 6\" of this model, if that DEATH GUARD unit is not within Engagement Range of one or more enemy units, it can make a Normal move of up to 5\".’"
  },
  {
@@ -364,7 +388,7 @@
   "pack": "death-guard",
   "subject": "Mortarion, Inflamed Reprisal Ability",
   "directive": "Change to:",
-  "category": "VIRULENT VECTORIUM DETACHMENT",
+  "category": "DATASHEETS",
   "text": "‘In your opponent’s Shooting phase, when a friendly DEATH GUARD unit within 6\" of this model is selected as the target of an attack, this model can use this ability. If it does, after the attacking unit has finished making its attacks, that DEATH GUARD unit can shoot as if it were your Shooting phase, but when resolving those attacks, worsen the BS characteristic of that attack by 1 and it can onl"
  },
  {
@@ -372,7 +396,7 @@
   "pack": "death-guard",
   "subject": "Typhus, Eater Plague Ability",
   "directive": "Change to:",
-  "category": "VIRULENT VECTORIUM DETACHMENT",
+  "category": "DATASHEETS",
   "text": "‘In your Shooting phase, you can select one enemy unit within 18” of and visible to this PSYKER (excluding units with the Lone Operative ability that are not part of an Attached unit and are not within 12” of this PSYKER) and roll one D6: on a 1, this PSYKER’s unit suffers D3 mortal wounds; on a 2-5, that enemy unit suffers D6 mortal wounds; on a 6, that enemy unit suffers D3+3 mortal wounds.’ FAQ"
  },
  {
@@ -398,6 +422,174 @@
   "directive": "Change 9\" to 8\".",
   "category": "DATASHEETS",
   "text": "Change 9\" to 8\"."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "emperors-children",
+  "subject": "W 3 Noise Marines",
+  "directive": "Change the following weapon characteristics:",
+  "category": "DATASHEETS",
+  "text": "Change the following weapon characteristics: WEAPON CHANGES UNITS S 5 Flawless Blades, Infractors, Lord Exultant, Bolt Pistol AP -1 Sorcerer, Tormentors S 5 Boltgun Tormentors AP -1 S 5 Chaos Land Raider, Chaos Rhino, Chaos Combi-bolter AP -1 Terminators S 5 Chaos Land Raider, Chaos Rhino, Chaos Combi-weapon AP -1 Terminators Close Combat Lord Exultant, Lord Kakophanist, Noise Marines, S 5 Weapon "
+ },
+ {
+  "why": "names a part of a datasheet, not of a rule",
+  "pack": "genestealer-cults",
+  "subject": "Integrated Tactics Detachment Rule, Brood Brothers Section",
+  "directive": "Change second paragraph to:",
+  "category": "BROOD BROTHERS AUXILIA DETACHMENT",
+  "text": "Change second paragraph to: ‘A GENESTEALER CULTS model must be your WARLORD, and ASTRA MILITARUM models from your army lose the Voice of Command ability if they have it. You cannot include units with any of the following keywords in your army using this rule: AIRCRAFT; COMMISSAR; EPIC HERO; MILITARUM TEMPESTUS; OGRYN; RATLING; TECH-PRIEST ENGINSEER; MINISTORUM PRIEST."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "genestealer-cults",
+  "subject": "Primed and Readied Stratagem, CP cost",
+  "directive": "Change to ‘2CP’.",
+  "category": "HOST OF ASCENSION DETACHMENT",
+  "text": "‘2CP’."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "genestealer-cults",
+  "subject": "Biophagus, Unit Composition, Wargear",
+  "directive": "Change to:",
+  "category": "DATASHEETS",
+  "text": "‘This model is equipped with: autopistol; chemical vials; injector goad; alchemicus familiar.’"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "genestealer-cults",
+  "subject": "Acolyte Hybrids with Hand Flamers, Ranged Weapons",
+  "directive": "Change the Range characteristic of demolition charges to ‘8\"’.",
+  "category": "DATASHEETS",
+  "text": "Change the Range characteristic of demolition charges to ‘8\"’."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "genestealer-cults",
+  "subject": "Goliath Rockgrinder, Ranged Weapons",
+  "directive": "Change the Range characteristic of demolition charge cache to ‘8\"’.",
+  "category": "DATASHEETS",
+  "text": "Change the Range characteristic of demolition charge cache to ‘8\"’."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "genestealer-cults",
+  "subject": "Goliath Truck, Ranged Weapons",
+  "directive": "Change the Range characteristic of demolition charge cache to ‘8\"’.",
+  "category": "DATASHEETS",
+  "text": "Change the Range characteristic of demolition charge cache to ‘8\"’."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "genestealer-cults",
+  "subject": "Kelermorph, Hypersensory Abilities",
+  "directive": "Change to:",
+  "category": "DATASHEETS",
+  "text": "‘Once per turn, in your opponent’s Movement phase, when an enemy unit ends a Normal, Advance or Fall Back move within 8\" of this model, if this model is not within Engagement Range of one or more enemy units, it can shoot at that unit as if it were your Shooting phase and then make a Normal move of up to D6\" (it cannot embark within a Transport as part of this move)."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "genestealer-cults",
+  "subject": "Sanctus - \u0007Creeping Shadow Ability",
+  "directive": "Change to:",
+  "category": "DATASHEETS",
+  "text": "'If this model is equipped with a Cult Sniper Rifle, In your opponent's Movement phase, if an enemy unit ends a move within 8” of this unit, if this unit is not within Engagement Range of one or more enemy"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "genestealer-cults",
+  "subject": "units, this unit can make a Normal move of up to 6”.' - \u0007Cloaked Assassin Ability, Second Sentence",
+  "directive": "Change to:",
+  "category": "DATASHEETS",
+  "text": "'Enemy units cannot target this unit with snap shooting attacks.'"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "grey-knights",
+  "subject": "Gate of Infinity Army Rule, Last Paragraph",
+  "directive": "Change to:",
+  "category": "ARMY RULES",
+  "text": "▪ Place those units in strategic reserves. ▪ \u0007Those units can make an ingress move in your next phase (including in your first turn)."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "grey-knights",
+  "subject": "T 9 Grand Master in Nemesis Dreadknight, Nemesis Dreadknight",
+  "directive": "Change the following weapon characteristics:",
+  "category": "T 5",
+  "text": "Change the following weapon characteristics: WEAPON CHANGES UNITS Close Combat Interceptor Squad, Purgation Squad, Purifier S 5 Weapon Squad, Strike Squad S 5 Combi-weapon Brotherhood Librarian AP -1 S 5 Hurricane Bolter Stormraven Gunship AP -1 Brother Captain, Brotherhood Champion, Brotherhood Chaplain, Brotherhood Librarian, Brotherhood Terminator Squad, Castellan S 5 Crowe, Grand Master, Grand"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "grey-knights",
+  "subject": "Brotherhood Chaplain, Abilities, Core Abilities",
+  "directive": "Add ‘Leader’.",
+  "category": "T 5",
+  "text": "Add ‘Leader’."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "imperial-agents",
+  "subject": "T 6 Grey Knights Terminator Squad",
+  "directive": "Change the following weapon characteristics:",
+  "category": "CHANGES UNITS",
+  "text": "Change the following weapon characteristics: WEAPON CHANGES UNITS S 5 Storm Bolter Grey Knights Terminator Squad, AP -1 Imperial Rhino, Inquisitorial Chimera and Sisters of Battle"
+ },
+ {
+  "why": "no datasheet of that name",
+  "pack": "imperial-agents",
+  "subject": "– Keywords Section",
+  "directive": "Add 'FRAME'.",
+  "category": "AP -1",
+  "text": "Add 'FRAME'."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "imperial-agents",
+  "subject": "Imperial Rhino, Transport Section",
+  "directive": "Change to:",
+  "category": "AP -1",
+  "text": "‘This model has a transport capacity of 12 AGENTS OF THE IMPERIUM INFANTRY models. It cannot transport TERMINATOR or OFFICIO ASSASSINORUM models."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "imperial-agents",
+  "subject": "Inquisitor, Leader Section",
+  "directive": "Remove ‘DEATHWATCH KILL TEAM'.",
+  "category": "AP -1",
+  "text": "Remove ‘DEATHWATCH KILL TEAM'."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "imperial-agents",
+  "subject": "Inquisitorial Agents, Inquisitorial Henchmen Section",
+  "directive": "Change to:",
+  "category": "AP -1",
+  "text": "‘If your Army Faction is not AGENTS OF THE IMPERIUM, then for each INQUISITOR unit you include in your army, you can include one INQUISITORIAL AGENTS unit in your army that does not count towards the number of RETINUE units your army can include (see Assigned Agents, page 75).’"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "imperial-agents",
+  "subject": "Inquisitor Draxus, Leader Section",
+  "directive": "Remove ‘DEATHWATCH KILL TEAM'.",
+  "category": "AP -1",
+  "text": "Remove ‘DEATHWATCH KILL TEAM'."
+ },
+ {
+  "why": "edits something other than a distance",
+  "pack": "imperial-agents",
+  "subject": "Sisters of Battle Immolator, Invulnerable Save",
+  "directive": "Remove asterisk.",
+  "category": "AP -1",
+  "text": "Remove asterisk."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "imperial-agents",
+  "subject": "Voidsmen-at-Arms, Navy Bodyguard Section",
+  "directive": "Change to:",
+  "category": "AP -1",
+  "text": "‘If your Army Faction is not AGENTS OF THE IMPERIUM, then for each VOIDFARERS CHARACTER unit you include in your army, you can include one VOIDSMEN-AT-ARMS unit in your army that does not count towards the number of RETINUE units your army can include (see Assigned Agents, page 75).’"
  },
  {
   "why": "no ability of that name",
@@ -430,6 +622,30 @@
   "directive": "Change OC characteristic to ‘10’.",
   "category": "VALOURSTRIKE LANCE DETACHMENT",
   "text": "Change OC characteristic to ‘10’."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "leagues-of-votann",
+  "subject": "Dêlvewerke Navigator Enhancement, Last Sentence",
+  "directive": "Change to:",
+  "category": "DÊLVE ASSAULT SHIFT DETACHMENT",
+  "text": "‘Return one destroyed model (excluding CHARACTER models) to that unit and then, for every 2YP you just spent, return up to one additional destroyed model (excluding CHARACTER models) to that unit.’"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "leagues-of-votann",
+  "subject": "Hekaton Land Fortress, Transport Section",
+  "directive": "Change to:",
+  "category": "DATASHEETS",
+  "text": "‘This model has a transport capacity of 14 LEAGUES OF VOTANN INFANTRY models. Each EXOARMOUR, EXOFRAME or IRONKIN STEELJACKS model takes up the space of 2 models. It cannot transport ARTILLERY models."
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "leagues-of-votann",
+  "subject": "Sagitaur, Transport Section",
+  "directive": "Change first paragraph to:",
+  "category": "DATASHEETS",
+  "text": "Change first paragraph to: ‘This model has a transport capacity of 6 LEAGUES OF VOTANN INFANTRY models. It cannot transport ARTILLERY, EXOARMOUR, EXOFRAME or IRONKIN STEELJACKS models.'"
  },
  {
   "why": "no ability of that name",
@@ -470,390 +686,6 @@
   "directive": "Change to:",
   "category": "OBEISANCE PHALANX DETACHMENT",
   "text": "‘In your Shooting phase, select one enemy unit within 18\" of and visible to this model (excluding units with the Lone Operative ability that are not part of an Attached unit and are not within 12\" of this model) and roll four D6: for each 4+, that enemy unit suffers 1 mortal wound. The Silent King ▪ \u0007Bringer of Unity Ability: Change to ‘Relentless March (Aura): While a friendly NECRONS unit is wit"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "Crushing Impact Stratagem, Name",
-  "directive": "Change to:",
-  "category": "BULLY BOYZ DETACHMENT",
-  "text": "‘Krushin’ Impact’"
- },
- {
-  "why": "no stratagem of that name",
-  "pack": "orks",
-  "subject": "Dat One's Even Bigga! Stratagem, Effect section",
-  "directive": "Change to:",
-  "category": "DA BIG HUNT DETACHMENT",
-  "text": "'Until the end of the phase, your unit is eligible to charge in a turn in which it Advanced or Fell Back. In addition, you can re-roll charge rolls made for your unit. If you do, your unit must end that charge move engaged with your Prey.'"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "Command phase, that enemy unit is your Prey:'",
-  "directive": "Change first bullet point to:",
-  "category": "DA BIG HUNT DETACHMENT",
-  "text": "Change first bullet point to: ▪ \u0007When a friendly BEAST SNAGGA unit declares a charge, If your Prey is within 12\" of that unit, you can use this part of this ability. If you do: ▫ \u0007That BEAST SNAGGA unit can re-roll that charge roll. ▫ \u0007That BEAST SNAGGA unit must end that charge move engaged with your Prey. designed to improve the gaming experience for all players. highlighted in red."
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "Try Dat Button! Detachment Rule, Last Paragraph",
-  "directive": "Change to:",
-  "category": "DREAD MOB DETACHMENT",
-  "text": "'If a weapon equipped by a model from your army has the [HAZARDOUS] ability from multiple sources, each time you take a Hazardous test for that weapon, it is failed on a roll of 1-3.'"
- },
- {
-  "why": "the distance is not in the rule exactly once",
-  "pack": "orks",
-  "subject": "Conniving Runts Stratagem, Target Section",
-  "directive": "Change 9\" to 8\".",
-  "category": "DREAD MOB DETACHMENT",
-  "text": "Change 9\" to 8\"."
- },
- {
-  "why": "no stratagem of that name",
-  "pack": "orks",
-  "subject": "Tide of Muscle Stratagem, Effect Section",
-  "directive": "Change to:",
-  "category": "GREEN TIDE DETACHMENT",
-  "text": "‘Until the end of the phase, each time your unit declares a charge, add 1 to the Charge roll and, if your unit contains 10 or more models, you can re-roll the Charge roll."
- },
- {
-  "why": "no stratagem of that name",
-  "pack": "orks",
-  "subject": "Go Get ’Em! Stratagem",
-  "directive": "Change to:",
-  "category": "GREEN TIDE DETACHMENT",
-  "text": "‘WHEN: Your opponent’s Shooting phase, when an enemy unit that targeted a friendly unengaged BOYZ unit this phase has shot. TARGET: That BOYZ unit. EFFECT: Your unit can make a surge move of up to D6\".’"
- },
- {
-  "why": "no stratagem of that name",
-  "pack": "orks",
-  "subject": "More Gitz Over 'Ere! Stratagem, Target Section",
-  "directive": "Change 9\" to 8\".",
-  "category": "KULT OF SPEED DETACHMENT",
-  "text": "Change 9\" to 8\"."
- },
- {
-  "why": "no stratagem of that name",
-  "pack": "orks",
-  "subject": "Careen! Stratagem, Effect Section",
-  "directive": "Change to:",
-  "category": "WAR HORDE DETACHMENT",
-  "text": "‘Your unit can make a Normal or Fall Back move before its Deadly Demise ability is resolved, and before any embarked units perform an emergency disembark move. When making this move, your unit can move over enemy units (excluding MONSTERS and VEHICLES) as if they were not there.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "Ability",
-  "directive": "Change to:",
-  "category": "DATASHEETS",
-  "text": "‘Once per battle, for each bomb squig this unit has, after this unit ends a Normal move, you can use one Bomb Squig. If you do, select one enemy unit within 12\" and visible to this unit and roll one D6: on a 3+, that enemy unit suffers D3 mortal wounds.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "Battlewagon, Transport Section",
-  "directive": "Change to:",
-  "category": "DATASHEETS",
-  "text": "‘This model has a transport capacity of 22 ORKS INFANTRY models. If this model is equipped with a killkannon, it has a transport capacity of 12 ORKS INFANTRY models. Each MEGA ARMOUR or JUMP PACK model takes up the space of 2 models.The GHAZGHKULL THRAKA model takes up the space of 4 models.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "Boomdakka Snazzwagon, Billowing Fumes Ability",
-  "directive": "Change to:",
-  "category": "DATASHEETS",
-  "text": "‘While an enemy unit (excluding MONSTER/VEHICLE units) is within 6\" of this unit, when that enemy unit is selected to shoot, that unit’s targets have the benefit of cover until that unit has shot.’ Boss Snikrot ▪ \u0007Red Skulls Kommandos Ability: Change to: ‘This unit has +1 Sv against ranged attacks.’ ▪ \u0007Kunnin’ Infiltrator Ability: Change to: ‘Kunnin’ Infiltrator (Once per battle, per army): In you"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "▫ 1 rokkit launcha and 1 close combat weapon - \u0007Bodyguard Section",
-  "directive": "Remove this section.",
-  "category": "DATASHEETS",
-  "text": "Remove this section."
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "Ghazghkull Thraka - \u0007Prophet of da Great Waaagh! Ability",
-  "directive": "Change to:",
-  "category": "DATASHEETS",
-  "text": "‘While this unit is leading a unit, each time a model in that unit makes a melee attack, add 1 to the Hit roll and add 1 to the Wound roll and if the Waaagh! is active for your army, a Critical Hit is scored on a"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "successful unmodified Hit roll of 5+. - \u0007Ghazghkull’s Waaagh! Banner (Aura) Ability",
-  "directive": "Change to:",
-  "category": "DATASHEETS",
-  "text": "‘While a friendly ORKS unit is within 12\" of Makari, if the Waaagh! is active for your army, melee weapons equipped by models in that unit"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "‘This unit can be attached to the following units: BOYZ, MEGANOBZ, NOBZ - \u0007Invulnerable Save Section, Footnote",
-  "directive": "Change to:",
-  "category": "DATASHEETS",
-  "text": "‘While a friendly Makari model is on the battlefield, you cannot re-roll save rolls for this unit.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "Gretchin - \u0007Unit Composition",
-  "directive": "Change to:",
-  "category": "DATASHEETS",
-  "text": "▫ \u00070-1 Runtherd and 10 Gretchin OR"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "▫ 0-2 Runtherds and 20 Gretchin - \u0007Thievin’ Scavengers Ability",
-  "directive": "Change to:",
-  "category": "DATASHEETS",
-  "text": "‘At the start of your Movement phase, roll one D6 for each objective marker you control that has one or more units from your army with this ability within range of it (excluding Battle-shocked units). If one or more of those rolls is a 4+, you gain 1CP.’ Hunta Rig, Kill Rig ▪ Keywords: \u0007 Remove 'VEHICLE', add 'MONSTER'. ▪ Saw Blades weapon: Change AP to '-2'."
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "'Enemy units cannot target this unit with snap shooting attacks.' - \u0007Patrol Squad Section",
-  "directive": "Add new Patrol Squad section with: ‘At the start of the Declare Battle",
-  "category": "DATASHEETS",
-  "text": "Add new Patrol Squad section with: ‘At the start of the Declare Battle"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "Mek Gunz, Bubblechukka Weapon Ability",
-  "directive": "Change to: ‘Before selecting targets for one or more models equipped",
-  "category": "DATASHEETS",
-  "text": "‘Before selecting targets for one or more models equipped with this weapon, roll one D6 to determine which profile models equipped with this weapon will make attacks with, comparing the result with the numbers shown on the left.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "Stompa, Transport Section",
-  "directive": "Change to:",
-  "category": "DATASHEETS",
-  "text": "‘This model has a transport capacity of 22 ORKS INFANTRY models. Each MEGA ARMOUR or JUMP PACK model takes up the space of 2 models. The GHAZGHKULL THRAKA model takes up the space of 4 models.’ Warboss ▪ Weapon Profiles: Add the following: Kustom Shoota [RAPID FIRE 2] RANGE A BS S AP D 18\" 4 5+ 4 0 1 Kustom Choppa [CLEAVE 1] RANGE A WS S AP D Melee 6 2+ 8 -2 2 ▪ \u0007Wargear Options: Add the following"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "replaced with 1 kustom choppa and 1 kustom shoota.’ - \u0007Da Biggest and da Best Ability",
-  "directive": "Change to:",
-  "category": "DATASHEETS",
-  "text": "‘While the Waaagh! is active for your army, add 4 to the Attacks characteristic of this model’s melee weapons.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "orks",
-  "subject": "Weirdboy, Da Jump Ability",
-  "directive": "Change 9\" to 8\".",
-  "category": "DATASHEETS",
-  "text": "Change 9\" to 8\"."
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Tactical Squad.’",
-  "directive": "Add new sub-header and bullet points:",
-  "category": "ARMY RULES",
-  "text": "Add new sub-header and bullet points: DEATHWATCH ▪ \u0007Your army can include ADEPTUS ASTARTES DEATHWATCH units, but it cannot include any ADEPTUS ASTARTES units drawn from any other Chapter. ▪ \u0007With the exception of Kill Team Cassius (see Legends: Agents of the Imperium), your army cannot include any AGENTS OF THE IMPERIUM DEATHWATCH units. ▪ \u0007Your army cannot include any of the following units: Assa"
- },
- {
-  "why": "no detachment heading to scope it",
-  "pack": "space-marines",
-  "subject": "Vanguard Spearhead – Armour of Contempt Stratagem, Effect Section",
-  "directive": "Change to:",
-  "category": "ARMY RULES",
-  "text": "‘Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.’ designed to improve the gaming experience for all players. in red."
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Mercy is Weakness Stratagem, CP Cost",
-  "directive": "Change to ‘2CP’.",
-  "category": "IRONSTORM SPEARHEAD DETACHMENT",
-  "text": "‘2CP’."
- },
- {
-  "why": "no stratagem of that name",
-  "pack": "space-marines",
-  "subject": "Ride Hard, Ride Fast Stratagem, Effect Section",
-  "directive": "Change to:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "‘Until the end of the phase, each time an attack targets your unit, subtract 1 from the Wound roll.’"
- },
- {
-  "why": "no stratagem of that name",
-  "pack": "space-marines",
-  "subject": "Calculated Feint Stratagem, Target Section",
-  "directive": "Change to:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "‘TARGET: One friendly ADEPTUS ASTARTES INFANTRY unit within 12\" of that enemy unit.’ DATASHEETS Drop Pod, Gladiator Lancer, Gladiator Reaper, Gladiator Valiant, Hammerfall Bunker, Impulsor, Invader ATV, Land Raider, Land Raider Crusader, Land Raider Redeemer, Predator Annihilator, Predator Destructor, Razorback, Repulsor, Repulsor Executioner, Rhino, Storm Speeder Hailstrike, Storm Speeder Hammers"
- },
- {
-  "why": "no datasheet profile to change",
-  "pack": "space-marines",
-  "subject": "Squad, Scout Squad – Combat Knife weapon",
-  "directive": "Change AP to '-1'.",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Change AP to '-1'."
- },
- {
-  "why": "no datasheet profile to change",
-  "pack": "space-marines",
-  "subject": "Combi-weapon – Paired Combat Blades weapon",
-  "directive": "Change AP to '-1'.",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Change AP to '-1'."
- },
- {
-  "why": "no datasheet of that name",
-  "pack": "space-marines",
-  "subject": "Abilities Section",
-  "directive": "Remove 'Leader', add 'Support'.",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Remove 'Leader', add 'Support'."
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Captain, Leader Section",
-  "directive": "Remove the following:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Remove the following: ‘This model cannot be attached to a BLADEGUARD VETERAN SQUAD unless this model is equipped with a relic shield, and cannot be attached to a HELLBLASTER SQUAD unless this model is equipped with a plasma pistol.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Captain in Gravis Armour, Master-crafted heavy bolt rifle profile",
-  "directive": "Change to:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Heavy Bolt Rifle [ASSAULT, HEAVY] RANGE A BS S AP D 30\" 2 2+ 5 -1 3"
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Captain with Jump Pack, Wargear Options Section",
-  "directive": "Add the following bullet point:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Add the following bullet point: ‘• \u0007If this model is equipped with a heavy bolt pistol and an Astartes chainsword, it can be equipped with 1 relic shield. This model’s heavy bolt pistol and Astartes chainsword cannot be replaced. Chaplain with Jump Pack Ranged Weapons: Add the following profile: Absolvor Bolt Pistol [CLOSE-QUARTERS] RANGE A BS S AP D 18\" 1 3+ 5 -1 2 Wargear Options Section: Add th"
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Chief Librarian Tigurius, Master of Prescience Ability",
-  "directive": "Change to:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "▪ This unit has Stealth. ▪ Melee attacks that target this unit have ‑1 to hit rolls. ▪ \u0007(Once per battle round, per army) When you target this unit with the Counteroffensive/Fire Overwatch/Heroic Intervention stratagem, that use is ‑1 CP. Desolation Squad ▪ \u0007Targeter Optics Ability: Change to ‘Each time this unit Remains Stationary, until the start of your next Movement phase, ranged weapons equip"
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "heavy bolter profiles",
-  "directive": "Change to:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Heavy Bolt Rifle [ASSAULT, HEAVY] RANGE A BS S AP D 30\" 2 3+ 5 -1 2 Heavy Bolter [ASSAULT, HEAVY, SUSTAINED HITS 1] RANGE A BS S AP D 36\" 3 3+ 5 -1 2"
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Impulsor, Transport Section",
-  "directive": "Change to:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "‘This model has a transport capacity of 7 TACTICUS or PHOBOS INFANTRY models. It cannot transport JUMP PACK models.'"
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Infernus Squad, Ranged Weapons, pyreblaster profile",
-  "directive": "Change to:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Pyreblaster [IGNORES COVER, TORRENT] RANGE A BS S AP D 12\" D6 N/A 5 -1 1 Inceptor Squad"
- },
- {
-  "why": "a keyword edit that is neither add nor swap",
-  "pack": "space-marines",
-  "subject": "Intercessor Squad, Abilities Section",
-  "directive": "Replace previously added Target Elimination ability with the following",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Replace previously added Target Elimination ability with the following"
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Iron Father Feirros",
-  "directive": "Add new ‘Inspiring Commander’ section:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Add new ‘Inspiring Commander’ section: ‘If you include this model in your army, until the end of the battle, non-CHARACTER models in HEAVY INTERCESSOR SQUAD units from your army have an Objective Control characteristic of 3 while they are not Battle-shocked.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Kayvaan Shrike",
-  "directive": "Add new ‘Inspiring Commander’ section:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Add new ‘Inspiring Commander’ section: ‘If you include this model in your army, until the end of the battle, non- CHARACTER models in ASSAULT INTERCESSORS WITH JUMP PACKS units from your army have an Objective Control characteristic of 2 while they are not Battle-shocked.’ Kor’sarro Khan ▪ \u0007\u0007Add new ‘Inspiring Commander’ section: ‘If you include this model in your army, until the end of the battle"
- },
- {
-  "why": "no datasheet profile to change",
-  "pack": "space-marines",
-  "subject": "Lieutenant in Reiver Armour, master-crafted special issue bolt pistol",
-  "directive": "Change AP to ‘-1’.",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Change AP to ‘-1’."
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Outrider Squad, Abilities Section",
-  "directive": "Remove the Turbo-boost ability and add the following ability:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Remove the Turbo-boost ability and add the following ability: ‘Thunderous Impact: Each time a model in this unit makes a melee attack, if this unit made a Charge move this turn, improve the Strength and Damage characteristics of that attack by 1.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Pedro Kantor",
-  "directive": "Add new ‘Inspiring Commander’ section:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "Add new ‘Inspiring Commander’ section: ‘If you include this model in your army, until the end of the battle, non-CHARACTER models in STERNGUARD VETERAN SQUAD units from your army have an Objective Control characteristic of 2 while they are not Battle-shocked.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Reiver Squad - \u0007Fearsome Assault Ability",
-  "directive": "Change to:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "‘At the start of the Fight phase, each enemy unit within Engagement Range of one or more units with this ability must take a Battle-shock"
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "test, subtracting 1 from that test.’ - \u0007Terror Troops Ability",
-  "directive": "Change to:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "‘While an enemy unit (excluding MONSTERS and VEHICLES) is within 3\" of one or more units with this ability, subtract 1 from the Objective Control characteristic of models in that enemy unit."
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Repulsor, Transport Section",
-  "directive": "Change to:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "‘This model has a transport capacity of 14 ADEPTUS ASTARTES INFANTRY models. Each JUMP PACK, WULFEN, GRAVIS or TERMINATOR model takes up the space of 2 models and each CENTURION model takes up the space of 3 models.’"
- },
- {
-  "why": "no ability of that name",
-  "pack": "space-marines",
-  "subject": "Repulsor Executioner, Transport Section",
-  "directive": "Change to:",
-  "category": "STORMLANCE TASK FORCE DETACHMENT",
-  "text": "‘This model has a transport capacity of 7 ADEPTUS ASTARTES INFANTRYmodels. Each JUMP PACK, WULFEN, GRAVIS or TERMINATOR model takes up the space of 2 models and each CENTURION model takes up the space of 3 models.’ Roboute Guilliman ▪ Keywords – Add ‘MOBILE’. ▪ \u0007Author of the Codex Ability – Change to: ‘At the Start of your Command phase, select two Author of the Codex abilities (see left). Until "
  },
  {
   "why": "no ability of that name",
@@ -904,6 +736,14 @@
   "text": "‘Select one enemy unit within 24\" of and visible to the manifesting model. Until the end of the phase, each time a THOUSAND SONS or SCINTILLATING LEGIONS model from your army makes an attack that targets that unit, improve the Armour Penetration characteristic of that attack by 1. If the Psychic test result for this Ritual was 12+, improve the Armour Penetration characteristic of that attack by 2 "
  },
  {
+  "why": "no stratagem of that name",
+  "pack": "thousand-sons",
+  "subject": "Unwavering Phalanx Stratagem, Effect Section",
+  "directive": "Change to:",
+  "category": "GRAND COVEN DETACHMENT",
+  "text": "‘Until the end of the turn, attacks that target your unit with a S greater than your unit’s T have -1 to wound rolls.’"
+ },
+ {
   "why": "no ability of that name",
   "pack": "thousand-sons",
   "subject": "Ensorcelled Infusion Stratagem, CP Cost",
@@ -914,9 +754,17 @@
  {
   "why": "no ability of that name",
   "pack": "thousand-sons",
+  "subject": "Infernal Master, Rubric Marines, Sorcerer",
+  "directive": "Change the following weapon characteristics:",
+  "category": "T 5",
+  "text": "Change the following weapon characteristics: WEAPON CHANGES UNITS Close Combat S 5 Rubric Marines Weapon S 5 Ahriman, Exalted Sorcerer, Exalted Sorcerer Inferno Bolt Pistol on Disc of Tzeentch, Infernal Master, Rubric AP -2 Marines, Sorcerer Inferno Boltgun S 5 Rubric Marines Chaos Land Raider, Chaos Predator Annihilator, Chaos Predator Destructor, Chaos Rhino, Chaos Inferno Combi-bolter S 5 Vindi"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "thousand-sons",
   "subject": "Chaos Rhino, Core Abilities",
   "directive": "Add ‘Firing Deck 2’.",
-  "category": "DATASHEETS",
+  "category": "T 5",
   "text": "Add ‘Firing Deck 2’."
  },
  {
@@ -924,7 +772,7 @@
   "pack": "thousand-sons",
   "subject": "Daemon Prince of Tzeentch with Wings, Aetherstride Ability",
   "directive": "Change to:",
-  "category": "DATASHEETS",
+  "category": "T 5",
   "text": "‘In your Movement phase, when this model is set up on the battlefield using the Deep Strike ability, it can perform an aetherstride. If it does: ▪ \u0007It can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy units. ▪ \u0007Until the end of the turn, its Dark Blessing has the [SUSTAINED HITS D3] ability. ▪ \u0007Until the end of the turn, it is not eligible to declare a"
  },
  {
@@ -932,7 +780,7 @@
   "pack": "thousand-sons",
   "subject": "Flamers, Profile",
   "directive": "Change Ld to 7+.",
-  "category": "DATASHEETS",
+  "category": "T 5",
   "text": "Change Ld to 7+."
  },
  {
@@ -940,7 +788,7 @@
   "pack": "thousand-sons",
   "subject": "Infernal Master, Ranged Weapons, inferno bolt pistol",
   "directive": "Add ‘[PISTOL]’.",
-  "category": "DATASHEETS",
+  "category": "T 5",
   "text": "Add ‘[PISTOL]’."
  },
  {
@@ -948,7 +796,7 @@
   "pack": "thousand-sons",
   "subject": "Kairos Fateweaver, One Head Looks Back Ability",
   "directive": "Change to:",
-  "category": "DATASHEETS",
+  "category": "T 5",
   "text": "‘Once per turn, when your opponent targets a unit from their army within 12\" of this model with a stratagem, you can use this ability. If you do, increase the CP cost of that use of that stratagem by 1CP.’"
  },
  {
@@ -956,7 +804,7 @@
   "pack": "thousand-sons",
   "subject": "Kairos Fateweaver, Ranged Weapons, Infernal Gateway",
   "directive": "Change profiles to:",
-  "category": "DATASHEETS",
+  "category": "T 5",
   "text": "Change profiles to: Infernal Gateway - Witchfire [BLAST, INDIRECT FIRE, PSYCHIC] RANGE A BS S AP D 24\" D6+3 2+ 9 -2 D3 Infernal Gateway - Focused Witchfire [BLAST, INDIRECT FIRE, HAZARDOUS, PSYCHIC] RANGE A BS S AP D 24\" D3+6 2+ 9 -2 3"
  },
  {
@@ -964,7 +812,7 @@
   "pack": "thousand-sons",
   "subject": "Mutalith Vortex Beast, Immaterial Flare Ability",
   "directive": "Change to:",
-  "category": "DATASHEETS",
+  "category": "T 5",
   "text": "‘While a friendly THOUSAND SONS PSYKER model is within 6\" of this model, each time that model Channels the Warp (pg 67), add 1 to the Psychic test result. This is not cumulative with any other modifiers to the Psychic test result. Lord of Change, Ranged Weapons ▪ \u0007Change the Bolt of Change profiles to: Bolt of Change - Witchfire [PSYCHIC] RANGE A BS S AP D 18\" 9 2+ 9 -1 1 Bolt of Change - Focused "
  },
  {
@@ -972,7 +820,7 @@
   "pack": "thousand-sons",
   "subject": "Screamers, Profile",
   "directive": "Change Ld to 7+.",
-  "category": "DATASHEETS",
+  "category": "T 5",
   "text": "Change Ld to 7+."
  },
  {
@@ -980,7 +828,7 @@
   "pack": "thousand-sons",
   "subject": "Sorcerer in Terminator Armour, Marked by Fate Ability",
   "directive": "Change to:",
-  "category": "DATASHEETS",
+  "category": "T 5",
   "text": "‘At the start of your Shooting phase, select one enemy unit that is visible to this PSYKER model. Until the end of the phase, each time a model in this unit makes an attack that targets that enemy unit, add 1 to the Hit roll.’ Tzaangor Enlightened with Fatecaster Greatbows,"
  },
  {
@@ -1005,22 +853,46 @@
   "subject": "Brazen Fury Detachment Rule",
   "directive": "Change to:",
   "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
-  "text": "'In your opponent’s Shooting phase, when an enemy unit has shot, if a model in this unit was destroyed as a result of those attacks, this unit can make a surge move of up to D6\". That surge move is a Brazen Fury move.' DATASHEETS Heldrake ▪ Profile: Change M to 12\" and OC to '0'. ▪ Keywords: \u0007 Remove 'AIRCRAFT'."
+  "text": "'In your opponent’s Shooting phase, when an enemy unit has shot, if a model in this unit was destroyed as a result of those attacks, this unit can make a surge move of up to D6\". That surge move is a Brazen Fury move.'"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "world-eaters",
+  "subject": "T 5 Khârn the Betrayer, Khorne Berzerkers, Master of Executions",
+  "directive": "Change the following weapon characteristics:",
+  "category": "CHANGES UNITS",
+  "text": "Change the following weapon characteristics: WEAPON CHANGES UNITS S 5 Khorne Berzerkers, Lord Invocatus, Master of Bolt Pistol AP -1 Executions Chainblade S 5 Khorne Berzerkers S 5 Chaos Land Raider, Chaos Predator Annihilator, Combi-bolter Chaos Predator Destructor, Chaos Rhino, AP -1 Chaos Terminators, Helbrute S 5 Chaos Land Raider, Chaos Predator Annihilator, Combi-weapon Chaos Predator Destru"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "world-eaters",
+  "subject": "Angron, Driven by Ultimate Rage Ability",
+  "directive": "Change to:",
+  "category": "CHANGES UNITS",
+  "text": "‘While a friendly WORLD EATERS unit is within 6\" of this unit, that unit’s melee attacks can: ▪ Re‑roll hit rolls of 1. ▪ Re‑roll wound rolls of 1.’"
  },
  {
   "why": "no ability of that name",
   "pack": "world-eaters",
   "subject": "Chaos Terminators, Blood Fury Ability",
   "directive": "Change to:",
-  "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+  "category": "CHANGES UNITS",
   "text": "▪ '\u0007This unit’s ranged attacks that target the closest eligible target can re-roll hit rolls. ▪ \u0007When this unit declares a charge, you can use this part of this ability. If you do: ▫ \u0007This unit can re-roll that charge roll. ▫ \u0007This unit must end that charge move engaged with the closest charge target.'"
+ },
+ {
+  "why": "no ability of that name",
+  "pack": "world-eaters",
+  "subject": "Khorne Berzerkers, Abilities Section",
+  "directive": "Add new ability:",
+  "category": "CHANGES UNITS",
+  "text": "Add new ability: ‘Murderous Charge: If this unit made a charge move this turn, this unit’s melee attacks have +1 S.’"
  },
  {
   "why": "no ability of that name",
   "pack": "world-eaters",
   "subject": "Khorne Berzerkers, Jakhals – Icon of Khorne Wargear Ability",
   "directive": "Change to:",
-  "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+  "category": "CHANGES UNITS",
   "text": "‘If the bearer’s unit contains one or more Icons of Khorne, each time the bearer’s unit destroys an enemy unit, you gain 1 Bloodshed point. Each time you make a Blessings of Khorne roll, roll one additional D6 for each Bloodshed point you have, after which, all your Bloodshed points are lost.'"
  },
  {
@@ -1028,7 +900,7 @@
   "pack": "world-eaters",
   "subject": "Maulerfiend, Scent Of Blood Ability",
   "directive": "Change to:",
-  "category": "POSSESSED SLAUGHTERBOUND DETACHMENT",
+  "category": "CHANGES UNITS",
   "text": "'In the Charge phase, when this unit declares a charge: ▪ \u0007If an enemy unit below starting strength is within 9\" of this unit, this unit has +1 to charge rolls. ▪ \u0007Or: If an enemy unit below half strength is within 9\" of this unit, this unit has +2 to charge rolls.'"
  }
 ]
