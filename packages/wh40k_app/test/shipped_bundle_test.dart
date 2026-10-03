@@ -238,6 +238,19 @@ void main() {
         ['for-the-greater-good']);
   });
 
+  test('a corrected default loadout ships baked into the bundle', () async {
+    // 40kdc 1.4.5 gives Vanguard Veterans a relic blade and no pistol;
+    // data-corrections.yaml restores what BSData and Wahapedia print (§3.42).
+    final astartes = await repo.faction('adeptus-astartes');
+    final squad = astartes.composition('vanguard-veteran-squad-with-jump-packs');
+    expect(squad, isNotNull);
+    for (final model in squad!.models) {
+      expect(model.defaultWeaponIds,
+          containsAll(['bolt-pistol', 'vanguard-veteran-weapon']),
+          reason: model.name);
+    }
+  });
+
   test('a faction with two army rules ships both', () async {
     // 40kdc 1.4.4 made the army rule a list, for the Tyranids.
     final tyranids = await repo.faction('tyranids');

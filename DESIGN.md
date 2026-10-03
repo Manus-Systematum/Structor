@@ -1285,20 +1285,46 @@ apps take their data from the site, so that includes apps nobody rebuilt.
 - A shipped-bundle test checks that every faction record still carries the
   single id.
 
-**GW published new points.** 468 units were repriced on the manual since
-September, across every faction. Games Workshop also retired many Space Marine datasheets from the
-manual: Tactical, Devastator and Centurion squads, Predators and others.
-BSData has caught up for everyone but the Space Marine family. Regenerating
+**GW published new points.** 615 units were repriced on the manual since
+September, across every faction. Games Workshop also took 123 datasheets out
+of it, all but two in the Space Marine family: Tactical, Devastator and
+Centurion squads, Predators and others. BSData has caught up for everyone
+but the Space Marine family. Regenerating
 the patch against the September copy of the manual would have put
 September's prices back on about 200 units. The manual was refetched before
 the patch was regenerated. That order is the lesson: **refetch the manual
 whenever the snapshot moves**, or the patch reverts the very points update
 the snapshot brought.
 
-The regenerated patch has 1,793 operations. 139 of them set points, and 123
-of those are Space Marine chapters where GW's codex prices are ahead of
-BSData. Outside that family the two sources disagree on one or two units
-per faction, the same shape as before.
+**The manual's parser was dropping every card GW marks green.** A card the
+update changed gets a coloured title bar: red when the price rose, green
+when it fell or a detachment was updated, grey otherwise. `TITLE` in
+`tools/fetch-mfm-points.py` took grey and red. Green cards were read as no
+card at all: 149 units and 119 detachments, Canoptek Court among them.
+Missing, they looked exactly like datasheets retired from the manual, and
+the first draft of this section said Infiltrators and Redemptor
+Dreadnoughts had been retired. The detachment badge pattern also failed on
+the `▼` GW prints after a changed cost. Both are fixed.
+
+**Detachment costs were never patched.** `make-update.py` read the manual's
+enhancement costs but not the detachments'. It now writes
+`detachment_points` too: 24 corrections, among them Canoptek Court from
+3 DP to 2 and Ironstorm Spearhead and Stormlance Task Force to 1 for every
+chapter.
+
+The regenerated patch has 1,853 operations: 151 unit prices, 24 detachment
+costs and 21 enhancement costs. Most of the unit prices are Space Marine
+chapters where GW's codex prices are ahead of BSData.
+
+**The Necrons cross-check now checks what ships.** It compared raw 40kdc with
+the manual and failed for as long as anyone remembers. That was real
+upstream lag, but no player saw it: BSData is primary, and the patch
+carries the manual. Its manual snapshot (`data/mfm/`) was also seven weeks
+old. It now reads the merged snapshot with corrections and the patch
+applied, against a refetched manual (v1.5, 30 September), and passes. Run
+without the patch it fails on exactly the two errors players did see:
+Lokhust Heavy Destroyers collapsed to one price for 1–3 models, and
+Canoptek Court at 3 DP.
 
 **The Space Marine codex reached 40kdc before BSData.** 40kdc 1.4.5 ingests
 the codex profiles. 72 of 221 Space Marine unit compositions changed, and
@@ -1309,16 +1335,26 @@ Three effects are visible:
 | datasheet | 40kdc 1.4.5 | BSData / Wahapedia | state |
 | --- | --- | --- | --- |
 | Ballistus Dreadnought | Storm Bolters, A4 S5 AP-1, Rapid Fire 4 | Twin storm bolter, A2 S4, twin-linked | open |
-| Vanguard Veterans with Jump Packs | relic blade, no pistol; power fist and thunder hammer listed | bolt pistol + Vanguard Veteran weapon, pistol options | open |
+| Vanguard Veterans with Jump Packs | relic blade, no pistol; power fist and thunder hammer listed | bolt pistol + Vanguard Veteran weapon, pistol options | corrected |
 | Intercessor Squad | `Power Weapon` | `Power weapon` | cosmetic |
 
-Neither source can be shown right from here: the codex is not one of the
-sources, and Wahapedia's live page may simply lag it. The builder takes its
-slots from BSData, so Vanguard Veterans are still offered the pre-codex
-pistols. The two tests that pin that loadout are skipped with this section
-as the reason. They come back when BSData publishes the codex, and so does
-the Ballistus question. The Ballistus and Intercessor tests no longer pin
-the gun's name, which was never what they tested.
+Wahapedia's Vanguard page already carries the codex-era points (110 / 220)
+and still prints a bolt pistol and a Vanguard Veteran weapon. With BSData
+agreeing, that is two current sources against one, and
+`data-corrections.yaml` gains a `compositions` section to say so. It sets a
+named model's default loadout, is baked into the bundles like every other
+correction, and needs a reason. The two Vanguard tests run again.
+
+The Ballistus is still open. Wahapedia's page there may simply lag the
+codex, and with only two sources in play, neither can be shown right from
+here. The Ballistus and Intercessor tests no longer pin the gun's name,
+which was never what they tested.
+
+Thirteen Space Marine models now carry a 40kdc default that BSData's slots
+do not, against five in September: among them the Redemptor's fragstorm
+launchers, the Sternguard Sergeant and the Captain on Bike. Some will be the
+codex and some 40kdc's ingest. Each needs the same check against a second
+source before it is corrected; only Vanguard Veterans has had it.
 
 **Moved under the tests, and backed by GW each time.** The Twin Lance went
 from 230 to 240, so the reference lists cost 2,040 and 1,035. A Captain
@@ -1326,8 +1362,7 @@ costs 90 against 40kdc's 80, and stands in for Centurion Devastators, which
 left the manual. Assault Intercessors cost 85 and a Captain with Jump Pack
 90.
 
-Both suites pass: 617 in the engine, with 2 skipped (the Vanguard tests) and
-the Necrons cross-check failing upstream as before, and 334 in the app.
+Both suites pass with nothing skipped: 623 in the engine and 335 in the app.
 
 ## 4. Army builder
 

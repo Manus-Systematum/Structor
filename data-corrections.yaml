@@ -44,6 +44,28 @@ wargear_slots:
         per_models: 1
 
 # ---------------------------------------------------------------------------
+# What a model carries before any option is taken (DESIGN.md §3.42).
+#
+# Only where two other sources agree against upstream — the codex is not one
+# of this project's sources, so a single disagreement is recorded as open in
+# DESIGN.md rather than settled here.
+compositions:
+  - faction: adeptus-astartes
+    id: vanguard-veteran-squad-with-jump-packs
+    reason: >
+      40kdc 1.4.5's codex ingest gives every model a relic blade and nothing
+      else. Wahapedia's 11th edition page, already carrying the codex-era
+      points (110 / 220), prints "Every model is equipped with: bolt pistol;
+      Vanguard Veteran weapon", with the pistol swaps as options, and BSData
+      structures the same loadout. Read 2026-10-04.
+    upstream: not yet reported
+    models:
+      - name: Vanguard Veteran Sergeant with Jump Pack
+        default_weapon_ids: [bolt-pistol, vanguard-veteran-weapon]
+      - name: Vanguard Veteran with Jump Pack
+        default_weapon_ids: [bolt-pistol, vanguard-veteran-weapon]
+
+# ---------------------------------------------------------------------------
 # Words upstream misspells.
 #
 # **Found, not judged.** Each of these is a token that is in no dictionary, in

@@ -119,6 +119,20 @@
     ]
    },
    {
+    "name": "CELESTIAN INSIDIANTS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 115
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "CELESTIAN SACRESANTS",
     "costs": [
      {
@@ -455,6 +469,35 @@
     ]
    },
    {
+    "name": "PARAGON WARSUITS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 165
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 175
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Multi-melta",
+      "cost": 10
+     }
+    ]
+   },
+   {
     "name": "PENITENT ENGINES",
     "costs": [
      {
@@ -517,6 +560,24 @@
       "of": "per Multi-melta",
       "cost": 5
      }
+    ]
+   },
+   {
+    "name": "SAINT CELESTINE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 135
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "SERAPHIM SQUAD",
+     "ZEPHYRIM SQUAD"
     ]
    },
    {
@@ -1781,6 +1842,105 @@
     ]
    },
    {
+    "name": "CORPUSCARII ELECTRO-PRIESTS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 60
+       },
+       {
+        "of": "10 models",
+        "cost": 120
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "CYBERNETICA DATASMITH",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 20
+       }
+      ]
+     }
+    ],
+    "support": [
+     "KASTELAN ROBOTS"
+    ]
+   },
+   {
+    "name": "FULGURITE ELECTRO-PRIESTS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 65
+       },
+       {
+        "of": "10 models",
+        "cost": 130
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "HASTARII EXTERMINATORS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 100
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 115
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "HASTARII FUSILIERS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 105
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 120
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "IRONSTRIDER BALLISTARII",
     "costs": [
      {
@@ -1857,6 +2017,24 @@
     ]
    },
    {
+    "name": "KATAPHRON BREACHERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 140
+       },
+       {
+        "of": "6 models",
+        "cost": 290
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "KATAPHRON DESTROYERS",
     "costs": [
      {
@@ -1869,6 +2047,20 @@
        {
         "of": "6 models",
         "cost": 200
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "ONAGER DUNECRAWLER",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 150
        }
       ]
      }
@@ -1931,6 +2123,42 @@
        {
         "of": "10 models",
         "cost": 160
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "SERBERYS RAIDERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 60
+       },
+       {
+        "of": "6 models",
+        "cost": 105
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "SERBERYS SULPHURHOUNDS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 55
+       },
+       {
+        "of": "6 models",
+        "cost": 95
        }
       ]
      }
@@ -2113,6 +2341,28 @@
     ]
    },
    {
+    "name": "SYDONIAN DRAGOONS WITH RADIUM JEZZAILS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 55
+       },
+       {
+        "of": "2 models",
+        "cost": 95
+       },
+       {
+        "of": "3 models",
+        "cost": 140
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "SYDONIAN DRAGOONS WITH TASER LANCES",
     "costs": [
      {
@@ -2129,6 +2379,20 @@
        {
         "of": "3 models",
         "cost": 170
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "SYDONIAN SKATROS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 45
        }
       ]
      }
@@ -2262,6 +2526,28 @@
     ]
    },
    {
+    "name": "COHORT CYBERNETICA",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Arch-negator",
+      "cost": 5
+     },
+     {
+      "name": "Emotionless Clarity",
+      "cost": 10
+     },
+     {
+      "name": "Lord of Machines",
+      "cost": 15
+     },
+     {
+      "name": "Necromechanic",
+      "cost": 20
+     }
+    ]
+   },
+   {
     "name": "DATA-PSALM CONCLAVE",
     "dp": 2,
     "enhancements": [
@@ -2280,6 +2566,28 @@
      {
       "name": "Temporcopia",
       "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "ERADICATION COHORT",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Belicosa-class Capacitor Vanes",
+      "cost": 25
+     },
+     {
+      "name": "Martial Signatum Amplificator",
+      "cost": 15
+     },
+     {
+      "name": "Omnicogitator",
+      "cost": 25
+     },
+     {
+      "name": "Omnissiah’s Fury",
+      "cost": 10
      }
     ]
    },
@@ -2324,6 +2632,20 @@
      {
       "name": "Transoracular Dyad Wafers",
       "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "LORDS OF THE FORGE",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "TL-4ø9",
+      "cost": 30
+     },
+     {
+      "name": "Vingh’s Wafers of Dynamism",
+      "cost": 25
      }
     ]
    },
@@ -2404,6 +2726,29 @@
     ],
     "leader": [
      "DIRE AVENGERS"
+    ]
+   },
+   {
+    "name": "AUTARCH",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 70
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "DARK REAPERS",
+     "DIRE AVENGERS",
+     "FIRE DRAGONS",
+     "GUARDIAN DEFENDERS",
+     "HOWLING BANSHEES",
+     "STORM GUARDIANS",
+     "STRIKING SCORPIONS"
     ]
    },
    {
@@ -2632,6 +2977,24 @@
     ]
    },
    {
+    "name": "FARSEER",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "GUARDIAN DEFENDERS",
+     "STORM GUARDIANS"
+    ]
+   },
+   {
     "name": "FARSEER SKYRUNNER",
     "costs": [
      {
@@ -2647,6 +3010,37 @@
     "leader": [
      "WARLOCK SKYRUNNERS",
      "WINDRIDERS"
+    ]
+   },
+   {
+    "name": "FIRE DRAGONS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 110
+       },
+       {
+        "of": "10 models",
+        "cost": 240
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 120
+       },
+       {
+        "of": "10 models",
+        "cost": 250
+       }
+      ]
+     }
     ]
    },
    {
@@ -2741,6 +3135,38 @@
     ],
     "leader": [
      "HOWLING BANSHEES"
+    ]
+   },
+   {
+    "name": "KHARSETH",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 80
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "CORSAIR VOIDREAVERS",
+     "CORSAIR VOIDSCARRED"
+    ]
+   },
+   {
+    "name": "LEYSTALKER",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 75
+       }
+      ]
+     }
     ]
    },
    {
@@ -2874,6 +3300,24 @@
     ]
    },
    {
+    "name": "SHROUD RUNNERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 90
+       },
+       {
+        "of": "6 models",
+        "cost": 165
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "SPIRITSEER",
     "costs": [
      {
@@ -2903,6 +3347,23 @@
        }
       ]
      }
+    ]
+   },
+   {
+    "name": "STONESINGER",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 55
+       }
+      ]
+     }
+    ],
+    "support": [
+     "DRAGON KNIGHTS"
     ]
    },
    {
@@ -3009,6 +3470,28 @@
        {
         "of": "1 model",
         "cost": 40
+       }
+      ]
+     }
+    ],
+    "support": [
+     "GUARDIAN DEFENDERS",
+     "STORM GUARDIANS"
+    ]
+   },
+   {
+    "name": "WARLOCK CONCLAVE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "2 models",
+        "cost": 55
+       },
+       {
+        "of": "4 models",
+        "cost": 110
        }
       ]
      }
@@ -3224,6 +3707,20 @@
     ]
    },
    {
+    "name": "DEATH JESTER",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 65
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "SHADOWSEER",
     "costs": [
      {
@@ -3238,6 +3735,38 @@
     ],
     "leader": [
      "TROUPE"
+    ]
+   },
+   {
+    "name": "SKYWEAVERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "2 models",
+        "cost": 90
+       },
+       {
+        "of": "4 models",
+        "cost": 180
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "SOLITAIRE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 105
+       }
+      ]
+     }
     ]
    },
    {
@@ -3340,6 +3869,20 @@
      "STORM GUARDIANS",
      "YNNARI KABALITE WARRIORS",
      "YNNARI WYCHES"
+    ]
+   },
+   {
+    "name": "THE YNCARNE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 230
+       }
+      ]
+     }
     ]
    },
    {
@@ -3498,6 +4041,29 @@
        }
       ]
      }
+    ]
+   },
+   {
+    "name": "YVRAINE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 90
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "CORSAIR VOIDREAVERS",
+     "CORSAIR VOIDSCARRED",
+     "GUARDIAN DEFENDERS",
+     "STORM GUARDIANS",
+     "YNNARI INCUBI",
+     "YNNARI KABALITE WARRIORS",
+     "YNNARI WYCHES"
     ]
    }
   ],
@@ -3752,6 +4318,28 @@
      },
      {
       "name": "Shadowfall Masks (Upgrade)",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "WARHOST",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Gift of Foresight",
+      "cost": 15
+     },
+     {
+      "name": "Phoenix Gem",
+      "cost": 35
+     },
+     {
+      "name": "Psychic Destroyer",
+      "cost": 30
+     },
+     {
+      "name": "Timeless Strategist",
       "cost": 15
      }
     ]
@@ -4231,6 +4819,28 @@
     ]
    },
    {
+    "name": "COMMISSAR YARRICK",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 110
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "CADIAN SHOCK TROOPS",
+     "CATACHAN JUNGLE FIGHTERS",
+     "DEATH KORPS OF KRIEG",
+     "KASRKIN",
+     "KRIEG COMBAT ENGINEERS",
+     "TEMPESTUS SCIONS"
+    ]
+   },
+   {
     "name": "CYCLOPS DEMOLITION VEHICLE",
     "costs": [
      {
@@ -4387,6 +4997,29 @@
        {
         "of": "1 model",
         "cost": 415
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "HELLHOUND",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 115
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 125
        }
       ]
      }
@@ -4814,6 +5447,46 @@
       "of": "per Plasma cannon",
       "cost": 5
      }
+    ]
+   },
+   {
+    "name": "LORD MARSHAL DREIR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 70
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "DEATH RIDERS"
+    ]
+   },
+   {
+    "name": "LORD SOLAR LEONTUS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 120
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "ATTILAN ROUGH RIDERS",
+     "CADIAN SHOCK TROOPS",
+     "CATACHAN JUNGLE FIGHTERS",
+     "DEATH KORPS OF KRIEG",
+     "DEATH RIDERS",
+     "KASRKIN",
+     "KRIEG COMBAT ENGINEERS"
     ]
    },
    {
@@ -5721,6 +6394,39 @@
     ]
    },
    {
+    "name": "IMPULSOR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 3RD UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 70
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 4TH + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 80
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Multi-melta",
+      "cost": 10
+     },
+     {
+      "of": "per Orbital Comms Array",
+      "cost": 10
+     }
+    ]
+   },
+   {
     "name": "MARSHAL",
     "costs": [
      {
@@ -5945,6 +6651,27 @@
      "INTERCESSOR SQUAD",
      "STERNGUARD VETERAN SQUAD",
      "SWORD BRETHREN SQUAD"
+    ]
+   },
+   {
+    "name": "APOTHECARY BIOLOGIS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
+       }
+      ]
+     }
+    ],
+    "support": [
+     "AGGRESSOR SQUAD",
+     "ERADICATOR SQUAD WITH HEAVY BOLTERS",
+     "ERADICATOR SQUAD WITH MELTA RIFLES",
+     "HEAVY INTERCESSOR SQUAD",
+     "INDOMITOR KILL TEAM"
     ]
    },
    {
@@ -6622,6 +7349,24 @@
     ]
    },
    {
+    "name": "INFILTRATOR SQUAD",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 85
+       },
+       {
+        "of": "10 models",
+        "cost": 150
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "INTERCESSOR SQUAD",
     "costs": [
      {
@@ -6697,6 +7442,34 @@
        }
       ]
      }
+    ]
+   },
+   {
+    "name": "JUDICIAR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 50
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "CRUSADER SQUAD",
+     "DEATHWATCH VETERANS",
+     "DECIMUS KILL TEAM",
+     "FORTIS KILL TEAM",
+     "INFERNUS SQUAD",
+     "INNER CIRCLE COMPANIONS",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD",
+     "SWORD BRETHREN SQUAD",
+     "VANGUARD VETERAN SQUAD"
     ]
    },
    {
@@ -6791,6 +7564,42 @@
     ]
    },
    {
+    "name": "LIEUTENANT IN PHOBOS ARMOUR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 40
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ELIMINATOR SQUAD",
+     "INCURSOR SQUAD",
+     "INFILTRATOR SQUAD",
+     "REIVER SQUAD",
+     "SPECTRUS KILL TEAM",
+     "WOLF SCOUTS"
+    ]
+   },
+   {
+    "name": "LIEUTENANT WITH COMBI-WEAPON",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 85
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "OUTRIDER SQUAD",
     "costs": [
      {
@@ -6805,6 +7614,35 @@
         "cost": 160
        }
       ]
+     }
+    ]
+   },
+   {
+    "name": "REDEMPTOR DREADNOUGHT",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 170
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 190
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Macro plasma incinerator",
+      "cost": 10
      }
     ]
    },
@@ -7119,7 +7957,264 @@
     ]
    }
   ],
-  "detachments": []
+  "detachments": [
+   {
+    "name": "ASSAULT BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Furious Assault (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Imperium’s Sword",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "DEATHWATCH SUPPORT",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Beacon Angelis",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "DEVASTATOR BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Honour of Vigilance",
+      "cost": 20
+     },
+     {
+      "name": "Master-forged Firearms",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "FIST OF THE GOD-EMPEROR",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Oathbound Exemplar",
+      "cost": 10
+     },
+     {
+      "name": "Righteous Fervour (Upgrade)",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "GAUNTLET TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Damocles-class Uplink",
+      "cost": 15
+     },
+     {
+      "name": "Linebreaker Onslaught",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "GRAVIS LINEBREAKER FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Indefatigable Fortitude",
+      "cost": 20
+     },
+     {
+      "name": "Relentless Advance",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "GRAVIS SIEGE FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Immovable Conquerors (Upgrade)",
+      "cost": 15
+     },
+     {
+      "name": "Narthecis Gauntlet",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "IRONCLAD CHAMPIONS",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Artificer Sarcophagus (Upgrade)",
+      "cost": 40
+     },
+     {
+      "name": "Venerable Champion (Aura) (Upgrade)",
+      "cost": 30
+     }
+    ]
+   },
+   {
+    "name": "IRONSTORM SPEARHEAD",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Gunnery Honours (Upgrade)",
+      "cost": 15
+     },
+     {
+      "name": "Redoubtable Machine Spirit (Upgrade)",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "MARSHAL'S HOUSEHOLD",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Fervent Exemplars (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Inheritors of Sigismund (Upgrade)",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "PHOBOS SHADOW FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Execute and Redeploy",
+      "cost": 25
+     },
+     {
+      "name": "Venator Omni-auspex",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "PHOBOS SHOCK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Seal of Shrouding",
+      "cost": 15
+     },
+     {
+      "name": "Venator Omni-auspex",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "STORMLANCE TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Auspex Triangulation Shrines (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Supercharged Engines (Upgrade)",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "TACTICAL BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Laurels of Vigilance",
+      "cost": 10
+     },
+     {
+      "name": "Tactical Insight",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "TACTICUS ATTACK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Martial Paragon",
+      "cost": 10
+     },
+     {
+      "name": "Spearpoint War Leader",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "TACTICUS FIRESTORM FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Cyber-familiar",
+      "cost": 15
+     },
+     {
+      "name": "Tempered in Battle (Aura)",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "TERMINATOR STORM FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Champion of the First Company",
+      "cost": 20
+     },
+     {
+      "name": "Corporeum Reliquary",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "VOW-SWORN CRUSADERS",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Augury Servo-host",
+      "cost": 20
+     },
+     {
+      "name": "Consecrating Aura",
+      "cost": 20
+     },
+     {
+      "name": "Incendiary Animus",
+      "cost": 25
+     },
+     {
+      "name": "Zealous Vanguard",
+      "cost": 25
+     }
+    ]
+   }
+  ]
  },
  "blood-angels": {
   "units": [
@@ -7385,6 +8480,30 @@
     ]
    },
    {
+    "name": "SANGUINARY PRIEST",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "COMPANY HEROES",
+     "DESOLATION SQUAD",
+     "HELLBLASTER SQUAD",
+     "INFERNUS SQUAD",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD"
+    ]
+   },
+   {
     "name": "THE SANGUINOR",
     "costs": [
      {
@@ -7495,6 +8614,27 @@
      "INTERCESSOR SQUAD",
      "STERNGUARD VETERAN SQUAD",
      "SWORD BRETHREN SQUAD"
+    ]
+   },
+   {
+    "name": "APOTHECARY BIOLOGIS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
+       }
+      ]
+     }
+    ],
+    "support": [
+     "AGGRESSOR SQUAD",
+     "ERADICATOR SQUAD WITH HEAVY BOLTERS",
+     "ERADICATOR SQUAD WITH MELTA RIFLES",
+     "HEAVY INTERCESSOR SQUAD",
+     "INDOMITOR KILL TEAM"
     ]
    },
    {
@@ -7867,6 +9007,26 @@
     "leader": [
      "OUTRIDER SQUAD",
      "RAVENWING BLACK KNIGHTS"
+    ]
+   },
+   {
+    "name": "CHAPLAIN WITH JUMP PACK",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 75
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "ASSAULT INTERCESSORS WITH JUMP PACKS",
+     "DEATH COMPANY MARINES WITH JUMP PACKS",
+     "TALONSTRIKE KILL TEAM",
+     "VANGUARD VETERAN SQUAD WITH JUMP PACKS"
     ]
    },
    {
@@ -8250,6 +9410,24 @@
     ]
    },
    {
+    "name": "INFILTRATOR SQUAD",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 85
+       },
+       {
+        "of": "10 models",
+        "cost": 150
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "INTERCESSOR SQUAD",
     "costs": [
      {
@@ -8325,6 +9503,34 @@
        }
       ]
      }
+    ]
+   },
+   {
+    "name": "JUDICIAR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 50
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "CRUSADER SQUAD",
+     "DEATHWATCH VETERANS",
+     "DECIMUS KILL TEAM",
+     "FORTIS KILL TEAM",
+     "INFERNUS SQUAD",
+     "INNER CIRCLE COMPANIONS",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD",
+     "SWORD BRETHREN SQUAD",
+     "VANGUARD VETERAN SQUAD"
     ]
    },
    {
@@ -8438,6 +9644,28 @@
     ]
    },
    {
+    "name": "LIBRARIAN IN TERMINATOR ARMOUR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 80
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "DEATHWATCH TERMINATOR SQUAD",
+     "DEATHWING KNIGHTS",
+     "DEATHWING TERMINATOR SQUAD",
+     "TERMINATOR ASSAULT SQUAD",
+     "TERMINATOR SQUAD",
+     "WOLF GUARD TERMINATORS"
+    ]
+   },
+   {
     "name": "LIEUTENANT",
     "costs": [
      {
@@ -8469,6 +9697,42 @@
     ]
    },
    {
+    "name": "LIEUTENANT IN PHOBOS ARMOUR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 40
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ELIMINATOR SQUAD",
+     "INCURSOR SQUAD",
+     "INFILTRATOR SQUAD",
+     "REIVER SQUAD",
+     "SPECTRUS KILL TEAM",
+     "WOLF SCOUTS"
+    ]
+   },
+   {
+    "name": "LIEUTENANT WITH COMBI-WEAPON",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 85
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "OUTRIDER SQUAD",
     "costs": [
      {
@@ -8483,6 +9747,35 @@
         "cost": 160
        }
       ]
+     }
+    ]
+   },
+   {
+    "name": "REDEMPTOR DREADNOUGHT",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 170
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 190
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Macro plasma incinerator",
+      "cost": 10
      }
     ]
    },
@@ -8849,7 +10142,286 @@
     ]
    }
   ],
-  "detachments": []
+  "detachments": [
+   {
+    "name": "ANGELIC INHERITORS",
+    "dp": 3,
+    "enhancements": [
+     {
+      "name": "Blazing Icon",
+      "cost": 20
+     },
+     {
+      "name": "Ordained Sacrifice",
+      "cost": 25
+     },
+     {
+      "name": "Prescient Flash",
+      "cost": 25
+     },
+     {
+      "name": "Unto Death",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "ASSAULT BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Furious Assault (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Imperium’s Sword",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "DEATHWATCH SUPPORT",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Beacon Angelis",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "DEVASTATOR BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Honour of Vigilance",
+      "cost": 20
+     },
+     {
+      "name": "Master-forged Firearms",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "ENCARMINE SPEARTIP",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Angelic Executioner",
+      "cost": 20
+     },
+     {
+      "name": "Shadow of Abomination",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "GAUNTLET TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Damocles-class Uplink",
+      "cost": 15
+     },
+     {
+      "name": "Linebreaker Onslaught",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "GLADIUS TASK FORCE",
+    "dp": 3,
+    "enhancements": [
+     {
+      "name": "Adept of the Codex",
+      "cost": 20
+     },
+     {
+      "name": "Artificer Armour",
+      "cost": 15
+     },
+     {
+      "name": "Laurels of Triumph",
+      "cost": 20
+     },
+     {
+      "name": "Standard of the Emperor Ascendant",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "GRAVIS LINEBREAKER FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Indefatigable Fortitude",
+      "cost": 20
+     },
+     {
+      "name": "Relentless Advance",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "GRAVIS SIEGE FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Immovable Conquerors (Upgrade)",
+      "cost": 15
+     },
+     {
+      "name": "Narthecis Gauntlet",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "IRONCLAD CHAMPIONS",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Artificer Sarcophagus (Upgrade)",
+      "cost": 40
+     },
+     {
+      "name": "Venerable Champion (Aura) (Upgrade)",
+      "cost": 30
+     }
+    ]
+   },
+   {
+    "name": "IRONSTORM SPEARHEAD",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Gunnery Honours (Upgrade)",
+      "cost": 15
+     },
+     {
+      "name": "Redoubtable Machine Spirit (Upgrade)",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "PHOBOS SHADOW FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Execute and Redeploy",
+      "cost": 25
+     },
+     {
+      "name": "Venator Omni-auspex",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "PHOBOS SHOCK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Seal of Shrouding",
+      "cost": 15
+     },
+     {
+      "name": "Venator Omni-auspex",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "STORMLANCE TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Auspex Triangulation Shrines (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Supercharged Engines (Upgrade)",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "TACTICAL BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Laurels of Vigilance",
+      "cost": 10
+     },
+     {
+      "name": "Tactical Insight",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "TACTICUS ATTACK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Martial Paragon",
+      "cost": 10
+     },
+     {
+      "name": "Spearpoint War Leader",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "TACTICUS FIRESTORM FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Cyber-familiar",
+      "cost": 15
+     },
+     {
+      "name": "Tempered in Battle (Aura)",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "TERMINATOR STORM FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Champion of the First Company",
+      "cost": 20
+     },
+     {
+      "name": "Corporeum Reliquary",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "WRATH OF THE DOOMED",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Instinctive Interception",
+      "cost": 10
+     },
+     {
+      "name": "On the Archtraitor's Bridge",
+      "cost": 20
+     }
+    ]
+   }
+  ]
  },
  "chaos-daemons": {
   "units": [
@@ -10150,6 +11722,52 @@
     ]
    },
    {
+    "name": "KNIGHT ABOMINANT",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 350
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 370
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "KNIGHT DESECRATOR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 350
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 370
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "KNIGHT DESPOILER",
     "costs": [
      {
@@ -10179,6 +11797,75 @@
      {
       "of": "per Despoiler battle cannon",
       "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "KNIGHT RAMPAGER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 350
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 370
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "KNIGHT RUINATOR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 325
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 345
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "KNIGHT TYRANT",
+    "costs": [
+     {
+      "scope": "YOUR 1ST UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 390
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 2ND + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 410
+       }
+      ]
      }
     ]
    },
@@ -10460,6 +12147,37 @@
     ]
    },
    {
+    "name": "ACCURSED CULTISTS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "8 models",
+        "cost": 90
+       },
+       {
+        "of": "16 models",
+        "cost": 185
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "8 models",
+        "cost": 110
+       },
+       {
+        "of": "16 models",
+        "cost": 205
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "CHAOS BIKERS",
     "costs": [
      {
@@ -10555,6 +12273,52 @@
     ]
    },
    {
+    "name": "CHAOS PREDATOR ANNIHILATOR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 140
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 150
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "CHAOS PREDATOR DESTRUCTOR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 145
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 155
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "CHAOS RHINO",
     "costs": [
      {
@@ -10617,6 +12381,29 @@
        {
         "of": "10 models",
         "cost": 400
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "CHAOS VINDICATOR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 180
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 190
        }
       ]
      }
@@ -10830,6 +12617,35 @@
     ]
    },
    {
+    "name": "FORGEFIEND",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 155
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 165
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Ectoplasma cannon",
+      "cost": 5
+     }
+    ]
+   },
+   {
     "name": "HAARKEN WORLDCLAIMER",
     "costs": [
      {
@@ -10870,6 +12686,20 @@
     ]
    },
    {
+    "name": "HELBRUTE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 125
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "HELDRAKE",
     "costs": [
      {
@@ -10878,6 +12708,34 @@
        {
         "of": "1 model",
         "cost": 175
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "HERETIC ASTARTES DAEMON PRINCE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 155
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "HERETIC ASTARTES DAEMON PRINCE WITH WINGS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 170
        }
       ]
      }
@@ -10964,6 +12822,20 @@
     ]
    },
    {
+    "name": "LORD DISCORDANT ON HELSTALKER",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 155
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "MASTER OF EXECUTIONS",
     "costs": [
      {
@@ -11021,6 +12893,20 @@
      "CHOSEN",
      "LEGIONARIES",
      "RED CORSAIRS RAIDERS"
+    ]
+   },
+   {
+    "name": "MAULERFIEND",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 125
+       }
+      ]
+     }
     ]
    },
    {
@@ -11266,6 +13152,20 @@
     ],
     "leader": [
      "TRAITOR GUARDSMEN SQUAD"
+    ]
+   },
+   {
+    "name": "TRAITOR GUARDSMEN SQUAD",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 65
+       }
+      ]
+     }
     ]
    },
    {
@@ -12101,6 +14001,20 @@
     ]
    },
    {
+    "name": "RAVENWING DARK TALON",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 190
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "SAMMAEL",
     "costs": [
      {
@@ -12215,6 +14129,27 @@
      "INTERCESSOR SQUAD",
      "STERNGUARD VETERAN SQUAD",
      "SWORD BRETHREN SQUAD"
+    ]
+   },
+   {
+    "name": "APOTHECARY BIOLOGIS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
+       }
+      ]
+     }
+    ],
+    "support": [
+     "AGGRESSOR SQUAD",
+     "ERADICATOR SQUAD WITH HEAVY BOLTERS",
+     "ERADICATOR SQUAD WITH MELTA RIFLES",
+     "HEAVY INTERCESSOR SQUAD",
+     "INDOMITOR KILL TEAM"
     ]
    },
    {
@@ -12990,6 +14925,24 @@
     ]
    },
    {
+    "name": "INFILTRATOR SQUAD",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 85
+       },
+       {
+        "of": "10 models",
+        "cost": 150
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "INTERCESSOR SQUAD",
     "costs": [
      {
@@ -13065,6 +15018,34 @@
        }
       ]
      }
+    ]
+   },
+   {
+    "name": "JUDICIAR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 50
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "CRUSADER SQUAD",
+     "DEATHWATCH VETERANS",
+     "DECIMUS KILL TEAM",
+     "FORTIS KILL TEAM",
+     "INFERNUS SQUAD",
+     "INNER CIRCLE COMPANIONS",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD",
+     "SWORD BRETHREN SQUAD",
+     "VANGUARD VETERAN SQUAD"
     ]
    },
    {
@@ -13178,6 +15159,28 @@
     ]
    },
    {
+    "name": "LIBRARIAN IN TERMINATOR ARMOUR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 80
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "DEATHWATCH TERMINATOR SQUAD",
+     "DEATHWING KNIGHTS",
+     "DEATHWING TERMINATOR SQUAD",
+     "TERMINATOR ASSAULT SQUAD",
+     "TERMINATOR SQUAD",
+     "WOLF GUARD TERMINATORS"
+    ]
+   },
+   {
     "name": "LIEUTENANT",
     "costs": [
      {
@@ -13209,6 +15212,42 @@
     ]
    },
    {
+    "name": "LIEUTENANT IN PHOBOS ARMOUR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 40
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ELIMINATOR SQUAD",
+     "INCURSOR SQUAD",
+     "INFILTRATOR SQUAD",
+     "REIVER SQUAD",
+     "SPECTRUS KILL TEAM",
+     "WOLF SCOUTS"
+    ]
+   },
+   {
+    "name": "LIEUTENANT WITH COMBI-WEAPON",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 85
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "OUTRIDER SQUAD",
     "costs": [
      {
@@ -13223,6 +15262,35 @@
         "cost": 160
        }
       ]
+     }
+    ]
+   },
+   {
+    "name": "REDEMPTOR DREADNOUGHT",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 170
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 190
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Macro plasma incinerator",
+      "cost": 10
      }
     ]
    },
@@ -13589,7 +15657,286 @@
     ]
    }
   ],
-  "detachments": []
+  "detachments": [
+   {
+    "name": "ASSAULT BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Furious Assault (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Imperium’s Sword",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "DARKFLIGHT PURSUIT",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Nightforged Battery (Upgarde)",
+      "cost": 10
+     },
+     {
+      "name": "Thundercowl Turbines (Upgrade)",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "DEATHWATCH SUPPORT",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Beacon Angelis",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "DEVASTATOR BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Honour of Vigilance",
+      "cost": 20
+     },
+     {
+      "name": "Master-forged Firearms",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "GAUNTLET TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Damocles-class Uplink",
+      "cost": 15
+     },
+     {
+      "name": "Linebreaker Onslaught",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "GLADIUS TASK FORCE",
+    "dp": 3,
+    "enhancements": [
+     {
+      "name": "Adept of the Codex",
+      "cost": 20
+     },
+     {
+      "name": "Artificer Armour",
+      "cost": 15
+     },
+     {
+      "name": "Laurels of Triumph",
+      "cost": 20
+     },
+     {
+      "name": "Standard of the Emperor Ascendant",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "GRAVIS LINEBREAKER FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Indefatigable Fortitude",
+      "cost": 20
+     },
+     {
+      "name": "Relentless Advance",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "GRAVIS SIEGE FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Immovable Conquerors (Upgrade)",
+      "cost": 15
+     },
+     {
+      "name": "Narthecis Gauntlet",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "INNER CIRCLE TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Champion of the Deathwing",
+      "cost": 20
+     },
+     {
+      "name": "Singular Will",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "IRONCLAD CHAMPIONS",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Artificer Sarcophagus (Upgrade)",
+      "cost": 40
+     },
+     {
+      "name": "Venerable Champion (Aura) (Upgrade)",
+      "cost": 30
+     }
+    ]
+   },
+   {
+    "name": "IRONSTORM SPEARHEAD",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Gunnery Honours (Upgrade)",
+      "cost": 15
+     },
+     {
+      "name": "Redoubtable Machine Spirit (Upgrade)",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "PHOBOS SHADOW FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Execute and Redeploy",
+      "cost": 25
+     },
+     {
+      "name": "Venator Omni-auspex",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "PHOBOS SHOCK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Seal of Shrouding",
+      "cost": 15
+     },
+     {
+      "name": "Venator Omni-auspex",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "STORMLANCE TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Auspex Triangulation Shrines (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Supercharged Engines (Upgrade)",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "TACTICAL BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Laurels of Vigilance",
+      "cost": 10
+     },
+     {
+      "name": "Tactical Insight",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "TACTICUS ATTACK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Martial Paragon",
+      "cost": 10
+     },
+     {
+      "name": "Spearpoint War Leader",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "TACTICUS FIRESTORM FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Cyber-familiar",
+      "cost": 15
+     },
+     {
+      "name": "Tempered in Battle (Aura)",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "TERMINATOR STORM FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Champion of the First Company",
+      "cost": 20
+     },
+     {
+      "name": "Corporeum Reliquary",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "WRATH OF THE ROCK",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Ancient Weapons",
+      "cost": 20
+     },
+     {
+      "name": "Deathwing Assault",
+      "cost": 15
+     },
+     {
+      "name": "Lord of the Ravenwing",
+      "cost": 15
+     },
+     {
+      "name": "Tempered in Battle (Aura)",
+      "cost": 10
+     }
+    ]
+   }
+  ]
  },
  "death-guard": {
   "units": [
@@ -13673,6 +16020,52 @@
     ]
    },
    {
+    "name": "CHAOS PREDATOR ANNIHILATOR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 130
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 140
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "CHAOS PREDATOR DESTRUCTOR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 140
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 150
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "CHAOS RHINO",
     "costs": [
      {
@@ -13704,6 +16097,65 @@
        {
         "of": "2 models",
         "cost": 80
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DAEMON PRINCE OF NURGLE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 185
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DAEMON PRINCE OF NURGLE WITH WINGS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 160
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DEATHSHROUD TERMINATORS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 150
+       },
+       {
+        "of": "6 models",
+        "cost": 305
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 160
+       },
+       {
+        "of": "6 models",
+        "cost": 315
        }
       ]
      }
@@ -13806,6 +16258,20 @@
     ]
    },
    {
+    "name": "HELBRUTE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 105
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "ICON BEARER",
     "costs": [
      {
@@ -13823,6 +16289,24 @@
     ]
    },
    {
+    "name": "LORD OF CONTAGION",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 110
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "BLIGHTLORD TERMINATORS",
+     "DEATHSHROUD TERMINATORS"
+    ]
+   },
+   {
     "name": "LORD OF POXES",
     "costs": [
      {
@@ -13837,6 +16321,24 @@
     ],
     "leader": [
      "PLAGUE MARINES"
+    ]
+   },
+   {
+    "name": "LORD OF VIRULENCE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 90
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "BLIGHTLORD TERMINATORS",
+     "DEATHSHROUD TERMINATORS"
     ]
    },
    {
@@ -13945,6 +16447,28 @@
     ]
    },
    {
+    "name": "PLAGUE MARINES",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 90
+       },
+       {
+        "of": "7 models",
+        "cost": 125
+       },
+       {
+        "of": "10 models",
+        "cost": 175
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "PLAGUE SURGEON",
     "costs": [
      {
@@ -13994,6 +16518,25 @@
     ],
     "leader": [
      "PLAGUE MARINES"
+    ]
+   },
+   {
+    "name": "TYPHUS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 90
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "BLIGHTLORD TERMINATORS",
+     "DEATHSHROUD TERMINATORS",
+     "POXWALKERS"
     ]
    },
    {
@@ -14602,6 +17145,27 @@
     ]
    },
    {
+    "name": "APOTHECARY BIOLOGIS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
+       }
+      ]
+     }
+    ],
+    "support": [
+     "AGGRESSOR SQUAD",
+     "ERADICATOR SQUAD WITH HEAVY BOLTERS",
+     "ERADICATOR SQUAD WITH MELTA RIFLES",
+     "HEAVY INTERCESSOR SQUAD",
+     "INDOMITOR KILL TEAM"
+    ]
+   },
+   {
     "name": "ASSAULT INTERCESSOR SQUAD",
     "costs": [
      {
@@ -15374,6 +17938,24 @@
     ]
    },
    {
+    "name": "INFILTRATOR SQUAD",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 85
+       },
+       {
+        "of": "10 models",
+        "cost": 150
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "INTERCESSOR SQUAD",
     "costs": [
      {
@@ -15449,6 +18031,34 @@
        }
       ]
      }
+    ]
+   },
+   {
+    "name": "JUDICIAR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 50
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "CRUSADER SQUAD",
+     "DEATHWATCH VETERANS",
+     "DECIMUS KILL TEAM",
+     "FORTIS KILL TEAM",
+     "INFERNUS SQUAD",
+     "INNER CIRCLE COMPANIONS",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD",
+     "SWORD BRETHREN SQUAD",
+     "VANGUARD VETERAN SQUAD"
     ]
    },
    {
@@ -15562,6 +18172,28 @@
     ]
    },
    {
+    "name": "LIBRARIAN IN TERMINATOR ARMOUR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 80
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "DEATHWATCH TERMINATOR SQUAD",
+     "DEATHWING KNIGHTS",
+     "DEATHWING TERMINATOR SQUAD",
+     "TERMINATOR ASSAULT SQUAD",
+     "TERMINATOR SQUAD",
+     "WOLF GUARD TERMINATORS"
+    ]
+   },
+   {
     "name": "LIEUTENANT",
     "costs": [
      {
@@ -15593,6 +18225,42 @@
     ]
    },
    {
+    "name": "LIEUTENANT IN PHOBOS ARMOUR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 40
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ELIMINATOR SQUAD",
+     "INCURSOR SQUAD",
+     "INFILTRATOR SQUAD",
+     "REIVER SQUAD",
+     "SPECTRUS KILL TEAM",
+     "WOLF SCOUTS"
+    ]
+   },
+   {
+    "name": "LIEUTENANT WITH COMBI-WEAPON",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 85
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "OUTRIDER SQUAD",
     "costs": [
      {
@@ -15607,6 +18275,35 @@
         "cost": 160
        }
       ]
+     }
+    ]
+   },
+   {
+    "name": "REDEMPTOR DREADNOUGHT",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 170
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 190
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Macro plasma incinerator",
+      "cost": 10
      }
     ]
    },
@@ -15881,7 +18578,248 @@
     ]
    }
   ],
-  "detachments": []
+  "detachments": [
+   {
+    "name": "ASSAULT BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Furious Assault (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Imperium’s Sword",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "BLACK SPEAR TASK FORCE",
+    "dp": 3,
+    "enhancements": [
+     {
+      "name": "Beacon Angelis",
+      "cost": 25
+     },
+     {
+      "name": "Osseus Key (Aura)",
+      "cost": 20
+     },
+     {
+      "name": "The Thief of Secrets",
+      "cost": 10
+     },
+     {
+      "name": "The Tome of Ectoclades",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "DEVASTATOR BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Honour of Vigilance",
+      "cost": 20
+     },
+     {
+      "name": "Master-forged Firearms",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "GAUNTLET TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Damocles-class Uplink",
+      "cost": 15
+     },
+     {
+      "name": "Linebreaker Onslaught",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "GLADIUS TASK FORCE",
+    "dp": 3,
+    "enhancements": [
+     {
+      "name": "Adept of the Codex",
+      "cost": 20
+     },
+     {
+      "name": "Artificer Armour",
+      "cost": 15
+     },
+     {
+      "name": "Laurels of Triumph",
+      "cost": 20
+     },
+     {
+      "name": "Standard of the Emperor Ascendant",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "GRAVIS LINEBREAKER FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Indefatigable Fortitude",
+      "cost": 20
+     },
+     {
+      "name": "Relentless Advance",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "GRAVIS SIEGE FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Immovable Conquerors (Upgrade)",
+      "cost": 15
+     },
+     {
+      "name": "Narthecis Gauntlet",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "IRONCLAD CHAMPIONS",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Artificer Sarcophagus (Upgrade)",
+      "cost": 40
+     },
+     {
+      "name": "Venerable Champion (Aura) (Upgrade)",
+      "cost": 30
+     }
+    ]
+   },
+   {
+    "name": "IRONSTORM SPEARHEAD",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Gunnery Honours (Upgrade)",
+      "cost": 15
+     },
+     {
+      "name": "Redoubtable Machine Spirit (Upgrade)",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "PHOBOS SHADOW FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Execute and Redeploy",
+      "cost": 25
+     },
+     {
+      "name": "Venator Omni-auspex",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "PHOBOS SHOCK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Seal of Shrouding",
+      "cost": 15
+     },
+     {
+      "name": "Venator Omni-auspex",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "STORMLANCE TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Auspex Triangulation Shrines (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Supercharged Engines (Upgrade)",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "TACTICAL BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Laurels of Vigilance",
+      "cost": 10
+     },
+     {
+      "name": "Tactical Insight",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "TACTICUS ATTACK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Martial Paragon",
+      "cost": 10
+     },
+     {
+      "name": "Spearpoint War Leader",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "TACTICUS FIRESTORM FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Cyber-familiar",
+      "cost": 15
+     },
+     {
+      "name": "Tempered in Battle (Aura)",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "TERMINATOR STORM FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Champion of the First Company",
+      "cost": 20
+     },
+     {
+      "name": "Corporeum Reliquary",
+      "cost": 25
+     }
+    ]
+   }
+  ]
  },
  "drukhari": {
   "units": [
@@ -16275,6 +19213,43 @@
     ]
    },
    {
+    "name": "TALOS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 70
+       },
+       {
+        "of": "2 models",
+        "cost": 140
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 80
+       },
+       {
+        "of": "2 models",
+        "cost": 150
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Twin haywire blaster",
+      "cost": 5
+     }
+    ]
+   },
+   {
     "name": "VENOM",
     "costs": [
      {
@@ -16306,6 +19281,28 @@
        {
         "of": "1 model",
         "cost": 245
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "WRACKS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 55
+       },
+       {
+        "of": "8 models",
+        "cost": 90
+       },
+       {
+        "of": "10 models",
+        "cost": 110
        }
       ]
      }
@@ -16506,6 +19503,29 @@
  "emperors-children": {
   "units": [
    {
+    "name": "CHAOS LAND RAIDER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 210
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 230
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "CHAOS RHINO",
     "costs": [
      {
@@ -16551,6 +19571,52 @@
        {
         "of": "5 models",
         "cost": 155
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DAEMON PRINCE OF SLAANESH",
+    "costs": [
+     {
+      "scope": "YOUR 1ST UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 165
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 2ND + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 180
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DAEMON PRINCE OF SLAANESH WITH WINGS",
+    "costs": [
+     {
+      "scope": "YOUR 1ST UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 205
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 2ND + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 225
        }
       ]
      }
@@ -16888,6 +19954,28 @@
   ],
   "detachments": [
    {
+    "name": "CARNIVAL OF EXCESS",
+    "dp": 3,
+    "enhancements": [
+     {
+      "name": "Dark Blessings",
+      "cost": 10
+     },
+     {
+      "name": "Empyric Suffusion",
+      "cost": 15
+     },
+     {
+      "name": "Possessed Blade",
+      "cost": 35
+     },
+     {
+      "name": "Warp Walker",
+      "cost": 35
+     }
+    ]
+   },
+   {
     "name": "COTERIE OF THE CONCEITED",
     "dp": 3,
     "enhancements": [
@@ -17026,6 +20114,28 @@
     ]
    },
    {
+    "name": "SLAANESH’S CHOSEN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Eager to Prove",
+      "cost": 15
+     },
+     {
+      "name": "Proud and Vainglorious",
+      "cost": 20
+     },
+     {
+      "name": "Repulsed by Weakness",
+      "cost": 25
+     },
+     {
+      "name": "Slayer of Champions",
+      "cost": 15
+     }
+    ]
+   },
+   {
     "name": "SPECTACLE OF SLAUGHTER",
     "dp": 1,
     "enhancements": [
@@ -17134,6 +20244,24 @@
      {
       "of": "per Heavy mining laser",
       "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "ACOLYTE HYBRIDS WITH AUTOPISTOLS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 65
+       },
+       {
+        "of": "10 models",
+        "cost": 120
+       }
+      ]
      }
     ]
    },
@@ -17273,6 +20401,29 @@
      "ACOLYTE HYBRIDS WITH HAND FLAMERS",
      "HYBRID METAMORPHS",
      "NEOPHYTE HYBRIDS"
+    ]
+   },
+   {
+    "name": "GOLIATH ROCKGRINDER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 110
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 120
+       }
+      ]
+     }
     ]
    },
    {
@@ -17419,6 +20570,26 @@
     ]
    },
    {
+    "name": "NEXOS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 50
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ACOLYTE HYBRIDS WITH AUTOPISTOLS",
+     "ACOLYTE HYBRIDS WITH HAND FLAMERS",
+     "HYBRID METAMORPHS",
+     "NEOPHYTE HYBRIDS"
+    ]
+   },
+   {
     "name": "PATRIARCH",
     "costs": [
      {
@@ -17433,6 +20604,26 @@
     ],
     "leader": [
      "PURESTRAIN GENESTEALERS"
+    ]
+   },
+   {
+    "name": "PRIMUS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "ACOLYTE HYBRIDS WITH AUTOPISTOLS",
+     "ACOLYTE HYBRIDS WITH HAND FLAMERS",
+     "HYBRID METAMORPHS",
+     "NEOPHYTE HYBRIDS"
     ]
    },
    {
@@ -17484,6 +20675,20 @@
        {
         "of": "1 model",
         "cost": 80
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "SANCTUS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
        }
       ]
      }
@@ -19378,6 +22583,29 @@
     ]
    },
    {
+    "name": "KNIGHT DEFENDER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 385
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 2ND + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 405
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "KNIGHT DESTRIER",
     "costs": [
      {
@@ -19471,6 +22699,52 @@
    },
    {
     "name": "KNIGHT PRECEPTOR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 365
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 380
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "KNIGHT VALIANT",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 390
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 405
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "KNIGHT WARDEN",
     "costs": [
      {
       "scope": "YOUR 1ST TO 2ND UNITS COST",
@@ -19785,6 +23059,24 @@
        {
         "of": "1 model",
         "cost": 85
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "CTHONIAN BESERKS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 90
+       },
+       {
+        "of": "10 models",
+        "cost": 180
        }
       ]
      }
@@ -20361,6 +23653,20 @@
     ]
    },
    {
+    "name": "CANOPTEK DOOMSTALKER",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 130
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "CANOPTEK MACROCYTES",
     "costs": [
      {
@@ -20634,6 +23940,29 @@
     ]
    },
    {
+    "name": "DOOMSDAY ARK",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 200
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 230
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "FLAYED ONES",
     "costs": [
      {
@@ -20707,6 +24036,24 @@
        {
         "of": "1 model",
         "cost": 175
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "IMMORTALS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 65
+       },
+       {
+        "of": "10 models",
+        "cost": 130
        }
       ]
      }
@@ -21286,6 +24633,25 @@
     ]
    },
    {
+    "name": "TRAZYN THE INFINITE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "IMMORTALS",
+     "LYCHGUARD",
+     "NECRON WARRIORS"
+    ]
+   },
+   {
     "name": "TRIARCH PRAETORIANS",
     "costs": [
      {
@@ -21369,6 +24735,28 @@
      {
       "name": "Veil of Darkness",
       "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "CANOPTEK COURT",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Autodivinator",
+      "cost": 15
+     },
+     {
+      "name": "Dimensional Sanctum",
+      "cost": 20
+     },
+     {
+      "name": "Hyperphasic Fulcrum",
+      "cost": 15
+     },
+     {
+      "name": "Metalodermal Tesla Weave",
+      "cost": 10
      }
     ]
    },
@@ -21551,6 +24939,24 @@
  "orks": {
   "units": [
    {
+    "name": "BANNERNOB",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 30
+       }
+      ]
+     }
+    ],
+    "support": [
+     "BOYZ",
+     "NOBZ"
+    ]
+   },
+   {
     "name": "BATTLEWAGON",
     "costs": [
      {
@@ -21608,6 +25014,37 @@
        {
         "of": "1 model",
         "cost": 155
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "BEAST SNAGGA BOYZ",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 3RD UNITS COST",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 80
+       },
+       {
+        "of": "20 models",
+        "cost": 160
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 4TH + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 90
+       },
+       {
+        "of": "20 models",
+        "cost": 170
        }
       ]
      }
@@ -21779,6 +25216,60 @@
     ]
    },
    {
+    "name": "BOYZ",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 3RD UNITS COST",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 85
+       },
+       {
+        "of": "20 models",
+        "cost": 170
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 4TH + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 95
+       },
+       {
+        "of": "20 models",
+        "cost": 180
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "BREAKA BOYZ",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "6 models",
+        "cost": 120
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "6 models",
+        "cost": 130
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "BURNA-BOMMER",
     "costs": [
      {
@@ -21926,6 +25417,20 @@
        {
         "of": "1 model",
         "cost": 600
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "GHAZGHKULL THRAKA",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 290
        }
       ]
      }
@@ -22093,6 +25598,63 @@
     ]
    },
    {
+    "name": "MEGANOBZ",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "2 models",
+        "cost": 70
+       },
+       {
+        "of": "3 models",
+        "cost": 105
+       },
+       {
+        "of": "5 models",
+        "cost": 175
+       },
+       {
+        "of": "6 models",
+        "cost": 210
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "2 models",
+        "cost": 110
+       },
+       {
+        "of": "3 models",
+        "cost": 145
+       },
+       {
+        "of": "5 models",
+        "cost": 215
+       },
+       {
+        "of": "6 models",
+        "cost": 250
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Twin Killsaws",
+      "cost": 5
+     },
+     {
+      "of": "per Killsaw",
+      "cost": 5
+     }
+    ]
+   },
+   {
     "name": "MEK",
     "costs": [
      {
@@ -22190,6 +25752,60 @@
     ]
    },
    {
+    "name": "NAZDREG",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 165
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "MEGANOBZ"
+    ]
+   },
+   {
+    "name": "NOBZ",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 115
+       },
+       {
+        "of": "10 models",
+        "cost": 230
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 145
+       },
+       {
+        "of": "10 models",
+        "cost": 260
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Paired Krumpas",
+      "cost": 5
+     }
+    ]
+   },
+   {
     "name": "PAINBOSS",
     "costs": [
      {
@@ -22270,6 +25886,37 @@
     ],
     "support": [
      "GRETCHIN"
+    ]
+   },
+   {
+    "name": "SQUIGHOG BOYZ",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "4 models",
+        "cost": 130
+       },
+       {
+        "of": "8 models",
+        "cost": 260
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "4 models",
+        "cost": 160
+       },
+       {
+        "of": "8 models",
+        "cost": 290
+       }
+      ]
+     }
     ]
    },
    {
@@ -22397,6 +26044,32 @@
     ]
    },
    {
+    "name": "WARBOSS IN MEGA ARMOUR",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 115
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 130
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "MEGANOBZ"
+    ]
+   },
+   {
     "name": "WARBUGGIES",
     "costs": [
      {
@@ -22467,6 +26140,24 @@
        }
       ]
      }
+    ]
+   },
+   {
+    "name": "WEIRDBOY",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
+       }
+      ]
+     }
+    ],
+    "support": [
+     "BEAST SNAGGA BOYZ",
+     "BOYZ"
     ]
    },
    {
@@ -22831,6 +26522,27 @@
      "INTERCESSOR SQUAD",
      "STERNGUARD VETERAN SQUAD",
      "SWORD BRETHREN SQUAD"
+    ]
+   },
+   {
+    "name": "APOTHECARY BIOLOGIS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 60
+       }
+      ]
+     }
+    ],
+    "support": [
+     "AGGRESSOR SQUAD",
+     "ERADICATOR SQUAD WITH HEAVY BOLTERS",
+     "ERADICATOR SQUAD WITH MELTA RIFLES",
+     "HEAVY INTERCESSOR SQUAD",
+     "INDOMITOR KILL TEAM"
     ]
    },
    {
@@ -23606,6 +27318,24 @@
     ]
    },
    {
+    "name": "INFILTRATOR SQUAD",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 85
+       },
+       {
+        "of": "10 models",
+        "cost": 150
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "INTERCESSOR SQUAD",
     "costs": [
      {
@@ -23681,6 +27411,34 @@
        }
       ]
      }
+    ]
+   },
+   {
+    "name": "JUDICIAR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 50
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "CRUSADER SQUAD",
+     "DEATHWATCH VETERANS",
+     "DECIMUS KILL TEAM",
+     "FORTIS KILL TEAM",
+     "INFERNUS SQUAD",
+     "INNER CIRCLE COMPANIONS",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD",
+     "SWORD BRETHREN SQUAD",
+     "VANGUARD VETERAN SQUAD"
     ]
    },
    {
@@ -23794,6 +27552,28 @@
     ]
    },
    {
+    "name": "LIBRARIAN IN TERMINATOR ARMOUR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 80
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "DEATHWATCH TERMINATOR SQUAD",
+     "DEATHWING KNIGHTS",
+     "DEATHWING TERMINATOR SQUAD",
+     "TERMINATOR ASSAULT SQUAD",
+     "TERMINATOR SQUAD",
+     "WOLF GUARD TERMINATORS"
+    ]
+   },
+   {
     "name": "LIEUTENANT",
     "costs": [
      {
@@ -23825,6 +27605,42 @@
     ]
    },
    {
+    "name": "LIEUTENANT IN PHOBOS ARMOUR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 40
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ELIMINATOR SQUAD",
+     "INCURSOR SQUAD",
+     "INFILTRATOR SQUAD",
+     "REIVER SQUAD",
+     "SPECTRUS KILL TEAM",
+     "WOLF SCOUTS"
+    ]
+   },
+   {
+    "name": "LIEUTENANT WITH COMBI-WEAPON",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 85
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "OUTRIDER SQUAD",
     "costs": [
      {
@@ -23839,6 +27655,35 @@
         "cost": 160
        }
       ]
+     }
+    ]
+   },
+   {
+    "name": "REDEMPTOR DREADNOUGHT",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 170
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 190
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Macro plasma incinerator",
+      "cost": 10
      }
     ]
    },
@@ -24340,6 +28185,24 @@
     ]
    },
    {
+    "name": "KAYVAAN SHRIKE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 95
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "ASSAULT INTERCESSORS WITH JUMP PACKS",
+     "VANGUARD VETERAN SQUAD WITH JUMP PACKS"
+    ]
+   },
+   {
     "name": "CAPTAIN TITUS",
     "costs": [
      {
@@ -24508,6 +28371,27 @@
     ]
    },
    {
+    "name": "WARDENS OF ULTRAMAR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "6 models",
+        "cost": 115
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD",
+     "VANGUARD VETERAN SQUAD"
+    ]
+   },
+   {
     "name": "KOR’SARRO KHAN",
     "costs": [
      {
@@ -24547,7 +28431,368 @@
     ]
    }
   ],
-  "detachments": []
+  "detachments": [
+   {
+    "name": "ASSAULT BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Furious Assault (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Imperium’s Sword",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "BLADE OF ULTRAMAR",
+    "dp": 3,
+    "enhancements": [
+     {
+      "name": "Armour of Antoninus",
+      "cost": 15
+     },
+     {
+      "name": "Oath of Macragge",
+      "cost": 20
+     },
+     {
+      "name": "Student of the Codex",
+      "cost": 20
+     },
+     {
+      "name": "Veteran of Behemoth",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "CERAMITE SENTINELS",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Castellum Omnivox",
+      "cost": 10
+     },
+     {
+      "name": "Defensive Mastery",
+      "cost": 10
+     },
+     {
+      "name": "Honour Indefatigable",
+      "cost": 10
+     },
+     {
+      "name": "Spy-skull Data Link",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "DEATHWATCH SUPPORT",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Beacon Angelis",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "DEVASTATOR BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Honour of Vigilance",
+      "cost": 20
+     },
+     {
+      "name": "Master-forged Firearms",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "FORGEFATHER’S SEEKERS",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Adamantine Mantle",
+      "cost": 20
+     },
+     {
+      "name": "Forged in Battle",
+      "cost": 25
+     },
+     {
+      "name": "Immolator",
+      "cost": 20
+     },
+     {
+      "name": "War-tempered Artifice",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "GAUNTLET TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Damocles-class Uplink",
+      "cost": 15
+     },
+     {
+      "name": "Linebreaker Onslaught",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "GLADIUS TASK FORCE",
+    "dp": 3,
+    "enhancements": [
+     {
+      "name": "Adept of the Codex",
+      "cost": 20
+     },
+     {
+      "name": "Artificer Armour",
+      "cost": 15
+     },
+     {
+      "name": "Laurels of Triumph",
+      "cost": 20
+     },
+     {
+      "name": "Standard of the Emperor Ascendant",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "GRAVIS LINEBREAKER FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Indefatigable Fortitude",
+      "cost": 20
+     },
+     {
+      "name": "Relentless Advance",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "GRAVIS SIEGE FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Immovable Conquerors (Upgrade)",
+      "cost": 15
+     },
+     {
+      "name": "Narthecis Gauntlet",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "IRONCLAD CHAMPIONS",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Artificer Sarcophagus (Upgrade)",
+      "cost": 40
+     },
+     {
+      "name": "Venerable Champion (Aura) (Upgrade)",
+      "cost": 30
+     }
+    ]
+   },
+   {
+    "name": "IRONSTORM SPEARHEAD",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Gunnery Honours (Upgrade)",
+      "cost": 15
+     },
+     {
+      "name": "Redoubtable Machine Spirit (Upgrade)",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "MEDUSA'S WRATH",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Adept of the Omnissiah",
+      "cost": 25
+     },
+     {
+      "name": "Master of the Machine War",
+      "cost": 25
+     },
+     {
+      "name": "Target Augury Web",
+      "cost": 30
+     },
+     {
+      "name": "The Flesh is Weak",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "PHOBOS SHADOW FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Execute and Redeploy",
+      "cost": 25
+     },
+     {
+      "name": "Venator Omni-auspex",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "PHOBOS SHOCK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Seal of Shrouding",
+      "cost": 15
+     },
+     {
+      "name": "Venator Omni-auspex",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "SHADOWMARK TALON",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Blackwing Shroud",
+      "cost": 25
+     },
+     {
+      "name": "Coronal Susurrant",
+      "cost": 30
+     },
+     {
+      "name": "Hunter’s Instincts",
+      "cost": 25
+     },
+     {
+      "name": "Umbral Raptor",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "SPEARPOINT TASK FORCE",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Chogorian Huntmaster (Upgrade)",
+      "cost": 20
+     },
+     {
+      "name": "Hunter’s Eye",
+      "cost": 25
+     },
+     {
+      "name": "Spearpoint Paragon",
+      "cost": 25
+     },
+     {
+      "name": "Stormseers' Wisdom",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "STORMLANCE TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Auspex Triangulation Shrines (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Supercharged Engines (Upgrade)",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "TACTICAL BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Laurels of Vigilance",
+      "cost": 10
+     },
+     {
+      "name": "Tactical Insight",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "TACTICUS ATTACK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Martial Paragon",
+      "cost": 10
+     },
+     {
+      "name": "Spearpoint War Leader",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "TACTICUS FIRESTORM FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Cyber-familiar",
+      "cost": 15
+     },
+     {
+      "name": "Tempered in Battle (Aura)",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "TERMINATOR STORM FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Champion of the First Company",
+      "cost": 20
+     },
+     {
+      "name": "Corporeum Reliquary",
+      "cost": 25
+     }
+    ]
+   }
+  ]
  },
  "space-wolves": {
   "units": [
@@ -25909,6 +30154,24 @@
     ]
    },
    {
+    "name": "INFILTRATOR SQUAD",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 85
+       },
+       {
+        "of": "10 models",
+        "cost": 150
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "INTERCESSOR SQUAD",
     "costs": [
      {
@@ -25984,6 +30247,34 @@
        }
       ]
      }
+    ]
+   },
+   {
+    "name": "JUDICIAR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 50
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ASSAULT INTERCESSOR SQUAD",
+     "BLADEGUARD VETERAN SQUAD",
+     "CRUSADER SQUAD",
+     "DEATHWATCH VETERANS",
+     "DECIMUS KILL TEAM",
+     "FORTIS KILL TEAM",
+     "INFERNUS SQUAD",
+     "INNER CIRCLE COMPANIONS",
+     "INTERCESSOR SQUAD",
+     "STERNGUARD VETERAN SQUAD",
+     "SWORD BRETHREN SQUAD",
+     "VANGUARD VETERAN SQUAD"
     ]
    },
    {
@@ -26097,6 +30388,28 @@
     ]
    },
    {
+    "name": "LIBRARIAN IN TERMINATOR ARMOUR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 80
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "DEATHWATCH TERMINATOR SQUAD",
+     "DEATHWING KNIGHTS",
+     "DEATHWING TERMINATOR SQUAD",
+     "TERMINATOR ASSAULT SQUAD",
+     "TERMINATOR SQUAD",
+     "WOLF GUARD TERMINATORS"
+    ]
+   },
+   {
     "name": "LIEUTENANT",
     "costs": [
      {
@@ -26128,6 +30441,42 @@
     ]
    },
    {
+    "name": "LIEUTENANT IN PHOBOS ARMOUR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 40
+       }
+      ]
+     }
+    ],
+    "support": [
+     "ELIMINATOR SQUAD",
+     "INCURSOR SQUAD",
+     "INFILTRATOR SQUAD",
+     "REIVER SQUAD",
+     "SPECTRUS KILL TEAM",
+     "WOLF SCOUTS"
+    ]
+   },
+   {
+    "name": "LIEUTENANT WITH COMBI-WEAPON",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 85
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "OUTRIDER SQUAD",
     "costs": [
      {
@@ -26142,6 +30491,35 @@
         "cost": 160
        }
       ]
+     }
+    ]
+   },
+   {
+    "name": "REDEMPTOR DREADNOUGHT",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 170
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 190
+       }
+      ]
+     }
+    ],
+    "wargear": [
+     {
+      "of": "per Macro plasma incinerator",
+      "cost": 10
      }
     ]
    },
@@ -26508,7 +30886,286 @@
     ]
    }
   ],
-  "detachments": []
+  "detachments": [
+   {
+    "name": "ASSAULT BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Furious Assault (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Imperium’s Sword",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "CHAMPIONS OF FENRIS",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "A Giant Amongst Giants",
+      "cost": 15
+     },
+     {
+      "name": "Preyslayer",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "DEATHWATCH SUPPORT",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Beacon Angelis",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "DEVASTATOR BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Honour of Vigilance",
+      "cost": 20
+     },
+     {
+      "name": "Master-forged Firearms",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "GAUNTLET TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Damocles-class Uplink",
+      "cost": 15
+     },
+     {
+      "name": "Linebreaker Onslaught",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "GLADIUS TASK FORCE",
+    "dp": 3,
+    "enhancements": [
+     {
+      "name": "Adept of the Codex",
+      "cost": 20
+     },
+     {
+      "name": "Artificer Armour",
+      "cost": 15
+     },
+     {
+      "name": "Laurels of Triumph",
+      "cost": 20
+     },
+     {
+      "name": "Standard of the Emperor Ascendant",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "GRAVIS LINEBREAKER FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Indefatigable Fortitude",
+      "cost": 20
+     },
+     {
+      "name": "Relentless Advance",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "GRAVIS SIEGE FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Immovable Conquerors (Upgrade)",
+      "cost": 15
+     },
+     {
+      "name": "Narthecis Gauntlet",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "IRONCLAD CHAMPIONS",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Artificer Sarcophagus (Upgrade)",
+      "cost": 40
+     },
+     {
+      "name": "Venerable Champion (Aura) (Upgrade)",
+      "cost": 30
+     }
+    ]
+   },
+   {
+    "name": "IRONSTORM SPEARHEAD",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Gunnery Honours (Upgrade)",
+      "cost": 15
+     },
+     {
+      "name": "Redoubtable Machine Spirit (Upgrade)",
+      "cost": 25
+     }
+    ]
+   },
+   {
+    "name": "PHOBOS SHADOW FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Execute and Redeploy",
+      "cost": 25
+     },
+     {
+      "name": "Venator Omni-auspex",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "PHOBOS SHOCK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Seal of Shrouding",
+      "cost": 15
+     },
+     {
+      "name": "Venator Omni-auspex",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "SAGA OF THE BEASTSLAYER",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Hunter’s Guile",
+      "cost": 20
+     },
+     {
+      "name": "Wolf-Touched",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "SAGA OF THE GREAT WOLF",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Chariots of the Storm",
+      "cost": 25
+     },
+     {
+      "name": "Grimnar’s Mark",
+      "cost": 15
+     },
+     {
+      "name": "Howlmaw",
+      "cost": 15
+     },
+     {
+      "name": "Skjald’s Foretelling",
+      "cost": 20
+     }
+    ]
+   },
+   {
+    "name": "STORMLANCE TASK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Auspex Triangulation Shrines (Upgrade)",
+      "cost": 10
+     },
+     {
+      "name": "Supercharged Engines (Upgrade)",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "TACTICAL BRETHREN",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Laurels of Vigilance",
+      "cost": 10
+     },
+     {
+      "name": "Tactical Insight",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "TACTICUS ATTACK FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Martial Paragon",
+      "cost": 10
+     },
+     {
+      "name": "Spearpoint War Leader",
+      "cost": 15
+     }
+    ]
+   },
+   {
+    "name": "TACTICUS FIRESTORM FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Cyber-familiar",
+      "cost": 15
+     },
+     {
+      "name": "Tempered in Battle (Aura)",
+      "cost": 10
+     }
+    ]
+   },
+   {
+    "name": "TERMINATOR STORM FORCE",
+    "dp": 1,
+    "enhancements": [
+     {
+      "name": "Champion of the First Company",
+      "cost": 20
+     },
+     {
+      "name": "Corporeum Reliquary",
+      "cost": 25
+     }
+    ]
+   }
+  ]
  },
  "tau-empire": {
   "units": [
@@ -26530,6 +31187,20 @@
        {
         "of": "1 model",
         "cost": 375
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "BREACHER TEAM",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 80
        }
       ]
      }
@@ -28476,6 +33147,24 @@
  "tyranids": {
   "units": [
    {
+    "name": "BARBGAUNTS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "5 models",
+        "cost": 50
+       },
+       {
+        "of": "10 models",
+        "cost": 100
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "BIOVORES",
     "costs": [
      {
@@ -28564,6 +33253,24 @@
        {
         "of": "1 model",
         "cost": 145
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "GARGOYLES",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 75
+       },
+       {
+        "of": "20 models",
+        "cost": 150
        }
       ]
      }
@@ -28827,6 +33534,20 @@
     ]
    },
    {
+    "name": "MAWLOC",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 130
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "MUCOLID SPORES",
     "costs": [
      {
@@ -28886,6 +33607,25 @@
     ]
    },
    {
+    "name": "NEUROTYRANT",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 120
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "NEUROGAUNTS",
+     "TYRANT GUARD",
+     "ZOANTHROPES"
+    ]
+   },
+   {
     "name": "NORN ASSIMILATOR",
     "costs": [
      {
@@ -28926,6 +33666,37 @@
        {
         "of": "1 model",
         "cost": 270
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "OLD ONE EYE",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 130
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "CARNIFEXES"
+    ]
+   },
+   {
+    "name": "PARASITE OF MORTREX",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 65
        }
       ]
      }
@@ -29085,6 +33856,52 @@
     ]
    },
    {
+    "name": "TERMAGANTS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 55
+       },
+       {
+        "of": "20 models",
+        "cost": 110
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "TERVIGON",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 150
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "THE RED TERROR",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 120
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "THE SWARMLORD",
     "costs": [
      {
@@ -29110,6 +33927,20 @@
        {
         "of": "1 model",
         "cost": 120
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "TRYGON",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 135
        }
       ]
      }
@@ -29549,6 +34380,29 @@
     ]
    },
    {
+    "name": "CHAOS LAND RAIDER",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 200
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 220
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "CHAOS PREDATOR ANNIHILATOR",
     "costs": [
      {
@@ -29724,6 +34578,68 @@
     ]
    },
    {
+    "name": "EIGHTBOUND",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 125
+       },
+       {
+        "of": "6 models",
+        "cost": 250
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 140
+       },
+       {
+        "of": "6 models",
+        "cost": 265
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "EXALTED EIGHTBOUND",
+    "costs": [
+     {
+      "scope": "YOUR 1ST TO 2ND UNITS COST",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 130
+       },
+       {
+        "of": "6 models",
+        "cost": 260
+       }
+      ]
+     },
+     {
+      "scope": "YOUR 3RD + UNIT COSTS",
+      "tiers": [
+       {
+        "of": "3 models",
+        "cost": 145
+       },
+       {
+        "of": "6 models",
+        "cost": 275
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "FORGEFIEND",
     "costs": [
      {
@@ -29753,6 +34669,20 @@
     ]
    },
    {
+    "name": "GOREMONGERS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "8 models",
+        "cost": 70
+       }
+      ]
+     }
+    ]
+   },
+   {
     "name": "HELBRUTE",
     "costs": [
      {
@@ -29775,6 +34705,24 @@
        {
         "of": "1 model",
         "cost": 175
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "JAKHALS",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "10 models",
+        "cost": 65
+       },
+       {
+        "of": "20 models",
+        "cost": 120
        }
       ]
      }
@@ -29917,6 +34865,24 @@
     ]
    },
    {
+    "name": "SLAUGHTERBOUND",
+    "costs": [
+     {
+      "scope": "YOUR UNIT COSTS",
+      "tiers": [
+       {
+        "of": "1 model",
+        "cost": 90
+       }
+      ]
+     }
+    ],
+    "leader": [
+     "EIGHTBOUND",
+     "EXALTED EIGHTBOUND"
+    ]
+   },
+   {
     "name": "BLOODCRUSHERS",
     "costs": [
      {
@@ -30018,6 +34984,28 @@
    }
   ],
   "detachments": [
+   {
+    "name": "BERZERKER WARBAND",
+    "dp": 2,
+    "enhancements": [
+     {
+      "name": "Battle-lust",
+      "cost": 20
+     },
+     {
+      "name": "Berzerker Glaive",
+      "cost": 35
+     },
+     {
+      "name": "Favoured of Khorne",
+      "cost": 20
+     },
+     {
+      "name": "Helm of Brazen Ire",
+      "cost": 30
+     }
+    ]
+   },
    {
     "name": "BRAZEN ENGINES",
     "dp": 1,

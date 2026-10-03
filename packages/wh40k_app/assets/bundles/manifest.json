@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": 20261003224224,
+  "revision": 20261003225949,
   "generated": "local",
   "source": "40kdc-data",
   "bundles": [
@@ -26,9 +26,9 @@
       "id": "adeptus-astartes",
       "kind": "faction",
       "name": "Adeptus Astartes",
-      "file": "adeptus-astartes.83a77b4d73de.json.gz",
-      "sha256": "83a77b4d73de712c7df9365c2cc558133fbd37323e1f0ec9c663b74b060f930f",
-      "bytes": 353531,
+      "file": "adeptus-astartes.ef4305a4332c.json.gz",
+      "sha256": "ef4305a4332caf5b127beebf3de2ca6cecfa24e8cb5b0aaf732601791ef7a38c",
+      "bytes": 353773,
       "revision": "local",
       "aliases": [
         "Space Marines"
@@ -351,9 +351,9 @@
     {
       "id": "2026-08-26",
       "name": "August 2026 rules update",
-      "file": "patch-2026-08-26.f40bf35fee47.json.gz",
-      "sha256": "f40bf35fee4779ba338969368f45e4f73b1c46e54517efef39eab1988b1efa88",
-      "bytes": 79945,
+      "file": "patch-2026-08-26.9e78d183efc2.json.gz",
+      "sha256": "9e78d183efc21e89ee9b4f72c903bdeeae3837273891bbe8a416e251c8bd3a5f",
+      "bytes": 80781,
       "appliesTo": "pre-launch-provisional"
     }
   ],

@@ -10241,6 +10241,36 @@
    "note": "Munitorum Field Manual"
   },
   {
+   "faction": "adeptus-mechanicus",
+   "file": "detachments",
+   "op": "set",
+   "id": "cohort-cybernetica",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-mechanicus",
+   "file": "detachments",
+   "op": "set",
+   "id": "eradication-cohort",
+   "values": {
+    "detachment_points": 2
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-mechanicus",
+   "file": "detachments",
+   "op": "set",
+   "id": "lords-of-the-forge",
+   "values": {
+    "detachment_points": 2
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
    "faction": "aeldari",
    "file": "units",
    "op": "set",
@@ -10285,6 +10315,16 @@
       "cost": 205
      }
     ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "aeldari",
+   "file": "detachments",
+   "op": "set",
+   "id": "warhost",
+   "values": {
+    "detachment_points": 2
    },
    "note": "Munitorum Field Manual"
   },
@@ -10472,6 +10512,28 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "impulsor",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 70,
+      "unit_count_min": 1,
+      "unit_count_max": 3
+     },
+     {
+      "models": 1,
+      "cost": 80,
+      "unit_count_min": 4
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "black-templars",
@@ -10901,6 +10963,26 @@
    "note": "Munitorum Field Manual"
   },
   {
+   "faction": "black-templars",
+   "file": "detachments",
+   "op": "set",
+   "id": "ironstorm-spearhead",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "black-templars",
+   "file": "detachments",
+   "op": "set",
+   "id": "stormlance-task-force",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
    "faction": "blood-angels",
    "file": "units",
    "op": "set",
@@ -11240,6 +11322,21 @@
   },
   {
    "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "sanguinary-priest",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 60
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
    "file": "leader-attachments",
    "op": "add",
    "id": "captain",
@@ -11411,6 +11508,22 @@
    "faction": "blood-angels",
    "file": "leader-attachments",
    "op": "add",
+   "id": "chaplain-with-jump-pack",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "assault-intercessors-with-jump-packs",
+     "death-company-marines-with-jump-packs",
+     "talonstrike-kill-team",
+     "vanguard-veteran-squad-with-jump-packs"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "leader-attachments",
+   "op": "add",
    "id": "librarian",
    "key": "leader_id",
    "values": {
@@ -11453,6 +11566,24 @@
    "faction": "blood-angels",
    "file": "leader-attachments",
    "op": "add",
+   "id": "librarian-in-terminator-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "deathwatch-terminator-squad",
+     "deathwing-knights",
+     "deathwing-terminator-squad",
+     "terminator-assault-squad",
+     "terminator-squad",
+     "wolf-guard-terminators"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "leader-attachments",
+   "op": "add",
    "id": "techmarine",
    "key": "leader_id",
    "values": {
@@ -11467,6 +11598,66 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "enhancements",
+   "op": "set",
+   "id": "prescient-flash-angelic-inheritors",
+   "values": {
+    "cost": "25"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "enhancements",
+   "op": "set",
+   "id": "angelic-executioner-encarmine-speartip",
+   "values": {
+    "cost": "20"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "enhancements",
+   "op": "set",
+   "id": "shadow-of-abomination-encarmine-speartip",
+   "values": {
+    "cost": "15"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "enhancements",
+   "op": "set",
+   "id": "artificer-armour-gladius-task-force",
+   "values": {
+    "cost": "15"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "detachments",
+   "op": "set",
+   "id": "ironstorm-spearhead",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "detachments",
+   "op": "set",
+   "id": "stormlance-task-force",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "chaos-space-marines",
@@ -11892,6 +12083,21 @@
    "faction": "dark-angels",
    "file": "units",
    "op": "set",
+   "id": "ravenwing-dark-talon",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 190
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
    "id": "sammael",
    "values": {
     "points": [
@@ -12148,6 +12354,24 @@
    "faction": "dark-angels",
    "file": "leader-attachments",
    "op": "add",
+   "id": "librarian-in-terminator-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "deathwatch-terminator-squad",
+     "deathwing-knights",
+     "deathwing-terminator-squad",
+     "terminator-assault-squad",
+     "terminator-squad",
+     "wolf-guard-terminators"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "leader-attachments",
+   "op": "add",
    "id": "techmarine",
    "key": "leader_id",
    "values": {
@@ -12162,6 +12386,86 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "enhancements",
+   "op": "set",
+   "id": "artificer-armour-gladius-task-force",
+   "values": {
+    "cost": "15"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "detachments",
+   "op": "set",
+   "id": "inner-circle-task-force",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "enhancements",
+   "op": "set",
+   "id": "champion-of-the-deathwing-inner-circle-task-force",
+   "values": {
+    "cost": "20"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "detachments",
+   "op": "set",
+   "id": "ironstorm-spearhead",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "detachments",
+   "op": "set",
+   "id": "stormlance-task-force",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "detachments",
+   "op": "set",
+   "id": "wrath-of-the-rock",
+   "values": {
+    "detachment_points": 2
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "enhancements",
+   "op": "set",
+   "id": "ancient-weapons-wrath-of-the-rock",
+   "values": {
+    "cost": "20"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "enhancements",
+   "op": "set",
+   "id": "lord-of-the-ravenwing-wrath-of-the-rock",
+   "values": {
+    "cost": "15"
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "deathwatch",
@@ -12622,6 +12926,24 @@
    "faction": "deathwatch",
    "file": "leader-attachments",
    "op": "add",
+   "id": "librarian-in-terminator-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "deathwatch-terminator-squad",
+     "deathwing-knights",
+     "deathwing-terminator-squad",
+     "terminator-assault-squad",
+     "terminator-squad",
+     "wolf-guard-terminators"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "leader-attachments",
+   "op": "add",
    "id": "techmarine",
    "key": "leader_id",
    "values": {
@@ -12638,6 +12960,46 @@
    "note": "Munitorum Field Manual, LEADER section"
   },
   {
+   "faction": "deathwatch",
+   "file": "enhancements",
+   "op": "set",
+   "id": "the-tome-of-ectoclades-black-spear-task-force",
+   "values": {
+    "cost": "15"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "enhancements",
+   "op": "set",
+   "id": "artificer-armour-gladius-task-force",
+   "values": {
+    "cost": "15"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "detachments",
+   "op": "set",
+   "id": "ironstorm-spearhead",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "detachments",
+   "op": "set",
+   "id": "stormlance-task-force",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
    "faction": "emperors-children",
    "file": "units",
    "op": "set",
@@ -12649,6 +13011,26 @@
       "cost": 155
      }
     ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "detachments",
+   "op": "set",
+   "id": "carnival-of-excess",
+   "values": {
+    "detachment_points": 3
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "emperors-children",
+   "file": "detachments",
+   "op": "set",
+   "id": "slaaneshs-chosen",
+   "values": {
+    "detachment_points": 1
    },
    "note": "Munitorum Field Manual"
   },
@@ -12782,6 +13164,16 @@
    "note": "Munitorum Field Manual"
   },
   {
+   "faction": "necrons",
+   "file": "detachments",
+   "op": "set",
+   "id": "canoptek-court",
+   "values": {
+    "detachment_points": 2
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
    "faction": "orks",
    "file": "enhancements",
    "op": "set",
@@ -12855,6 +13247,21 @@
      {
       "models": 1,
       "cost": 45
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "apothecary-biologis",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 60
      }
     ]
    },
@@ -13590,6 +13997,25 @@
    "faction": "adeptus-astartes",
    "file": "units",
    "op": "set",
+   "id": "infiltrator-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 85
+     },
+     {
+      "models": 10,
+      "cost": 150
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
    "id": "intercessor-squad",
    "values": {
     "points": [
@@ -13623,6 +14049,21 @@
       "models": 1,
       "cost": 150,
       "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "judiciar",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 50
      }
     ]
    },
@@ -13748,12 +14189,75 @@
    "faction": "adeptus-astartes",
    "file": "units",
    "op": "set",
+   "id": "librarian-in-terminator-armour",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 80
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "leader-attachments",
+   "op": "set",
+   "id": "librarian-in-terminator-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "deathwatch-terminator-squad",
+     "deathwing-knights",
+     "deathwing-terminator-squad",
+     "terminator-assault-squad",
+     "terminator-squad",
+     "wolf-guard-terminators"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
    "id": "lieutenant",
    "values": {
     "points": [
      {
       "models": 1,
       "cost": 50
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "lieutenant-in-phobos-armour",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 40
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "lieutenant-with-combi-weapon",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 85
      }
     ]
    },
@@ -13774,6 +14278,28 @@
       "models": 4,
       "models_max": 7,
       "cost": 160
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "redemptor-dreadnought",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 170,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 190,
+      "unit_count_min": 3
      }
     ]
    },
@@ -14263,6 +14789,21 @@
    "faction": "adeptus-astartes",
    "file": "units",
    "op": "set",
+   "id": "kayvaan-shrike",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 95
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
    "id": "captain-titus",
    "values": {
     "points": [
@@ -14409,6 +14950,21 @@
    "faction": "adeptus-astartes",
    "file": "units",
    "op": "set",
+   "id": "wardens-of-ultramar",
+   "values": {
+    "points": [
+     {
+      "models": 6,
+      "cost": 115
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
    "id": "korsarro-khan",
    "values": {
     "points": [
@@ -14450,6 +15006,86 @@
       "cost": 105
      }
     ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "detachments",
+   "op": "set",
+   "id": "ceramite-sentinels",
+   "values": {
+    "detachment_points": 2
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "enhancements",
+   "op": "set",
+   "id": "castellum-omnivox-ceramite-sentinels",
+   "values": {
+    "cost": "10"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "enhancements",
+   "op": "set",
+   "id": "defensive-mastery-ceramite-sentinels",
+   "values": {
+    "cost": "10"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "enhancements",
+   "op": "set",
+   "id": "honour-indefatigable-ceramite-sentinels",
+   "values": {
+    "cost": "10"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "enhancements",
+   "op": "set",
+   "id": "spy-skull-data-link-ceramite-sentinels",
+   "values": {
+    "cost": "10"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "enhancements",
+   "op": "set",
+   "id": "artificer-armour-gladius-task-force",
+   "values": {
+    "cost": "15"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "detachments",
+   "op": "set",
+   "id": "ironstorm-spearhead",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "detachments",
+   "op": "set",
+   "id": "stormlance-task-force",
+   "values": {
+    "detachment_points": 1
    },
    "note": "Munitorum Field Manual"
   },
@@ -15189,6 +15825,24 @@
    "faction": "space-wolves",
    "file": "leader-attachments",
    "op": "add",
+   "id": "librarian-in-terminator-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "deathwatch-terminator-squad",
+     "deathwing-knights",
+     "deathwing-terminator-squad",
+     "terminator-assault-squad",
+     "terminator-squad",
+     "wolf-guard-terminators"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "leader-attachments",
+   "op": "add",
    "id": "techmarine",
    "key": "leader_id",
    "values": {
@@ -15203,6 +15857,76 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "enhancements",
+   "op": "set",
+   "id": "artificer-armour-gladius-task-force",
+   "values": {
+    "cost": "15"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "detachments",
+   "op": "set",
+   "id": "ironstorm-spearhead",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "detachments",
+   "op": "set",
+   "id": "saga-of-the-beastslayer",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "enhancements",
+   "op": "set",
+   "id": "grimnars-mark-saga-of-the-great-wolf",
+   "values": {
+    "cost": "15"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "enhancements",
+   "op": "set",
+   "id": "skjalds-foretelling-saga-of-the-great-wolf",
+   "values": {
+    "cost": "20"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "detachments",
+   "op": "set",
+   "id": "stormlance-task-force",
+   "values": {
+    "detachment_points": 1
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "world-eaters",
+   "file": "detachments",
+   "op": "set",
+   "id": "berzerker-warband",
+   "values": {
+    "detachment_points": 2
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adepta-sororitas",

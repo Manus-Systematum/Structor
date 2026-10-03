@@ -958,6 +958,15 @@ def points_ops():
             record = detachments.get(key(d['name']))
             if record is None:
                 continue
+            # What the detachment costs out of the army's Detachment Points
+            # budget. Never read before 2026-10-04, when Canoptek Court went
+            # from 3 DP to 2 on the manual and stayed at 3 in the app.
+            if record.get('detachment_points') != d['dp'] and once({
+                    'faction': faction, 'file': 'detachments', 'op': 'set',
+                    'id': record['id'],
+                    'values': {'detachment_points': d['dp']},
+                    'note': 'Munitorum Field Manual'}):
+                stats['detachment points corrected'] += 1
             for e in d['enhancements']:
                 found = costs[record['id']].get(key(e['name']))
                 if found is None or str(found.get('cost')) == str(e['cost']):

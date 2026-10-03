@@ -42,8 +42,13 @@ CARD = re.compile(r'<div class="flex flex-col space-y-1 m-1[^"]*">(.*?)'
 # only the grey bar skipped exactly the units the update is about: the T'au
 # page has 43 cards, and the three it hid were Crisis Starscythes, Tiger Shark
 # and The Twin Lance.
+#
+# A detachment the update changed gets a third colour, green, with an UPDATED
+# note above it. Canoptek Court was missed for that reason after the October
+# points, and with it the one place its cost moved from 3 DP to 2.
 TITLE = re.compile(
-    r'<div class="[^"]*bg-(?:slate-500|red-500)[^"]*">(.*?)</div>', re.S)
+    r'<div class="[^"]*bg-(?:slate-500|red-500|emerald-600)[^"]*">(.*?)</div>',
+    re.S)
 # On a detachment card the title shares its div with the `2DP` badge.
 TITLE_SPAN = re.compile(r'<span[^>]*>(.*?)</span>', re.S)
 
@@ -64,7 +69,11 @@ ROW = re.compile(r'<li[^>]*>\s*<span[^>]*>([^<]*?)</span>\s*'
                  r'<span[^>]*>\s*(?:[▲▼]\s*\([+-]?[\d,]+\)\s*)?'
                  r'([\d,]+)\s*pts</span>', re.S)
 
-DP = re.compile(r'<span class="text-sm self-end pl-2">(\d+)DP</span>')
+# A detachment whose cost changed in this update gets the same treatment as a
+# changed unit: a `▼`/`▲` after the figure and a `text-nowrap` on the span.
+# Matching only the plain badge skipped exactly those — Canoptek Court went
+# from 3 DP to 2 and the manual's copy of it simply had no Canoptek Court.
+DP = re.compile(r'<span class="text-sm self-end pl-2[^"]*">\s*(\d+)\s*DP')
 # `LEADER` and `SUPPORT` head a list of the datasheets a character can attach
 # to. The app holds the same thing as leader-attachments, and nothing else
 # publishes it in one place.

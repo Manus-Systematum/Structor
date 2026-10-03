@@ -97,6 +97,12 @@ void main() {
           for (final e in dataset.faction.enhancements)
             {'id': e.id, 'cost': e.cost.toString()},
         ],
+        // What a detachment costs out of the Detachment Points budget, first
+        // patched in October when the manual moved 24 of them (§3.42).
+        'detachments': [
+          for (final d in dataset.faction.detachments)
+            {'id': d.id, 'detachment_points': d.detachmentPoints},
+        ],
       };
 
       for (final op in entry.value) {
@@ -129,6 +135,8 @@ void main() {
               final got = found.first[field];
               if (got == null && want != null) {
                 failures.add('${entry.key}: ${op.id}.$field is null');
+              } else if (want is num && got != want) {
+                failures.add('${entry.key}: ${op.id}.$field is $got, not $want');
               } else if (want is String && got.toString() != want) {
                 failures.add('${entry.key}: ${op.id}.$field did not take');
               } else if (want is List &&
