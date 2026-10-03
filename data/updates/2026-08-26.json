@@ -10290,6 +10290,21 @@
   },
   {
    "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "castellan",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 75
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "black-templars",
    "file": "leader-attachments",
    "op": "add",
    "id": "chaplain-grimaldus",
@@ -10304,6 +10319,36 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "crusade-ancient",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 45
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "emperors-champion",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 100
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "black-templars",
@@ -10324,6 +10369,21 @@
   },
   {
    "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "execrator",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 65
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "black-templars",
    "file": "leader-attachments",
    "op": "add",
    "id": "execrator",
@@ -10338,6 +10398,65 @@
   },
   {
    "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "gladiator-lancer",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 165,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 185,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "gladiator-reaper",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 165,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 185,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "high-marshal-helbrecht",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 125
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "black-templars",
    "file": "leader-attachments",
    "op": "add",
    "id": "high-marshal-helbrecht",
@@ -10345,12 +10464,29 @@
    "values": {
     "eligible_bodyguard_ids": [
      "assault-intercessor-squad",
+     "bladeguard-veteran-squad",
+     "company-heroes",
      "crusader-squad",
      "intercessor-squad",
      "sword-brethren-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "marshal",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 80
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "black-templars",
@@ -10361,6 +10497,7 @@
    "values": {
     "eligible_bodyguard_ids": [
      "assault-intercessor-squad",
+     "bladeguard-veteran-squad",
      "crusader-squad",
      "infernus-squad",
      "intercessor-squad",
@@ -10374,53 +10511,97 @@
    "faction": "black-templars",
    "file": "units",
    "op": "set",
+   "id": "repulsor",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 190,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 210,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "repulsor-executioner",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 265,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 285,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
    "id": "sword-brethren-squad",
    "values": {
     "points": [
      {
       "models": 4,
-      "cost": 100,
+      "cost": 115,
       "unit_count_min": 1,
       "unit_count_max": 2
      },
      {
       "models": 5,
       "models_max": 8,
-      "cost": 125,
+      "cost": 140,
       "unit_count_min": 1,
       "unit_count_max": 2
      },
      {
       "models": 9,
-      "cost": 225,
-      "unit_count_min": 1,
-      "unit_count_max": 2
-     },
-     {
-      "models": 10,
       "cost": 250,
       "unit_count_min": 1,
       "unit_count_max": 2
      },
      {
+      "models": 10,
+      "cost": 275,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
       "models": 4,
-      "cost": 120,
+      "cost": 135,
       "unit_count_min": 3
      },
      {
       "models": 5,
       "models_max": 8,
-      "cost": 145,
+      "cost": 160,
       "unit_count_min": 3
      },
      {
       "models": 9,
-      "cost": 245,
+      "cost": 270,
       "unit_count_min": 3
      },
      {
       "models": 10,
-      "cost": 270,
+      "cost": 295,
       "unit_count_min": 3
      }
     ]
@@ -10441,6 +10622,7 @@
      "crusader-squad",
      "deathwatch-veterans",
      "decimus-kill-team",
+     "desolation-squad",
      "fortis-kill-team",
      "hellblaster-squad",
      "infernus-squad",
@@ -10448,7 +10630,7 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "sword-brethren-squad",
-     "tactical-squad",
+     "vanguard-veteran-squad",
      "victrix-honour-guard"
     ]
    },
@@ -10463,7 +10645,7 @@
    "values": {
     "eligible_bodyguard_ids": [
      "aggressor-squad",
-     "eradicator-squad",
+     "eradicator-squad-with-heavy-bolters",
      "heavy-intercessor-squad",
      "indomitor-kill-team"
     ]
@@ -10483,7 +10665,8 @@
      "infiltrator-squad",
      "reiver-squad",
      "scout-squad",
-     "spectrus-kill-team"
+     "spectrus-kill-team",
+     "wolf-scouts"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -10500,7 +10683,22 @@
      "deathwing-knights",
      "deathwing-terminator-squad",
      "terminator-assault-squad",
-     "terminator-squad"
+     "terminator-squad",
+     "wolf-guard-terminators"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "black-templars",
+   "file": "leader-attachments",
+   "op": "add",
+   "id": "captain-on-bike",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "outrider-squad",
+     "ravenwing-black-knights"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -10533,7 +10731,6 @@
      "bladeguard-veteran-squad",
      "crusader-squad",
      "death-company-marines",
-     "death-company-marines-with-bolt-rifles",
      "deathwatch-veterans",
      "decimus-kill-team",
      "fortis-kill-team",
@@ -10543,7 +10740,7 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "sword-brethren-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -10560,7 +10757,8 @@
      "deathwing-knights",
      "deathwing-terminator-squad",
      "terminator-assault-squad",
-     "terminator-squad"
+     "terminator-squad",
+     "wolf-guard-terminators"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -10597,27 +10795,58 @@
   },
   {
    "faction": "black-templars",
-   "file": "leader-attachments",
-   "op": "add",
-   "id": "judiciar",
-   "key": "leader_id",
+   "file": "units",
+   "op": "set",
+   "id": "land-raider-crusader",
    "values": {
-    "eligible_bodyguard_ids": [
-     "assault-intercessor-squad",
-     "bladeguard-veteran-squad",
-     "crusader-squad",
-     "deathwatch-veterans",
-     "decimus-kill-team",
-     "fortis-kill-team",
-     "infernus-squad",
-     "inner-circle-companions",
-     "intercessor-squad",
-     "sternguard-veteran-squad",
-     "sword-brethren-squad",
-     "tactical-squad"
+    "points": [
+     {
+      "models": 1,
+      "cost": 230,
+      "unit_count_min": 1,
+      "unit_count_max": 1
+     },
+     {
+      "models": 1,
+      "cost": 250,
+      "unit_count_min": 2
+     }
     ]
    },
-   "note": "Munitorum Field Manual, LEADER section"
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "sternguard-veteran-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 105,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "cost": 210,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 120,
+      "unit_count_min": 3
+     },
+     {
+      "models": 10,
+      "cost": 225,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "black-templars",
@@ -10631,14 +10860,60 @@
      "crusader-squad",
      "decimus-kill-team",
      "desolation-squad",
-     "devastator-squad",
      "fortis-kill-team",
      "intercessor-squad",
-     "sword-brethren-squad",
-     "tactical-squad"
+     "sword-brethren-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "black-templars",
+   "file": "units",
+   "op": "set",
+   "id": "terminator-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 190,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "cost": 380,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 230,
+      "unit_count_min": 3
+     },
+     {
+      "models": 10,
+      "cost": 420,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "astorath",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 90
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "blood-angels",
@@ -10655,6 +10930,43 @@
   },
   {
    "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "baal-predator",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 135,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 150,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "blood-angels-captain",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 90
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
    "file": "leader-attachments",
    "op": "add",
    "id": "blood-angels-captain",
@@ -10665,11 +10977,40 @@
      "company-heroes",
      "infernus-squad",
      "intercessor-squad",
-     "sternguard-veteran-squad",
-     "tactical-squad"
+     "sternguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "chief-librarian-mephiston",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 175
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "commander-dante",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 140
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "blood-angels",
@@ -10688,17 +11029,46 @@
   },
   {
    "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "death-company-captain",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 80
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
    "file": "leader-attachments",
    "op": "add",
    "id": "death-company-captain",
    "key": "leader_id",
    "values": {
     "eligible_bodyguard_ids": [
-     "death-company-marines",
-     "death-company-marines-with-bolt-rifles"
+     "death-company-marines"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "death-company-captain-with-jump-pack",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 85
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "blood-angels",
@@ -10715,6 +11085,113 @@
   },
   {
    "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "death-company-dreadnought",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 165,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 185,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "death-company-marines",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 90,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 105,
+      "unit_count_min": 3
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 170,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 185,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "death-company-marines-with-jump-packs",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 130,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 160,
+      "unit_count_min": 3
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 260,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 290,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "lemartes",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 110
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "blood-angels",
    "file": "leader-attachments",
    "op": "add",
    "id": "lemartes",
@@ -10725,6 +11202,41 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "units",
+   "op": "set",
+   "id": "sanguinary-guard",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 135,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 3,
+      "cost": 150,
+      "unit_count_min": 3
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 275,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 290,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "blood-angels",
@@ -10740,6 +11252,7 @@
      "crusader-squad",
      "deathwatch-veterans",
      "decimus-kill-team",
+     "desolation-squad",
      "fortis-kill-team",
      "hellblaster-squad",
      "infernus-squad",
@@ -10747,7 +11260,7 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "sword-brethren-squad",
-     "tactical-squad",
+     "vanguard-veteran-squad",
      "victrix-honour-guard"
     ]
    },
@@ -10762,7 +11275,7 @@
    "values": {
     "eligible_bodyguard_ids": [
      "aggressor-squad",
-     "eradicator-squad",
+     "eradicator-squad-with-heavy-bolters",
      "heavy-intercessor-squad",
      "indomitor-kill-team"
     ]
@@ -10782,7 +11295,8 @@
      "infiltrator-squad",
      "reiver-squad",
      "scout-squad",
-     "spectrus-kill-team"
+     "spectrus-kill-team",
+     "wolf-scouts"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -10799,7 +11313,22 @@
      "deathwing-knights",
      "deathwing-terminator-squad",
      "terminator-assault-squad",
-     "terminator-squad"
+     "terminator-squad",
+     "wolf-guard-terminators"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "blood-angels",
+   "file": "leader-attachments",
+   "op": "add",
+   "id": "captain-on-bike",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "outrider-squad",
+     "ravenwing-black-knights"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -10832,7 +11361,6 @@
      "bladeguard-veteran-squad",
      "crusader-squad",
      "death-company-marines",
-     "death-company-marines-with-bolt-rifles",
      "deathwatch-veterans",
      "decimus-kill-team",
      "fortis-kill-team",
@@ -10842,7 +11370,7 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "sword-brethren-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -10859,7 +11387,8 @@
      "deathwing-knights",
      "deathwing-terminator-squad",
      "terminator-assault-squad",
-     "terminator-squad"
+     "terminator-squad",
+     "wolf-guard-terminators"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -10882,46 +11411,6 @@
    "faction": "blood-angels",
    "file": "leader-attachments",
    "op": "add",
-   "id": "chaplain-with-jump-pack",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "assault-intercessors-with-jump-packs",
-     "death-company-marines-with-jump-packs",
-     "talonstrike-kill-team",
-     "vanguard-veteran-squad-with-jump-packs"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "blood-angels",
-   "file": "leader-attachments",
-   "op": "add",
-   "id": "judiciar",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "assault-intercessor-squad",
-     "bladeguard-veteran-squad",
-     "crusader-squad",
-     "deathwatch-veterans",
-     "decimus-kill-team",
-     "fortis-kill-team",
-     "infernus-squad",
-     "inner-circle-companions",
-     "intercessor-squad",
-     "sternguard-veteran-squad",
-     "sword-brethren-squad",
-     "tactical-squad"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "blood-angels",
-   "file": "leader-attachments",
-   "op": "add",
    "id": "librarian",
    "key": "leader_id",
    "values": {
@@ -10930,14 +11419,13 @@
      "deathwatch-veterans",
      "decimus-kill-team",
      "desolation-squad",
-     "devastator-squad",
      "fortis-kill-team",
      "hellblaster-squad",
      "infernus-squad",
      "inner-circle-companions",
      "intercessor-squad",
      "sternguard-veteran-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -10954,24 +11442,9 @@
      "incursor-squad",
      "infiltrator-squad",
      "reiver-squad",
-     "spectrus-kill-team"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "blood-angels",
-   "file": "leader-attachments",
-   "op": "add",
-   "id": "librarian-in-terminator-armour",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "deathwatch-terminator-squad",
-     "deathwing-knights",
-     "deathwing-terminator-squad",
-     "terminator-assault-squad",
-     "terminator-squad"
+     "scout-squad",
+     "spectrus-kill-team",
+     "wolf-scouts"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -10988,11 +11461,9 @@
      "crusader-squad",
      "decimus-kill-team",
      "desolation-squad",
-     "devastator-squad",
      "fortis-kill-team",
      "intercessor-squad",
-     "sword-brethren-squad",
-     "tactical-squad"
+     "sword-brethren-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11038,6 +11509,21 @@
   },
   {
    "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "asmodai",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 80
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
    "file": "leader-attachments",
    "op": "add",
    "id": "asmodai",
@@ -11050,11 +11536,25 @@
      "infernus-squad",
      "inner-circle-companions",
      "intercessor-squad",
-     "sternguard-veteran-squad",
-     "tactical-squad"
+     "sternguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "azrael",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 150
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "dark-angels",
@@ -11066,15 +11566,30 @@
     "eligible_bodyguard_ids": [
      "assault-intercessor-squad",
      "bladeguard-veteran-squad",
+     "company-heroes",
      "hellblaster-squad",
      "infernus-squad",
      "inner-circle-companions",
      "intercessor-squad",
-     "sternguard-veteran-squad",
-     "tactical-squad"
+     "sternguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "belial",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 100
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "dark-angels",
@@ -11086,11 +11601,80 @@
     "eligible_bodyguard_ids": [
      "deathwing-knights",
      "deathwing-terminator-squad",
-     "terminator-assault-squad",
      "terminator-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "deathwing-knights",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 255,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 275,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "deathwing-terminator-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 190,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "cost": 380,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 230,
+      "unit_count_min": 3
+     },
+     {
+      "models": 10,
+      "cost": 420,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "ezekiel",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 110
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "dark-angels",
@@ -11106,11 +11690,82 @@
      "infernus-squad",
      "inner-circle-companions",
      "intercessor-squad",
-     "sternguard-veteran-squad",
-     "tactical-squad"
+     "sternguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "inner-circle-companions",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 90,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 3,
+      "cost": 105,
+      "unit_count_min": 3
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 180,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 195,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "land-speeder-vengeance",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 150,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 160,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "lazarus",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 80
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "dark-angels",
@@ -11122,14 +11777,131 @@
     "eligible_bodyguard_ids": [
      "assault-intercessor-squad",
      "bladeguard-veteran-squad",
+     "company-heroes",
      "infernus-squad",
      "inner-circle-companions",
      "intercessor-squad",
-     "sternguard-veteran-squad",
-     "tactical-squad"
+     "sternguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "lion-eljonson",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 415
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "nephilim-jetfighter",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 200
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "ravenwing-black-knights",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 85,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 3,
+      "cost": 95,
+      "unit_count_min": 3
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 170,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 180,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "ravenwing-command-squad",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 115,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 3,
+      "cost": 135,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "ravenwing-darkshroud",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 80
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "units",
+   "op": "set",
+   "id": "sammael",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 120
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "dark-angels",
@@ -11159,6 +11931,7 @@
      "crusader-squad",
      "deathwatch-veterans",
      "decimus-kill-team",
+     "desolation-squad",
      "fortis-kill-team",
      "hellblaster-squad",
      "infernus-squad",
@@ -11166,7 +11939,7 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "sword-brethren-squad",
-     "tactical-squad",
+     "vanguard-veteran-squad",
      "victrix-honour-guard"
     ]
    },
@@ -11181,7 +11954,7 @@
    "values": {
     "eligible_bodyguard_ids": [
      "aggressor-squad",
-     "eradicator-squad",
+     "eradicator-squad-with-heavy-bolters",
      "heavy-intercessor-squad",
      "indomitor-kill-team"
     ]
@@ -11201,7 +11974,8 @@
      "infiltrator-squad",
      "reiver-squad",
      "scout-squad",
-     "spectrus-kill-team"
+     "spectrus-kill-team",
+     "wolf-scouts"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11218,7 +11992,22 @@
      "deathwing-knights",
      "deathwing-terminator-squad",
      "terminator-assault-squad",
-     "terminator-squad"
+     "terminator-squad",
+     "wolf-guard-terminators"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "dark-angels",
+   "file": "leader-attachments",
+   "op": "add",
+   "id": "captain-on-bike",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "outrider-squad",
+     "ravenwing-black-knights"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11251,7 +12040,6 @@
      "bladeguard-veteran-squad",
      "crusader-squad",
      "death-company-marines",
-     "death-company-marines-with-bolt-rifles",
      "deathwatch-veterans",
      "decimus-kill-team",
      "fortis-kill-team",
@@ -11261,7 +12049,7 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "sword-brethren-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11278,7 +12066,8 @@
      "deathwing-knights",
      "deathwing-terminator-squad",
      "terminator-assault-squad",
-     "terminator-squad"
+     "terminator-squad",
+     "wolf-guard-terminators"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11317,30 +12106,6 @@
    "faction": "dark-angels",
    "file": "leader-attachments",
    "op": "add",
-   "id": "judiciar",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "assault-intercessor-squad",
-     "bladeguard-veteran-squad",
-     "crusader-squad",
-     "deathwatch-veterans",
-     "decimus-kill-team",
-     "fortis-kill-team",
-     "infernus-squad",
-     "inner-circle-companions",
-     "intercessor-squad",
-     "sternguard-veteran-squad",
-     "sword-brethren-squad",
-     "tactical-squad"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "dark-angels",
-   "file": "leader-attachments",
-   "op": "add",
    "id": "librarian",
    "key": "leader_id",
    "values": {
@@ -11349,14 +12114,13 @@
      "deathwatch-veterans",
      "decimus-kill-team",
      "desolation-squad",
-     "devastator-squad",
      "fortis-kill-team",
      "hellblaster-squad",
      "infernus-squad",
      "inner-circle-companions",
      "intercessor-squad",
      "sternguard-veteran-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11373,24 +12137,9 @@
      "incursor-squad",
      "infiltrator-squad",
      "reiver-squad",
-     "spectrus-kill-team"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "dark-angels",
-   "file": "leader-attachments",
-   "op": "add",
-   "id": "librarian-in-terminator-armour",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "deathwatch-terminator-squad",
-     "deathwing-knights",
-     "deathwing-terminator-squad",
-     "terminator-assault-squad",
-     "terminator-squad"
+     "scout-squad",
+     "spectrus-kill-team",
+     "wolf-scouts"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11407,14 +12156,65 @@
      "crusader-squad",
      "decimus-kill-team",
      "desolation-squad",
-     "devastator-squad",
      "fortis-kill-team",
      "intercessor-squad",
-     "sword-brethren-squad",
-     "tactical-squad"
+     "sword-brethren-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "deathwatch-terminator-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 190,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "cost": 380,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 230,
+      "unit_count_min": 3
+     },
+     {
+      "models": 10,
+      "cost": 420,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "deathwatch-veterans",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 115
+     },
+     {
+      "models": 6,
+      "models_max": 15,
+      "cost": 220
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "deathwatch",
@@ -11425,11 +12225,122 @@
     "points": [
      {
       "models": 5,
-      "cost": 100
+      "cost": 110
      },
      {
       "models": 10,
-      "cost": 190
+      "cost": 210
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "fortis-kill-team",
+   "values": {
+    "points": [
+     {
+      "models": 10,
+      "models_max": 16,
+      "cost": 210,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "models_max": 16,
+      "cost": 225,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "indomitor-kill-team",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "models_max": 16,
+      "cost": 280,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 3,
+      "models_max": 16,
+      "cost": 300,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "spectrus-kill-team",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "models_max": 17,
+      "cost": 185,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "models_max": 17,
+      "cost": 195,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "talonstrike-kill-team",
+   "values": {
+    "points": [
+     {
+      "models": 10,
+      "models_max": 15,
+      "cost": 280,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "models_max": 15,
+      "cost": 300,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "watch-captain-artemis",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 75
      }
     ]
    },
@@ -11449,6 +12360,21 @@
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "units",
+   "op": "set",
+   "id": "watch-master",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 105
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "deathwatch",
@@ -11479,6 +12405,7 @@
      "crusader-squad",
      "deathwatch-veterans",
      "decimus-kill-team",
+     "desolation-squad",
      "fortis-kill-team",
      "hellblaster-squad",
      "infernus-squad",
@@ -11486,7 +12413,7 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "sword-brethren-squad",
-     "tactical-squad",
+     "vanguard-veteran-squad",
      "victrix-honour-guard"
     ]
    },
@@ -11501,7 +12428,7 @@
    "values": {
     "eligible_bodyguard_ids": [
      "aggressor-squad",
-     "eradicator-squad",
+     "eradicator-squad-with-heavy-bolters",
      "heavy-intercessor-squad",
      "indomitor-kill-team"
     ]
@@ -11521,7 +12448,8 @@
      "infiltrator-squad",
      "reiver-squad",
      "scout-squad",
-     "spectrus-kill-team"
+     "spectrus-kill-team",
+     "wolf-scouts"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11538,7 +12466,22 @@
      "deathwing-knights",
      "deathwing-terminator-squad",
      "terminator-assault-squad",
-     "terminator-squad"
+     "terminator-squad",
+     "wolf-guard-terminators"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "deathwatch",
+   "file": "leader-attachments",
+   "op": "add",
+   "id": "captain-on-bike",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "outrider-squad",
+     "ravenwing-black-knights"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11571,7 +12514,6 @@
      "bladeguard-veteran-squad",
      "crusader-squad",
      "death-company-marines",
-     "death-company-marines-with-bolt-rifles",
      "deathwatch-veterans",
      "decimus-kill-team",
      "fortis-kill-team",
@@ -11581,7 +12523,7 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "sword-brethren-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11598,7 +12540,8 @@
      "deathwing-knights",
      "deathwing-terminator-squad",
      "terminator-assault-squad",
-     "terminator-squad"
+     "terminator-squad",
+     "wolf-guard-terminators"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11637,30 +12580,6 @@
    "faction": "deathwatch",
    "file": "leader-attachments",
    "op": "add",
-   "id": "judiciar",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "assault-intercessor-squad",
-     "bladeguard-veteran-squad",
-     "crusader-squad",
-     "deathwatch-veterans",
-     "decimus-kill-team",
-     "fortis-kill-team",
-     "infernus-squad",
-     "inner-circle-companions",
-     "intercessor-squad",
-     "sternguard-veteran-squad",
-     "sword-brethren-squad",
-     "tactical-squad"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "deathwatch",
-   "file": "leader-attachments",
-   "op": "add",
    "id": "librarian",
    "key": "leader_id",
    "values": {
@@ -11669,14 +12588,13 @@
      "deathwatch-veterans",
      "decimus-kill-team",
      "desolation-squad",
-     "devastator-squad",
      "fortis-kill-team",
      "hellblaster-squad",
      "infernus-squad",
      "inner-circle-companions",
      "intercessor-squad",
      "sternguard-veteran-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11693,24 +12611,9 @@
      "incursor-squad",
      "infiltrator-squad",
      "reiver-squad",
-     "spectrus-kill-team"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "deathwatch",
-   "file": "leader-attachments",
-   "op": "add",
-   "id": "librarian-in-terminator-armour",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "deathwatch-terminator-squad",
-     "deathwing-knights",
-     "deathwing-terminator-squad",
-     "terminator-assault-squad",
-     "terminator-squad"
+     "scout-squad",
+     "spectrus-kill-team",
+     "wolf-scouts"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11727,11 +12630,9 @@
      "crusader-squad",
      "decimus-kill-team",
      "desolation-squad",
-     "devastator-squad",
      "fortis-kill-team",
      "intercessor-squad",
-     "sword-brethren-squad",
-     "tactical-squad"
+     "sword-brethren-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11745,7 +12646,7 @@
     "points": [
      {
       "models": 5,
-      "cost": 145
+      "cost": 155
      }
     ]
    },
@@ -11806,11 +12707,11 @@
     "points": [
      {
       "models": 5,
-      "cost": 100
+      "cost": 110
      },
      {
       "models": 10,
-      "cost": 200
+      "cost": 210
      }
     ]
    },
@@ -11881,6 +12782,271 @@
    "note": "Munitorum Field Manual"
   },
   {
+   "faction": "orks",
+   "file": "enhancements",
+   "op": "set",
+   "id": "targetin-gizmos-upgrade-blitz-brigade",
+   "values": {
+    "cost": "25"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "orks",
+   "file": "enhancements",
+   "op": "set",
+   "id": "dreadherder-dread-mob",
+   "values": {
+    "cost": "30"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "orks",
+   "file": "enhancements",
+   "op": "set",
+   "id": "supa-snazz-dakka-upgrade-wreckas",
+   "values": {
+    "cost": "25"
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "aggressor-squad",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 90
+     },
+     {
+      "models": 6,
+      "cost": 180
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "ancient-in-terminator-armour",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 75
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "apothecary",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 45
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "assault-intercessor-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 85
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 170
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "assault-intercessors-with-jump-packs",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 95,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 105,
+      "unit_count_min": 3
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 190,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 200,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "astraeus",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 550,
+      "unit_count_min": 1,
+      "unit_count_max": 1
+     },
+     {
+      "models": 1,
+      "cost": 650,
+      "unit_count_min": 2
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "ballistus-dreadnought",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 150,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 170,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "bladeguard-ancient",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 70
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "bladeguard-veteran-squad",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 90,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 3,
+      "cost": 110,
+      "unit_count_min": 3
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 180,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 200,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "brutalis-dreadnought",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 160,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 180,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "captain",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 90
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
    "faction": "adeptus-astartes",
    "file": "leader-attachments",
    "op": "set",
@@ -11894,6 +13060,7 @@
      "crusader-squad",
      "deathwatch-veterans",
      "decimus-kill-team",
+     "desolation-squad",
      "fortis-kill-team",
      "hellblaster-squad",
      "infernus-squad",
@@ -11901,11 +13068,26 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "sword-brethren-squad",
-     "tactical-squad",
+     "vanguard-veteran-squad",
      "victrix-honour-guard"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "captain-in-gravis-armour",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 90
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -11916,12 +13098,61 @@
    "values": {
     "eligible_bodyguard_ids": [
      "aggressor-squad",
-     "eradicator-squad",
+     "eradicator-squad-with-heavy-bolters",
      "heavy-intercessor-squad",
      "indomitor-kill-team"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "captain-in-phobos-armour",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 75
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "leader-attachments",
+   "op": "set",
+   "id": "captain-in-phobos-armour",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "eliminator-squad",
+     "incursor-squad",
+     "infiltrator-squad",
+     "reiver-squad",
+     "scout-squad",
+     "spectrus-kill-team",
+     "wolf-scouts"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "captain-in-terminator-armour",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 90
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -11935,7 +13166,8 @@
      "deathwing-knights",
      "deathwing-terminator-squad",
      "terminator-assault-squad",
-     "terminator-squad"
+     "terminator-squad",
+     "wolf-guard-terminators"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11944,17 +13176,41 @@
    "faction": "adeptus-astartes",
    "file": "units",
    "op": "set",
-   "id": "centurion-devastator-squad",
+   "id": "captain-on-bike",
    "values": {
     "points": [
      {
-      "models": 3,
-      "cost": 175
-     },
+      "models": 1,
+      "cost": 110
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "leader-attachments",
+   "op": "add",
+   "id": "captain-on-bike",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "outrider-squad",
+     "ravenwing-black-knights"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "captain-with-jump-pack",
+   "values": {
+    "points": [
      {
-      "models": 4,
-      "models_max": 6,
-      "cost": 365
+      "models": 1,
+      "cost": 90
      }
     ]
    },
@@ -11972,7 +13228,6 @@
      "bladeguard-veteran-squad",
      "crusader-squad",
      "death-company-marines",
-     "death-company-marines-with-bolt-rifles",
      "deathwatch-veterans",
      "decimus-kill-team",
      "fortis-kill-team",
@@ -11982,7 +13237,7 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "sword-brethren-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -11999,34 +13254,438 @@
      "deathwing-knights",
      "deathwing-terminator-squad",
      "terminator-assault-squad",
-     "terminator-squad"
+     "terminator-squad",
+     "wolf-guard-terminators"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
   },
   {
    "faction": "adeptus-astartes",
-   "file": "leader-attachments",
+   "file": "units",
    "op": "set",
-   "id": "judiciar",
-   "key": "leader_id",
+   "id": "chaplain-on-bike",
    "values": {
-    "eligible_bodyguard_ids": [
-     "assault-intercessor-squad",
-     "bladeguard-veteran-squad",
-     "crusader-squad",
-     "deathwatch-veterans",
-     "decimus-kill-team",
-     "fortis-kill-team",
-     "infernus-squad",
-     "inner-circle-companions",
-     "intercessor-squad",
-     "sternguard-veteran-squad",
-     "sword-brethren-squad",
-     "tactical-squad"
+    "points": [
+     {
+      "models": 1,
+      "cost": 75
+     }
     ]
    },
-   "note": "Munitorum Field Manual, LEADER section"
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "company-heroes",
+   "values": {
+    "points": [
+     {
+      "models": 4,
+      "cost": 125,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 4,
+      "cost": 145,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "eliminator-squad",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 85
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "eradicator-squad-with-heavy-bolters",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 100,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 6,
+      "cost": 215,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 3,
+      "cost": 130,
+      "unit_count_min": 3
+     },
+     {
+      "models": 6,
+      "cost": 245,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "firestrike-servo-turrets",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 80
+     },
+     {
+      "models": 2,
+      "cost": 160
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "gladiator-lancer",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 160,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 180,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "gladiator-reaper",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 165,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 185,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "gladiator-valiant",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 165,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 185,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "heavy-intercessor-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 115
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 230
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "hellblaster-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 115,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "cost": 230,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 130,
+      "unit_count_min": 3
+     },
+     {
+      "models": 10,
+      "cost": 245,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "inceptor-squad",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 130,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 3,
+      "cost": 150,
+      "unit_count_min": 3
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 260,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 280,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "incursor-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 90,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 100,
+      "unit_count_min": 3
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 170,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 180,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "infernus-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 95,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "cost": 190,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 105,
+      "unit_count_min": 3
+     },
+     {
+      "models": 10,
+      "cost": 200,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "intercessor-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 85
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 170
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "invictor-tactical-warsuit",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 135,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 150,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "land-raider",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 245,
+      "unit_count_min": 1,
+      "unit_count_max": 1
+     },
+     {
+      "models": 1,
+      "cost": 265,
+      "unit_count_min": 2
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "land-raider-crusader",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 230,
+      "unit_count_min": 1,
+      "unit_count_max": 1
+     },
+     {
+      "models": 1,
+      "cost": 250,
+      "unit_count_min": 2
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "librarian",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 75
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -12040,34 +13699,65 @@
      "deathwatch-veterans",
      "decimus-kill-team",
      "desolation-squad",
-     "devastator-squad",
      "fortis-kill-team",
      "hellblaster-squad",
      "infernus-squad",
      "inner-circle-companions",
      "intercessor-squad",
      "sternguard-veteran-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
   },
   {
    "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "librarian-in-phobos-armour",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 75
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
    "file": "leader-attachments",
    "op": "set",
-   "id": "librarian-in-terminator-armour",
+   "id": "librarian-in-phobos-armour",
    "key": "leader_id",
    "values": {
     "eligible_bodyguard_ids": [
-     "deathwatch-terminator-squad",
-     "deathwing-knights",
-     "deathwing-terminator-squad",
-     "terminator-assault-squad",
-     "terminator-squad"
+     "eliminator-squad",
+     "incursor-squad",
+     "infiltrator-squad",
+     "reiver-squad",
+     "scout-squad",
+     "spectrus-kill-team",
+     "wolf-scouts"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "lieutenant",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 50
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -12078,12 +13768,194 @@
     "points": [
      {
       "models": 3,
-      "cost": 70
+      "cost": 80
      },
      {
       "models": 4,
       "models_max": 7,
-      "cost": 140
+      "cost": 160
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "reiver-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 85
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 165
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "repulsor",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 190,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 210,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "repulsor-executioner",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 260,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 280,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "rhino",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 70,
+      "unit_count_min": 1,
+      "unit_count_max": 3
+     },
+     {
+      "models": 1,
+      "cost": 80,
+      "unit_count_min": 4
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "scout-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 65
+     },
+     {
+      "models": 10,
+      "cost": 120
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "sternguard-veteran-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 105,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "cost": 210,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 120,
+      "unit_count_min": 3
+     },
+     {
+      "models": 10,
+      "cost": 225,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "storm-speeder-hailstrike",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 110,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 120,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "storm-speeder-thunderstrike",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 140,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 150,
+      "unit_count_min": 3
      }
     ]
    },
@@ -12093,17 +13965,173 @@
    "faction": "adeptus-astartes",
    "file": "leader-attachments",
    "op": "set",
-   "id": "pedro-kantor",
+   "id": "techmarine",
    "key": "leader_id",
    "values": {
     "eligible_bodyguard_ids": [
-     "bladeguard-veteran-squad",
-     "company-heroes",
-     "sternguard-veteran-squad",
-     "tactical-squad"
+     "assault-intercessor-squad",
+     "crusader-squad",
+     "decimus-kill-team",
+     "desolation-squad",
+     "fortis-kill-team",
+     "intercessor-squad",
+     "sword-brethren-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "terminator-assault-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 170,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "cost": 340,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 210,
+      "unit_count_min": 3
+     },
+     {
+      "models": 10,
+      "cost": 380,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "terminator-squad",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 190,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 10,
+      "cost": 380,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 230,
+      "unit_count_min": 3
+     },
+     {
+      "models": 10,
+      "cost": 420,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "thunderhawk-gunship",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 850,
+      "unit_count_min": 1,
+      "unit_count_max": 1
+     },
+     {
+      "models": 1,
+      "cost": 950,
+      "unit_count_min": 2
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "vanguard-veteran-squad-with-jump-packs",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 110,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 130,
+      "unit_count_min": 3
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 220,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 240,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "darnath-lysander",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 160
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "tor-garadon",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 90
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -12114,11 +14142,26 @@
    "values": {
     "eligible_bodyguard_ids": [
      "aggressor-squad",
-     "eradicator-squad",
+     "eradicator-squad-with-heavy-bolters",
      "heavy-intercessor-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "caanok-var",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 100
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -12129,11 +14172,26 @@
    "values": {
     "eligible_bodyguard_ids": [
      "aggressor-squad",
-     "eradicator-squad",
+     "eradicator-squad-with-heavy-bolters",
      "heavy-intercessor-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "adrax-agatone",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 90
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -12149,10 +14207,72 @@
      "infernus-squad",
      "intercessor-squad",
      "sternguard-veteran-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "vulkan-hestan",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 105
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "leader-attachments",
+   "op": "set",
+   "id": "vulkan-hestan",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "assault-intercessor-squad",
+     "bladeguard-veteran-squad",
+     "company-heroes",
+     "infernus-squad",
+     "vanguard-veteran-squad"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "aethon-shaan",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 105
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "captain-titus",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 115
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -12164,16 +14284,44 @@
     "eligible_bodyguard_ids": [
      "assault-intercessor-squad",
      "bladeguard-veteran-squad",
-     "company-heroes",
      "hellblaster-squad",
      "infernus-squad",
      "intercessor-squad",
      "sternguard-veteran-squad",
-     "victrix-honour-guard",
-     "wardens-of-ultramar"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "cato-sicarius",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 115
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "chief-librarian-tigurius",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 115
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -12186,32 +14334,91 @@
      "assault-intercessor-squad",
      "bladeguard-veteran-squad",
      "desolation-squad",
-     "devastator-squad",
+     "infernus-squad",
      "intercessor-squad",
      "sternguard-veteran-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
   },
   {
    "faction": "adeptus-astartes",
-   "file": "leader-attachments",
+   "file": "units",
    "op": "set",
-   "id": "uriel-ventris",
-   "key": "leader_id",
+   "id": "kaius-konorius",
    "values": {
-    "eligible_bodyguard_ids": [
-     "assault-intercessor-squad",
-     "bladeguard-veteran-squad",
-     "company-heroes",
-     "intercessor-squad",
-     "sternguard-veteran-squad",
-     "tactical-squad",
-     "victrix-honour-guard"
+    "points": [
+     {
+      "models": 1,
+      "cost": 100
+     }
     ]
    },
-   "note": "Munitorum Field Manual, LEADER section"
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "roboute-guilliman",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 415
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "victrix-honour-guard",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 120,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 6,
+      "cost": 250,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 3,
+      "cost": 150,
+      "unit_count_min": 3
+     },
+     {
+      "models": 6,
+      "cost": 280,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "korsarro-khan",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 80
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "adeptus-astartes",
@@ -12226,10 +14433,40 @@
      "company-heroes",
      "intercessor-squad",
      "sternguard-veteran-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "units",
+   "op": "set",
+   "id": "suboden-khan",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 105
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "arjac-rockfist",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 105
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "space-wolves",
@@ -12239,10 +14476,62 @@
    "key": "leader_id",
    "values": {
     "eligible_bodyguard_ids": [
+     "terminator-assault-squad",
+     "terminator-squad",
      "wolf-guard-terminators"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "blood-claws",
+   "values": {
+    "points": [
+     {
+      "models": 10,
+      "cost": 150
+     },
+     {
+      "models": 11,
+      "models_max": 20,
+      "cost": 290
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "grey-hunters",
+   "values": {
+    "points": [
+     {
+      "models": 10,
+      "cost": 180
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "iron-priest",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 60
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "space-wolves",
@@ -12252,12 +14541,29 @@
    "key": "leader_id",
    "values": {
     "eligible_bodyguard_ids": [
+     "assault-intercessor-squad",
      "blood-claws",
      "grey-hunters",
+     "intercessor-squad",
      "wolf-guard-headtakers"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "logan-grimnar",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 150
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "space-wolves",
@@ -12267,10 +14573,27 @@
    "key": "leader_id",
    "values": {
     "eligible_bodyguard_ids": [
+     "terminator-assault-squad",
+     "terminator-squad",
      "wolf-guard-terminators"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "njal-stormcaller",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 100
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "space-wolves",
@@ -12280,12 +14603,30 @@
    "key": "leader_id",
    "values": {
     "eligible_bodyguard_ids": [
+     "assault-intercessor-squad",
+     "bladeguard-veteran-squad",
      "blood-claws",
      "grey-hunters",
+     "intercessor-squad",
      "wolf-guard-headtakers"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "ragnar-blackmane",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 100
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "space-wolves",
@@ -12303,18 +14644,108 @@
   },
   {
    "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "thunderwolf-cavalry",
+   "values": {
+    "points": [
+     {
+      "models": 3,
+      "cost": 115,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 3,
+      "cost": 145,
+      "unit_count_min": 3
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 230,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 4,
+      "models_max": 6,
+      "cost": 260,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "ulrik-the-slayer",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 90
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
    "file": "leader-attachments",
    "op": "add",
    "id": "ulrik-the-slayer",
    "key": "leader_id",
    "values": {
     "eligible_bodyguard_ids": [
+     "assault-intercessor-squad",
+     "bladeguard-veteran-squad",
      "blood-claws",
      "grey-hunters",
+     "intercessor-squad",
      "wolf-guard-headtakers"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "venerable-dreadnought",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 130,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 140,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wolf-guard-battle-leader",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 80
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "space-wolves",
@@ -12324,12 +14755,65 @@
    "key": "leader_id",
    "values": {
     "eligible_bodyguard_ids": [
+     "assault-intercessor-squad",
+     "bladeguard-veteran-squad",
      "blood-claws",
      "grey-hunters",
+     "intercessor-squad",
      "wolf-guard-headtakers"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wolf-guard-terminators",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 180,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 220,
+      "unit_count_min": 3
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 365,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 405,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wolf-priest",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 75
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
   },
   {
    "faction": "space-wolves",
@@ -12339,8 +14823,11 @@
    "key": "leader_id",
    "values": {
     "eligible_bodyguard_ids": [
+     "assault-intercessor-squad",
+     "bladeguard-veteran-squad",
      "blood-claws",
      "grey-hunters",
+     "intercessor-squad",
      "wolf-guard-headtakers"
     ]
    },
@@ -12355,12 +14842,117 @@
     "points": [
      {
       "models": 6,
-      "models_max": 11,
-      "cost": 90
+      "cost": 95,
+      "unit_count_min": 1,
+      "unit_count_max": 2
      },
      {
       "models": 12,
-      "cost": 180
+      "cost": 190,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 6,
+      "cost": 105,
+      "unit_count_min": 3
+     },
+     {
+      "models": 12,
+      "cost": 200,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wulfen",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 90,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 105,
+      "unit_count_min": 3
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 180,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 195,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wulfen-dreadnought",
+   "values": {
+    "points": [
+     {
+      "models": 1,
+      "cost": 140,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 1,
+      "cost": 150,
+      "unit_count_min": 3
+     }
+    ]
+   },
+   "note": "Munitorum Field Manual"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "units",
+   "op": "set",
+   "id": "wulfen-with-storm-shields",
+   "values": {
+    "points": [
+     {
+      "models": 5,
+      "cost": 125,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 5,
+      "cost": 155,
+      "unit_count_min": 3
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 250,
+      "unit_count_min": 1,
+      "unit_count_max": 2
+     },
+     {
+      "models": 6,
+      "models_max": 10,
+      "cost": 280,
+      "unit_count_min": 3
      }
     ]
    },
@@ -12380,6 +14972,7 @@
      "crusader-squad",
      "deathwatch-veterans",
      "decimus-kill-team",
+     "desolation-squad",
      "fortis-kill-team",
      "hellblaster-squad",
      "infernus-squad",
@@ -12387,7 +14980,7 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "sword-brethren-squad",
-     "tactical-squad",
+     "vanguard-veteran-squad",
      "victrix-honour-guard"
     ]
    },
@@ -12402,7 +14995,7 @@
    "values": {
     "eligible_bodyguard_ids": [
      "aggressor-squad",
-     "eradicator-squad",
+     "eradicator-squad-with-heavy-bolters",
      "heavy-intercessor-squad",
      "indomitor-kill-team"
     ]
@@ -12422,7 +15015,8 @@
      "infiltrator-squad",
      "reiver-squad",
      "scout-squad",
-     "spectrus-kill-team"
+     "spectrus-kill-team",
+     "wolf-scouts"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -12439,7 +15033,22 @@
      "deathwing-knights",
      "deathwing-terminator-squad",
      "terminator-assault-squad",
-     "terminator-squad"
+     "terminator-squad",
+     "wolf-guard-terminators"
+    ]
+   },
+   "note": "Munitorum Field Manual, LEADER section"
+  },
+  {
+   "faction": "space-wolves",
+   "file": "leader-attachments",
+   "op": "add",
+   "id": "captain-on-bike",
+   "key": "leader_id",
+   "values": {
+    "eligible_bodyguard_ids": [
+     "outrider-squad",
+     "ravenwing-black-knights"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -12472,7 +15081,6 @@
      "bladeguard-veteran-squad",
      "crusader-squad",
      "death-company-marines",
-     "death-company-marines-with-bolt-rifles",
      "deathwatch-veterans",
      "decimus-kill-team",
      "fortis-kill-team",
@@ -12482,7 +15090,7 @@
      "intercessor-squad",
      "sternguard-veteran-squad",
      "sword-brethren-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -12499,7 +15107,8 @@
      "deathwing-knights",
      "deathwing-terminator-squad",
      "terminator-assault-squad",
-     "terminator-squad"
+     "terminator-squad",
+     "wolf-guard-terminators"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -12538,30 +15147,6 @@
    "faction": "space-wolves",
    "file": "leader-attachments",
    "op": "add",
-   "id": "judiciar",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "assault-intercessor-squad",
-     "bladeguard-veteran-squad",
-     "crusader-squad",
-     "deathwatch-veterans",
-     "decimus-kill-team",
-     "fortis-kill-team",
-     "infernus-squad",
-     "inner-circle-companions",
-     "intercessor-squad",
-     "sternguard-veteran-squad",
-     "sword-brethren-squad",
-     "tactical-squad"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "space-wolves",
-   "file": "leader-attachments",
-   "op": "add",
    "id": "librarian",
    "key": "leader_id",
    "values": {
@@ -12570,14 +15155,13 @@
      "deathwatch-veterans",
      "decimus-kill-team",
      "desolation-squad",
-     "devastator-squad",
      "fortis-kill-team",
      "hellblaster-squad",
      "infernus-squad",
      "inner-circle-companions",
      "intercessor-squad",
      "sternguard-veteran-squad",
-     "tactical-squad"
+     "vanguard-veteran-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -12594,24 +15178,9 @@
      "incursor-squad",
      "infiltrator-squad",
      "reiver-squad",
-     "spectrus-kill-team"
-    ]
-   },
-   "note": "Munitorum Field Manual, LEADER section"
-  },
-  {
-   "faction": "space-wolves",
-   "file": "leader-attachments",
-   "op": "add",
-   "id": "librarian-in-terminator-armour",
-   "key": "leader_id",
-   "values": {
-    "eligible_bodyguard_ids": [
-     "deathwatch-terminator-squad",
-     "deathwing-knights",
-     "deathwing-terminator-squad",
-     "terminator-assault-squad",
-     "terminator-squad"
+     "scout-squad",
+     "spectrus-kill-team",
+     "wolf-scouts"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -12628,11 +15197,9 @@
      "crusader-squad",
      "decimus-kill-team",
      "desolation-squad",
-     "devastator-squad",
      "fortis-kill-team",
      "intercessor-squad",
-     "sword-brethren-squad",
-     "tactical-squad"
+     "sword-brethren-squad"
     ]
    },
    "note": "Munitorum Field Manual, LEADER section"
@@ -14842,6 +17409,13 @@
       "SV": "3+",
       "LD": "7+"
      }
+    ],
+    "keywords": [
+     "Vehicle",
+     "Imperium",
+     "Smoke",
+     "Squadron",
+     "Hippogriff AFV"
     ]
    },
    "note": "astra-militarum pack, codex datasheet"
@@ -14911,6 +17485,15 @@
       "SV": "3+",
       "LD": "7+"
      }
+    ],
+    "keywords": [
+     "Vehicle",
+     "Imperium",
+     "Smoke",
+     "Squadron",
+     "Transport",
+     "Dedicated Transport",
+     "Centaur RSV"
     ]
    },
    "note": "astra-militarum pack, codex datasheet"
@@ -15668,6 +18251,16 @@
       "SV": "3+",
       "LD": "7+"
      }
+    ],
+    "keywords": [
+     "Vehicle",
+     "Walker",
+     "Frame",
+     "Imperium",
+     "Regiment",
+     "Squadron",
+     "Smoke",
+     "Sentinel Powerlifter"
     ]
    },
    "note": "astra-militarum pack, legends datasheet"
@@ -19386,6 +21979,36 @@
   },
   {
    "faction": "orks",
+   "file": "weapons",
+   "op": "set",
+   "id": "supa-kannon-gargantuan-squiggoth",
+   "values": {
+    "profiles": [
+     {
+      "name": "Supa-kannon",
+      "range": 60,
+      "stats": {
+       "A": "2D6",
+       "BS": 5,
+       "S": 12,
+       "AP": -2,
+       "D": 3
+      },
+      "keywords": [
+       {
+        "keyword_id": "blast",
+        "parameters": {
+         "value": 1
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "note": "orks pack datasheet"
+  },
+  {
+   "faction": "orks",
    "file": "units",
    "op": "add",
    "id": "kannonwagon",
@@ -20566,7 +23189,7 @@
    "faction": "adeptus-astartes",
    "file": "weapons",
    "op": "set",
-   "id": "bolt-pistol-vulkan-hestan",
+   "id": "bolt-pistol-scout-squad",
    "values": {
     "profiles": [
      {
@@ -20574,14 +23197,14 @@
       "range": 12,
       "stats": {
        "A": 1,
+       "BS": 3,
        "S": 4,
        "AP": 0,
-       "D": 1,
-       "BS": 3
+       "D": 1
       },
       "keywords": [
        {
-        "keyword_id": "pistol"
+        "keyword_id": "close-quarters"
        }
       ]
      }
@@ -20638,22 +23261,24 @@
    "faction": "adeptus-astartes",
    "file": "weapons",
    "op": "set",
-   "id": "heavy-flamer",
+   "id": "heavy-flamer-terminator-squad",
    "values": {
     "profiles": [
      {
-      "name": "Heavy flamer",
+      "name": "Heavy Flamer",
       "range": 12,
       "stats": {
        "A": "D6",
        "S": 5,
        "AP": -1,
-       "D": 1,
-       "BS": "N/A"
+       "D": 1
       },
       "keywords": [
        {
-        "keyword_id": "ignores-cover"
+        "keyword_id": "blast",
+        "parameters": {
+         "value": 2
+        }
        },
        {
         "keyword_id": "torrent"
@@ -20728,19 +23353,20 @@
    "faction": "adeptus-astartes",
    "file": "weapons",
    "op": "set",
-   "id": "stormfury-missile-launcher",
+   "id": "stormfury-missile-launcher-storm-speeder-thunderstrike",
    "values": {
     "profiles": [
      {
-      "name": "Stormfury missile launcher",
+      "name": "Stormfury Missile Launcher",
       "range": 48,
       "stats": {
        "A": 1,
+       "BS": 3,
        "S": 12,
        "AP": -3,
-       "D": "D6+1",
-       "BS": 3
-      }
+       "D": "D6+1"
+      },
+      "keywords": []
      }
     ]
    },
@@ -20765,6 +23391,16 @@
       "SV": "2+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Character",
+     "Epic Hero",
+     "Imperium",
+     "Tacticus",
+     "Captain",
+     "Cato",
+     "Sicarius"
     ]
    },
    "note": "space-marines pack, codex datasheet"
@@ -20788,9 +23424,42 @@
       "SV": "3+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Character",
+     "Epic Hero",
+     "Imperium",
+     "Tacticus",
+     "Grenades",
+     "Captain",
+     "Titus"
     ]
    },
    "note": "space-marines pack, codex datasheet"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "weapons",
+   "op": "set",
+   "id": "master-crafted-bolter-lieutenant",
+   "values": {
+    "profiles": [
+     {
+      "name": "Master-crafted Bolter",
+      "range": 24,
+      "stats": {
+       "A": 2,
+       "BS": 2,
+       "S": 4,
+       "AP": -1,
+       "D": 2
+      },
+      "keywords": []
+     }
+    ]
+   },
+   "note": "space-marines pack datasheet"
   },
   {
    "faction": "adeptus-astartes",
@@ -20813,7 +23482,40 @@
    "faction": "adeptus-astartes",
    "file": "weapons",
    "op": "set",
-   "id": "heavy-bolt-pistol-suboden-khan",
+   "id": "astropathic-blast",
+   "values": {
+    "profiles": [
+     {
+      "name": "Astropathic Blast",
+      "range": 12,
+      "stats": {
+       "A": "D6",
+       "BS": 3,
+       "S": 4,
+       "AP": -1,
+       "D": 1
+      },
+      "keywords": [
+       {
+        "keyword_id": "blast",
+        "parameters": {
+         "value": 1
+        }
+       },
+       {
+        "keyword_id": "psychic"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "space-marines pack datasheet"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "weapons",
+   "op": "set",
+   "id": "heavy-bolt-pistol-wardens-of-ultramar",
    "values": {
     "profiles": [
      {
@@ -20821,14 +23523,14 @@
       "range": 18,
       "stats": {
        "A": "Company",
+       "BS": "Banner:",
        "S": "While",
        "AP": "this",
-       "D": "unit",
-       "BS": "Banner:"
+       "D": "unit"
       },
       "keywords": [
        {
-        "keyword_id": "pistol"
+        "keyword_id": "close-quarters"
        }
       ]
      }
@@ -20928,6 +23630,15 @@
       "SV": "2+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Character",
+     "Epic Hero",
+     "Imperium",
+     "Terminator",
+     "Captain",
+     "Caanok Var"
     ]
    },
    "note": "space-marines pack, codex datasheet"
@@ -20951,9 +23662,89 @@
       "SV": "3+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Mounted",
+     "Character",
+     "Epic Hero",
+     "Imperium",
+     "Grenades",
+     "Captain",
+     "Suboden Khan"
     ]
    },
    "note": "space-marines pack, codex datasheet"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "weapons",
+   "op": "set",
+   "id": "stormtooth",
+   "values": {
+    "profiles": [
+     {
+      "name": "Stormtooth",
+      "range": "Melee",
+      "stats": {
+       "A": 6,
+       "WS": 2,
+       "S": 6,
+       "AP": -2,
+       "D": 2
+      },
+      "keywords": [
+       {
+        "keyword_id": "anti",
+        "parameters": {
+         "target_keyword": "MONSTER/VEHICLE",
+         "threshold": 4
+        }
+       },
+       {
+        "keyword_id": "lance"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "space-marines pack datasheet"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "weapons",
+   "op": "set",
+   "id": "power-sword",
+   "values": {
+    "profiles": [
+     {
+      "name": "Power Sword",
+      "range": "Melee",
+      "stats": {
+       "A": 8,
+       "WS": 2,
+       "S": 5,
+       "AP": -2,
+       "D": 1
+      },
+      "keywords": [
+       {
+        "keyword_id": "extra-attacks"
+       },
+       {
+        "keyword_id": "sustained-hits",
+        "parameters": {
+         "value": 1,
+         "excluded_target_keywords": [
+          "Monster",
+          "Vehicle"
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "note": "space-marines pack datasheet"
   },
   {
    "faction": "adeptus-astartes",
@@ -20974,6 +23765,16 @@
       "SV": "2+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Character",
+     "Epic Hero",
+     "Grenades",
+     "Imperium",
+     "Tacticus",
+     "Captain",
+     "Vulkan He’stan"
     ]
    },
    "note": "space-marines pack, codex datasheet"
@@ -21030,6 +23831,17 @@
       "SV": "3+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Character",
+     "Epic Hero",
+     "Fly",
+     "Jump Pack",
+     "Imperium",
+     "Tacticus",
+     "Chapter Master",
+     "Aethon Shaan"
     ]
    },
    "note": "space-marines pack, codex datasheet"
@@ -21053,6 +23865,15 @@
       "SV": "2+",
       "LD": "6+"
      }
+    ],
+    "keywords": [
+     "Infantry",
+     "Character",
+     "Epic Hero",
+     "Imperium",
+     "Terminator",
+     "Captain",
+     "Darnath Lysander"
     ]
    },
    "note": "space-marines pack, codex datasheet"
@@ -21086,6 +23907,36 @@
     ]
    },
    "note": "space-marines pack, imperial-armour datasheet"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "weapons",
+   "op": "set",
+   "id": "ironhail-heavy-stubber-impulsor",
+   "values": {
+    "profiles": [
+     {
+      "name": "Ironhail Heavy Stubber",
+      "range": 36,
+      "stats": {
+       "A": 3,
+       "BS": 3,
+       "S": 4,
+       "AP": 0,
+       "D": 1
+      },
+      "keywords": [
+       {
+        "keyword_id": "rapid-fire",
+        "parameters": {
+         "value": 3
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "note": "space-marines pack datasheet"
   },
   {
    "faction": "adeptus-astartes",
@@ -21141,6 +23992,33 @@
          "value": 1
         }
        },
+       {
+        "keyword_id": "twin-linked"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "space-marines pack datasheet"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "weapons",
+   "op": "set",
+   "id": "twin-lascannon-repulsor",
+   "values": {
+    "profiles": [
+     {
+      "name": "Twin Lascannon",
+      "range": 48,
+      "stats": {
+       "A": 1,
+       "BS": 3,
+       "S": 12,
+       "AP": -3,
+       "D": "D6+1"
+      },
+      "keywords": [
        {
         "keyword_id": "twin-linked"
        }
@@ -21256,6 +24134,33 @@
   },
   {
    "faction": "adeptus-astartes",
+   "file": "weapons",
+   "op": "set",
+   "id": "hunter-killer-missile-rhino",
+   "values": {
+    "profiles": [
+     {
+      "name": "Hunter-killer Missile",
+      "range": 48,
+      "stats": {
+       "A": 1,
+       "BS": 2,
+       "S": 14,
+       "AP": -3,
+       "D": "D6"
+      },
+      "keywords": [
+       {
+        "keyword_id": "one-shot"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "space-marines pack datasheet"
+  },
+  {
+   "faction": "adeptus-astartes",
    "file": "units",
    "op": "set",
    "id": "mortis-dreadnought",
@@ -21281,22 +24186,25 @@
    "faction": "adeptus-astartes",
    "file": "weapons",
    "op": "set",
-   "id": "assault-cannon-wolf-guard-terminators",
+   "id": "assault-cannon-terminator-squad",
    "values": {
     "profiles": [
      {
-      "name": "Assault cannon",
+      "name": "Assault Cannon",
       "range": 24,
       "stats": {
        "A": 6,
+       "BS": 3,
        "S": 6,
        "AP": 0,
-       "D": 1,
-       "BS": 3
+       "D": 1
       },
       "keywords": [
        {
-        "keyword_id": "devastating-wounds"
+        "keyword_id": "sustained-hits",
+        "parameters": {
+         "value": 1
+        }
        }
       ]
      }
@@ -21937,6 +24845,33 @@
   },
   {
    "faction": "adeptus-astartes",
+   "file": "weapons",
+   "op": "set",
+   "id": "force-weapon",
+   "values": {
+    "profiles": [
+     {
+      "name": "Force Weapon",
+      "range": "Melee",
+      "stats": {
+       "A": 4,
+       "WS": 3,
+       "S": 6,
+       "AP": -1,
+       "D": "D3"
+      },
+      "keywords": [
+       {
+        "keyword_id": "psychic"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "space-marines pack datasheet"
+  },
+  {
+   "faction": "adeptus-astartes",
    "file": "units",
    "op": "set",
    "id": "thunderhawk-transporter",
@@ -22115,25 +25050,21 @@
    "faction": "adeptus-astartes",
    "file": "weapons",
    "op": "set",
-   "id": "hand-flamer",
+   "id": "hand-flamer-intercessor-squad",
    "values": {
     "profiles": [
      {
-      "name": "Hand flamer",
-      "range": 12,
+      "name": "Hand Flamer",
+      "range": 9,
       "stats": {
        "A": "D6",
        "S": 3,
        "AP": 0,
-       "D": 1,
-       "BS": "N/A"
+       "D": 1
       },
       "keywords": [
        {
-        "keyword_id": "ignores-cover"
-       },
-       {
-        "keyword_id": "pistol"
+        "keyword_id": "close-quarters"
        },
        {
         "keyword_id": "torrent"
@@ -22275,6 +25206,39 @@
   },
   {
    "faction": "adeptus-astartes",
+   "file": "weapons",
+   "op": "set",
+   "id": "hurricane-bolter-land-raider-crusader",
+   "values": {
+    "profiles": [
+     {
+      "name": "Hurricane Bolter",
+      "range": 24,
+      "stats": {
+       "A": 6,
+       "BS": 3,
+       "S": 4,
+       "AP": 0,
+       "D": 1
+      },
+      "keywords": [
+       {
+        "keyword_id": "rapid-fire",
+        "parameters": {
+         "value": 6
+        }
+       },
+       {
+        "keyword_id": "twin-linked"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "space-marines pack datasheet"
+  },
+  {
+   "faction": "adeptus-astartes",
    "file": "units",
    "op": "set",
    "id": "assault-squad",
@@ -22386,6 +25350,36 @@
   },
   {
    "faction": "adeptus-astartes",
+   "file": "weapons",
+   "op": "set",
+   "id": "scout-sniper-rifle",
+   "values": {
+    "profiles": [
+     {
+      "name": "Sniper Rifle",
+      "range": 36,
+      "stats": {
+       "A": 1,
+       "BS": 3,
+       "S": 4,
+       "AP": -2,
+       "D": 2
+      },
+      "keywords": [
+       {
+        "keyword_id": "heavy"
+       },
+       {
+        "keyword_id": "precision"
+       }
+      ]
+     }
+    ]
+   },
+   "note": "space-marines pack datasheet"
+  },
+  {
+   "faction": "adeptus-astartes",
    "file": "units",
    "op": "add",
    "id": "tyrannic-war-veterans",
@@ -22492,6 +25486,39 @@
     ]
    },
    "note": "space-marines pack, legends datasheet"
+  },
+  {
+   "faction": "adeptus-astartes",
+   "file": "weapons",
+   "op": "set",
+   "id": "astartes-shotgun",
+   "values": {
+    "profiles": [
+     {
+      "name": "Shotgun",
+      "range": 18,
+      "stats": {
+       "A": 2,
+       "BS": 3,
+       "S": 4,
+       "AP": 0,
+       "D": 1
+      },
+      "keywords": [
+       {
+        "keyword_id": "assault"
+       },
+       {
+        "keyword_id": "blast",
+        "parameters": {
+         "value": 1
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "note": "space-marines pack datasheet"
   },
   {
    "faction": "adeptus-astartes",

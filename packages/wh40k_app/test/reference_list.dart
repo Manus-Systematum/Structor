@@ -2,13 +2,16 @@
 ///
 /// The export bundled as `assets/reference_snapshot.json` prints **2,000** and
 /// was a legal Strike Force when it was made. Two of its sixteen units cost
-/// ten points more now, and Games Workshop's own published points back the
+/// more now, and Games Workshop's own published points back the
 /// higher figure in both cases:
 ///
 /// | unit | export | GW today |
 /// | --- | --- | --- |
 /// | Crisis Starscythe Battlesuits (×2) | 120 | 100 + 6 flamers at 5 = 130 |
-/// | The Twin Lance | 220 | 230 |
+/// | The Twin Lance | 220 | 240 |
+///
+/// The Twin Lance was 230 in September; Games Workshop's October points
+/// raised it to 240.
 ///
 /// Whether Games Workshop raised them or the exporting app had them wrong is
 /// not something this repository can tell, and these tests do not claim
@@ -18,4 +21,4 @@
 ///
 /// **A fresh export would restore the stronger check**, where the computed
 /// total and the printed total are the same number.
-const referenceListCost = 2030;
+const referenceListCost = 2040;

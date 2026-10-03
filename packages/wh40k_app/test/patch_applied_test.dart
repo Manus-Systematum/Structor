@@ -196,22 +196,21 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
     final repo = DatasetRepository();
 
-    // Centurion Devastators, 4 to 6 models: 350 in 40kdc, 365 in the manual.
-    int costOf(List<SourceUnit> units) => units
-        .firstWhere((u) => u.id == 'centurion-devastator-squad')
-        .points
-        .firstWhere((p) => p.modelsMax == 6)
-        .cost;
+    // A Captain: 80 in the data, 90 in the manual since October. This was
+    // Centurion Devastators until the Space Marine codex took them out of
+    // the manual altogether.
+    int costOf(List<SourceUnit> units) =>
+        units.firstWhere((u) => u.id == 'captain').points.first.cost;
 
     final shipped = DatasetBundle.decode((await const AssetBundleSource()
         .fetch((await repo.manifest()).entry('adeptus-astartes')!.file))!);
     expect(
       costOf(shipped.file('units').map(SourceUnit.fromJson).toList()),
-      350,
+      80,
       reason: 'the bundle is what 40kdc published',
     );
 
-    expect(costOf((await repo.faction('adeptus-astartes')).faction.units), 365,
+    expect(costOf((await repo.faction('adeptus-astartes')).faction.units), 90,
         reason: 'the patch carries the published price');
   });
 
@@ -221,6 +220,11 @@ void main() {
   // Marine datasheet itself, so Vanguard Veterans cost 110 in every chapter
   // and the copy scopes were dropped on the way. Both checked here: the
   // parent keeps its own page's price, and a scoped price stays scoped.
+  //
+  // Since October's points the Space Marine and Blood Angels pages agree on
+  // Vanguard Veterans, so they can no longer tell the pages apart. A
+  // Gladiator Lancer can: 160 / 180 on the Space Marine page, 165 / 185 on
+  // the Black Templars one, which is read before Blood Angels.
   test('a chapter\'s price never lands on its parent\'s datasheet', () async {
     TestWidgetsFlutterBinding.ensureInitialized();
     final units =
@@ -228,22 +232,20 @@ void main() {
     List<PointsBracket> pointsOf(String id) =>
         units.firstWhere((u) => u.id == id).points;
 
-    final vanguard = pointsOf('vanguard-veteran-squad-with-jump-packs');
+    final lancer = pointsOf('gladiator-lancer');
     expect(
       [
-        for (final p in vanguard)
-          (p.models, p.modelsMax, p.unitCountMin, p.unitCountMax, p.cost),
+        for (final p in lancer)
+          (p.models, p.unitCountMin, p.unitCountMax, p.cost),
       ],
       containsAll([
-        (5, null, 1, 2, 105),
-        (5, null, 3, null, 115),
-        (6, 10, 1, 2, 210),
-        (6, 10, 3, null, 220),
+        (1, 1, 2, 160),
+        (1, 3, null, 180),
       ]),
-      reason: 'the Space Marine page, not the Blood Angels one (110 / 220)',
+      reason: 'the Space Marine page, not the Black Templars one (165 / 185)',
     );
-    expect(pointsOf('assault-intercessor-squad').first.cost, 75);
-    expect(pointsOf('captain-with-jump-pack').first.cost, 75);
+    expect(pointsOf('assault-intercessor-squad').first.cost, 85);
+    expect(pointsOf('captain-with-jump-pack').first.cost, 90);
 
     // Every price the patch sets on a copy-scaled datasheet keeps its scope.
     final patch = (await DatasetRepository().patches()).patches.single;
@@ -265,27 +267,32 @@ void main() {
   test('the snapshot is built from corrected records, not raw ones', () async {
     TestWidgetsFlutterBinding.ensureInitialized();
     final repo = DatasetRepository();
-    final builder = await repo.snapshotBuilder('tau-empire');
+    final builder = await repo.snapshotBuilder('adeptus-astartes');
 
+    // A Captain: 80 in the raw bundle, 90 once the patch is applied. This was
+    // The Twin Lance until October, when the raw data caught up with the
+    // manual and the unit stopped telling the two apart.
     const roster = Roster(
       name: 'the same list, snapshotted',
-      factionId: 'tau-empire',
+      factionId: 'adeptus-astartes',
       battleSizeId: 'strike-force',
       units: [
-        RosterUnit(instanceId: 'u1', datasheetId: 'the-twin-lance', models: 2),
+        RosterUnit(instanceId: 'u1', datasheetId: 'captain', models: 1),
       ],
     );
 
-    final raw = builder.build(roster).units['the-twin-lance'];
+    final raw = builder.build(roster).units['captain'];
     expect((raw! as Map)['points'], [
-      {'models': 2, 'cost': 230},
+      {'models': 1, 'cost': 90},
     ]);
 
     // And the army built from it prices at the corrected figure, which is the
     // number on the screen the player actually reads.
     expect(
-      PointsCalculator(await repo.faction('tau-empire')).price(roster).total,
-      230,
+      PointsCalculator(await repo.faction('adeptus-astartes'))
+          .price(roster)
+          .total,
+      90,
     );
   });
 

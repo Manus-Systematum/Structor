@@ -547,13 +547,13 @@
           "ability_id": "intra-neural-biotech",
           "name": "Intra-neural Biotech",
           "score": 0.4,
-          "text": "Once per battle round, you can target this model with the Heroic Intervention or Counter-offensive Stratagem for 0CP, and can do so even if you have already …"
+          "text": "You can target this unit with the **Heroic Intervention stratagem**, regardless of any other uses of that **stratagem** this phase. If you do:"
         },
         {
-          "ability_id": "inured-to-agony",
-          "name": "Inured To Agony",
+          "ability_id": "consumed-by-rage",
+          "name": "Consumed By Rage",
           "score": 0.0,
-          "text": "- **Death Company** models in this unit have the Feel No Pain 5+ ability."
+          "text": "- Each time this unit makes a Charge move, until the end of the turn, add 1 to the Attacks characteristic of melee weapons equipped by **Death Company** mode…"
         },
         {
           "ability_id": "cherub",
@@ -2112,10 +2112,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         },
         {
           "ability_id": "leader",
@@ -2168,10 +2168,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         },
         {
           "ability_id": "leader",
@@ -2202,10 +2202,10 @@
           "text": "In your Movement phase, when a unit embarked within this unit is selected to make a **disembark move**, that unit is **riled up** until the start of your nex…"
         },
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         },
         {
           "ability_id": "waaagh-energy",
@@ -2308,10 +2308,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         },
         {
           "ability_id": "leader",
@@ -2336,10 +2336,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         },
         {
           "ability_id": "leader",
@@ -2373,7 +2373,7 @@
           "ability_id": "kill-kommanda",
           "name": "Kill Kommanda",
           "score": 0.5,
-          "text": "**BIG MEK/WARBOSS INFANTRY* model only. While this unit is part of an attached unit, this model has:"
+          "text": "**BIG MEK/WARBOSS INFANTRY** model only. While this unit is part of an attached unit, this model has:"
         },
         {
           "ability_id": "kill-teams",
@@ -2432,10 +2432,10 @@
           "text": "**BEASTBOSS ON SQUIGOSAUR** model only. This model has +1 **T**."
         },
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         }
       ]
     },
@@ -2451,13 +2451,13 @@
           "ability_id": "raucous-occupants",
           "name": "Raucous Occupants",
           "score": 0.5,
-          "text": "While this model is within range of your **home objective*, add the **OC** of models embarked within this model to this model's **OC**."
+          "text": "While this model is within range of your **home objective**, add the **OC** of models embarked within this model to this model's **OC**."
         },
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         },
         {
           "ability_id": "waaagh-energy",
@@ -2482,10 +2482,10 @@
           "text": "While this model is attached to a **MOUNTED** unit, this model:"
         },
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         },
         {
           "ability_id": "waaagh-energy",
@@ -2510,10 +2510,10 @@
           "text": "You can target this unit with the Rapid Ingress Stratagem for 0CP."
         },
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         },
         {
           "ability_id": "waaagh-energy",
@@ -2532,10 +2532,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         },
         {
           "ability_id": "leader",
@@ -2712,10 +2712,10 @@
           "text": "**Mek** model only."
         },
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         }
       ]
     },
@@ -2728,10 +2728,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         },
         {
           "ability_id": "leader",
@@ -2756,10 +2756,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         },
         {
           "ability_id": "leader",
@@ -2812,10 +2812,10 @@
       "ability_id": null,
       "suggestions": [
         {
-          "ability_id": "point-blank-strike",
-          "name": "Point-blank Strike",
+          "ability_id": "rapid-insertion",
+          "name": "Rapid Insertion",
           "score": 0.0,
-          "text": "Each time this model makes a ranged attack that targets a unit within 12\", you can re-roll the Hit roll."
+          "text": "Models in this unit have the Scouts 6\" ability."
         },
         {
           "ability_id": "leader",

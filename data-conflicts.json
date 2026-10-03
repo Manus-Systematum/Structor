@@ -13,12 +13,133 @@
     {
       "faction": "adepta-sororitas",
       "kind": "units",
+      "id": "castigator",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 165,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 185,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 165,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 175,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adepta-sororitas",
+      "kind": "units",
+      "id": "exorcist",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 180,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 220,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 180,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 220,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adepta-sororitas",
+      "kind": "units",
+      "id": "morvenn-vahl",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 215
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 200
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adepta-sororitas",
+      "kind": "units",
+      "id": "paragon-warsuits",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 165,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 175,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 180,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 190,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adepta-sororitas",
+      "kind": "units",
       "id": "saint-celestine",
       "field": "points",
       "bsdata": [
         {
           "models": 1,
-          "cost": 150
+          "cost": 135
         }
       ],
       "40kdc": [
@@ -51,6 +172,25 @@
     },
     {
       "faction": "adepta-sororitas",
+      "kind": "units",
+      "id": "celestian-insidiants",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 10,
+          "cost": 115
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 10,
+          "cost": 120
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adepta-sororitas",
       "kind": "abilities",
       "id": "denuncia-oratory",
       "field": "name",
@@ -77,7 +217,8 @@
       "40kdc": [
         {
           "models": 5,
-          "cost": 75
+          "cost": 75,
+          "models_max": 9
         },
         {
           "models": 10,
@@ -134,7 +275,8 @@
           "models": 3,
           "cost": 90,
           "unit_count_min": 3,
-          "unit_count_max": null
+          "unit_count_max": null,
+          "models_max": 5
         },
         {
           "models": 6,
@@ -193,7 +335,8 @@
           "models": 5,
           "cost": 110,
           "unit_count_min": 3,
-          "unit_count_max": null
+          "unit_count_max": null,
+          "models_max": 9
         },
         {
           "models": 10,
@@ -219,7 +362,8 @@
       "40kdc": [
         {
           "models": 3,
-          "cost": 70
+          "cost": 70,
+          "models_max": 5
         },
         {
           "models": 6,
@@ -269,6 +413,15 @@
           "unit_count_max": null
         }
       ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-astartes",
+      "kind": "units",
+      "id": "captain-on-bike",
+      "field": "is_legend",
+      "bsdata": true,
+      "40kdc": false,
       "resolution": "bsdata"
     },
     {
@@ -355,7 +508,8 @@
           "models": 5,
           "cost": 95,
           "unit_count_min": 3,
-          "unit_count_max": null
+          "unit_count_max": null,
+          "models_max": 9
         },
         {
           "models": 10,
@@ -414,6 +568,367 @@
     {
       "faction": "adeptus-custodes",
       "kind": "units",
+      "id": "allarus-custodians",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 2,
+          "cost": 120,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 160,
+          "unit_count_min": 3
+        },
+        {
+          "models": 3,
+          "cost": 180,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 220,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 5,
+          "cost": 300,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 5,
+          "cost": 340,
+          "unit_count_min": 3
+        },
+        {
+          "models": 6,
+          "cost": 360,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "cost": 400,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 2,
+          "cost": 110,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 165,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 5,
+          "cost": 280,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "cost": 340,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 140,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 3,
+          "cost": 195,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 4,
+          "models_max": 5,
+          "cost": 310,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 6,
+          "cost": 370,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-custodes",
+      "kind": "units",
+      "id": "custodian-guard",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 4,
+          "cost": 180,
+          "unit_count_min": 1,
+          "unit_count_max": 3
+        },
+        {
+          "models": 4,
+          "cost": 190,
+          "unit_count_min": 4
+        },
+        {
+          "models": 5,
+          "cost": 225,
+          "unit_count_min": 1,
+          "unit_count_max": 3
+        },
+        {
+          "models": 5,
+          "cost": 235,
+          "unit_count_min": 4
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 4,
+          "cost": 170,
+          "unit_count_min": 1,
+          "unit_count_max": 3
+        },
+        {
+          "models": 5,
+          "cost": 215,
+          "unit_count_min": 1,
+          "unit_count_max": 3
+        },
+        {
+          "models": 4,
+          "cost": 180,
+          "unit_count_min": 4,
+          "unit_count_max": null
+        },
+        {
+          "models": 5,
+          "cost": 225,
+          "unit_count_min": 4,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-custodes",
+      "kind": "units",
+      "id": "custodian-wardens",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 4,
+          "cost": 210,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 4,
+          "cost": 230,
+          "unit_count_min": 2
+        },
+        {
+          "models": 5,
+          "cost": 260,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 5,
+          "cost": 280,
+          "unit_count_min": 2
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 4,
+          "cost": 200,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 5,
+          "cost": 250,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 4,
+          "cost": 220,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        },
+        {
+          "models": 5,
+          "cost": 270,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-custodes",
+      "kind": "units",
+      "id": "prosecutors",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 4,
+          "cost": 50
+        },
+        {
+          "models": 5,
+          "cost": 55
+        },
+        {
+          "models": 6,
+          "models_max": 9,
+          "cost": 80
+        },
+        {
+          "models": 10,
+          "cost": 90
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 4,
+          "cost": 45
+        },
+        {
+          "models": 5,
+          "cost": 50
+        },
+        {
+          "models": 6,
+          "models_max": 9,
+          "cost": 75
+        },
+        {
+          "models": 10,
+          "cost": 85
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-custodes",
+      "kind": "units",
+      "id": "shield-captain-on-dawneagle-jetbike",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 150
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 140
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-custodes",
+      "kind": "units",
+      "id": "valerian",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 120
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 110
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-custodes",
+      "kind": "units",
+      "id": "vertus-praetors",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 2,
+          "cost": 155,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 180,
+          "unit_count_min": 3
+        },
+        {
+          "models": 3,
+          "cost": 230,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 255,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 2,
+          "cost": 145,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 215,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 170,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 3,
+          "cost": 240,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-custodes",
+      "kind": "units",
       "id": "custodian-guard-with-adrasite-and-pyrithite-spears",
       "field": "name",
       "bsdata": "Custodian Guard with Adrasite and Pyrithite spears",
@@ -445,6 +960,64 @@
       "field": "name",
       "bsdata": "Skin-crawling Disorientation",
       "40kdc": "Skin-Crawling Disorientation",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "corpuscarii-electro-priests",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 60
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 120
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 65
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 130
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "fulgurite-electro-priests",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 65
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 130
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 70
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 140
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -510,6 +1083,173 @@
     {
       "faction": "adeptus-mechanicus",
       "kind": "units",
+      "id": "kastelan-robots",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 2,
+          "cost": 150,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 180,
+          "unit_count_min": 3
+        },
+        {
+          "models": 3,
+          "models_max": 4,
+          "cost": 300,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "models_max": 4,
+          "cost": 330,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 2,
+          "cost": 150,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 3,
+          "models_max": 4,
+          "cost": 300,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 2,
+          "cost": 180,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        },
+        {
+          "models": 3,
+          "models_max": 4,
+          "cost": 330,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "kataphron-breachers",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 140
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 290
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 150
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 310
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "onager-dunecrawler",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 150
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 155
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "serberys-raiders",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 60
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 105
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 60
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 110
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "serberys-sulphurhounds",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 55
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 95
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 55
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 100
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
       "id": "skitarii-rangers",
       "field": "points",
       "bsdata": [
@@ -559,10 +1299,185 @@
     {
       "faction": "adeptus-mechanicus",
       "kind": "units",
+      "id": "cybernetica-datasmith",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 20
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 25
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "sydonian-skatros",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 45
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 50
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
       "id": "sydonian-dragoons-with-radium-jezzails",
       "field": "name",
       "bsdata": "Sydonian Dragoons with radium jezzails",
       "40kdc": "Sydonian Dragoons with Radium Jezzails",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "sydonian-dragoons-with-radium-jezzails",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 55
+        },
+        {
+          "models": 2,
+          "cost": 95
+        },
+        {
+          "models": 3,
+          "cost": 140
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 55
+        },
+        {
+          "models": 2,
+          "cost": 100
+        },
+        {
+          "models": 3,
+          "cost": 150
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "servitor-battleclade",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 9,
+          "cost": 75,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 9,
+          "cost": 85,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 9,
+          "cost": 65,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 9,
+          "cost": 75,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "hastarii-exterminators",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 100,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 115,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 105,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 120,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "adeptus-mechanicus",
+      "kind": "units",
+      "id": "hastarii-fusiliers",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 105,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 120,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 115,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 130,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -640,6 +1555,25 @@
     {
       "faction": "aeldari",
       "kind": "units",
+      "id": "autarch",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 70
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 75
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
       "id": "corsair-voidreavers",
       "field": "points",
       "bsdata": [
@@ -710,10 +1644,273 @@
     {
       "faction": "aeldari",
       "kind": "units",
+      "id": "death-jester",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 70
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "farseer",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 60
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "fire-dragons",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 110,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 120,
+          "unit_count_min": 3
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 240,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 250,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 120,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 240,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 130,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 250,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "night-spinner",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 165,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 195,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 170,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 190,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "shroud-runners",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 90
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 165
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 90
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 175
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "skyweavers",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 2,
+          "cost": 90
+        },
+        {
+          "models": 3,
+          "models_max": 4,
+          "cost": 180
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 2,
+          "cost": 95
+        },
+        {
+          "models": 3,
+          "models_max": 4,
+          "cost": 190
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "solitaire",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 105
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 115
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
       "id": "d-cannon-platform",
       "field": "name",
       "bsdata": "D-Cannon Platform",
       "40kdc": "D-cannon Platform",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "d-cannon-platform",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 110,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 130,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 110,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 125,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "the-yncarne",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 230
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 245
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -760,6 +1957,35 @@
     {
       "faction": "aeldari",
       "kind": "units",
+      "id": "warlock-conclave",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 2,
+          "cost": 55
+        },
+        {
+          "models": 3,
+          "models_max": 4,
+          "cost": 110
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 2,
+          "cost": 55
+        },
+        {
+          "models": 3,
+          "models_max": 4,
+          "cost": 120
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
       "id": "windriders",
       "field": "points",
       "bsdata": [
@@ -778,6 +2004,44 @@
           "models": 4,
           "models_max": 6,
           "cost": 170
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "yvraine",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 90
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 100
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "kharseth",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 80
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 85
         }
       ],
       "resolution": "bsdata"
@@ -807,6 +2071,88 @@
           "models": 6,
           "models_max": 10,
           "cost": 140
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "dragon-knights",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 85,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 95,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 180,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 190,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 90
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 180
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "leystalker",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 75
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 80
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "aeldari",
+      "kind": "units",
+      "id": "stonesinger",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 55
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 60
         }
       ],
       "resolution": "bsdata"
@@ -1001,6 +2347,73 @@
     {
       "faction": "agents-of-the-imperium",
       "kind": "units",
+      "id": "deathwatch-kill-team",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 115
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 220
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 100
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 190
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "agents-of-the-imperium",
+      "kind": "units",
+      "id": "watch-captain-artemis",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 75
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "agents-of-the-imperium",
+      "kind": "units",
+      "id": "watch-master",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 105
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 95
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "agents-of-the-imperium",
+      "kind": "units",
       "id": "sanctifiers",
       "field": "points",
       "bsdata": [
@@ -1025,7 +2438,7 @@
       "bsdata": [
         {
           "models": 1,
-          "cost": 200
+          "cost": 210
         }
       ],
       "40kdc": [
@@ -1169,6 +2582,101 @@
     {
       "faction": "astra-militarum",
       "kind": "units",
+      "id": "basilisk",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 115,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 145,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 115,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 135,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "astra-militarum",
+      "kind": "units",
+      "id": "bullgryn-squad",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 90,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 120,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 200,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 230,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 90,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 200,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 3,
+          "cost": 105,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 215,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "astra-militarum",
+      "kind": "units",
       "id": "cadian-shock-troops",
       "field": "points",
       "bsdata": [
@@ -1254,6 +2762,74 @@
     {
       "faction": "astra-militarum",
       "kind": "units",
+      "id": "deathstrike",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 125,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 145,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 125,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 135,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "astra-militarum",
+      "kind": "units",
+      "id": "hellhound",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 115,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 125,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 125,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 135,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "astra-militarum",
+      "kind": "units",
       "id": "kasrkin",
       "field": "points",
       "bsdata": [
@@ -1282,6 +2858,59 @@
           "models": 10,
           "cost": 120,
           "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "astra-militarum",
+      "kind": "units",
+      "id": "lord-solar-leontus",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 120
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 130
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "astra-militarum",
+      "kind": "units",
+      "id": "manticore",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 150,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 180,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 150,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 170,
+          "unit_count_min": 2,
           "unit_count_max": null
         }
       ],
@@ -1351,6 +2980,59 @@
     {
       "faction": "astra-militarum",
       "kind": "units",
+      "id": "wyvern",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 95,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 125,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 95,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 115,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "astra-militarum",
+      "kind": "units",
+      "id": "lord-marshal-dreir",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 70
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 75
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "astra-militarum",
+      "kind": "units",
       "id": "catachan-command-squad",
       "field": "points",
       "bsdata": [
@@ -1364,6 +3046,25 @@
         {
           "models": 5,
           "cost": 60
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "astra-militarum",
+      "kind": "units",
+      "id": "commissar-yarrick",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 110
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 120
         }
       ],
       "resolution": "bsdata"
@@ -1436,6 +3137,115 @@
     {
       "faction": "chaos-daemons",
       "kind": "units",
+      "id": "skarbrand",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 330
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 315
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-daemons",
+      "kind": "units",
+      "id": "bloodcrushers",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 95,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 135,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 210,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 250,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 95,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 200,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 135,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 240,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-daemons",
+      "kind": "units",
+      "id": "flesh-hounds",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 80
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 150
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 75
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 150
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-daemons",
+      "kind": "units",
       "id": "daemon-prince-of-chaos-with-wings",
       "field": "name",
       "bsdata": "Daemon Prince of Chaos with wings",
@@ -1449,6 +3259,67 @@
       "field": "name",
       "bsdata": "Syll'esske",
       "40kdc": "Syll’Esske",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-daemons",
+      "kind": "units",
+      "id": "fiends",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 90,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 115,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 190,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 215,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 90,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 190,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 105,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 205,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -1504,11 +3375,257 @@
     },
     {
       "faction": "chaos-knights",
+      "kind": "units",
+      "id": "knight-desecrator",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 350,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 370,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 355,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 370,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-knights",
+      "kind": "units",
+      "id": "knight-rampager",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 350,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 370,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 355,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 370,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-knights",
+      "kind": "units",
+      "id": "knight-abominant",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 350,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 370,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 355,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 370,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-knights",
+      "kind": "units",
+      "id": "knight-tyrant",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 390,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 410,
+          "unit_count_min": 2
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 400,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 420,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-knights",
+      "kind": "units",
+      "id": "knight-ruinator",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 325,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 345,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 340,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 355,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-knights",
       "kind": "abilities",
       "id": "super-heavy-walker",
       "field": "name",
       "bsdata": "Super-Heavy Walker",
       "40kdc": "Super-heavy Walker",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "abaddon-the-despoiler",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 300
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 295
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "haarken-worldclaimer",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 95
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 90
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "huron-blackheart",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 135
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 130
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "heretic-astartes-daemon-prince",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 155
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 165
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -1523,17 +3640,501 @@
     {
       "faction": "chaos-space-marines",
       "kind": "units",
-      "id": "chaos-bikers",
+      "id": "heretic-astartes-daemon-prince-with-wings",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 170
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 180
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "fabius-bile",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 2,
+          "cost": 110
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 2,
+          "cost": 100
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "cypher",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 95
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 90
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "master-of-possession",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 60
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "chaos-lord",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 95
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 90
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "chaos-lord-in-terminator-armour",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 90
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 85
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "sorcerer",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 60
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "sorcerer-in-terminator-armour",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 85
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 80
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "lord-discordant-on-helstalker",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 155
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 160
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "warpsmith",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 60
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "dark-apostle",
       "field": "points",
       "bsdata": [
         {
           "models": 3,
           "cost": 70
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 65
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "legionaries",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 95
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 180
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 90
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 170
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "accursed-cultists",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 8,
+          "cost": 90,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 8,
+          "cost": 110,
+          "unit_count_min": 3
+        },
+        {
+          "models": 9,
+          "models_max": 16,
+          "cost": 185,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 9,
+          "models_max": 16,
+          "cost": 205,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 8,
+          "cost": 90,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 9,
+          "models_max": 16,
+          "cost": 195,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 8,
+          "cost": 110,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 9,
+          "models_max": 16,
+          "cost": 215,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "chaos-terminator-squad",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 185,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 215,
+          "unit_count_min": 3
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 370,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 400,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 175
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 350
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "master-of-executions",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 75
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 70
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "possessed",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 130,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 150,
+          "unit_count_min": 3
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 260,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 280,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 120,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 250,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 130,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 260,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "chosen",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 140,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 150,
+          "unit_count_min": 3
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 280,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 290,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 135,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 270,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 145,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 280,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "chaos-bikers",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 80
         },
         {
           "models": 4,
           "models_max": 8,
-          "cost": 130
+          "cost": 150
         }
       ],
       "40kdc": [
@@ -1557,26 +4158,26 @@
       "bsdata": [
         {
           "models": 5,
-          "cost": 110,
+          "cost": 115,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 5,
-          "cost": 120,
+          "cost": 125,
           "unit_count_min": 3
         },
         {
           "models": 6,
           "models_max": 14,
-          "cost": 210,
+          "cost": 225,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 6,
           "models_max": 14,
-          "cost": 220,
+          "cost": 235,
           "unit_count_min": 3
         }
       ],
@@ -1604,6 +4205,101 @@
           "models": 6,
           "models_max": 10,
           "cost": 220,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "warp-talons",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 130,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 140,
+          "unit_count_min": 3
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 290,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 300,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 125,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 280,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 135,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 290,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "havocs",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 135,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 145,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 125,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 135,
           "unit_count_min": 3,
           "unit_count_max": null
         }
@@ -1664,7 +4360,7 @@
         {
           "models": 10,
           "models_max": 13,
-          "cost": 70
+          "cost": 65
         }
       ],
       "40kdc": [
@@ -1678,31 +4374,306 @@
     {
       "faction": "chaos-space-marines",
       "kind": "units",
+      "id": "chaos-predator-annihilator",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 140,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 150,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 145,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 155,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "chaos-predator-destructor",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 145,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 155,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 150,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 160,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "chaos-vindicator",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 180,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 190,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 185,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 195,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "forgefiend",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 155,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 165,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 160,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 170,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "helbrute",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 125
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 130
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "maulerfiend",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 125
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 130
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "mutilators",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 165,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 185,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 165,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 175,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "chaos-lord-with-jump-pack",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 85
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 80
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "nemesis-claw",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 105
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 190
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 100
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 180
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "masters-of-the-maelstrom",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 150
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 145
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
       "id": "red-corsairs-raiders",
       "field": "points",
       "bsdata": [
         {
           "models": 5,
-          "cost": 110,
+          "cost": 120,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 5,
-          "cost": 120,
+          "cost": 130,
           "unit_count_min": 3
         },
         {
           "models": 6,
           "models_max": 14,
-          "cost": 210,
+          "cost": 220,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 6,
           "models_max": 14,
-          "cost": 220,
+          "cost": 230,
           "unit_count_min": 3
         }
       ],
@@ -1743,6 +4714,44 @@
       "field": "name",
       "bsdata": "Red Corsairs Reave-captain",
       "40kdc": "Red Corsairs Reave-Captain",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "red-corsairs-reave-captain",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 60
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "chaos-space-marines",
+      "kind": "units",
+      "id": "kravek-morne",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 130
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 120
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -1802,10 +4811,105 @@
     {
       "faction": "death-guard",
       "kind": "units",
+      "id": "daemon-prince-of-nurgle",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 185
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 195
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "death-guard",
+      "kind": "units",
       "id": "daemon-prince-of-nurgle-with-wings",
       "field": "name",
       "bsdata": "Daemon Prince of Nurgle with wings",
       "40kdc": "Daemon Prince of Nurgle with Wings",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "death-guard",
+      "kind": "units",
+      "id": "daemon-prince-of-nurgle-with-wings",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 160
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 170
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "death-guard",
+      "kind": "units",
+      "id": "typhus",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 90
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 100
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "death-guard",
+      "kind": "units",
+      "id": "lord-of-virulence",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 90
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 100
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "death-guard",
+      "kind": "units",
+      "id": "lord-of-contagion",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 110
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 120
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -1826,7 +4930,7 @@
         {
           "models": 8,
           "models_max": 12,
-          "cost": 180
+          "cost": 175
         }
       ],
       "40kdc": [
@@ -1850,10 +4954,254 @@
     {
       "faction": "death-guard",
       "kind": "units",
+      "id": "deathshroud-terminators",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 150,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 160,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 305,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 315,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 160,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 305,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 170,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 315,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "death-guard",
+      "kind": "units",
+      "id": "helbrute",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 105
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 110
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "death-guard",
+      "kind": "units",
+      "id": "blightlord-terminators",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 115,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 145,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 5,
+          "cost": 185,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 5,
+          "cost": 215,
+          "unit_count_min": 3
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 370,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 400,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 115
+        },
+        {
+          "models": 4,
+          "models_max": 5,
+          "cost": 180
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 360
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "death-guard",
+      "kind": "units",
       "id": "foetid-bloat-drone",
       "field": "name",
       "bsdata": "Foetid Bloat-drone",
       "40kdc": "Foetid Bloat-Drone",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "death-guard",
+      "kind": "units",
+      "id": "plagueburst-crawler",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 170,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 200,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 170,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 200,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "death-guard",
+      "kind": "units",
+      "id": "chaos-predator-annihilator",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 130,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 140,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 135,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 145,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "death-guard",
+      "kind": "units",
+      "id": "chaos-predator-destructor",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 140,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 150,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 145,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 155,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -1881,6 +5229,102 @@
       "field": "name",
       "bsdata": "Diseased icon",
       "40kdc": "Diseased Icon",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "drukhari",
+      "kind": "units",
+      "id": "talos",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 70,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 80,
+          "unit_count_min": 3
+        },
+        {
+          "models": 2,
+          "cost": 140,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 150,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 75,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 150,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 85,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 2,
+          "cost": 160,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "drukhari",
+      "kind": "units",
+      "id": "wracks",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 55
+        },
+        {
+          "models": 6,
+          "models_max": 8,
+          "cost": 90
+        },
+        {
+          "models": 9,
+          "models_max": 10,
+          "cost": 110
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 60
+        },
+        {
+          "models": 6,
+          "models_max": 8,
+          "cost": 100
+        },
+        {
+          "models": 9,
+          "models_max": 10,
+          "cost": 120
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -1922,12 +5366,191 @@
     {
       "faction": "emperors-children",
       "kind": "units",
+      "id": "lucius-the-eternal",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 130
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 120
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "emperors-children",
+      "kind": "units",
+      "id": "lord-exultant",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 95,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 105,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 90,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 100,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "emperors-children",
+      "kind": "units",
+      "id": "daemon-prince-of-slaanesh",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 165,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 180,
+          "unit_count_min": 2
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 170,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 185,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "emperors-children",
+      "kind": "units",
+      "id": "daemon-prince-of-slaanesh-with-wings",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 205,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 225,
+          "unit_count_min": 2
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 205,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 235,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "emperors-children",
+      "kind": "units",
+      "id": "tormentors",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 85
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 170
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 80
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 160
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "emperors-children",
+      "kind": "units",
+      "id": "infractors",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 95
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 175
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 85
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 160
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "emperors-children",
+      "kind": "units",
       "id": "chaos-terminators",
       "field": "points",
       "bsdata": [
         {
           "models": 5,
-          "cost": 145
+          "cost": 155
         },
         {
           "models": 6,
@@ -1938,6 +5561,74 @@
         {
           "models": 5,
           "cost": 145
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "emperors-children",
+      "kind": "units",
+      "id": "chaos-land-raider",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 210,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 230,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 220,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 240,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "emperors-children",
+      "kind": "units",
+      "id": "noise-marines",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 6,
+          "cost": 160,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "cost": 175,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 6,
+          "cost": 145,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "cost": 160,
+          "unit_count_min": 3,
+          "unit_count_max": null
         }
       ],
       "resolution": "bsdata"
@@ -2017,6 +5708,126 @@
     },
     {
       "faction": "genestealer-cults",
+      "kind": "units",
+      "id": "goliath-rockgrinder",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 110,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 120,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 120,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 130,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "genestealer-cults",
+      "kind": "units",
+      "id": "nexos",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 50
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 60
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "genestealer-cults",
+      "kind": "units",
+      "id": "primus",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 60
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 70
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "genestealer-cults",
+      "kind": "units",
+      "id": "sanctus",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 60
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "genestealer-cults",
+      "kind": "units",
+      "id": "acolyte-hybrids-with-autopistols",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 65
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 120
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 70
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 130
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "genestealer-cults",
       "kind": "abilities",
       "id": "flare-launcher",
       "field": "name",
@@ -2036,31 +5847,279 @@
     {
       "faction": "grey-knights",
       "kind": "units",
+      "id": "brother-captain",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 100
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 95
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
+      "id": "brotherhood-champion",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 75
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 70
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
+      "id": "brotherhood-chaplain",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 70
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
+      "id": "brotherhood-librarian",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 95,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 105,
+          "unit_count_min": 2
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 90,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 100,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
+      "id": "brotherhood-techmarine",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 75
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 70
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
+      "id": "brotherhood-terminator-squad",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 4,
+          "cost": 150
+        },
+        {
+          "models": 5,
+          "cost": 185
+        },
+        {
+          "models": 6,
+          "models_max": 8,
+          "cost": 315
+        },
+        {
+          "models": 9,
+          "models_max": 10,
+          "cost": 380
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 4,
+          "cost": 140
+        },
+        {
+          "models": 5,
+          "cost": 175
+        },
+        {
+          "models": 6,
+          "models_max": 8,
+          "cost": 300
+        },
+        {
+          "models": 9,
+          "models_max": 10,
+          "cost": 360
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
+      "id": "castellan-crowe",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 105
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 100
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
+      "id": "grand-master",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 100
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 95
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
+      "id": "grand-master-in-nemesis-dreadknight",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 210,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 225,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 200,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 215,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
+      "id": "grand-master-voldus",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 130
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 125
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
       "id": "interceptor-squad",
       "field": "points",
       "bsdata": [
         {
           "models": 5,
-          "cost": 125,
+          "cost": 135,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 5,
-          "cost": 135,
+          "cost": 145,
           "unit_count_min": 3
         },
         {
           "models": 6,
           "models_max": 11,
-          "cost": 250,
+          "cost": 270,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 6,
           "models_max": 11,
-          "cost": 260,
+          "cost": 280,
           "unit_count_min": 3
         }
       ],
@@ -2097,31 +6156,176 @@
     {
       "faction": "grey-knights",
       "kind": "units",
+      "id": "nemesis-dreadknight",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 205,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 220,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 195,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 210,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
+      "id": "paladin-squad",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 4,
+          "cost": 185,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "cost": 225,
+          "unit_count_min": 3
+        },
+        {
+          "models": 5,
+          "cost": 230,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 270,
+          "unit_count_min": 3
+        },
+        {
+          "models": 6,
+          "models_max": 8,
+          "cost": 385,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 8,
+          "cost": 425,
+          "unit_count_min": 3
+        },
+        {
+          "models": 9,
+          "models_max": 10,
+          "cost": 490,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 9,
+          "models_max": 10,
+          "cost": 530,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 4,
+          "cost": 170,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 215,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 8,
+          "cost": 360,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 9,
+          "models_max": 10,
+          "cost": 460,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "cost": 210,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 5,
+          "cost": 255,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 6,
+          "models_max": 8,
+          "cost": 400,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 9,
+          "models_max": 10,
+          "cost": 500,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
       "id": "purgation-squad",
       "field": "points",
       "bsdata": [
         {
           "models": 5,
-          "cost": 105,
+          "cost": 115,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 5,
-          "cost": 115,
+          "cost": 125,
           "unit_count_min": 3
         },
         {
           "models": 6,
           "models_max": 14,
-          "cost": 210,
+          "cost": 230,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 6,
           "models_max": 14,
-          "cost": 220,
+          "cost": 240,
           "unit_count_min": 3
         }
       ],
@@ -2163,26 +6367,26 @@
       "bsdata": [
         {
           "models": 5,
-          "cost": 130,
+          "cost": 145,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 5,
-          "cost": 140,
+          "cost": 155,
           "unit_count_min": 3
         },
         {
           "models": 6,
           "models_max": 12,
-          "cost": 260,
+          "cost": 290,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 6,
           "models_max": 12,
-          "cost": 270,
+          "cost": 300,
           "unit_count_min": 3
         }
       ],
@@ -2212,6 +6416,35 @@
           "cost": 270,
           "unit_count_min": 3,
           "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "grey-knights",
+      "kind": "units",
+      "id": "strike-squad",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 125
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 250
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 115
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 230
         }
       ],
       "resolution": "bsdata"
@@ -2273,6 +6506,142 @@
     },
     {
       "faction": "imperial-knights",
+      "kind": "units",
+      "id": "knight-warden",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 365,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 380,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 375,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 390,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "imperial-knights",
+      "kind": "units",
+      "id": "knight-valiant",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 390,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 405,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 400,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 415,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "imperial-knights",
+      "kind": "units",
+      "id": "cerastus-knight-atrapos",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 420,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 440,
+          "unit_count_min": 2
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 405,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 425,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "imperial-knights",
+      "kind": "units",
+      "id": "knight-defender",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 385,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 405,
+          "unit_count_min": 2
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 400,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 420,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "imperial-knights",
       "kind": "abilities",
       "id": "super-heavy-walker",
       "field": "name",
@@ -2287,6 +6656,25 @@
       "field": "name",
       "bsdata": "Driven From Their Lairs",
       "40kdc": "Driven from Their Lairs",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "leagues-of-votann",
+      "kind": "units",
+      "id": "uthar-the-destined",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 100
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 90
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -2312,31 +6700,60 @@
     {
       "faction": "leagues-of-votann",
       "kind": "units",
+      "id": "cthonian-beserks",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 90
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 180
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 95
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 190
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "leagues-of-votann",
+      "kind": "units",
       "id": "hernkyn-pioneers",
       "field": "points",
       "bsdata": [
         {
           "models": 3,
-          "cost": 80,
+          "cost": 85,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 3,
-          "cost": 90,
+          "cost": 95,
           "unit_count_min": 3
         },
         {
           "models": 4,
           "models_max": 8,
-          "cost": 160,
+          "cost": 170,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 4,
           "models_max": 8,
-          "cost": 170,
+          "cost": 180,
           "unit_count_min": 3
         }
       ],
@@ -2364,6 +6781,97 @@
           "models": 4,
           "models_max": 6,
           "cost": 170,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "leagues-of-votann",
+      "kind": "units",
+      "id": "hekaton-land-fortress",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 250,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 270,
+          "unit_count_min": 2
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 250,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 265,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "leagues-of-votann",
+      "kind": "units",
+      "id": "kapricus-defenders",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 75,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 95,
+          "unit_count_min": 3
+        },
+        {
+          "models": 2,
+          "cost": 150,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 170,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 70,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 140,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 80,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 2,
+          "cost": 150,
           "unit_count_min": 3,
           "unit_count_max": null
         }
@@ -2436,6 +6944,233 @@
     {
       "faction": "necrons",
       "kind": "units",
+      "id": "trazyn-the-infinite",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 60
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "necrons",
+      "kind": "units",
+      "id": "psychomancer",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 55
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "necrons",
+      "kind": "units",
+      "id": "immortals",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 65
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 130
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 70
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 140
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "necrons",
+      "kind": "units",
+      "id": "annihilation-barge",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 100
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 95
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "necrons",
+      "kind": "units",
+      "id": "doomsday-ark",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 200,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 230,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 210,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 230,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "necrons",
+      "kind": "units",
+      "id": "lokhust-destroyers",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 40,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 70,
+          "unit_count_min": 3
+        },
+        {
+          "models": 2,
+          "cost": 55,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 85,
+          "unit_count_min": 3
+        },
+        {
+          "models": 3,
+          "cost": 80,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 110,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 190,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 220,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 40,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 55,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 80,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 175,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 70,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 2,
+          "cost": 85,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 3,
+          "cost": 110,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 205,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "necrons",
+      "kind": "units",
       "id": "lokhust-heavy-destroyers",
       "field": "points",
       "bsdata": [
@@ -2495,6 +7230,97 @@
     },
     {
       "faction": "necrons",
+      "kind": "units",
+      "id": "canoptek-doomstalker",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 130
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 140
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "necrons",
+      "kind": "units",
+      "id": "tesseract-vault",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 465,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 505,
+          "unit_count_min": 2
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 465,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 485,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "necrons",
+      "kind": "units",
+      "id": "canoptek-tomb-crawlers",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 2,
+          "cost": 60
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 2,
+          "cost": 50
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "necrons",
+      "kind": "units",
+      "id": "nekrosor-ammentar",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 195
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 185
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "necrons",
       "kind": "abilities",
       "id": "nanoscarab-amulet",
       "field": "name",
@@ -2523,31 +7349,65 @@
     {
       "faction": "orks",
       "kind": "units",
+      "id": "battlewagon",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 160,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 180,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 150,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 160,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
       "id": "beast-snagga-boyz",
       "field": "points",
       "bsdata": [
         {
           "models": 10,
-          "cost": 85,
+          "cost": 80,
           "unit_count_min": 1,
           "unit_count_max": 3
         },
         {
           "models": 10,
-          "cost": 95,
+          "cost": 90,
           "unit_count_min": 4
         },
         {
           "models": 11,
           "models_max": 20,
-          "cost": 170,
+          "cost": 160,
           "unit_count_min": 1,
           "unit_count_max": 3
         },
         {
           "models": 11,
           "models_max": 20,
-          "cost": 180,
+          "cost": 170,
           "unit_count_min": 4
         }
       ],
@@ -2567,31 +7427,65 @@
     {
       "faction": "orks",
       "kind": "units",
+      "id": "big-mek-with-shokk-attack-gun",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 110,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 125,
+          "unit_count_min": 2
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 95,
+          "unit_count_min": 1,
+          "unit_count_max": 1
+        },
+        {
+          "models": 1,
+          "cost": 105,
+          "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
       "id": "boyz",
       "field": "points",
       "bsdata": [
         {
           "models": 10,
-          "cost": 90,
+          "cost": 85,
           "unit_count_min": 1,
           "unit_count_max": 3
         },
         {
           "models": 10,
-          "cost": 100,
+          "cost": 95,
           "unit_count_min": 4
         },
         {
           "models": 11,
           "models_max": 23,
-          "cost": 180,
+          "cost": 170,
           "unit_count_min": 1,
           "unit_count_max": 3
         },
         {
           "models": 11,
           "models_max": 23,
-          "cost": 190,
+          "cost": 180,
           "unit_count_min": 4
         }
       ],
@@ -2628,29 +7522,414 @@
     {
       "faction": "orks",
       "kind": "units",
-      "id": "gretchin",
+      "id": "deffkoptas",
       "field": "points",
       "bsdata": [
         {
-          "models": 10,
-          "models_max": 11,
-          "cost": 45
+          "models": 3,
+          "cost": 85,
+          "unit_count_min": 1,
+          "unit_count_max": 2
         },
         {
-          "models": 12,
-          "models_max": 20,
-          "cost": 80
+          "models": 3,
+          "cost": 95,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 170,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 180,
+          "unit_count_min": 3
         }
       ],
       "40kdc": [
         {
-          "models": 10,
-          "cost": 45
+          "models": 3,
+          "cost": 80,
+          "unit_count_min": 1,
+          "unit_count_max": 2
         },
         {
-          "models": 11,
-          "models_max": 20,
-          "cost": 80
+          "models": 4,
+          "models_max": 6,
+          "cost": 160,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 90,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 170,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "flash-gitz",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 110,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 150,
+          "unit_count_min": 3
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 220,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 260,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 105,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 210,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 135,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 240,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "ghazghkull-thraka",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 290
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 300
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "hunta-rig",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 165,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 185,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 165,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 175,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "kill-rig",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 175,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 195,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 175,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 185,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "killa-kans",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 130,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 170,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 275,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 315,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 130,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 260,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 150,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 280,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "meganobz",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 2,
+          "cost": 70,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 110,
+          "unit_count_min": 3
+        },
+        {
+          "models": 3,
+          "cost": 105,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 145,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 5,
+          "cost": 175,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 5,
+          "cost": 215,
+          "unit_count_min": 3
+        },
+        {
+          "models": 6,
+          "cost": 210,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "cost": 250,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 2,
+          "cost": 75,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 110,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 5,
+          "cost": 185,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "cost": 225,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 2,
+          "cost": 115,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 3,
+          "cost": 150,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 4,
+          "models_max": 5,
+          "cost": 225,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 6,
+          "cost": 265,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "mek",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 55
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 45
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "bannernob",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 30
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 35
         }
       ],
       "resolution": "bsdata"
@@ -2663,26 +7942,26 @@
       "bsdata": [
         {
           "models": 5,
-          "cost": 125,
+          "cost": 115,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 5,
-          "cost": 155,
+          "cost": 145,
           "unit_count_min": 3
         },
         {
           "models": 6,
           "models_max": 18,
-          "cost": 250,
+          "cost": 230,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 6,
           "models_max": 18,
-          "cost": 280,
+          "cost": 260,
           "unit_count_min": 3
         }
       ],
@@ -2724,7 +8003,7 @@
       "bsdata": [
         {
           "models": 4,
-          "cost": 140,
+          "cost": 130,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
@@ -2736,14 +8015,14 @@
         {
           "models": 5,
           "models_max": 8,
-          "cost": 280,
+          "cost": 260,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 5,
           "models_max": 8,
-          "cost": 300,
+          "cost": 290,
           "unit_count_min": 3
         }
       ],
@@ -2783,13 +8062,13 @@
       "bsdata": [
         {
           "models": 6,
-          "cost": 145,
+          "cost": 160,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 6,
-          "cost": 155,
+          "cost": 170,
           "unit_count_min": 3
         }
       ],
@@ -2812,6 +8091,59 @@
     {
       "faction": "orks",
       "kind": "units",
+      "id": "warboss-in-mega-armour",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 115,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 130,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 125,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 140,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "weirdboy",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 60
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
       "id": "gargantuan-squiggoth",
       "field": "points",
       "bsdata": [
@@ -2823,7 +8155,7 @@
         },
         {
           "models": 1,
-          "cost": 550,
+          "cost": 600,
           "unit_count_min": 2
         }
       ],
@@ -2838,6 +8170,108 @@
           "models": 1,
           "cost": 490,
           "unit_count_min": 2,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "big-mek",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 100,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 115,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 85,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 95,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "breaka-boyz",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 6,
+          "cost": 120,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "cost": 130,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 6,
+          "cost": 135,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "cost": 145,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "orks",
+      "kind": "units",
+      "id": "big-mek-dakkarig",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 160,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 180,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 135,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 145,
+          "unit_count_min": 3,
           "unit_count_max": null
         }
       ],
@@ -2904,6 +8338,25 @@
       "field": "name",
       "bsdata": "Blitz Dem Gitz!",
       "40kdc": "Blitz Dem Gitz",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "tau-empire",
+      "kind": "units",
+      "id": "breacher-team",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 10,
+          "cost": 80
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 10,
+          "cost": 90
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -3001,6 +8454,25 @@
     },
     {
       "faction": "tau-empire",
+      "kind": "units",
+      "id": "the-twin-lance",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 2,
+          "cost": 240
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 2,
+          "cost": 230
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "tau-empire",
       "kind": "abilities",
       "id": "for-the-greater-good",
       "field": "name",
@@ -3029,31 +8501,168 @@
     {
       "faction": "thousand-sons",
       "kind": "units",
+      "id": "ahriman",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 105
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 100
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "thousand-sons",
+      "kind": "units",
+      "id": "exalted-sorcerer",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 100
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 95
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "thousand-sons",
+      "kind": "units",
+      "id": "exalted-sorcerer-on-disc-of-tzeentch",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 95
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 90
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "thousand-sons",
+      "kind": "units",
+      "id": "infernal-master",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 105
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 100
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "thousand-sons",
+      "kind": "units",
+      "id": "rubric-marines",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 115,
+          "unit_count_min": 1,
+          "unit_count_max": 3
+        },
+        {
+          "models": 5,
+          "cost": 125,
+          "unit_count_min": 4
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 210,
+          "unit_count_min": 1,
+          "unit_count_max": 3
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 220,
+          "unit_count_min": 4
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 100,
+          "unit_count_min": 1,
+          "unit_count_max": 3
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 190,
+          "unit_count_min": 1,
+          "unit_count_max": 3
+        },
+        {
+          "models": 5,
+          "cost": 110,
+          "unit_count_min": 4,
+          "unit_count_max": null
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 200,
+          "unit_count_min": 4,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "thousand-sons",
+      "kind": "units",
       "id": "scarab-occult-terminators",
       "field": "points",
       "bsdata": [
         {
           "models": 5,
-          "cost": 180,
+          "cost": 200,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 5,
-          "cost": 195,
+          "cost": 240,
           "unit_count_min": 3
         },
         {
           "models": 6,
           "models_max": 12,
-          "cost": 385,
+          "cost": 425,
           "unit_count_min": 1,
           "unit_count_max": 2
         },
         {
           "models": 6,
           "models_max": 12,
-          "cost": 400,
+          "cost": 465,
           "unit_count_min": 3
         }
       ],
@@ -3081,6 +8690,74 @@
           "models": 6,
           "models_max": 10,
           "cost": 400,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "thousand-sons",
+      "kind": "units",
+      "id": "sorcerer",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 100,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 110,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 95,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 105,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "thousand-sons",
+      "kind": "units",
+      "id": "sorcerer-in-terminator-armour",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 110,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 120,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 100,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 110,
           "unit_count_min": 3,
           "unit_count_max": null
         }
@@ -3126,6 +8803,149 @@
     {
       "faction": "tyranids",
       "kind": "units",
+      "id": "gargoyles",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 10,
+          "cost": 75
+        },
+        {
+          "models": 11,
+          "models_max": 20,
+          "cost": 150
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 10,
+          "cost": 80
+        },
+        {
+          "models": 11,
+          "models_max": 20,
+          "cost": 155
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "tyranids",
+      "kind": "units",
+      "id": "mawloc",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 130
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 135
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "tyranids",
+      "kind": "units",
+      "id": "parasite-of-mortrex",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 65
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 70
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "tyranids",
+      "kind": "units",
+      "id": "trygon",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 135
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 140
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "tyranids",
+      "kind": "units",
+      "id": "the-red-terror",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 120
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 130
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "tyranids",
+      "kind": "units",
+      "id": "tervigon",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 150
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 160
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "tyranids",
+      "kind": "units",
+      "id": "old-one-eye",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 130
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 140
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "tyranids",
+      "kind": "units",
       "id": "tyranid-warriors-with-ranged-bio-weapons",
       "field": "name",
       "bsdata": "Tyranid Warriors with Ranged Bio-Weapons",
@@ -3139,6 +8959,54 @@
       "field": "name",
       "bsdata": "Tyranid Warriors with Melee Bio-Weapons",
       "40kdc": "Tyranid Warriors with Melee Bio-weapons",
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "tyranids",
+      "kind": "units",
+      "id": "termagants",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 10,
+          "cost": 55
+        },
+        {
+          "models": 11,
+          "models_max": 20,
+          "cost": 110
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 10,
+          "cost": 60
+        },
+        {
+          "models": 11,
+          "models_max": 20,
+          "cost": 110
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "tyranids",
+      "kind": "units",
+      "id": "neurotyrant",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 120
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 130
+        }
+      ],
       "resolution": "bsdata"
     },
     {
@@ -3185,6 +9053,35 @@
     },
     {
       "faction": "tyranids",
+      "kind": "units",
+      "id": "barbgaunts",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 50
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 100
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 55
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 110
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "tyranids",
       "kind": "abilities",
       "id": "terror-from-the-deep",
       "field": "name",
@@ -3209,12 +9106,12 @@
       "bsdata": [
         {
           "models": 10,
-          "cost": 160
+          "cost": 170
         },
         {
           "models": 11,
           "models_max": 32,
-          "cost": 320
+          "cost": 330
         }
       ],
       "40kdc": [
@@ -3233,6 +9130,67 @@
     {
       "faction": "world-eaters",
       "kind": "units",
+      "id": "chaos-terminators",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 5,
+          "cost": 175,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 185,
+          "unit_count_min": 3
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 350,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 360,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 5,
+          "cost": 165,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 330,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 5,
+          "cost": 175,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 6,
+          "models_max": 10,
+          "cost": 340,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "world-eaters",
+      "kind": "units",
       "id": "jakhals",
       "field": "points",
       "bsdata": [
@@ -3243,7 +9201,7 @@
         },
         {
           "models": 11,
-          "cost": 130
+          "cost": 120
         }
       ],
       "40kdc": [
@@ -3254,6 +9212,200 @@
         {
           "models": 20,
           "cost": 130
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "world-eaters",
+      "kind": "units",
+      "id": "eightbound",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 125,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 140,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 250,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 265,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 125,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 255,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 140,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 270,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "world-eaters",
+      "kind": "units",
+      "id": "exalted-eightbound",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 3,
+          "cost": 130,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 145,
+          "unit_count_min": 3
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 260,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 275,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 3,
+          "cost": 130,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 265,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 3,
+          "cost": 145,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        },
+        {
+          "models": 4,
+          "models_max": 6,
+          "cost": 280,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "world-eaters",
+      "kind": "units",
+      "id": "chaos-land-raider",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 200,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 220,
+          "unit_count_min": 3
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 220,
+          "unit_count_min": 1,
+          "unit_count_max": 2
+        },
+        {
+          "models": 1,
+          "cost": 240,
+          "unit_count_min": 3,
+          "unit_count_max": null
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "world-eaters",
+      "kind": "units",
+      "id": "goremongers",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 8,
+          "cost": 70
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 8,
+          "cost": 75
+        }
+      ],
+      "resolution": "bsdata"
+    },
+    {
+      "faction": "world-eaters",
+      "kind": "units",
+      "id": "slaughterbound",
+      "field": "points",
+      "bsdata": [
+        {
+          "models": 1,
+          "cost": 90
+        }
+      ],
+      "40kdc": [
+        {
+          "models": 1,
+          "cost": 100
         }
       ],
       "resolution": "bsdata"

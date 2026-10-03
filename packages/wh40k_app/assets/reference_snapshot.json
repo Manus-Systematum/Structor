@@ -672,7 +672,7 @@
       "points": [
         {
           "models": 2,
-          "cost": 230
+          "cost": 240
         }
       ],
       "keywords": [
@@ -5025,6 +5025,9 @@
       "command"
     ]
   },
+  "factionRuleIds": [
+    "for-the-greater-good"
+  ],
   "factionRuleId": "for-the-greater-good",
   "factionKeywords": [
     "T’au Empire"

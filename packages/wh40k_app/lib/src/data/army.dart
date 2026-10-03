@@ -211,7 +211,7 @@ class Army {
     catalogue: catalogue,
     sharedAbilityIds:
         snapshot.sharedAbilities.isEmpty ? null : snapshot.sharedAbilities,
-    factionRuleId: snapshot.factionRuleId,
+    factionRuleIds: snapshot.factionRuleIds,
   );
 
   /// Everything the roster's copies of [datasheetId] carry between them.

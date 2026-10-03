@@ -818,6 +818,9 @@ tests expect exactly that one error and no other.
 **A fresh export would restore the stronger check**, where the computed total
 and the printed total are the same number and any divergence at all is a bug.
 
+*Since 2026-10-04 The Twin Lance is 240, not 230, and both constants moved by
+the same ten: 2,040 and 1,035 (§3.42).*
+
 ### 3.34 Sample armies, because the suites price exactly one
 
 Both suites price a single army end to end: the reference 2,000 point T'au
@@ -1252,6 +1255,79 @@ priced, which is the correction itself (§2.2 governs data, not arithmetic).
 (`roster_store.dart`), not a fresh price. A saved Blood Angels or god-legion
 army that takes host-priced datasheets shows its old total in the list and
 the new one on its own screen until it is saved again.
+
+*Since October's points (§3.42) the Space Marine page prices Vanguard Veterans
+at 110 as well, so that pair no longer differs. The rule is unchanged; the
+app test that showed it now uses a Gladiator Lancer, 160 on the Space Marine
+page and 165 on the Black Templars one.*
+
+### 3.42 The October update: both sources, and GW's points, refetched
+
+Refetched 2026-10-04. 40kdc moved from 1.4.3 to 1.4.5 plus `main` at
+2026-09-22; BSData from 2026-09-10 to `8b91e6bc` of 2026-10-03; the
+Munitorum Field Manual was read again from the live site.
+
+**The army rule became a list.** 40kdc 1.4.4 replaced `faction_rule_id` with
+`faction_rule_ids`, because Tyranids have two rules, Shadow in the Warp and
+Synapse. The engine and the app read only the old field. Rebuilt as it
+stood, the update would have taken the army rule off every army. Installed
+apps take their data from the site, so that includes apps nobody rebuilt.
+
+- `bin/merge.dart` writes both forms on every faction record. The list is
+  what new code reads. The single id is the first rule, so an app from
+  before this keeps exactly what it showed. Crimson Fists still publish only
+  the old form, and the list is filled from it.
+- `FactionData.factionRuleIds`, `RosterSnapshot.factionRuleIds` and
+  `ArmyRules.forRoster(factionRuleIds:)` replace the single id. A saved
+  snapshot naming one rule under the old key still opens with that rule. A
+  new snapshot writes the first rule under the old key as well, for an older
+  app it is shared with.
+- A shipped-bundle test checks that every faction record still carries the
+  single id.
+
+**GW published new points.** 468 units were repriced on the manual since
+September, across every faction. Games Workshop also retired many Space Marine datasheets from the
+manual: Tactical, Devastator and Centurion squads, Predators and others.
+BSData has caught up for everyone but the Space Marine family. Regenerating
+the patch against the September copy of the manual would have put
+September's prices back on about 200 units. The manual was refetched before
+the patch was regenerated. That order is the lesson: **refetch the manual
+whenever the snapshot moves**, or the patch reverts the very points update
+the snapshot brought.
+
+The regenerated patch has 1,793 operations. 139 of them set points, and 123
+of those are Space Marine chapters where GW's codex prices are ahead of
+BSData. Outside that family the two sources disagree on one or two units
+per faction, the same shape as before.
+
+**The Space Marine codex reached 40kdc before BSData.** 40kdc 1.4.5 ingests
+the codex profiles. 72 of 221 Space Marine unit compositions changed, and
+weapons now carry the datasheet in their id (`bolt-rifle-intercessor-squad`).
+The engine already resolves those ids (`Dataset.weaponFor`, `unscope`).
+Three effects are visible:
+
+| datasheet | 40kdc 1.4.5 | BSData / Wahapedia | state |
+| --- | --- | --- | --- |
+| Ballistus Dreadnought | Storm Bolters, A4 S5 AP-1, Rapid Fire 4 | Twin storm bolter, A2 S4, twin-linked | open |
+| Vanguard Veterans with Jump Packs | relic blade, no pistol; power fist and thunder hammer listed | bolt pistol + Vanguard Veteran weapon, pistol options | open |
+| Intercessor Squad | `Power Weapon` | `Power weapon` | cosmetic |
+
+Neither source can be shown right from here: the codex is not one of the
+sources, and Wahapedia's live page may simply lag it. The builder takes its
+slots from BSData, so Vanguard Veterans are still offered the pre-codex
+pistols. The two tests that pin that loadout are skipped with this section
+as the reason. They come back when BSData publishes the codex, and so does
+the Ballistus question. The Ballistus and Intercessor tests no longer pin
+the gun's name, which was never what they tested.
+
+**Moved under the tests, and backed by GW each time.** The Twin Lance went
+from 230 to 240, so the reference lists cost 2,040 and 1,035. A Captain
+costs 90 against 40kdc's 80, and stands in for Centurion Devastators, which
+left the manual. Assault Intercessors cost 85 and a Captain with Jump Pack
+90.
+
+Both suites pass: 617 in the engine, with 2 skipped (the Vanguard tests) and
+the Necrons cross-check failing upstream as before, and 334 in the app.
 
 ## 4. Army builder
 

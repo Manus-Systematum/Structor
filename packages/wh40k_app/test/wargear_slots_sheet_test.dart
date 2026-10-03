@@ -94,7 +94,11 @@ void main() {
       // together.
       await tester.tap(menus.at(0));
       await settle(tester);
-      await tester.tap(find.text('Power weapon').last);
+      // `Power Weapon` since 40kdc's Space Marine codex ingest, `Power
+      // weapon` before it; the case is upstream's and not what this tests.
+      await tester.tap(find
+          .textContaining(RegExp(r'^Power weapon$', caseSensitive: false))
+          .last);
       await settle(tester);
 
       expect(valueOf(0), isNot(-1));

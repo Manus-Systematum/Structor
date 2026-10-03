@@ -463,8 +463,10 @@ class DatasetRepository {
       factionId: id,
       // Without these the army rule is dropped on the way through the bundle,
       // and a roster built in the app loses the one rule its whole army has.
-      // A chapter keeps *its own* — The Red Thirst, not Oath of Moment.
-      factionRuleId: self?['faction_rule_id']?.toString(),
+      // A chapter keeps *its own* — Templar Vows, not Oath of Moment. A list
+      // since 40kdc 1.4.4, for the Tyranids' two.
+      factionRuleIds:
+          self == null ? const [] : factionRulesOf(Map<String, Object?>.from(self)),
       factionName: self?['name']?.toString(),
       // The army's own keywords, which is what makes a datasheet in this
       // bundle an ally or one of ours (§4.18). They were in the bundle all

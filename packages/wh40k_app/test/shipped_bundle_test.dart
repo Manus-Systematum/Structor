@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -99,16 +100,17 @@ void main() {
     // The export prints what the list cost when it was written; the bundle
     // prices it at today's points. Both lists field The Twin Lance and two
     // units of Crisis Starscythes, and the August manual put 10 points on
-    // each of the three — so each list is 30 points dearer than its own
-    // header says, and that is the data being right rather than wrong.
+    // each of the three — so each list was 30 points dearer than its own
+    // header says. October's put another 10 on The Twin Lance, making it 40.
+    // That is the data being right rather than wrong.
     const fixtures = {
       'test/fixtures/war_organ_export.txt': (
         printed: 2000,
-        now: 2030,
+        now: 2040,
       ),
       'test/fixtures/war_organ_incursion_1000.txt': (
         printed: 995,
-        now: 1025,
+        now: 1035,
       ),
     };
 
@@ -206,11 +208,11 @@ void main() {
       // can show the rule surviving the bundle as the chapter's own rather
       // than as the parent's.
       final templars = await repo.faction('black-templars');
-      expect(templars.faction.factionRuleId, 'templar-vows');
-      expect(astartes.faction.factionRuleId, 'oath-of-moment');
+      expect(templars.faction.factionRuleIds, ['templar-vows']);
+      expect(astartes.faction.factionRuleIds, ['oath-of-moment']);
 
       // And one that agrees with its parent reads as agreeing, not as empty.
-      expect(bloodAngels.faction.factionRuleId, 'oath-of-moment');
+      expect(bloodAngels.faction.factionRuleIds, ['oath-of-moment']);
     });
   });
 
@@ -219,7 +221,7 @@ void main() {
     // arrived null in the app and every roster built or imported there lost
     // the one rule its whole army has. The CLI reads the snapshot directly
     // and kept it, which is exactly why nothing noticed.
-    expect(tau.faction.factionRuleId, 'for-the-greater-good');
+    expect(tau.faction.factionRuleIds, ['for-the-greater-good']);
     expect(tau.faction.factionName, 'T’au Empire');
 
     // And it has to reach the snapshot, which is what the play screens read.
@@ -232,7 +234,42 @@ void main() {
       abilityLookup: tau.ability,
       knownAbilities: tau.faction.abilities,
     ).resolve(parsed, factionId: 'tau-empire');
-    expect(builder.build(result.roster).factionRuleId, 'for-the-greater-good');
+    expect(builder.build(result.roster).factionRuleIds,
+        ['for-the-greater-good']);
+  });
+
+  test('a faction with two army rules ships both', () async {
+    // 40kdc 1.4.4 made the army rule a list, for the Tyranids.
+    final tyranids = await repo.faction('tyranids');
+    expect(tyranids.faction.factionRuleIds, ['shadow-in-the-warp', 'synapse']);
+  });
+
+  test('the bundle still names one army rule for an app that predates the '
+      'list', () {
+    // Installed apps take their data from the site, and an app from before
+    // 40kdc 1.4.4 reads only `faction_rule_id`. Without it every army on
+    // every such phone would lose its army rule the day this was published.
+    final bundles = Directory('assets/bundles')
+        .listSync()
+        .whereType<File>()
+        .where((f) => f.path.endsWith('.json.gz') &&
+            !f.path.contains('/patch-') &&
+            !f.path.contains('/core.'));
+    var checked = 0;
+    for (final file in bundles) {
+      final bundle = jsonDecode(utf8.decode(gzip.decode(file.readAsBytesSync())))
+          as Map<String, Object?>;
+      final files = bundle['files'] as Map<String, Object?>?;
+      for (final raw in (files?['factions'] as List<Object?>? ?? const [])) {
+        final record = raw as Map<String, Object?>;
+        final ids = record['faction_rule_ids'] as List<Object?>?;
+        if (ids == null || ids.isEmpty) continue;
+        expect(record['faction_rule_id'], ids.first,
+            reason: '${record['id']} names no single army rule');
+        checked++;
+      }
+    }
+    expect(checked, greaterThan(30));
   });
 
   // The August 2026 Faction Packs, reaching the app as a patch rather than a
